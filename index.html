@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA日本株モデルポートフォリオ 顧客向けサイト</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #607086;
+      --line: #d8e1ec;
+      --bg: #f5f8fb;
+      --panel: #ffffff;
+      --navy: #14395b;
+      --blue: #1f6f8b;
+      --sky: #e8f4ff;
+      --green: #17815a;
+      --green-bg: #edf9f3;
+      --orange: #c76a13;
+      --orange-bg: #fff4e5;
+      --red: #b83232;
+      --red-bg: #fff0f0;
+      --purple: #5b5fc7;
+      --shadow: 0 12px 34px rgba(15, 42, 67, .10);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+      letter-spacing: 0;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+    .site {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      max-width: 100%;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 22px 18px;
+      background: #ffffff;
+      border-right: 1px solid var(--line);
+      overflow: auto;
+    }
+    .brand {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+    .brand-title {
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 6px;
+    }
+    .brand-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+    .nav a {
+      text-decoration: none;
+      display: block;
+      padding: 9px 10px;
+      border-radius: 10px;
+      color: #36506a;
+      font-size: 13px;
+      border: 1px solid transparent;
+    }
+    .nav a:hover {
+      background: var(--sky);
+      border-color: #cfe6fb;
+      color: var(--navy);
+    }
+    .sidebar-note {
+      margin-top: 18px;
+      padding: 11px;
+      border-radius: 12px;
+      background: var(--orange-bg);
+      border: 1px solid #f1c98f;
+      color: #70400c;
+      font-size: 12px;
+    }
+    main {
+      padding: 28px;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      min-width: 0;
+    }
+    section {
+      scroll-margin-top: 18px;
+      margin-bottom: 26px;
+    }
+    .hero {
+      background: var(--navy);
+      color: #ffffff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(300px, .7fr);
+      gap: 22px;
+      align-items: center;
+      max-width: 100%;
+    }
+    .hero > * { min-width: 0; }
+    .mobile-only { display: none; }
+    h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.15;
+      margin: 0 0 14px;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+    .hero p { margin: 0 0 18px; color: #dbeafe; font-size: 15px; overflow-wrap: anywhere; }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 13px;
+      border-radius: 10px;
+      border: 1px solid #9cc8ec;
+      background: #ffffff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .button.secondary {
+      background: transparent;
+      color: #ffffff;
+      border-color: #6ea6d1;
+    }
+    .hero-card {
+      background: #ffffff;
+      color: var(--ink);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+    }
+    .hero-metric {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: #f7fbff;
+      border: 1px solid #dce9f6;
+    }
+    .hero-metric b {
+      font-size: 24px;
+      line-height: 1;
+      color: var(--blue);
+    }
+    .hero-metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 25px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    .section-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 22px rgba(15, 42, 67, .06);
+      padding: 18px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .kpi {
+      border-radius: var(--radius);
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: 0 7px 18px rgba(15, 42, 67, .05);
+    }
+    .kpi .label { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+    .kpi .value { font-size: 30px; font-weight: 800; color: var(--navy); line-height: 1; }
+    .kpi .desc { color: var(--muted); font-size: 12px; margin-top: 7px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: step;
+    }
+    .step {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 14px 14px;
+      min-height: 146px;
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: #ffffff;
+      font-weight: 800;
+    }
+    .step::after {
+      content: "→";
+      position: absolute;
+      right: -17px;
+      top: 52px;
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 800;
+      z-index: 2;
+    }
+    .step:last-child::after { content: ""; }
+    .step b {
+      display: block;
+      font-size: 26px;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .step strong { display: block; margin-bottom: 6px; }
+    .step span { color: var(--muted); font-size: 12px; }
+    .viz-grid {
+      display: grid;
+      grid-template-columns: 380px minmax(0, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+    .donut-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 330px;
+    }
+    .donut-label {
+      position: absolute;
+      text-align: center;
+      color: var(--navy);
+    }
+    .donut-label b { display: block; font-size: 34px; line-height: 1; }
+    .donut-box { position: relative; display: grid; place-items: center; }
+    .legend {
+      display: grid;
+      gap: 7px;
+      align-content: center;
+    }
+    .legend-row {
+      display: grid;
+      grid-template-columns: 14px 1fr 70px;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+      background: #f8fbfe;
+      border-radius: 10px;
+      border: 1px solid #e2edf7;
+      font-size: 13px;
+    }
+    .swatch { width: 14px; height: 14px; border-radius: 4px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .stock-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 7px 18px rgba(15, 42, 67, .05);
+      display: grid;
+      gap: 10px;
+    }
+    .stock-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .ticker { color: var(--muted); font-size: 12px; }
+    .stock-card h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 17px;
+      line-height: 1.3;
+    }
+    .score {
+      min-width: 42px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      background: var(--blue);
+      font-weight: 800;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 23px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 11px;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+    .growth { background: #2563eb; }
+    .income { background: var(--green); }
+    .watch { background: var(--orange); }
+    .risk { background: var(--red); }
+    .metric-list {
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+    }
+    .metric-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 9px;
+      background: #f7fafc;
+    }
+    .metric-list b { color: var(--navy); }
+    .bar-chart {
+      display: grid;
+      gap: 9px;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 116px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .track {
+      height: 13px;
+      background: #e8eef5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 999px;
+    }
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .decision {
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 2px solid;
+    }
+    .decision.buy { background: var(--green-bg); border-color: #63b989; }
+    .decision.delay { background: var(--orange-bg); border-color: #e4a957; }
+    .decision b { display: block; font-size: 18px; margin-bottom: 6px; }
+    .rule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .rule-table th,
+    .rule-table td {
+      border: 1px solid var(--line);
+      padding: 10px;
+      vertical-align: top;
+    }
+    .rule-table th {
+      background: #e8f4ff;
+      color: var(--navy);
+      text-align: left;
+    }
+    .rule-table tr:nth-child(even) td { background: #fbfdff; }
+    .calendar {
+      display: grid;
+      gap: 12px;
+    }
+    .month-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .month {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 7px 18px rgba(15, 42, 67, .05);
+      overflow: hidden;
+    }
+    .month h3 {
+      margin: 0;
+      padding: 12px 14px;
+      background: #e8f4ff;
+      color: var(--navy);
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .month h3 span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .weekdays,
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+    .weekdays div {
+      padding: 7px 0;
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted);
+      background: #fbfdff;
+      border-bottom: 1px solid var(--line);
+    }
+    .day {
+      min-height: 64px;
+      border-right: 1px solid #edf2f7;
+      border-bottom: 1px solid #edf2f7;
+      padding: 5px;
+      font-size: 11px;
+      background: #ffffff;
+    }
+    .day:nth-child(7n) { border-right: none; }
+    .day.blank { background: #f8fafc; }
+    .date {
+      display: block;
+      color: #40566d;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+    .cal-event {
+      display: inline-flex;
+      width: 100%;
+      min-height: 24px;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 5px;
+      border: none;
+      border-radius: 7px;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+    .cal-event.buy { background: var(--green); }
+    .cal-event.watch { background: var(--orange); }
+    .cal-event.risk { background: var(--red); }
+    .cal-event.macro { background: var(--purple); }
+    .cal-event:hover { filter: brightness(.95); }
+    .calendar-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+    .calendar-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #40566d;
+    }
+    .calendar-legend i {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .event-detail {
+      border: 2px solid #cde2f5;
+      border-radius: var(--radius);
+      background: #ffffff;
+      padding: 16px;
+      margin: 0 0 16px;
+      box-shadow: 0 8px 22px rgba(15, 42, 67, .06);
+    }
+    .event-detail h3 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+    .event-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .event-detail-grid div {
+      border-radius: 11px;
+      padding: 10px;
+      background: #f7fbff;
+      border: 1px solid #dbeaf7;
+      font-size: 12px;
+    }
+    .event-detail-grid b {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .scenario-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 14px;
+      box-shadow: 0 7px 18px rgba(15, 42, 67, .05);
+    }
+    .scenario-card b {
+      display: block;
+      color: var(--navy);
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .scenario-card .action {
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 10px;
+      background: var(--sky);
+      color: var(--navy);
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .event {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .event-date {
+      border-radius: var(--radius);
+      background: var(--navy);
+      color: #ffffff;
+      padding: 12px;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      font-weight: 800;
+    }
+    .event-body {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      display: grid;
+      gap: 7px;
+    }
+    .event-body b { color: var(--navy); }
+    .event-body .mini {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .mini div {
+      padding: 8px;
+      border-radius: 10px;
+      background: #f7fafc;
+      border: 1px solid #e2edf7;
+      font-size: 12px;
+    }
+    .annotation-link {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 800;
+      border-bottom: 1px dashed var(--blue);
+    }
+    .notes {
+      display: grid;
+      gap: 10px;
+    }
+    .note {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--blue);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .backtop {
+      display: inline-flex;
+      margin-top: 6px;
+      color: var(--blue);
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    details {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      font-weight: 800;
+      color: var(--navy);
+      background: #f5f9ff;
+    }
+    details .detail-body { padding: 12px 14px; }
+    @media (max-width: 1080px) {
+      .site { grid-template-columns: 1fr; }
+      .sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      main { padding: 18px; }
+      .hero, .viz-grid { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        padding: 10px 12px;
+      }
+      .brand {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 10px;
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+      }
+      .brand-title { font-size: 16px; margin: 0; }
+      .brand-sub { display: none; }
+      .nav {
+        display: flex;
+        overflow-x: auto;
+        gap: 6px;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+      .nav::-webkit-scrollbar { display: none; }
+      .nav a {
+        flex: 0 0 auto;
+        padding: 7px 9px;
+        font-size: 12px;
+      }
+      .sidebar-note { display: none; }
+      .grid-3, .grid-2, .decision-grid, .flow, .cards { grid-template-columns: 1fr; }
+      .month-board, .scenario-grid { grid-template-columns: 1fr; }
+      .event-detail-grid { grid-template-columns: 1fr; }
+      main { padding: 12px; }
+      h1 { font-size: 27px; word-break: break-all; }
+      .mobile-only { display: block; }
+      .hero p { word-break: break-all; }
+      .hero { padding: 22px 18px; border-radius: 16px; overflow: hidden; }
+      .hero-actions { display: grid; grid-template-columns: 1fr; }
+      .button { width: 100%; }
+      .hero-card { padding: 12px; }
+      .hero-metric { grid-template-columns: 72px 1fr; }
+      .hero-metric b { font-size: 23px; }
+      .day { min-height: 58px; padding: 4px; }
+      .cal-event { font-size: 9px; padding: 3px 2px; }
+      .step::after { content: "↓"; right: 50%; transform: translateX(50%); top: auto; bottom: -24px; }
+      .step { margin-bottom: 14px; }
+      .event { grid-template-columns: 1fr; }
+      .event-body .mini { grid-template-columns: 1fr; }
+      .rule-table { font-size: 12px; }
+    }
+    @media print {
+      body { background: #ffffff; }
+      .site { display: block; }
+      .sidebar { display: none; }
+      main { max-width: none; padding: 0; }
+      section { break-inside: avoid; }
+      .hero, .panel, .stock-card, .kpi, .step { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <aside class="sidebar" id="top">
+      <div class="brand">
+        <p class="brand-title">NISA日本株<br>モデル提案</p>
+        <p class="brand-sub">100万円 / 3か月 / 条件分岐型</p>
+      </div>
+      <nav class="nav" aria-label="ページ内ナビゲーション">
+        <a href="#summary">結論</a>
+        <a href="#benchmark">合格ライン</a>
+        <a href="#flow">買う時期</a>
+        <a href="#portfolio">配分</a>
+        <a href="#stocks">銘柄根拠</a>
+        <a href="#rules">条件分岐</a>
+        <a href="#scenario">シナリオ</a>
+        <a href="#calendar">カレンダー</a>
+        <a href="#actions">銘柄別ルール</a>
+        <a href="#notes">注釈</a>
+      </nav>
+      <div class="sidebar-note">
+        このページは顧客説明用です。実売買前には証券会社画面と最新決算を再確認します。
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero" id="summary">
+        <div>
+          <h1>NISAで日経平均を<br class="mobile-only">超えるための<br>日本株モデル</h1>
+          <p>ただS&P500投信や日経平均連動投信を持つだけなら、個別株を選ぶ意味は薄いです。この提案では、半導体AI、金利、株主還元、医薬成長、ゲーム周期を組み合わせ、3か月で比較対象を<b>+1%ポイント以上</b>上回ることを明確な目標にします。</p>
+          <div class="hero-actions">
+            <a class="button" href="#flow">買う時期を見る</a>
+            <a class="button secondary" href="#rules">条件分岐を見る</a>
+            <a class="button secondary" href="#notes">注釈へ移動</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-metric"><b>25%</b><span>5/20以降に小さく開始</span></div>
+          <div class="hero-metric"><b>35%</b><span>6/18以降に本格追加</span></div>
+          <div class="hero-metric"><b>15%</b><span>下落と事故対応の現金</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="grid-3">
+          <div class="kpi">
+            <div class="label">投資予定額</div>
+            <div class="value">85万円</div>
+            <div class="desc">3回に分けて投入</div>
+          </div>
+          <div class="kpi">
+            <div class="label">現金待機</div>
+            <div class="value">15万円</div>
+            <div class="desc">日経平均-10%や決算事故に備える</div>
+          </div>
+          <div class="kpi">
+            <div class="label">3か月の相対目標</div>
+            <div class="value">+1%pt</div>
+            <div class="desc">S&P500投信・日経平均/TOPIXを上回る</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="benchmark">
+        <div class="section-head">
+          <div>
+            <h2>この運用の合格ライン</h2>
+            <p>「ただの投信運用」を上回れないなら、日本個別株を選ぶ意味が弱くなります。</p>
+          </div>
+        </div>
+        <div class="panel">
+          <table class="rule-table">
+            <tr><th>比較対象</th><th>目標</th><th>判定</th></tr>
+            <tr><td>S&P500投信</td><td>3か月で+1%ポイント以上上回る</td><td>円換算で比較。負けるなら個別株比率を落とす。</td></tr>
+            <tr><td>日経平均連動投信</td><td>3か月で+1%ポイント以上上回る</td><td>日本株を選ぶ最低条件。</td></tr>
+            <tr><td>TOPIX連動投信</td><td>3か月で+1%ポイント以上上回る</td><td>大型株全体との比較。</td></tr>
+          </table>
+          <div class="decision-grid" style="margin-top:14px">
+            <div class="decision buy">
+              <b>合格</b>
+              3か月後に、S&P500投信・日経平均/TOPIXのうち主要比較対象を+1%ポイント以上上回る。
+            </div>
+            <div class="decision delay">
+              <b>不合格</b>
+              4週間で指数に-3%ポイント以上負ける、または3か月で+1%ポイント超過できない。銘柄を削り、指数投信へ戻す。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="flow">
+        <div class="section-head">
+          <div>
+            <h2>買う時期: 4ステップ</h2>
+            <p>今すぐ全額ではなく、イベントを見ながら段階的に買います。</p>
+          </div>
+        </div>
+        <div class="flow">
+          <div class="step"><b>0円</b><strong>〜5/16</strong><span>米PPIと日本決算の反応を見る。買わない。</span></div>
+          <div class="step"><b>25万円</b><strong>5/20-5/24</strong><span>決算一巡後に小さく開始。半導体は控えめ。</span></div>
+          <div class="step"><b>35万円</b><strong>6/18-6/24</strong><span>米CPI、日銀、FOMC通過後に本格追加。</span></div>
+          <div class="step"><b>25万円</b><strong>8月中旬</strong><span>4-6月期決算で強い銘柄へ追加。</span></div>
+        </div>
+      </section>
+
+      <section id="portfolio">
+        <div class="section-head">
+          <div>
+            <h2>モデル配分</h2>
+            <p>銘柄の役割を分け、1つのテーマに偏りすぎないようにします。</p>
+          </div>
+        </div>
+        <div class="panel viz-grid">
+          <div class="donut-wrap">
+            <div class="donut-box" aria-label="ポートフォリオ配分グラフ">
+              <svg width="310" height="310" viewBox="0 0 310 310" role="img" aria-label="投資85万円、現金15万円の配分">
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#e7eef6" stroke-width="42"></circle>
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#2563eb" stroke-width="42" stroke-dasharray="88 612" stroke-dashoffset="0" transform="rotate(-90 155 155)"></circle>
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#1f6f8b" stroke-width="42" stroke-dasharray="57 612" stroke-dashoffset="-88" transform="rotate(-90 155 155)"></circle>
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#17815a" stroke-width="42" stroke-dasharray="88 612" stroke-dashoffset="-145" transform="rotate(-90 155 155)"></circle>
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#7c4dff" stroke-width="42" stroke-dasharray="75 612" stroke-dashoffset="-233" transform="rotate(-90 155 155)"></circle>
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#c76a13" stroke-width="42" stroke-dasharray="107 612" stroke-dashoffset="-308" transform="rotate(-90 155 155)"></circle>
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#6b7280" stroke-width="42" stroke-dasharray="94 612" stroke-dashoffset="-415" transform="rotate(-90 155 155)"></circle>
+                <circle cx="155" cy="155" r="112" fill="none" stroke="#94a3b8" stroke-width="42" stroke-dasharray="94 612" stroke-dashoffset="-509" transform="rotate(-90 155 155)"></circle>
+              </svg>
+              <div class="donut-label"><b>100万円</b><span>85万円投資<br>15万円現金</span></div>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-row"><span class="swatch" style="background:#2563eb"></span><span>半導体AI: 東京エレクトロン + アドバンテスト</span><b>23万円</b></div>
+            <div class="legend-row"><span class="swatch" style="background:#1f6f8b"></span><span>銀行: 三菱UFJ</span><b>14万円</b></div>
+            <div class="legend-row"><span class="swatch" style="background:#17815a"></span><span>商社/還元: 三菱商事</span><b>12万円</b></div>
+            <div class="legend-row"><span class="swatch" style="background:#7c4dff"></span><span>医薬成長: 中外製薬</span><b>11万円</b></div>
+            <div class="legend-row"><span class="swatch" style="background:#c76a13"></span><span>ゲーム/通信/食品材料</span><b>25万円</b></div>
+            <div class="legend-row"><span class="swatch" style="background:#6b7280"></span><span>現金待機</span><b>15万円</b></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="stocks">
+        <div class="section-head">
+          <div>
+            <h2>銘柄選定: 数字で見る根拠</h2>
+            <p>スコアは、成長、割高/妥当性、イベント、リスクを合算した説明用の目安です。</p>
+          </div>
+        </div>
+        <div class="cards">
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">8035</div><h3>東京エレクトロン</h3></div><div class="score">82</div></div>
+            <div class="tags"><span class="tag growth">成長</span><span class="tag risk">高値圏</span></div>
+            <div class="metric-list"><div><span>PER</span><b>41.35倍</b></div><div><span>Forward PER</span><b>34.22倍</b></div><div><span>配当</span><b>1.53%</b></div></div>
+            <a class="annotation-link" href="#note-semiconductor">注釈: 半導体リスクへ</a>
+          </article>
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">6857</div><h3>アドバンテスト</h3></div><div class="score">80</div></div>
+            <div class="tags"><span class="tag growth">AI</span><span class="tag risk">高PER</span></div>
+            <div class="metric-list"><div><span>売上TTM</span><b>+44.7%</b></div><div><span>純利益</span><b>+132.9%</b></div><div><span>PER</span><b>57.89倍</b></div></div>
+            <a class="annotation-link" href="#note-per">注釈: PERの見方へ</a>
+          </article>
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">4519</div><h3>中外製薬</h3></div><div class="score">79</div></div>
+            <div class="tags"><span class="tag growth">医薬</span><span class="tag income">分散</span></div>
+            <div class="metric-list"><div><span>Q1売上</span><b>+11.5%</b></div><div><span>Core営業利益</span><b>+17.1%</b></div><div><span>Forward PER</span><b>26.04倍</b></div></div>
+            <a class="annotation-link" href="#note-medical">注釈: 医薬リスクへ</a>
+          </article>
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">8306</div><h3>三菱UFJ</h3></div><div class="score">78</div></div>
+            <div class="tags"><span class="tag income">金利</span><span class="tag income">配当</span></div>
+            <div class="metric-list"><div><span>Forward PER</span><b>13.95倍</b></div><div><span>配当</span><b>2.64%</b></div><div><span>テーマ</span><b>日銀正常化</b></div></div>
+            <a class="annotation-link" href="#note-rate">注釈: 金利テーマへ</a>
+          </article>
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">8058</div><h3>三菱商事</h3></div><div class="score">76</div></div>
+            <div class="tags"><span class="tag income">還元</span><span class="tag income">商社</span></div>
+            <div class="metric-list"><div><span>Forward PER</span><b>17.23倍</b></div><div><span>配当</span><b>2.40%</b></div><div><span>発行株数</span><b>-5.36%</b></div></div>
+            <a class="annotation-link" href="#note-buyback">注釈: 自社株買いへ</a>
+          </article>
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">7974</div><h3>任天堂</h3></div><div class="score">74</div></div>
+            <div class="tags"><span class="tag watch">周期</span><span class="tag income">配当</span></div>
+            <div class="metric-list"><div><span>PER</span><b>21.52倍</b></div><div><span>配当</span><b>2.38%</b></div><div><span>株価位置</span><b>52週安値近辺</b></div></div>
+            <a class="annotation-link" href="#note-nintendo">注釈: ハード周期へ</a>
+          </article>
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">9433</div><h3>KDDI</h3></div><div class="score">70</div></div>
+            <div class="tags"><span class="tag income">守り</span><span class="tag income">配当</span></div>
+            <div class="metric-list"><div><span>PER</span><b>14.43倍</b></div><div><span>Forward PER</span><b>12.48倍</b></div><div><span>配当</span><b>3.14%</b></div></div>
+            <a class="annotation-link" href="#note-defensive">注釈: 守り枠へ</a>
+          </article>
+          <article class="stock-card">
+            <div class="stock-top"><div><div class="ticker">2802</div><h3>味の素</h3></div><div class="score">68</div></div>
+            <div class="tags"><span class="tag watch">監視</span><span class="tag risk">高PER</span></div>
+            <div class="metric-list"><div><span>事業利益予想</span><b>+8.7%</b></div><div><span>ヘルスケア等</span><b>+20.8%</b></div><div><span>予想PER</span><b>約44倍</b></div></div>
+            <a class="annotation-link" href="#note-ajinomoto">注釈: 味の素の注意点へ</a>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <h2>スコア比較グラフ</h2>
+            <p>どの銘柄が“日経平均を超える理由”を持つかを見える化します。</p>
+          </div>
+        </div>
+        <div class="panel bar-chart">
+          <div class="bar-row"><span>東京エレクトロン</span><div class="track"><div class="bar" style="width:82%"></div></div><b>82</b></div>
+          <div class="bar-row"><span>アドバンテスト</span><div class="track"><div class="bar" style="width:80%"></div></div><b>80</b></div>
+          <div class="bar-row"><span>中外製薬</span><div class="track"><div class="bar" style="width:79%"></div></div><b>79</b></div>
+          <div class="bar-row"><span>三菱UFJ</span><div class="track"><div class="bar" style="width:78%"></div></div><b>78</b></div>
+          <div class="bar-row"><span>三菱商事</span><div class="track"><div class="bar" style="width:76%"></div></div><b>76</b></div>
+          <div class="bar-row"><span>任天堂</span><div class="track"><div class="bar" style="width:74%"></div></div><b>74</b></div>
+          <div class="bar-row"><span>KDDI</span><div class="track"><div class="bar" style="width:70%"></div></div><b>70</b></div>
+          <div class="bar-row"><span>味の素</span><div class="track"><div class="bar" style="width:68%"></div></div><b>68</b></div>
+        </div>
+      </section>
+
+      <section id="rules">
+        <div class="section-head">
+          <div>
+            <h2>条件分岐: 何%ならどうするか</h2>
+            <p>顧客に説明しやすいよう、買う/待つを数字で決めます。</p>
+          </div>
+        </div>
+        <div class="decision-grid">
+          <div class="decision buy">
+            <b>予定通り買う条件</b>
+            米CPIが落ち着く / 米10年金利4.60%未満 / 日経平均が75日線以上 / 決算下方修正なし
+          </div>
+          <div class="decision delay">
+            <b>延期・半減する条件</b>
+            CPI再加速 / 米10年金利4.70%以上 / 円高3%以上 / 日経平均75日線-2%以上
+          </div>
+        </div>
+        <div class="panel" style="margin-top:14px">
+          <table class="rule-table">
+            <tr><th>チェック</th><th>良い条件</th><th>悪い条件</th><th>行動</th></tr>
+            <tr><td>米CPI</td><td>前年比3.8%以下、前月比0.4%以下</td><td>前年比4.0%以上、前月比0.5%以上</td><td>悪ければ6/18追加を35万円から17.5万円へ半減</td></tr>
+            <tr><td>米10年金利</td><td>4.60%未満</td><td>4.70%以上</td><td>悪ければ半導体の追加を止める</td></tr>
+            <tr><td>日銀後の為替</td><td>2営業日の円高が3%未満</td><td>2営業日で3%以上円高</td><td>輸出・海外比率が高い銘柄を待つ</td></tr>
+            <tr><td>日経平均</td><td>75日線以上</td><td>75日線を-2%以上下回る</td><td>個別株の新規買い停止</td></tr>
+            <tr><td>決算</td><td>営業利益YoYプラス、進捗25%以上</td><td>営業利益YoY-10%以上、下方修正</td><td>悪い銘柄は除外</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section id="scenario">
+        <div class="section-head">
+          <div>
+            <h2>シナリオ別アクション早見表</h2>
+            <p>顧客説明時に「悪い時はどうするのか」をすぐ示せるようにします。</p>
+          </div>
+        </div>
+        <div class="scenario-grid">
+          <div class="scenario-card">
+            <b>日経平均 -5%</b>
+            <span>市場全体の軽い調整。</span>
+            <div class="action">新規買い停止。現金15万円から最大3万円だけ追加可。</div>
+          </div>
+          <div class="scenario-card">
+            <b>日経平均 -10%</b>
+            <span>市場全体の大きな調整。</span>
+            <div class="action">予定買いを半分にする。現金は使い切らない。</div>
+          </div>
+          <div class="scenario-card">
+            <b>米金利 4.70%以上</b>
+            <span>高PER株に逆風。</span>
+            <div class="action">東京エレクトロン/アドバンテストの追加を止める。</div>
+          </div>
+          <div class="scenario-card">
+            <b>決算下方修正</b>
+            <span>会社の前提が崩れた状態。</span>
+            <div class="action">その銘柄を除外。保有があれば半分減額候補。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="calendar">
+        <div class="section-head">
+          <div>
+            <h2>銘柄別カレンダー</h2>
+            <p>イベントの日に、何を見て、どう動くかを固定します。</p>
+          </div>
+        </div>
+        <div class="calendar-legend" aria-label="カレンダー凡例">
+          <span><i style="background:var(--green)"></i>買う/追加候補</span>
+          <span><i style="background:var(--orange)"></i>確認・待機</span>
+          <span><i style="background:var(--red)"></i>危険判定</span>
+          <span><i style="background:var(--purple)"></i>マクロイベント</span>
+        </div>
+        <div class="month-board" aria-label="2026年5月から8月の投資カレンダー">
+          <div class="month">
+            <h3>2026年5月 <span>小さく開始</span></h3>
+            <div class="weekdays"><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div><div>日</div></div>
+            <div class="days">
+              <div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div>
+              <div class="day"><span class="date">1</span></div><div class="day"><span class="date">2</span></div><div class="day"><span class="date">3</span></div>
+              <div class="day"><span class="date">4</span></div><div class="day"><span class="date">5</span></div><div class="day"><span class="date">6</span></div><div class="day"><span class="date">7</span></div><div class="day"><span class="date">8</span></div><div class="day"><span class="date">9</span></div><div class="day"><span class="date">10</span></div>
+              <div class="day"><span class="date">11</span></div><div class="day"><span class="date">12</span><button class="cal-event macro" data-event="cpi-may">米CPI</button></div><div class="day"><span class="date">13</span><button class="cal-event macro" data-event="ppi-may">米PPI</button></div><div class="day"><span class="date">14</span></div><div class="day"><span class="date">15</span><button class="cal-event watch" data-event="earnings-may">決算集中</button></div><div class="day"><span class="date">16</span></div><div class="day"><span class="date">17</span></div>
+              <div class="day"><span class="date">18</span><button class="cal-event watch" data-event="mufg-may">MUFG確認</button></div><div class="day"><span class="date">19</span></div><div class="day"><span class="date">20</span><button class="cal-event buy" data-event="start-may">25万円開始</button></div><div class="day"><span class="date">21</span></div><div class="day"><span class="date">22</span></div><div class="day"><span class="date">23</span></div><div class="day"><span class="date">24</span></div>
+              <div class="day"><span class="date">25</span></div><div class="day"><span class="date">26</span></div><div class="day"><span class="date">27</span></div><div class="day"><span class="date">28</span></div><div class="day"><span class="date">29</span></div><div class="day"><span class="date">30</span></div><div class="day"><span class="date">31</span></div>
+            </div>
+          </div>
+          <div class="month">
+            <h3>2026年6月 <span>本格判定</span></h3>
+            <div class="weekdays"><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div><div>日</div></div>
+            <div class="days">
+              <div class="day"><span class="date">1</span></div><div class="day"><span class="date">2</span></div><div class="day"><span class="date">3</span></div><div class="day"><span class="date">4</span></div><div class="day"><span class="date">5</span></div><div class="day"><span class="date">6</span></div><div class="day"><span class="date">7</span></div>
+              <div class="day"><span class="date">8</span></div><div class="day"><span class="date">9</span></div><div class="day"><span class="date">10</span><button class="cal-event macro" data-event="cpi-june">米CPI</button></div><div class="day"><span class="date">11</span></div><div class="day"><span class="date">12</span></div><div class="day"><span class="date">13</span></div><div class="day"><span class="date">14</span></div>
+              <div class="day"><span class="date">15</span><button class="cal-event macro" data-event="boj-june">日銀</button></div><div class="day"><span class="date">16</span><button class="cal-event macro" data-event="fomc-june">FOMC</button></div><div class="day"><span class="date">17</span></div><div class="day"><span class="date">18</span><button class="cal-event buy" data-event="add-june">35万円追加</button></div><div class="day"><span class="date">19</span></div><div class="day"><span class="date">20</span></div><div class="day"><span class="date">21</span></div>
+              <div class="day"><span class="date">22</span><button class="cal-event buy" data-event="add-june">追加期間</button></div><div class="day"><span class="date">23</span></div><div class="day"><span class="date">24</span></div><div class="day"><span class="date">25</span></div><div class="day"><span class="date">26</span></div><div class="day"><span class="date">27</span></div><div class="day"><span class="date">28</span></div>
+              <div class="day"><span class="date">29</span></div><div class="day"><span class="date">30</span></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div>
+            </div>
+          </div>
+          <div class="month">
+            <h3>2026年7月 <span>第2判断点</span></h3>
+            <div class="weekdays"><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div><div>日</div></div>
+            <div class="days">
+              <div class="day blank"></div><div class="day blank"></div><div class="day"><span class="date">1</span></div><div class="day"><span class="date">2</span></div><div class="day"><span class="date">3</span></div><div class="day"><span class="date">4</span></div><div class="day"><span class="date">5</span></div>
+              <div class="day"><span class="date">6</span></div><div class="day"><span class="date">7</span></div><div class="day"><span class="date">8</span></div><div class="day"><span class="date">9</span></div><div class="day"><span class="date">10</span></div><div class="day"><span class="date">11</span></div><div class="day"><span class="date">12</span></div>
+              <div class="day"><span class="date">13</span></div><div class="day"><span class="date">14</span></div><div class="day"><span class="date">15</span></div><div class="day"><span class="date">16</span></div><div class="day"><span class="date">17</span></div><div class="day"><span class="date">18</span></div><div class="day"><span class="date">19</span></div>
+              <div class="day"><span class="date">20</span></div><div class="day"><span class="date">21</span></div><div class="day"><span class="date">22</span></div><div class="day"><span class="date">23</span></div><div class="day"><span class="date">24</span></div><div class="day"><span class="date">25</span></div><div class="day"><span class="date">26</span></div>
+              <div class="day"><span class="date">27</span></div><div class="day"><span class="date">28</span><button class="cal-event macro" data-event="fomc-july">FOMC</button></div><div class="day"><span class="date">29</span></div><div class="day"><span class="date">30</span><button class="cal-event macro" data-event="boj-july">日銀</button></div><div class="day"><span class="date">31</span></div><div class="day blank"></div><div class="day blank"></div>
+            </div>
+          </div>
+          <div class="month">
+            <h3>2026年8月 <span>決算で選別</span></h3>
+            <div class="weekdays"><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div><div>日</div></div>
+            <div class="days">
+              <div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day"><span class="date">1</span></div><div class="day"><span class="date">2</span></div>
+              <div class="day"><span class="date">3</span><button class="cal-event watch" data-event="q1-aug">決算週</button></div><div class="day"><span class="date">4</span></div><div class="day"><span class="date">5</span></div><div class="day"><span class="date">6</span></div><div class="day"><span class="date">7</span></div><div class="day"><span class="date">8</span></div><div class="day"><span class="date">9</span></div>
+              <div class="day"><span class="date">10</span></div><div class="day"><span class="date">11</span></div><div class="day"><span class="date">12</span></div><div class="day"><span class="date">13</span></div><div class="day"><span class="date">14</span></div><div class="day"><span class="date">15</span></div><div class="day"><span class="date">16</span></div>
+              <div class="day"><span class="date">17</span><button class="cal-event buy" data-event="add-aug">25万円追加</button></div><div class="day"><span class="date">18</span></div><div class="day"><span class="date">19</span></div><div class="day"><span class="date">20</span></div><div class="day"><span class="date">21</span></div><div class="day"><span class="date">22</span></div><div class="day"><span class="date">23</span></div>
+              <div class="day"><span class="date">24</span></div><div class="day"><span class="date">25</span></div><div class="day"><span class="date">26</span></div><div class="day"><span class="date">27</span></div><div class="day"><span class="date">28</span></div><div class="day"><span class="date">29</span></div><div class="day"><span class="date">30</span></div>
+              <div class="day"><span class="date">31</span></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div>
+            </div>
+          </div>
+        </div>
+        <div class="event-detail" id="event-detail" aria-live="polite">
+          <h3>カレンダーのイベントをクリックしてください</h3>
+          <div class="event-detail-grid">
+            <div><b>見る数字</b><span>イベントを選ぶと表示されます。</span></div>
+            <div><b>良い条件</b><span>買う/追加する条件です。</span></div>
+            <div><b>悪い条件</b><span>延期/半減する条件です。</span></div>
+            <div><b>行動</b><span>実際のアクションです。</span></div>
+          </div>
+        </div>
+        <div class="calendar">
+          <div class="event">
+            <div class="event-date">5/18前後</div>
+            <div class="event-body">
+              <b>三菱UFJ: メガバンク決算確認</b>
+              <div class="mini"><div>見る: 純利益、配当、自社株買い</div><div>良い: 配当維持/増配</div><div>行動: 5/20以降に一部買い</div></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-date">5/20-5/24</div>
+            <div class="event-body">
+              <b>初回25万円: 決算一巡後</b>
+              <div class="mini"><div>対象: KDDI、商事、中外、任天堂、MUFG</div><div>条件: 日経平均75日線付近以上</div><div>注意: 半導体は合計5万円以下</div></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-date">6/10</div>
+            <div class="event-body">
+              <b>米CPI: 半導体追加の判定</b>
+              <div class="mini"><div>対象: 東エレク、アドバン、任天堂</div><div>良い: CPI前年比3.8%以下</div><div>悪い: 半導体追加を半分</div></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-date">6/15-6/17</div>
+            <div class="event-body">
+              <b>日銀 + FOMC: 本格追加の最終判定</b>
+              <div class="mini"><div>見る: 米10年金利、NASDAQ、ドル円</div><div>良い: 金利4.60%未満</div><div>行動: 35万円追加</div></div>
+            </div>
+          </div>
+          <div class="event">
+            <div class="event-date">8月中旬</div>
+            <div class="event-body">
+              <b>4-6月期決算: 最後の25万円</b>
+              <div class="mini"><div>見る: 営業利益YoY、進捗率</div><div>良い: 進捗25%以上</div><div>悪い: その銘柄は除外</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="actions">
+        <div class="section-head">
+          <div>
+            <h2>銘柄別の通常時ルール</h2>
+            <p>イベントがない日でも、価格や指数で判断します。</p>
+          </div>
+        </div>
+        <div class="grid-2">
+          <details open>
+            <summary>半導体: 東京エレクトロン / アドバンテスト</summary>
+            <div class="detail-body">
+              <table class="rule-table">
+                <tr><th>銘柄</th><th>追加する条件</th><th>止める/減らす条件</th></tr>
+                <tr><td>東京エレクトロン</td><td>高値から-5%以上、米10年金利4.60%未満</td><td>金利4.70%以上、NASDAQが5日で-5%以上</td></tr>
+                <tr><td>アドバンテスト</td><td>高値から-10%以上、下方修正なし</td><td>PER60倍超の追い買い禁止、買値から-12%で半分減額</td></tr>
+              </table>
+            </div>
+          </details>
+          <details open>
+            <summary>金利・還元: 三菱UFJ / 三菱商事</summary>
+            <div class="detail-body">
+              <table class="rule-table">
+                <tr><th>銘柄</th><th>追加する条件</th><th>止める/減らす条件</th></tr>
+                <tr><td>三菱UFJ</td><td>配当維持/増配、信用コスト悪化なし</td><td>銀行株がTOPIX比-3%以上</td></tr>
+                <tr><td>三菱商事</td><td>52週高値から-8%以上、還元方針維持</td><td>純利益見通し-10%以上</td></tr>
+              </table>
+            </div>
+          </details>
+          <details>
+            <summary>成長分散: 中外製薬 / 任天堂</summary>
+            <div class="detail-body">
+              <table class="rule-table">
+                <tr><th>銘柄</th><th>追加する条件</th><th>止める/減らす条件</th></tr>
+                <tr><td>中外製薬</td><td>Core営業利益YoY+10%以上、進捗25%以上</td><td>Core営業利益YoYマイナス、薬価/臨床の悪材料</td></tr>
+                <tr><td>任天堂</td><td>Switch 2販売が計画以上、25日線回復</td><td>営業利益見通し-10%以上、買値から-12%</td></tr>
+              </table>
+            </div>
+          </details>
+          <details>
+            <summary>守り・監視: KDDI / 味の素</summary>
+            <div class="detail-body">
+              <table class="rule-table">
+                <tr><th>銘柄</th><th>追加する条件</th><th>止める/減らす条件</th></tr>
+                <tr><td>KDDI</td><td>配当利回り3%以上、Forward PER13倍以下</td><td>営業利益下方修正、配当方針悪化</td></tr>
+                <tr><td>味の素</td><td>4,600円以下、またはヘルスケア等利益+20%以上</td><td>5,300円以上では追わない、事業利益率11%割れ</td></tr>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <h2>全体の安全ルール</h2>
+            <p>大きく負けないための停止条件です。</p>
+          </div>
+        </div>
+        <div class="panel">
+          <table class="rule-table">
+            <tr><th>起きたこと</th><th>行動</th><th>理由</th></tr>
+            <tr><td>ポートフォリオ-5%</td><td>新規買い停止。現金から最大3万円だけ追加可。</td><td>普通の押し目か、失敗かを見分ける。</td></tr>
+            <tr><td>ポートフォリオ-10%</td><td>半導体比率を下げる。追加買い停止。</td><td>高PER株が崩れた時は守る。</td></tr>
+            <tr><td>日経平均が高値から-10%</td><td>予定買いを半分にする。</td><td>市場全体が悪い時は急がない。</td></tr>
+            <tr><td>日経平均が75日線を-2%以上下回る</td><td>個別株の新規買い停止。</td><td>指数トレンドが悪い時は勝率が下がる。</td></tr>
+            <tr><td>指数に4週間で-3%pt以上負け</td><td>負けている銘柄を1つ外す。</td><td>S&P500投信や日経平均連動投信に勝てないなら個別株の意味が弱い。</td></tr>
+            <tr><td>3か月で比較対象を+1%pt以上上回れない</td><td>日本個別株比率を下げ、指数投信へ戻す。</td><td>この運用の最低合格ラインを下回ったため。</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section id="notes">
+        <div class="section-head">
+          <div>
+            <h2>クリック注釈</h2>
+            <p>銘柄カードから飛べる補足説明です。</p>
+          </div>
+        </div>
+        <div class="notes">
+          <div class="note" id="note-semiconductor"><b>半導体リスク</b><br>AI需要が強い時は指数を上回る力があります。一方、米金利が上がると高PER株は売られやすくなります。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+          <div class="note" id="note-per"><b>PERの見方</b><br>PERが高いだけで悪いとは限りません。利益成長が高ければ正当化されます。ただし、成長が鈍ると株価の下落が速くなります。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+          <div class="note" id="note-medical"><b>医薬リスク</b><br>医薬品株は景気と違う動きをしやすい一方、薬価改定、臨床試験、承認、主力品依存のリスクがあります。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+          <div class="note" id="note-rate"><b>金利テーマ</b><br>銀行は金利上昇で利ざや改善が期待されます。ただし信用コストや日銀の方針転換で逆風になります。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+          <div class="note" id="note-buyback"><b>自社株買い</b><br>発行株数が減ると、1株あたり利益が高まりやすくなります。三菱商事は還元姿勢が評価ポイントです。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+          <div class="note" id="note-nintendo"><b>ハード周期</b><br>任天堂は新ハード発売前後で期待と失望が大きく動きます。Switch 2販売が計画以上かが重要です。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+          <div class="note" id="note-defensive"><b>守り枠</b><br>KDDIは指数を大きく超える主役ではありませんが、配当と安定性で全体の揺れを抑える役割です。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+          <div class="note" id="note-ajinomoto"><b>味の素の注意点</b><br>ABF/ヘルスケアの成長は魅力ですが、予想PER約44倍は高めです。5,300円以上では追わず、4,600円以下か次決算確認後に判断します。<a class="backtop" href="#stocks">銘柄へ戻る</a></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const eventData = {
+      "cpi-may": {
+        title: "5/12 米CPI: すでに発表済み",
+        watch: "総合CPI 前年比+3.8%、前月比+0.6%。インフレ再加速気味。",
+        good: "追加判断はまだしない。次のPPIと日本決算を待つ。",
+        bad: "金利上昇が続く場合、半導体の初回投入を控える。",
+        action: "5/20までは買わない。候補銘柄の決算反応だけ確認。"
+      },
+      "ppi-may": {
+        title: "5/13 米PPI: 金利とNASDAQを確認",
+        watch: "米PPI、米10年金利、NASDAQ先物。",
+        good: "米10年金利4.60%未満、NASDAQ先物-2%以内。",
+        bad: "米10年金利4.60%以上、またはNASDAQ先物-2%以上。",
+        action: "悪ければ5/20の半導体初回投入を半分にする。"
+      },
+      "earnings-may": {
+        title: "5月中旬 日本企業の本決算集中",
+        watch: "候補銘柄の下方修正、配当、自社株買い、通期予想。",
+        good: "下方修正なし、配当維持/増配、決算後5営業日で-8%以内。",
+        bad: "下方修正、営業利益見通し-10%以上、出来高急増で大陰線。",
+        action: "悪い銘柄は除外。良い銘柄だけ5/20以降に25万円枠で開始。"
+      },
+      "mufg-may": {
+        title: "5/18前後 三菱UFJ決算確認",
+        watch: "純利益、配当、自社株買い、与信費用。",
+        good: "配当維持/増配、信用コスト悪化なし、通期見通しが市場失望でない。",
+        bad: "下方修正、信用コスト急増、配当方針悪化。",
+        action: "良ければ5/20以降に一部買い。悪ければ除外。"
+      },
+      "start-may": {
+        title: "5/20-5/24 初回25万円",
+        watch: "日経平均75日線、決算後の値動き、米金利。",
+        good: "日経平均が75日線以上、または75日線割れでも-1.5%以内。",
+        bad: "日経平均が75日線を-1.5%以上下回る。",
+        action: "良ければ25万円開始。悪ければ12.5万円に半減。"
+      },
+      "cpi-june": {
+        title: "6/10 米5月CPI",
+        watch: "CPI前年比、前月比、コアCPI、米10年金利。",
+        good: "前年比3.8%以下、前月比0.4%以下、コア前月比0.4%以下、米10年金利4.60%未満。",
+        bad: "前年比4.0%以上、前月比0.5%以上、コア前月比0.5%以上、米10年金利4.70%以上。",
+        action: "良ければ6/18追加準備。悪ければ35万円追加を17.5万円に半減。"
+      },
+      "boj-june": {
+        title: "6/15-6/16 日銀会合",
+        watch: "USD/JPY、日経平均、銀行株。",
+        good: "日銀後2営業日で円高3%未満、日経平均-3%以内。",
+        bad: "2営業日で3%以上の急な円高、日経平均-3%以上。",
+        action: "円高ショックなら輸出・海外比率の高い銘柄を待つ。"
+      },
+      "fomc-june": {
+        title: "6/16-6/17 FOMC",
+        watch: "米10年金利、NASDAQ、ドル円、声明文。",
+        good: "米10年金利4.60%未満、NASDAQが2営業日で-3%以内。",
+        bad: "米10年金利4.70%以上、NASDAQ-3%以上、ドル円±3%以上の急変。",
+        action: "良ければ6/18-6/24に35万円追加。悪ければ半減または延期。"
+      },
+      "add-june": {
+        title: "6/18-6/24 35万円追加",
+        watch: "米CPI、日銀、FOMCを通過した後の市場反応。",
+        good: "米金利急騰なし、円高ショックなし、日経平均75日線以上。",
+        bad: "金利4.70%以上、日経平均75日線-2%以上、候補銘柄に下方修正。",
+        action: "条件達成なら35万円追加。未達なら17.5万円に半減。"
+      },
+      "fomc-july": {
+        title: "7/28-7/29 FOMC",
+        watch: "米金利、NASDAQ、保有株の相対成績。",
+        good: "日経平均が75日線以上、ポートフォリオが指数に劣後していない。",
+        bad: "日経平均が高値から-10%以上、または75日線-2%以上。",
+        action: "8月決算前の追加は急がず、現金15万円を維持。"
+      },
+      "boj-july": {
+        title: "7/30-7/31 日銀会合",
+        watch: "日銀姿勢、USD/JPY、銀行株、日経平均75日線。",
+        good: "銀行株がTOPIX比で崩れない。為替急変なし。",
+        bad: "急な円高、銀行株がTOPIX比-3%以上。",
+        action: "悪ければMUFG追加を延期。8月決算まで待つ。"
+      },
+      "q1-aug": {
+        title: "8月上旬 4-6月期決算週",
+        watch: "売上YoY、営業利益YoY、通期進捗率、会社予想修正。",
+        good: "営業利益YoYプラス、または会社計画進捗25%以上。下方修正なし。",
+        bad: "下方修正、営業利益YoY-10%以上、通期進捗20%未満。",
+        action: "悪い銘柄は除外。良い銘柄だけ8月中旬に追加。"
+      },
+      "add-aug": {
+        title: "8月中旬 25万円追加",
+        watch: "4-6月期決算で本当に強い銘柄。",
+        good: "営業利益YoYプラス、進捗25%以上、下方修正なし。",
+        bad: "下方修正、営業利益YoY-10%以上、指数に4週間で-3%pt以上負け。",
+        action: "強い銘柄へ25万円追加。弱い銘柄は現金または指数ETFへ。"
+      }
+    };
+
+    const detail = document.getElementById("event-detail");
+    document.querySelectorAll(".cal-event").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = eventData[button.dataset.event];
+        if (!item || !detail) return;
+        detail.innerHTML = `
+          <h3>${item.title}</h3>
+          <div class="event-detail-grid">
+            <div><b>見る数字</b><span>${item.watch}</span></div>
+            <div><b>良い条件</b><span>${item.good}</span></div>
+            <div><b>悪い条件</b><span>${item.bad}</span></div>
+            <div><b>行動</b><span>${item.action}</span></div>
+          </div>
+        `;
+        detail.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+  </script>
+</body>
+</html>
