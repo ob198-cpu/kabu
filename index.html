@@ -409,6 +409,88 @@
       font-size: 13px;
     }
     .risk-rule b { display: block; color: var(--navy); margin-bottom: 5px; }
+    .chain-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+    .chain-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .chain-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #f4f9ff;
+      border-bottom: 1px solid #dce9f6;
+    }
+    .chain-head b { color: var(--navy); font-size: 16px; }
+    .chain-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--orange-bg);
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .chain-body {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+    }
+    .chain-step {
+      position: relative;
+      padding: 13px 14px;
+      border-right: 1px solid var(--line);
+      min-height: 128px;
+    }
+    .chain-step:last-child { border-right: none; }
+    .chain-step::after {
+      content: "→";
+      position: absolute;
+      right: -9px;
+      top: 44px;
+      color: var(--blue);
+      font-weight: 900;
+      z-index: 2;
+    }
+    .chain-step:last-child::after { content: ""; }
+    .chain-step small {
+      display: block;
+      color: var(--muted);
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+    .chain-step span {
+      display: block;
+      font-size: 13px;
+      color: #2f4054;
+    }
+    .number-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .number-chip {
+      border: 1px solid #dce9f6;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 10px;
+      min-height: 80px;
+    }
+    .number-chip small { display: block; color: var(--muted); font-weight: 900; margin-bottom: 4px; }
+    .number-chip b { display: block; color: var(--navy); font-size: 20px; line-height: 1.2; overflow-wrap: anywhere; }
+    .number-chip span { display: block; font-size: 12px; color: var(--muted); margin-top: 4px; }
     .flow {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -887,6 +969,9 @@
       .hero, .viz-grid, .update-grid, .risk-board { grid-template-columns: 1fr; }
       .market-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .risk-rule-grid { grid-template-columns: 1fr; }
+      .chain-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chain-step:nth-child(2) { border-right: none; }
+      .number-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
@@ -923,6 +1008,12 @@
       .grid-3, .grid-2, .decision-grid, .flow, .cards { grid-template-columns: 1fr; }
       .market-strip { grid-template-columns: 1fr; }
       .section-head { align-items: start; flex-direction: column; }
+      .chain-body { grid-template-columns: 1fr; }
+      .chain-step { border-right: none; border-bottom: 1px solid var(--line); }
+      .chain-step:last-child { border-bottom: none; }
+      .chain-step::after { content: "↓"; right: 50%; transform: translateX(50%); top: auto; bottom: -15px; }
+      .chain-step:last-child::after { content: ""; }
+      .number-strip { grid-template-columns: 1fr; }
       .month-board, .scenario-grid { grid-template-columns: 1fr; }
       .event-detail-grid { grid-template-columns: 1fr; }
       main { padding: 12px; }
@@ -964,6 +1055,7 @@
         <a href="#summary">結論</a>
         <a href="#live-data">最新データ</a>
         <a href="#dollar-risk">ドル監視</a>
+        <a href="#association">連想材料</a>
         <a href="#benchmark">合格ライン</a>
         <a href="#flow">買う時期</a>
         <a href="#portfolio">配分</a>
@@ -1105,6 +1197,88 @@
             <div class="risk-rule">
               <b>解除条件</b>
               DXYが3営業日連続で反発、VIX20未満、米10年金利が急低下を止め、日経平均が75日線を回復したら段階的に再開します。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="association">
+        <div class="section-head">
+          <div>
+            <h2>連想材料 ＞ 出来事 ＞ 付随する出来事</h2>
+            <p>ニュースや数値を、どの銘柄・どの行動に結びつけるかを一覧します。</p>
+          </div>
+          <span class="update-pill">ニュースと数値の連想表</span>
+        </div>
+        <div class="panel">
+          <div class="number-strip" id="association-numbers">
+            <div class="number-chip"><small>日経平均</small><b>-</b><span>日本株全体</span></div>
+            <div class="number-chip"><small>NASDAQ</small><b>-</b><span>AI・半導体</span></div>
+            <div class="number-chip"><small>米10年金利</small><b>-</b><span>高PER圧力</span></div>
+            <div class="number-chip"><small>ドル円</small><b>-</b><span>円高・円安</span></div>
+            <div class="number-chip"><small>DXY</small><b>-</b><span>ドル急落予兆</span></div>
+            <div class="number-chip"><small>VIX</small><b>-</b><span>市場ストレス</span></div>
+          </div>
+
+          <div class="chain-grid" style="margin-top:16px">
+            <div class="chain-card">
+              <div class="chain-head"><b>AI・半導体</b><span class="chain-tag">8035 / 6857</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>連想材料</small><span>AI投資、GPU需要、データセンター建設、Nvidia決算、NASDAQの強弱</span></div>
+                <div class="chain-step"><small>出来事</small><span>米ハイテク決算、AI関連CAPEX計画、半導体製造装置の受注、米金利上昇</span></div>
+                <div class="chain-step"><small>付随する出来事</small><span>電力不足、循環取引懸念、顧客集中、米中規制、在庫調整</span></div>
+                <div class="chain-step"><small>見る数値と行動</small><span>NASDAQ5日-5%、米10年4.70%以上、対象株-12%で追加停止。強い時だけ分割追加。</span></div>
+              </div>
+            </div>
+
+            <div class="chain-card">
+              <div class="chain-head"><b>ドル・円・金利</b><span class="chain-tag">日本株全体</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>連想材料</small><span>FOMC、米CPI、米PPI、日銀会合、ドル指数DXY、ドル円</span></div>
+                <div class="chain-step"><small>出来事</small><span>インフレ再加速、利下げ後退、日銀利上げ観測、急な円高、ドル急落</span></div>
+                <div class="chain-step"><small>付随する出来事</small><span>輸出株売り、高PER株売り、銀行株見直し、外国人投資家の日本株売買</span></div>
+                <div class="chain-step"><small>見る数値と行動</small><span>DXY5日-2.5%、ドル円5日-3%、VIX25以上なら新規買い停止。金利上昇なら高PER半分。</span></div>
+              </div>
+            </div>
+
+            <div class="chain-card">
+              <div class="chain-head"><b>医薬・ヘルスケア</b><span class="chain-tag">4519</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>連想材料</small><span>薬価改定、臨床試験、承認、主力薬売上、海外規制</span></div>
+                <div class="chain-step"><small>出来事</small><span>第3相試験結果、FDA/PMDA承認、薬価引き下げ、競合薬登場</span></div>
+                <div class="chain-step"><small>付随する出来事</small><span>主力薬依存の見直し、研究開発費増、為替影響、パイプライン評価変更</span></div>
+                <div class="chain-step"><small>見る数値と行動</small><span>営業利益見通し-10%、決算翌日-8%、試験失敗なら追加停止。イベント前は半分まで。</span></div>
+              </div>
+            </div>
+
+            <div class="chain-card">
+              <div class="chain-head"><b>銀行・金利</b><span class="chain-tag">8306</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>連想材料</small><span>日銀、国内金利、貸出利ざや、与信費用、PBR改善</span></div>
+                <div class="chain-step"><small>出来事</small><span>日銀利上げ、長期金利上昇、円高ショック、企業倒産増加</span></div>
+                <div class="chain-step"><small>付随する出来事</small><span>債券評価損、信用コスト増、配当・自社株買い期待、銀行株物色</span></div>
+                <div class="chain-step"><small>見る数値と行動</small><span>与信費用悪化、円高3%以上、日経75日線割れなら追加延期。緩やかな金利上昇は追い風。</span></div>
+              </div>
+            </div>
+
+            <div class="chain-card">
+              <div class="chain-head"><b>商社・資源・還元</b><span class="chain-tag">8058</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>連想材料</small><span>資源価格、円相場、投資先評価、自社株買い、配当方針</span></div>
+                <div class="chain-step"><small>出来事</small><span>原料炭・LNG・金属価格下落、投資損失、還元強化発表</span></div>
+                <div class="chain-step"><small>付随する出来事</small><span>EPS押し上げ、需給下支え、資源利益減、非資源事業の評価</span></div>
+                <div class="chain-step"><small>見る数値と行動</small><span>通期利益-10%、資源急落、自社株買い終了後75日線割れなら追加停止。</span></div>
+              </div>
+            </div>
+
+            <div class="chain-card">
+              <div class="chain-head"><b>消費・ゲーム・食品</b><span class="chain-tag">7974 / 2802 / 9433</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>連想材料</small><span>Switch 2、ソフト販売、ABF、原材料費、通信料金、配当</span></div>
+                <div class="chain-step"><small>出来事</small><span>新ハード初動、円高、ABF需要鈍化、値上げ浸透、通信規制</span></div>
+                <div class="chain-step"><small>付随する出来事</small><span>材料出尽くし、PER調整、利益率低下、守り枠への資金移動</span></div>
+                <div class="chain-step"><small>見る数値と行動</small><span>任天堂-8%、味の素5,300円以上、KDDIは最大4万円。強弱に応じて攻め枠へ配分。</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1714,6 +1888,7 @@
         alert.innerHTML = `<b>今日の自動判定</b><br>${data.summary || "最新データを確認中です。"}`;
       }
       renderDollarRisk(data.dollarRisk || {});
+      renderAssociationNumbers(data);
     };
 
     const renderDollarRisk = (risk) => {
@@ -1736,6 +1911,32 @@
       signalsEl.innerHTML = (risk.signals || [
         { label: "DXY、ドル円、米10年金利、金、VIXを確認します。", severity: "normal" }
       ]).map((item) => `<li class="${item.severity || ""}">${item.label}</li>`).join("");
+    };
+
+    const renderAssociationNumbers = (data) => {
+      const container = document.getElementById("association-numbers");
+      if (!container) return;
+      const markets = data.markets || [];
+      const findMarket = (symbol) => markets.find((item) => item.symbol === symbol) || {};
+      const items = [
+        { label: "日経平均", symbol: "^N225", sub: "日本株全体", digits: 0 },
+        { label: "NASDAQ", symbol: "^IXIC", sub: "AI・半導体", digits: 2 },
+        { label: "米10年金利", symbol: "^TNX", sub: "高PER圧力", digits: 2 },
+        { label: "ドル円", symbol: "JPY=X", sub: "円高・円安", digits: 2 },
+        { label: "DXY", symbol: "DX-Y.NYB", sub: "ドル急落予兆", digits: 2 },
+        { label: "VIX", symbol: "^VIX", sub: "市場ストレス", digits: 2 }
+      ];
+      container.innerHTML = items.map((item) => {
+        const market = findMarket(item.symbol);
+        const change = formatPercent(market.changePct);
+        return `
+          <div class="number-chip">
+            <small>${item.label}</small>
+            <b>${formatNumber(market.value, item.digits)}</b>
+            <span>${item.sub} / 前日比 ${change}</span>
+          </div>
+        `;
+      }).join("");
     };
 
     const loadMarketUpdate = async () => {
