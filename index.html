@@ -240,6 +240,53 @@
       font-weight: 800;
       white-space: nowrap;
     }
+    .update-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .refresh-button {
+      border: 1px solid #9cc8ec;
+      border-radius: 10px;
+      background: var(--blue);
+      color: #ffffff;
+      min-height: 34px;
+      padding: 7px 11px;
+      font-weight: 900;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .refresh-button:hover { filter: brightness(.95); }
+    .source-card {
+      border: 1px solid #dce9f6;
+      border-radius: 12px;
+      background: #f8fbff;
+      padding: 12px;
+      font-size: 13px;
+      color: #36506a;
+    }
+    .source-card b { color: var(--navy); }
+    .source-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .source-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid #cfe6fb;
+      background: #ffffff;
+      color: var(--navy);
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 12px;
+    }
     .update-panel { display: grid; gap: 16px; }
     .market-strip {
       display: grid;
@@ -976,7 +1023,10 @@
             <h2>最新データ確認</h2>
             <p>株価・指数・為替・米金利を読み込み、ルールに使う数字を更新します。</p>
           </div>
-          <span class="update-pill" id="market-updated">更新確認中</span>
+          <div class="update-actions">
+            <span class="update-pill" id="market-updated">更新確認中</span>
+            <button class="refresh-button" type="button" id="refresh-market-data">データ再読み込み</button>
+          </div>
         </div>
         <div class="panel update-panel">
           <div class="market-strip" id="market-strip" aria-live="polite">
@@ -1004,6 +1054,15 @@
                 <li>このページはJSONを読み込み、数字と判定を表示します。</li>
                 <li>取得に失敗した時は、最後に保存された数字を表示します。</li>
               </ol>
+              <div class="source-card">
+                <b>引用元</b><br>
+                表示データはGitHub ActionsがYahoo FinanceのチャートAPIから取得し、公開リポジトリ内のJSONへ保存したものです。PERなど一部の基準値は本資料のルール用に固定しているため、実売買前は証券会社画面・決算短信・四季報で再確認します。
+                <div class="source-links">
+                  <a href="https://finance.yahoo.com/" target="_blank" rel="noopener">Yahoo Finance</a>
+                  <a href="https://github.com/ob198-cpu/kabu/blob/main/data/market_update.json" target="_blank" rel="noopener">更新JSON</a>
+                  <a href="https://github.com/ob198-cpu/kabu/actions/workflows/update-market-data.yml" target="_blank" rel="noopener">手動更新</a>
+                </div>
+              </div>
               <div class="decision delay" id="market-alert">更新データを確認してから、買い増し条件に合うか判断します。</div>
             </div>
           </div>
@@ -1630,7 +1689,8 @@
       const alert = document.getElementById("market-alert");
       if (!strip || !body) return;
 
-      updated.textContent = data.updatedAt ? `更新: ${data.updatedAt}` : "更新日時なし";
+      const sourceLabel = data.source ? " / Yahoo Finance取得" : "";
+      updated.textContent = data.updatedAt ? `更新: ${data.updatedAt}${sourceLabel}` : "更新日時なし";
       strip.innerHTML = (data.markets || []).map((item) => {
         const direction = Number(item.changePct) >= 0 ? "up" : "down";
         return `
@@ -1681,12 +1741,23 @@
     };
 
     const loadMarketUpdate = async () => {
+      const button = document.getElementById("refresh-market-data");
+      const updated = document.getElementById("market-updated");
+      if (button) {
+        button.disabled = true;
+        button.textContent = "読み込み中";
+      }
+      if (updated) updated.textContent = "更新確認中";
       const paths = ["data/market_update.json", "../data/market_update.json"];
       for (const path of paths) {
         try {
           const response = await fetch(`${path}?v=${Date.now()}`);
           if (!response.ok) continue;
           renderMarketUpdate(await response.json());
+          if (button) {
+            button.disabled = false;
+            button.textContent = "データ再読み込み";
+          }
           return;
         } catch (error) {
           // file:// で開いた時はfetchが失敗することがあるため、固定表示へ進みます。
@@ -1698,9 +1769,14 @@
         stocks: [],
         summary: "自動更新データをまだ取得できません。GitHub Pages上では data/market_update.json を読み込んで表示します。"
       });
+      if (button) {
+        button.disabled = false;
+        button.textContent = "データ再読み込み";
+      }
     };
 
     loadMarketUpdate();
+    document.getElementById("refresh-market-data")?.addEventListener("click", loadMarketUpdate);
 
     const eventData = {
       "cpi-may": {
