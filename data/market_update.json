@@ -1,0 +1,124 @@
+{
+  "updatedAt": "2026-05-13 18:44 JST",
+  "source": "Yahoo Finance chart API via GitHub Actions",
+  "summary": "確認判定が5銘柄あります。高PER・金利・急変動の条件を確認してから買います。",
+  "errors": [],
+  "markets": [
+    {
+      "symbol": "^N225",
+      "name": "日経平均",
+      "value": 63272.11,
+      "changePct": 0.6975063118854491,
+      "digits": 0
+    },
+    {
+      "symbol": "1306.T",
+      "name": "TOPIX ETF",
+      "value": 415.7,
+      "changePct": 2.087426326129666,
+      "digits": 0
+    },
+    {
+      "symbol": "^GSPC",
+      "name": "S&P500",
+      "value": 7400.96,
+      "changePct": 1.9525513760431532,
+      "digits": 2
+    },
+    {
+      "symbol": "^IXIC",
+      "name": "NASDAQ",
+      "value": 26088.203,
+      "changePct": 3.009038491076214,
+      "digits": 2
+    },
+    {
+      "symbol": "JPY=X",
+      "name": "ドル円",
+      "value": 157.886,
+      "changePct": 0.8804661742530643,
+      "digits": 2
+    },
+    {
+      "symbol": "^TNX",
+      "name": "米10年金利",
+      "value": 4.463,
+      "changePct": 2.4563820018365523,
+      "digits": 2
+    }
+  ],
+  "stocks": [
+    {
+      "code": "8035",
+      "symbol": "8035.T",
+      "name": "東京エレクトロン",
+      "price": 51340,
+      "changePct": -0.7347254447022429,
+      "per": 34,
+      "signal": "買い可"
+    },
+    {
+      "code": "6857",
+      "symbol": "6857.T",
+      "name": "アドバンテスト",
+      "price": 28290,
+      "changePct": -4.795557799091368,
+      "per": 58,
+      "signal": "確認"
+    },
+    {
+      "code": "4519",
+      "symbol": "4519.T",
+      "name": "中外製薬",
+      "price": 7805,
+      "changePct": -3.5824583075972827,
+      "per": 31,
+      "signal": "確認"
+    },
+    {
+      "code": "8306",
+      "symbol": "8306.T",
+      "name": "三菱UFJ",
+      "price": 2926.5,
+      "changePct": 2.217953195948306,
+      "per": 12,
+      "signal": "買い可"
+    },
+    {
+      "code": "8058",
+      "symbol": "8058.T",
+      "name": "三菱商事",
+      "price": 5864,
+      "changePct": 8.632826972952945,
+      "per": 11,
+      "signal": "確認"
+    },
+    {
+      "code": "7974",
+      "symbol": "7974.T",
+      "name": "任天堂",
+      "price": 7141,
+      "changePct": -3.5521339816315507,
+      "per": 32,
+      "signal": "確認"
+    },
+    {
+      "code": "9433",
+      "symbol": "9433.T",
+      "name": "KDDI",
+      "price": 2540.5,
+      "changePct": 0.6138613861386139,
+      "per": 14,
+      "signal": "買い可"
+    },
+    {
+      "code": "2802",
+      "symbol": "2802.T",
+      "name": "味の素",
+      "price": 5483,
+      "changePct": 10.588947156111335,
+      "per": 34,
+      "signal": "確認"
+    }
+  ]
+}

@@ -227,6 +227,61 @@
     .kpi .label { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
     .kpi .value { font-size: 30px; font-weight: 800; color: var(--navy); line-height: 1; }
     .kpi .desc { color: var(--muted); font-size: 12px; margin-top: 7px; }
+    .update-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid #cfe6fb;
+      background: #f0f8ff;
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .update-panel { display: grid; gap: 16px; }
+    .market-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .market-tile {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8fbff;
+      min-height: 94px;
+    }
+    .market-tile.loading { grid-column: 1 / -1; color: var(--muted); min-height: auto; }
+    .market-name { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+    .market-value { font-size: 23px; font-weight: 900; color: var(--navy); line-height: 1.1; overflow-wrap: anywhere; }
+    .market-change { font-size: 12px; font-weight: 800; margin-top: 8px; }
+    .market-change.up { color: var(--green); }
+    .market-change.down { color: var(--red); }
+    .update-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .update-box {
+      border: 1px solid #dce9f6;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 14px;
+    }
+    .update-box h3, .update-grid h3 { margin: 0 0 10px; color: var(--navy); font-size: 17px; }
+    .compact-list {
+      margin: 0 0 12px 20px;
+      padding: 0;
+      color: #36506a;
+      font-size: 13px;
+    }
+    .live-table td, .live-table th { white-space: nowrap; }
+    .signal-buy { color: var(--green); font-weight: 900; }
+    .signal-watch { color: var(--orange); font-weight: 900; }
+    .signal-stop { color: var(--red); font-weight: 900; }
     .flow {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -702,7 +757,8 @@
       }
       .nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       main { padding: 18px; }
-      .hero, .viz-grid { grid-template-columns: 1fr; }
+      .hero, .viz-grid, .update-grid { grid-template-columns: 1fr; }
+      .market-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
@@ -737,6 +793,8 @@
       }
       .sidebar-note { display: none; }
       .grid-3, .grid-2, .decision-grid, .flow, .cards { grid-template-columns: 1fr; }
+      .market-strip { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
       .month-board, .scenario-grid { grid-template-columns: 1fr; }
       .event-detail-grid { grid-template-columns: 1fr; }
       main { padding: 12px; }
@@ -776,6 +834,7 @@
       </div>
       <nav class="nav" aria-label="ページ内ナビゲーション">
         <a href="#summary">結論</a>
+        <a href="#live-data">最新データ</a>
         <a href="#benchmark">合格ライン</a>
         <a href="#flow">買う時期</a>
         <a href="#portfolio">配分</a>
@@ -825,6 +884,46 @@
             <div class="label">3か月の相対目標</div>
             <div class="value">+1%pt</div>
             <div class="desc">S&P500投信・日経平均/TOPIXを上回る</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="live-data">
+        <div class="section-head">
+          <div>
+            <h2>最新データ確認</h2>
+            <p>株価・指数・為替・米金利を読み込み、ルールに使う数字を更新します。</p>
+          </div>
+          <span class="update-pill" id="market-updated">更新確認中</span>
+        </div>
+        <div class="panel update-panel">
+          <div class="market-strip" id="market-strip" aria-live="polite">
+            <div class="market-tile loading">データを読み込み中</div>
+          </div>
+          <div class="update-grid">
+            <div>
+              <h3>保有候補の更新値</h3>
+              <div class="table-wrap">
+                <table class="rule-table live-table">
+                  <thead>
+                    <tr><th>銘柄</th><th>価格</th><th>前日比</th><th>PER</th><th>判定</th></tr>
+                  </thead>
+                  <tbody id="stock-live-body">
+                    <tr><td colspan="5">読み込み中</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="update-box">
+              <h3>自動更新の考え方</h3>
+              <ol class="compact-list">
+                <li>GitHub Actionsが定期的に市場データを取得します。</li>
+                <li>取得結果を <b>data/market_update.json</b> に保存します。</li>
+                <li>このページはJSONを読み込み、数字と判定を表示します。</li>
+                <li>取得に失敗した時は、最後に保存された数字を表示します。</li>
+              </ol>
+              <div class="decision delay" id="market-alert">更新データを確認してから、買い増し条件に合うか判断します。</div>
+            </div>
           </div>
         </div>
       </section>
@@ -1267,6 +1366,80 @@
     </main>
   </div>
   <script>
+    const formatNumber = (value, digits = 2) => {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "-";
+      return Number(value).toLocaleString("ja-JP", { maximumFractionDigits: digits });
+    };
+
+    const formatPercent = (value) => {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "-";
+      const num = Number(value);
+      const sign = num > 0 ? "+" : "";
+      return `${sign}${num.toFixed(2)}%`;
+    };
+
+    const signalClass = (signal) => {
+      if (signal === "買い可") return "signal-buy";
+      if (signal === "停止") return "signal-stop";
+      return "signal-watch";
+    };
+
+    const renderMarketUpdate = (data) => {
+      const updated = document.getElementById("market-updated");
+      const strip = document.getElementById("market-strip");
+      const body = document.getElementById("stock-live-body");
+      const alert = document.getElementById("market-alert");
+      if (!strip || !body) return;
+
+      updated.textContent = data.updatedAt ? `更新: ${data.updatedAt}` : "更新日時なし";
+      strip.innerHTML = (data.markets || []).map((item) => {
+        const direction = Number(item.changePct) >= 0 ? "up" : "down";
+        return `
+          <div class="market-tile">
+            <div class="market-name">${item.name}</div>
+            <div class="market-value">${formatNumber(item.value, item.digits ?? 2)}</div>
+            <div class="market-change ${direction}">${formatPercent(item.changePct)}</div>
+          </div>
+        `;
+      }).join("");
+
+      body.innerHTML = (data.stocks || []).map((stock) => `
+        <tr>
+          <td>${stock.code} ${stock.name}</td>
+          <td>${formatNumber(stock.price, 0)}円</td>
+          <td class="${Number(stock.changePct) >= 0 ? "signal-buy" : "signal-stop"}">${formatPercent(stock.changePct)}</td>
+          <td>${stock.per ? `${formatNumber(stock.per, 1)}倍` : "-"}</td>
+          <td class="${signalClass(stock.signal)}">${stock.signal || "確認"}</td>
+        </tr>
+      `).join("");
+
+      if (alert) {
+        alert.innerHTML = `<b>今日の自動判定</b><br>${data.summary || "最新データを確認中です。"}`;
+      }
+    };
+
+    const loadMarketUpdate = async () => {
+      const paths = ["data/market_update.json", "../data/market_update.json"];
+      for (const path of paths) {
+        try {
+          const response = await fetch(`${path}?v=${Date.now()}`);
+          if (!response.ok) continue;
+          renderMarketUpdate(await response.json());
+          return;
+        } catch (error) {
+          // file:// で開いた時はfetchが失敗することがあるため、固定表示へ進みます。
+        }
+      }
+      renderMarketUpdate({
+        updatedAt: "未取得",
+        markets: [{ name: "市場データ", value: null, changePct: null }],
+        stocks: [],
+        summary: "自動更新データをまだ取得できません。GitHub Pages上では data/market_update.json を読み込んで表示します。"
+      });
+    };
+
+    loadMarketUpdate();
+
     const eventData = {
       "cpi-may": {
         title: "5/12 米CPI: すでに発表済み",
