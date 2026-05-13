@@ -282,6 +282,86 @@
     .signal-buy { color: var(--green); font-weight: 900; }
     .signal-watch { color: var(--orange); font-weight: 900; }
     .signal-stop { color: var(--red); font-weight: 900; }
+    .risk-board {
+      display: grid;
+      grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .risk-gauge {
+      border-radius: 14px;
+      border: 1px solid #f1c98f;
+      background: linear-gradient(135deg, #fff9ef, #ffffff);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .risk-level {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid #b8e5cf;
+    }
+    .risk-level.watch { background: var(--orange-bg); color: var(--orange); border-color: #f1c98f; }
+    .risk-level.danger { background: var(--red-bg); color: var(--red); border-color: #f0b8b8; }
+    .risk-score {
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .risk-meter {
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green) 0 35%, var(--orange) 35% 70%, var(--red) 70% 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .risk-meter span {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 20px;
+      border-radius: 999px;
+      background: #172033;
+      left: var(--risk-pos, 0%);
+    }
+    .risk-list {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .risk-list li {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    .risk-list li.watch { border-left-color: var(--orange); }
+    .risk-list li.danger { border-left-color: var(--red); }
+    .risk-rule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .risk-rule {
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fbfdff;
+      padding: 12px;
+      font-size: 13px;
+    }
+    .risk-rule b { display: block; color: var(--navy); margin-bottom: 5px; }
     .flow {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -757,8 +837,9 @@
       }
       .nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       main { padding: 18px; }
-      .hero, .viz-grid, .update-grid { grid-template-columns: 1fr; }
+      .hero, .viz-grid, .update-grid, .risk-board { grid-template-columns: 1fr; }
       .market-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .risk-rule-grid { grid-template-columns: 1fr; }
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
@@ -835,6 +916,7 @@
       <nav class="nav" aria-label="ページ内ナビゲーション">
         <a href="#summary">結論</a>
         <a href="#live-data">最新データ</a>
+        <a href="#dollar-risk">ドル監視</a>
         <a href="#benchmark">合格ライン</a>
         <a href="#flow">買う時期</a>
         <a href="#portfolio">配分</a>
@@ -923,6 +1005,49 @@
                 <li>取得に失敗した時は、最後に保存された数字を表示します。</li>
               </ol>
               <div class="decision delay" id="market-alert">更新データを確認してから、買い増し条件に合うか判断します。</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dollar-risk">
+        <div class="section-head">
+          <div>
+            <h2>ドルがはじける予兆</h2>
+            <p>DXY、ドル円、米金利、金、VIXを組み合わせて、急なドル安・円高ショックを監視します。</p>
+          </div>
+          <span class="update-pill">為替・金利の事故チェック</span>
+        </div>
+        <div class="panel">
+          <div class="risk-board">
+            <div class="risk-gauge">
+              <span class="risk-level" id="dollar-risk-level">確認中</span>
+              <div>
+                <div class="risk-score"><span id="dollar-risk-score">-</span><small>/10</small></div>
+                <p class="muted">スコアが高いほど、ドル安・円高・リスクオフが同時に出ている状態です。</p>
+              </div>
+              <div class="risk-meter" id="dollar-risk-meter" style="--risk-pos:0%"><span></span></div>
+              <div class="decision delay" id="dollar-risk-action">最新データを読み込み、投入額を調整します。</div>
+            </div>
+            <div>
+              <h3>監視する数値</h3>
+              <ul class="risk-list" id="dollar-risk-signals">
+                <li>データを読み込み中</li>
+              </ul>
+            </div>
+          </div>
+          <div class="risk-rule-grid">
+            <div class="risk-rule">
+              <b>警戒 3点以上</b>
+              5月・6月の予定買いは半分にします。半導体、任天堂、味の素など高PER・海外比率が高い銘柄は追加を急ぎません。
+            </div>
+            <div class="risk-rule">
+              <b>危険 6点以上</b>
+              新規買いを停止します。ドル円が3営業日で-3%以上、DXYが5日で-2.5%以上下落、VIX25以上なら現金比率を上げます。
+            </div>
+            <div class="risk-rule">
+              <b>解除条件</b>
+              DXYが3営業日連続で反発、VIX20未満、米10年金利が急低下を止め、日経平均が75日線を回復したら段階的に再開します。
             </div>
           </div>
         </div>
@@ -1530,6 +1655,29 @@
       if (alert) {
         alert.innerHTML = `<b>今日の自動判定</b><br>${data.summary || "最新データを確認中です。"}`;
       }
+      renderDollarRisk(data.dollarRisk || {});
+    };
+
+    const renderDollarRisk = (risk) => {
+      const scoreEl = document.getElementById("dollar-risk-score");
+      const levelEl = document.getElementById("dollar-risk-level");
+      const meterEl = document.getElementById("dollar-risk-meter");
+      const actionEl = document.getElementById("dollar-risk-action");
+      const signalsEl = document.getElementById("dollar-risk-signals");
+      if (!scoreEl || !levelEl || !meterEl || !actionEl || !signalsEl) return;
+
+      const score = Number(risk.score || 0);
+      const level = risk.level || "通常";
+      scoreEl.textContent = String(score);
+      levelEl.textContent = level;
+      levelEl.classList.remove("watch", "danger");
+      if (level === "危険") levelEl.classList.add("danger");
+      if (level === "警戒") levelEl.classList.add("watch");
+      meterEl.style.setProperty("--risk-pos", `${Math.min(100, Math.max(0, score * 10))}%`);
+      actionEl.innerHTML = `<b>行動</b><br>${risk.action || "通常監視。予定買いは他の条件と合わせて判断します。"}`;
+      signalsEl.innerHTML = (risk.signals || [
+        { label: "DXY、ドル円、米10年金利、金、VIXを確認します。", severity: "normal" }
+      ]).map((item) => `<li class="${item.severity || ""}">${item.label}</li>`).join("");
     };
 
     const loadMarketUpdate = async () => {

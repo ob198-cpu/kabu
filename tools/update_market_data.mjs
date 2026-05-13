@@ -6,7 +6,10 @@ const marketItems = [
   { symbol: "^GSPC", name: "S&P500", digits: 2 },
   { symbol: "^IXIC", name: "NASDAQ", digits: 2 },
   { symbol: "JPY=X", name: "ドル円", digits: 2 },
-  { symbol: "^TNX", name: "米10年金利", digits: 2 }
+  { symbol: "^TNX", name: "米10年金利", digits: 2 },
+  { symbol: "DX-Y.NYB", name: "ドル指数DXY", digits: 2 },
+  { symbol: "GC=F", name: "金先物", digits: 1 },
+  { symbol: "^VIX", name: "VIX", digits: 2 }
 ];
 
 const stockItems = [
@@ -21,7 +24,7 @@ const stockItems = [
 ];
 
 const endpoint = (symbol) =>
-  `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=5d&interval=1d`;
+  `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=3mo&interval=1d`;
 
 const toTokyoTime = () =>
   new Intl.DateTimeFormat("ja-JP", {
@@ -53,8 +56,67 @@ async function fetchQuote(item) {
   const changePct = Number.isFinite(price) && Number.isFinite(prev) && prev !== 0
     ? ((price - prev) / prev) * 100
     : null;
+  const closeFromEnd = (daysBack) => closes.length > daysBack ? closes.at(-(daysBack + 1)) : null;
+  const fiveDayBase = closeFromEnd(5);
+  const twentyDayBase = closeFromEnd(20);
+  const change5dPct = Number.isFinite(price) && Number.isFinite(fiveDayBase) && fiveDayBase !== 0
+    ? ((price - fiveDayBase) / fiveDayBase) * 100
+    : null;
+  const change20dPct = Number.isFinite(price) && Number.isFinite(twentyDayBase) && twentyDayBase !== 0
+    ? ((price - twentyDayBase) / twentyDayBase) * 100
+    : null;
 
-  return { ...item, value: price ?? null, price: price ?? null, changePct };
+  return { ...item, value: price ?? null, price: price ?? null, changePct, change5dPct, change20dPct };
+}
+
+function marketValue(markets, symbol, key = "value") {
+  const item = markets.find((market) => market.symbol === symbol);
+  const value = item?.[key];
+  return Number.isFinite(value) ? value : null;
+}
+
+function addRisk(signals, condition, points, label, severity = "watch") {
+  if (!condition) return 0;
+  signals.push({ label, severity });
+  return points;
+}
+
+function buildDollarRisk(markets) {
+  const signals = [];
+  let score = 0;
+  const dxy = marketValue(markets, "DX-Y.NYB");
+  const dxy1d = marketValue(markets, "DX-Y.NYB", "changePct");
+  const dxy5d = marketValue(markets, "DX-Y.NYB", "change5dPct");
+  const dxy20d = marketValue(markets, "DX-Y.NYB", "change20dPct");
+  const usdjpy5d = marketValue(markets, "JPY=X", "change5dPct");
+  const us10y5d = marketValue(markets, "^TNX", "change5dPct");
+  const gold5d = marketValue(markets, "GC=F", "change5dPct");
+  const vix = marketValue(markets, "^VIX");
+  const sp5005d = marketValue(markets, "^GSPC", "change5dPct");
+
+  score += addRisk(signals, dxy !== null && dxy < 100, 1, `DXYが100割れ: ${dxy?.toFixed(2)}。ドルの基調が弱い可能性。`, "watch");
+  score += addRisk(signals, dxy1d !== null && dxy1d <= -1.0, 2, `DXYが1日で${dxy1d.toFixed(2)}%。単日で急落。`, "danger");
+  score += addRisk(signals, dxy5d !== null && dxy5d <= -2.5, 2, `DXYが5営業日で${dxy5d.toFixed(2)}%。ドル売りが連続。`, "danger");
+  score += addRisk(signals, dxy20d !== null && dxy20d <= -5.0, 2, `DXYが20営業日で${dxy20d.toFixed(2)}%。中期のドル安トレンド。`, "danger");
+  score += addRisk(signals, usdjpy5d !== null && usdjpy5d <= -3.0, 1, `ドル円が5営業日で${usdjpy5d.toFixed(2)}%。急な円高で日本株に逆風。`, "watch");
+  score += addRisk(signals, us10y5d !== null && us10y5d <= -8.0, 1, `米10年金利が5営業日で${us10y5d.toFixed(2)}%。景気不安型の金利低下に注意。`, "watch");
+  score += addRisk(signals, gold5d !== null && gold5d >= 3.0, 1, `金が5営業日で+${gold5d.toFixed(2)}%。ドル不信・安全資産買いの可能性。`, "watch");
+  score += addRisk(signals, vix !== null && vix >= 25, 2, `VIXが${vix.toFixed(2)}。市場ストレスが高い。`, "danger");
+  score += addRisk(signals, vix !== null && vix >= 20 && vix < 25, 1, `VIXが${vix.toFixed(2)}。警戒水準。`, "watch");
+  score += addRisk(signals, sp5005d !== null && sp5005d <= -4.0 && dxy5d !== null && dxy5d <= -2.0, 1, `S&P500とドルが同時下落。リスクオフ型のドル売りに注意。`, "danger");
+
+  if (signals.length === 0) {
+    signals.push({ label: "主要なドル急落シグナルは出ていません。通常監視です。", severity: "normal" });
+  }
+
+  const level = score >= 6 ? "危険" : score >= 3 ? "警戒" : "通常";
+  const action = score >= 6
+    ? "新規買いを停止。半導体・任天堂・味の素など高PER/海外比率の高い銘柄は追加せず、現金15万円を維持します。"
+    : score >= 3
+      ? "予定買いを半分に縮小。6月18日以降の35万円追加は、DXY反発とVIX低下を確認してから実行します。"
+      : "予定通り監視継続。ドル急落シグナルが弱ければ、他の条件と合わせて段階投資を検討します。";
+
+  return { score: Math.min(score, 10), level, action, signals };
 }
 
 function decideSignal(stock, markets) {
@@ -114,7 +176,8 @@ const output = {
   source: "Yahoo Finance chart API via GitHub Actions",
   summary,
   errors,
-  markets: markets.map(({ symbol, name, value, changePct, digits }) => ({ symbol, name, value, changePct, digits })),
+  dollarRisk: buildDollarRisk(markets),
+  markets: markets.map(({ symbol, name, value, changePct, change5dPct, change20dPct, digits }) => ({ symbol, name, value, changePct, change5dPct, change20dPct, digits })),
   stocks
 };
 
