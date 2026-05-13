@@ -640,6 +640,25 @@
       font-weight: 800;
       border-bottom: 1px dashed var(--blue);
     }
+    .stock-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .stock-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 9px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--navy);
+      background: #f0f8ff;
+      border: 1px solid #cde2f5;
+    }
     .notes {
       display: grid;
       gap: 10px;
@@ -898,49 +917,49 @@
             <div class="stock-top"><div><div class="ticker">8035</div><h3>東京エレクトロン</h3></div><div class="score">82</div></div>
             <div class="tags"><span class="tag growth">成長</span><span class="tag risk">高値圏</span></div>
             <div class="metric-list"><div><span>PER</span><b>41.35倍</b></div><div><span>Forward PER</span><b>34.22倍</b></div><div><span>配当</span><b>1.53%</b></div></div>
-            <a class="annotation-link" href="#note-semiconductor">注釈: 半導体リスクへ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/8035" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-semiconductor">注釈</a></div>
           </article>
           <article class="stock-card">
             <div class="stock-top"><div><div class="ticker">6857</div><h3>アドバンテスト</h3></div><div class="score">80</div></div>
             <div class="tags"><span class="tag growth">AI</span><span class="tag risk">高PER</span></div>
             <div class="metric-list"><div><span>売上TTM</span><b>+44.7%</b></div><div><span>純利益</span><b>+132.9%</b></div><div><span>PER</span><b>57.89倍</b></div></div>
-            <a class="annotation-link" href="#note-per">注釈: PERの見方へ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/6857" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-per">注釈</a></div>
           </article>
           <article class="stock-card">
             <div class="stock-top"><div><div class="ticker">4519</div><h3>中外製薬</h3></div><div class="score">79</div></div>
             <div class="tags"><span class="tag growth">医薬</span><span class="tag income">分散</span></div>
             <div class="metric-list"><div><span>Q1売上</span><b>+11.5%</b></div><div><span>Core営業利益</span><b>+17.1%</b></div><div><span>Forward PER</span><b>26.04倍</b></div></div>
-            <a class="annotation-link" href="#note-medical">注釈: 医薬リスクへ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/4519" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-medical">注釈</a></div>
           </article>
           <article class="stock-card">
             <div class="stock-top"><div><div class="ticker">8306</div><h3>三菱UFJ</h3></div><div class="score">78</div></div>
             <div class="tags"><span class="tag income">金利</span><span class="tag income">配当</span></div>
             <div class="metric-list"><div><span>Forward PER</span><b>13.95倍</b></div><div><span>配当</span><b>2.64%</b></div><div><span>テーマ</span><b>日銀正常化</b></div></div>
-            <a class="annotation-link" href="#note-rate">注釈: 金利テーマへ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/8306" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-rate">注釈</a></div>
           </article>
           <article class="stock-card">
             <div class="stock-top"><div><div class="ticker">8058</div><h3>三菱商事</h3></div><div class="score">76</div></div>
             <div class="tags"><span class="tag income">還元</span><span class="tag income">商社</span></div>
             <div class="metric-list"><div><span>Forward PER</span><b>17.23倍</b></div><div><span>配当</span><b>2.40%</b></div><div><span>発行株数</span><b>-5.36%</b></div></div>
-            <a class="annotation-link" href="#note-buyback">注釈: 自社株買いへ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/8058" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-buyback">注釈</a></div>
           </article>
           <article class="stock-card">
             <div class="stock-top"><div><div class="ticker">7974</div><h3>任天堂</h3></div><div class="score">74</div></div>
             <div class="tags"><span class="tag watch">周期</span><span class="tag income">配当</span></div>
             <div class="metric-list"><div><span>PER</span><b>21.52倍</b></div><div><span>配当</span><b>2.38%</b></div><div><span>株価位置</span><b>52週安値近辺</b></div></div>
-            <a class="annotation-link" href="#note-nintendo">注釈: ハード周期へ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/7974" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-nintendo">注釈</a></div>
           </article>
           <article class="stock-card">
             <div class="stock-top"><div><div class="ticker">9433</div><h3>KDDI</h3></div><div class="score">70</div></div>
             <div class="tags"><span class="tag income">守り</span><span class="tag income">配当</span></div>
             <div class="metric-list"><div><span>PER</span><b>14.43倍</b></div><div><span>Forward PER</span><b>12.48倍</b></div><div><span>配当</span><b>3.14%</b></div></div>
-            <a class="annotation-link" href="#note-defensive">注釈: 守り枠へ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/9433" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-defensive">注釈</a></div>
           </article>
           <article class="stock-card">
             <div class="stock-top"><div><div class="ticker">2802</div><h3>味の素</h3></div><div class="score">68</div></div>
             <div class="tags"><span class="tag watch">監視</span><span class="tag risk">高PER</span></div>
             <div class="metric-list"><div><span>事業利益予想</span><b>+8.7%</b></div><div><span>ヘルスケア等</span><b>+20.8%</b></div><div><span>予想PER</span><b>約44倍</b></div></div>
-            <a class="annotation-link" href="#note-ajinomoto">注釈: 味の素の注意点へ</a>
+            <div class="stock-links"><a href="https://shikiho.toyokeizai.net/stocks/2802" target="_blank" rel="noopener">四季報</a><a class="annotation-link" href="#note-ajinomoto">注釈</a></div>
           </article>
         </div>
       </section>
