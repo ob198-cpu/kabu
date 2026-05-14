@@ -491,6 +491,115 @@
     .number-chip small { display: block; color: var(--muted); font-weight: 900; margin-bottom: 4px; }
     .number-chip b { display: block; color: var(--navy); font-size: 20px; line-height: 1.2; overflow-wrap: anywhere; }
     .number-chip span { display: block; font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .plan-sheet {
+      border: 2px solid #cfe6fb;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #f8fcff 0%, #ffffff 58%);
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(15, 42, 67, .07);
+    }
+    .plan-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      gap: 18px;
+      padding: 18px;
+      background: #153a5b;
+      color: #ffffff;
+    }
+    .plan-hero h3 { margin: 0 0 8px; font-size: 24px; line-height: 1.25; }
+    .plan-hero p { margin: 0; color: #dbeafe; font-size: 13px; }
+    .plan-badges {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .plan-badge {
+      border: 1px solid #6ea6d1;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .12);
+      padding: 10px;
+    }
+    .plan-badge small { display: block; color: #bfe2ff; font-weight: 900; margin-bottom: 5px; }
+    .plan-badge b { display: block; font-size: 22px; line-height: 1.1; }
+    .plan-body { padding: 16px; display: grid; gap: 14px; }
+    .plan-flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      counter-reset: planstep;
+    }
+    .plan-flow-step {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+      padding: 12px 10px;
+      min-height: 116px;
+    }
+    .plan-flow-step::before {
+      counter-increment: planstep;
+      content: counter(planstep);
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #ffffff;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .plan-flow-step::after {
+      content: "→";
+      position: absolute;
+      right: -11px;
+      top: 48px;
+      color: var(--blue);
+      font-size: 20px;
+      font-weight: 900;
+      z-index: 2;
+    }
+    .plan-flow-step:last-child::after { content: ""; }
+    .plan-flow-step b { display: block; color: var(--navy); margin-bottom: 4px; }
+    .plan-flow-step span { display: block; color: var(--muted); font-size: 12px; }
+    .plan-columns {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .plan-box {
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 13px;
+      background: #ffffff;
+    }
+    .plan-box.source { border-top: 5px solid var(--blue); }
+    .plan-box.model { border-top: 5px solid var(--green); }
+    .plan-box.risk { border-top: 5px solid var(--red); }
+    .plan-box.delivery { border-top: 5px solid var(--orange); }
+    .plan-box b { display: block; color: var(--navy); margin-bottom: 8px; }
+    .plan-box ul { margin: 0; padding-left: 18px; color: #36506a; font-size: 13px; }
+    .plan-mini-title {
+      margin: 4px 0 8px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+    .detail-sheet {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .detail-sheet summary {
+      cursor: pointer;
+      padding: 13px 16px;
+      background: #f4f9ff;
+      color: var(--navy);
+      font-weight: 900;
+      border-bottom: 1px solid #dce9f6;
+    }
+    .detail-sheet-inner { padding: 16px; }
     .flow {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -972,6 +1081,8 @@
       .chain-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .chain-step:nth-child(2) { border-right: none; }
       .number-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .plan-hero, .plan-columns { grid-template-columns: 1fr; }
+      .plan-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
@@ -1014,6 +1125,9 @@
       .chain-step::after { content: "↓"; right: 50%; transform: translateX(50%); top: auto; bottom: -15px; }
       .chain-step:last-child::after { content: ""; }
       .number-strip { grid-template-columns: 1fr; }
+      .plan-badges, .plan-flow { grid-template-columns: 1fr; }
+      .plan-flow-step::after { content: "↓"; right: 50%; transform: translateX(50%); top: auto; bottom: -18px; }
+      .plan-flow-step:last-child::after { content: ""; }
       .month-board, .scenario-grid { grid-template-columns: 1fr; }
       .event-detail-grid { grid-template-columns: 1fr; }
       main { padding: 12px; }
@@ -1294,6 +1408,79 @@
           <span class="update-pill">高信頼性・イベント連鎖型 投資分析システム</span>
         </div>
         <div class="panel">
+          <div class="plan-sheet">
+            <div class="plan-hero">
+              <div>
+                <h3>高信頼性・イベント連鎖型 投資分析システム 開発シート</h3>
+                <p>AIで市場データ・開示・決算・ニュースを集め、スコア化、誤差記録、改善まで回す運用型モデルです。納品物は「見せるレポート」だけでなく、更新できる分析基盤まで含めます。</p>
+              </div>
+              <div class="plan-badges">
+                <div class="plan-badge"><small>簡易版</small><b>2〜3週</b></div>
+                <div class="plan-badge"><small>実用β版</small><b>5〜7週</b></div>
+                <div class="plan-badge"><small>本格運用版</small><b>10〜12週</b></div>
+              </div>
+            </div>
+            <div class="plan-body">
+              <h3 class="plan-mini-title">開発の流れ</h3>
+              <div class="plan-flow">
+                <div class="plan-flow-step"><b>要件定義</b><span>対象銘柄、指標、出力、納品範囲を決定</span></div>
+                <div class="plan-flow-step"><b>データ取得</b><span>Yahoo、TDnet、EDINET、FRED、IRを接続</span></div>
+                <div class="plan-flow-step"><b>スコア化</b><span>企業力、買い時、決算、イベント、リスクを点数化</span></div>
+                <div class="plan-flow-step"><b>画面化</b><span>顧客向けHTML、グラフ、注釈、カレンダーを作成</span></div>
+                <div class="plan-flow-step"><b>検証</b><span>予測と実績、MDD、勝率、誤差原因を記録</span></div>
+                <div class="plan-flow-step"><b>納品運用</b><span>日次更新、月次改善、運用マニュアルを提供</span></div>
+              </div>
+
+              <h3 class="plan-mini-title">納品範囲</h3>
+              <div class="plan-columns">
+                <div class="plan-box source">
+                  <b>データ収集</b>
+                  <ul>
+                    <li>株価・出来高・指数</li>
+                    <li>決算・適時開示</li>
+                    <li>金利・CPI・VIX・DXY</li>
+                  </ul>
+                </div>
+                <div class="plan-box model">
+                  <b>モデル化</b>
+                  <ul>
+                    <li>0〜100点へ正規化</li>
+                    <li>イベント連鎖スコア</li>
+                    <li>決算前後スコア</li>
+                  </ul>
+                </div>
+                <div class="plan-box risk">
+                  <b>安全設計</b>
+                  <ul>
+                    <li>KillSwitch</li>
+                    <li>損失・誤差ログ</li>
+                    <li>月1回の重み調整</li>
+                  </ul>
+                </div>
+                <div class="plan-box delivery">
+                  <b>成果物</b>
+                  <ul>
+                    <li>顧客向けHTML</li>
+                    <li>更新JSON・DB表</li>
+                    <li>運用マニュアル</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="rule-table">
+                  <tr><th>信頼性</th><th>主な取得元</th><th>使う場面</th><th>扱い</th></tr>
+                  <tr><td>A</td><td>TDnet / EDINET / JPX / FRED / SEC / 企業IR</td><td>決算・開示・マクロの根拠</td><td>正式根拠として採用</td></tr>
+                  <tr><td>B</td><td>Yahoo Finance / FMP / TIKR / GuruFocus</td><td>株価・出来高・財務補助</td><td>自動計算に使用し、重要判断は公式情報で確認</td></tr>
+                  <tr><td>C</td><td>ニュース / RSS / 手動DB / スクショ</td><td>イベント連鎖・市場心理</td><td>補助材料。単独では売買判断に使わない</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <details class="detail-sheet">
+            <summary>詳細資料を開く: 比較表・データ取得元・工程表</summary>
+            <div class="detail-sheet-inner">
           <div class="grid-3">
             <div class="kpi">
               <div class="label">簡易版</div>
@@ -1438,6 +1625,8 @@
               <tr><td>8. 納品</td><td>2〜3日</td><td>マニュアル、引き継ぎ、最終調整</td><td>納品版</td></tr>
             </table>
           </div>
+            </div>
+          </details>
         </div>
       </section>
 
