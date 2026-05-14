@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>暫定プロトタイプ 点数計算サンプル</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5f7085;
+      --line: #d8e1ec;
+      --bg: #f4f8fb;
+      --panel: #ffffff;
+      --navy: #14395b;
+      --blue: #1f6f8b;
+      --green: #17815a;
+      --orange: #c76a13;
+      --red: #b83232;
+      --sky: #e8f4ff;
+      --green-bg: #edf9f3;
+      --orange-bg: #fff4e5;
+      --red-bg: #fff0f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .back, .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid #cfe6fb;
+      background: #ffffff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .hero {
+      background: var(--navy);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .85fr);
+      gap: 18px;
+      align-items: center;
+      box-shadow: 0 12px 30px rgba(15, 42, 67, .12);
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+    }
+    .hero p { margin: 0; color: #dbeafe; }
+    .formula {
+      background: #ffffff;
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 15px;
+      border: 1px solid #9cc8ec;
+    }
+    .formula b { color: var(--navy); display: block; margin-bottom: 7px; }
+    .formula code {
+      display: block;
+      white-space: normal;
+      color: #285844;
+      background: var(--green-bg);
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 900;
+    }
+    section { margin-top: 18px; }
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.25;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 8px 22px rgba(15, 42, 67, .06);
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 66px minmax(0, 1fr) 66px minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .flow-card {
+      background: #ffffff;
+      border: 2px solid #dce9f6;
+      border-radius: 16px;
+      padding: 14px;
+      min-height: 164px;
+    }
+    .flow-card.input { border-top: 7px solid var(--blue); }
+    .flow-card.calc { border-top: 7px solid var(--green); }
+    .flow-card.output { border-top: 7px solid var(--orange); }
+    .flow-card b {
+      display: block;
+      color: var(--navy);
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+    .arrow {
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      font-size: 34px;
+      font-weight: 900;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: #ffffff;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #edf6ff;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+    tr:nth-child(even) td { background: #fbfdff; }
+    .table-wrap { overflow-x: auto; }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .score-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+      background: #ffffff;
+    }
+    .score-card.best { border: 2px solid #b8e5cf; background: #fbfffd; }
+    .score-card h3 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 20px;
+    }
+    .big-score {
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--blue);
+      margin: 0 0 8px;
+    }
+    .judgement {
+      display: inline-flex;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 13px;
+      background: var(--orange-bg);
+      color: var(--orange);
+      border: 1px solid #f1c98f;
+      margin-bottom: 10px;
+    }
+    .judgement.buy { background: var(--green-bg); color: var(--green); border-color: #b8e5cf; }
+    .judgement.wait { background: var(--red-bg); color: var(--red); border-color: #f0b8b8; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 78px 1fr 42px;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+      margin: 6px 0;
+    }
+    .bar {
+      height: 9px;
+      background: #e6edf5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      width: var(--w);
+      background: var(--blue);
+      border-radius: 999px;
+    }
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .note {
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 13px;
+      border-top: 6px solid var(--orange);
+    }
+    .note b { display: block; color: var(--navy); margin-bottom: 6px; }
+    .note p { margin: 0; color: #36506a; font-size: 13px; }
+    .notice {
+      border-left: 6px solid var(--orange);
+      background: var(--orange-bg);
+      border-radius: 12px;
+      padding: 12px;
+      color: #70400c;
+      font-size: 13px;
+    }
+    @media (max-width: 900px) {
+      .hero, .flow, .score-grid, .notes { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); min-height: 42px; }
+      .page { padding: 12px; }
+      .section-title { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back" href="development_plan.html">開発計画へ戻る</a>
+      <span class="pill">暫定プロトタイプ</span>
+    </div>
+
+    <section class="hero">
+      <div>
+        <h1>データ取得 → 数式処理 → 点数出力</h1>
+        <p>実データ連携前の暫定サンプルです。仮の市場データと銘柄データを使い、同じ数式で3銘柄を採点し、買い候補・分割候補・様子見を出します。</p>
+      </div>
+      <div class="formula">
+        <b>今回使う暫定式</b>
+        <code>総合点 = 0.25企業力 + 0.20買い時 + 0.20イベント + 0.20決算 + 0.15市場 - リスク</code>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>処理の流れ</h2>
+        <span class="pill">まずは見本データで動かす</span>
+      </div>
+      <div class="flow">
+        <div class="flow-card input">
+          <b>1. データ取得</b>
+          <div class="table-wrap">
+            <table>
+              <tr><th>項目</th><th>値</th></tr>
+              <tr><td>NASDAQ 5日</td><td>+3.0%</td></tr>
+              <tr><td>米10年金利</td><td>4.46%</td></tr>
+              <tr><td>VIX</td><td>17.9</td></tr>
+              <tr><td>DXY</td><td>98.6</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-card calc">
+          <b>2. 数式で処理</b>
+          <p>各項目を0〜100点に変換し、重みを掛けます。危険条件に当たる場合は、総合点からリスク点を引きます。</p>
+          <div class="notice">例: VIX25以上、NASDAQ5日-5%、米10年4.70%以上なら買い停止または減点。</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-card output">
+          <b>3. 点数アウトプット</b>
+          <p>点数、判定、理由、次の行動を表示します。顧客説明では点数だけでなく、なぜその点数かを見せます。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>サンプル入力データ</h2>
+        <span class="pill">仮データ</span>
+      </div>
+      <div class="table-wrap">
+        <table id="input-table">
+          <tr><th>銘柄</th><th>企業力</th><th>買い時</th><th>イベント</th><th>決算</th><th>市場</th><th>リスク</th><th>主な理由</th></tr>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>点数アウトプット</h2>
+        <span class="pill">自動計算結果</span>
+      </div>
+      <div class="score-grid" id="score-grid"></div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>課題抽出</h2>
+        <span class="pill">暫定版で足りないもの</span>
+      </div>
+      <div class="notes">
+        <div class="note">
+          <b>課題1: 決算データが薄い</b>
+          <p>EPS予想、売上予想、会社予想修正、説明会コメントまで入れないと決算スコアの根拠が弱いです。</p>
+        </div>
+        <div class="note">
+          <b>課題2: イベント適合度が仮</b>
+          <p>AIや電力需要が、その会社の売上・利益に何%効くかを売上構成で確認する必要があります。</p>
+        </div>
+        <div class="note">
+          <b>課題3: バックテスト未実施</b>
+          <p>この点数で過去に本当に勝てたか、最大下落率はどれくらいかを検証する必要があります。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>改善プラン</h2>
+        <span class="pill">次の工程</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>工程</th><th>期間</th><th>改善内容</th><th>成果物</th></tr>
+          <tr><td>第1段階</td><td>1週</td><td>Yahoo Financeから株価・指数・為替を自動取得</td><td>暫定スコア表</td></tr>
+          <tr><td>第2段階</td><td>2〜3週</td><td>TDnet、EDINET、IRで決算・開示を追加</td><td>データ表</td></tr>
+          <tr><td>第3段階</td><td>5〜7週</td><td>決算スコア、イベント連鎖、誤差ログを実装</td><td>実用β版</td></tr>
+          <tr><td>第4段階</td><td>10〜12週</td><td>バックテスト、重み調整、運用マニュアル作成</td><td>本格運用版</td></tr>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const sampleRows = [
+      {
+        symbol: "TSMC",
+        company: 86,
+        timing: 74,
+        event: 92,
+        earnings: 84,
+        market: 70,
+        risk: 0,
+        reason: "AI半導体製造需要が強く、複数顧客に乗れる"
+      },
+      {
+        symbol: "NVIDIA",
+        company: 90,
+        timing: 68,
+        event: 100,
+        earnings: 88,
+        market: 70,
+        risk: 8,
+        reason: "AI需要の中心だが高PERと期待先行を減点"
+      },
+      {
+        symbol: "Vertiv",
+        company: 74,
+        timing: 66,
+        event: 88,
+        earnings: 76,
+        market: 70,
+        risk: 8,
+        reason: "電力・冷却インフラ需要は強いが高バリュエーション"
+      }
+    ];
+
+    const calcScore = (row) =>
+      (0.25 * row.company) +
+      (0.20 * row.timing) +
+      (0.20 * row.event) +
+      (0.20 * row.earnings) +
+      (0.15 * row.market) -
+      row.risk;
+
+    const judge = (score) => {
+      if (score >= 80) return { text: "買い候補", cls: "buy" };
+      if (score >= 70) return { text: "分割候補", cls: "" };
+      if (score >= 60) return { text: "様子見", cls: "wait" };
+      return { text: "見送り", cls: "wait" };
+    };
+
+    const inputTable = document.getElementById("input-table");
+    const scoreGrid = document.getElementById("score-grid");
+    const rows = sampleRows
+      .map((row) => ({ ...row, score: calcScore(row) }))
+      .sort((a, b) => b.score - a.score);
+
+    inputTable.innerHTML += rows.map((row) => `
+      <tr>
+        <td>${row.symbol}</td>
+        <td>${row.company}</td>
+        <td>${row.timing}</td>
+        <td>${row.event}</td>
+        <td>${row.earnings}</td>
+        <td>${row.market}</td>
+        <td>-${row.risk}</td>
+        <td>${row.reason}</td>
+      </tr>
+    `).join("");
+
+    scoreGrid.innerHTML = rows.map((row, index) => {
+      const judgement = judge(row.score);
+      return `
+        <div class="score-card ${index === 0 ? "best" : ""}">
+          <h3>${index + 1}位 ${row.symbol}</h3>
+          <div class="big-score">${row.score.toFixed(1)}</div>
+          <div class="judgement ${judgement.cls}">${judgement.text}</div>
+          ${[
+            ["企業力", row.company],
+            ["買い時", row.timing],
+            ["イベント", row.event],
+            ["決算", row.earnings],
+            ["市場", row.market]
+          ].map(([label, value]) => `
+            <div class="bar-row">
+              <span>${label}</span>
+              <div class="bar"><span style="--w:${value}%"></span></div>
+              <strong>${value}</strong>
+            </div>
+          `).join("")}
+          <div class="bar-row">
+            <span>リスク</span>
+            <div class="bar"><span style="--w:${row.risk * 4}%; background: var(--red)"></span></div>
+            <strong>-${row.risk}</strong>
+          </div>
+        </div>
+      `;
+    }).join("");
+  </script>
+</body>
+</html>
