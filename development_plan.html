@@ -151,6 +151,102 @@
       margin-bottom: 8px;
     }
     .big-card p { margin: 0; color: #36506a; font-size: 14px; }
+    .purpose-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .8fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .purpose-main {
+      border: 2px solid #cfe6fb;
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 18px;
+    }
+    .purpose-main b {
+      display: block;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .purpose-main p { margin: 0; color: #36506a; }
+    .answer-box {
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--green-bg);
+      border: 2px solid #b8e5cf;
+    }
+    .answer-box b { display: block; color: var(--green); font-size: 22px; margin-bottom: 8px; }
+    .answer-box p { margin: 0; color: #285844; }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .feature-card {
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 14px;
+      min-height: 146px;
+    }
+    .feature-card small {
+      display: inline-flex;
+      min-height: 26px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--sky);
+      color: var(--blue);
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .feature-card b { display: block; color: var(--navy); margin-bottom: 6px; }
+    .feature-card span { display: block; color: var(--muted); font-size: 13px; }
+    .mock-screen {
+      border: 2px solid #dce9f6;
+      border-radius: 18px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .mock-top {
+      background: #153a5b;
+      color: #ffffff;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .mock-top b { font-size: 16px; }
+    .mock-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 14px;
+    }
+    .mock-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+    }
+    .mock-card small { display: block; color: var(--muted); font-weight: 900; }
+    .mock-card b { display: block; color: var(--navy); font-size: 22px; margin: 4px 0; }
+    .mock-card span { color: #36506a; font-size: 13px; }
+    .use-case {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .use-card {
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 15px;
+    }
+    .use-card b { display: block; color: var(--navy); margin-bottom: 7px; font-size: 18px; }
+    .use-card p { margin: 0; color: #36506a; font-size: 13px; }
     .flow {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -250,7 +346,7 @@
       font-size: 13px;
     }
     @media (max-width: 980px) {
-      .hero, .big-grid, .timeline, .two-col { grid-template-columns: 1fr; }
+      .hero, .big-grid, .timeline, .two-col, .purpose-grid, .feature-grid, .mock-body, .use-case { grid-template-columns: 1fr; }
       .flow { grid-template-columns: 1fr; }
       .step::after {
         content: "↓";
@@ -274,20 +370,77 @@
 
     <section class="hero">
       <div>
-        <h1>投資分析システム<br>開発計画</h1>
-        <p>難しい投資モデルを、毎日更新できる「見える分析システム」にします。目的は、売買候補、理由、リスク、次の行動を数字で説明できる状態にすることです。</p>
+        <h1>株を選ぶ理由と<br>買うタイミングを<br>数字で出すシステム</h1>
+        <p>このシステムは、株価・決算・金利・ニュースを集めて、どの銘柄を買う候補にするか、いつ買うか、いくら入れるか、危険ならなぜ止めるかを表示します。</p>
       </div>
       <div class="hero-result">
-        <div class="result-card"><b>入力</b><span>株価、決算、金利、ニュース、イベント</span></div>
-        <div class="result-card"><b>計算</b><span>AIとルールでスコア化、危険時は停止</span></div>
-        <div class="result-card"><b>出力</b><span>買う、待つ、見送る、いくら入れる</span></div>
+        <div class="result-card"><b>何を</b><span>株価、決算、金利、ニュース、イベントを毎日確認</span></div>
+        <div class="result-card"><b>どう</b><span>AIとルールで点数化し、危険な時は買い停止</span></div>
+        <div class="result-card"><b>答え</b><span>買う、待つ、見送る、投入額、理由を表示</span></div>
       </div>
     </section>
 
     <section>
       <div class="section-title">
-        <h2>まず何を作るのか</h2>
-        <span class="pill">目的を3つに整理</span>
+        <h2>これは何をするシステムか</h2>
+        <span class="pill">一言で説明</span>
+      </div>
+      <div class="purpose-grid">
+        <div class="purpose-main">
+          <b>投資判断の「理由」を自動で集め、数字で説明するシステムです。</b>
+          <p>人がニュースや決算を見て悩む部分を、データ取得、スコア計算、リスク判定、記録まで一つの流れにします。売買そのものを勝手に行うものではなく、判断材料を整理して候補と理由を出す仕組みです。</p>
+        </div>
+        <div class="answer-box">
+          <b>最終的に出る答え</b>
+          <p>「この銘柄は買い候補」「今は待つ」「決算後まで見送り」「予定額の25%だけ」「VIXが高いので停止」など、次の行動を文章と数字で表示します。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>主な機能</h2>
+        <span class="pill">できること</span>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card"><small>機能1</small><b>銘柄ランキング</b><span>企業力、買い時、決算、イベント、リスクを点数化し、候補銘柄を並べます。</span></div>
+        <div class="feature-card"><small>機能2</small><b>買い時判定</b><span>移動平均、出来高、下落率、VIX、金利を見て、今買えるかを判定します。</span></div>
+        <div class="feature-card"><small>機能3</small><b>イベント連鎖</b><span>AI、電力、防災、円安、金利などで、どこへ資金が流れるかを整理します。</span></div>
+        <div class="feature-card"><small>機能4</small><b>危険時の停止</b><span>VIX上昇、NASDAQ急落、金利急騰、決算事故なら、スコアが高くても買いを止めます。</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>画面で見えるもの</h2>
+        <span class="pill">出力イメージ</span>
+      </div>
+      <div class="mock-screen">
+        <div class="mock-top"><b>今日の投資判断</b><span>更新: 自動取得データ反映</span></div>
+        <div class="mock-body">
+          <div class="mock-card"><small>買い候補</small><b>TSMC</b><span>総合82点。AI製造需要が強く、財務も安定。</span></div>
+          <div class="mock-card"><small>行動</small><b>分割買い</b><span>予定額の25%。決算後に追加判断。</span></div>
+          <div class="mock-card"><small>停止条件</small><b>VIX25</b><span>NASDAQ5日-5%、米10年4.70%以上でも停止。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>使い方</h2>
+        <span class="pill">担当者の流れ</span>
+      </div>
+      <div class="use-case">
+        <div class="use-card"><b>1. 朝に確認</b><p>最新データ欄で、日経平均、NASDAQ、VIX、DXY、米金利、候補銘柄の変化を確認します。</p></div>
+        <div class="use-card"><b>2. 候補を見る</b><p>ランキングと連想材料を見て、どの銘柄に資金が流れやすいかを確認します。</p></div>
+        <div class="use-card"><b>3. 行動を決める</b><p>買い、分割、待ち、停止の判定を見て、顧客説明や社内判断に使います。</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>作る中身</h2>
+        <span class="pill">3つに整理</span>
       </div>
       <div class="big-grid">
         <div class="big-card blue">
