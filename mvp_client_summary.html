@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>株式購入判断補助システム MVP概要</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5f7085;
+      --line: #d8e1ec;
+      --bg: #f4f8fb;
+      --navy: #14395b;
+      --blue: #1f6f8b;
+      --green: #17815a;
+      --orange: #c76a13;
+      --red: #b83232;
+      --panel: #ffffff;
+      --sky: #e8f4ff;
+      --green-bg: #edf9f3;
+      --orange-bg: #fff4e5;
+      --red-bg: #fff0f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 18px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 330px;
+      gap: 18px;
+      align-items: center;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 38px;
+      line-height: 1.15;
+    }
+    .hero p { margin: 0; color: #dbeafe; }
+    .hero-box {
+      background: #fff;
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .hero-box b {
+      display: block;
+      color: var(--blue);
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .hero-box span { color: var(--muted); font-size: 14px; }
+    section { margin-top: 16px; }
+    h2 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 22px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 7px solid var(--blue);
+      border-radius: 14px;
+      padding: 15px;
+      min-height: 148px;
+    }
+    .card.green { border-top-color: var(--green); }
+    .card.orange { border-top-color: var(--orange); }
+    .card.red { border-top-color: var(--red); }
+    .card b {
+      display: block;
+      color: var(--navy);
+      font-size: 19px;
+      margin-bottom: 7px;
+    }
+    .card p { margin: 0; color: #36506a; font-size: 14px; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th {
+      background: var(--sky);
+      color: var(--navy);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .tag {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .tag.good { background: var(--green-bg); color: var(--green); }
+    .tag.warn { background: var(--orange-bg); color: var(--orange); }
+    .tag.stop { background: var(--red-bg); color: var(--red); }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    .step {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+      min-height: 120px;
+    }
+    .step b { display: block; color: var(--blue); font-size: 22px; }
+    .step span { display: block; color: var(--muted); font-size: 13px; }
+    .notice {
+      background: var(--orange-bg);
+      border: 2px solid #ffd59a;
+      color: #68420c;
+      border-radius: 14px;
+      padding: 13px;
+      font-size: 14px;
+    }
+    .footer {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+    @media (max-width: 900px) {
+      .hero, .grid-3 { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr 1fr; }
+    }
+    @media print {
+      @page { size: A4 landscape; margin: 8mm; }
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <h1>株式購入判断補助システム MVP概要</h1>
+        <p>
+          実データを取得し、表に保存し、定義済みの数式でスコアを出し、購入前チェックと予測誤差記録まで行う初期版です。投資判断をAIに丸投げするものではなく、判断材料を数値化して確認しやすくするためのシステムです。
+        </p>
+      </div>
+      <div class="hero-box">
+        <b>MVP</b>
+        <span>5月末までに仮数値、6月上旬に毎日検証、6月下旬に条件付き少額NISAテストを想定</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>納品物</h2>
+      <div class="grid-3">
+        <article class="card green">
+          <b>Excelブック</b>
+          <p>株価、出来高、市場データ、財務一部、スコア、購入前チェック、予測ログ、実績比較を保存します。</p>
+        </article>
+        <article class="card">
+          <b>更新スクリプト</b>
+          <p>日次でデータ取得、スコア計算、履歴保存、公開用コピーを実行します。</p>
+        </article>
+        <article class="card orange">
+          <b>運用手順書</b>
+          <p>毎日何を確認し、いつ買わず、いつ少額テストに進むかを明文化します。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>処理の流れ</h2>
+      <div class="flow">
+        <div class="step"><b>1</b><span>データ取得</span></div>
+        <div class="step"><b>2</b><span>表に保存</span></div>
+        <div class="step"><b>3</b><span>数式で計算</span></div>
+        <div class="step"><b>4</b><span>点数化</span></div>
+        <div class="step"><b>5</b><span>購入前チェック</span></div>
+        <div class="step"><b>6</b><span>予測と実績を比較</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>現段階でできること・できないこと</h2>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>区分</th>
+              <th>内容</th>
+              <th>状態</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="tag good">できる</span></td><td>株価、出来高、指数、為替、金利の取得</td><td>実装済み</td></tr>
+            <tr><td><span class="tag good">できる</span></td><td>移動平均、騰落率、出来高倍率、リスク点の計算</td><td>実装済み</td></tr>
+            <tr><td><span class="tag good">できる</span></td><td>PER/PBR/EPSの一部取得とスコア反映</td><td>実装済み。ただし取得不能項目あり</td></tr>
+            <tr><td><span class="tag good">できる</span></td><td>予測ログと後日実績比較の記録</td><td>実装済み。検証は翌日以降</td></tr>
+            <tr><td><span class="tag warn">一部</span></td><td>公式決算確認後の補正</td><td>三菱商事、味の素から開始</td></tr>
+            <tr><td><span class="tag stop">未対応</span></td><td>売上成長率、営業利益成長率、下方修正の完全自動反映</td><td>次工程</td></tr>
+            <tr><td><span class="tag stop">しない</span></td><td>自動売買、利益保証、買い推奨の断定</td><td>対象外</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>現時点の使い方</h2>
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>用途</th>
+              <th>使い方</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>銘柄選び</td><td>スコア上位を「買う銘柄」ではなく「詳しく調べる銘柄」として扱います。</td></tr>
+            <tr><td>購入判断</td><td>CPI、FOMC、日銀、決算確認を通過するまで実購入には使いません。</td></tr>
+            <tr><td>NISAテスト</td><td>6月22日以降、条件を満たす場合のみ総資金の5〜10%で少額テストします。</td></tr>
+            <tr><td>改善</td><td>予測ログと実績比較を蓄積し、外れた理由を記録して配点を修正します。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="notice">
+        重要: 現段階のスコアは候補抽出用です。購入判断には、最新決算、会社予想、イベント通過、市場急変の有無を必ず確認します。
+      </div>
+    </section>
+
+    <p class="footer">株式購入判断補助システム MVP概要 / 2026年5月14日</p>
+  </main>
+</body>
+</html>
