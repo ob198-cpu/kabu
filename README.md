@@ -3,6 +3,7 @@
 顧客説明用のHTMLサイトです。
 
 - `index.html`: NISA日本株モデルポートフォリオの顧客向けサイト
+- `development_plan.html`: 投資分析システム開発計画の1枚説明シート
 
 内容:
 
