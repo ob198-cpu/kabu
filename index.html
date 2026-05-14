@@ -1056,6 +1056,7 @@
         <a href="#live-data">最新データ</a>
         <a href="#dollar-risk">ドル監視</a>
         <a href="#association">連想材料</a>
+        <a href="#development-plan">開発計画</a>
         <a href="#benchmark">合格ライン</a>
         <a href="#flow">買う時期</a>
         <a href="#portfolio">配分</a>
@@ -1280,6 +1281,100 @@
                 <div class="chain-step"><small>見る数値と行動</small><span>任天堂-8%、味の素5,300円以上、KDDIは最大4万円。強弱に応じて攻め枠へ配分。</span></div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="development-plan">
+        <div class="section-head">
+          <div>
+            <h2>開発計画</h2>
+            <p>モデルをクライアント納品用に運営するための、データ取得・検証・工程・納期です。</p>
+          </div>
+          <span class="update-pill">高信頼性・イベント連鎖型 投資分析システム</span>
+        </div>
+        <div class="panel">
+          <div class="grid-3">
+            <div class="kpi">
+              <div class="label">簡易版</div>
+              <div class="value">2〜3週</div>
+              <div class="desc">株価・指数・基本スコア・HTMLレポート</div>
+            </div>
+            <div class="kpi">
+              <div class="label">実用β版</div>
+              <div class="value">5〜7週</div>
+              <div class="desc">決算・イベント・誤差記録まで運用</div>
+            </div>
+            <div class="kpi">
+              <div class="label">本格運用版</div>
+              <div class="value">10〜12週</div>
+              <div class="desc">バックテスト・自動更新・運用マニュアル</div>
+            </div>
+          </div>
+
+          <div class="risk-rule-grid">
+            <div class="risk-rule">
+              <b>モデル改善方針</b>
+              企業力、買い時、イベント連鎖、決算、市場環境、リスク制御を0〜100点に正規化し、掛け算ではなく加重平均で最終スコアを出します。
+            </div>
+            <div class="risk-rule">
+              <b>運営方法</b>
+              AIで株価、開示、決算、マクロ、ニュースを収集し、売買候補、見送り候補、警戒銘柄、リスクアラートを毎日更新します。
+            </div>
+            <div class="risk-rule">
+              <b>誤差修正</b>
+              予測と実績を記録し、外れた理由を金利、決算、為替、過熱、イベント誤認に分類。月1回だけ重みを見直します。
+            </div>
+          </div>
+
+          <div class="table-wrap" style="margin-top:16px">
+            <table class="rule-table">
+              <tr><th>データ</th><th>取得元</th><th>信頼性</th><th>用途</th></tr>
+              <tr><td>日本株適時開示</td><td>TDnet / JPX</td><td>A</td><td>決算短信、業績修正、自社株買い、重要開示</td></tr>
+              <tr><td>有価証券報告書</td><td>EDINET API</td><td>A</td><td>売上、利益、事業リスク、財務の正式確認</td></tr>
+              <tr><td>市場統計</td><td>JPX統計</td><td>A</td><td>空売り、信用、売買代金、市場全体の確認</td></tr>
+              <tr><td>米マクロ</td><td>FRED API</td><td>A</td><td>米10年金利、CPI、失業率、景気モード判定</td></tr>
+              <tr><td>米国企業決算</td><td>SEC EDGAR / 企業IR</td><td>A</td><td>公式決算、リスク、キャッシュフロー確認</td></tr>
+              <tr><td>株価・出来高</td><td>Yahoo Finance chart API</td><td>B</td><td>OHLCV、移動平均、出来高異常、指数・為替</td></tr>
+              <tr><td>財務補助</td><td>TIKR / GuruFocus / FMP</td><td>B</td><td>PER、EPS、FCF、ROE、予想データ補完</td></tr>
+              <tr><td>ニュース・心理</td><td>RSS / News API / 手動DB</td><td>C</td><td>イベント連鎖、連想材料、市場心理の補足</td></tr>
+            </table>
+          </div>
+
+          <div class="chain-grid" style="margin-top:16px">
+            <div class="chain-card">
+              <div class="chain-head"><b>日次運用フロー</b><span class="chain-tag">自動更新</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>朝</small><span>米国市場、NASDAQ、VIX、DXY、米10年金利、ドル円を取得。</span></div>
+                <div class="chain-step"><small>昼</small><span>TDnet、ニュース、イベント連鎖材料を確認。</span></div>
+                <div class="chain-step"><small>夕方</small><span>日本株終値、出来高、適時開示、決算反応を反映。</span></div>
+                <div class="chain-step"><small>夜</small><span>米国決算、FOMC、CPI、AI関連ニュースを確認。</span></div>
+              </div>
+            </div>
+
+            <div class="chain-card">
+              <div class="chain-head"><b>データベース設計</b><span class="chain-tag">表で運用</span></div>
+              <div class="chain-body">
+                <div class="chain-step"><small>銘柄表</small><span>銘柄コード、会社名、セクター、テーマ、通貨、IR URL。</span></div>
+                <div class="chain-step"><small>価格表</small><span>日付、始値、高値、安値、終値、出来高、移動平均。</span></div>
+                <div class="chain-step"><small>決算表</small><span>決算日、EPS、売上、ガイダンス、翌日ギャップ。</span></div>
+                <div class="chain-step"><small>スコア表</small><span>企業力、買い時、イベント、決算、リスク、最終判定。</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrap" style="margin-top:16px">
+            <table class="rule-table">
+              <tr><th>工程</th><th>期間</th><th>作業内容</th><th>成果物</th></tr>
+              <tr><td>1. 要件定義</td><td>3〜5日</td><td>対象銘柄、指標、出力形式、納品範囲を決定</td><td>仕様書</td></tr>
+              <tr><td>2. データ基盤</td><td>1〜2週</td><td>株価、マクロ、開示、決算データ取得を実装</td><td>データベース</td></tr>
+              <tr><td>3. スコアモデル</td><td>1〜2週</td><td>企業力、買い時、イベント、決算、リスク計算</td><td>スコア計算表</td></tr>
+              <tr><td>4. レポート画面</td><td>1週</td><td>HTMLサイト、グラフ、注釈、カレンダー作成</td><td>顧客向けサイト</td></tr>
+              <tr><td>5. 誤差記録</td><td>1週</td><td>予測と実績の差、原因分類、修正履歴を保存</td><td>予測ログ</td></tr>
+              <tr><td>6. バックテスト</td><td>2〜3週</td><td>過去データで勝率、MDD、期待値を検証</td><td>検証レポート</td></tr>
+              <tr><td>7. 運用テスト</td><td>1〜2週</td><td>日次更新、異常時、決算時の動作確認</td><td>β版</td></tr>
+              <tr><td>8. 納品</td><td>2〜3日</td><td>マニュアル、引き継ぎ、最終調整</td><td>納品版</td></tr>
+            </table>
           </div>
         </div>
       </section>
