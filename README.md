@@ -4,6 +4,7 @@
 
 - `index.html`: NISA日本株モデルポートフォリオの顧客向けサイト
 - `development_plan.html`: 投資分析システム開発計画の1枚説明シート
+- `development_plan.pdf`: 開発計画シートのPDF版
 - `prototype_sample.html`: データ取得から点数出力までの暫定プロトタイプ
 
 内容:
