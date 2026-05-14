@@ -345,8 +345,109 @@
       color: #70400c;
       font-size: 13px;
     }
+    .sample-lane {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 74px minmax(0, 1fr) 74px minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .sample-card {
+      border: 2px solid #dce9f6;
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 14px;
+      min-height: 190px;
+    }
+    .sample-card.input { border-top: 7px solid var(--blue); }
+    .sample-card.calc { border-top: 7px solid var(--green); }
+    .sample-card.output { border-top: 7px solid var(--orange); }
+    .sample-card b {
+      display: block;
+      color: var(--navy);
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+    .sample-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #36506a;
+      font-size: 13px;
+    }
+    .sample-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      font-size: 34px;
+      font-weight: 900;
+    }
+    .formula-box {
+      border-radius: 12px;
+      background: #edf9f3;
+      border: 1px solid #b8e5cf;
+      padding: 10px;
+      color: #285844;
+      font-weight: 900;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .score-list {
+      display: grid;
+      gap: 8px;
+    }
+    .score-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 54px;
+      gap: 8px;
+      align-items: center;
+      font-size: 13px;
+    }
+    .score-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #e6edf5;
+      overflow: hidden;
+    }
+    .score-bar span {
+      display: block;
+      height: 100%;
+      width: var(--w);
+      background: var(--blue);
+      border-radius: 999px;
+    }
+    .issue-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .issue-card {
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 14px;
+      border-top: 6px solid var(--red);
+    }
+    .issue-card.fix { border-top-color: var(--green); }
+    .issue-card b { display: block; color: var(--navy); margin-bottom: 7px; }
+    .issue-card p { margin: 0; color: #36506a; font-size: 13px; }
+    .mini-roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .mini-phase {
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fbfdff;
+      padding: 12px;
+    }
+    .mini-phase small { display: block; color: var(--muted); font-weight: 900; margin-bottom: 4px; }
+    .mini-phase b { display: block; color: var(--navy); margin-bottom: 5px; }
+    .mini-phase span { color: #36506a; font-size: 13px; }
     @media (max-width: 980px) {
       .hero, .big-grid, .timeline, .two-col, .purpose-grid, .feature-grid, .mock-body, .use-case { grid-template-columns: 1fr; }
+      .sample-lane { grid-template-columns: 1fr; }
+      .sample-arrow { transform: rotate(90deg); min-height: 44px; }
+      .issue-grid, .mini-roadmap { grid-template-columns: 1fr; }
       .flow { grid-template-columns: 1fr; }
       .step::after {
         content: "↓";
@@ -455,6 +556,97 @@
           <b>3. 行動に変える</b>
           <p>高得点でも危険条件なら買いません。買う場合も、予定額の何%だけ入れるか、どこで止めるかを表示します。</p>
         </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>暫定サンプル</h2>
+        <span class="pill">データ取得 → 数式 → 点数 → 改善</span>
+      </div>
+      <div class="panel">
+        <div class="sample-lane">
+          <div class="sample-card input">
+            <b>1. 取得するデータ</b>
+            <ul>
+              <li>株価: 5日変化率、20日変化率、200日線位置</li>
+              <li>出来高: 20日平均比</li>
+              <li>決算: 売上成長、営業利益、ガイダンス</li>
+              <li>市場: NASDAQ、VIX、DXY、米10年金利</li>
+              <li>イベント: AI、電力、データセンター需要</li>
+            </ul>
+          </div>
+          <div class="sample-arrow">→</div>
+          <div class="sample-card calc">
+            <b>2. 数式で処理</b>
+            <div class="formula-box">
+              総合点 = 0.25企業力 + 0.20買い時 + 0.20イベント + 0.20決算 + 0.15市場 - リスク
+            </div>
+            <ul>
+              <li>全部0〜100点へ変換</li>
+              <li>危険条件なら強制停止</li>
+              <li>点数だけでなく理由も保存</li>
+            </ul>
+          </div>
+          <div class="sample-arrow">→</div>
+          <div class="sample-card output">
+            <b>3. 点数アウトプット</b>
+            <div class="score-list">
+              <div class="score-row"><span>TSMC</span><div class="score-bar"><span style="--w:82%"></span></div><strong>82点</strong></div>
+              <div class="score-row"><span>NVIDIA</span><div class="score-bar"><span style="--w:78%"></span></div><strong>78点</strong></div>
+              <div class="score-row"><span>Vertiv</span><div class="score-bar"><span style="--w:71%"></span></div><strong>71点</strong></div>
+            </div>
+            <ul style="margin-top:10px">
+              <li>80点以上: 買い候補</li>
+              <li>70〜79点: 分割候補</li>
+              <li>60点台: 様子見</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:14px">
+          <table>
+            <tr><th>サンプル項目</th><th>仮の数値</th><th>判定例</th><th>次の行動</th></tr>
+            <tr><td>NASDAQ</td><td>5日変化 +3.0%</td><td>AI・半導体に追い風</td><td>半導体候補を確認</td></tr>
+            <tr><td>米10年金利</td><td>4.46%</td><td>4.70%未満で危険停止なし</td><td>高PERは半分だけ検討</td></tr>
+            <tr><td>VIX</td><td>17.9</td><td>市場ストレス低め</td><td>予定通り監視</td></tr>
+            <tr><td>DXY</td><td>98.6</td><td>100割れでドル弱め</td><td>円高時の円換算損益を確認</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>サンプルから分かる課題</h2>
+        <span class="pill">ここを改善する</span>
+      </div>
+      <div class="issue-grid">
+        <div class="issue-card">
+          <b>課題1: データの穴</b>
+          <p>株価や指数は取りやすい一方、決算サプライズ、会社予想、説明会トーンは取得元を整備しないと弱いです。</p>
+        </div>
+        <div class="issue-card">
+          <b>課題2: 点数の根拠</b>
+          <p>82点と出しても、どの指標が何点か見えないと説明力が落ちます。内訳表示が必要です。</p>
+        </div>
+        <div class="issue-card">
+          <b>課題3: 予測の外れ</b>
+          <p>イベント連鎖は外れることがあります。予測と実績のズレを記録し、次回の重みに反映します。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>改善プランと工程</h2>
+        <span class="pill">暫定版から本格版へ</span>
+      </div>
+      <div class="mini-roadmap">
+        <div class="mini-phase"><small>第1段階 / 1週</small><b>暫定サンプル</b><span>株価、指数、為替、金利を取得し、仮スコアを表示。</span></div>
+        <div class="mini-phase"><small>第2段階 / 2〜3週</small><b>データ表化</b><span>銘柄、価格、決算、マクロ、イベントを表で保存。</span></div>
+        <div class="mini-phase"><small>第3段階 / 5〜7週</small><b>実用β版</b><span>決算スコア、イベント連鎖、誤差ログ、停止条件を実装。</span></div>
+        <div class="mini-phase"><small>第4段階 / 10〜12週</small><b>本格運用版</b><span>バックテスト、重み調整、運用マニュアル、納品版を作成。</span></div>
       </div>
     </section>
 
