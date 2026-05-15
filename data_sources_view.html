@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>データ取得結果 確認ページ</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: #172033;
+      background: #f4f8fb;
+      line-height: 1.6;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+    header {
+      background: #14395b;
+      color: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    header p { margin: 0; color: #dbeafe; }
+    section {
+      background: #fff;
+      border: 1px solid #d8e1ec;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+    h2 { margin: 0 0 10px; color: #14395b; font-size: 22px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #d8e1ec;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    th, td {
+      border-bottom: 1px solid #d8e1ec;
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th {
+      background: #e8f4ff;
+      color: #14395b;
+      white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: 0; }
+    a { color: #1f6f8b; font-weight: 700; }
+    .tag {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .ok { background: #edf9f3; color: #17815a; }
+    .warn { background: #fff4e5; color: #c76a13; }
+    .ng { background: #fff0f0; color: #b83232; }
+    .links {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .link-card {
+      display: block;
+      text-decoration: none;
+      border: 1px solid #cfe6fb;
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8fcff;
+      color: #14395b;
+    }
+    .link-card b { display: block; margin-bottom: 4px; }
+    .link-card span { display: block; color: #5f7085; font-weight: 400; font-size: 13px; }
+    .note {
+      background: #fff4e5;
+      border: 1px solid #ffd59a;
+      color: #68420c;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 780px) {
+      .links { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>データ取得結果 確認ページ</h1>
+      <p>Excelを開かなくても、どのデータが取得済みか、どれが接続確認だけかをこのページで確認できます。</p>
+    </header>
+
+    <section>
+      <h2>すぐ開く</h2>
+      <div class="links">
+        <a class="link-card" href="stock_decision_mvp_calculated.xlsx">
+          <b>Excel分析ブック</b>
+          <span>株価・市場・スコア・1年データ入り</span>
+        </a>
+        <a class="link-card" href="mvp_charts.html">
+          <b>チャート分析</b>
+          <span>ブラウザで1年チャートを見る</span>
+        </a>
+        <a class="link-card" href="data_acquisition_report.pdf">
+          <b>成果報告書PDF</b>
+          <span>データ取得構築の報告書</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>取得データの状態</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>データ</th>
+            <th>取得元</th>
+            <th>状態</th>
+            <th>どこで見れるか</th>
+            <th>コメント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>株価</td>
+            <td>Yahoo Finance chart API</td>
+            <td><span class="tag ok">実データ保存済</span></td>
+            <td>Excel: <code>02b_raw_prices_1y</code></td>
+            <td>対象8銘柄の過去1年分日次データを保存済み</td>
+          </tr>
+          <tr>
+            <td>為替</td>
+            <td>Yahoo Finance chart API</td>
+            <td><span class="tag ok">実データ保存済</span></td>
+            <td>Excel: <code>03b_raw_macro_1y</code>, <code>03c_weekly_1y</code></td>
+            <td>ドル円を保存済み</td>
+          </tr>
+          <tr>
+            <td>米10年金利</td>
+            <td>Yahoo Finance / FRED</td>
+            <td><span class="tag ok">実データ保存済</span></td>
+            <td>Excel: <code>03b_raw_macro_1y</code>, FRED接続結果はJSON</td>
+            <td>Excel側はYahooの<code>^TNX</code>、FRED長期CSVは接続確認済み</td>
+          </tr>
+          <tr>
+            <td>米CPI</td>
+            <td>FRED</td>
+            <td><span class="tag warn">接続確認のみ</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>1947年以降のCSV取得は確認済み。Excel本体への保存は次工程</td>
+          </tr>
+          <tr>
+            <td>日本CPI</td>
+            <td>統計局 / e-Stat</td>
+            <td><span class="tag warn">接続確認のみ</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>統計局ページとExcelリンク確認済み。系列ID/API取得は次工程</td>
+          </tr>
+          <tr>
+            <td>e-Stat</td>
+            <td>e-Stat API</td>
+            <td><span class="tag warn">入口確認のみ</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>API入口は確認済み。利用にはキー/統計表ID/系列ID整理が必要</td>
+          </tr>
+          <tr>
+            <td>統計ダッシュボードAPI</td>
+            <td>統計ダッシュボード</td>
+            <td><span class="tag warn">入口確認のみ</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>API仕様と系列コード表の取得口を確認済み</td>
+          </tr>
+          <tr>
+            <td>鉱工業生産</td>
+            <td>経産省統計</td>
+            <td><span class="tag warn">接続確認のみ</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>経産省ページへのアクセス確認済み。統計ファイル抽出は次工程</td>
+          </tr>
+          <tr>
+            <td>自動車販売</td>
+            <td>自販連</td>
+            <td><span class="tag warn">接続確認のみ</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>統計ページへのアクセス確認済み。PDF/表の抽出は次工程</td>
+          </tr>
+          <tr>
+            <td>輸入車販売</td>
+            <td>JAIA</td>
+            <td><span class="tag ng">取得失敗</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>fetch失敗。URL/TLS/アクセス制限を再確認</td>
+          </tr>
+          <tr>
+            <td>企業決算</td>
+            <td>企業IR PDF</td>
+            <td><span class="tag warn">PDF取得確認</span></td>
+            <td>Excel: <code>11_top_review</code>, <code>15_review_adjusted</code></td>
+            <td>三菱商事・味の素は公式資料を見て補正済み。自動表抽出は次工程</td>
+          </tr>
+          <tr>
+            <td>TDnet</td>
+            <td>適時開示ページ</td>
+            <td><span class="tag warn">ページ確認のみ</span></td>
+            <td><code>reports/data_source_test_results.json</code></td>
+            <td>ページ取得は成功。開示PDFリンク抽出は次工程</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">
+        注意: 「接続確認のみ」は、データ取得元へアクセスできることを確認した段階です。Excelに本体データとして保存済みなのは、株価・為替・指数・金利・VIX・DXYなどの市場データ中心です。
+      </div>
+    </section>
+  </main>
+</body>
+</html>
