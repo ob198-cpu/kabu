@@ -15,6 +15,7 @@
     .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:920px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12.5px;vertical-align:top;text-align:left}th{background:#eaf2f9;color:#1d405f;font-weight:800}tr:last-child td{border-bottom:none}
     .pill{display:inline-block;border-radius:999px;padding:3px 9px;font-weight:800;white-space:nowrap}.done{background:#e4f7ef;color:var(--green)}.partial{background:#fff4dc;color:var(--amber)}.planned{background:#e9f4ff;color:var(--blue)}.hold{background:#fff0f1;color:var(--red)}
     .summary{display:grid;grid-template-columns:1fr 1fr;gap:12px}.box{border:1px solid var(--line);border-radius:10px;background:#f8fbfe;padding:12px}.box b{color:#0d678f}.small{font-size:12px;color:var(--muted)}
+    .progress-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.progress-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#f8fbfe}.progress-card h3{margin:0 0 6px;font-size:15px}.big{font-size:28px;font-weight:900;color:#0d678f}.bar{height:12px;background:#e3edf5;border-radius:999px;overflow:hidden;margin:8px 0}.bar span{display:block;height:100%;background:#13784f}.breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}.mini{border-radius:8px;background:white;border:1px solid #e1eaf2;padding:6px;text-align:center}.mini b{display:block;font-size:16px}
     @media(max-width:850px){.cards,.summary{grid-template-columns:1fr}table{min-width:760px}h1{font-size:23px}}
     @media print{body{background:#fff}header{background:#123c5b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}section{box-shadow:none;break-inside:avoid}.table-wrap{overflow:visible}table{min-width:0}th,td{font-size:9.5px;padding:5px}}
   </style>
@@ -33,6 +34,37 @@
   <main>
     <section>
       <h2>1. 現状の結論</h2>
+      <div class="progress-grid">
+        <div class="progress-card">
+          <h3>全体進捗</h3>
+          <div class="big">31 / 50件</div>
+          <div class="bar"><span style="width:62%"></span></div>
+          <div class="small">実装済み + 一部実装を「着手済み」として集計。進捗率 62%</div>
+        </div>
+        <div class="progress-card">
+          <h3>変数</h3>
+          <div class="big">19 / 27件</div>
+          <div class="bar"><span style="width:70%"></span></div>
+          <div class="breakdown">
+            <div class="mini"><b>12</b>実装済み</div>
+            <div class="mini"><b>7</b>一部</div>
+            <div class="mini"><b>7</b>予定</div>
+            <div class="mini"><b>1</b>保留</div>
+          </div>
+        </div>
+        <div class="progress-card">
+          <h3>数式</h3>
+          <div class="big">12 / 23件</div>
+          <div class="bar"><span style="width:52%"></span></div>
+          <div class="breakdown">
+            <div class="mini"><b>12</b>実装済み</div>
+            <div class="mini"><b>0</b>一部</div>
+            <div class="mini"><b>9</b>予定</div>
+            <div class="mini"><b>2</b>保留</div>
+          </div>
+        </div>
+      </div>
+      <div class="note"><b>進捗の読み方:</b> 「実装済み」は現在の表やスコアに直接入っているもの。「一部実装」は一部銘柄・一部計算で使っているもの。「実装予定」は取得元や用途が決まっているもの。「保留」は信頼できるデータ確保や検証が必要なものです。</div>
       <div class="summary">
         <div class="box"><b>すでにできていること</b><br>株価1年データ、週次データ、移動平均、騰落率、出来高倍率、PER/PBR/EPSの一部、決算短信・IRからの財務入力、NISA 1年保有スコアの試算。</div>
         <div class="box"><b>これから強化すること</b><br>CPI、金利、為替、業界統計、イベントタグ、相関係数、決算サプライズ、ガイダンス修正率、予測誤差の統計化。</div>
