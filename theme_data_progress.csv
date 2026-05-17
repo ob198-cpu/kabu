@@ -1,0 +1,9 @@
+data,source,series_or_route,status,rows,latest_date,latest_value,change_1y_pct,file,note,checked_at
+米CPI,FRED,CPIAUCSL,取得済み,951,2026-04-01,332.407,3.7792,data\theme_macro\us_cpi.csv,インフレ・金利リスク判定,2026/05/17 16:07:40
+米PPI,FRED,PPIACO,取得済み,1360,2026-04-01,283.764,9.8192,data\theme_macro\us_ppi.csv,インフレ・金利リスク判定,2026/05/17 16:07:40
+FF金利,FRED,FEDFUNDS,取得済み,862,2026-04-01,3.64,-15.9353,data\theme_macro\fed_funds.csv,FRB金利環境,2026/05/17 16:07:40
+米10年金利,FRED,DGS10,取得済み,16077,2026-05-14,4.47,-1.3245,data\theme_macro\us10y.csv,長期金利環境,2026/05/17 16:07:40
+日本短期金利,FRED/OECD,IRSTCI01JPM156N,取得済み,490,2026-04-01,0.72700,52.4109,data\theme_macro\japan_short_rate.csv,日銀金利環境の近似,2026/05/17 16:07:40
+ドル円,FRED,DEXJPUS,取得済み,13874,2026-05-08,156.64,7.6860,data\theme_macro\usd_jpy.csv,円安・円高影響,2026/05/17 16:07:40
+WTI原油,FRED,DCOILWTICO,取得済み,10158,2026-05-11,101.56,60.3917,data\theme_macro\wti_crude.csv,ナフサ・原油テーマの代替指標,2026/05/17 16:07:40
+VIX,FRED,VIXCLS,取得済み,9186,2026-05-14,17.26,-7.3040,data\theme_macro\vix.csv,市場不安指数,2026/05/17 16:07:40

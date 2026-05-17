@@ -1,0 +1,6 @@
+event_id,event_name,date,source,status,note
+CPI-US,米CPI発表,,BLS/FRED,手動入力待ち,日付を入れるとイベント前後リターン検証に使用
+PPI-US,米PPI発表,,BLS/FRED,手動入力待ち,日付を入れるとイベント前後リターン検証に使用
+FOMC,FOMC,,Federal Reserve,手動入力待ち,政策金利イベント
+BOJ,日銀金融政策決定会合,,日本銀行,手動入力待ち,日本株・円相場イベント
+EARNINGS,企業決算,,企業IR/TDnet,手動入力待ち,銘柄別に決算日を入れる
