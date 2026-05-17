@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>イベント連鎖・ニーズ分析プロトタイプ</title>
+  <style>
+    :root{--ink:#172033;--muted:#617086;--blue:#0e6b98;--green:#13784f;--amber:#b36b00;--line:#d8e3ee}
+    *{box-sizing:border-box}body{margin:0;background:#eef4f8;color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:#123c5b;color:white;padding:30px 24px}.wrap,main{max-width:1180px;margin:auto}main{padding:20px 16px 48px}
+    h1{font-size:28px;margin:0 0 8px}h2{font-size:21px;margin:28px 0 12px;border-left:8px solid var(--blue);padding-left:10px}
+    .lead{color:#e9f6ff;max-width:980px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:12px}.card b{font-size:20px}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;box-shadow:0 4px 14px rgba(20,50,80,.05)}
+    .note{background:#fff7e8;border:1px solid #e8bd74;border-left:8px solid #d78600;border-radius:10px;padding:12px 14px;margin:10px 0}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.step{background:#f8fbfe;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;font-weight:800}.arrow{color:#0e6b98}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:1080px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12.5px;vertical-align:top;text-align:left}th{background:#eaf2f9;color:#1d405f;font-weight:800}tr:last-child td{border-bottom:none}
+    .formula{font-family:Consolas,"Yu Gothic",monospace;background:#f6f9fc;border:1px solid #dbe6f1;border-radius:8px;padding:8px}.small{font-size:12px;color:var(--muted)}
+    @media(max-width:900px){.cards,.flow{grid-template-columns:1fr}table{min-width:850px}h1{font-size:23px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>イベント連鎖・ニーズ分析プロトタイプ</h1>
+    <p class="lead">時流に合った銘柄選定を補助するため、「何かが不足する」「需要が増える」時に、どの業界へお金が流れ、本当に株価に効いたかを検証しやすくする機能の試作です。</p>
+    <div class="cards">
+      <div class="card"><span>作成日</span><br><b>2026-05-17</b></div>
+      <div class="card"><span>シナリオ数</span><br><b>5件</b></div>
+      <div class="card"><span>検証式</span><br><b>5本</b></div>
+      <div class="card"><span>状態</span><br><b>試作</b></div>
+    </div>
+  </div></header>
+  <main>
+    <section>
+      <h2>1. この機能でやること</h2>
+      <div class="flow">
+        <div class="step">出来事</div>
+        <div class="step arrow">→</div>
+        <div class="step">ニーズ増減</div>
+        <div class="step arrow">→</div>
+        <div class="step">銘柄候補</div>
+      </div>
+      <div class="note">重要なのは「需要が増えそう」だけで買わないことです。需要増が売上・利益・受注・価格転嫁に結びつき、さらに過去データで株価が指数を上回ったかを検証します。</div>
+    </section>
+
+    <section>
+      <h2>2. シナリオ別 ニーズ分析</h2>
+      <div class="table-wrap"><table><thead><tr><th>ID</th><th>テーマ</th><th>発生要因</th><th>一次ニーズ</th><th>二次ニーズ</th><th>得しやすい業種</th><th>弱りやすい業種</th><th>見る変数</th><th>検証方法</th><th>買い候補化の条件</th><th>リスク</th></tr></thead><tbody><tr><td>EVT-NAPHTHA-01</td><td>ナフサ不足・石化原料逼迫</td><td>原油高、製油所停止、輸入制約、物流混乱、アジア石化需給の逼迫</td><td>代替原料、在庫確保、価格転嫁、供給安定</td><td>リサイクル樹脂、バイオ素材、省原料設計、商社調達、物流</td><td>総合商社、石油元売り、化学の一部、素材代替、リサイクル、包装材</td><td>ナフサ依存度が高く価格転嫁が弱い化学、樹脂加工、原材料比率が高い製造業</td><td>ナフサ価格、原油価格、エチレン価格、化学品スプレッド、輸入量、在庫、各社原材料費率、価格転嫁率</td><td>ナフサ価格上昇局面をイベント化し、関連銘柄の5日/20日/60日リターンをTOPIX・化学指数と比較</td><td>需要増ではなく『価格転嫁できる会社』または『調達・代替で得をする会社』を優先</td><td>原料高は売上増に見えても利益率を壊す場合がある。単純に化学株を買うのは危険。</td></tr><tr><td>EVT-AI-POWER-01</td><td>AIデータセンター電力不足</td><td>AIサーバー増加、データセンター建設、電力網制約、冷却需要増</td><td>電力供給、受変電、冷却、UPS、発電、送配電投資</td><td>銅線、空調、液冷、電力制御、建設、発電燃料、蓄電池</td><td>電力設備、重電、電線、空調、データセンター設備、建設</td><td>高PERのAI関連、電力コスト上昇に弱い企業</td><td>データセンター投資額、電力需要、電力価格、設備受注、銅価格、受注残</td><td>AI指数・NASDAQだけでなく、設備受注と株価の先行/遅行を検証</td><td>AI本命だけでなく、電力・冷却・受変電の二次需要を確認</td><td>期待先行でPERが高くなりやすい。受注が利益に変わるか確認が必要。</td></tr><tr><td>EVT-RATE-01</td><td>金利上昇</td><td>CPI再加速、FRB利下げ後退、日銀利上げ、長期金利上昇</td><td>利ざや改善、資金調達コスト管理、債券評価損管理</td><td>銀行収益改善、保険運用収益、グロース株のバリュエーション調整</td><td>銀行、保険、金利収益が増える金融</td><td>高PERグロース、不動産、借入依存企業</td><td>米10年金利、日本10年金利、政策金利、銀行株指数、PER水準</td><td>金利上昇日と銀行株・グロース株の相対リターンを比較</td><td>金利上昇そのものより、信用コストが悪化していない銀行を優先</td><td>景気悪化を伴う金利上昇では銀行にも逆風。</td></tr><tr><td>EVT-YEN-01</td><td>円安進行</td><td>日米金利差拡大、貿易赤字、ドル高</td><td>輸出採算改善、海外利益の円換算増、輸入コスト管理</td><td>価格改定、海外生産、為替予約、原材料調達</td><td>輸出企業、海外売上比率が高い企業、商社</td><td>輸入依存、小売、食品、原材料輸入比率が高い企業</td><td>ドル円、海外売上比率、輸入原材料比率、営業利益率、会社想定為替</td><td>ドル円変化率と個別株リターンの相関、決算時の為替感応度確認</td><td>海外売上比率が高く、原材料輸入負担が小さい企業を優先</td><td>円安メリットは既に株価へ織り込み済みの場合がある。</td></tr><tr><td>EVT-DISASTER-01</td><td>大規模災害・復旧需要</td><td>地震、豪雨、台風、インフラ障害</td><td>通信、電力、建設、物流、水、仮設住宅</td><td>測量、ドローン、インフラ点検、防災DX、保険支払い</td><td>建設、通信、電力復旧、測量、防災、物流</td><td>観光、保険、被災地域依存企業</td><td>災害規模、政府補正予算、建設受注、通信復旧需要、保険支払額</td><td>過去災害日のイベントスタディで、5日/20日/60日の業種別リターンを比較</td><td>短期材料株ではなく、受注・予算に結びつく企業を確認</td><td>倫理面・短期思惑・一過性の上昇に注意。長期受注に繋がるかを確認。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>3. 検証に使う数式</h2>
+      <div class="table-wrap"><table><thead><tr><th>数式名</th><th>式</th><th>目的</th></tr></thead><tbody><tr><td>EventNeedScore</td><td>Probability × DemandShock × Duration × SupplyConstraint × PolicySupport</td><td>不足・需要増が投資テーマとして強いかを測る</td></tr><tr><td>StockFitScore</td><td>RevenueExposure × MarginSensitivity × BalanceSheet × Momentum × ValuationGuard</td><td>そのイベントが本当に個別銘柄の利益に効くかを測る</td></tr><tr><td>ValidationReturn</td><td>StockReturn - BenchmarkReturn</td><td>テーマ発生後にTOPIXや業種指数を上回ったかを見る</td></tr><tr><td>LeadLagCheck</td><td>Corr(EventVariable(t-k), StockReturn(t))</td><td>イベント変数が株価に先行するかを見る</td></tr><tr><td>FalsePositiveRate</td><td>外れ回数 ÷ シグナル発生回数</td><td>もっともらしいテーマが外れた割合を記録する</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>4. 必要データと取得元</h2>
+      <div class="table-wrap"><table><thead><tr><th>データ</th><th>取得元候補</th><th>用途</th><th>状態</th></tr></thead><tbody><tr><td>株価</td><td>Yahoo Finance chart API</td><td>日次/週次のリターン、イベント前後検証</td><td>実装済み</td></tr><tr><td>指数</td><td>Yahoo Finance chart API</td><td>TOPIX、日経、NASDAQ等との比較</td><td>実装済み</td></tr><tr><td>ナフサ・原油・化学品価格</td><td>経産省、財務省貿易統計、業界統計、有料商品データ</td><td>ナフサ不足・化学スプレッド検証</td><td>追加予定</td></tr><tr><td>CPI・金利・為替</td><td>FRED、日銀、統計局、Yahoo Finance</td><td>金利・インフレ・円安テーマ検証</td><td>追加予定</td></tr><tr><td>業界統計</td><td>経産省、自販連、業界団体、各社IR</td><td>業界全体の需要増と個別企業差の比較</td><td>追加予定</td></tr><tr><td>決算・IR</td><td>企業IR、TDnet、決算短信</td><td>売上・利益・価格転嫁・受注残の確認</td><td>一部実装</td></tr><tr><td>イベントタグ</td><td>手動入力から開始、後にニュース/API</td><td>いつ何が起きたかを検証対象にする</td><td>追加予定</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>5. ナフサ不足の読み方</h2>
+      <p>ナフサ不足は、単純に「化学株が上がる」とは限りません。ナフサは多くの石化製品の原料なので、原料高は売上を押し上げる一方で、価格転嫁できない企業の利益率を下げます。</p>
+      <div class="note"><b>見る順番:</b> ナフサ価格上昇 → 化学品スプレッド → 価格転嫁率 → 営業利益率 → 関連銘柄のTOPIX超過リターン。ここまで確認して初めて、株価に効いた可能性を評価します。</div>
+    </section>
+  </main>
+</body>
+</html>
