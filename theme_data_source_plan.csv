@@ -1,6 +1,8 @@
 data,source,series_or_route,status,note
 CPI/PPI,FRED,CPIAUCSL/PPIACO,取得済み,米国はFRED CSVで取得。日本CPIは統計局/e-Stat系列ID整備が次工程。
 日銀・FRB金利,FRED/日銀,FEDFUNDS/DGS10/IRSTCI01JPM156N,一部取得,FRB関連は取得済み。日銀政策金利そのものは日銀公表データの系列確認が必要。
+景気指標,FRED,UNRATE/GDP/INDPRO/RSAFS/T10Y2Y,取得済み,失業率、GDP、鉱工業生産、小売売上、長短金利差を追加取得。
+比較指数・テーマETF,Yahoo Finance chart API,^SOX/XLF/XLB/XLI/XLK/SMH/1615.T,取得済み,半導体、金融、素材、資本財、テック、銀行ETFを追加取得。
 業界統計,経産省/自販連/業界団体,未指定,未取得,業界ごとにCSV/Excel/PDFが異なるため、対象業界を決めて個別実装。
 イベント日付,公式カレンダー/手動入力,FOMC/日銀/CPI/決算,テンプレート作成,まず手動入力CSVを作成。公式カレンダー自動取得は次工程。
 相関係数用データ,既存株価 + FRED/Yahoo,株価/金利/為替/VIX/原油,取得済み,今回取得した時系列と既存株価で相関計算可能。

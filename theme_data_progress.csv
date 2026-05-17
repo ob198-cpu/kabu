@@ -1,9 +1,24 @@
 data,source,series_or_route,status,rows,latest_date,latest_value,change_1y_pct,file,note,checked_at
-米CPI,FRED,CPIAUCSL,取得済み,951,2026-04-01,332.407,3.7792,data\theme_macro\us_cpi.csv,インフレ・金利リスク判定,2026/05/17 16:07:40
-米PPI,FRED,PPIACO,取得済み,1360,2026-04-01,283.764,9.8192,data\theme_macro\us_ppi.csv,インフレ・金利リスク判定,2026/05/17 16:07:40
-FF金利,FRED,FEDFUNDS,取得済み,862,2026-04-01,3.64,-15.9353,data\theme_macro\fed_funds.csv,FRB金利環境,2026/05/17 16:07:40
-米10年金利,FRED,DGS10,取得済み,16077,2026-05-14,4.47,-1.3245,data\theme_macro\us10y.csv,長期金利環境,2026/05/17 16:07:40
-日本短期金利,FRED/OECD,IRSTCI01JPM156N,取得済み,490,2026-04-01,0.72700,52.4109,data\theme_macro\japan_short_rate.csv,日銀金利環境の近似,2026/05/17 16:07:40
-ドル円,FRED,DEXJPUS,取得済み,13874,2026-05-08,156.64,7.6860,data\theme_macro\usd_jpy.csv,円安・円高影響,2026/05/17 16:07:40
-WTI原油,FRED,DCOILWTICO,取得済み,10158,2026-05-11,101.56,60.3917,data\theme_macro\wti_crude.csv,ナフサ・原油テーマの代替指標,2026/05/17 16:07:40
-VIX,FRED,VIXCLS,取得済み,9186,2026-05-14,17.26,-7.3040,data\theme_macro\vix.csv,市場不安指数,2026/05/17 16:07:40
+米CPI,FRED,CPIAUCSL,取得済み,951,2026-04-01,332.407,3.7792,data\theme_macro\us_cpi.csv,インフレ・金利リスク判定,2026/05/17 16:33:41
+米PPI,FRED,PPIACO,取得済み,1360,2026-04-01,283.764,9.8192,data\theme_macro\us_ppi.csv,インフレ・金利リスク判定,2026/05/17 16:33:41
+FF金利,FRED,FEDFUNDS,取得済み,862,2026-04-01,3.64,-15.9353,data\theme_macro\fed_funds.csv,FRB金利環境,2026/05/17 16:33:41
+米10年金利,FRED,DGS10,取得済み,16077,2026-05-14,4.47,-1.3245,data\theme_macro\us10y.csv,長期金利環境,2026/05/17 16:33:41
+米失業率,FRED,UNRATE,取得済み,939,2026-04-01,4.3,2.3810,data\theme_macro\us_unemployment.csv,景気後退リスク判定,2026/05/17 16:33:41
+米GDP,FRED,GDP,取得済み,317,2026-01-01,31856.257,6.0387,data\theme_macro\us_gdp.csv,景気局面判定,2026/05/17 16:33:41
+米鉱工業生産,FRED,INDPRO,取得済み,1288,2026-04-01,102.4963,1.3531,data\theme_macro\us_industrial_production.csv,製造業・景気の強弱,2026/05/17 16:33:41
+米小売売上高,FRED,RSAFS,取得済み,412,2026-04-01,757085,4.8735,data\theme_macro\us_retail_sales.csv,消費関連の地合い判定,2026/05/17 16:33:41
+米長短金利差,FRED,T10Y2Y,取得済み,12486,2026-05-15,0.50,2.0408,data\theme_macro\us_yield_curve_10y2y.csv,景気後退警戒,2026/05/17 16:33:41
+日本短期金利,FRED/OECD,IRSTCI01JPM156N,取得済み,490,2026-04-01,0.72700,52.4109,data\theme_macro\japan_short_rate.csv,日銀金利環境の近似,2026/05/17 16:33:41
+ドル円,FRED,DEXJPUS,取得済み,13874,2026-05-08,156.64,7.6860,data\theme_macro\usd_jpy.csv,円安・円高影響,2026/05/17 16:33:41
+WTI原油,FRED,DCOILWTICO,取得済み,10158,2026-05-11,101.56,60.3917,data\theme_macro\wti_crude.csv,ナフサ・原油テーマの代替指標,2026/05/17 16:33:41
+ブレント原油,FRED,DCOILBRENTEU,取得済み,9888,2026-05-11,106.11,62.5460,data\theme_macro\brent_crude.csv,ナフサ・原油テーマの補助指標,2026/05/17 16:33:41
+米天然ガス,FRED,DHHNGSP,取得済み,7368,2026-05-11,2.82,-11.5987,data\theme_macro\henry_hub_gas.csv,電力・エネルギーコスト,2026/05/17 16:33:41
+銅価格,FRED/IMF,PCOPPUSDM,取得済み,411,2026-03-01,12528.709545454551,28.6867,data\theme_macro\copper_price.csv,AI電力・設備投資テーマ,2026/05/17 16:33:41
+VIX,FRED,VIXCLS,取得済み,9186,2026-05-14,17.26,-7.3040,data\theme_macro\vix.csv,市場不安指数,2026/05/17 16:33:41
+SOX指数,Yahoo Finance chart API,^SOX,取得済み,1256,2026-05-15,11588.4599609375,134.9433,data\theme_macro\sox_index.csv,半導体テーマ比較,2026/05/17 16:33:41
+米金融ETF,Yahoo Finance chart API,XLF,取得済み,1256,2026-05-15,51.099998474121094,-0.3510,data\theme_macro\xlf_financial.csv,金利上昇テーマ比較,2026/05/17 16:33:41
+米素材ETF,Yahoo Finance chart API,XLB,取得済み,1256,2026-05-15,50.29999923706055,16.7460,data\theme_macro\xlb_materials.csv,素材・化学テーマ比較,2026/05/17 16:33:41
+米資本財ETF,Yahoo Finance chart API,XLI,取得済み,1256,2026-05-15,171.39999389648438,20.5684,data\theme_macro\xli_industrials.csv,設備投資テーマ比較,2026/05/17 16:33:41
+米テクノロジーETF,Yahoo Finance chart API,XLK,取得済み,1256,2026-05-15,176.25999450683594,50.3604,data\theme_macro\xlk_technology.csv,AI/半導体テーマ比較,2026/05/17 16:33:41
+半導体ETF,Yahoo Finance chart API,SMH,取得済み,1256,2026-05-15,556.3400268554688,125.1204,data\theme_macro\smh_semiconductor.csv,半導体テーマ比較,2026/05/17 16:33:41
+TOPIX銀行業ETF,Yahoo Finance chart API,1615.T,取得済み,1221,2026-05-15,639.7000122070312,61.8674,data\theme_macro\topix_banks_etf.csv,日本銀行株テーマ比較,2026/05/17 16:33:41
