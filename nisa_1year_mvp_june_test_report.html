@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA 1年保有スコア 6月テスト計画書</title>
+  <style>
+    :root{--ink:#172033;--muted:#5b6b7d;--navy:#123c5b;--blue:#176b8e;--green:#13845b;--amber:#b76e00;--red:#b72b38;--line:#d8e3ee;--bg:#eef4f8}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:linear-gradient(135deg,#123c5b,#176b8e);color:#fff;padding:34px 26px}
+    .wrap,main{max-width:1180px;margin:auto}
+    main{padding:20px 16px 52px}
+    h1{font-size:30px;margin:0 0 8px}
+    h2{font-size:21px;margin:30px 0 12px;border-left:8px solid var(--blue);padding-left:10px}
+    h3{font-size:16px;margin:18px 0 8px}
+    p{margin:8px 0}.lead{color:#eaf6ff;max-width:980px}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;box-shadow:0 4px 14px rgba(20,50,80,.05)}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+    .card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:13px}
+    .label{font-size:12px;opacity:.85}.value{font-size:21px;font-weight:800}
+    .success{background:#e9f7f0;border:1px solid #a9dcc1;border-left:8px solid var(--green);border-radius:10px;padding:14px 16px;margin:12px 0}
+    .notice{background:#fff7e8;border:1px solid #efc378;border-left:8px solid #d98300;border-radius:10px;padding:14px 16px;margin:12px 0}
+    .riskbox{background:#fff0f1;border:1px solid #efb3b9;border-left:8px solid var(--red);border-radius:10px;padding:14px 16px;margin:12px 0}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+    table{width:100%;border-collapse:collapse;min-width:900px}
+    th,td{border-bottom:1px solid #e7eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}
+    th{background:#eaf2f9;color:#1d405f;font-weight:800}
+    tr:last-child td{border-bottom:none}
+    .pill{font-weight:800;border-radius:999px;padding:4px 9px;display:inline-block;white-space:nowrap}
+    .done{background:#e5f7ef;color:var(--green)}.wait{background:#fff5df;color:var(--amber)}.risk{background:#fff0f1;color:var(--red)}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:12px 0}
+    .step{border:1px solid var(--line);border-radius:10px;background:#f8fbfe;padding:12px}
+    .step b{display:block;color:#123c5b;margin-bottom:5px}
+    .formula{font-family:Consolas,"Yu Gothic",monospace;background:#f6f9fc;border:1px solid #dbe6f1;border-radius:8px;padding:10px}
+    .small{font-size:12px;color:var(--muted)}
+    .score{font-size:17px;font-weight:900;color:#0c5e8d}
+    @media(max-width:900px){.cards,.flow{grid-template-columns:1fr}table{min-width:760px}h1{font-size:24px}}
+    @media print{body{background:#fff}section{box-shadow:none;break-inside:avoid}.table-wrap{overflow:visible}table{min-width:0}th,td{font-size:10px;padding:5px}header{background:#123c5b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.flow{grid-template-columns:repeat(5,1fr)}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>NISA 1年保有スコア 6月テスト計画書</h1>
+    <p class="lead">株を購入する判断補助システムの仕様・実装進捗・6月NISA少額テスト購入までの手順を整理した資料です。目的は、S&P500連動投信・日経平均/TOPIX連動投信・一般的な投資会社運用に対して、1年後の運用成績で最低+1%ポイント上回ることを検証することです。</p>
+    <div class="cards">
+      <div class="card"><div class="label">目的</div><div class="value">1年保有候補の選定</div></div>
+      <div class="card"><div class="label">比較目標</div><div class="value">指数等+1%pt</div></div>
+      <div class="card"><div class="label">6月方針</div><div class="value">少額テスト</div></div>
+      <div class="card"><div class="label">最新更新</div><div class="value">2026/05/17 17:29:39</div></div>
+    </div>
+  </div></header>
+
+  <main>
+    <section>
+      <h2>1. 結論</h2>
+      <div class="success"><b>6月テスト購入は可能です。</b><br>ただし、現時点のシステムは完成版ではなく、銘柄選定補助MVPです。6月は全額購入ではなく、5月中に不足データ補完と時流テーマ選定機能を実装し、6月上旬に毎日スコアを確認したうえで、6月下旬に10〜25%以内の少額テスト購入を行う設計にします。</div>
+      <div class="notice"><b>買う理由を数字で説明するための条件</b><br>「財務・割安・下落耐性」だけでなく、「今の時流テーマに合っているか」「過去3年で同テーマに反応したか」「6月のCPI/FOMC/日銀を通過して市場が崩れていないか」を同時に確認します。</div>
+    </section>
+
+    <section>
+      <h2>2. 現在できていること・未完了のこと</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>必要データ/機能</th><th>進捗</th><th>現在の使い道</th><th>6月購入までの扱い</th></tr></thead>
+        <tbody>
+          <tr><td>株価・出来高</td><td><span class="pill done">実装済み</span></td><td>騰落率、移動平均、下落率、ボラティリティ</td><td>本体スコアに使用</td></tr>
+          <tr><td>5年株価取得</td><td><span class="pill done">実装済み</span></td><td>過去3年イベント検証</td><td>時流テーマ検証に使用</td></tr>
+          <tr><td>CPI/PPI/金利/為替/VIX</td><td><span class="pill done">23系列取得済み</span></td><td>市場環境、イベント検証、リスク判定</td><td>6月上旬に毎日確認</td></tr>
+          <tr><td>SOX/SMH/銀行ETF/素材ETF</td><td><span class="pill done">実装済み</span></td><td>テーマ連動、イベント検証、相関</td><td>時流テーマ選定に使用</td></tr>
+          <tr><td>イベント検証</td><td><span class="pill done">実装済み</span></td><td>過去3年でテーマ後に指数を上回ったか</td><td>NISAスコアへ最大±5点で反映</td></tr>
+          <tr><td>財務データ</td><td><span class="pill wait">一部実装</span></td><td>成長、財務安全性、還元</td><td>5月中に不足項目を補完</td></tr>
+          <tr><td>決算日・会社予想修正</td><td><span class="pill wait">未実装</span></td><td>下方修正、決算跨ぎリスク</td><td>6月購入前は手動確認で代替</td></tr>
+          <tr><td>業界統計/ナフサ/電力需要</td><td><span class="pill wait">一部未実装</span></td><td>需要テーマの深掘り</td><td>6月以降の改善対象</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <h2>3. 5月中に追加する時流テーマ選定機能</h2>
+      <div class="flow">
+        <div class="step"><b>1. テーマ候補</b>AI半導体、金利上昇、円安、資源、素材、電力不足、防衛などを一覧化</div>
+        <div class="step"><b>2. テーマ数値</b>SOX、SMH、米10年金利、ドル円、原油、VIX、銀行ETF、素材ETFを取得</div>
+        <div class="step"><b>3. テーマ強度</b>直近変化率、過去3年イベント後リターン、相関を点数化</div>
+        <div class="step"><b>4. 銘柄適合</b>テーマに過去反応した銘柄を優先し、逆効果候補を減点</div>
+        <div class="step"><b>5. テスト候補</b>6月に確認する3〜5銘柄を出力</div>
+      </div>
+      <div class="formula">テスト候補 = NISA 1年保有スコア + イベントテーマ補正 + 時流テーマ強度 - 除外リスク</div>
+      <p class="small">この機能は、単に「話題の銘柄」を選ぶのではなく、時流テーマの数値、過去の反応、財務・下落耐性を合わせて候補を絞るためのものです。</p>
+    </section>
+
+    <section>
+      <h2>4. 現時点のNISAスコア</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>補正後スコア</th><th>補正前</th><th>イベント補正</th><th>有効テーマ</th><th>判定</th><th>不足データ</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>2802.T</b><br>味の素</td><td><span class="score">66.7</span></td><td>64</td><td>2.7</td><td>素材・資源<br><span class="small">events=8, win60=75%, avg_excess60=9.73%</span></td><td>監視</td><td>自社株買い</td></tr><tr><td>2</td><td><b>8306.T</b><br>三菱UFJフィナンシャル・グループ</td><td><span class="score">64.1</span></td><td>60</td><td>4.1</td><td>金利上昇<br><span class="small">events=8, win60=87.5%, avg_excess60=13.51%</span></td><td>監視</td><td>FCF / 自社株買い / PER</td></tr><tr><td>3</td><td><b>8058.T</b><br>三菱商事</td><td><span class="score">58.6</span></td><td>56</td><td>2.6</td><td>素材・資源<br><span class="small">events=8, win60=75%, avg_excess60=9.29%</span></td><td>見送り/保留</td><td>自社株買い</td></tr><tr><td>4</td><td><b>7974.T</b><br>任天堂</td><td><span class="score">58.2</span></td><td>57</td><td>1.2</td><td>円安進行<br><span class="small">events=8, win60=62.5%, avg_excess60=5.5%</span></td><td>見送り/保留</td><td>FCF / 自社株買い</td></tr><tr><td>5</td><td><b>9433.T</b><br>KDDI</td><td><span class="score">57.7</span></td><td>59</td><td>-1.3</td><td>市場ストレス<br><span class="small">events=8, win60=50%, avg_excess60=-3.93%</span></td><td>見送り/保留</td><td>FCF / 自己資本比率 / PER</td></tr><tr><td>6</td><td><b>8035.T</b><br>東京エレクトロン</td><td><span class="score">57.1</span></td><td>56</td><td>1.1</td><td>AI・半導体需要<br><span class="small">events=16, win60=68.8%, avg_excess60=3.47%</span></td><td>見送り/保留</td><td>自社株買い / PER</td></tr><tr><td>7</td><td><b>6857.T</b><br>アドバンテスト</td><td><span class="score">53.4</span></td><td>49</td><td>4.4</td><td>AI・半導体需要<br><span class="small">events=16, win60=87.5%, avg_excess60=25.56%</span></td><td>データ不足・要確認</td><td>EPS成長率 / FCF / 配当利回り / 自社株買い</td></tr><tr><td>8</td><td><b>4519.T</b><br>中外製薬</td><td><span class="score">33.4</span></td><td>33</td><td>0.4</td><td>市場ストレス<br><span class="small">events=8, win60=62.5%, avg_excess60=1.49%</span></td><td>データ不足・要確認</td><td>EPS成長率 / FCF / 自己資本比率 / 配当利回り / 自社株買い / PER</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <h2>5. 時流テーマ検証の現状</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>テーマ</th><th>銘柄</th><th>イベント件数</th><th>60日勝率</th><th>60日平均超過</th><th>テーマスコア</th><th>判定</th></tr></thead>
+        <tbody>
+          <tr><td>AI・半導体需要</td><td>6857.T<br>アドバンテスト</td><td>16</td><td>87.5%</td><td>25.56%</td><td>93.8</td><td>テーマ有効候補</td></tr><tr><td>金利上昇</td><td>8306.T<br>三菱UFJ</td><td>8</td><td>87.5%</td><td>13.51%</td><td>90.8</td><td>テーマ有効候補</td></tr><tr><td>市場ストレス</td><td>8306.T<br>三菱UFJ</td><td>8</td><td>87.5%</td><td>6.62%</td><td>77</td><td>テーマ有効候補</td></tr><tr><td>素材・資源</td><td>2802.T<br>味の素</td><td>8</td><td>75%</td><td>9.73%</td><td>77</td><td>テーマ有効候補</td></tr><tr><td>素材・資源</td><td>8058.T<br>三菱商事</td><td>8</td><td>75%</td><td>9.29%</td><td>76.1</td><td>テーマ有効候補</td></tr><tr><td>円安進行</td><td>7974.T<br>任天堂</td><td>8</td><td>62.5%</td><td>5.5%</td><td>62.2</td><td>追加検証候補</td></tr><tr><td>AI・半導体需要</td><td>8035.T<br>東京エレクトロン</td><td>16</td><td>68.8%</td><td>3.47%</td><td>61.3</td><td>追加検証候補</td></tr><tr><td>市場ストレス</td><td>4519.T<br>中外製薬</td><td>8</td><td>62.5%</td><td>1.49%</td><td>54.2</td><td>中立</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small">イベント件数が少ないものは過信しません。5月中に時流テーマスコアへ接続し、6月上旬は順位が安定するかを確認します。</p>
+    </section>
+
+    <section>
+      <h2>6. 6月購入までの更新スケジュール</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>期間</th><th>作業</th><th>成果物</th><th>購入判断への意味</th></tr></thead>
+        <tbody>
+          <tr><td>5/17〜5/20</td><td>不足財務データの補完</td><td>FCF、自社株買い、PER、配当、自己資本比率の空欄削減</td><td>財務不足による誤判定を減らす</td></tr>
+          <tr><td>5/20〜5/23</td><td>時流テーマ候補表を作成</td><td>AI半導体、金利、円安、資源、素材、防衛、電力不足などの一覧</td><td>6月に何を狙うのか説明可能にする</td></tr>
+          <tr><td>5/23〜5/26</td><td>テーマスコア実装</td><td>SOX、金利、為替、原油、VIX、業界ETFからテーマ強度を点数化</td><td>時流を感覚ではなく数値化する</td></tr>
+          <tr><td>5/26〜5/28</td><td>テーマ×銘柄マッチング</td><td>過去3年イベント検証と銘柄適合度を結合</td><td>テーマに乗りやすい銘柄を抽出</td></tr>
+          <tr><td>5/28〜5/31</td><td>6月テスト候補一覧を作成</td><td>候補3〜5銘柄、除外理由、確認項目</td><td>6月上旬テストの対象を固定</td></tr>
+          <tr><td>6/1〜6/9</td><td>仮運用テスト</td><td>毎日スコア更新、順位変動、異常値記録</td><td>スコアが安定して使えるかを見る</td></tr>
+          <tr><td>6/10</td><td>米CPI確認</td><td>インフレ・金利リスク判定</td><td>悪化なら購入延期</td></tr>
+          <tr><td>6/15〜6/17</td><td>日銀・FOMC確認</td><td>円高ショック、米金利、NASDAQ反応の確認</td><td>イベント通過後に買える地合いか判断</td></tr>
+          <tr><td>6/18〜6/21</td><td>最終スコア再計算</td><td>候補1〜3銘柄、購入可否、投入額</td><td>6月下旬の少額購入判断</td></tr>
+          <tr><td>6/22〜6/30</td><td>NISA少額テスト購入</td><td>10〜25万円以内の購入記録、予測と実績の比較開始</td><td>システムの実運用検証</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <h2>7. 6月購入判断ルール</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>条件</th><th>行動</th></tr></thead>
+        <tbody>
+          <tr><td>CPI悪化なし、米10年金利急騰なし、日銀/FOMC通過後に指数が安定</td><td>6/22以降に少額購入可</td></tr>
+          <tr><td>日経平均が75日線を明確に下回る</td><td>購入停止</td></tr>
+          <tr><td>日経平均が直近高値から-10%以上</td><td>投入額を半分以下</td></tr>
+          <tr><td>VIXが25超</td><td>新規購入を抑制</td></tr>
+          <tr><td>VIXが30超</td><td>原則停止</td></tr>
+          <tr><td>候補銘柄に下方修正</td><td>その銘柄を除外</td></tr>
+          <tr><td>財務データ不足が大きい銘柄</td><td>スコア上位でも購入候補から外す</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <h2>8. 最終方針</h2>
+      <div class="riskbox"><b>6月は本格運用ではなく、検証を兼ねた少額購入です。</b><br>5月中に「不足財務データ補完」と「時流テーマ選定機能」を実装し、6月上旬にスコアの安定性を確認します。6月中旬のCPI・日銀・FOMCを通過し、条件を満たした場合のみ、6月22日以降にNISA枠の10〜25%以内でテスト購入します。</div>
+    </section>
+  </main>
+</body>
+</html>
