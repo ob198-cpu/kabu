@@ -1,0 +1,5 @@
+event_id,theme,event_date,event_variable,event_value,candidate_ticker,candidate_name,benchmark,stock_return_5d_pct,benchmark_return_5d_pct,excess_return_5d_pct,stock_return_20d_pct,benchmark_return_20d_pct,excess_return_20d_pct,stock_return_60d_pct,benchmark_return_60d_pct,excess_return_60d_pct,result,note
+EVT-NAPHTHA-01,ナフサ不足・石化原料逼迫,,ナフサ価格/原油価格/化学品スプレッド,,,,TOPIXまたは化学指数,,,,,,,,,,未検証,イベント日と候補銘柄を入れると、次工程で株価データから5/20/60日リターンを自動計算する。
+EVT-AI-POWER-01,AIデータセンター電力不足,,電力需要/設備受注/銅価格/データセンター投資,,,,TOPIXまたは電機・建設・設備指数,,,,,,,,,,未検証,AIテーマ株ではなく、電力・冷却・受変電など二次需要の銘柄を検証する。
+EVT-RATE-01,金利上昇,,米10年金利/日本10年金利/政策金利,,,,TOPIXまたは銀行指数,,,,,,,,,,未検証,銀行株は金利だけでなく信用コストも確認する。
+EVT-YEN-01,円安進行,,ドル円/会社想定為替/海外売上比率,,,,TOPIX,,,,,,,,,,未検証,円安メリット銘柄と輸入コスト増銘柄を分けて検証する。
