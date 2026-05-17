@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>イベント検証 集計サマリー</title>
+<style>
+body{font-family:"Yu Gothic",Meiryo,sans-serif;margin:24px;background:#f5f7fa;color:#172033}
+h1{font-size:24px;margin:0 0 8px}
+.note{background:#fff;border-left:6px solid #146b8c;padding:12px 14px;margin:14px 0 18px;line-height:1.7}
+table{border-collapse:collapse;background:#fff;width:100%;font-size:13px}
+th,td{border:1px solid #d8e1ea;padding:8px;vertical-align:top}
+th{background:#173f5f;color:#fff;position:sticky;top:0}
+.good td{background:#ebf8f0}
+.watch td{background:#fff8e5}
+.bad td{background:#fff0f0}
+.num{font-weight:700}
+</style>
+</head>
+<body>
+<h1>イベント検証 集計サマリー</h1>
+<div class="note">
+更新: 2026/05/17 17:01<br>
+イベント検証明細をテーマ×銘柄で集計し、5日・20日・60日後に日経平均を上回った割合と平均超過リターンをまとめています。<br>
+この表は、NISA 1年保有の銘柄選びで「どの時流テーマがどの銘柄に効きやすいか」を見るための補助表です。
+</div>
+<table>
+<thead><tr><th>theme</th><th>candidate_ticker</th><th>candidate_name</th><th>events</th><th>win_rate_5d_pct</th><th>avg_excess_5d_pct</th><th>win_rate_20d_pct</th><th>avg_excess_20d_pct</th><th>win_rate_60d_pct</th><th>avg_excess_60d_pct</th><th>effective_count</th><th>reverse_count</th><th>event_theme_score</th><th>decision</th><th>note</th></tr></thead>
+<tbody><tr class="good"><td>AI・半導体需要</td><td>8035.T</td><td>東京エレクトロン</td><td>6</td><td>33.3</td><td>-0.61</td><td>66.7</td><td>3.15</td><td>100</td><td>24.57</td><td>6</td><td>0</td><td>100</td><td>テーマ有効候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="good"><td>AI・半導体需要</td><td>6857.T</td><td>アドバンテスト</td><td>6</td><td>66.7</td><td>1.78</td><td>33.3</td><td>1.77</td><td>100</td><td>16.92</td><td>4</td><td>0</td><td>100</td><td>テーマ有効候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="good"><td>素材・資源</td><td>8058.T</td><td>三菱商事</td><td>3</td><td>66.7</td><td>4.23</td><td>66.7</td><td>3.5</td><td>100</td><td>13.33</td><td>3</td><td>0</td><td>91.7</td><td>テーマ有効候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="watch"><td>素材・資源</td><td>2802.T</td><td>味の素</td><td>3</td><td>66.7</td><td>4.84</td><td>33.3</td><td>3.9</td><td>66.7</td><td>11.01</td><td>2</td><td>1</td><td>70.4</td><td>追加検証候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="watch"><td>金利上昇</td><td>8306.T</td><td>三菱UFJ</td><td>3</td><td>33.3</td><td>-0.43</td><td>66.7</td><td>2.77</td><td>66.7</td><td>5.96</td><td>2</td><td>1</td><td>60.3</td><td>追加検証候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class=""><td>原油・ナフサ系コスト変動</td><td>8058.T</td><td>三菱商事</td><td>3</td><td>33.3</td><td>-2.1</td><td>33.3</td><td>0.67</td><td>66.7</td><td>3.68</td><td>2</td><td>0</td><td>55.7</td><td>中立</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="bad"><td>円安進行</td><td>8058.T</td><td>三菱商事</td><td>3</td><td>66.7</td><td>0.38</td><td>33.3</td><td>-2.44</td><td>33.3</td><td>0.56</td><td>1</td><td>2</td><td>32.8</td><td>注意/逆効果候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="bad"><td>市場ストレス</td><td>8306.T</td><td>三菱UFJ</td><td>3</td><td>0</td><td>-3.05</td><td>33.3</td><td>-3.3</td><td>33.3</td><td>-4.82</td><td>1</td><td>2</td><td>22</td><td>注意/逆効果候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="bad"><td>原油・ナフサ系コスト変動</td><td>2802.T</td><td>味の素</td><td>3</td><td>66.7</td><td>-1.82</td><td>33.3</td><td>-4.02</td><td>33.3</td><td>-13.23</td><td>1</td><td>2</td><td>21.7</td><td>注意/逆効果候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="bad"><td>市場ストレス</td><td>9433.T</td><td>KDDI</td><td>3</td><td>66.7</td><td>-0.04</td><td>33.3</td><td>-0.18</td><td>33.3</td><td>-11.56</td><td>1</td><td>2</td><td>21.7</td><td>注意/逆効果候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="bad"><td>市場ストレス</td><td>4519.T</td><td>中外製薬</td><td>3</td><td>33.3</td><td>-6.81</td><td>33.3</td><td>-4.62</td><td>33.3</td><td>-12.08</td><td>1</td><td>2</td><td>21.7</td><td>注意/逆効果候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="bad"><td>円安進行</td><td>7974.T</td><td>任天堂</td><td>3</td><td>33.3</td><td>1.66</td><td>100</td><td>3.34</td><td>0</td><td>-17.33</td><td>1</td><td>2</td><td>5</td><td>注意/逆効果候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr>
+<tr class="bad"><td>銀行セクター</td><td>8306.T</td><td>三菱UFJ</td><td>3</td><td>33.3</td><td>-0.34</td><td>33.3</td><td>-2.98</td><td>0</td><td>-11.9</td><td>0</td><td>3</td><td>5</td><td>注意/逆効果候補</td><td>暫定イベント抽出による検証。サンプル数が少ないため、今後イベント日付を手入力で増やして精度を上げる。</td></tr></tbody>
+</table>
+</body>
+</html>
