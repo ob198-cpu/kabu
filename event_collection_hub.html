@@ -36,7 +36,7 @@
 <header>
   <h1>上場・IPO・イベント収集コーナー</h1>
   <p class="lead">IPO、新規上場、適時開示、業績修正、自社株買い、株式分割、指数採用など、株価に影響しやすいイベントを集めて、銘柄候補の確認に使うための入口です。</p>
-  <p class="small">更新: 2026/05/18 13:31</p>
+  <p class="small">更新: 2026/05/18 14:07</p>
 </header>
 <main>
   <section>
@@ -140,8 +140,28 @@
   </section>
 
   <section>
+    <h2>イベント記録表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>項目</th><th>意味</th><th>入力例</th><th>使い方</th></tr></thead>
+        <tbody>
+          <tr><td>event_date</td><td>イベント発生日または開示日</td><td>2026-06-18</td><td>株価反応を前後比較する基準日</td></tr>
+          <tr><td>ticker / company_name</td><td>対象銘柄</td><td>4680.T / ラウンドワン</td><td>銘柄スコアへ接続</td></tr>
+          <tr><td>event_group</td><td>イベント分類</td><td>IPO、業績修正、自社株買い、指数採用</td><td>加点・減点ルールを選ぶ</td></tr>
+          <tr><td>importance_1_5</td><td>重要度</td><td>5</td><td>大きいほど確認優先度を上げる</td></tr>
+          <tr><td>score_action</td><td>スコアへの扱い</td><td>加点、減点、除外、監視、情報のみ</td><td>候補銘柄の判定に使う</td></tr>
+          <tr><td>score_adjustment</td><td>暫定補正点</td><td>+3、-5、0</td><td>最終スコアの補正候補。確定前は暫定扱い</td></tr>
+          <tr><td>source_url</td><td>確認元URL</td><td>TDnet、JPX、EDINET、Nasdaq、SEC</td><td>説明責任のため必ず残す</td></tr>
+          <tr><td>next_check</td><td>次に確認すること</td><td>決算短信PDF、会社予想、出来高反応</td><td>人間が迷わないようにする</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">CSV: <a href="19_event_log_template.csv">19_event_log_template.csv</a></p>
+  </section>
+
+  <section>
     <h2>実装状態</h2>
-    <div class="ok"><b>今回作成済み</b><br>イベント収集の入口ページ、取得元リスト、分類ルール、CSV記録表を作成しました。</div>
+    <div class="ok"><b>今回作成済み</b><br>イベント収集の入口ページ、取得元リスト、分類ルール、イベント記録表テンプレートを作成しました。</div>
     <div class="notice"><b>次工程</b><br>直近のJPX/TDnet/Nasdaq情報を実際に取得し、イベント一覧表に保存します。自動取得できない項目は、手動確認欄として分けます。</div>
     <div class="risk"><b>できないと言うべきこと</b><br>有料データベース、ログインが必要な情報、四季報本文、TDnet長期履歴の一括取得は、この段階では自動取得できる前提にしません。</div>
     <p class="small">関連: <a href="candidate_theme_scoring.html">候補銘柄 試算スコア表</a> / <a href="theme_stock_bridge.html">テーマと銘柄の接続表</a> / <a href="market_theme_check.html">市場テーマ確認表</a></p>

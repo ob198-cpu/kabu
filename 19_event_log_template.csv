@@ -1,0 +1,2 @@
+event_id,status,event_date,collected_date,market,ticker,company_name,event_group,event_title,importance_1_5,score_action,score_adjustment,reason,source_name,source_url,next_check,checked_by,notes
+EVT-0001,template,YYYY-MM-DD,YYYY-MM-DD,JP/US,例: 4680.T,例: ラウンドワン,例: 業績修正,例: 通期業績予想の修正,1〜5,加点/減点/除外/監視/情報のみ,例: -5,例: 下方修正なら候補から一時除外,例: TDnet,https://...,例: 決算短信PDFを確認,担当者,ここにメモ
