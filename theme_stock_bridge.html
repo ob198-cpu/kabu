@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>市場テーマと銘柄候補の接続表</title>
+<style>
+  :root{--ink:#172033;--muted:#607086;--line:#d8e1ec;--bg:#f5f8fb;--navy:#14395b;--blue:#1f6f8b;--green:#17815a;--amber:#b76e00;--red:#b83232}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+  header{background:#14395b;color:#fff;padding:30px 22px}
+  main{max-width:1180px;margin:auto;padding:22px}
+  h1{margin:0 0 8px;font-size:30px;line-height:1.2}
+  h2{font-size:20px;margin:24px 0 10px;border-left:8px solid var(--blue);padding-left:10px;color:var(--navy)}
+  p{margin:8px 0}.lead{color:#e9f5ff;max-width:920px}
+  .notice{background:#fff7e8;border:1px solid #efc378;border-left:8px solid #d98300;border-radius:10px;padding:13px 15px;margin:14px 0}
+  .ok{background:#e9f7f0;border:1px solid #a9dcc1;border-left:8px solid var(--green);border-radius:10px;padding:13px 15px;margin:14px 0}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+  table{width:100%;border-collapse:collapse;min-width:1120px}
+  th,td{border-bottom:1px solid #e7eef6;padding:10px 11px;font-size:13px;vertical-align:top;text-align:left}
+  th{background:#eaf2f9;color:#1d405f;font-weight:800}
+  tr:last-child td{border-bottom:none}
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px}
+  .step b{display:block;color:var(--navy);margin-bottom:4px}
+  .small{font-size:12px;color:var(--muted)}
+  a{color:#145f86;font-weight:700}
+  @media(max-width:900px){.flow{grid-template-columns:1fr}table{min-width:900px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>市場テーマと銘柄候補の接続表</h1>
+  <p class="lead">市場テーマ確認表で見た数字を、どの銘柄候補の確認に使うかを整理したページです。これは買い推奨ではなく、NISA 1年保有スコアへ進む前のチェック表です。</p>
+  <p class="small">更新: 2026/05/18 12:54</p>
+</header>
+<main>
+  <section>
+    <h2>この表で分かること</h2>
+    <div class="flow">
+      <div class="step"><b>1. テーマ</b>AI、金利、円安、資源、守り、インフレを確認</div>
+      <div class="step"><b>2. 見る数字</b>SOX、金利、為替、VIX、CPIなどを確認</div>
+      <div class="step"><b>3. 候補銘柄</b>テーマに関係しやすい銘柄を候補化</div>
+      <div class="step"><b>4. 注意点</b>数字だけでなく決算とPERも確認</div>
+      <div class="step"><b>5. スコアへ接続</b>NISA 1年保有スコアで最終整理</div>
+    </div>
+    <div class="notice">この表は、ニュースやテーマをそのまま買い判断にするものではありません。市場テーマに合っているかを確認し、その後に財務、PER、決算、下落耐性で絞り込みます。</div>
+  </section>
+
+  <section>
+    <h2>テーマ別の確認表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>市場テーマ</th>
+            <th>確認するデータ</th>
+            <th>候補銘柄例</th>
+            <th>使い方</th>
+            <th>注意点</th>
+            <th>実装状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>AI・半導体</b></td>
+            <td>SOX指数、SMH、XLK、米10年金利、VIX</td>
+            <td>8035 東京エレクトロン、6857 アドバンテスト、4063 信越化学、5803 フジクラ、6501 日立製作所</td>
+            <td>SOX/SMHが20日・60日で上向き、かつVIX急騰なしなら候補に残す。金利急騰時は高PER銘柄の投入額を下げる。</td>
+            <td>半導体は期待先行になりやすい。PER、受注、会社予想、米金利を同時確認する。単独指標で買わない。</td>
+            <td>確認表作成済み。個別決算との接続は追加実装対象。</td>
+          </tr><tr>
+            <td><b>金利上昇・銀行</b></td>
+            <td>米10年金利、FF金利、10年-2年金利差、TOPIX銀行ETF</td>
+            <td>8306 三菱UFJ、8316 三井住友FG、8411 みずほFG</td>
+            <td>金利が上向き、銀行ETFも上向きなら候補化。金利上昇だけでなく、信用コストと決算進捗を確認する。</td>
+            <td>景気悪化や不良債権増加があると金利上昇でも株価が弱くなる。日銀イベント前は投入額を抑える。</td>
+            <td>確認表作成済み。信用コストの自動取得は未実装。</td>
+          </tr><tr>
+            <td><b>円安・海外売上</b></td>
+            <td>ドル円、米金利、日本株指数、企業別海外売上比率</td>
+            <td>8058 三菱商事、7203 トヨタ、6501 日立製作所、2802 味の素</td>
+            <td>円安が続き、海外売上比率が高い企業は候補化。ただし輸入コストが重い企業は別判定にする。</td>
+            <td>海外売上比率はIRや有価証券報告書確認が必要。現時点では一部手入力・確認扱い。</td>
+            <td>為替データは取得済み。海外売上比率の自動取得は未実装。</td>
+          </tr><tr>
+            <td><b>資源・素材・ナフサ</b></td>
+            <td>WTI、Brent、銅価格、XLB、ナフサ価格、化学品価格</td>
+            <td>1605 INPEX、8058 三菱商事、4005 住友化学、4188 三菱ケミカル</td>
+            <td>原油・素材価格が上向きなら資源側を確認。ナフサ高は化学メーカーにコスト圧迫としても見る。</td>
+            <td>ナフサ価格や化学品価格は安定取得ルートを確認中。現時点では原油・素材ETFで代替確認。</td>
+            <td>代替指標は取得済み。ナフサ個別データは未実装。</td>
+          </tr><tr>
+            <td><b>市場不安・守り</b></td>
+            <td>VIX、日経平均/TOPIX、米金利、為替、出来高</td>
+            <td>9433 KDDI、9432 NTT、4452 花王、4519 中外製薬</td>
+            <td>VIX上昇や指数悪化時は、投入額を下げて守り候補を優先。現金比率を増やす判断にも使う。</td>
+            <td>守り銘柄でも下落はする。配当、業績安定性、決算悪化がないかを確認する。</td>
+            <td>市場不安の確認は実装済み。銘柄別守り判定は追加実装対象。</td>
+          </tr><tr>
+            <td><b>インフレ・コスト</b></td>
+            <td>CPI、PPI、為替、原油、企業別原価率、値上げ実績</td>
+            <td>2802 味の素、2801 キッコーマン、4452 花王、8113 ユニ・チャーム</td>
+            <td>CPI/PPIが高い時は、値上げできる企業か、原価上昇に負ける企業かを分ける。</td>
+            <td>売上増が値上げによるものか数量増によるものかは決算資料確認が必要。自動判定はまだ不可。</td>
+            <td>CPI/PPIは取得済み。企業別原価率・値上げ実績は未実装。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>運用上のルール</h2>
+    <div class="ok"><b>採用できる使い方</b><br>市場テーマと取得済みデータの方向が一致する銘柄を、次の詳細スコア計算に回します。</div>
+    <div class="notice"><b>採用しない使い方</b><br>「AIが強いから半導体を買う」「円安だから海外売上銘柄を買う」のように、テーマだけで購入判断をしません。</div>
+    <p>次の工程では、この接続表を使って、候補銘柄ごとに「テーマ適合」「決算確認」「PER確認」「下落耐性確認」の列を追加します。</p>
+    <p class="small">関連ページ: <a href="market_theme_check.html">市場テーマ確認表</a> / <a href="nisa_1year_mvp_june_test_report.html">NISA 1年保有スコア テスト計画</a></p>
+  </section>
+</main>
+</body>
+</html>
