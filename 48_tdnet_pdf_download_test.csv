@@ -1,0 +1,3 @@
+updated_at,ticker,company_name,event_date,action_class,event_title,source_url,http_status,content_type,bytes,pdf_download_status,next_step
+2026/05/18 17:30,9433.T,ＫＤＤＩ,2026-05-12,その他,2026年３月期 決算説明会資料（中期経営戦略）,https://www.release.tdnet.info/inbs/140120260512524146.pdf,200,application/pdf,4416464,PDF取得確認済み,本文テキスト抽出と数値項目抽出は次工程
+2026/05/18 17:30,9433.T,ＫＤＤＩ,2026-05-12,上場・IPO関連,auフィナンシャルホールディングス株式会社の東京証券取引所への株式上場準備の開始について,https://www.release.tdnet.info/inbs/140120260512524156.pdf,200,application/pdf,140561,PDF取得確認済み,本文テキスト抽出と数値項目抽出は次工程
