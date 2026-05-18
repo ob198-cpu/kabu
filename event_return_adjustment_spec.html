@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>イベント反応補正 仕様書</title>
+<style>
+body{margin:0;background:#f5f8fb;color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.7}
+header{background:#14395b;color:#fff;padding:30px 22px} main{max-width:1180px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:30px;line-height:1.2} h2{font-size:20px;margin:26px 0 10px;border-left:8px solid #1f6f8b;padding-left:10px;color:#14395b}
+.lead{color:#e9f5ff;max-width:980px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box,.metric{background:#fff;border:1px solid #d8e1ec;border-radius:12px;padding:14px 16px;margin:12px 0}.warn{background:#fff7e8;border-left:8px solid #d98300}
+.metric b{font-size:28px;color:#12668a}.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+.step{background:#fff;border:1px solid #cbd9e6;border-radius:10px;padding:14px;position:relative}.step b{display:block;color:#14395b}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d8e1ec;border-radius:12px;overflow:hidden} th,td{border-bottom:1px solid #e7eef6;padding:9px 10px;font-size:13px;text-align:left;vertical-align:top}
+th{background:#eaf2f9;color:#1d405f}.pos{color:#08783e;font-weight:800}.neg{color:#b3261e;font-weight:800}
+code{background:#edf3f8;padding:2px 5px;border-radius:5px}
+</style>
+</head>
+<body>
+<header>
+  <h1>イベント反応補正 仕様書</h1>
+  <p class="lead">イベント後リターンをランキングに反映するための、計算ルール・使用データ・制限を明記した説明ページです。</p>
+  <p>更新: 2026/05/18 17:11</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="metric"><b>8</b><br>候補銘柄</div>
+    <div class="metric"><b>32</b><br>計算済みイベント明細</div>
+    <div class="metric"><b>98</b><br>未確定イベント明細</div>
+    <div class="metric"><b>±2.5点</b><br>補正上限</div>
+  </section>
+
+  <section>
+    <h2>何をする機能か</h2>
+    <div class="box">日銀・FRB・TDnetなどのイベント日と、候補銘柄の株価時系列を結合し、イベント後20営業日のリターンが日経平均を上回ったかを確認します。その結果を、6月テスト候補ランキングへ小さな補正点として反映します。</div>
+  </section>
+
+  <section>
+    <h2>処理の流れ</h2>
+    <div class="flow">
+      <div class="step"><b>1. イベント取得</b>日銀・FRB・TDnet等の日付を記録</div>
+      <div class="step"><b>2. 株価取得</b>候補銘柄と日経平均の1年日次株価を取得</div>
+      <div class="step"><b>3. リターン計算</b>1営業日・5営業日・20営業日後を計算</div>
+      <div class="step"><b>4. 指数比較</b>日経平均との差を超過リターンとして記録</div>
+      <div class="step"><b>5. 小さく補正</b>最大±2.5点だけランキングへ反映</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>補正式</h2>
+    <div class="box"><code>イベント反応補正 = 20営業日平均超過リターン補正 + 強弱回数補正</code><br><code>最終6月テスト点 = 基礎スコア + 本文イベント補正 + イベント反応補正</code></div>
+    <table><thead><tr><th>条件</th><th>補正</th></tr></thead><tbody><tr><td>イベント後20営業日の平均超過リターンが +5%以上</td><td>+2.0点</td></tr><tr><td>イベント後20営業日の平均超過リターンが +2%以上 +5%未満</td><td>+1.0点</td></tr><tr><td>イベント後20営業日の平均超過リターンが -2%以下 -5%超</td><td>-1.0点</td></tr><tr><td>イベント後20営業日の平均超過リターンが -5%以下</td><td>-2.0点</td></tr><tr><td>強いイベント回数が弱いイベント回数より2回以上多い</td><td>+0.5点</td></tr><tr><td>弱いイベント回数が強いイベント回数より2回以上多い</td><td>-0.5点</td></tr><tr><td>最終補正幅</td><td>最大 +2.5点 / 最小 -2.5点</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>今回の補正結果</h2>
+    <table>
+      <thead><tr><th>順位</th><th>銘柄</th><th>最終点</th><th>イベント反応補正</th><th>20日超過平均</th><th>計算件数</th><th>強/弱</th></tr></thead>
+      <tbody><tr>
+          <td>1</td>
+          <td><b>8306.T</b><br>三菱UFJフィナンシャル・グループ</td>
+          <td>74.2</td>
+          <td class="">0</td>
+          <td>-0.36%</td>
+          <td>4</td>
+          <td>0 / 1</td>
+        </tr><tr>
+          <td>2</td>
+          <td><b>8058.T</b><br>三菱商事</td>
+          <td>68.7</td>
+          <td class="">0</td>
+          <td>1.01%</td>
+          <td>4</td>
+          <td>2 / 2</td>
+        </tr><tr>
+          <td>3</td>
+          <td><b>8035.T</b><br>東京エレクトロン</td>
+          <td>68</td>
+          <td class="pos">+0.5</td>
+          <td>1.75%</td>
+          <td>4</td>
+          <td>2 / 0</td>
+        </tr><tr>
+          <td>4</td>
+          <td><b>2802.T</b><br>味の素</td>
+          <td>68</td>
+          <td class="pos">+2</td>
+          <td>10.43%</td>
+          <td>4</td>
+          <td>2 / 2</td>
+        </tr><tr>
+          <td>5</td>
+          <td><b>9433.T</b><br>KDDI</td>
+          <td>61</td>
+          <td class="neg">-2.5</td>
+          <td>-7.85%</td>
+          <td>4</td>
+          <td>0 / 4</td>
+        </tr><tr>
+          <td>6</td>
+          <td><b>6857.T</b><br>アドバンテスト</td>
+          <td>56.6</td>
+          <td class="pos">+2.5</td>
+          <td>5.89%</td>
+          <td>4</td>
+          <td>3 / 0</td>
+        </tr><tr>
+          <td>7</td>
+          <td><b>7974.T</b><br>任天堂</td>
+          <td>54.3</td>
+          <td class="neg">-2.5</td>
+          <td>-22.6%</td>
+          <td>4</td>
+          <td>0 / 4</td>
+        </tr><tr>
+          <td>8</td>
+          <td><b>4519.T</b><br>中外製薬</td>
+          <td>46.7</td>
+          <td class="">0</td>
+          <td>-1.54%</td>
+          <td>4</td>
+          <td>2 / 2</td>
+        </tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>制限</h2>
+    <div class="box warn">この機能は因果関係の証明ではありません。イベント後に株価が動いた事実を記録するもので、決算内容、バリュエーション、為替、金利、指数全体の地合いと組み合わせて判断します。未来イベントや20営業日未満のイベントは未確定として扱います。</div>
+  </section>
+</main>
+</body>
+</html>
