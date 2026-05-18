@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>本日の進捗報告書 2026-05-18</title>
+<style>
+@page{size:A4;margin:13mm}
+body{margin:0;background:#f5f8fb;color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.55}
+.page{max-width:1120px;margin:auto;padding:24px}
+header{background:#14395b;color:#fff;padding:28px 30px;border-radius:14px;margin-bottom:18px}
+h1{margin:0 0 8px;font-size:28px} h2{font-size:19px;margin:22px 0 10px;border-left:7px solid #1f6f8b;padding-left:10px;color:#14395b}
+.lead{color:#e9f5ff}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.metric{background:#fff;border:1px solid #d8e1ec;border-radius:12px;padding:12px}.metric b{display:block;font-size:25px;color:#12668a}
+.box{background:#fff;border:1px solid #d8e1ec;border-radius:12px;padding:13px 15px;margin:10px 0}.warn{background:#fff7e8;border-left:8px solid #d98300}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d8e1ec;margin:10px 0 16px;break-inside:auto}
+tr{break-inside:avoid} th,td{border-bottom:1px solid #e7eef6;padding:7px 8px;font-size:11.5px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.done{color:#08783e;font-weight:800}.partial{color:#b76e00;font-weight:800}.pending{color:#b3261e;font-weight:800}
+.small{font-size:11px;color:#607086}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media print{body{background:#fff}.page{padding:0}.box,.metric,table{box-shadow:none}.two{display:block}}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <h1>本日の進捗報告書</h1>
+  <p class="lead">株式判断補助システム MVP / データ取得・計算・課題管理</p>
+  <p>対象日: 2026年5月18日　作成: 2026/05/18 17:51</p>
+</header>
+
+<section class="grid">
+  <div class="metric"><b>64</b>Excelシート数</div>
+  <div class="metric"><b>72件</b>SEC開示取得</div>
+  <div class="metric"><b>16件</b>日銀・FRB日程</div>
+  <div class="metric"><b>200件</b>TDnet分類</div>
+</section>
+
+<div class="box warn">本報告は売買推奨ではなく、NISAで1年保有を検討するための判断補助システム開発の進捗です。取得できたデータ、課題が残るデータ、未実装データを分けて記載しています。</div>
+
+<h2>1. 本日実施したこと</h2>
+<table><thead><tr><th>作業</th><th>内容</th></tr></thead><tbody><tr><td class="">追加公開データ取得</td><td class="pending">SEC EDGAR 72件、日銀8件、FOMC8件、EDINET入口、業界統計入口を整理</td></tr><tr><td class="">イベント後リターン計算</td><td class="pending">イベント×銘柄130件を作成。1営業日/5営業日/20営業日後と日経平均超過を計算</td></tr><tr><td class="">イベント反応補正ランキング</td><td class="pending">イベント後20営業日の平均超過リターンを最大±2.5点でランキングへ反映</td></tr><tr><td class="">TDnet重要イベント分類</td><td class="pending">直近200件を自社株買い、上方修正、下方修正、増配、減配、M&amp;Aなどに分類</td></tr><tr><td class="">運用判断テーブル</td><td class="pending">購入前チェック、未確定データ一覧、弱いイベント警告、再取得ログを作成</td></tr><tr><td class="">次工程データ検証キュー</td><td class="pending">EDINET/XBRL、PDF読解、業界統計、SEC S-1代替の状態と禁止表現を明記</td></tr><tr><td class="">Excel更新</td><td class="partial">シート64まで拡張し、取得・計算・課題管理を1ブックに格納</td></tr></tbody></table>
+
+<h2>2. データ取得候補全体の進捗</h2>
+<table><thead><tr><th>データ</th><th>状態</th><th>取得元</th><th>今日時点でできたこと</th><th>課題・注意</th></tr></thead><tbody><tr><td class="">株価・出来高</td><td class="done">取得済み</td><td class="">Yahoo Finance chart API</td><td class="">候補8銘柄、日経平均、指数の1年日次・週次データを取得し、移動平均・騰落率・出来高倍率に使用</td><td class="">商用APIではないため、取得失敗時の再実行ログが必要</td></tr><tr><td class="">為替・米10年金利・VIX・DXY</td><td class="done">取得済み</td><td class="">Yahoo Finance / FRED等</td><td class="">市場環境、金利・ドル・リスク許容度の確認に使用</td><td class="">短期売買指示ではなく、購入前チェック材料として扱う</td></tr><tr><td class="">CPI/PPI・米マクロ</td><td class="done">取得済み</td><td class="">FRED</td><td class="">インフレ・金利イベント確認に使用</td><td class="">日本CPI/e-Statの系列本格取得は追加実装余地あり</td></tr><tr><td class="">SEC EDGAR直近開示</td><td class="done">取得済み</td><td class="">SEC submissions API</td><td class="">NVDA/GOOGL/MSFT/AMZN/TSM/VRTで72件取得</td><td class="">日本株候補への直接反映ではなく、米国テーマ・競合・S-1監視に使用</td></tr><tr><td class="">日銀・FRBイベント日程</td><td class="done">取得済み</td><td class="">日銀公式 / FRB公式</td><td class="">日銀8件、FOMC8件を取得し、イベント後リターン計算に接続</td><td class="">声明文・議事要旨・ドットチャートの本文解析は別工程</td></tr><tr><td class="">TDnet直近イベント</td><td class="done">取得済み</td><td class="">TDnet public HTML/PDF</td><td class="">直近200件を取得し、自社株買い・上方修正・下方修正・増配等に分類</td><td class="">タイトル分類は一次判定。スコア反映前に本文確認が必要</td></tr><tr><td class="">イベント後リターン</td><td class="done">実装済み</td><td class="">取得済みイベント + 株価時系列</td><td class="">130件のイベント×銘柄を作成。32件は20営業日後まで計算済み</td><td class="">未来イベント・日数不足の98件は未確定として残す</td></tr><tr><td class="">TDnet PDF取得</td><td class="done">一部取得済み</td><td class="">TDnet PDF</td><td class="">KDDI関連PDF 2件のPDF取得を確認</td><td class="">PDFが取れることと、本文の数値を正確に読めることは別</td></tr><tr><td class="">EDINET有報/XBRL</td><td class="partial">課題あり</td><td class="">EDINET API v2</td><td class="">API入口は到達済み。対象日では文書0件</td><td class="">企業別EDINETコード、対象書類、XBRLタグ設計が必要。財務値抽出済みとは言わない</td></tr><tr><td class="">Nasdaq IPOカレンダー</td><td class="partial">課題あり</td><td class="">Nasdaq / SEC代替</td><td class="">Nasdaqページはタイムアウト。SEC S-1/F-1代替方針を整理</td><td class="">Nasdaq IPO一覧を安定自動取得済みとは言わない</td></tr><tr><td class="">業界統計</td><td class="partial">一部取得・課題あり</td><td class="">経産省/JADA/全軽自協/OCCTO</td><td class="">入口確認。全軽自協とOCCTOはページ到達、METIはタイムアウト、JADAは404</td><td class="">系列コード・安定URL・月次単位の統一が必要</td></tr><tr><td class="">決算説明資料PDFの全自動読解</td><td class="pending">未実装・検証待ち</td><td class="">企業IR/TDnet PDF</td><td class="">PDF取得確認までは開始</td><td class="">表崩れ、画像PDF、数値誤読対策が必要</td></tr><tr><td class="">コンセンサスEPS</td><td class="pending">未実装</td><td class="">有料DB/一部手動</td><td class="">決算サプライズ計算には有用</td><td class="">無料で安定取得できる公式APIが未確定</td></tr><tr><td class="">四季報本文/QUICK/日経/Bloomberg等</td><td class="pending">未実装・有料/権利前提</td><td class="">有料DB/契約データ</td><td class="">精度向上には有用</td><td class="">初期MVPでは前提にしない</td></tr></tbody></table>
+
+<h2>3. 成果物</h2>
+<table><thead><tr><th>成果物</th><th>ファイル</th></tr></thead><tbody><tr><td class="">運用判断テーブル</td><td class="pending">operational_decision_tables.html</td></tr><tr><td class="">次工程データ検証キュー</td><td class="pending">next_data_verification_queue.html</td></tr><tr><td class="">TDnet重要イベント分類</td><td class="pending">tdnet_action_classification.html</td></tr><tr><td class="">イベント後リターン計算</td><td class="pending">event_return_analysis.html</td></tr><tr><td class="">イベント反応補正ランキング</td><td class="pending">june_test_candidate_ranking_event_return.html</td></tr><tr><td class="">Excelブック</td><td class="pending">stock_decision_mvp_calculated.xlsx</td></tr></tbody></table>
+
+<h2>4. 明日の課題</h2>
+<table><thead><tr><th>課題</th><th>明日やること</th></tr></thead><tbody><tr><td class="">EDINET/XBRL</td><td class="pending">対象8銘柄のEDINETコード表を作成し、1社1書類でXBRL抽出テスト</td></tr><tr><td class="">PDF読解</td><td class="pending">KDDI PDF 1本をテキスト化し、売上/利益/ガイダンス等の抽出可否を確認</td></tr><tr><td class="">業界統計</td><td class="pending">電力需要または軽自動車販売の1系列だけを選び、時系列CSV化を試す</td></tr><tr><td class="">購入前チェック</td><td class="pending">未確認PER/FCF/EPSの補完優先順位を上位候補から整理</td></tr><tr><td class="">反映確認</td><td class="pending">GitHub Pagesの新規ページ反映、Excel Onlineで新シートが見えるか確認</td></tr></tbody></table>
+
+<h2>5. 報告時の要点</h2>
+<div class="box">
+  <b>説明ポイント:</b><br>
+  公開データで取得できる範囲はかなり広がった。特に株価、マクロ、SEC、日銀/FRB、TDnet、イベント後リターンは実データで表にできた。<br>
+  一方、EDINET XBRL、PDF本文読解、業界統計系列、コンセンサスEPSはまだ本実装ではない。ここは「できた」とは言わず、次工程として検証する。
+</div>
+<p class="small">保存先: C:\AI関連ファイル\株\reports\daily_progress_report_20260518.html / .pdf</p>
+</div>
+</body>
+</html>
