@@ -1,0 +1,3 @@
+event_scope,event_type,calculated_count,avg_return_1d_pct,avg_excess_1d_pct,avg_return_5d_pct,avg_excess_5d_pct,avg_return_20d_pct,avg_excess_20d_pct,strong_count,weak_count,interpretation
+市場イベント,Monetary Policy Meeting,16,-1.04,0.5,-1.34,0.43,5.17,-1.62,6,7,中立
+市場イベント,FOMC,16,1.36,-0.1,0.74,-0.6,7.51,-1.7,5,8,中立

@@ -1,0 +1,4 @@
+updated_at,source,url,last_result,retry_priority,retry_method,next_action
+2026/05/18 17:24,Nasdaq IPO Calendar,https://www.nasdaq.com/market-activity/ipos,取得失敗: This operation was aborted,中,SEC S-1で代替,SEC S-1検索で代替する
+2026/05/18 17:24,経済産業省 鉱工業指数,https://www.meti.go.jp/statistics/tyo/iip/result-2.html,取得失敗: This operation was aborted,中,公式ページのURL/Excelリンクを再確認,手動確認または別ソースを検討する
+2026/05/18 17:24,日本自動車販売協会連合会,https://www.jada.or.jp/statistics/,取得失敗,中,公式ページのURL/Excelリンクを再確認,必要系列を選定して個別実装する

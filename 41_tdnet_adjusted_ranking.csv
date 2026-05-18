@@ -1,0 +1,9 @@
+rank,ticker,name,final_score_for_june_test,tdnet_action_adjustment,final_score_after_tdnet_action,event_return_adjustment,avg_excess_20d_after_events_pct,reviewed_event_adjustment,missing_data,tdnet_action_note
+1,8306.T,三菱UFJフィナンシャル・グループ,74.2,0,74.2,0,-0.36,0,FCF / 自社株買い / PER,直近TDnetの重要分類による補正なし
+2,8058.T,三菱商事,68.7,0,68.7,0,1.01,0,自社株買い,直近TDnetの重要分類による補正なし
+3,8035.T,東京エレクトロン,68,0,68,0.5,1.75,0,自社株買い / PER,直近TDnetの重要分類による補正なし
+4,2802.T,味の素,68,0,68,2,10.43,0,自社株買い,直近TDnetの重要分類による補正なし
+5,9433.T,KDDI,61,0,61,-2.5,-7.85,1,FCF / 自己資本比率 / PER,直近TDnetの重要分類による補正なし
+6,6857.T,アドバンテスト,56.6,0,56.6,2.5,5.89,0,EPS成長率 / FCF / 配当利回り / 自社株買い,直近TDnetの重要分類による補正なし
+7,7974.T,任天堂,54.3,0,54.3,-2.5,-22.6,0,FCF / 自社株買い,直近TDnetの重要分類による補正なし
+8,4519.T,中外製薬,46.7,0,46.7,0,-1.54,0,EPS成長率 / FCF / 自己資本比率 / 配当利回り / 自社株買い / PER,直近TDnetの重要分類による補正なし
