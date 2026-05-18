@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>候補銘柄イベント照合</title>
+<style>
+  :root{--ink:#172033;--muted:#607086;--line:#d8e1ec;--bg:#f5f8fb;--navy:#14395b;--blue:#1f6f8b;--green:#17815a;--amber:#b76e00;--red:#b83232}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+  header{background:#14395b;color:#fff;padding:30px 22px}
+  main{max-width:1240px;margin:auto;padding:22px}
+  h1{margin:0 0 8px;font-size:30px;line-height:1.2}
+  h2{font-size:20px;margin:24px 0 10px;border-left:8px solid var(--blue);padding-left:10px;color:var(--navy)}
+  .lead{color:#e9f5ff;max-width:980px}.small{font-size:12px;color:var(--muted)}
+  .notice{background:#fff7e8;border:1px solid #efc378;border-left:8px solid #d98300;border-radius:10px;padding:13px 15px;margin:14px 0}
+  .ok{background:#e9f7f0;border:1px solid #a9dcc1;border-left:8px solid var(--green);border-radius:10px;padding:13px 15px;margin:14px 0}
+  .risk{background:#fff0f1;border:1px solid #efb3b9;border-left:8px solid var(--red);border-radius:10px;padding:13px 15px;margin:14px 0}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+  table{width:100%;border-collapse:collapse;min-width:1180px}
+  th,td{border-bottom:1px solid #e7eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}
+  th{background:#eaf2f9;color:#1d405f;font-weight:800;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  a{color:#145f86;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>候補銘柄イベント照合</h1>
+  <p class="lead">候補銘柄と、JPX新規上場・TDnet直近イベントを照合したページです。候補銘柄に直接関係するイベントと、市場全体の監視イベントを分けて表示します。</p>
+  <p class="small">更新: 2026/05/18 14:51</p>
+</header>
+<main>
+  <section>
+    <h2>照合結果</h2>
+    <div class="ok"><b>候補銘柄</b><br>8銘柄</div>
+    <div class="risk"><b>候補銘柄に一致したイベント</b><br>2件</div>
+    <div class="notice">一致が0件でも「何も起きていない」と断定しません。対象期間、取得元、表記ゆれ、TDnet以外のIRを確認する必要があります。</div>
+  </section>
+
+  <section>
+    <h2>候補銘柄別サマリー</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>銘柄</th><th>試算点</th><th>元判定</th><th>一致件数</th><th>重要度</th><th>補正合計</th><th>行動</th><th>イベント概要</th></tr></thead>
+      <tbody><tr>
+        <td><b>8306.T</b><br>三菱UFJフィナンシャル・グループ</td>
+        <td>74.2</td>
+        <td>分割候補</td>
+        <td>0</td>
+        <td></td>
+        <td>0</td>
+        <td>直近8日では候補銘柄のTDnet重要イベントなし</td>
+        <td>なし</td>
+      </tr><tr>
+        <td><b>8058.T</b><br>三菱商事</td>
+        <td>68.7</td>
+        <td>分割候補</td>
+        <td>0</td>
+        <td></td>
+        <td>0</td>
+        <td>直近8日では候補銘柄のTDnet重要イベントなし</td>
+        <td>なし</td>
+      </tr><tr>
+        <td><b>8035.T</b><br>東京エレクトロン</td>
+        <td>67.5</td>
+        <td>分割候補</td>
+        <td>0</td>
+        <td></td>
+        <td>0</td>
+        <td>直近8日では候補銘柄のTDnet重要イベントなし</td>
+        <td>なし</td>
+      </tr><tr>
+        <td><b>2802.T</b><br>味の素</td>
+        <td>66</td>
+        <td>分割候補</td>
+        <td>0</td>
+        <td></td>
+        <td>0</td>
+        <td>直近8日では候補銘柄のTDnet重要イベントなし</td>
+        <td>なし</td>
+      </tr><tr>
+        <td><b>9433.T</b><br>KDDI</td>
+        <td>62.5</td>
+        <td>監視</td>
+        <td>2</td>
+        <td>4</td>
+        <td>0</td>
+        <td>イベントあり。内容確認</td>
+        <td>2026-05-12 その他: 2026年３月期 決算説明会資料（中期経営戦略） / 2026-05-12 その他: auフィナンシャルホールディングス株式会社の東京証券取引所への株式上場準備の開始について</td>
+      </tr><tr>
+        <td><b>7974.T</b><br>任天堂</td>
+        <td>56.8</td>
+        <td>監視</td>
+        <td>0</td>
+        <td></td>
+        <td>0</td>
+        <td>直近8日では候補銘柄のTDnet重要イベントなし</td>
+        <td>なし</td>
+      </tr><tr>
+        <td><b>6857.T</b><br>アドバンテスト</td>
+        <td>54.1</td>
+        <td>見送り</td>
+        <td>0</td>
+        <td></td>
+        <td>0</td>
+        <td>直近8日では候補銘柄のTDnet重要イベントなし</td>
+        <td>なし</td>
+      </tr><tr>
+        <td><b>4519.T</b><br>中外製薬</td>
+        <td>46.7</td>
+        <td>見送り</td>
+        <td>0</td>
+        <td></td>
+        <td>0</td>
+        <td>直近8日では候補銘柄のTDnet重要イベントなし</td>
+        <td>なし</td>
+      </tr></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>候補銘柄に一致したイベント</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>銘柄</th><th>日付</th><th>分類</th><th>タイトル</th><th>重要度</th><th>補正</th><th>次の確認</th><th>原文</th></tr></thead>
+      <tbody><tr>
+        <td><b>9433.T</b><br>KDDI</td>
+        <td>2026-05-12</td>
+        <td>その他</td>
+        <td>2026年３月期 決算説明会資料（中期経営戦略）</td>
+        <td>4</td>
+        <td>情報のみ / 0</td>
+        <td>PDF本文、会社予想、配当、翌営業日の株価反応を確認</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260512524146.pdf">原文</a></td>
+      </tr><tr>
+        <td><b>9433.T</b><br>KDDI</td>
+        <td>2026-05-12</td>
+        <td>その他</td>
+        <td>auフィナンシャルホールディングス株式会社の東京証券取引所への株式上場準備の開始について</td>
+        <td>4</td>
+        <td>情報のみ / 0</td>
+        <td>PDF本文、会社予想、配当、翌営業日の株価反応を確認</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260512524156.pdf">原文</a></td>
+      </tr></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>候補外の市場監視イベント</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>日付</th><th>銘柄</th><th>会社</th><th>分類</th><th>タイトル</th><th>重要度</th><th>用途</th><th>原文</th></tr></thead>
+      <tbody><tr>
+        <td>2026-05-18</td>
+        <td>1847.T</td>
+        <td>イチケン</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538038.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>2991.T</td>
+        <td>ランドネット</td>
+        <td>月次</td>
+        <td>2026年４月度 月次業績速報</td>
+        <td>3</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539647.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>6104.T</td>
+        <td>芝浦機械</td>
+        <td>M&amp;A・資本提携</td>
+        <td>Moore Nanotechnology Systems, LLCの持分取得（子会社化）に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538806.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>7616.T</td>
+        <td>コロワイド</td>
+        <td>決算短信</td>
+        <td>（訂正・数値データ訂正）「2026年３月期 決算短信〔ＩＦＲＳ〕（連結）」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539307.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>4966.T</td>
+        <td>上村工業</td>
+        <td>配当・増配</td>
+        <td>剰余金の配当に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539407.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>9170.T</td>
+        <td>成友興業</td>
+        <td>配当・増配</td>
+        <td>株式分割及び株式分割に伴う定款の一部変更並びに配当予想の修正（増配）に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539376.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>4275.T</td>
+        <td>カーリット</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引(ToSTNeT-3)による自己株式の取得結果及び自己株式取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539580.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>8705.T</td>
+        <td>日産証券グループ</td>
+        <td>月次</td>
+        <td>2026年４月の月次業績等（速報）に関するお知らせ</td>
+        <td>3</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260507518310.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>1499.T</td>
+        <td>ＭＸＳ高配当７０ＭＮ</td>
+        <td>決算短信</td>
+        <td>ＭＡＸＩＳ日本株高配当７０マーケットニュートラル上場投信 決算短信（2026年4月期）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539501.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>1660.T</td>
+        <td>ＭＸＳ高利Ｊリート</td>
+        <td>決算短信</td>
+        <td>ＭＡＸＩＳ高利回りＪリート上場投信 決算短信（2026年4月期）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539494.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>9326.T</td>
+        <td>Ｇ－関通ＨＤ</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ＴｏＳＴＮｅＴ－３）による自己株式の取得結果及び取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539352.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>9402.T</td>
+        <td>中部日本放送</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（Ｎ－ＮＥＴ３）による自己株式の取得結果及び取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260512526180.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>2784.T</td>
+        <td>アルフレッサＨＤ</td>
+        <td>自社株買い</td>
+        <td>コミットメント型自己株式取得（FCSR）による自己株式取得のための第三者割当による 第1回新株予約権の発行条件の決定に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260517539204.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>2911.T</td>
+        <td>旭松食品</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ＴｏＳＴＮｅＴ－３）による自己株式の取得結果及び取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539351.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>3512.T</td>
+        <td>日フエルト</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ＴｏＳＴＮｅＴ－３）による自己株式の取得結果に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260514535741.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>3675.T</td>
+        <td>クロスマーケティング</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果及び自己株式取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539366.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>8742.T</td>
+        <td>小林洋行</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539337.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>9788.T</td>
+        <td>ナック</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ToSTNeT-３）による自己株式の取得結果及び取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539389.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>2652.T</td>
+        <td>まんだらけ</td>
+        <td>決算短信</td>
+        <td>「2026年９月期 第２四半期（中間期）決算短信〔日本基準〕（非連結）」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539363.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>3954.T</td>
+        <td>ＰＡＸＸＳ</td>
+        <td>決算短信</td>
+        <td>（訂正） 「2026年３月期 決算短信〔日本基準〕（連結）」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538489.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>5598.T</td>
+        <td>Ｐ－Ｙｏｔｔａｖｉａ</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ＴｏＳＴＮｅＴ－３）による自己株式の取得結果及び取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539341.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>1397.T</td>
+        <td>ＳＭＤＡＭ ２２５</td>
+        <td>決算短信</td>
+        <td>2026年4月期 決算短信（2025年10月9日～2026年4月8日）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539334.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>2557.T</td>
+        <td>ＳＭＤＡＭトピックス</td>
+        <td>決算短信</td>
+        <td>2026年4月期 決算短信（2025年10月9日～2026年4月8日）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539326.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>2652.T</td>
+        <td>まんだらけ</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果及び自己株式取得終了に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539265.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>9980.T</td>
+        <td>ＭＲＫ ＨＬＤ</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539300.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>5280.T</td>
+        <td>ヨシコン</td>
+        <td>自社株買い</td>
+        <td>自己株式立会外買付取引（ＴｏＳＴＮｅＴ－３）による自己株式の取得結果に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260514535616.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>7280.T</td>
+        <td>ミツバ</td>
+        <td>M&amp;A・資本提携</td>
+        <td>（訂正）「株式会社両毛システムズ株式（証券コード：9691）に対する公開買付けの開始に関するお知らせ」の訂正に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539234.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td>9502.T</td>
+        <td>中部電力</td>
+        <td>M&amp;A・資本提携</td>
+        <td>（訂正）「株式会社両毛システムズ株式（証券コード：9691）に対する公開買付けの開始に関するお知らせ」の訂正に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260518539232.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-18</td>
+        <td></td>
+        <td>Ｇ－アストロスケール</td>
+        <td>業績上方修正</td>
+        <td>2026年４月期 通期連結業績予想の修正に関するお知らせ</td>
+        <td>5</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515539110.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>5869.T</td>
+        <td>早稲田学習研究会</td>
+        <td>決算短信</td>
+        <td>（訂正）「2026年５月期第４四半期決算短信〔日本基準〕(非連結)」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515539101.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>3726.T</td>
+        <td>フォーシーズＨＤ</td>
+        <td>決算短信</td>
+        <td>2026年９月期第２四半期（中間期）決算短信〔日本基準〕(連結)</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538453.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>6574.T</td>
+        <td>Ｇ－コンヴァノ</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔ＩＦＲＳ〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538835.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>7270.T</td>
+        <td>ＳＵＢＡＲＵ</td>
+        <td>配当・増配</td>
+        <td>（訂正）「剰余金の配当に関するお知らせ」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538983.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>2334.T</td>
+        <td>Ｇ－イオレ</td>
+        <td>決算短信</td>
+        <td>2026年3月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515539050.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>6140.T</td>
+        <td>旭ダイヤ</td>
+        <td>決算短信</td>
+        <td>（訂正・数値データ訂正）「2026年３月期決算短信〔日本基準〕(連結)」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538995.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>5471.T</td>
+        <td>大同特鋼</td>
+        <td>M&amp;A・資本提携</td>
+        <td>東北特殊鋼株式会社（証券コード：5484）に対する公開買付けの開始に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515539063.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>5484.T</td>
+        <td>東北鋼</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538576.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>5484.T</td>
+        <td>東北鋼</td>
+        <td>配当・増配</td>
+        <td>2026年３月期配当予想の修正（無配）に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538948.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>5484.T</td>
+        <td>東北鋼</td>
+        <td>M&amp;A・資本提携</td>
+        <td>その他の関係会社である大同特殊鋼株式会社による当社株式に対する公開買付けに関する賛同の意見表明及び応募推奨のお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515539069.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>7273.T</td>
+        <td>イクヨ</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515536488.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>3175.T</td>
+        <td>ＡＰＨＤ</td>
+        <td>決算短信</td>
+        <td>2026年３月期決算短信〔日本基準〕(連結)</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538749.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>3175.T</td>
+        <td>ＡＰＨＤ</td>
+        <td>月次</td>
+        <td>月次営業レポート（2026年４月度）</td>
+        <td>3</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538774.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>6145.T</td>
+        <td>ＮＩＴＴＯＫＵ</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260514535543.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>6145.T</td>
+        <td>ＮＩＴＴＯＫＵ</td>
+        <td>配当・増配</td>
+        <td>剰余金の配当に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260514535589.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>9984.T</td>
+        <td>ソフトバンクグループ</td>
+        <td>決算短信</td>
+        <td>（訂正・数値データ訂正）「2026年３月期 決算短信〔ＩＦＲＳ〕（連結）」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538975.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>2134.T</td>
+        <td>キタハマキャピタル</td>
+        <td>決算短信</td>
+        <td>2026年３月期決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538690.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td></td>
+        <td>Ｐ－エクシオＨＤ</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538996.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>4444.T</td>
+        <td>Ｇ－インフォネット</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538193.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>7638.T</td>
+        <td>ＮＥＷ ＡＲＴ</td>
+        <td>決算短信</td>
+        <td>2026年3月期決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260510521130.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>7790.T</td>
+        <td>バルコス</td>
+        <td>決算短信</td>
+        <td>2026年12月期第1四半期決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538802.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>7790.T</td>
+        <td>バルコス</td>
+        <td>業績上方修正</td>
+        <td>連結業績予想の上方修正及び特別利益の計上に関するお知らせ</td>
+        <td>5</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515539024.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>7885.T</td>
+        <td>タカノ</td>
+        <td>配当・増配</td>
+        <td>剰余金の配当に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515536139.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>9760.T</td>
+        <td>進学会ＨＤ</td>
+        <td>決算短信</td>
+        <td>2026年３月期決算短信〔日本基準〕(連結)</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538384.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>4258.T</td>
+        <td>Ｇ－網屋</td>
+        <td>決算短信</td>
+        <td>（訂正・数値データ訂正）「2026年12月期第１四半期決算短信〔日本基準〕(連結)」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538937.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>4258.T</td>
+        <td>Ｇ－網屋</td>
+        <td>M&amp;A・資本提携</td>
+        <td>（訂正）「株式会社アンペール株式の取得（子会社化）及び新たな事業開始に関するお知らせ」の一部訂正について</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538950.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>3905.T</td>
+        <td>Ｇ－データセクション</td>
+        <td>決算短信</td>
+        <td>2026年３月期 決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538919.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>9980.T</td>
+        <td>ＭＲＫ ＨＬＤ</td>
+        <td>自社株買い</td>
+        <td>自己株式の取得に係る事項の一部変更に関するお知らせ</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538542.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>1435.T</td>
+        <td>ｒｏｂｏｔ ｈｏｍｅ</td>
+        <td>決算短信</td>
+        <td>2026年12月期 第１四半期決算短信〔日本基準〕（連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515537853.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td>1435.T</td>
+        <td>ｒｏｂｏｔ ｈｏｍｅ</td>
+        <td>月次</td>
+        <td>2026年４月度月次KPI（速報）に関するお知らせ</td>
+        <td>3</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515537947.pdf">原文</a></td>
+      </tr><tr>
+        <td>2026-05-15</td>
+        <td></td>
+        <td>Ｐ－アップルパーク</td>
+        <td>決算短信</td>
+        <td>2026年3月期 決算短信〔日本基準〕（非連結）</td>
+        <td>4</td>
+        <td>候補外。市場テーマ・業界動向の確認材料</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260515538876.pdf">原文</a></td>
+      </tr></tbody>
+    </table></div>
+    <p class="small">CSV: <a href="25_candidate_event_watch_summary.csv">25_candidate_event_watch_summary.csv</a> / <a href="26_candidate_event_watch_detail.csv">26_candidate_event_watch_detail.csv</a> / <a href="27_market_event_watch.csv">27_market_event_watch.csv</a></p>
+  </section>
+</main>
+</body>
+</html>
