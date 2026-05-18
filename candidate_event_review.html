@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>候補銘柄イベント本文レビュー</title>
+<style>
+  :root{--ink:#172033;--muted:#607086;--line:#d8e1ec;--bg:#f5f8fb;--navy:#14395b;--blue:#1f6f8b;--green:#17815a;--amber:#b76e00;--red:#b83232}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+  header{background:#14395b;color:#fff;padding:30px 22px}
+  main{max-width:1240px;margin:auto;padding:22px}
+  h1{margin:0 0 8px;font-size:30px;line-height:1.2}
+  h2{font-size:20px;margin:24px 0 10px;border-left:8px solid var(--blue);padding-left:10px;color:var(--navy)}
+  .lead{color:#e9f5ff;max-width:980px}.small{font-size:12px;color:var(--muted)}
+  .notice{background:#fff7e8;border:1px solid #efc378;border-left:8px solid #d98300;border-radius:10px;padding:13px 15px;margin:14px 0}
+  .ok{background:#e9f7f0;border:1px solid #a9dcc1;border-left:8px solid var(--green);border-radius:10px;padding:13px 15px;margin:14px 0}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+  table{width:100%;border-collapse:collapse;min-width:1320px}
+  th,td{border-bottom:1px solid #e7eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}
+  th{background:#eaf2f9;color:#1d405f;font-weight:800;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  a{color:#145f86;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>候補銘柄イベント本文レビュー</h1>
+  <p class="lead">候補銘柄に一致したTDnetイベントについて、PDF本文で何を確認し、スコアへどう反映するかを整理するページです。本文確認前のため、現時点では加点しません。</p>
+  <p class="small">更新: 2026/05/18 14:55</p>
+</header>
+<main>
+  <section>
+    <h2>レビュー方針</h2>
+    <div class="ok"><b>対象イベント</b><br>2件</div>
+    <div class="notice">タイトル一致だけでは点数を動かしません。PDF本文で、利益・配当・自己株買い・会社予想・事業価値への影響を確認してから、加点・減点・除外・情報のみを決めます。</div>
+  </section>
+
+  <section>
+    <h2>本文レビュー表</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>銘柄</th><th>イベント日</th><th>タイトル</th><th>原文</th><th>暫定扱い</th><th>補正</th><th>確認する数字</th><th>プラス条件</th><th>マイナス条件</th><th>判定ルール</th><th>最終判定</th></tr></thead>
+      <tbody><tr>
+        <td><b>9433.T</b><br>KDDI</td>
+        <td>2026-05-12</td>
+        <td>2026年３月期 決算説明会資料（中期経営戦略）</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260512524146.pdf">PDF</a></td>
+        <td>情報のみ<br>本文確認待ち</td>
+        <td>0</td>
+        <td>営業利益、EPS、配当、成長投資、通信ARPU、金融事業の利益貢献、自己株式取得の有無</td>
+        <td>中期計画の利益成長、増配、還元強化が数字で確認できる場合は加点候補</td>
+        <td>利益成長鈍化、投資負担増、還元弱化が見える場合は減点候補</td>
+        <td>本文の数値を確認するまでスコア加点しない</td>
+        <td>未判定</td>
+      </tr><tr>
+        <td><b>9433.T</b><br>KDDI</td>
+        <td>2026-05-12</td>
+        <td>auフィナンシャルホールディングス株式会社の東京証券取引所への株式上場準備の開始について</td>
+        <td><a href="https://www.release.tdnet.info/inbs/140120260512524156.pdf">PDF</a></td>
+        <td>情報のみ<br>本文確認待ち</td>
+        <td>0</td>
+        <td>上場準備の段階、KDDI保有比率、想定時価総額、利益貢献、上場益、持分法影響、スケジュール</td>
+        <td>上場が正式決定し、保有価値・資本効率改善が見込める場合は加点候補</td>
+        <td>上場未確定、利益貢献が小さい、希薄化やコスト増が大きい場合は情報のみ</td>
+        <td>上場準備開始だけでは加点しない。正式条件確認後に再判定</td>
+        <td>未判定</td>
+      </tr></tbody>
+    </table></div>
+    <p class="small">CSV: <a href="28_candidate_event_review.csv">28_candidate_event_review.csv</a></p>
+  </section>
+</main>
+</body>
+</html>
