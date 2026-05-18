@@ -1,0 +1,5 @@
+data,source,url,use,http_status,status,extracted_file_links
+鉱工業生産,経済産業省 鉱工業指数,https://www.meti.go.jp/statistics/tyo/iip/result-2.html,製造業全体、半導体、素材、機械関連の景気確認に使う,,取得失敗: This operation was aborted,
+自動車販売,日本自動車販売協会連合会,https://www.jada.or.jp/statistics/,自動車、部品、素材、商社テーマ確認に使う,404,取得失敗,
+軽自動車販売,全国軽自動車協会連合会,https://www.zenkeijikyo.or.jp/statistics/,国内消費、自動車販売の補助確認に使う,200,ページ到達済み,https://www.zenkeijikyo.or.jp/common/pdf/kcar_panf_202409.pdf | https://www.aftc.or.jp/content/files/pdf/PR_PDF_v_logo2.pdf
+電力需要,電力広域的運営推進機関 OCCTO,https://www.occto.or.jp/,AI、データセンター、電力不足テーマ確認に使う,200,ページ到達済み,

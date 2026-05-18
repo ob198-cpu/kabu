@@ -1,0 +1,17 @@
+source,event_type,event_date,title,source_url,action
+BOJ,Monetary Policy Meeting,"Jan. 22 (Thurs.), 23 (Fri.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+BOJ,Monetary Policy Meeting,"Mar. 18 (Wed.), 19 (Thurs.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+BOJ,Monetary Policy Meeting,"Apr. 27 (Mon.), 28 (Tues.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+BOJ,Monetary Policy Meeting,"June 15 (Mon.), 16 (Tues.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+BOJ,Monetary Policy Meeting,"July 30 (Thurs.), 31 (Fri.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+BOJ,Monetary Policy Meeting,"Sept. 17 (Thurs.), 18 (Fri.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+BOJ,Monetary Policy Meeting,"Oct. 29 (Thurs.), 30 (Fri.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+BOJ,Monetary Policy Meeting,"Dec. 17 (Thurs.), 18 (Fri.)",Bank of Japan Monetary Policy Meeting,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,会合前後で円高/円安、銀行株、輸出株、日経平均の反応を確認する
+FRB,FOMC,2026 January 27-28,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
+FRB,FOMC,2026 March 17-18,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
+FRB,FOMC,2026 April 28-29,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
+FRB,FOMC,2026 June 16-17,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
+FRB,FOMC,2026 July 28-29,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
+FRB,FOMC,2026 September 15-16,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
+FRB,FOMC,2026 October 27-28,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
+FRB,FOMC,2026 December 8-9,Federal Open Market Committee meeting,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,FOMC前後で米長期金利、NASDAQ、SOX、高PER株の反応を確認する
