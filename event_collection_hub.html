@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>上場・IPO・イベント収集コーナー</title>
+<style>
+  :root{--ink:#172033;--muted:#607086;--line:#d8e1ec;--bg:#f5f8fb;--navy:#14395b;--blue:#1f6f8b;--green:#17815a;--amber:#b76e00;--red:#b83232}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+  header{background:#14395b;color:#fff;padding:30px 22px}
+  main{max-width:1220px;margin:auto;padding:22px}
+  h1{margin:0 0 8px;font-size:30px;line-height:1.2}
+  h2{font-size:20px;margin:24px 0 10px;border-left:8px solid var(--blue);padding-left:10px;color:var(--navy)}
+  p{margin:8px 0}.lead{color:#e9f5ff;max-width:980px}
+  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+  .card b{display:block;color:var(--navy);font-size:16px;margin-bottom:5px}
+  .notice{background:#fff7e8;border:1px solid #efc378;border-left:8px solid #d98300;border-radius:10px;padding:13px 15px;margin:14px 0}
+  .ok{background:#e9f7f0;border:1px solid #a9dcc1;border-left:8px solid var(--green);border-radius:10px;padding:13px 15px;margin:14px 0}
+  .risk{background:#fff0f1;border:1px solid #efb3b9;border-left:8px solid var(--red);border-radius:10px;padding:13px 15px;margin:14px 0}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+  table{width:100%;border-collapse:collapse;min-width:1160px}
+  th,td{border-bottom:1px solid #e7eef6;padding:10px 11px;font-size:13px;vertical-align:top;text-align:left}
+  th{background:#eaf2f9;color:#1d405f;font-weight:800;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px}
+  .step b{display:block;color:var(--navy);margin-bottom:4px}
+  .small{font-size:12px;color:var(--muted)}
+  a{color:#145f86;font-weight:700}
+  @media(max-width:900px){.cards,.flow{grid-template-columns:1fr}table{min-width:900px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>上場・IPO・イベント収集コーナー</h1>
+  <p class="lead">IPO、新規上場、適時開示、業績修正、自社株買い、株式分割、指数採用など、株価に影響しやすいイベントを集めて、銘柄候補の確認に使うための入口です。</p>
+  <p class="small">更新: 2026/05/18 13:31</p>
+</header>
+<main>
+  <section>
+    <h2>このコーナーの目的</h2>
+    <div class="cards">
+      <div class="card"><b>IPOを拾う</b>新規上場や大型IPOで資金がどこへ向かうかを見る</div>
+      <div class="card"><b>開示を拾う</b>上方修正、下方修正、自社株買い、増配を確認する</div>
+      <div class="card"><b>危険を拾う</b>減配、下方修正、上場廃止、監理銘柄を警戒する</div>
+      <div class="card"><b>スコアへ接続</b>銘柄スコアの加点、減点、除外理由に使う</div>
+    </div>
+    <div class="notice">このページは、イベントを買い推奨に変えるものではありません。イベントを見つけた後、決算・PER・財務・株価反応で確認してから候補に入れます。</div>
+  </section>
+
+  <section>
+    <h2>運用フロー</h2>
+    <div class="flow">
+      <div class="step"><b>1. 収集</b>JPX、TDnet、EDINET、Nasdaq、SECなどからイベントを拾う</div>
+      <div class="step"><b>2. 分類</b>IPO、業績修正、還元、分割、M&A、指数採用に分ける</div>
+      <div class="step"><b>3. 重要度</b>株価影響が大きいイベントだけ残す</div>
+      <div class="step"><b>4. 銘柄接続</b>対象銘柄や関連セクターへつなぐ</div>
+      <div class="step"><b>5. 記録</b>スコア変化と実際の株価反応を保存する</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>取得元と現実性</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>イベント</th><th>取得元</th><th>URL</th><th>取得可能性</th><th>取得方法</th><th>信頼性</th><th>制限</th><th>モデルでの使い方</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>日本IPO・新規上場</b></td>
+            <td>JPX New Listings</td>
+            <td><a href="https://www.jpx.co.jp/english/listing/stocks/new/index.html">https://www.jpx.co.jp/english/listing/stocks/new/index.html</a></td>
+            <td>公開ページで確認可能</td>
+            <td>HTML/PDF/Excel等の公開情報を確認。まずはリンク収集と手動確認、次に自動抽出を検証。</td>
+            <td>高</td>
+            <td>ページ形式が変わる可能性あり。上場承認後の更新差分は都度確認が必要。</td>
+            <td>IPO、上場承認、上場日、事業内容、想定時価総額をイベント候補として記録する。</td>
+          </tr><tr>
+            <td><b>適時開示・決算・修正・自社株買い</b></td>
+            <td>JPX TDnet / Company Announcements</td>
+            <td><a href="https://www.jpx.co.jp/english/listing/disclosure/index.html">https://www.jpx.co.jp/english/listing/disclosure/index.html</a></td>
+            <td>公開ページで直近情報を確認可能</td>
+            <td>会社コード、開示日時、表題、PDFリンクを収集。重要語句で分類する。</td>
+            <td>高</td>
+            <td>無料表示は期間制限あり。長期履歴や高度検索は有料DBや個別取得が必要。</td>
+            <td>下方修正、上方修正、増配、自社株買い、株式分割、M&amp;A、業績予想変更をスコア補正に使う。</td>
+          </tr><tr>
+            <td><b>有価証券報告書・大量保有・正式提出書類</b></td>
+            <td>EDINET API</td>
+            <td><a href="https://disclosure2.edinet-fsa.go.jp/">https://disclosure2.edinet-fsa.go.jp/</a></td>
+            <td>API利用可能</td>
+            <td>EDINET APIで書類一覧と提出書類を取得。企業財務・大株主・リスク情報の根拠に使う。</td>
+            <td>高</td>
+            <td>APIキー、書類種別、XBRL解析が必要。即時ニュース収集より実装工数が大きい。</td>
+            <td>海外売上比率、事業リスク、大株主、財務諸表の確認に使う。</td>
+          </tr><tr>
+            <td><b>米国IPO</b></td>
+            <td>Nasdaq IPO Calendar</td>
+            <td><a href="https://www.nasdaq.com/market-activity/ipos">https://www.nasdaq.com/market-activity/ipos</a></td>
+            <td>公開ページで確認可能</td>
+            <td>IPO予定日、ティッカー、会社名、取引所、想定価格帯を確認。</td>
+            <td>中〜高</td>
+            <td>Nasdaq側も予定日は推定扱いが含まれる。SEC提出書類で再確認が必要。</td>
+            <td>AI、宇宙、防衛、半導体など大型IPOが既存銘柄や指数に与える影響を見る。</td>
+          </tr><tr>
+            <td><b>米国正式開示</b></td>
+            <td>SEC EDGAR</td>
+            <td><a href="https://www.sec.gov/search-filings">https://www.sec.gov/search-filings</a></td>
+            <td>公開検索/APIあり</td>
+            <td>S-1、10-K、10-Q、8-Kを確認。米国IPOや大型開示の裏取りに使う。</td>
+            <td>高</td>
+            <td>日本語資料ではない。企業名やCIKの紐付けが必要。</td>
+            <td>米国IPO、AI企業、米国競合、上場準備企業の正式情報を確認する。</td>
+          </tr><tr>
+            <td><b>指数採用・除外</b></td>
+            <td>JPX / Nasdaq / S&amp;P Dow Jones等</td>
+            <td><a href="https://www.jpx.co.jp/english/markets/indices/">https://www.jpx.co.jp/english/markets/indices/</a></td>
+            <td>公開ページで確認可能なものが多い</td>
+            <td>指数構成変更、採用候補、除外候補をイベントとして記録。</td>
+            <td>中〜高</td>
+            <td>指数ごとに発表元が異なる。全指数を一括で無料取得するのは難しい。</td>
+            <td>指数採用による需給イベント、除外による売り圧力を確認する。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>分類ルール</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>分類</th><th>見る言葉</th><th>モデル上の扱い</th><th>注意点</th></tr></thead>
+        <tbody>
+          <tr><td><b>IPO・新規上場</b></td><td>新規上場、IPO、上場承認、listing approval</td><td>関連セクターの資金流入候補として記録</td><td>上場直後は値動きが荒い。NISA本体候補ではなくテーマ確認に使う</td></tr><tr><td><b>業績修正</b></td><td>上方修正、下方修正、guidance、forecast revision</td><td>上方は加点候補、下方は除外または監視へ</td><td>表題だけで判断せず通期予想、営業利益、EPSを見る</td></tr><tr><td><b>自社株買い</b></td><td>自己株式取得、自社株買い、share repurchase</td><td>株主還元点に加点候補</td><td>規模、期間、発行済株式比率を確認</td></tr><tr><td><b>増配・減配</b></td><td>増配、減配、dividend revision</td><td>還元点と守り評価へ反映</td><td>一時的な記念配当と継続増配を分ける</td></tr><tr><td><b>株式分割</b></td><td>株式分割、stock split</td><td>流動性改善イベントとして記録</td><td>分割自体は企業価値を増やさない</td></tr><tr><td><b>M&amp;A・提携</b></td><td>買収、TOB、業務提携、capital alliance</td><td>事業テーマ適合とリスクを確認</td><td>買収価格、資金負担、希薄化を確認</td></tr><tr><td><b>指数採用</b></td><td>指数採用、index inclusion、additions</td><td>需給イベントとして記録</td><td>発表後に織り込み済みの場合あり</td></tr><tr><td><b>上場廃止・監理</b></td><td>上場廃止、監理銘柄、delisting</td><td>原則除外・警戒</td><td>NISA候補から外す方向で確認</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>実装状態</h2>
+    <div class="ok"><b>今回作成済み</b><br>イベント収集の入口ページ、取得元リスト、分類ルール、CSV記録表を作成しました。</div>
+    <div class="notice"><b>次工程</b><br>直近のJPX/TDnet/Nasdaq情報を実際に取得し、イベント一覧表に保存します。自動取得できない項目は、手動確認欄として分けます。</div>
+    <div class="risk"><b>できないと言うべきこと</b><br>有料データベース、ログインが必要な情報、四季報本文、TDnet長期履歴の一括取得は、この段階では自動取得できる前提にしません。</div>
+    <p class="small">関連: <a href="candidate_theme_scoring.html">候補銘柄 試算スコア表</a> / <a href="theme_stock_bridge.html">テーマと銘柄の接続表</a> / <a href="market_theme_check.html">市場テーマ確認表</a></p>
+  </section>
+</main>
+</body>
+</html>

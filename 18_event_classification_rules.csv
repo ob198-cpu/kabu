@@ -1,0 +1,9 @@
+event_group,keywords,model_action,caution
+IPO・新規上場,新規上場、IPO、上場承認、listing approval,関連セクターの資金流入候補として記録,上場直後は値動きが荒い。NISA本体候補ではなくテーマ確認に使う
+業績修正,上方修正、下方修正、guidance、forecast revision,上方は加点候補、下方は除外または監視へ,表題だけで判断せず通期予想、営業利益、EPSを見る
+自社株買い,自己株式取得、自社株買い、share repurchase,株主還元点に加点候補,規模、期間、発行済株式比率を確認
+増配・減配,増配、減配、dividend revision,還元点と守り評価へ反映,一時的な記念配当と継続増配を分ける
+株式分割,株式分割、stock split,流動性改善イベントとして記録,分割自体は企業価値を増やさない
+M&A・提携,買収、TOB、業務提携、capital alliance,事業テーマ適合とリスクを確認,買収価格、資金負担、希薄化を確認
+指数採用,指数採用、index inclusion、additions,需給イベントとして記録,発表後に織り込み済みの場合あり
+上場廃止・監理,上場廃止、監理銘柄、delisting,原則除外・警戒,NISA候補から外す方向で確認

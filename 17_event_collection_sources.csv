@@ -1,0 +1,7 @@
+event_type,source_name,source_url,availability,method,reliability,limitation,use_in_model
+日本IPO・新規上場,JPX New Listings,https://www.jpx.co.jp/english/listing/stocks/new/index.html,公開ページで確認可能,HTML/PDF/Excel等の公開情報を確認。まずはリンク収集と手動確認、次に自動抽出を検証。,高,ページ形式が変わる可能性あり。上場承認後の更新差分は都度確認が必要。,IPO、上場承認、上場日、事業内容、想定時価総額をイベント候補として記録する。
+適時開示・決算・修正・自社株買い,JPX TDnet / Company Announcements,https://www.jpx.co.jp/english/listing/disclosure/index.html,公開ページで直近情報を確認可能,会社コード、開示日時、表題、PDFリンクを収集。重要語句で分類する。,高,無料表示は期間制限あり。長期履歴や高度検索は有料DBや個別取得が必要。,下方修正、上方修正、増配、自社株買い、株式分割、M&A、業績予想変更をスコア補正に使う。
+有価証券報告書・大量保有・正式提出書類,EDINET API,https://disclosure2.edinet-fsa.go.jp/,API利用可能,EDINET APIで書類一覧と提出書類を取得。企業財務・大株主・リスク情報の根拠に使う。,高,APIキー、書類種別、XBRL解析が必要。即時ニュース収集より実装工数が大きい。,海外売上比率、事業リスク、大株主、財務諸表の確認に使う。
+米国IPO,Nasdaq IPO Calendar,https://www.nasdaq.com/market-activity/ipos,公開ページで確認可能,IPO予定日、ティッカー、会社名、取引所、想定価格帯を確認。,中〜高,Nasdaq側も予定日は推定扱いが含まれる。SEC提出書類で再確認が必要。,AI、宇宙、防衛、半導体など大型IPOが既存銘柄や指数に与える影響を見る。
+米国正式開示,SEC EDGAR,https://www.sec.gov/search-filings,公開検索/APIあり,S-1、10-K、10-Q、8-Kを確認。米国IPOや大型開示の裏取りに使う。,高,日本語資料ではない。企業名やCIKの紐付けが必要。,米国IPO、AI企業、米国競合、上場準備企業の正式情報を確認する。
+指数採用・除外,JPX / Nasdaq / S&P Dow Jones等,https://www.jpx.co.jp/english/markets/indices/,公開ページで確認可能なものが多い,指数構成変更、採用候補、除外候補をイベントとして記録。,中〜高,指数ごとに発表元が異なる。全指数を一括で無料取得するのは難しい。,指数採用による需給イベント、除外による売り圧力を確認する。
