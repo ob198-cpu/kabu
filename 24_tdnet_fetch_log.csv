@@ -1,0 +1,9 @@
+updated_at,source_name,source_url,http_status,rows_collected,result
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260518.html,200,88,success: parsed=88
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260517.html,200,0,success: No parse rows. tdnet_pdf_like_hits=0
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260516.html,200,0,success: No parse rows. tdnet_pdf_like_hits=0
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260515.html,200,100,success: parsed=100
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260514.html,200,100,success: parsed=100
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260513.html,200,100,success: parsed=100
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260512.html,200,100,success: parsed=100
+2026/05/18 14:48,TDnet public HTML,https://www.release.tdnet.info/inbs/I_list_001_20260511.html,200,100,success: parsed=100

@@ -3,7 +3,7 @@ ticker,name,score_before_event,event_adjustment_total,score_after_event,decision
 8058.T,三菱商事,68.7,0,68.7,分割候補,0,確認済みイベントなし,直近TDnet/JPX/EDINET/Nasdaqを確認,未入力
 8035.T,東京エレクトロン,67.5,0,67.5,分割候補,0,確認済みイベントなし,直近TDnet/JPX/EDINET/Nasdaqを確認,未入力
 2802.T,味の素,66,0,66,分割候補,0,確認済みイベントなし,直近TDnet/JPX/EDINET/Nasdaqを確認,未入力
-9433.T,KDDI,62.5,0,62.5,監視,0,確認済みイベントなし,直近TDnet/JPX/EDINET/Nasdaqを確認,未入力
+9433.T,KDDI,62.5,0,62.5,監視,2,その他:情報のみ / その他:情報のみ,イベントの原文URLと決算・株価反応を再確認,https://www.release.tdnet.info/inbs/140120260512524146.pdf / https://www.release.tdnet.info/inbs/140120260512524156.pdf
 7974.T,任天堂,56.8,0,56.8,監視,0,確認済みイベントなし,直近TDnet/JPX/EDINET/Nasdaqを確認,未入力
 6857.T,アドバンテスト,54.1,0,54.1,見送り,0,確認済みイベントなし,直近TDnet/JPX/EDINET/Nasdaqを確認,未入力
 4519.T,中外製薬,46.7,0,46.7,見送り,0,確認済みイベントなし,直近TDnet/JPX/EDINET/Nasdaqを確認,未入力
