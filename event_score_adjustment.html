@@ -30,13 +30,13 @@
 <header>
   <h1>イベント補正スコア表</h1>
   <p class="lead">候補銘柄の試算スコアに、上方修正、下方修正、自社株買い、増配、IPO、指数採用などのイベントを加点・減点として反映するための表です。</p>
-  <p class="small">更新: 2026/05/18 14:12</p>
+  <p class="small">更新: 2026/05/18 14:28</p>
 </header>
 <main>
   <section>
     <h2>計算式</h2>
     <div class="formula">イベント補正後スコア = 候補銘柄 試算スコア + イベント補正点の合計</div>
-    <div class="notice">現時点ではイベント記録表に実イベントが入っていないため、補正点は原則0です。ここで重要なのは「イベントを入れたら点数に反映できる構造」ができたことです。</div>
+    <div class="notice">現時点で読み込んだイベントは 21 件です。新規上場など、既存NISA候補へ直接加点しないイベントは補正0で記録します。</div>
   </section>
 
   <section>
@@ -141,7 +141,7 @@
 
   <section>
     <h2>次に必要な作業</h2>
-    <div class="ok"><b>次工程</b><br>JPX/TDnet/EDINET/Nasdaq/SECから直近イベントを確認し、35_event_logに入力します。入力後、この表で補正後スコアを再計算します。</div>
+    <div class="ok"><b>次工程</b><br>TDnet/EDINET/Nasdaq/SECから直近イベントを追加し、業績修正・自社株買い・増配など、個別銘柄へ直接影響しやすいイベントを補正点に反映します。</div>
     <p class="small">関連: <a href="event_collection_hub.html">上場・IPO・イベント収集</a> / <a href="candidate_theme_scoring.html">候補銘柄 試算スコア表</a></p>
   </section>
 </main>
