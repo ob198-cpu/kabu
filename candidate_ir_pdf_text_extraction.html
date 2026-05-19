@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>候補銘柄IR PDF本文抽出</title>
+<style>
+body{margin:0;background:#f5f8fb;color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:#14395b;color:#fff;padding:28px 22px}main{max-width:1240px;margin:auto;padding:22px}
+h1{margin:0 0 8px}.lead{color:#e9f5ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.metric,.box{background:#fff;border:1px solid #d8e1ec;border-radius:12px;padding:14px 16px;margin:12px 0}.metric b{font-size:28px;color:#12668a}
+.table-wrap{overflow:auto;border:1px solid #d8e1ec;border-radius:12px;background:#fff;margin:12px 0 24px}table{border-collapse:collapse;width:100%;min-width:1180px}
+th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}th{background:#eaf2f9;color:#1d405f}.ok{color:#08783e;font-weight:800}.warn{color:#b3261e;font-weight:800}a{color:#145f86;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>候補銘柄IR PDF本文抽出</h1>
+  <p class="lead">既存スコア表のIR/PDF URLから、PDF本文を抽出できるかを候補銘柄横断で確認します。</p>
+  <p>更新: 2026/05/19 15:38</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="metric"><b>5</b><br>PDF対象件数</div>
+    <div class="metric"><b>5</b><br>本文抽出成功</div>
+    <div class="metric"><b>130,970</b><br>抽出文字数合計</div>
+  </section>
+  <div class="box">
+    <b>今日わかったこと</b><br>
+    KDDIだけではなく、PDF URLが明確な候補銘柄にも同じ本文抽出処理を横展開しました。
+    HTMLページしかない銘柄は別処理が必要なため、この表ではPDF対象外です。
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>updated_at</th><th>ticker</th><th>name</th><th>source_url</th><th>http_status</th><th>content_type</th><th>pdf_bytes</th><th>parse_status</th><th>page_count</th><th>extracted_chars</th><th>keyword_hits</th><th>sample_text</th><th>limitation</th></tr></thead>
+      <tbody><tr><td class="">2026/05/19 15:38</td><td class="">2802.T</td><td class="">味の素</td><td class=""><a href="https://news.ajinomoto.co.jp/2026/05/2026_05_07_03.pdf">source</a></td><td class="">200</td><td class="">application/pdf</td><td class="">509363</td><td class="ok">本文抽出成功</td><td class="">22</td><td class="">22685</td><td class="">売上:30 / 売上高:24 / 営業利益:6 / 事業利益:24 / 純利益:6 / 親会社:29 / EPS:2 / 配当:30 / 自己株式:24 / 業績予想:6 / 見通し:7 / 通期:2</td><td class="">職名） 執行理事グローバル財務部長 （氏名）渡辺 一臣 TEL 03-5250-8111 （百万円未満切捨て） （1）連結経営成績 （％表示は、対前期増減率） 売上高 事業利益 税引前当期利益 当期利益 親会社の所有者に 帰属する当期利益 当期包括利益 合計額 百万円 ％ 百万円 ％ 百万円 ％ 百万円 ％ 百万円 ％ 百万円 ％ 2026年3月期 1,583,719 3.5 181,163 13.7 196,115 81.0 145,060 79.6 134,675 91.6 214,159 195.2 2025</td><td class="">数値候補抽出へ進める</td></tr><tr><td class="">2026/05/19 15:38</td><td class="">8058.T</td><td class="">三菱商事</td><td class=""><a href="https://www.mitsubishicorp.com/jp/en/ir/library/earnings/pdf/202605e.pdf">source</a></td><td class="">200</td><td class="">application/pdf</td><td class="">230592</td><td class="ok">本文抽出成功</td><td class="">30</td><td class="">62593</td><td class="">ROE:4</td><td class="">FINANCIAL RESULTS FOR THE YEAR ENDED MARCH 2026 Mitsubishi Corporation 2-3-1 Marunouchi, Chiyoda-ku, Tokyo, JAPAN 100-8086 http://www.mitsubishicorp.com/ -- 1 of 30 -- May 1, 2026 Mitsubishi Corporation FINANCIAL HIGHLIGHTS FOR THE YEAR ENDED MARCH 31, 2026 (B</td><td class="">数値候補抽出へ進める</td></tr><tr><td class="">2026/05/19 15:38</td><td class="">7974.T</td><td class="">任天堂</td><td class=""><a href="https://www.nintendo.co.jp/ir/pdf/2026/260203.pdf">source</a></td><td class="">200</td><td class="">application/pdf</td><td class="">406398</td><td class="ok">本文抽出成功</td><td class="">10</td><td class="">10368</td><td class="">売上:12 / 売上高:8 / 営業利益:3 / 純利益:13 / 親会社:4 / 配当:5 / 自己株式:3 / 業績予想:6 / 見通し:3 / 通期:1</td><td class="">者 (役職名) 代表取締役社長 (氏名) 古川 俊太郎 問合せ先責任者 (役職名) 経営統括本部長 (氏名) 三宅 浩二 (TEL) 075-662-9600 配当支払開始予定日 － 決算補足説明資料作成の有無 ： 有 決算説明会開催の有無 ： 有 (機関投資家・証券アナリスト向け) (百万円未満切捨て) 1．2026年3月期第3四半期の連結業績(2025年4月1日～2025年12月31日) (1)連結経営成績(累計) (％表示は、対前年同四半期増減率) 売上高 営業利益 経常利益 親会社株主に帰属する 四半期純利</td><td class="">数値候補抽出へ進める</td></tr><tr><td class="">2026/05/19 15:38</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf">source</a></td><td class="">200</td><td class="">application/pdf</td><td class="">301734</td><td class="ok">本文抽出成功</td><td class="">14</td><td class="">16303</td><td class="">売上:4 / 売上高:4 / 営業利益:4 / 純利益:9 / 親会社:2 / 配当:9 / 自己株式:4 / 業績予想:6 / 見通し:2 / 通期:2</td><td class="">氏名） 河合 利樹 問合せ先責任者 （役職名） 経理部長 （氏名） 前野 俊輔 TEL 03-5561-7000 定時株主総会開催予定日 2026年6月23日 配当支払開始予定日 2026年6月2日 有価証券報告書提出予定日 2026年6月22日 決算補足説明資料作成の有無 ： 有 決算説明会開催の有無 ： 有 (機関投資家・アナリスト向け) （百万円未満切捨て） 1. 2026年3月期の連結業績（2025年4月1日～2026年3月31日） (1) 連結経営成績 （％表示は対前期増減率） 売上高 営業利益 経常利益</td><td class="">数値候補抽出へ進める</td></tr><tr><td class="">2026/05/19 15:38</td><td class="">6857.T</td><td class="">アドバンテスト</td><td class=""><a href="https://www2.jpx.co.jp/disc/68570/140120260427511547.pdf">source</a></td><td class="">200</td><td class="">application/pdf</td><td class="">374318</td><td class="ok">本文抽出成功</td><td class="">16</td><td class="">19021</td><td class="">売上:29 / 売上高:22 / 営業利益:13 / 純利益:4 / 親会社:14 / 配当:15 / 自己株式:14 / 業績予想:6 / 見通し:4 / 通期:3</td><td class="">井 幸一 問合せ先責任者 (役職名) 経営執行役員 CFO (氏名)高田 寿子 TEL 03-3214-7500 定時株主総会開催予定日 2026年7月31日 配当支払開始予定日 2026年6月2日 有価証券報告書提出予定日 2026年6月26日 決算補足説明資料作成の有無:有 決算説明会開催の有無 :有 (百万円未満四捨五入) (1)連結経営成績 (%表示は対前期増減率) 売上高 営業利益 税引前利益 当期利益 親会社の所有者に 帰属する当期利益 当期包括利益 合計額 百万円 % 百万円 % 百万円 % 百万円 </td><td class="">数値候補抽出へ進める</td></tr></tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>
