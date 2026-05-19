@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>候補IR PDF スコア反映候補</title>
+<style>
+body{margin:0;background:#f5f8fb;color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:#14395b;color:#fff;padding:28px 22px}main{max-width:1240px;margin:auto;padding:22px}
+h1{margin:0 0 8px}.lead{color:#e9f5ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.metric,.box{background:#fff;border:1px solid #d8e1ec;border-radius:12px;padding:14px 16px;margin:12px 0}.metric b{font-size:28px;color:#12668a}
+.table-wrap{overflow:auto;border:1px solid #d8e1ec;border-radius:12px;background:#fff;margin:12px 0 24px}table{border-collapse:collapse;width:100%;min-width:1260px}
+th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}th{background:#eaf2f9;color:#1d405f}
+.ok{color:#08783e;font-weight:800}.warn{color:#9b5a00;font-weight:800}.small{font-size:13px;color:#607086}
+</style>
+</head>
+<body>
+<header>
+  <h1>候補IR PDF スコア反映候補</h1>
+  <p class="lead">PDFで拾えた数値候補を、NISA 1年保有スコアへどう接続できるかを確認する表です。</p>
+  <p>更新: 2026/05/19 16:23</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="metric"><b>8</b><br>対象銘柄</div>
+    <div class="metric"><b>5</b><br>参考反映候補あり</div>
+    <div class="metric"><b>3.6</b><br>最大参考ポイント</div>
+    <div class="metric"><b>26</b><br>入力候補数</div>
+  </section>
+  <div class="box">
+    <b>使い方</b><br>
+    この表は、PDF候補をすぐ点数に混ぜるための表ではありません。どの銘柄で、どの項目を確認すればスコア根拠を強化できるかを見るための接続表です。
+    正式反映は、PDF原文で単位・対象期間・前年比を確認し、全銘柄に同じルールを適用してから行います。
+  </div>
+  <p class="small">reference_only_points は、確認できた指標候補の種類に応じた参考値です。正式な投資判断点ではありません。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>updated_at</th><th>ticker</th><th>name</th><th>current_nisa_score</th><th>pdf_structured_metric_count</th><th>pdf_input_candidate_count</th><th>pdf_need_review_count</th><th>reference_only_points</th><th>reference_score_after_pdf_inputs</th><th>input_candidate_metrics</th><th>missing_or_review</th><th>application_status</th><th>rule</th><th>next_action</th></tr></thead>
+      <tbody><tr><td class="">2026/05/19 16:23</td><td class="">2802.T</td><td class="">味の素</td><td class="">66.7</td><td class="">7</td><td class="">7</td><td class="">0</td><td class="">3.6</td><td class="">70.3</td><td class="">売上 / EPS / 配当 / 自社株買い / 業績予想 / 営業利益 / 純利益</td><td class="">ROE / CF/FCF</td><td class="ok">参考反映候補</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF原文で単位・対象期間・前年比を確認</td></tr><tr><td class="">2026/05/19 16:23</td><td class="">8306.T</td><td class="">三菱UFJフィナンシャル・グループ</td><td class="">64.1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">64.1</td><td class=""></td><td class=""></td><td class="warn">PDF候補なし</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF/HTMLから追加資料を探す</td></tr><tr><td class="">2026/05/19 16:23</td><td class="">8058.T</td><td class="">三菱商事</td><td class="">58.6</td><td class="">8</td><td class="">5</td><td class="">3</td><td class="">2.5</td><td class="">61.1</td><td class="">CF/FCF / 売上 / 配当 / 業績予想 / 自社株買い</td><td class="">営業利益</td><td class="ok">参考反映候補</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF原文で単位・対象期間・前年比を確認</td></tr><tr><td class="">2026/05/19 16:23</td><td class="">7974.T</td><td class="">任天堂</td><td class="">58.2</td><td class="">7</td><td class="">4</td><td class="">3</td><td class="">2</td><td class="">60.2</td><td class="">純利益 / 売上 / 業績予想 / 配当</td><td class="">ROE / CF/FCF</td><td class="ok">参考反映候補</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF原文で単位・対象期間・前年比を確認</td></tr><tr><td class="">2026/05/19 16:23</td><td class="">9433.T</td><td class="">KDDI</td><td class="">57.7</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">57.7</td><td class=""></td><td class=""></td><td class="warn">PDF候補なし</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF/HTMLから追加資料を探す</td></tr><tr><td class="">2026/05/19 16:23</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">57.1</td><td class="">7</td><td class="">4</td><td class="">3</td><td class="">1.9</td><td class="">59</td><td class="">純利益 / 配当 / 業績予想 / EPS</td><td class="">ROE / CF/FCF</td><td class="ok">参考反映候補</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF原文で単位・対象期間・前年比を確認</td></tr><tr><td class="">2026/05/19 16:23</td><td class="">6857.T</td><td class="">アドバンテスト</td><td class="">53.4</td><td class="">7</td><td class="">6</td><td class="">1</td><td class="">3.2</td><td class="">56.6</td><td class="">売上 / EPS / 配当 / 自社株買い / 営業利益 / 業績予想</td><td class="">ROE / CF/FCF</td><td class="ok">参考反映候補</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF原文で単位・対象期間・前年比を確認</td></tr><tr><td class="">2026/05/19 16:23</td><td class="">4519.T</td><td class="">中外製薬</td><td class="">33.4</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">33.4</td><td class=""></td><td class=""></td><td class="warn">PDF候補なし</td><td class="">本体スコアは上書きしない。原文照合後、全銘柄同一ルールで正式反映する。</td><td class="">PDF/HTMLから追加資料を探す</td></tr></tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>
