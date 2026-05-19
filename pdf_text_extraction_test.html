@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF本文抽出テスト</title>
+<style>
+body{margin:0;background:#f5f8fb;color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:#14395b;color:#fff;padding:28px 22px}main{max-width:1200px;margin:auto;padding:22px}
+h1{margin:0 0 8px}.lead{color:#e9f5ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.metric,.box{background:#fff;border:1px solid #d8e1ec;border-radius:12px;padding:14px 16px;margin:12px 0}.metric b{font-size:28px;color:#12668a}
+.table-wrap{overflow:auto;border:1px solid #d8e1ec;border-radius:12px;background:#fff}table{border-collapse:collapse;width:100%;min-width:1120px}
+th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}th{background:#eaf2f9;color:#1d405f}.ok{color:#08783e;font-weight:800}.warn{color:#b3261e;font-weight:800}a{color:#145f86;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>PDF本文抽出テスト</h1>
+  <p class="lead">TDnet PDFを「取得できる」だけでなく、本文テキストとして読めるかを確認するテストです。</p>
+  <p>更新: 2026/05/19 12:52</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="metric"><b>2</b><br>PDFテスト件数</div>
+    <div class="metric"><b>2</b><br>本文抽出成功</div>
+    <div class="metric"><b>13,068</b><br>抽出文字数合計</div>
+  </section>
+  <div class="box">
+    <b>今日わかったこと</b><br>
+    PDF本文抽出ライブラリを追加し、TDnet PDFから本文テキストを取得する入口を作りました。
+    ここで本文が取れたPDFは、次に「売上」「営業利益」「配当」「自社株買い」などの数値抽出ルールへ進めます。
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>updated_at</th><th>ticker</th><th>company_name</th><th>event_date</th><th>source_url</th><th>http_status</th><th>content_type</th><th>pdf_bytes</th><th>parse_status</th><th>page_count</th><th>extracted_chars</th><th>keyword_hits</th><th>sample_text</th><th>limitation</th></tr></thead>
+      <tbody><tr><td class="">2026/05/19 12:52</td><td class="">9433.T</td><td class="">ＫＤＤＩ</td><td class="">2026-05-12</td><td class=""><a href="https://www.release.tdnet.info/inbs/140120260512524146.pdf">source</a></td><td class="">200</td><td class="">application/pdf</td><td class="">4416464</td><td class="ok">本文抽出成功</td><td class="">38</td><td class="">11967</td><td class="">売上:2 / 営業利益:19 / EPS:3 / 配当:5 / 業績予想:2</td><td class="">中期経営戦略 （27.3期-29.3期） 2026年5月12日 KDDI株式会社 代表取締役社長 CEO 松田 浩路 -- 1 of 38 -- 中期経営戦略 “Power-to-Connect 2028” ー 全体戦略 ー -- 2 of 38 -- KDDIグループの持続的成長への挑戦 通信価値の再定義によりAI前提社会の土台を完成。新たな成長構造づくり</td><td class="">本文は読めた。次は表形式の数値抽出ルールが必要</td></tr><tr><td class="">2026/05/19 12:52</td><td class="">9433.T</td><td class="">ＫＤＤＩ</td><td class="">2026-05-12</td><td class=""><a href="https://www.release.tdnet.info/inbs/140120260512524156.pdf">source</a></td><td class="">200</td><td class="">application/pdf</td><td class="">140561</td><td class="ok">本文抽出成功</td><td class="">1</td><td class="">1101</td><td class=""></td><td class="">2026 年 5 月 12 日 各 位 会 社 名 KDDI 株式会社 代表者名 代表取締役社長 CEO 松田 浩路 （コード番号：9433 東証プライム市場） 問合せ先 コーポレート統括本部 総務本部長 堀井 啓太 （TEL．03－3347－0077） au フィナンシャルホールディングス株式会社の 東京証券取引所への株式上場準備の開始について 当社は、本</td><td class="">本文は読めた。次は表形式の数値抽出ルールが必要</td></tr></tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>
