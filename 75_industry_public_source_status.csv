@@ -1,0 +1,4 @@
+updated_at,source_id,label,page_url,http_status,candidate_links,result,purpose
+2026/05/19 17:46,meti_iip,METI 鉱工業指数,https://www.meti.go.jp/statistics/tyo/iip/b2020_result-2.html,200,12,ページ到達済み,製造業・電子部品・輸送機械などの業界景況を株価と比較する
+2026/05/19 17:46,jada_auto_sales,自販連 新車販売統計,https://www.jada.or.jp/pages/449/,200,0,ページ到達済み,自動車販売台数と自動車・部品・素材銘柄の関係を見る
+2026/05/19 17:46,zenkei_light_auto,全軽自協 軽自動車統計,https://www.zenkeijikyo.or.jp/statistics/,200,2,ページ到達済み,軽自動車販売台数と国内自動車需要の確認に使う

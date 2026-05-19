@@ -1,17 +1,17 @@
 updated_at,source,url,http_status,rows_collected,result,limitation,next_action
-2026/05/18 16:25,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001045810.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
-2026/05/18 16:25,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001652044.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
-2026/05/18 16:25,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0000789019.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
-2026/05/18 16:25,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001018724.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
-2026/05/18 16:25,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001046179.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
-2026/05/18 16:25,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001674101.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
-2026/05/18 16:25,EDINET API v2 documents,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2026-05-16&type=2,200,0,到達済み・該当0件,指定日に一覧は取得できたが、今回の条件では対象文書0件。企業別財務値の抽出にはXBRL取得と解析が必要。,APIキー、対象日、EDINETコードを確定し、有報/XBRL抽出へ進む
-2026/05/18 16:25,EDINET API v2 documents,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2026-05-17&type=2,200,0,到達済み・該当0件,指定日に一覧は取得できたが、今回の条件では対象文書0件。企業別財務値の抽出にはXBRL取得と解析が必要。,APIキー、対象日、EDINETコードを確定し、有報/XBRL抽出へ進む
-2026/05/18 16:25,EDINET API v2 documents,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2026-05-18&type=2,200,0,到達済み・該当0件,指定日に一覧は取得できたが、今回の条件では対象文書0件。企業別財務値の抽出にはXBRL取得と解析が必要。,APIキー、対象日、EDINETコードを確定し、有報/XBRL抽出へ進む
-2026/05/18 16:25,BOJ MPM schedule,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,200,8,取得済み,日銀会合の日程は取得可能。詳細な政策文と議事要旨は別PDF確認が必要。,6月、7月の日銀イベント確認に使用する
-2026/05/18 16:25,Federal Reserve FOMC calendars,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,200,8,取得済み,FOMC日程は取得可能。声明文、議事要旨、ドットチャートは別取得が必要。,6月、7月の米金利イベント確認に使用する
-2026/05/18 16:25,Nasdaq IPO Calendar,https://www.nasdaq.com/market-activity/ipos,,0,取得失敗: This operation was aborted,ページ側のBot対策またはタイムアウトの可能性。,SEC S-1検索で代替する
-2026/05/18 16:25,経済産業省 鉱工業指数,https://www.meti.go.jp/statistics/tyo/iip/result-2.html,,0,取得失敗: This operation was aborted,ページ構造、URL変更、アクセス制限の確認が必要。,手動確認または別ソースを検討する
-2026/05/18 16:25,日本自動車販売協会連合会,https://www.jada.or.jp/statistics/,404,0,取得失敗,系列コードやファイル形式は個別確認が必要。今回は入口ページとファイル候補の確認まで。,必要系列を選定して個別実装する
-2026/05/18 16:25,全国軽自動車協会連合会,https://www.zenkeijikyo.or.jp/statistics/,200,2,ページ到達済み,系列コードやファイル形式は個別確認が必要。今回は入口ページとファイル候補の確認まで。,必要系列を選定して個別実装する
-2026/05/18 16:25,電力広域的運営推進機関 OCCTO,https://www.occto.or.jp/,200,0,ページ到達済み,系列コードやファイル形式は個別確認が必要。今回は入口ページとファイル候補の確認まで。,必要系列を選定して個別実装する
+2026/05/19 17:43,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001045810.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
+2026/05/19 17:43,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001652044.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
+2026/05/19 17:43,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0000789019.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
+2026/05/19 17:43,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001018724.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
+2026/05/19 17:43,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001046179.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
+2026/05/19 17:43,SEC EDGAR Submissions API,https://data.sec.gov/submissions/CIK0001674101.json,200,12,取得済み,米国上場企業/ADRが対象。CIKを指定できる銘柄は直近開示を取得可能。,米国株候補、米国競合、IPO/S-1監視に使用する
+2026/05/19 17:43,EDINET API v2 documents,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2026-05-16&type=2,200,0,到達済み・該当0件,指定日に一覧は取得できたが、今回の条件では対象文書0件。企業別財務値の抽出にはXBRL取得と解析が必要。,APIキー、対象日、EDINETコードを確定し、有報/XBRL抽出へ進む
+2026/05/19 17:43,EDINET API v2 documents,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2026-05-17&type=2,200,0,到達済み・該当0件,指定日に一覧は取得できたが、今回の条件では対象文書0件。企業別財務値の抽出にはXBRL取得と解析が必要。,APIキー、対象日、EDINETコードを確定し、有報/XBRL抽出へ進む
+2026/05/19 17:43,EDINET API v2 documents,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2026-05-18&type=2,200,0,到達済み・該当0件,指定日に一覧は取得できたが、今回の条件では対象文書0件。企業別財務値の抽出にはXBRL取得と解析が必要。,APIキー、対象日、EDINETコードを確定し、有報/XBRL抽出へ進む
+2026/05/19 17:43,BOJ MPM schedule,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,200,8,取得済み,日銀会合の日程は取得可能。詳細な政策文と議事要旨は別PDF確認が必要。,6月、7月の日銀イベント確認に使用する
+2026/05/19 17:43,Federal Reserve FOMC calendars,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,200,8,取得済み,FOMC日程は取得可能。声明文、議事要旨、ドットチャートは別取得が必要。,6月、7月の米金利イベント確認に使用する
+2026/05/19 17:43,Nasdaq IPO Calendar,https://www.nasdaq.com/market-activity/ipos,,0,取得失敗: This operation was aborted,ページ側のBot対策またはタイムアウトの可能性。,SEC S-1検索で代替する
+2026/05/19 17:43,経済産業省 鉱工業指数,https://www.meti.go.jp/statistics/tyo/iip/result-2.html,,0,取得失敗: This operation was aborted,ページ構造、URL変更、アクセス制限の確認が必要。,手動確認または別ソースを検討する
+2026/05/19 17:43,日本自動車販売協会連合会,https://www.jada.or.jp/statistics/,404,0,取得失敗,系列コードやファイル形式は個別確認が必要。今回は入口ページとファイル候補の確認まで。,必要系列を選定して個別実装する
+2026/05/19 17:43,全国軽自動車協会連合会,https://www.zenkeijikyo.or.jp/statistics/,200,2,ページ到達済み,系列コードやファイル形式は個別確認が必要。今回は入口ページとファイル候補の確認まで。,必要系列を選定して個別実装する
+2026/05/19 17:43,電力広域的運営推進機関 OCCTO,https://www.occto.or.jp/,200,0,ページ到達済み,系列コードやファイル形式は個別確認が必要。今回は入口ページとファイル候補の確認まで。,必要系列を選定して個別実装する
