@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>未取得データ状況 更新報告書 2026-05-19</title>
+<style>
+@page { size: A4 landscape; margin: 10mm; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #f4f7fb;
+  color: #172033;
+  font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+  line-height: 1.55;
+}
+.page { max-width: 1320px; margin: auto; padding: 22px; }
+header {
+  background: #14395b;
+  color: #fff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+}
+h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: 0; }
+h2 {
+  margin: 22px 0 10px;
+  font-size: 20px;
+  color: #14395b;
+  border-left: 7px solid #1f6f8b;
+  padding-left: 10px;
+  break-after: avoid;
+}
+.lead { color: #e7f2ff; margin: 0 0 8px; }
+.summary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.card {
+  background: #fff;
+  border: 1px solid #d8e1ec;
+  border-radius: 12px;
+  padding: 12px 14px;
+  break-inside: avoid;
+}
+.card b { display: block; color: #12668a; font-size: 26px; line-height: 1.1; }
+.note {
+  background: #fff7e8;
+  border: 1px solid #f0cc91;
+  border-left: 8px solid #c76a13;
+}
+.legend {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px 0 12px;
+}
+.pill {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12px;
+  border: 1px solid #d8e1ec;
+  background: #fff;
+  white-space: nowrap;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #fff;
+  border: 1px solid #d8e1ec;
+  margin: 10px 0 16px;
+}
+tr { break-inside: avoid; }
+th, td {
+  border-bottom: 1px solid #e7eef6;
+  padding: 7px 8px;
+  font-size: 10.7px;
+  vertical-align: top;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+th { background: #eaf2f9; color: #1d405f; }
+th:nth-child(1), td:nth-child(1) { width: 78px; }
+th:nth-child(2), td:nth-child(2) { width: 158px; }
+th.status-col, td.status-col {
+  width: 122px;
+  min-width: 122px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  text-align: center;
+  font-weight: 800;
+}
+th.importance-col, td.importance-col {
+  width: 68px;
+  min-width: 68px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  text-align: center;
+  font-weight: 800;
+}
+th:nth-child(5), td:nth-child(5) { width: 160px; }
+th:nth-child(6), td:nth-child(6) { width: 270px; }
+th:nth-child(7), td:nth-child(7) { width: 260px; }
+.done { color: #08783e; background: #edf9f3; }
+.new { color: #075d95; background: #e8f4ff; }
+.partial { color: #7952b3; background: #f3efff; }
+.planned { color: #9b5a00; background: #fff4e5; }
+.issue { color: #b3261e; background: #fff0f0; }
+.max { background: #e8f6ef; color: #075b32; }
+.high { background: #eef6ff; color: #15466f; }
+.mid { background: #fff8e8; color: #714300; }
+ul { margin: 8px 0 0 19px; padding: 0; }
+li { margin: 4px 0; }
+.small { color: #607086; font-size: 11px; }
+@media print {
+  body { background: #fff; }
+  .page { padding: 0; max-width: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>未取得データ状況 更新報告書</h1>
+    <p class="lead">NISA 1年保有スコアMVP / データ取得・未取得・一部取得の整理</p>
+    <p>対象日: 2026年5月19日 / 作成: 2026/05/19 17:36</p>
+  </header>
+
+  <section class="summary">
+    <div class="card"><b>19</b>必要データ全体</div>
+    <div class="card"><b>7</b>取得済み</div>
+    <div class="card"><b>3</b>取得済み（NEW）</div>
+    <div class="card"><b>3</b>一部取得</div>
+    <div class="card"><b>5</b>未取得（制約あり）</div>
+  </section>
+
+  <div class="card note">
+    今回の更新点は、候補銘柄のIR PDF工程を追加したことです。PDF本文抽出と数値候補抽出は進みましたが、正式値の人間確認が終わるまでは本体スコアへ反映しません。ここを分けることで、計算したふりを防ぎます。
+  </div>
+
+  <h2>ステータスの意味</h2>
+  <div class="legend">
+    <span class="pill done">取得済み: すでに表・計算で使える</span>
+    <span class="pill new">取得済み（NEW）: 今回新しく取得・作成</span>
+    <span class="pill partial">一部取得: 入口や一部処理はあるが完成ではない</span>
+    <span class="pill planned">取得予定: 次工程で実装予定</span>
+    <span class="pill issue">未取得（制約あり）: 有料・権利・安定取得に制約</span>
+  </div>
+
+  <div class="card">
+    <b>必要度の見方</b>
+    <ul>
+      <li>最重要: ないとNISA 1年保有スコアの信頼性が大きく落ちる。</li>
+      <li>高: できるだけ入れたいが、代替データで初期テストは可能。</li>
+      <li>中: 精度向上・テーマ検証には役立つが、全部そろわなくても初期運用は可能。</li>
+    </ul>
+  </div>
+
+  <h2>必要データ全体の状況</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>分類</th>
+        <th>データ</th>
+        <th class="status-col">ステータス</th>
+        <th class="importance-col">必要度</th>
+        <th>取得元・ルート</th>
+        <th>現段階で分かること</th>
+        <th>次の扱い</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>市場データ</td>
+        <td><b>株価・出来高</b></td>
+        <td class="status-col done">取得済み</td>
+        <td class="importance-col max">最重要</td>
+        <td>Yahoo Finance chart API</td>
+        <td>1年の日次データと週次相当の確認に利用可能。移動平均、騰落率、出来高変化、イベント後リターン計算に使える。</td>
+        <td>対象銘柄を増やす場合は同じ取得処理を横展開する。</td>
+      </tr><tr>
+        <td>市場データ</td>
+        <td><b>為替、米10年金利、VIX、DXY、SOX指数など</b></td>
+        <td class="status-col done">取得済み</td>
+        <td class="importance-col max">最重要</td>
+        <td>Yahoo Finance / FRED</td>
+        <td>金利上昇、円高円安、半導体指数、リスク許容度の確認に使える。</td>
+        <td>NISA 1年保有スコアの市場環境補正に接続する。</td>
+      </tr><tr>
+        <td>マクロ</td>
+        <td><b>米CPI / PPI</b></td>
+        <td class="status-col done">取得済み</td>
+        <td class="importance-col high">高</td>
+        <td>FRED</td>
+        <td>米インフレ再加速や金利イベント前後の確認に使える。</td>
+        <td>イベント日付と株価を結合し、発表後リターンの統計に使う。</td>
+      </tr><tr>
+        <td>イベント</td>
+        <td><b>日銀・FRBイベント日程</b></td>
+        <td class="status-col done">取得済み</td>
+        <td class="importance-col max">最重要</td>
+        <td>日銀・FRB公式情報</td>
+        <td>6月購入判断前の定点確認日として利用可能。</td>
+        <td>カレンダー表示と購入前チェックリストに反映する。</td>
+      </tr><tr>
+        <td>イベント</td>
+        <td><b>TDnet直近イベント</b></td>
+        <td class="status-col done">取得済み</td>
+        <td class="importance-col high">高</td>
+        <td>TDnet公開ページ</td>
+        <td>直近開示を取得し、自社株買い、上方修正、下方修正、増配などの分類を開始済み。</td>
+        <td>候補銘柄の直近イベントだけを抽出し、スコア補正に使う。</td>
+      </tr><tr>
+        <td>イベント</td>
+        <td><b>イベント後リターン</b></td>
+        <td class="status-col done">取得済み</td>
+        <td class="importance-col max">最重要</td>
+        <td>TDnetイベント + 株価時系列</td>
+        <td>イベント日から営業日後の株価変化を計算する流れを作成済み。</td>
+        <td>イベント種別ごとの勝率、平均上昇率、平均下落率をスコアに接続する。</td>
+      </tr><tr>
+        <td>米国開示</td>
+        <td><b>SEC EDGAR直近開示</b></td>
+        <td class="status-col done">取得済み</td>
+        <td class="importance-col mid">中</td>
+        <td>SEC submissions API</td>
+        <td>米国・ADR銘柄の直近開示を取得する入口を作成済み。</td>
+        <td>S-1/F-1などIPO関連イベントの代替取得に使う。</td>
+      </tr><tr>
+        <td>企業IR</td>
+        <td><b>候補銘柄IR PDF本文抽出</b></td>
+        <td class="status-col new">取得済み（NEW）</td>
+        <td class="importance-col high">高</td>
+        <td>企業IR PDF</td>
+        <td>候補IR PDF 5件で本文抽出の動作を確認済み。</td>
+        <td>PDFの出所URLと対象資料名を固定し、候補銘柄ごとに広げる。</td>
+      </tr><tr>
+        <td>企業IR</td>
+        <td><b>IR PDF数値候補</b></td>
+        <td class="status-col new">取得済み（NEW）</td>
+        <td class="importance-col high">高</td>
+        <td>企業IR PDF本文</td>
+        <td>数値候補 379行、構造化候補 36行を作成済み。ただし正式値ではない。</td>
+        <td>正式入力候補に絞り、誤読しやすい数字を除外する。</td>
+      </tr><tr>
+        <td>企業IR</td>
+        <td><b>IR PDF正式入力表</b></td>
+        <td class="status-col new">取得済み（NEW）</td>
+        <td class="importance-col high">高</td>
+        <td>企業IR PDF + 確認用入力表</td>
+        <td>正式入力待ち 36行を作成済み。まだ人間確認後の正式値は未入力。</td>
+        <td>売上、営業利益、EPS、自己株買いなどをPDF原文と照合して入力する。</td>
+      </tr><tr>
+        <td>企業IR</td>
+        <td><b>IR PDFから本体スコアへの反映</b></td>
+        <td class="status-col partial">一部取得</td>
+        <td class="importance-col max">最重要</td>
+        <td>正式入力表 + 反映ゲート</td>
+        <td>反映ゲートは作成済み。ただし正式値未入力のため、本体スコアへ反映可能な行は0件。</td>
+        <td>正式値が入った行だけをスコア反映する。候補抽出だけで点数を変えない。</td>
+      </tr><tr>
+        <td>EDINET</td>
+        <td><b>EDINETコード・有価証券報告書 / XBRL</b></td>
+        <td class="status-col partial">一部取得</td>
+        <td class="importance-col high">高</td>
+        <td>EDINET API</td>
+        <td>EDINETコード確認の入口は作成済み。XBRLから財務値を安定抽出する処理は未完成。</td>
+        <td>対象銘柄のEDINETコード、対象書類、XBRLタグを固定して小さく検証する。</td>
+      </tr><tr>
+        <td>業界統計</td>
+        <td><b>鉱工業生産、自動車販売、電力需要</b></td>
+        <td class="status-col planned">取得予定</td>
+        <td class="importance-col high">高</td>
+        <td>経産省、自販連、全軽自協、OCCTOなど</td>
+        <td>公開ページと取得ルートは確認済み。安定した時系列DBにはまだ入っていない。</td>
+        <td>1系列ずつCSV/Excel化して、業界テーマ検証に接続する。</td>
+      </tr><tr>
+        <td>業界統計</td>
+        <td><b>ナフサ・原油・化学品価格</b></td>
+        <td class="status-col issue">未取得（制約あり）</td>
+        <td class="importance-col mid">中</td>
+        <td>経産省、貿易統計、商品市況など</td>
+        <td>テーマ検証には有用だが、安定取得できる系列と単位の確定が未完了。</td>
+        <td>公開統計で代替できる系列を選び、化学・素材銘柄に限定して検証する。</td>
+      </tr><tr>
+        <td>企業財務</td>
+        <td><b>企業別海外売上比率、原価率、値上げ実績</b></td>
+        <td class="status-col issue">未取得（制約あり）</td>
+        <td class="importance-col mid">中</td>
+        <td>有価証券報告書、決算説明資料、企業IR</td>
+        <td>スコア精度向上には有効。ただし企業ごとに表記が違い、完全自動取得はまだ現実的でない。</td>
+        <td>重要銘柄だけ正式入力表で扱う。</td>
+      </tr><tr>
+        <td>予想データ</td>
+        <td><b>コンセンサスEPS</b></td>
+        <td class="status-col issue">未取得（制約あり）</td>
+        <td class="importance-col high">高</td>
+        <td>有料DB、証券会社、手動入力</td>
+        <td>決算サプライズ計算には有用だが、現時点のMVPには未実装。</td>
+        <td>無料で安定取得できない場合は、会社予想の変化率で代替する。</td>
+      </tr><tr>
+        <td>有料情報</td>
+        <td><b>四季報本文、QUICK、日経、Bloomberg、Refinitiv系データ</b></td>
+        <td class="status-col issue">未取得（制約あり）</td>
+        <td class="importance-col mid">中</td>
+        <td>有料・ライセンス契約データ</td>
+        <td>本文や独自データは契約が必要。現在のシステムで自動取得済みとは扱わない。</td>
+        <td>契約する場合のみ取り込み対象にする。初期MVPは公開データ中心で進める。</td>
+      </tr><tr>
+        <td>イベント</td>
+        <td><b>TDnet長期履歴、自社株買い・上方修正・下方修正の長期DB</b></td>
+        <td class="status-col partial">一部取得</td>
+        <td class="importance-col high">高</td>
+        <td>TDnet / 企業IR</td>
+        <td>直近イベント分類は開始済み。長期履歴DBとしては未完成。</td>
+        <td>期間を区切って蓄積し、イベント種別ごとのリターン統計を作る。</td>
+      </tr><tr>
+        <td>IPO</td>
+        <td><b>Nasdaq IPOカレンダー</b></td>
+        <td class="status-col issue">未取得（制約あり）</td>
+        <td class="importance-col mid">中</td>
+        <td>Nasdaq / SEC代替</td>
+        <td>Nasdaqページの安定取得は未完了。SEC S-1/F-1を代替ルートにする方針。</td>
+        <td>監視対象のIPO関連イベントをSEC開示から抽出する。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>現段階の結論</h2>
+  <div class="card">
+    <ul>
+      <li>6月テストに必要な市場データ、株価、主要マクロ、イベント日程、直近開示はおおむね入口ができている。</li>
+      <li>企業IR PDFは、本文抽出と数値候補までは進んだ。ただし正式値未入力のため、スコア反映はまだ0件。</li>
+      <li>業界統計、ナフサ、企業別海外売上比率、コンセンサスEPS、有料DB系は、初期運用では必須ではないが、精度向上の追加工程として扱う。</li>
+      <li>現時点で「自動取得済み」と説明できるものと、「候補抽出まで」のものを分けて報告する。</li>
+    </ul>
+  </div>
+
+  <p class="small">保存先: C:\AI関連ファイル\株\reports\data_gap_status_report_20260519.html / .pdf / .csv</p>
+</div>
+</body>
+</html>
