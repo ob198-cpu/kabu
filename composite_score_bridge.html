@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>複合条件スコア接続MVP</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#d88700;--red:#b43c3c;--line:#d9e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1260px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:980px;color:#e8f6ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.warn{border-left:8px solid var(--amber);background:#fff8ea}.ok{border-left:8px solid var(--green);background:#effaf5}
+.rule{display:grid;grid-template-columns:90px 1fr 100px;gap:10px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px;margin:8px 0}.rule strong{color:var(--navy)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1180px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#eaf2f9;color:#164c70;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>複合条件スコア接続MVP</h1>
+  <p class="lead">複合条件検証の結果を、NISA 1年保有スコアへ最大+3点までの「参考補助点」として接続する表です。ここでは本体スコアを書き換えず、参考スコアとして別表示します。</p>
+  <p>更新: 2026/05/20 02:27</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="card"><b>8</b>対象銘柄</div>
+    <div class="card"><b>3</b>参考加点あり</div>
+    <div class="card"><b>+3</b>補助点の上限</div>
+    <div class="card"><b>0</b>本体スコア反映</div>
+  </section>
+  <div class="box warn">
+    このページの点数は、銘柄選びの補助材料です。複合条件が良くても、決算悪化、PER過熱、市場イベント悪化があれば購入判断には使いません。
+  </div>
+  <h2>補助点ルール</h2>
+  <div class="rule"><strong>R1</strong><div>強い改善候補<br><span>観測20件以上、3か月勝率60%以上、基準比+3.0%以上</span></div><strong>3点</strong></div><div class="rule"><strong>R2</strong><div>改善候補<br><span>観測12件以上、3か月勝率55%以上、基準比+2.0%以上</span></div><strong>2点</strong></div><div class="rule"><strong>R3</strong><div>弱い参考材料<br><span>観測12件以上、3か月勝率55%以上、基準比+0.8%以上</span></div><strong>1点</strong></div><div class="rule"><strong>R4</strong><div>優位性なし<br><span>基準比が小さい、または勝率条件を満たさない</span></div><strong>0点</strong></div><div class="rule"><strong>R5</strong><div>未接続<br><span>複合条件データがない銘柄</span></div><strong>0点</strong></div>
+  <h2>参考スコア順位</h2>
+  <div class="table-wrap"><table><thead><tr><th>rank</th><th>ticker</th><th>name</th><th>nisa_base_score</th><th>composite_aux_points</th><th>composite_reference_score</th><th>reference_decision</th><th>reflection_status</th></tr></thead><tbody><tr><td>1</td><td>2802.T</td><td>味の素</td><td>66.7</td><td>0</td><td>66.7</td><td>候補維持。分割・待機を前提に確認</td><td>反映しない</td></tr><tr><td>2</td><td>8306.T</td><td>三菱UFJフィナンシャル・グループ</td><td>64.1</td><td>0</td><td>64.1</td><td>監視継続。買い理由はまだ不足</td><td>未接続</td></tr><tr><td>3</td><td>8058.T</td><td>三菱商事</td><td>58.6</td><td>2</td><td>60.6</td><td>監視継続。買い理由はまだ不足</td><td>参考加点</td></tr><tr><td>4</td><td>8035.T</td><td>東京エレクトロン</td><td>57.1</td><td>2</td><td>59.1</td><td>監視継続。買い理由はまだ不足</td><td>参考加点</td></tr><tr><td>5</td><td>7974.T</td><td>任天堂</td><td>58.2</td><td>0</td><td>58.2</td><td>監視継続。買い理由はまだ不足</td><td>反映しない</td></tr><tr><td>6</td><td>9433.T</td><td>KDDI</td><td>57.7</td><td>0</td><td>57.7</td><td>監視継続。買い理由はまだ不足</td><td>未接続</td></tr><tr><td>7</td><td>6857.T</td><td>アドバンテスト</td><td>53.4</td><td>2</td><td>55.4</td><td>監視継続。買い理由はまだ不足</td><td>参考加点</td></tr><tr><td>8</td><td>4519.T</td><td>中外製薬</td><td>33.4</td><td>0</td><td>33.4</td><td>見送り寄り。追加根拠が必要</td><td>反映しない</td></tr></tbody></table></div>
+  <h2>スコア接続明細</h2>
+  <div class="table-wrap"><table><thead><tr><th>ticker</th><th>name</th><th>nisa_base_score</th><th>composite_aux_points</th><th>composite_reference_score</th><th>reflection_status</th><th>best_condition_label</th><th>best_observations</th><th>best_win_rate_3m_pct</th><th>best_edge_vs_baseline_3m_pct</th><th>reason</th></tr></thead><tbody><tr><td>2802.T</td><td>味の素</td><td>66.7</td><td>0</td><td>66.7</td><td>反映しない</td><td>市場3か月トレンドがプラス</td><td>56</td><td>64.3</td><td>0.355</td><td>勝率、観測数、基準比のいずれかが不足。テーマ加点は行わない。</td></tr><tr><td>8306.T</td><td>三菱UFJフィナンシャル・グループ</td><td>64.1</td><td>0</td><td>64.1</td><td>未接続</td><td></td><td></td><td></td><td></td><td>複合条件データがまだないため、参考加点なし。</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>58.6</td><td>2</td><td>60.6</td><td>参考加点</td><td>個別株プラス + 市場プラス</td><td>39</td><td>69.2</td><td>2.573</td><td>観測39件、勝率69.2%、基準比+2.57%。+2点の参考加点候補。</td></tr><tr><td>7974.T</td><td>任天堂</td><td>58.2</td><td>0</td><td>58.2</td><td>反映しない</td><td>全期間</td><td>95</td><td>57.9</td><td>0</td><td>勝率、観測数、基準比のいずれかが不足。テーマ加点は行わない。</td></tr><tr><td>9433.T</td><td>KDDI</td><td>57.7</td><td>0</td><td>57.7</td><td>未接続</td><td></td><td></td><td></td><td></td><td>複合条件データがまだないため、参考加点なし。</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>57.1</td><td>2</td><td>59.1</td><td>参考加点</td><td>業界 + 個別株 + 市場がすべてプラス</td><td>28</td><td>57.1</td><td>2.863</td><td>観測28件、勝率57.1%、基準比+2.86%。+2点の参考加点候補。</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>53.4</td><td>2</td><td>55.4</td><td>参考加点</td><td>業界 + 個別株 + 市場がすべてプラス</td><td>27</td><td>63</td><td>2.978</td><td>観測27件、勝率63%、基準比+2.98%。+2点の参考加点候補。</td></tr><tr><td>4519.T</td><td>中外製薬</td><td>33.4</td><td>0</td><td>33.4</td><td>反映しない</td><td>全期間</td><td>95</td><td>57.9</td><td>0</td><td>勝率、観測数、基準比のいずれかが不足。テーマ加点は行わない。</td></tr></tbody></table></div>
+</main>
+</body>
+</html>
