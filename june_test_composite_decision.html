@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6月テスト候補 判定表</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#d88700;--red:#b43c3c;--line:#d9e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1280px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:980px;color:#e8f6ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.warn{border-left:8px solid var(--amber);background:#fff8ea}.ok{border-left:8px solid var(--green);background:#effaf5}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1180px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.step{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>6月テスト候補 判定表</h1>
+  <p class="lead">NISA 1年保有スコアに複合条件の参考点を重ね、6月テストで残す候補、条件付き候補、監視のみ、初回除外を分けた表です。</p>
+  <p>更新: 2026/05/20 08:29</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="card"><b>1</b>主候補</div>
+    <div class="card"><b>2</b>条件付き候補</div>
+    <div class="card"><b>4</b>監視のみ</div>
+    <div class="card"><b>1</b>初回除外</div>
+  </section>
+  <div class="box warn">この分類は購入指示ではありません。6月の市場イベント、決算、PER、流動性を確認する前の候補整理です。</div>
+  <h2>6月テストの流れ</h2>
+  <div class="flow">
+    <div class="step"><strong>1. 主候補</strong><br>スコアとデータ充足が一定以上。買い急がず再確認。</div>
+    <div class="step"><strong>2. 条件付き候補</strong><br>複合条件は良いが、本体スコア不足。監視優先。</div>
+    <div class="step"><strong>3. 監視のみ</strong><br>購入候補ではなく、追加データ待ち。</div>
+    <div class="step"><strong>4. 初回除外</strong><br>6月初回テストから外す。</div>
+  </div>
+  <h2>候補判定</h2>
+  <div class="table-wrap"><table><thead><tr><th>rank</th><th>ticker</th><th>name</th><th>june_test_category</th><th>june_test_action</th><th>nisa_base_score</th><th>composite_aux_points</th><th>composite_reference_score</th><th>data_coverage_points</th><th>per</th><th>risk_level</th><th>reason</th></tr></thead><tbody><tr><td>1</td><td>2802.T</td><td>味の素</td><td>主候補</td><td>6月テスト候補に残す</td><td>66.7</td><td>0</td><td>66.7</td><td>93</td><td>42.08</td><td>中-高</td><td>参考スコア66.7点 / 本体66.7点 / データ充足93点 / PER高め(42.1倍) / 未確認: 自社株買い</td></tr><tr><td>2</td><td>8306.T</td><td>三菱UFJフィナンシャル・グループ</td><td>監視のみ</td><td>初回購入候補にはしない。数値追加またはイベント通過を待つ</td><td>64.1</td><td>0</td><td>64.1</td><td>75</td><td></td><td>中</td><td>参考スコア64.1点 / 本体64.1点 / データ充足75点 / 未確認: FCF / 自社株買い / PER</td></tr><tr><td>3</td><td>8058.T</td><td>三菱商事</td><td>条件付き候補</td><td>複合条件は良いが、本体スコア不足。初回は監視または少額候補</td><td>58.6</td><td>2</td><td>60.6</td><td>93</td><td>19.47</td><td>中-高</td><td>参考スコア60.6点 / 本体58.6点 / 複合条件+2点 / データ充足93点 / 未確認: 自社株買い</td></tr><tr><td>4</td><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>複合条件は良いが、本体スコア不足。初回は監視または少額候補</td><td>57.1</td><td>2</td><td>59.1</td><td>85</td><td></td><td>中-高</td><td>参考スコア59.1点 / 本体57.1点 / 複合条件+2点 / データ充足85点 / 未確認: 自社株買い / PER</td></tr><tr><td>5</td><td>7974.T</td><td>任天堂</td><td>監視のみ</td><td>初回購入候補にはしない。数値追加またはイベント通過を待つ</td><td>58.2</td><td>0</td><td>58.2</td><td>83</td><td>26.59</td><td>中</td><td>参考スコア58.2点 / 本体58.2点 / データ充足83点 / 未確認: FCF / 自社株買い</td></tr><tr><td>6</td><td>9433.T</td><td>KDDI</td><td>監視のみ</td><td>初回購入候補にはしない。数値追加またはイベント通過を待つ</td><td>57.7</td><td>0</td><td>57.7</td><td>72</td><td></td><td>中</td><td>参考スコア57.7点 / 本体57.7点 / データ充足72点 / 未確認: FCF / 自己資本比率 / PER</td></tr><tr><td>7</td><td>6857.T</td><td>アドバンテスト</td><td>監視のみ</td><td>初回購入候補にはしない。数値追加またはイベント通過を待つ</td><td>53.4</td><td>2</td><td>55.4</td><td>67</td><td>41.08</td><td>中-高</td><td>参考スコア55.4点 / 本体53.4点 / 複合条件+2点 / データ充足67点 / PER高め(41.1倍) / 未確認: EPS成長率 / FCF / 配当利回り / 自社株買い</td></tr><tr><td>8</td><td>4519.T</td><td>中外製薬</td><td>初回除外</td><td>6月初回テストから外す</td><td>33.4</td><td>0</td><td>33.4</td><td>49</td><td></td><td>高</td><td>参考スコア33.4点 / 本体33.4点 / データ充足49点 / 未確認: EPS成長率 / FCF / 自己資本比率 / 配当利回り / 自社株買い / PER</td></tr></tbody></table></div>
+  <h2>アクション表</h2>
+  <div class="table-wrap"><table><thead><tr><th>phase</th><th>target</th><th>check_item</th><th>condition</th><th>action</th></tr></thead><tbody><tr><td>5月下旬</td><td>全候補</td><td>スコア表、複合条件、未確認データを整理</td><td>参考スコア、PER、未確認データを確認</td><td>主候補・条件付き候補・監視・初回除外に分類</td></tr><tr><td>6月上旬</td><td>2802.T</td><td>購入前チェック</td><td>決算悪化なし、指数急落なし、PER過熱を再確認</td><td>条件を満たす場合のみテスト候補に残す</td></tr><tr><td>6月上旬-中旬</td><td>8058.T / 8035.T</td><td>複合条件の継続確認</td><td>半導体/市場トレンドが崩れない、決算・イベントで悪材料が出ない</td><td>本体スコア不足のため、初回は買い急がず再判定</td></tr><tr><td>6月中旬以降</td><td>監視のみ・初回除外</td><td>追加データ確認</td><td>未確認データが埋まる、またはスコアが改善する</td><td>改善がなければ6月テストから外す</td></tr></tbody></table></div>
+</main>
+</body>
+</html>
