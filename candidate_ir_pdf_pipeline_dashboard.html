@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>候補IR PDF工程ダッシュボード</title>
+<style>
+body{margin:0;background:#f5f8fb;color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:#14395b;color:#fff;padding:28px 22px}main{max-width:1240px;margin:auto;padding:22px}
+h1{margin:0 0 8px}.lead{color:#e9f5ff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.metric,.box,.step{background:#fff;border:1px solid #d8e1ec;border-radius:12px;padding:14px 16px;margin:12px 0}.metric b{font-size:28px;color:#12668a}
+.flow{display:grid;gap:10px}.step{display:grid;grid-template-columns:64px minmax(0,1fr) 160px;gap:12px;align-items:center}
+.num{width:44px;height:44px;border-radius:50%;background:#14395b;color:#fff;display:grid;place-items:center;font-weight:800}.done{color:#08783e;font-weight:800}
+.table-wrap{overflow:auto;border:1px solid #d8e1ec;border-radius:12px;background:#fff;margin:12px 0 24px}table{border-collapse:collapse;width:100%;min-width:1180px}
+th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}th{background:#eaf2f9;color:#1d405f}a{color:#145f86;font-weight:700}
+@media(max-width:720px){.step{grid-template-columns:1fr}.num{width:36px;height:36px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>候補IR PDF工程ダッシュボード</h1>
+  <p class="lead">PDF取得からスコア反映ゲートまでの進捗を、1枚で確認するページです。</p>
+  <p>更新: 2026/05/19 17:31</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="metric"><b>5件成功</b><br>PDF本文抽出<br><small>直接PDF URLがある候補銘柄は本文抽出まで到達</small></div><div class="metric"><b>379行</b><br>数値候補<br><small>機械抽出候補。正式値ではない</small></div><div class="metric"><b>36行</b><br>正式入力待ち<br><small>PDF原文照合後に入力する欄</small></div><div class="metric"><b>0行</b><br>スコア反映可能<br><small>現時点では正式値未入力のため0行</small></div><div class="metric"><b>18行</b><br>動作確認通過<br><small>既存MVP値を使ったテスト。正式判断には使わない</small></div>
+  </section>
+  <div class="box">
+    <b>現在地</b><br>
+    PDF本文抽出、数値候補抽出、構造化、正式入力表、計算チェック、反映ゲート、動作確認まで作成済みです。
+    ただし、正式値はまだ未入力なので、実際の本体スコア反映は0件です。次の実作業はPDF原文照合による正式値入力です。
+  </div>
+  <h2>工程フロー</h2>
+  <div class="flow">
+    <div class="step">
+      <div class="num">1</div>
+      <div><b>PDF本文抽出</b><br>候補銘柄のIR PDFを取得し、本文を抽出できるか確認する<br><small>HTMLページのみの銘柄はPDFリンク探索を追加</small></div>
+      <div><span class="done">作成済み</span><br>5行 5件成功<br><a href="candidate_ir_pdf_text_extraction.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">2</div>
+      <div><b>数値候補抽出</b><br>売上、営業利益、EPS、配当などの周辺にある数値を候補として拾う<br><small>候補の項目名、単位、期間を確認</small></div>
+      <div><span class="done">作成済み</span><br>379行 <br><a href="candidate_ir_pdf_numeric_candidates.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">3</div>
+      <div><b>構造化指標候補</b><br>数値候補を売上、利益、EPSなどの分析項目に整理する<br><small>正式入力へ進める候補を選ぶ</small></div>
+      <div><span class="done">作成済み</span><br>36行 <br><a href="candidate_ir_pdf_structured_metrics.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">4</div>
+      <div><b>スコア接続</b><br>どの指標がNISA 1年保有スコアのどの項目を強化するか確認する<br><small>本体スコアにはまだ反映しない</small></div>
+      <div><span class="done">作成済み</span><br>8行 <br><a href="candidate_ir_pdf_score_input_bridge.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">5</div>
+      <div><b>正式入力キュー</b><br>正式値として入力する前に確認すべき項目を整理する<br><small>高優先度からPDF原文を照合</small></div>
+      <div><span class="done">作成済み</span><br>36行 <br><a href="candidate_ir_pdf_official_input_queue.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">6</div>
+      <div><b>正式入力表</b><br>PDF原文確認後に、対象期間、当期値、前期値、単位を入力する<br><small>正式値を入力する</small></div>
+      <div><span class="done">作成済み</span><br>36行 <br><a href="candidate_ir_pdf_official_input_table.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">7</div>
+      <div><b>入力値計算チェック</b><br>入力値から前年比やスコア投入値を計算できるか検算する<br><small>反映可能候補だけを次へ進める</small></div>
+      <div><span class="done">作成済み</span><br>36行 0件反映可能<br><a href="candidate_ir_pdf_input_calculation_check.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">8</div>
+      <div><b>スコア反映ゲート</b><br>正式入力と計算チェックを通過した値だけをスコア反映候補にする<br><small>正式値入力後に反映候補を検算</small></div>
+      <div><span class="done">作成済み</span><br>36行 0件反映可能<br><a href="candidate_ir_pdf_score_reflection_gate.html">ページを見る</a></div>
+    </div><div class="step">
+      <div class="num">9</div>
+      <div><b>ゲート動作確認</b><br>既存MVP値で、反映ゲートが動くことを確認する<br><small>正式値で同じ流れを実行</small></div>
+      <div><span class="done">作成済み</span><br>25行 18件通過<br><a href="candidate_ir_pdf_gate_demo.html">ページを見る</a></div>
+    </div>
+  </div>
+  <h2>工程一覧</h2>
+  <div class="table-wrap"><table><thead><tr><th>updated_at</th><th>step_no</th><th>step_name</th><th>status</th><th>row_count</th><th>key_count</th><th>meaning</th><th>status_rule</th><th>next_action</th><th>page</th><th>csv_file</th></tr></thead><tbody><tr><td>2026/05/19 17:31</td><td>1</td><td>PDF本文抽出</td><td>作成済み</td><td>5</td><td>5件成功</td><td>候補銘柄のIR PDFを取得し、本文を抽出できるか確認する</td><td>parse_statusが成功なら完了</td><td>HTMLページのみの銘柄はPDFリンク探索を追加</td><td><a href="candidate_ir_pdf_text_extraction.html">candidate_ir_pdf_text_extraction.html</a></td><td>57_candidate_ir_pdf_text_extraction.csv</td></tr><tr><td>2026/05/19 17:31</td><td>2</td><td>数値候補抽出</td><td>作成済み</td><td>379</td><td></td><td>売上、営業利益、EPS、配当などの周辺にある数値を候補として拾う</td><td>候補行があれば完了。ただし正式値ではない</td><td>候補の項目名、単位、期間を確認</td><td><a href="candidate_ir_pdf_numeric_candidates.html">candidate_ir_pdf_numeric_candidates.html</a></td><td>58_candidate_ir_pdf_numeric_detail.csv</td></tr><tr><td>2026/05/19 17:31</td><td>3</td><td>構造化指標候補</td><td>作成済み</td><td>36</td><td></td><td>数値候補を売上、利益、EPSなどの分析項目に整理する</td><td>metric_groupに分類できれば完了</td><td>正式入力へ進める候補を選ぶ</td><td><a href="candidate_ir_pdf_structured_metrics.html">candidate_ir_pdf_structured_metrics.html</a></td><td>60_candidate_ir_pdf_structured_metrics.csv</td></tr><tr><td>2026/05/19 17:31</td><td>4</td><td>スコア接続</td><td>作成済み</td><td>8</td><td></td><td>どの指標がNISA 1年保有スコアのどの項目を強化するか確認する</td><td>参考反映候補があれば接続確認完了</td><td>本体スコアにはまだ反映しない</td><td><a href="candidate_ir_pdf_score_input_bridge.html">candidate_ir_pdf_score_input_bridge.html</a></td><td>62_candidate_ir_pdf_score_input_bridge.csv</td></tr><tr><td>2026/05/19 17:31</td><td>5</td><td>正式入力キュー</td><td>作成済み</td><td>36</td><td></td><td>正式値として入力する前に確認すべき項目を整理する</td><td>確認項目が作成されていれば完了</td><td>高優先度からPDF原文を照合</td><td><a href="candidate_ir_pdf_official_input_queue.html">candidate_ir_pdf_official_input_queue.html</a></td><td>63_candidate_ir_pdf_official_input_queue.csv</td></tr><tr><td>2026/05/19 17:31</td><td>6</td><td>正式入力表</td><td>作成済み</td><td>36</td><td></td><td>PDF原文確認後に、対象期間、当期値、前期値、単位を入力する</td><td>現時点では入力欄作成済み、正式値は未入力</td><td>正式値を入力する</td><td><a href="candidate_ir_pdf_official_input_table.html">candidate_ir_pdf_official_input_table.html</a></td><td>65_candidate_ir_pdf_official_input_table.csv</td></tr><tr><td>2026/05/19 17:31</td><td>7</td><td>入力値計算チェック</td><td>作成済み</td><td>36</td><td>0件反映可能</td><td>入力値から前年比やスコア投入値を計算できるか検算する</td><td>正式値未入力なら未入力で停止</td><td>反映可能候補だけを次へ進める</td><td><a href="candidate_ir_pdf_input_calculation_check.html">candidate_ir_pdf_input_calculation_check.html</a></td><td>67_candidate_ir_pdf_input_calculation_check.csv</td></tr><tr><td>2026/05/19 17:31</td><td>8</td><td>スコア反映ゲート</td><td>作成済み</td><td>36</td><td>0件反映可能</td><td>正式入力と計算チェックを通過した値だけをスコア反映候補にする</td><td>現時点では正式値未入力のため全行停止</td><td>正式値入力後に反映候補を検算</td><td><a href="candidate_ir_pdf_score_reflection_gate.html">candidate_ir_pdf_score_reflection_gate.html</a></td><td>69_candidate_ir_pdf_score_reflection_gate.csv</td></tr><tr><td>2026/05/19 17:31</td><td>9</td><td>ゲート動作確認</td><td>作成済み</td><td>25</td><td>18件通過</td><td>既存MVP値で、反映ゲートが動くことを確認する</td><td>動作確認用。正式判断には使わない</td><td>正式値で同じ流れを実行</td><td><a href="candidate_ir_pdf_gate_demo.html">candidate_ir_pdf_gate_demo.html</a></td><td>71_candidate_ir_pdf_gate_demo_detail.csv</td></tr></tbody></table></div>
+</main>
+</body>
+</html>

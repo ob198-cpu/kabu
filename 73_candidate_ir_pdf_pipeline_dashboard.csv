@@ -1,0 +1,10 @@
+updated_at,step_no,step_name,status,row_count,key_count,meaning,status_rule,next_action,page,csv_file
+2026/05/19 17:31,1,PDF本文抽出,作成済み,5,5件成功,候補銘柄のIR PDFを取得し、本文を抽出できるか確認する,parse_statusが成功なら完了,HTMLページのみの銘柄はPDFリンク探索を追加,candidate_ir_pdf_text_extraction.html,57_candidate_ir_pdf_text_extraction.csv
+2026/05/19 17:31,2,数値候補抽出,作成済み,379,,売上、営業利益、EPS、配当などの周辺にある数値を候補として拾う,候補行があれば完了。ただし正式値ではない,候補の項目名、単位、期間を確認,candidate_ir_pdf_numeric_candidates.html,58_candidate_ir_pdf_numeric_detail.csv
+2026/05/19 17:31,3,構造化指標候補,作成済み,36,,数値候補を売上、利益、EPSなどの分析項目に整理する,metric_groupに分類できれば完了,正式入力へ進める候補を選ぶ,candidate_ir_pdf_structured_metrics.html,60_candidate_ir_pdf_structured_metrics.csv
+2026/05/19 17:31,4,スコア接続,作成済み,8,,どの指標がNISA 1年保有スコアのどの項目を強化するか確認する,参考反映候補があれば接続確認完了,本体スコアにはまだ反映しない,candidate_ir_pdf_score_input_bridge.html,62_candidate_ir_pdf_score_input_bridge.csv
+2026/05/19 17:31,5,正式入力キュー,作成済み,36,,正式値として入力する前に確認すべき項目を整理する,確認項目が作成されていれば完了,高優先度からPDF原文を照合,candidate_ir_pdf_official_input_queue.html,63_candidate_ir_pdf_official_input_queue.csv
+2026/05/19 17:31,6,正式入力表,作成済み,36,,PDF原文確認後に、対象期間、当期値、前期値、単位を入力する,現時点では入力欄作成済み、正式値は未入力,正式値を入力する,candidate_ir_pdf_official_input_table.html,65_candidate_ir_pdf_official_input_table.csv
+2026/05/19 17:31,7,入力値計算チェック,作成済み,36,0件反映可能,入力値から前年比やスコア投入値を計算できるか検算する,正式値未入力なら未入力で停止,反映可能候補だけを次へ進める,candidate_ir_pdf_input_calculation_check.html,67_candidate_ir_pdf_input_calculation_check.csv
+2026/05/19 17:31,8,スコア反映ゲート,作成済み,36,0件反映可能,正式入力と計算チェックを通過した値だけをスコア反映候補にする,現時点では正式値未入力のため全行停止,正式値入力後に反映候補を検算,candidate_ir_pdf_score_reflection_gate.html,69_candidate_ir_pdf_score_reflection_gate.csv
+2026/05/19 17:31,9,ゲート動作確認,作成済み,25,18件通過,既存MVP値で、反映ゲートが動くことを確認する,動作確認用。正式判断には使わない,正式値で同じ流れを実行,candidate_ir_pdf_gate_demo.html,71_candidate_ir_pdf_gate_demo_detail.csv
