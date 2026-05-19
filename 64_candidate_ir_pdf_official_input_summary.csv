@@ -1,0 +1,6 @@
+updated_at,ticker,company_name,total_queue_items,high_priority_items,candidate_ready_items,needs_review_items,next_action
+2026/05/19 16:31,2802.T,味の素,7,4,7,0,高優先度項目からPDF原文照合
+2026/05/19 16:31,6857.T,アドバンテスト,7,4,6,1,高優先度項目からPDF原文照合
+2026/05/19 16:31,8058.T,三菱商事,8,4,5,3,高優先度項目からPDF原文照合
+2026/05/19 16:31,7974.T,任天堂,7,4,4,3,高優先度項目からPDF原文照合
+2026/05/19 16:31,8035.T,東京エレクトロン,7,4,4,3,高優先度項目からPDF原文照合
