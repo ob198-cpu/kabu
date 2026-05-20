@@ -1,0 +1,7 @@
+record_type,ticker,name,planned_amount_yen,actual_amount_yen,buy_date,buy_price,review_date,review_price,dividend_yen,return_pct,note,updated_at
+position,2802.T,味の素,80000,,,,,,,,食品・高PER。全通過でも初回は8万円まで。CPI/金利悪化時は追わない。,2026/05/20 11:54
+position,8058.T,三菱商事,120000,,,,,,,,商社・資源/円安/還元。全通過時の主力候補。日銀後の日本株地合いを確認。,2026/05/20 11:54
+position,8035.T,東京エレクトロン,60000,,,,,,,,半導体。AI/SOXが追い風なら候補。ただし金利急騰と指数急落に弱い。,2026/05/20 11:54
+benchmark,SP500_FUND,S&P500投信,,,,,,,,,既存の無難な投信運用との比較対象,2026/05/20 11:54
+benchmark,NIKKEI_OR_TOPIX_FUND,日経平均/TOPIX連動投信,,,,,,,,,日本株を選ぶ意味を確認する比較対象,2026/05/20 11:54
+benchmark,INVESTMENT_COMPANY,投資会社・一任運用想定,,,,,,,,,顧客が代替できる運用との比較対象。実績値は別途入力。,2026/05/20 11:54
