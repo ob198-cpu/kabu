@@ -29,6 +29,13 @@ th{background:#e8f2fa;color:#173a57;font-weight:900;white-space:nowrap}
 td:nth-child(3),td:nth-child(4){white-space:nowrap}
 .status{font-weight:900;color:#0b6f96}
 .risk{font-weight:900;color:#a54f00}
+.flow-list{display:grid;gap:10px;margin:8px 0 16px}
+.flow-item{background:#fff;border:1px solid #d6e1ea;border-left:9px solid #1b7aa6;border-radius:14px;padding:12px 14px;break-inside:avoid}
+.flow-title{font-size:15px;font-weight:900;color:#123f63;margin-bottom:8px}
+.flow-cols{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:10px}
+.flow-col{background:#f7fbff;border:1px solid #dbe9f5;border-radius:10px;padding:9px 10px;font-size:11.4px}
+.flow-col b{display:block;color:#173a57;margin-bottom:4px}
+.flow-col p{margin:0}
 .small{font-size:11px;color:#63748a;margin-top:12px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 ul{margin:8px 0 0 20px;padding:0}
@@ -47,7 +54,7 @@ li{margin:4px 0}
 <header>
   <h1>本日の進捗報告書</h1>
   <p class="lead">NISA 1年保有スコア / 時流候補選定システム / 2026年6月テスト開始前の開発状況</p>
-  <p class="date">対象日: 2026年5月20日　作成: 2026/05/20 18:02</p>
+  <p class="date">対象日: 2026年5月20日　作成: 2026/05/20 18:08</p>
 </header>
 
 <section class="cards">
@@ -58,7 +65,33 @@ li{margin:4px 0}
   <b>現行ルール:</b> 5月中は実購入なし。6月上旬も仮想売買・監視を中心にし、CPI、FOMC、日銀、最新決算、株価位置を確認した後だけ、小額テストの可否を判定します。イベント結果が未入力の場合は、新規投入0円です。
 </div>
 
-<h2>1. 今日の作業結果</h2>
+<h2>1. 目的別の進捗</h2>
+<div class="flow-list">
+    <div class="flow-item">
+      <div class="flow-title"><span>1. 時流に沿った銘柄選定</span></div>
+      <div class="flow-cols">
+        <div class="flow-col"><b>何のためにやるか</b><p>金利、AI・電力、守り枠、資源、設備投資など、今の資金が向かいやすいテーマから候補を出す</p></div>
+        <div class="flow-col"><b>できたこと</b><p>12銘柄の1年株価・出来高を取得し、一次候補4、監視2、保留6に整理。さらに6銘柄へPER、PBR、EPS、ROE、配当利回りを追加</p></div>
+        <div class="flow-col"><b>現在の位置</b><p>候補を絞る入口まで作成済み。正式判断には公式IR数値の入力が必要</p></div>
+      </div>
+    </div><div class="flow-item">
+      <div class="flow-title"><span>2. テスト</span></div>
+      <div class="flow-cols">
+        <div class="flow-col"><b>何のためにやるか</b><p>点数が実際に銘柄選びの補助として使えるか、価格・財務・イベントの3方向で検算する</p></div>
+        <div class="flow-col"><b>できたこと</b><p>価格一次ゲート、財務二次ゲート、公式IR確認ゲート、Excel記録シートを作成。公開リンクとCSVの欠落チェックも実施</p></div>
+        <div class="flow-col"><b>現在の位置</b><p>6月上旬は仮想売買・監視で、スコアと実際の値動きのズレを記録する段階</p></div>
+      </div>
+    </div><div class="flow-item">
+      <div class="flow-title"><span>3. 購入検討</span></div>
+      <div class="flow-cols">
+        <div class="flow-col"><b>何のためにやるか</b><p>候補銘柄を買うかではなく、買ってよい条件がそろったかを確認する</p></div>
+        <div class="flow-col"><b>できたこと</b><p>6月イベント確認後に再判定するルールを作成。イベント結果が未入力なら新規投入0円とする安全側の設計</p></div>
+        <div class="flow-col"><b>現在の位置</b><p>実購入前に、公式IR、最新決算、株価位置、イベント結果を再確認する</p></div>
+      </div>
+    </div>
+  </div>
+
+<h2>2. 今日の作業結果</h2>
 <table>
     <thead><tr><th>項目</th><th>内容</th><th>結果</th></tr></thead>
     <tbody>
@@ -66,7 +99,7 @@ li{margin:4px 0}
     </tbody>
   </table>
 
-<h2>2. 今日見えるようになった数値</h2>
+<h2>3. 今日見えるようになった数値</h2>
 <div class="two">
   <div>
     <h3>株価一次ゲート</h3>
@@ -88,7 +121,7 @@ li{margin:4px 0}
   </div>
 </div>
 
-<h2>3. 購入計画の正式な扱い</h2>
+<h2>4. 購入計画の正式な扱い</h2>
 <table>
     <thead><tr><th>時期・条件</th><th>扱い</th><th>理由</th></tr></thead>
     <tbody>
@@ -96,7 +129,7 @@ li{margin:4px 0}
     </tbody>
   </table>
 
-<h2>4. 注意点</h2>
+<h2>5. 注意点</h2>
 <table>
     <thead><tr><th>論点</th><th>現在の扱い</th></tr></thead>
     <tbody>
@@ -104,7 +137,7 @@ li{margin:4px 0}
     </tbody>
   </table>
 
-<h2>5. 次にやること</h2>
+<h2>6. 次にやること</h2>
 <table>
     <thead><tr><th>順番</th><th>作業</th><th>目的</th></tr></thead>
     <tbody>
