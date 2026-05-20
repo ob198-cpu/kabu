@@ -4,6 +4,7 @@ name,file,role
 データ取得完了状況,data_acquisition_completion_dashboard.html,取得済み・未完了データの説明
 テスト価値銘柄探索,candidate_discovery_funnel.html,暫定候補をふるい分けるページ
 時流演繹リサーチ,trend_deduction_research_base.html,時流から調査入口銘柄を作る根拠資料
+時流候補 株価一次判定,trend_candidate_price_intake.html,調査入口銘柄を株価1年データで一次ふるい分けるページ
 MVP Excelブック,stock_decision_mvp_calculated.xlsx,データ・計算・記録の保存先
 6月イベント入力,june_interactive_operation_dashboard.html,購入前の条件分岐
 イベント判定CSV確認,event_decision_record_viewer.html,判断根拠の保存確認
