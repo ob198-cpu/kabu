@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>運用記録・予実管理</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#d88700;--red:#b43c3c;--line:#d9e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1320px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:980px;color:#e8f6ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.warn{border-left:8px solid var(--amber);background:#fff8ea}.ok{border-left:8px solid var(--green);background:#effaf5}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1220px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.step{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>運用記録・予実管理</h1>
+  <p class="lead">6月テストで何を予想し、何を実行し、結果がS&P500投信・日経平均/TOPIX連動投信想定を+1%ポイント以上上回ったかを記録するページです。現時点では実行前なので、実績欄は未入力です。</p>
+  <p>更新: 2026/05/20 11:13</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="card"><b>0円</b>現時点投入額</div>
+    <div class="card"><b>260000円</b>全通過時の候補額</div>
+    <div class="card"><b>+1%</b>目標超過幅</div>
+    <div class="card"><b>8</b>予実記録枠</div>
+  </section>
+  <div class="box warn">実績値はまだありません。ここでは「計算したふり」を避けるため、期待リターンや実績リターンは未入力として残します。</div>
+  <h2>進捗サマリー</h2>
+  <div class="table-wrap"><table><thead><tr><th>item</th><th>value</th><th>status</th><th>note</th></tr></thead><tbody><tr><td>総資金</td><td>1000000</td><td>固定</td><td>NISAテスト想定の元本</td></tr><tr><td>現時点投入額</td><td>0</td><td>未実行</td><td>イベント未入力のため投入しない</td></tr><tr><td>全イベント通過時の候補投入額</td><td>260000</td><td>条件付き</td><td>現候補では26万円。6月上限35万円を超えない</td></tr><tr><td>ベンチマーク目標</td><td>+1%ポイント</td><td>採用</td><td>S&amp;P500投信・日経平均/TOPIX連動投信想定を最低+1%ポイント上回ることを目標に記録</td></tr><tr><td>期待リターン</td><td></td><td>未設定</td><td>現段階で利益率を作らない。購入価格とイベント通過後に記録</td></tr><tr><td>予実記録</td><td>8</td><td>枠作成済み</td><td>実行後に実績・ベンチマーク・差分を入力</td></tr><tr><td>ベンチマーク入力欄</td><td>4</td><td>枠作成済み</td><td>S&amp;P500、日経平均、TOPIX、本ポートフォリオ</td></tr><tr><td>未解消項目</td><td>30</td><td>要対応</td><td>購入前に減らす対象</td></tr></tbody></table></div>
+  <h2>実行判断ログ</h2>
+  <div class="table-wrap"><table><thead><tr><th>decision_id</th><th>ticker</th><th>name</th><th>scenario</th><th>planned_action</th><th>planned_amount_yen</th><th>gate_status</th><th>execution_status</th><th>actual_trade_date</th><th>actual_amount_yen</th><th>execution_note</th></tr></thead><tbody><tr><td>D-2802.T-CURRENT</td><td>2802.T</td><td>味の素</td><td>現時点</td><td>投入しない</td><td>0</td><td>イベント未入力</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-2802.T-PASS</td><td>2802.T</td><td>味の素</td><td>全イベント通過時</td><td>6月テスト候補</td><td>80000</td><td>イベント通過後に再判定</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-2802.T-ATTENTION</td><td>2802.T</td><td>味の素</td><td>注意判定時</td><td>縮小候補</td><td>50000</td><td>注意イベント時は縮小</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-8306.T-CURRENT</td><td>8306.T</td><td>三菱UFJ</td><td>現時点</td><td>投入しない</td><td>0</td><td>イベント未入力</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-8058.T-CURRENT</td><td>8058.T</td><td>三菱商事</td><td>現時点</td><td>投入しない</td><td>0</td><td>イベント未入力</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-8058.T-PASS</td><td>8058.T</td><td>三菱商事</td><td>全イベント通過時</td><td>6月テスト候補</td><td>120000</td><td>イベント通過後に再判定</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-8058.T-ATTENTION</td><td>8058.T</td><td>三菱商事</td><td>注意判定時</td><td>縮小候補</td><td>80000</td><td>注意イベント時は縮小</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-8035.T-CURRENT</td><td>8035.T</td><td>東京エレクトロン</td><td>現時点</td><td>投入しない</td><td>0</td><td>イベント未入力</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-8035.T-PASS</td><td>8035.T</td><td>東京エレクトロン</td><td>全イベント通過時</td><td>6月テスト候補</td><td>60000</td><td>イベント通過後に再判定</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-7974.T-CURRENT</td><td>7974.T</td><td>任天堂</td><td>現時点</td><td>投入しない</td><td>0</td><td>初回除外</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-9433.T-CURRENT</td><td>9433.T</td><td>KDDI</td><td>現時点</td><td>投入しない</td><td>0</td><td>イベント未入力</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-6857.T-CURRENT</td><td>6857.T</td><td>アドバンテスト</td><td>現時点</td><td>投入しない</td><td>0</td><td>初回除外</td><td>未実行</td><td></td><td></td><td></td></tr><tr><td>D-4519.T-CURRENT</td><td>4519.T</td><td>中外製薬</td><td>現時点</td><td>投入しない</td><td>0</td><td>初回除外</td><td>未実行</td><td></td><td></td><td></td></tr></tbody></table></div>
+  <h2>予実差記録</h2>
+  <div class="table-wrap"><table><thead><tr><th>prediction_id</th><th>ticker</th><th>name</th><th>holding_period</th><th>planned_amount_yen_if_all_pass</th><th>objective</th><th>target_excess_pct_point</th><th>expected_return_pct</th><th>expected_return_status</th><th>actual_return_pct</th><th>benchmark_return_pct</th><th>excess_return_pct</th><th>review_status</th></tr></thead><tbody><tr><td>P-2802.T-1Y</td><td>2802.T</td><td>味の素</td><td>NISA 1年保有テスト</td><td>80000</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr><tr><td>P-8306.T-1Y</td><td>8306.T</td><td>三菱UFJ</td><td>NISA 1年保有テスト</td><td>0</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr><tr><td>P-8058.T-1Y</td><td>8058.T</td><td>三菱商事</td><td>NISA 1年保有テスト</td><td>120000</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr><tr><td>P-8035.T-1Y</td><td>8035.T</td><td>東京エレクトロン</td><td>NISA 1年保有テスト</td><td>60000</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr><tr><td>P-7974.T-1Y</td><td>7974.T</td><td>任天堂</td><td>NISA 1年保有テスト</td><td>0</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr><tr><td>P-9433.T-1Y</td><td>9433.T</td><td>KDDI</td><td>NISA 1年保有テスト</td><td>0</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr><tr><td>P-6857.T-1Y</td><td>6857.T</td><td>アドバンテスト</td><td>NISA 1年保有テスト</td><td>0</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr><tr><td>P-4519.T-1Y</td><td>4519.T</td><td>中外製薬</td><td>NISA 1年保有テスト</td><td>0</td><td>既存の無難な投信運用を最低+1%ポイント上回る</td><td>1</td><td></td><td>未設定</td><td></td><td></td><td></td><td>未実行</td></tr></tbody></table></div>
+  <h2>ベンチマーク入力欄</h2>
+  <div class="table-wrap"><table><thead><tr><th>benchmark_id</th><th>benchmark_name</th><th>role</th><th>start_date</th><th>start_value</th><th>end_date</th><th>end_value</th><th>return_pct</th><th>source</th><th>status</th></tr></thead><tbody><tr><td>B01</td><td>S&amp;P500投信想定</td><td>比較対象</td><td></td><td></td><td></td><td></td><td></td><td>証券会社画面または公開指数</td><td>未入力</td></tr><tr><td>B02</td><td>日経平均連動想定</td><td>比較対象</td><td></td><td></td><td></td><td></td><td></td><td>証券会社画面または公開指数</td><td>未入力</td></tr><tr><td>B03</td><td>TOPIX連動想定</td><td>比較対象</td><td></td><td></td><td></td><td></td><td></td><td>証券会社画面または公開指数</td><td>未入力</td></tr><tr><td>P01</td><td>本システム候補ポートフォリオ</td><td>検証対象</td><td></td><td></td><td></td><td></td><td></td><td>実行ログ・証券会社画面</td><td>未実行</td></tr></tbody></table></div>
+</main>
+</body>
+</html>

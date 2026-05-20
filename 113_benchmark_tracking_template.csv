@@ -1,0 +1,5 @@
+benchmark_id,benchmark_name,role,start_date,start_value,end_date,end_value,return_pct,source,status
+B01,S&P500投信想定,比較対象,,,,,,証券会社画面または公開指数,未入力
+B02,日経平均連動想定,比較対象,,,,,,証券会社画面または公開指数,未入力
+B03,TOPIX連動想定,比較対象,,,,,,証券会社画面または公開指数,未入力
+P01,本システム候補ポートフォリオ,検証対象,,,,,,実行ログ・証券会社画面,未実行
