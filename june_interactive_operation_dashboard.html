@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6月イベント入力・購入判断ダッシュボード</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#c87900;--red:#b43c3c;--line:#d8e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1320px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:980px;color:#e9f7ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.ok{border-left:8px solid var(--green)}.warn{border-left:8px solid var(--amber)}.bad{border-left:8px solid var(--red)}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.control{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+label{font-weight:700}select,input,textarea{width:100%;padding:9px;border:1px solid #cbd8e4;border-radius:8px;background:#fff;margin-top:6px}textarea{min-height:76px}
+button{border:0;border-radius:999px;background:var(--blue);color:#fff;padding:10px 16px;font-weight:800;cursor:pointer}.secondary{background:#eaf2f9;color:#123b5d}.danger{background:var(--red)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1100px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.pill{display:inline-block;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:800}
+.pass{background:#e9f8f1;color:var(--green)}.attention{background:#fff3db;color:#9b6500}.negative{background:#fdecec;color:var(--red)}.pending{background:#edf2f7;color:#526171}
+.small{font-size:12px;color:#536273}.actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.summaryText{font-size:18px;font-weight:800}
+</style>
+</head>
+<body>
+<header>
+  <h1>6月イベント入力・購入判断ダッシュボード</h1>
+  <p class="lead">CPI、日銀、FOMC、最終購入前確認の結果を入れると、現時点で投入してよいか、注意時はいくらまでか、全通過時はいくらまでかを表示します。実売買ではなく、NISA 1年保有テストの判断補助です。</p>
+</header>
+<main>
+  <section class="grid" id="summaryCards"></section>
+
+  <section class="box warn">
+    <h2>イベント結果入力</h2>
+    <p class="small">入力内容はこのブラウザ内に保存されます。GitHub Pages上のファイル自体は書き換わりません。</p>
+    <div class="controls" id="eventControls"></div>
+    <div class="actions">
+      <button type="button" id="saveBtn">入力内容を保存</button>
+      <button type="button" class="secondary" id="allPassBtn">仮に全通過にする</button>
+      <button type="button" class="secondary" id="resetBtn">未入力へ戻す</button>
+    </div>
+  </section>
+
+  <section class="box" id="decisionBox">
+    <h2>現在の判定</h2>
+    <div class="summaryText" id="decisionText"></div>
+    <p id="decisionReason"></p>
+  </section>
+
+  <h2>銘柄別の候補額</h2>
+  <div id="allocationTable"></div>
+
+  <h2>イベント確認表</h2>
+  <div class="table-wrap"><table><thead><tr><th>event_id</th><th>planned_date</th><th>event</th><th>check_points</th><th>pass_condition</th><th>attention_condition</th><th>bad_condition</th><th>affected</th></tr></thead><tbody><tr><td>E01</td><td>2026-06-10</td><td>米5月CPI</td><td>CPI前年比、前月比、米10年金利、NASDAQ/SOX反応</td><td>インフレ再加速が限定的、米10年金利が急騰しない、NASDAQ/SOXが大崩れしない</td><td>CPIや金利がやや悪化、指数は小幅調整にとどまる</td><td>CPI再加速、米10年金利急騰、NASDAQ/SOX急落</td><td>高PER、半導体、グロース寄り候補</td></tr><tr><td>E02</td><td>2026-06-15〜2026-06-16</td><td>日銀会合</td><td>円高/円安、日経平均、TOPIX、銀行株反応</td><td>急な円高ショックなし、日本株全体が75日線を大きく割らない</td><td>円高または指数下落はあるが、急落ではない</td><td>急な円高、日本株全体の急落、75日線明確割れ</td><td>日本株全体、輸出、商社、銀行</td></tr><tr><td>E03</td><td>2026-06-16〜2026-06-17</td><td>FOMC</td><td>米長期金利、ドル円、NASDAQ、SOX、FRB声明</td><td>米長期金利が急騰せず、リスク許容度が崩れない</td><td>金利上昇や株安はあるが、一時的な範囲</td><td>金利急騰、NASDAQ/SOX急落、円高またはドル不安の拡大</td><td>半導体、高PER、海外比率の高い銘柄</td></tr><tr><td>E04</td><td>2026-06-18〜2026-06-24</td><td>最終購入前確認</td><td>最新株価、75日線、決算修正、証券会社画面、出来高</td><td>下方修正なし、指数75日線割れなし、候補価格が許容範囲</td><td>候補価格がやや高い、または未確認データが残る</td><td>下方修正、急落、ストップ安リスク、確認不能データあり</td><td>全候補</td></tr></tbody></table></div>
+
+  <h2>候補銘柄の元データ</h2>
+  <div class="table-wrap"><table><thead><tr><th>ticker</th><th>name</th><th>current_status</th><th>reference_score</th><th>data_coverage_points</th><th>per</th><th>all_pass_allocation_yen</th><th>attention_allocation_yen</th><th>note</th></tr></thead><tbody><tr><td>2802.T</td><td>味の素</td><td>イベント通過後候補</td><td>66.7</td><td>93</td><td>42.08</td><td>80000</td><td>50000</td><td>食品・高PER。全通過でも初回は8万円まで。CPI/金利悪化時は追わない。</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>イベント通過後候補</td><td>60.6</td><td>93</td><td>19.47</td><td>120000</td><td>80000</td><td>商社・資源/円安/還元。全通過時の主力候補。日銀後の日本株地合いを確認。</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>イベント通過後候補</td><td>59.1</td><td>85</td><td></td><td>60000</td><td>0</td><td>半導体。AI/SOXが追い風なら候補。ただし金利急騰と指数急落に弱い。</td></tr><tr><td>8306.T</td><td>三菱UFJ</td><td>監視のみ</td><td>64.1</td><td>75</td><td></td><td>0</td><td>0</td><td>銀行。金利テーマ候補だが、初回投入では監視中心。</td></tr><tr><td>9433.T</td><td>KDDI</td><td>監視のみ</td><td>57.7</td><td>72</td><td></td><td>0</td><td>0</td><td>通信の守り枠。指数超過の主役ではないため初回投入は見送り。</td></tr><tr><td>7974.T</td><td>任天堂</td><td>初回除外</td><td>58.2</td><td>83</td><td>26.59</td><td>0</td><td>0</td><td>ゲーム・新ハード期待はあるが初回除外。数字確認後の監視。</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>初回除外</td><td>55.4</td><td>67</td><td>41.08</td><td>0</td><td>0</td><td>半導体装置で感応度が高い。現段階は初回除外。</td></tr><tr><td>4519.T</td><td>中外製薬</td><td>初回除外</td><td>33.4</td><td>49</td><td></td><td>0</td><td>0</td><td>医薬。決算・薬価・主力品リスクを確認するまで初回除外。</td></tr></tbody></table></div>
+
+  <h2>判定ルール</h2>
+  <div class="table-wrap"><table><thead><tr><th>rule_id</th><th>condition</th><th>output</th><th>reason</th></tr></thead><tbody><tr><td>R01</td><td>イベント未入力が1つでもある</td><td>新規投入0円</td><td>イベント通過後に買う設計のため、未入力状態では買付判断を出さない。</td></tr><tr><td>R02</td><td>悪化が1つでもある</td><td>新規投入0円、延期</td><td>NISAの1年保有テストで、イベント直後の急落を避けるため。</td></tr><tr><td>R03</td><td>注意が1つ以上、悪化なし</td><td>最大13万円まで</td><td>完全通過ではないため、候補を味の素・三菱商事中心に縮小する。</td></tr><tr><td>R04</td><td>全イベント通過</td><td>最大26万円まで</td><td>現在の候補と未確認項目を踏まえ、6月上限35万円より低く抑える。</td></tr><tr><td>R05</td><td>個別下方修正または企業固有悪材料</td><td>該当銘柄は0円</td><td>市場全体が通過でも、個別リスクが出た銘柄は買わない。</td></tr></tbody></table></div>
+</main>
+<script>
+const events = [{"event_id":"E01","planned_date":"2026-06-10","event":"米5月CPI","check_points":"CPI前年比、前月比、米10年金利、NASDAQ/SOX反応","pass_condition":"インフレ再加速が限定的、米10年金利が急騰しない、NASDAQ/SOXが大崩れしない","attention_condition":"CPIや金利がやや悪化、指数は小幅調整にとどまる","bad_condition":"CPI再加速、米10年金利急騰、NASDAQ/SOX急落","affected":"高PER、半導体、グロース寄り候補"},{"event_id":"E02","planned_date":"2026-06-15〜2026-06-16","event":"日銀会合","check_points":"円高/円安、日経平均、TOPIX、銀行株反応","pass_condition":"急な円高ショックなし、日本株全体が75日線を大きく割らない","attention_condition":"円高または指数下落はあるが、急落ではない","bad_condition":"急な円高、日本株全体の急落、75日線明確割れ","affected":"日本株全体、輸出、商社、銀行"},{"event_id":"E03","planned_date":"2026-06-16〜2026-06-17","event":"FOMC","check_points":"米長期金利、ドル円、NASDAQ、SOX、FRB声明","pass_condition":"米長期金利が急騰せず、リスク許容度が崩れない","attention_condition":"金利上昇や株安はあるが、一時的な範囲","bad_condition":"金利急騰、NASDAQ/SOX急落、円高またはドル不安の拡大","affected":"半導体、高PER、海外比率の高い銘柄"},{"event_id":"E04","planned_date":"2026-06-18〜2026-06-24","event":"最終購入前確認","check_points":"最新株価、75日線、決算修正、証券会社画面、出来高","pass_condition":"下方修正なし、指数75日線割れなし、候補価格が許容範囲","attention_condition":"候補価格がやや高い、または未確認データが残る","bad_condition":"下方修正、急落、ストップ安リスク、確認不能データあり","affected":"全候補"}];
+const candidates = [{"updated_at":"2026/05/20 11:20","ticker":"2802.T","name":"味の素","current_status":"イベント通過後候補","reference_score":"66.7","data_coverage_points":"93","per":"42.08","all_pass_allocation_yen":80000,"attention_allocation_yen":50000,"bad_event_allocation_yen":0,"note":"食品・高PER。全通過でも初回は8万円まで。CPI/金利悪化時は追わない。"},{"updated_at":"2026/05/20 11:20","ticker":"8058.T","name":"三菱商事","current_status":"イベント通過後候補","reference_score":"60.6","data_coverage_points":"93","per":"19.47","all_pass_allocation_yen":120000,"attention_allocation_yen":80000,"bad_event_allocation_yen":0,"note":"商社・資源/円安/還元。全通過時の主力候補。日銀後の日本株地合いを確認。"},{"updated_at":"2026/05/20 11:20","ticker":"8035.T","name":"東京エレクトロン","current_status":"イベント通過後候補","reference_score":"59.1","data_coverage_points":"85","per":"","all_pass_allocation_yen":60000,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"半導体。AI/SOXが追い風なら候補。ただし金利急騰と指数急落に弱い。"},{"updated_at":"2026/05/20 11:20","ticker":"8306.T","name":"三菱UFJ","current_status":"監視のみ","reference_score":"64.1","data_coverage_points":"75","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"銀行。金利テーマ候補だが、初回投入では監視中心。"},{"updated_at":"2026/05/20 11:20","ticker":"9433.T","name":"KDDI","current_status":"監視のみ","reference_score":"57.7","data_coverage_points":"72","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"通信の守り枠。指数超過の主役ではないため初回投入は見送り。"},{"updated_at":"2026/05/20 11:20","ticker":"7974.T","name":"任天堂","current_status":"初回除外","reference_score":"58.2","data_coverage_points":"83","per":"26.59","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"ゲーム・新ハード期待はあるが初回除外。数字確認後の監視。"},{"updated_at":"2026/05/20 11:20","ticker":"6857.T","name":"アドバンテスト","current_status":"初回除外","reference_score":"55.4","data_coverage_points":"67","per":"41.08","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"半導体装置で感応度が高い。現段階は初回除外。"},{"updated_at":"2026/05/20 11:20","ticker":"4519.T","name":"中外製薬","current_status":"初回除外","reference_score":"33.4","data_coverage_points":"49","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"医薬。決算・薬価・主力品リスクを確認するまで初回除外。"}];
+const storageKey = "kabu_june_event_dashboard_v1";
+
+function yen(n){ return Math.round(Number(n)||0).toLocaleString("ja-JP") + "円"; }
+function statusLabel(status){
+  const cls = status === "通過" ? "pass" : status === "注意" ? "attention" : status === "悪化" ? "negative" : "pending";
+  return '<span class="pill '+cls+'">'+status+'</span>';
+}
+function loadState(){
+  try { return JSON.parse(localStorage.getItem(storageKey) || "{}"); } catch { return {}; }
+}
+function saveState(state){ localStorage.setItem(storageKey, JSON.stringify(state)); }
+function defaultState(){
+  return Object.fromEntries(events.map(e => [e.event_id, {status:"未入力", actual:"", memo:""}]));
+}
+let state = {...defaultState(), ...loadState()};
+
+function scenario(){
+  const statuses = events.map(e => state[e.event_id]?.status || "未入力");
+  if (statuses.includes("未入力")) return {key:"pending", title:"未入力あり：新規投入0円", amount:0, reason:"イベント通過後に判断する設計のため、未入力がある間は買付候補額を出しません。"};
+  if (statuses.includes("悪化")) return {key:"bad", title:"悪化あり：新規投入0円、延期", amount:0, reason:"CPI、日銀、FOMC、最終確認のどれかが悪化なら、6月購入は延期します。"};
+  if (statuses.includes("注意")) return {key:"attention", title:"注意あり：最大13万円まで", amount:130000, reason:"悪化ではないが不安要素が残るため、味の素・三菱商事中心に小さくします。"};
+  return {key:"pass", title:"全通過：最大26万円まで", amount:260000, reason:"現在の候補では、三菱商事12万円、味の素8万円、東京エレクトロン6万円を上限にします。"};
+}
+
+function amountFor(row, sc){
+  if (sc.key === "pass") return Number(row.all_pass_allocation_yen) || 0;
+  if (sc.key === "attention") return Number(row.attention_allocation_yen) || 0;
+  return 0;
+}
+
+function renderControls(){
+  const el = document.getElementById("eventControls");
+  el.innerHTML = events.map(e => {
+    const current = state[e.event_id] || {status:"未入力", actual:"", memo:""};
+    return '<div class="control">'
+      + '<label>'+e.planned_date+' '+e.event+'</label>'
+      + '<select data-id="'+e.event_id+'" data-field="status">'
+      + ["未入力","通過","注意","悪化"].map(v => '<option value="'+v+'" '+(current.status===v?'selected':'')+'>'+v+'</option>').join("")
+      + '</select>'
+      + '<input data-id="'+e.event_id+'" data-field="actual" placeholder="実際の数値・反応を入力" value="'+(current.actual||'').replaceAll('"','&quot;')+'">'
+      + '<textarea data-id="'+e.event_id+'" data-field="memo" placeholder="メモ・判断理由">'+(current.memo||'')+'</textarea>'
+      + '<p class="small"><b>通過:</b> '+e.pass_condition+'<br><b>注意:</b> '+e.attention_condition+'<br><b>悪化:</b> '+e.bad_condition+'</p>'
+      + '</div>';
+  }).join("");
+  el.querySelectorAll("select,input,textarea").forEach(input => {
+    input.addEventListener("input", () => {
+      const id = input.dataset.id;
+      const field = input.dataset.field;
+      state[id] = state[id] || {status:"未入力", actual:"", memo:""};
+      state[id][field] = input.value;
+      render();
+    });
+  });
+}
+
+function renderSummary(sc){
+  const entered = events.filter(e => (state[e.event_id]?.status || "未入力") !== "未入力").length;
+  const bad = events.filter(e => (state[e.event_id]?.status) === "悪化").length;
+  const attention = events.filter(e => (state[e.event_id]?.status) === "注意").length;
+  document.getElementById("summaryCards").innerHTML =
+    '<div class="card"><b>'+entered+'/4</b>入力済みイベント</div>'
+    + '<div class="card"><b>'+yen(sc.amount)+'</b>現在の上限候補額</div>'
+    + '<div class="card"><b>'+attention+'</b>注意イベント数</div>'
+    + '<div class="card"><b>'+bad+'</b>悪化イベント数</div>';
+  const box = document.getElementById("decisionBox");
+  box.className = "box " + (sc.key === "pass" ? "ok" : sc.key === "bad" ? "bad" : "warn");
+  document.getElementById("decisionText").textContent = sc.title;
+  document.getElementById("decisionReason").textContent = sc.reason;
+}
+
+function renderAllocation(sc){
+  const rows = candidates.map(row => ({...row, scenario_amount: amountFor(row, sc)}));
+  const total = rows.reduce((sum, row) => sum + row.scenario_amount, 0);
+  const html = '<div class="table-wrap"><table><thead><tr>'
+    + '<th>銘柄</th><th>状態</th><th>参考スコア</th><th>PER</th><th>今回候補額</th><th>理由</th>'
+    + '</tr></thead><tbody>'
+    + rows.map(row => '<tr>'
+      + '<td>'+row.ticker+' '+row.name+'</td>'
+      + '<td>'+row.current_status+'</td>'
+      + '<td>'+row.reference_score+'</td>'
+      + '<td>'+row.per+'</td>'
+      + '<td><b>'+yen(row.scenario_amount)+'</b></td>'
+      + '<td>'+row.note+'</td>'
+      + '</tr>').join("")
+    + '<tr><td colspan="4"><b>合計</b></td><td><b>'+yen(total)+'</b></td><td>100万円のうち、残りは現金待機。</td></tr>'
+    + '</tbody></table></div>';
+  document.getElementById("allocationTable").innerHTML = html;
+}
+
+function render(){
+  const sc = scenario();
+  renderSummary(sc);
+  renderAllocation(sc);
+}
+
+document.getElementById("saveBtn").addEventListener("click", () => { saveState(state); render(); alert("このブラウザ内に保存しました。"); });
+document.getElementById("allPassBtn").addEventListener("click", () => { events.forEach(e => { state[e.event_id] = {...(state[e.event_id]||{}), status:"通過"}; }); saveState(state); renderControls(); render(); });
+document.getElementById("resetBtn").addEventListener("click", () => { state = defaultState(); saveState(state); renderControls(); render(); });
+renderControls();
+render();
+</script>
+</body>
+</html>
