@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>顧客向け 納品・操作ガイド</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#c87900;--red:#b43c3c;--line:#d8e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1360px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:1040px;color:#eaf7ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.ok{border-left:8px solid var(--green)}.warn{border-left:8px solid var(--amber)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1080px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}a{color:#0f6f9e}.small{font-size:12px;color:#536273}
+</style>
+</head>
+<body>
+<header>
+  <h1>顧客向け 納品・操作ガイド</h1>
+  <p class="lead">この資料は、NISA 1年保有テスト用の株式判断補助システムについて、何が納品され、何ができ、どの順番で使い、どこに人間確認が必要かを説明するものです。</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="card ok"><b>MVP</b>判断補助システム</div>
+    <div class="card ok"><b>+1%</b>比較対象超過目標</div>
+    <div class="card ok"><b>0円</b>現時点投入額</div>
+    <div class="card warn"><b>未設定</b>期待リターン</div>
+  </section>
+
+  <section class="box warn">
+    <h2>最初に伝える一文</h2>
+    <p>本システムは、利益を保証する自動売買ではなく、NISA 1年保有の銘柄選定・購入前イベント判定・購入後評価を、数字と記録で補助するMVPです。</p>
+  </section>
+
+  <h2>納品物の説明</h2>
+  <div class="table-wrap"><table><thead><tr><th>item</th><th>content</th><th>client_benefit</th></tr></thead><tbody><tr><td>納品物の正体</td><td>NISA 1年保有を前提に、日本株の候補選定、購入前イベント判定、資金配分、購入後評価、モデル改善を補助するMVPシステム</td><td>銘柄選定の根拠、買う/待つ理由、購入後の評価を数字と記録で残せる</td></tr><tr><td>このシステムでできること</td><td>取得済みデータを確認し、候補を絞り、CPI/日銀/FOMCなどのイベント結果で投入額を分岐し、ベンチマーク+1%ポイントを検証する</td><td>感覚ではなく、条件分岐と記録に基づいて判断しやすくなる</td></tr><tr><td>このシステムでできないこと</td><td>利益保証、完全自動売買、全銘柄完全ランキング、根拠のない期待リターン算出、四季報本文や有料DBの無断取得</td><td>できないことを事前に明確化し、過大説明を避けられる</td></tr><tr><td>現時点の投資判断</td><td>イベント未入力のため現時点投入額は0円。注意時は最大13万円、全イベント通過時は最大26万円候補</td><td>今すぐ買う前提ではなく、安全側に段階投入できる</td></tr><tr><td>評価目標</td><td>S&amp;P500投信、日経平均/TOPIX連動投信、投資会社運用想定の最良値を最低+1%ポイント上回ること</td><td>個別株を選ぶ意味を、比較対象との成績差で検証できる</td></tr></tbody></table></div>
+
+  <h2>使う順番</h2>
+  <div class="table-wrap"><table><thead><tr><th>step_no</th><th>screen</th><th>url</th><th>user_action</th><th>result</th></tr></thead><tbody><tr><td>1</td><td>運用コックピット</td><td><a href="operation_cockpit.html">operation_cockpit.html</a></td><td>全体の順番と、どこが自動化/手入力/未取得かを確認する</td><td>システムの現在地が分かる</td></tr><tr><td>2</td><td>データ・チャート確認</td><td><a href="mvp_charts.html">mvp_charts.html</a></td><td>株価、週次データ、指数、為替、金利などを見る</td><td>候補判断に使う元データを確認できる</td></tr><tr><td>3</td><td>6月テスト候補 判定表</td><td><a href="june_test_composite_decision.html">june_test_composite_decision.html</a></td><td>主候補、条件付き候補、監視、除外を確認する</td><td>買付候補の優先順位が分かる</td></tr><tr><td>4</td><td>6月イベント入力ダッシュボード</td><td><a href="june_interactive_operation_dashboard.html">june_interactive_operation_dashboard.html</a></td><td>CPI、日銀、FOMC、最終購入前確認を入力する</td><td>0円、13万円、26万円のどれかに分岐する</td></tr><tr><td>5</td><td>イベント判定CSV確認</td><td><a href="event_decision_record_viewer.html">event_decision_record_viewer.html</a></td><td>判定CSVを読み込み、矛盾がないか確認する</td><td>買う/見送る理由を記録できる</td></tr><tr><td>6</td><td>NISA 1年保有 ベンチマーク評価</td><td><a href="benchmark_review_dashboard.html">benchmark_review_dashboard.html</a></td><td>購入後の価格、配当、ベンチマーク値を入力する</td><td>ベンチマーク+1%ポイントを超えたか判定できる</td></tr><tr><td>7</td><td>モデル改善・予実差レビュー</td><td><a href="model_improvement_dashboard.html">model_improvement_dashboard.html</a></td><td>未達の原因を分類し、改善候補か保留かを判断する</td><td>次回の重みや条件変更に使える</td></tr></tbody></table></div>
+
+  <h2>不安への回答</h2>
+  <div class="table-wrap"><table><thead><tr><th>concern</th><th>answer</th><th>evidence</th></tr></thead><tbody><tr><td>AIが適当に数字を出していないか</td><td>期待リターンや勝率は現段階では未設定。取得済みデータ、入力値、CSV、Excelシートに残る数字だけを使う</td><td>operation_cockpit.html、stock_decision_mvp_calculated.xlsx</td></tr><tr><td>買付判断が勝手に出ないか</td><td>イベント未入力なら新規投入0円。悪化があれば延期。手入力後に条件分岐で候補額を出す</td><td>june_interactive_operation_dashboard.html</td></tr><tr><td>負けた時にどうするのか</td><td>1回の未達では数式を変えない。同じ原因が3回以上出た時に変更候補へ進める。急落や悪材料は安全側へ即変更</td><td>model_improvement_dashboard.html</td></tr><tr><td>手作業が残るのか</td><td>残る。イベント結果、証券会社画面の価格、決算短信やIRの重要数値、配当、評価価格は人間が最終確認する</td><td>operation_cockpit.html</td></tr><tr><td>納品物が開けるか</td><td>主要ページ、CSV、トップ内リンク、Excelブックの存在チェックを実施。現時点で不足0件</td><td>delivery_check_report.html</td></tr></tbody></table></div>
+
+  <h2>主要ファイル</h2>
+  <div class="table-wrap"><table><thead><tr><th>name</th><th>file</th><th>role</th></tr></thead><tbody><tr><td>運用コックピット</td><td><a href="operation_cockpit.html">operation_cockpit.html</a></td><td>全体入口</td></tr><tr><td>MVP Excelブック</td><td><a href="stock_decision_mvp_calculated.xlsx">stock_decision_mvp_calculated.xlsx</a></td><td>データ・計算・記録の保存先</td></tr><tr><td>6月イベント入力</td><td><a href="june_interactive_operation_dashboard.html">june_interactive_operation_dashboard.html</a></td><td>購入前の条件分岐</td></tr><tr><td>イベント判定CSV確認</td><td><a href="event_decision_record_viewer.html">event_decision_record_viewer.html</a></td><td>判断根拠の保存確認</td></tr><tr><td>ベンチマーク評価</td><td><a href="benchmark_review_dashboard.html">benchmark_review_dashboard.html</a></td><td>購入後の合否判定</td></tr><tr><td>モデル改善レビュー</td><td><a href="model_improvement_dashboard.html">model_improvement_dashboard.html</a></td><td>予実差から改善へつなげる</td></tr><tr><td>納品前チェック</td><td><a href="delivery_check_report.html">delivery_check_report.html</a></td><td>リンク・CSV・Excelの存在確認</td></tr></tbody></table></div>
+
+  <section class="box">
+    <h2>現時点の正直な状態</h2>
+    <p>現時点では、イベント未入力のため投入額は0円です。全イベント通過時でも候補額は26万円に抑えています。期待リターンや勝率は、購入価格と実績が入るまで未設定です。</p>
+    <p class="small">更新: 2026/05/20 12:53</p>
+  </section>
+</main>
+</body>
+</html>

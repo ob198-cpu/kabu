@@ -1,0 +1,8 @@
+step_no,screen,url,user_action,result
+1,運用コックピット,operation_cockpit.html,全体の順番と、どこが自動化/手入力/未取得かを確認する,システムの現在地が分かる
+2,データ・チャート確認,mvp_charts.html,株価、週次データ、指数、為替、金利などを見る,候補判断に使う元データを確認できる
+3,6月テスト候補 判定表,june_test_composite_decision.html,主候補、条件付き候補、監視、除外を確認する,買付候補の優先順位が分かる
+4,6月イベント入力ダッシュボード,june_interactive_operation_dashboard.html,CPI、日銀、FOMC、最終購入前確認を入力する,0円、13万円、26万円のどれかに分岐する
+5,イベント判定CSV確認,event_decision_record_viewer.html,判定CSVを読み込み、矛盾がないか確認する,買う/見送る理由を記録できる
+6,NISA 1年保有 ベンチマーク評価,benchmark_review_dashboard.html,購入後の価格、配当、ベンチマーク値を入力する,ベンチマーク+1%ポイントを超えたか判定できる
+7,モデル改善・予実差レビュー,model_improvement_dashboard.html,未達の原因を分類し、改善候補か保留かを判断する,次回の重みや条件変更に使える

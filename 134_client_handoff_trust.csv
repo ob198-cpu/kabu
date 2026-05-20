@@ -1,0 +1,6 @@
+concern,answer,evidence
+AIが適当に数字を出していないか,期待リターンや勝率は現段階では未設定。取得済みデータ、入力値、CSV、Excelシートに残る数字だけを使う,operation_cockpit.html、stock_decision_mvp_calculated.xlsx
+買付判断が勝手に出ないか,イベント未入力なら新規投入0円。悪化があれば延期。手入力後に条件分岐で候補額を出す,june_interactive_operation_dashboard.html
+負けた時にどうするのか,1回の未達では数式を変えない。同じ原因が3回以上出た時に変更候補へ進める。急落や悪材料は安全側へ即変更,model_improvement_dashboard.html
+手作業が残るのか,残る。イベント結果、証券会社画面の価格、決算短信やIRの重要数値、配当、評価価格は人間が最終確認する,operation_cockpit.html
+納品物が開けるか,主要ページ、CSV、トップ内リンク、Excelブックの存在チェックを実施。現時点で不足0件,delivery_check_report.html

@@ -1,0 +1,8 @@
+name,file,role
+運用コックピット,operation_cockpit.html,全体入口
+MVP Excelブック,stock_decision_mvp_calculated.xlsx,データ・計算・記録の保存先
+6月イベント入力,june_interactive_operation_dashboard.html,購入前の条件分岐
+イベント判定CSV確認,event_decision_record_viewer.html,判断根拠の保存確認
+ベンチマーク評価,benchmark_review_dashboard.html,購入後の合否判定
+モデル改善レビュー,model_improvement_dashboard.html,予実差から改善へつなげる
+納品前チェック,delivery_check_report.html,リンク・CSV・Excelの存在確認
