@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NISA判断補助システム 運用コックピット</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#c87900;--red:#b43c3c;--line:#d8e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1380px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:1050px;color:#eaf7ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.ok{border-left:8px solid var(--green)}.warn{border-left:8px solid var(--amber)}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;position:relative}
+.step b{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:999px;background:#123b5d;color:#fff;margin-right:8px}.step a{font-weight:800;color:#0f6f9e;text-decoration:none}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1200px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}a{color:#0f6f9e}.pill{display:inline-block;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800;background:#e9f8f1;color:#16805d}.small{font-size:12px;color:#536273}
+</style>
+</head>
+<body>
+<header>
+  <h1>NISA判断補助システム 運用コックピット</h1>
+  <p class="lead">このページは、システム全体の入口です。どの順番で見ればよいか、何が自動化済みか、どこに手入力・人間確認が必要かをまとめています。実売買ではなく、NISA 1年保有テストの判断補助として使います。</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="card ok"><b>8</b>運用ステップ</div>
+    <div class="card ok"><b>0円</b>現時点投入額</div>
+    <div class="card ok"><b>26万円</b>全通過時候補額</div>
+    <div class="card ok"><b>+1%</b>目標超過幅</div>
+    <div class="card warn"><b>未設定</b>期待リターン</div>
+  </section>
+
+  <h2>最初に見る順番</h2>
+  <section class="flow">
+    <div class="step"><p><b>1</b>データ確認</p><p class="small">株価、出来高、金利、為替、指数、CPI/PPIなどの取得状況を確認する</p><p><a href="mvp_charts.html">開く</a></p></div><div class="step"><p><b>2</b>候補作成</p><p class="small">NISA 1年保有候補を、スコアと複合条件で絞る</p><p><a href="june_test_composite_decision.html">開く</a></p></div><div class="step"><p><b>3</b>購入前イベント判定</p><p class="small">CPI、日銀、FOMC、最終購入前確認の結果で買う/待つを分岐する</p><p><a href="june_interactive_operation_dashboard.html">開く</a></p></div><div class="step"><p><b>4</b>判定記録</p><p class="small">買う/見送る判断の根拠をCSVに残す</p><p><a href="event_decision_record_viewer.html">開く</a></p></div><div class="step"><p><b>5</b>資金配分</p><p class="small">100万円のうち、いくら投資していくら現金を残すかを決める</p><p><a href="capital_allocation_plan.html">開く</a></p></div><div class="step"><p><b>6</b>運用記録</p><p class="small">実行判断、予想、実績、ベンチマーク比較の枠を残す</p><p><a href="operation_tracking.html">開く</a></p></div><div class="step"><p><b>7</b>購入後評価</p><p class="small">S&amp;P500投信、日経/TOPIX連動投信、投資会社運用想定を+1%ポイント上回ったか確認する</p><p><a href="benchmark_review_dashboard.html">開く</a></p></div><div class="step"><p><b>8</b>モデル改善</p><p class="small">未達の原因を分類し、いつ数式や条件を変えるかを判断する</p><p><a href="model_improvement_dashboard.html">開く</a></p></div>
+  </section>
+
+  <h2>現在の状態</h2>
+  <div class="table-wrap"><table><thead><tr><th>item</th><th>value</th><th>status</th><th>note</th></tr></thead><tbody><tr><td>現在の新規投入額</td><td>0円</td><td>イベント未入力のため未実行</td><td>6月イベント後に判定</td></tr><tr><td>注意時の候補額</td><td>13万円</td><td>ルール実装済み</td><td>悪化なし・注意ありの場合</td></tr><tr><td>全イベント通過時の候補額</td><td>26万円</td><td>ルール実装済み</td><td>三菱商事12万円、味の素8万円、東京エレクトロン6万円</td></tr><tr><td>目標</td><td>+1%ポイント</td><td>明示済み</td><td>S&amp;P500投信、日経/TOPIX連動投信、投資会社運用想定の最良値を上回る</td></tr><tr><td>期待リターン</td><td>未設定</td><td>根拠不足のため未設定</td><td>購入価格と実績データが入るまで作らない</td></tr><tr><td>実績評価</td><td>入力欄作成済み</td><td>購入後に使用</td><td>1か月、3か月、6か月、1年で確認</td></tr></tbody></table></div>
+
+  <h2>運用ステップ詳細</h2>
+  <div class="table-wrap"><table><thead><tr><th>step_no</th><th>phase</th><th>purpose</th><th>main_page</th><th>input</th><th>output</th><th>operation_type</th><th>status</th><th>next_action</th></tr></thead><tbody><tr><td>1</td><td>データ確認</td><td>株価、出来高、金利、為替、指数、CPI/PPIなどの取得状況を確認する</td><td><a href="mvp_charts.html">mvp_charts.html</a></td><td>公開データ、既存CSV、更新済みExcel</td><td>取得済みデータ、欠損、チャート、週次データ</td><td>自動取得中心</td><td>実装済み</td><td>データ取得日と欠損を確認する</td></tr><tr><td>2</td><td>候補作成</td><td>NISA 1年保有候補を、スコアと複合条件で絞る</td><td><a href="june_test_composite_decision.html">june_test_composite_decision.html</a></td><td>NISAスコア、PER、データカバー率、複合条件スコア</td><td>主候補、条件付き候補、監視、初回除外</td><td>計算 + 人間確認</td><td>実装済み</td><td>候補の理由と未確認データを確認する</td></tr><tr><td>3</td><td>購入前イベント判定</td><td>CPI、日銀、FOMC、最終購入前確認の結果で買う/待つを分岐する</td><td><a href="june_interactive_operation_dashboard.html">june_interactive_operation_dashboard.html</a></td><td>イベント結果、実際の数値、メモ</td><td>新規投入0円、注意時13万円、全通過時26万円</td><td>手入力 + 自動判定</td><td>実装済み</td><td>6月イベント後に未入力をなくす</td></tr><tr><td>4</td><td>判定記録</td><td>買う/見送る判断の根拠をCSVに残す</td><td><a href="event_decision_record_viewer.html">event_decision_record_viewer.html</a></td><td>イベント判定CSV</td><td>総合判定、イベント結果、銘柄別候補額、整合性チェック</td><td>CSV出力 + 読み込み確認</td><td>実装済み</td><td>運用ログへ転記する要約を保存する</td></tr><tr><td>5</td><td>資金配分</td><td>100万円のうち、いくら投資していくら現金を残すかを決める</td><td><a href="capital_allocation_plan.html">capital_allocation_plan.html</a></td><td>イベント判定、候補額、リスクルール</td><td>現時点0円、注意時13万円、全通過時26万円、残り現金</td><td>ルール計算</td><td>実装済み</td><td>実売買前に証券会社画面と最新IRを確認する</td></tr><tr><td>6</td><td>運用記録</td><td>実行判断、予想、実績、ベンチマーク比較の枠を残す</td><td><a href="operation_tracking.html">operation_tracking.html</a></td><td>判断日、候補額、実績、ベンチマーク</td><td>判断ログ、予実差、ベンチマーク入力欄</td><td>記録テンプレート</td><td>実装済み</td><td>実行後に購入価格と評価日を入力する</td></tr><tr><td>7</td><td>購入後評価</td><td>S&amp;P500投信、日経/TOPIX連動投信、投資会社運用想定を+1%ポイント上回ったか確認する</td><td><a href="benchmark_review_dashboard.html">benchmark_review_dashboard.html</a></td><td>購入価格、評価価格、配当、ベンチマーク値</td><td>本ポートフォリオリターン、最良ベンチマーク、合格ライン、差分</td><td>手入力 + 自動計算</td><td>実装済み</td><td>1か月、3か月、6か月、1年で評価する</td></tr><tr><td>8</td><td>モデル改善</td><td>未達の原因を分類し、いつ数式や条件を変えるかを判断する</td><td><a href="model_improvement_dashboard.html">model_improvement_dashboard.html</a></td><td>予実差、最大下落率、主原因、同じ原因の累積回数</td><td>変更なし、保留、重み変更候補、安全側変更</td><td>原因分類 + 改善ルール</td><td>実装済み</td><td>同じ失敗が3回以上出た時だけ変更候補へ進める</td></tr></tbody></table></div>
+
+  <h2>自動化済み・手入力・未取得の境界</h2>
+  <div class="table-wrap"><table><thead><tr><th>category</th><th>data_or_function</th><th>source_or_method</th><th>reliability</th><th>current_use</th></tr></thead><tbody><tr><td>自動取得・実装済み</td><td>株価、出来高、週次データ、為替、米10年金利、VIX、CPI/PPI、SOX等</td><td>Yahoo Finance chart API、FRED、既存CSV</td><td>公開データとして確認可能。ただし取得失敗や遅延は記録する</td><td>スコア、相関、複合条件、チャート、ベンチマーク比較の基礎</td></tr><tr><td>自動化済みだが人間確認が必要</td><td>イベント判定、資金配分、ベンチマーク評価、改善判定</td><td>画面入力、CSV出力、Excelシート</td><td>入力値が正しければ計算可能。イベントの解釈は人間確認が必要</td><td>6月購入前の判断補助と購入後レビュー</td></tr><tr><td>一部取得・追加余地あり</td><td>EDINET、SEC、日銀/FRB日程、一部業界統計</td><td>公開API、公開ページ、CSV/Excel資料</td><td>ルート確認済み。一括安定取得や長期DB化は追加開発が必要</td><td>候補の根拠補強、イベント履歴整備</td></tr><tr><td>手入力・最終確認が必要</td><td>決算短信・IRの重要数値、購入価格、評価価格、配当、証券会社画面の最終値</td><td>企業IR、TDnet、証券会社画面、手入力</td><td>最終判断に必要。自動抽出だけで完結させない</td><td>実売買前確認、予実差、ベンチマーク評価</td></tr><tr><td>未取得・有料/権利/安定性の課題</td><td>四季報本文、QUICK/日経/Bloomberg/Refinitiv、コンセンサスEPS、TDnet長期履歴、アナリスト予想</td><td>有料DB、契約データ、別途API、長期スクレイピング設計</td><td>無断取得や不安定取得は避ける。代替データで初期運用は可能</td><td>精度向上候補。現MVPの必須条件にはしない</td></tr><tr><td>現段階では未設定</td><td>確定期待リターン、上昇確率、完全な自己進化AI、全銘柄完全ランキング</td><td>長期DB、十分なサンプル、バックテスト、運用ログ蓄積が必要</td><td>現段階で数値を作ると根拠が弱い</td><td>将来開発。現MVPでは作ったふりをしない</td></tr></tbody></table></div>
+
+  <section class="box warn">
+    <h2>重要な前提</h2>
+    <p>このMVPは、銘柄選定と購入判断の補助システムです。期待リターンや勝率を根拠なく作らず、取得済みデータ、イベント入力、購入後の実績、ベンチマーク差を記録して改善します。</p>
+  </section>
+</main>
+</body>
+</html>
