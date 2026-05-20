@@ -47,11 +47,11 @@ li{margin:4px 0}
 <header>
   <h1>本日の進捗報告書</h1>
   <p class="lead">NISA 1年保有スコア / 時流候補選定システム / 2026年6月テスト開始前の開発状況</p>
-  <p class="date">対象日: 2026年5月20日　作成: 2026/05/20 17:54</p>
+  <p class="date">対象日: 2026年5月20日　作成: 2026/05/20 17:59</p>
 </header>
 
 <section class="cards">
-  <div class="card"><span class="label">実売買</span><span class="num">0件</span><p>購入操作・購入確定・証券口座操作は行っていません</p></div><div class="card"><span class="label">5月の扱い</span><span class="num">開発・検証のみ</span><p>実購入ではなく、データ取得と仮想判定を進める期間</p></div><div class="card"><span class="label">6月の扱い</span><span class="num">イベント後に再判定</span><p>CPI、FOMC、日銀、決算確認後に小額テスト可否を判断</p></div><div class="card"><span class="label">公式IR反映</span><span class="num">0/48項目</span><p>到達確認は完了、正式数値入力とスコア反映は未実施</p></div>
+  <div class="card"><span class="label">実売買</span><span class="num">0件</span><p>購入操作・購入確定・証券口座操作は行っていません</p></div><div class="card"><span class="label">5月の扱い</span><span class="num">開発・検証のみ</span><p>実購入ではなく、データ取得と仮想判定を進める期間</p></div><div class="card"><span class="label">6月の扱い</span><span class="num">イベント確認後に再判定</span><p>CPI、FOMC、日銀、決算確認後に小額テスト可否を判断</p></div><div class="card"><span class="label">公式IR反映</span><span class="num">0/48項目</span><p>到達確認は完了、正式数値入力とスコア反映は未実施</p></div>
 </section>
 
 <div class="ok">
@@ -62,7 +62,7 @@ li{margin:4px 0}
 <table>
     <thead><tr><th>項目</th><th>内容</th><th>結果</th></tr></thead>
     <tbody>
-      <tr><td class="">時流候補・株価一次ゲート</td><td class="">1年株価、出来高、移動平均、下落率で候補を一次判定</td><td class="status">12銘柄を確認。通過4、監視2、保留6</td></tr><tr><td class="">時流候補・財務二次ゲート</td><td class="">PER、PBR、EPS、ROE、配当利回り等を参考値として追加</td><td class="status">6銘柄を確認。暫定通過3、継続監視3</td></tr><tr><td class="">公式IR確認ゲート</td><td class="">各社公式IR、決算、説明資料ページへ到達できるか確認</td><td class="status">6銘柄、17リンク到達。48の正式入力欄を作成</td></tr><tr><td class="">Excelブック更新</td><td class="">計算・記録用のシートを追加し、画面と表をつなげる</td><td class="status">161〜172番台のシートを追加</td></tr><tr><td class="">公開物チェック</td><td class="">HTML、CSV、Excel、PDFのリンク欠落を確認</td><td class="status">主要アセット20、CSV25、リンク66、欠落0</td></tr>
+      <tr><td class="">時流候補・株価一次ゲート</td><td class="">1年株価、出来高、移動平均、下落率で候補を一次判定</td><td class="status">12銘柄を確認。一次候補4、監視2、保留6</td></tr><tr><td class="">時流候補・財務二次ゲート</td><td class="">PER、PBR、EPS、ROE、配当利回り等を参考値として追加</td><td class="status">6銘柄を確認。正式確認へ進む候補3、継続監視3</td></tr><tr><td class="">公式IR確認ゲート</td><td class="">各社公式IR、決算、説明資料ページへ到達できるか確認</td><td class="status">6銘柄、17リンク到達。48の正式入力欄を作成</td></tr><tr><td class="">Excelブック更新</td><td class="">計算・記録用のシートを追加し、画面と表をつなげる</td><td class="status">161〜172番台のシートを追加</td></tr><tr><td class="">公開物チェック</td><td class="">HTML、CSV、Excel、PDFのリンク欠落を確認</td><td class="status">主要アセット20、CSV25、リンク66、欠落0</td></tr>
     </tbody>
   </table>
 
@@ -73,7 +73,7 @@ li{margin:4px 0}
     <table>
     <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>理由</th></tr></thead>
     <tbody>
-      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">100</td><td class="status">通過</td><td class="">金利テーマ。1年価格と出来高の一次条件が強い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">92</td><td class="status">通過</td><td class="">保険・金利・円安耐性テーマ。価格面は強い</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">84</td><td class="status">通過</td><td class="">守り枠。値動きは安定寄りだが、上昇力は再確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">73</td><td class="status">通過</td><td class="">電力・FA・防衛関連テーマ。財務確認が必要</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">88</td><td class="status">監視</td><td class="">空調・電力効率テーマ。ただし出来高条件が弱い</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">56</td><td class="status">監視</td><td class="">資源・商社テーマ。価格勢いは強くない</td></tr>
+      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">100</td><td class="status">一次候補</td><td class="">金利テーマ。1年価格と出来高の一次条件が強い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">92</td><td class="status">一次候補</td><td class="">保険・金利・円安耐性テーマ。価格面は強い</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">84</td><td class="status">一次候補</td><td class="">守り枠。値動きは安定寄りだが、上昇力は再確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">73</td><td class="status">一次候補</td><td class="">電力・FA・防衛関連テーマ。財務確認が必要</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">88</td><td class="status">監視</td><td class="">空調・電力効率テーマ。ただし出来高条件が弱い</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">56</td><td class="status">監視</td><td class="">資源・商社テーマ。価格勢いは強くない</td></tr>
     </tbody>
   </table>
   </div>
@@ -82,7 +82,7 @@ li{margin:4px 0}
     <table>
     <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>理由</th></tr></thead>
     <tbody>
-      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">85.0</td><td class="status">暫定通過</td><td class="">Yahoo系参考値では財務・還元・テーマのバランスが良い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">81.2</td><td class="status">暫定通過</td><td class="">保険・還元・金利環境の追い風を確認中</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">75.8</td><td class="status">暫定通過</td><td class="">テーマ性は強いが、割安性と需要継続性の確認が必要</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">66.6</td><td class="status">継続監視</td><td class="">資源価格・商社還元の確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">66.5</td><td class="status">継続監視</td><td class="">材料はあるが、決算とセグメント確認が必要</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">66.4</td><td class="status">継続監視</td><td class="">守り枠候補。PER/EPSなど一部欠損の補完が必要</td></tr>
+      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">85.0</td><td class="status">正式確認へ</td><td class="">Yahoo系参考値では財務・還元・テーマのバランスが良い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">81.2</td><td class="status">正式確認へ</td><td class="">保険・還元・金利環境の追い風を確認中</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">75.8</td><td class="status">正式確認へ</td><td class="">テーマ性は強いが、割安性と需要継続性の確認が必要</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">66.6</td><td class="status">継続監視</td><td class="">資源価格・商社還元の確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">66.5</td><td class="status">継続監視</td><td class="">材料はあるが、決算とセグメント確認が必要</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">66.4</td><td class="status">継続監視</td><td class="">守り枠候補。PER/EPSなど一部欠損の補完が必要</td></tr>
     </tbody>
   </table>
   </div>
@@ -92,7 +92,7 @@ li{margin:4px 0}
 <table>
     <thead><tr><th>時期・条件</th><th>扱い</th><th>理由</th></tr></thead>
     <tbody>
-      <tr><td class="">2026年5月中</td><td class="risk">実購入なし</td><td class="">データ取得、計算式の検算、候補銘柄の仮想判定のみ</td></tr><tr><td class="">2026年6月上旬</td><td class="risk">仮想売買・監視</td><td class="">イベント前の実購入は行わず、スコアの動きと記録の安定性を確認</td></tr><tr><td class="">6月の主要イベント通過後</td><td class="risk">購入可否を再判定</td><td class="">CPI、FOMC、日銀、最新決算、株価位置を入力して条件分岐</td></tr><tr><td class="">イベント結果が未入力の場合</td><td class="risk">新規投入0円</td><td class="">自動的に買い判定を出さない安全側の仕様</td></tr><tr><td class="">全条件通過の場合</td><td class="risk">小額テストに限定</td><td class="">現行の安全設計では全額投入ではなく、候補別上限と現金待機を残す</td></tr>
+      <tr><td class="">2026年5月中</td><td class="risk">実購入なし</td><td class="">データ取得、計算式の検算、候補銘柄の仮想判定のみ</td></tr><tr><td class="">2026年6月上旬</td><td class="risk">仮想売買・監視</td><td class="">イベント前の実購入は行わず、スコアの動きと記録の安定性を確認</td></tr><tr><td class="">6月の主要イベント確認後</td><td class="risk">購入可否を再判定</td><td class="">CPI、FOMC、日銀、最新決算、株価位置を入力して条件分岐</td></tr><tr><td class="">イベント結果が未入力の場合</td><td class="risk">新規投入0円</td><td class="">自動的に買い判定を出さない安全側の仕様</td></tr><tr><td class="">全条件を確認できた場合</td><td class="risk">小額テストに限定</td><td class="">現行の安全設計では全額投入ではなく、候補別上限と現金待機を残す</td></tr>
     </tbody>
   </table>
 
@@ -108,7 +108,7 @@ li{margin:4px 0}
 <table>
     <thead><tr><th>順番</th><th>作業</th><th>目的</th></tr></thead>
     <tbody>
-      <tr><td class="">1</td><td class="">旧表現の除去・上書き</td><td class="">5/20購入に見える表現を現行方針に統一</td></tr><tr><td class="">2</td><td class="">上位候補3銘柄の公式数値入力</td><td class="">三井住友FG、東京海上HD、ダイキンなどから優先</td></tr><tr><td class="">3</td><td class="">スコア式の検算</td><td class="">価格ゲート、財務ゲート、イベントゲートの重みを再確認</td></tr><tr><td class="">4</td><td class="">6月イベント入力画面の安全確認</td><td class="">未入力時0円、悪化時延期、通過時のみ小額テストに固定</td></tr>
+      <tr><td class="">1</td><td class="">旧表現の除去・上書き</td><td class="">5/20購入に見える表現を現行方針に統一</td></tr><tr><td class="">2</td><td class="">上位候補3銘柄の公式数値入力</td><td class="">三井住友FG、東京海上HD、ダイキンなどから優先</td></tr><tr><td class="">3</td><td class="">スコア式の検算</td><td class="">価格ゲート、財務ゲート、イベントゲートの重みを再確認</td></tr><tr><td class="">4</td><td class="">6月イベント入力画面の安全確認</td><td class="">未入力時0円、悪化時延期、条件確認後のみ小額テストに固定</td></tr>
     </tbody>
   </table>
 
@@ -116,8 +116,7 @@ li{margin:4px 0}
   <h3>本日の結論</h3>
   <ul>
     <li>今日の成果は、銘柄選定の「候補を絞る入口」を強化したことです。</li>
-    <li>まだ正式な投資判断ではありません。公式IRの数値入力、検算、6月イベント通過後の再判定が必要です。</li>
-    <li>5月20日に購入を開始する方針ではありません。現行方針は6月開始前提のテスト設計です。</li>
+    <li>まだ正式な投資判断ではありません。公式IRの数値入力、検算、6月イベント確認後の再判定が必要です。</li>
   </ul>
 </div>
 
