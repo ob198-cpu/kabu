@@ -3,6 +3,7 @@ name,file,role
 顧客向け納品ガイドPDF,client_handoff_guide.pdf,顧客へ渡す説明資料
 データ取得完了状況,data_acquisition_completion_dashboard.html,取得済み・未完了データの説明
 テスト価値銘柄探索,candidate_discovery_funnel.html,暫定候補をふるい分けるページ
+時流演繹リサーチ,trend_deduction_research_base.html,時流から調査入口銘柄を作る根拠資料
 MVP Excelブック,stock_decision_mvp_calculated.xlsx,データ・計算・記録の保存先
 6月イベント入力,june_interactive_operation_dashboard.html,購入前の条件分岐
 イベント判定CSV確認,event_decision_record_viewer.html,判断根拠の保存確認

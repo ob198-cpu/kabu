@@ -1,9 +1,9 @@
 updated_at,sheet,purpose,workbook_file,workbook_status,note
-2026/05/20 14:58,137_operation_cockpit_flow,運用フロー,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
-2026/05/20 14:58,138_operation_cockpit_boundary,自動化・手入力・未取得の境界,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
-2026/05/20 14:58,139_operation_cockpit_status,現状サマリー,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
-2026/05/20 14:58,132_benchmark_review_template,購入後評価入力欄,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
-2026/05/20 14:58,133_benchmark_review_schedule,評価タイミング,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
-2026/05/20 14:58,134_model_improvement_causes,原因分類,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
-2026/05/20 14:58,135_model_improvement_rules,改善ルール,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
-2026/05/20 14:58,136_model_improvement_log,改善ログテンプレート,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,137_operation_cockpit_flow,運用フロー,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,138_operation_cockpit_boundary,自動化・手入力・未取得の境界,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,139_operation_cockpit_status,現状サマリー,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,132_benchmark_review_template,購入後評価入力欄,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,133_benchmark_review_schedule,評価タイミング,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,134_model_improvement_causes,原因分類,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,135_model_improvement_rules,改善ルール,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
+2026/05/20 15:19,136_model_improvement_log,改善ログテンプレート,stock_decision_mvp_calculated.xlsx,確認済み,シート名は生成時に確認対象。最終確認ではExcelを開いて該当シートを確認する。
