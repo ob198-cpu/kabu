@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>本日の進捗報告書 2026-05-20</title>
+<style>
+@page{size:A4;margin:12mm}
+*{box-sizing:border-box}
+body{margin:0;background:#eef3f7;color:#162235;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.55}
+.page{max-width:1120px;margin:0 auto;padding:24px}
+header{background:#123f63;color:#fff;border-radius:18px;padding:30px 34px;margin-bottom:18px}
+h1{font-size:30px;margin:0 0 8px;letter-spacing:0}
+.lead{font-size:15px;color:#e6f3ff;margin:0}
+.date{margin:14px 0 0;color:#cfe2f2;font-size:12px}
+h2{font-size:19px;color:#123f63;margin:24px 0 10px;border-left:8px solid #1b7aa6;padding-left:10px;break-after:avoid}
+h3{font-size:15px;margin:14px 0 8px;color:#20334a}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 16px}
+.card{background:#fff;border:1px solid #d6e1ea;border-radius:14px;padding:13px;break-inside:avoid}
+.card .num{font-size:25px;font-weight:900;color:#0b6f96;display:block}
+.card .label{font-weight:800;color:#1b2b3d}
+.card p{margin:5px 0 0;font-size:11px;color:#53657a}
+.alert{background:#fff8ea;border:2px solid #f0c46b;border-left:12px solid #d98200;border-radius:14px;padding:14px 16px;margin:14px 0;break-inside:avoid}
+.ok{background:#eef9f2;border:1px solid #a8d8b8;border-left:10px solid #14965b;border-radius:14px;padding:13px 15px;margin:12px 0;break-inside:avoid}
+.note{background:#fff;border:1px solid #d6e1ea;border-radius:14px;padding:13px 15px;margin:12px 0;break-inside:avoid}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d6e1ea;border-radius:12px;overflow:hidden;margin:8px 0 16px;break-inside:auto}
+tr{break-inside:avoid}
+th,td{border-bottom:1px solid #e7eef5;padding:8px 9px;text-align:left;vertical-align:top;font-size:11.4px;overflow-wrap:anywhere;word-break:normal}
+th{background:#e8f2fa;color:#173a57;font-weight:900;white-space:nowrap}
+td:nth-child(3),td:nth-child(4){white-space:nowrap}
+.status{font-weight:900;color:#0b6f96}
+.risk{font-weight:900;color:#a54f00}
+.small{font-size:11px;color:#63748a;margin-top:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+ul{margin:8px 0 0 20px;padding:0}
+li{margin:4px 0}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900;background:#e8f2fa;color:#173a57}
+@media print{
+  body{background:#fff}
+  .page{padding:0}
+  .cards{grid-template-columns:repeat(4,1fr)}
+  .two{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <h1>本日の進捗報告書</h1>
+  <p class="lead">NISA 1年保有スコア / 時流候補選定システム / 2026年6月テスト開始前の開発状況</p>
+  <p class="date">対象日: 2026年5月20日　作成: 2026/05/20 17:50</p>
+</header>
+
+<section class="cards">
+  <div class="card"><span class="label">実売買</span><span class="num">0件</span><p>購入操作・購入確定・証券口座操作は行っていません</p></div><div class="card"><span class="label">5月の扱い</span><span class="num">開発・検証のみ</span><p>実購入ではなく、データ取得と仮想判定を進める期間</p></div><div class="card"><span class="label">6月の扱い</span><span class="num">イベント後に再判定</span><p>CPI、FOMC、日銀、決算確認後に小額テスト可否を判断</p></div><div class="card"><span class="label">公式IR反映</span><span class="num">0/48項目</span><p>到達確認は完了、正式数値入力とスコア反映は未実施</p></div>
+</section>
+
+<div class="alert">
+  <h3>先に訂正・確認</h3>
+  <p><b>勝手に購入した事実、購入を確定した事実、証券口座で操作した事実はありません。</b></p>
+  <p>「5月20日以降に25%だけ開始」のように見える表現は、初期検討案または過去のたたき台に残った文言です。現行方針ではありません。現在の正式な扱いは、<b>5月は開発・データ検証のみ、6月の市場イベント通過後に購入可否を再判定</b>です。</p>
+</div>
+
+<div class="ok">
+  <b>現行ルール:</b> 5月中は実購入なし。6月上旬も仮想売買・監視を中心にし、CPI、FOMC、日銀、最新決算、株価位置を確認した後だけ、小額テストの可否を判定します。イベント結果が未入力の場合は、新規投入0円です。
+</div>
+
+<h2>1. 今日の作業結果</h2>
+<table>
+    <thead><tr><th>項目</th><th>内容</th><th>結果</th></tr></thead>
+    <tbody>
+      <tr><td class="">時流候補・株価一次ゲート</td><td class="">1年株価、出来高、移動平均、下落率で候補を一次判定</td><td class="status">12銘柄を確認。通過4、監視2、保留6</td></tr><tr><td class="">時流候補・財務二次ゲート</td><td class="">PER、PBR、EPS、ROE、配当利回り等を参考値として追加</td><td class="status">6銘柄を確認。暫定通過3、継続監視3</td></tr><tr><td class="">公式IR確認ゲート</td><td class="">各社公式IR、決算、説明資料ページへ到達できるか確認</td><td class="status">6銘柄、17リンク到達。48の正式入力欄を作成</td></tr><tr><td class="">Excelブック更新</td><td class="">計算・記録用のシートを追加し、画面と表をつなげる</td><td class="status">161〜172番台のシートを追加</td></tr><tr><td class="">公開物チェック</td><td class="">HTML、CSV、Excel、PDFのリンク欠落を確認</td><td class="status">主要アセット20、CSV25、リンク66、欠落0</td></tr>
+    </tbody>
+  </table>
+
+<h2>2. 今日見えるようになった数値</h2>
+<div class="two">
+  <div>
+    <h3>株価一次ゲート</h3>
+    <table>
+    <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">100</td><td class="status">通過</td><td class="">金利テーマ。1年価格と出来高の一次条件が強い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">92</td><td class="status">通過</td><td class="">保険・金利・円安耐性テーマ。価格面は強い</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">84</td><td class="status">通過</td><td class="">守り枠。値動きは安定寄りだが、上昇力は再確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">73</td><td class="status">通過</td><td class="">電力・FA・防衛関連テーマ。財務確認が必要</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">88</td><td class="status">監視</td><td class="">空調・電力効率テーマ。ただし出来高条件が弱い</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">56</td><td class="status">監視</td><td class="">資源・商社テーマ。価格勢いは強くない</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div>
+    <h3>財務二次ゲート</h3>
+    <table>
+    <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">85.0</td><td class="status">暫定通過</td><td class="">Yahoo系参考値では財務・還元・テーマのバランスが良い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">81.2</td><td class="status">暫定通過</td><td class="">保険・還元・金利環境の追い風を確認中</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">75.8</td><td class="status">暫定通過</td><td class="">テーマ性は強いが、割安性と需要継続性の確認が必要</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">66.6</td><td class="status">継続監視</td><td class="">資源価格・商社還元の確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">66.5</td><td class="status">継続監視</td><td class="">材料はあるが、決算とセグメント確認が必要</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">66.4</td><td class="status">継続監視</td><td class="">守り枠候補。PER/EPSなど一部欠損の補完が必要</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<h2>3. 購入計画の正式な扱い</h2>
+<table>
+    <thead><tr><th>時期・条件</th><th>扱い</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td class="">2026年5月中</td><td class="risk">実購入なし</td><td class="">データ取得、計算式の検算、候補銘柄の仮想判定のみ</td></tr><tr><td class="">2026年6月上旬</td><td class="risk">仮想売買・監視</td><td class="">イベント前の実購入は行わず、スコアの動きと記録の安定性を確認</td></tr><tr><td class="">6月の主要イベント通過後</td><td class="risk">購入可否を再判定</td><td class="">CPI、FOMC、日銀、最新決算、株価位置を入力して条件分岐</td></tr><tr><td class="">イベント結果が未入力の場合</td><td class="risk">新規投入0円</td><td class="">自動的に買い判定を出さない安全側の仕様</td></tr><tr><td class="">全条件通過の場合</td><td class="risk">小額テストに限定</td><td class="">現行の安全設計では全額投入ではなく、候補別上限と現金待機を残す</td></tr>
+    </tbody>
+  </table>
+
+<h2>4. 注意点</h2>
+<table>
+    <thead><tr><th>論点</th><th>現在の扱い</th></tr></thead>
+    <tbody>
+      <tr><td class="">古い初期案の表現</td><td class="">一部資料に「5/20以降に25%」のような初期検討案が残っていた可能性があります。正式方針ではありません。</td></tr><tr><td class="">公式IRの正式数値入力</td><td class="">公式ページ到達は確認済みですが、売上、利益、EPS、還元などの正式入力はまだ0/48です。</td></tr><tr><td class="">Yahoo等の参考データ</td><td class="">取得は便利ですが、最終判断用には企業IR、決算短信、有報などの正式値で照合します。</td></tr><tr><td class="">スコアの位置づけ</td><td class="">現段階のスコアは候補を絞るための補助であり、売買指示ではありません。</td></tr>
+    </tbody>
+  </table>
+
+<h2>5. 次にやること</h2>
+<table>
+    <thead><tr><th>順番</th><th>作業</th><th>目的</th></tr></thead>
+    <tbody>
+      <tr><td class="">1</td><td class="">旧表現の除去・上書き</td><td class="">5/20購入に見える表現を現行方針に統一</td></tr><tr><td class="">2</td><td class="">上位候補3銘柄の公式数値入力</td><td class="">三井住友FG、東京海上HD、ダイキンなどから優先</td></tr><tr><td class="">3</td><td class="">スコア式の検算</td><td class="">価格ゲート、財務ゲート、イベントゲートの重みを再確認</td></tr><tr><td class="">4</td><td class="">6月イベント入力画面の安全確認</td><td class="">未入力時0円、悪化時延期、通過時のみ小額テストに固定</td></tr>
+    </tbody>
+  </table>
+
+<div class="note">
+  <h3>本日の結論</h3>
+  <ul>
+    <li>今日の成果は、銘柄選定の「候補を絞る入口」を強化したことです。</li>
+    <li>まだ正式な投資判断ではありません。公式IRの数値入力、検算、6月イベント通過後の再判定が必要です。</li>
+    <li>5月20日に購入を開始する方針ではありません。現行方針は6月開始前提のテスト設計です。</li>
+  </ul>
+</div>
+
+<p class="small">保存先: C:\AI関連ファイル\株\reports\daily_progress_report_20260520.html / daily_progress_report_20260520.pdf</p>
+</div>
+</body>
+</html>
