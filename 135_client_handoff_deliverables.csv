@@ -1,4 +1,5 @@
 name,file,role
+時流候補 公式IR確認ゲート,trend_candidate_official_ir_gate.html,公式IRページ到達、正式入力項目、本体スコア反映可否を確認するページ
 時流候補 財務IR二次判定,trend_candidate_fundamental_gate.html,価格一次通過・監視銘柄をPER/PBR/EPS/ROE/配当利回りで二次確認するページ
 運用コックピット,operation_cockpit.html,全体入口
 顧客向け納品ガイドPDF,client_handoff_guide.pdf,顧客へ渡す説明資料
