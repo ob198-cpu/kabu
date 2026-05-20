@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>進捗報告書 2026-05-20</title>
+<style>
+@page{size:A4;margin:13mm}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f8;color:#1f2937;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.55}
+.page{max-width:1080px;margin:0 auto;padding:24px}
+.cover{background:#fff;border:1px solid #d7dee8;padding:26px 30px;margin-bottom:16px}
+.doc-type{font-size:14px;color:#526273;font-weight:700;margin-bottom:20px}
+h1{font-size:28px;margin:0 0 6px;color:#172033;letter-spacing:0}
+.subtitle{font-size:15px;margin:0 0 20px;color:#526273}
+.meta{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;border-top:2px solid #172033;padding-top:14px;font-size:12px}
+.meta b{color:#172033}
+h2{font-size:18px;margin:20px 0 8px;border-bottom:2px solid #172033;padding-bottom:5px;color:#172033;break-after:avoid}
+h3{font-size:14px;margin:13px 0 6px;color:#172033}
+.summary{background:#fff;border:1px solid #d7dee8;padding:14px 16px;margin:10px 0 16px;break-inside:avoid}
+.summary p{margin:0;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d7dee8;margin:8px 0 16px;break-inside:auto}
+tr{break-inside:avoid}
+th,td{border:1px solid #d7dee8;padding:7px 8px;text-align:left;vertical-align:top;font-size:11.2px;overflow-wrap:anywhere}
+th{background:#edf2f7;color:#172033;font-weight:800}
+.num{text-align:center;white-space:nowrap}
+.status{font-weight:800;color:#075985;white-space:nowrap}
+.warn{font-weight:800;color:#92400e;white-space:nowrap}
+.note{font-size:11px;color:#526273;margin:8px 0 0}
+.section-note{background:#f8fafc;border-left:5px solid #64748b;padding:9px 11px;margin:8px 0 12px;font-size:12px}
+@media print{body{background:#fff}.page{padding:0}.grid2{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="cover">
+    <div class="doc-type">進捗報告書</div>
+    <h1>株式銘柄選定支援システム 開発・検証状況</h1>
+    <p class="subtitle">時流に沿った銘柄選定、テスト、購入検討に向けた進捗</p>
+    <div class="meta">
+      <b>報告日</b><span>2026年5月20日</span>
+      <b>作成日時</b><span>2026/05/20 18:29</span>
+      <b>対象</b><span>NISA 1年保有を想定した銘柄選定支援</span>
+      <b>形式</b><span>本日の進捗、成果、課題、次回予定の整理</span>
+    </div>
+  </section>
+
+  <h2>1. 報告概要</h2>
+  <table>
+    <thead><tr><th>項目</th><th>内容</th></tr></thead>
+    <tbody><tr><td class="">報告対象</td><td class="">株式銘柄選定支援システムの開発・検証状況</td></tr><tr><td class="">対象日</td><td class="">2026年5月20日</td></tr><tr><td class="">現在フェーズ</td><td class="">データ取得、暫定スコア算出、記録表整備</td></tr><tr><td class="">本日の結論</td><td class="">時流テーマから候補銘柄を抽出し、株価データ・財務参考値で点数化する入口を作成した。正式判断には公式IR数値の入力と6月イベント確認が必要。</td></tr><tr><td class="">実施範囲</td><td class="">銘柄候補の抽出、データ取得、暫定スコア算出、Excel記録、公開物確認</td></tr><tr><td class="">未実施範囲</td><td class="">証券口座での注文、実売買、最終的な購入判断</td></tr></tbody>
+  </table>
+
+  <div class="summary">
+    <p><b>要約:</b> 本日は、時流テーマから候補銘柄を抽出し、株価データと財務参考値で候補を点数化する仕組みを整理した。現在は候補を絞る段階であり、正式な購入判断には公式IR数値の入力、スコア式の検算、6月イベント確認が必要である。</p>
+  </div>
+
+  <h2>2. 本日の実施内容</h2>
+  <table>
+    <thead><tr><th>No.</th><th>実施項目</th><th>実施内容</th><th>成果</th></tr></thead>
+    <tbody><tr><td class="num">1</td><td class="">候補銘柄の抽出</td><td class="">金利、AI・電力、守り枠、資源、設備投資などのテーマから確認対象を整理</td><td class="status">12銘柄を確認対象として整理</td></tr><tr><td class="num">2</td><td class="">株価データの確認</td><td class="">1年株価、出来高、移動平均、下落率を用いて候補を点数化</td><td class="status">次の確認に進める候補4、監視2、保留6に分類</td></tr><tr><td class="num">3</td><td class="">財務参考値の確認</td><td class="">PER、PBR、EPS、ROE、配当利回り等を参考値として追加</td><td class="status">6銘柄を確認。公式数値確認へ進む候補3、継続監視3に分類</td></tr><tr><td class="num">4</td><td class="">公式IR確認の準備</td><td class="">各社公式IR、決算、説明資料ページに到達できるか確認</td><td class="status">6銘柄、17リンク到達。48の正式入力欄を作成</td></tr><tr><td class="num">5</td><td class="">記録表の更新</td><td class="">Excelに計算・記録用シートを追加</td><td class="status">161〜172番台のシートを追加</td></tr><tr><td class="num">6</td><td class="">公開物確認</td><td class="">HTML、CSV、Excel、PDFのリンク欠落を確認</td><td class="status">主要アセット20、CSV25、リンク66、欠落0</td></tr></tbody>
+  </table>
+
+  <h2>3. 算出結果</h2>
+  <div class="section-note">以下の点数は、候補銘柄を絞るための暫定スコアです。株価データと財務参考値を分けて確認し、次に公式数値で照合します。</div>
+  <div class="grid2">
+    <div>
+      <h3>株価データで点数化した結果</h3>
+      <table>
+    <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>確認理由</th></tr></thead>
+    <tbody><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="num">100</td><td class="status">次回確認対象</td><td class="">金利テーマ。1年価格と出来高の条件が強い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="num">92</td><td class="status">次回確認対象</td><td class="">保険・金利・円安耐性テーマ。価格面は強い</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="num">84</td><td class="status">次回確認対象</td><td class="">守り枠。値動きは安定寄りだが、上昇力は再確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="num">73</td><td class="status">次回確認対象</td><td class="">電力・FA・防衛関連テーマ。財務確認が必要</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="num">88</td><td class="status">監視</td><td class="">空調・電力効率テーマ。ただし出来高条件が弱い</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="num">56</td><td class="status">監視</td><td class="">資源・商社テーマ。価格勢いは強くない</td></tr></tbody>
+  </table>
+    </div>
+    <div>
+      <h3>財務データで点数化した結果</h3>
+      <table>
+    <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>確認理由</th></tr></thead>
+    <tbody><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="num">85.0</td><td class="status">公式数値確認へ</td><td class="">参考値では財務・還元・テーマのバランスが良い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="num">81.2</td><td class="status">公式数値確認へ</td><td class="">保険・還元・金利環境の追い風を確認中</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="num">75.8</td><td class="status">公式数値確認へ</td><td class="">テーマ性は強いが、割安性と需要継続性の確認が必要</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="num">66.6</td><td class="status">継続監視</td><td class="">資源価格・商社還元の確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="num">66.5</td><td class="status">継続監視</td><td class="">材料はあるが、決算とセグメント確認が必要</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="num">66.4</td><td class="status">継続監視</td><td class="">守り枠候補。PER/EPSなど一部欠損の補完が必要</td></tr></tbody>
+  </table>
+    </div>
+  </div>
+
+  <h2>4. 現在の課題と対応方針</h2>
+  <table>
+    <thead><tr><th>課題</th><th>現状</th><th>対応方針</th></tr></thead>
+    <tbody><tr><td class="warn">公式IR数値の未入力</td><td class="">公式IRページへの到達確認は完了。売上、利益、EPS、還元などの正式値入力は未完了。</td><td class="">48項目を順次入力する</td></tr><tr><td class="warn">参考データの扱い</td><td class="">Yahoo等の参考値は初期確認には有効だが、最終判断には公式IR・決算短信・有価証券報告書での照合が必要。</td><td class="">参考値と正式値を分けて記録する</td></tr><tr><td class="warn">スコア式の検算</td><td class="">暫定スコアは候補を絞るための補助であり、現時点では最終判断用ではない。</td><td class="">株価、財務、イベント条件の重みを検算する</td></tr><tr><td class="warn">6月イベント確認</td><td class="">CPI、FOMC、日銀、最新決算、株価位置が未入力の場合は購入判断に進めない。</td><td class="">6月イベント後に入力し、再判定する</td></tr></tbody>
+  </table>
+
+  <h2>5. 次回予定</h2>
+  <table>
+    <thead><tr><th>No.</th><th>予定項目</th><th>内容</th><th>目的</th></tr></thead>
+    <tbody><tr><td class="num">1</td><td class="">上位候補3銘柄の公式数値入力</td><td class="">三井住友FG、東京海上HD、ダイキンを優先</td><td class="">正式値で暫定スコアを補正する</td></tr><tr><td class="num">2</td><td class="">スコア式の検算</td><td class="">株価データ、財務データ、イベント条件の重みを確認</td><td class="">点数と実態のズレを減らす</td></tr><tr><td class="num">3</td><td class="">仮想売買記録の開始準備</td><td class="">6月上旬に実売買ではなく仮想記録で値動きを確認</td><td class="">判断ルールの妥当性を検証する</td></tr><tr><td class="num">4</td><td class="">6月イベント入力欄の確認</td><td class="">CPI、FOMC、日銀、最新決算、株価位置を入力できる状態にする</td><td class="">購入可否の再判定に備える</td></tr></tbody>
+  </table>
+
+  <h2>6. 運用判断の扱い</h2>
+  <table>
+    <thead><tr><th>時期・条件</th><th>扱い</th><th>内容</th></tr></thead>
+    <tbody><tr><td class="">5月中</td><td class="status">開発・検証</td><td class="">実売買は行わず、データ取得、点数化、記録表整備を進める</td></tr><tr><td class="">6月上旬</td><td class="status">仮想売買・監視</td><td class="">スコアと実際の値動きのズレを記録する</td></tr><tr><td class="">6月イベント確認後</td><td class="status">購入可否を再判定</td><td class="">市場イベント、最新決算、株価位置を確認して判断する</td></tr><tr><td class="">イベント結果未入力</td><td class="status">新規投入0円</td><td class="">条件が確認できない場合は購入判断に進めない</td></tr></tbody>
+  </table>
+
+  <p class="note">保存先: C:\AI関連ファイル\株\reports\daily_progress_report_20260520_business.html / daily_progress_report_20260520_business.pdf</p>
+</div>
+</body>
+</html>
