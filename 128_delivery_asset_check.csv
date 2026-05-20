@@ -1,0 +1,13 @@
+updated_at,group,file,purpose,status,size_bytes,last_modified
+2026/05/20 12:48,入口,index.html,公開サイトのトップページ,確認済み,122414,2026/05/20 12:34
+2026/05/20 12:48,入口,operation_cockpit.html,運用の順番と境界を示す入口,確認済み,12334,2026/05/20 12:33
+2026/05/20 12:48,Excel,stock_decision_mvp_calculated.xlsx,計算・記録・管理シートをまとめたMVPブック,確認済み,469669,2026/05/20 12:35
+2026/05/20 12:48,データ確認,mvp_charts.html,株価・指数・週次チャート確認,確認済み,93094,2026/05/20 01:45
+2026/05/20 12:48,候補作成,june_test_composite_decision.html,6月テスト候補の判定表,確認済み,7285,2026/05/20 08:29
+2026/05/20 12:48,購入前,june_interactive_operation_dashboard.html,CPI/日銀/FOMC/最終確認の入力判定,確認済み,21886,2026/05/20 11:25
+2026/05/20 12:48,購入前,event_decision_record_viewer.html,イベント判定CSVの読み込み確認,確認済み,9609,2026/05/20 11:32
+2026/05/20 12:48,資金配分,capital_allocation_plan.html,100万円の投資額と現金待機ルール,確認済み,8402,2026/05/20 10:51
+2026/05/20 12:48,記録,operation_tracking.html,判断ログ・予実差・ベンチマーク記録,確認済み,10356,2026/05/20 11:13
+2026/05/20 12:48,購入後,benchmark_review_dashboard.html,NISA 1年保有のベンチマーク+1%判定,確認済み,14613,2026/05/20 11:54
+2026/05/20 12:48,改善,model_improvement_dashboard.html,予実差の原因分類と改善ルール,確認済み,19406,2026/05/20 12:23
+2026/05/20 12:48,未取得管理,data_gap_status_report_20260519.pdf,未取得・課題ありデータの状況報告,確認済み,337113,2026/05/19 17:36
