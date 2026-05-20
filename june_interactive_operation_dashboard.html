@@ -35,9 +35,11 @@ th{background:#eaf2f9;color:#1d405f}.pill{display:inline-block;border-radius:999
     <div class="controls" id="eventControls"></div>
     <div class="actions">
       <button type="button" id="saveBtn">入力内容を保存</button>
+      <button type="button" class="secondary" id="exportCsvBtn">判定CSVを出力</button>
       <button type="button" class="secondary" id="allPassBtn">仮に全通過にする</button>
       <button type="button" class="secondary" id="resetBtn">未入力へ戻す</button>
     </div>
+    <p class="small" id="exportNote">CSV出力は、イベント結果・判定・銘柄別候補額を1ファイルにまとめます。</p>
   </section>
 
   <section class="box" id="decisionBox">
@@ -60,7 +62,7 @@ th{background:#eaf2f9;color:#1d405f}.pill{display:inline-block;border-radius:999
 </main>
 <script>
 const events = [{"event_id":"E01","planned_date":"2026-06-10","event":"米5月CPI","check_points":"CPI前年比、前月比、米10年金利、NASDAQ/SOX反応","pass_condition":"インフレ再加速が限定的、米10年金利が急騰しない、NASDAQ/SOXが大崩れしない","attention_condition":"CPIや金利がやや悪化、指数は小幅調整にとどまる","bad_condition":"CPI再加速、米10年金利急騰、NASDAQ/SOX急落","affected":"高PER、半導体、グロース寄り候補"},{"event_id":"E02","planned_date":"2026-06-15〜2026-06-16","event":"日銀会合","check_points":"円高/円安、日経平均、TOPIX、銀行株反応","pass_condition":"急な円高ショックなし、日本株全体が75日線を大きく割らない","attention_condition":"円高または指数下落はあるが、急落ではない","bad_condition":"急な円高、日本株全体の急落、75日線明確割れ","affected":"日本株全体、輸出、商社、銀行"},{"event_id":"E03","planned_date":"2026-06-16〜2026-06-17","event":"FOMC","check_points":"米長期金利、ドル円、NASDAQ、SOX、FRB声明","pass_condition":"米長期金利が急騰せず、リスク許容度が崩れない","attention_condition":"金利上昇や株安はあるが、一時的な範囲","bad_condition":"金利急騰、NASDAQ/SOX急落、円高またはドル不安の拡大","affected":"半導体、高PER、海外比率の高い銘柄"},{"event_id":"E04","planned_date":"2026-06-18〜2026-06-24","event":"最終購入前確認","check_points":"最新株価、75日線、決算修正、証券会社画面、出来高","pass_condition":"下方修正なし、指数75日線割れなし、候補価格が許容範囲","attention_condition":"候補価格がやや高い、または未確認データが残る","bad_condition":"下方修正、急落、ストップ安リスク、確認不能データあり","affected":"全候補"}];
-const candidates = [{"updated_at":"2026/05/20 11:20","ticker":"2802.T","name":"味の素","current_status":"イベント通過後候補","reference_score":"66.7","data_coverage_points":"93","per":"42.08","all_pass_allocation_yen":80000,"attention_allocation_yen":50000,"bad_event_allocation_yen":0,"note":"食品・高PER。全通過でも初回は8万円まで。CPI/金利悪化時は追わない。"},{"updated_at":"2026/05/20 11:20","ticker":"8058.T","name":"三菱商事","current_status":"イベント通過後候補","reference_score":"60.6","data_coverage_points":"93","per":"19.47","all_pass_allocation_yen":120000,"attention_allocation_yen":80000,"bad_event_allocation_yen":0,"note":"商社・資源/円安/還元。全通過時の主力候補。日銀後の日本株地合いを確認。"},{"updated_at":"2026/05/20 11:20","ticker":"8035.T","name":"東京エレクトロン","current_status":"イベント通過後候補","reference_score":"59.1","data_coverage_points":"85","per":"","all_pass_allocation_yen":60000,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"半導体。AI/SOXが追い風なら候補。ただし金利急騰と指数急落に弱い。"},{"updated_at":"2026/05/20 11:20","ticker":"8306.T","name":"三菱UFJ","current_status":"監視のみ","reference_score":"64.1","data_coverage_points":"75","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"銀行。金利テーマ候補だが、初回投入では監視中心。"},{"updated_at":"2026/05/20 11:20","ticker":"9433.T","name":"KDDI","current_status":"監視のみ","reference_score":"57.7","data_coverage_points":"72","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"通信の守り枠。指数超過の主役ではないため初回投入は見送り。"},{"updated_at":"2026/05/20 11:20","ticker":"7974.T","name":"任天堂","current_status":"初回除外","reference_score":"58.2","data_coverage_points":"83","per":"26.59","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"ゲーム・新ハード期待はあるが初回除外。数字確認後の監視。"},{"updated_at":"2026/05/20 11:20","ticker":"6857.T","name":"アドバンテスト","current_status":"初回除外","reference_score":"55.4","data_coverage_points":"67","per":"41.08","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"半導体装置で感応度が高い。現段階は初回除外。"},{"updated_at":"2026/05/20 11:20","ticker":"4519.T","name":"中外製薬","current_status":"初回除外","reference_score":"33.4","data_coverage_points":"49","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"医薬。決算・薬価・主力品リスクを確認するまで初回除外。"}];
+const candidates = [{"updated_at":"2026/05/20 11:25","ticker":"2802.T","name":"味の素","current_status":"イベント通過後候補","reference_score":"66.7","data_coverage_points":"93","per":"42.08","all_pass_allocation_yen":80000,"attention_allocation_yen":50000,"bad_event_allocation_yen":0,"note":"食品・高PER。全通過でも初回は8万円まで。CPI/金利悪化時は追わない。"},{"updated_at":"2026/05/20 11:25","ticker":"8058.T","name":"三菱商事","current_status":"イベント通過後候補","reference_score":"60.6","data_coverage_points":"93","per":"19.47","all_pass_allocation_yen":120000,"attention_allocation_yen":80000,"bad_event_allocation_yen":0,"note":"商社・資源/円安/還元。全通過時の主力候補。日銀後の日本株地合いを確認。"},{"updated_at":"2026/05/20 11:25","ticker":"8035.T","name":"東京エレクトロン","current_status":"イベント通過後候補","reference_score":"59.1","data_coverage_points":"85","per":"","all_pass_allocation_yen":60000,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"半導体。AI/SOXが追い風なら候補。ただし金利急騰と指数急落に弱い。"},{"updated_at":"2026/05/20 11:25","ticker":"8306.T","name":"三菱UFJ","current_status":"監視のみ","reference_score":"64.1","data_coverage_points":"75","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"銀行。金利テーマ候補だが、初回投入では監視中心。"},{"updated_at":"2026/05/20 11:25","ticker":"9433.T","name":"KDDI","current_status":"監視のみ","reference_score":"57.7","data_coverage_points":"72","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"通信の守り枠。指数超過の主役ではないため初回投入は見送り。"},{"updated_at":"2026/05/20 11:25","ticker":"7974.T","name":"任天堂","current_status":"初回除外","reference_score":"58.2","data_coverage_points":"83","per":"26.59","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"ゲーム・新ハード期待はあるが初回除外。数字確認後の監視。"},{"updated_at":"2026/05/20 11:25","ticker":"6857.T","name":"アドバンテスト","current_status":"初回除外","reference_score":"55.4","data_coverage_points":"67","per":"41.08","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"半導体装置で感応度が高い。現段階は初回除外。"},{"updated_at":"2026/05/20 11:25","ticker":"4519.T","name":"中外製薬","current_status":"初回除外","reference_score":"33.4","data_coverage_points":"49","per":"","all_pass_allocation_yen":0,"attention_allocation_yen":0,"bad_event_allocation_yen":0,"note":"医薬。決算・薬価・主力品リスクを確認するまで初回除外。"}];
 const storageKey = "kabu_june_event_dashboard_v1";
 
 function yen(n){ return Math.round(Number(n)||0).toLocaleString("ja-JP") + "円"; }
@@ -150,6 +152,77 @@ function renderAllocation(sc){
   document.getElementById("allocationTable").innerHTML = html;
 }
 
+function csvCell(value){
+  const text = String(value == null ? "" : value);
+  return /[",
+]/.test(text) ? '"' + text.replaceAll('"','""') + '"' : text;
+}
+
+function buildExportRows(){
+  const sc = scenario();
+  const now = new Date().toISOString();
+  const rows = [];
+  rows.push({
+    record_type: "decision",
+    event_id: "",
+    ticker: "",
+    item: "overall_decision",
+    status: sc.title,
+    amount_yen: sc.amount,
+    actual: "",
+    memo: "",
+    reason: sc.reason,
+    created_at: now
+  });
+  for (const e of events) {
+    const input = state[e.event_id] || {status:"未入力", actual:"", memo:""};
+    rows.push({
+      record_type: "event",
+      event_id: e.event_id,
+      ticker: "",
+      item: e.event,
+      status: input.status || "未入力",
+      amount_yen: "",
+      actual: input.actual || "",
+      memo: input.memo || "",
+      reason: "通過条件: " + e.pass_condition,
+      created_at: now
+    });
+  }
+  for (const c of candidates) {
+    rows.push({
+      record_type: "allocation",
+      event_id: "",
+      ticker: c.ticker,
+      item: c.name,
+      status: c.current_status,
+      amount_yen: amountFor(c, sc),
+      actual: "",
+      memo: c.note,
+      reason: "参考スコア " + (c.reference_score || "") + " / PER " + (c.per || ""),
+      created_at: now
+    });
+  }
+  return rows;
+}
+
+function exportCsv(){
+  const header = ["record_type","event_id","ticker","item","status","amount_yen","actual","memo","reason","created_at"];
+  const rows = buildExportRows();
+  const csv = [header.join(","), ...rows.map(row => header.map(key => csvCell(row[key])).join(","))].join("
+");
+  const blob = new Blob(["﻿" + csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const stamp = new Date().toISOString().slice(0,10).replaceAll("-","");
+  a.href = url;
+  a.download = "june_event_decision_record_" + stamp + ".csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 function render(){
   const sc = scenario();
   renderSummary(sc);
@@ -157,6 +230,7 @@ function render(){
 }
 
 document.getElementById("saveBtn").addEventListener("click", () => { saveState(state); render(); alert("このブラウザ内に保存しました。"); });
+document.getElementById("exportCsvBtn").addEventListener("click", () => { saveState(state); exportCsv(); });
 document.getElementById("allPassBtn").addEventListener("click", () => { events.forEach(e => { state[e.event_id] = {...(state[e.event_id]||{}), status:"通過"}; }); saveState(state); renderControls(); render(); });
 document.getElementById("resetBtn").addEventListener("click", () => { state = defaultState(); saveState(state); renderControls(); render(); });
 renderControls();
