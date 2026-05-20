@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>モデル改善・予実差レビュー</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#c87900;--red:#b43c3c;--line:#d8e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1360px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:1020px;color:#eaf7ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.ok{border-left:8px solid var(--green)}.warn{border-left:8px solid var(--amber)}.bad{border-left:8px solid var(--red)}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.field{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+label{display:block;font-weight:800;margin-bottom:5px}input,select,textarea{width:100%;padding:9px;border:1px solid #cbd8e4;border-radius:8px;background:#fff}textarea{min-height:80px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}button{border:0;border-radius:999px;background:var(--blue);color:#fff;padding:10px 16px;font-weight:800;cursor:pointer}.secondary{background:#eaf2f9;color:#123b5d}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1120px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.pill{display:inline-block;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:800}.pass{background:#e9f8f1;color:var(--green)}.fail{background:#fdecec;color:var(--red)}.hold{background:#fff3db;color:#9b6500}.pending{background:#edf2f7;color:#526171}
+pre{white-space:pre-wrap;background:#102438;color:#eaf7ff;border-radius:12px;padding:14px;overflow:auto}
+</style>
+</head>
+<body>
+<header>
+  <h1>モデル改善・予実差レビュー</h1>
+  <p class="lead">購入後の成績がベンチマーク+1%ポイントに届かなかった時、原因を分類し、データ不足・市場要因・個別要因・買付タイミングなどに分けて改善ルールへつなげます。1回の偶然で数式を変えず、記録を重ねてから調整します。</p>
+</header>
+<main>
+  <section class="grid" id="cards"></section>
+
+  <section class="box warn">
+    <h2>レビュー入力</h2>
+    <div class="form">
+      <div class="field"><label>評価期間</label><select id="period"><option>1か月</option><option>3か月</option><option>6か月</option><option>1年</option></select></div>
+      <div class="field"><label>本ポートフォリオリターン(%)</label><input id="portfolioReturn" type="number" step="0.01" placeholder="例 5.2"></div>
+      <div class="field"><label>最良ベンチマークリターン(%)</label><input id="benchmarkReturn" type="number" step="0.01" placeholder="例 4.0"></div>
+      <div class="field"><label>最大下落率(%)</label><input id="drawdown" type="number" step="0.01" placeholder="例 -6.5"></div>
+      <div class="field"><label>主原因</label><select id="cause"></select></div>
+      <div class="field"><label>同じ原因の累積回数</label><input id="repeatCount" type="number" step="1" value="1"></div>
+    </div>
+    <div class="field" style="margin-top:12px"><label>根拠・メモ</label><textarea id="memo" placeholder="例: CPI通過後にSOXは上昇したが、個別決算のガイダンスが弱かった"></textarea></div>
+    <div class="actions">
+      <button type="button" id="saveBtn">入力内容を保存</button>
+      <button type="button" class="secondary" id="exportBtn">改善ログCSVを出力</button>
+      <button type="button" class="secondary" id="resetBtn">入力をリセット</button>
+    </div>
+  </section>
+
+  <section class="box" id="decisionBox">
+    <h2>改善判定</h2>
+    <div id="decisionText">数値を入力すると表示します。</div>
+  </section>
+
+  <h2>運用ログへ転記する要約</h2>
+  <pre id="copySummary">数値を入力すると表示します。</pre>
+
+  <h2>原因分類</h2>
+  <div class="table-wrap"><table><thead><tr><th>cause_id</th><th>cause</th><th>meaning</th><th>check_data</th><th>first_action</th></tr></thead><tbody><tr><td>C01</td><td>市場・金利要因</td><td>CPI、FRB、日銀、金利、為替、VIXなど市場全体の逆風</td><td>CPI/PPI、米10年金利、VIX、ドル円、日経平均/TOPIX</td><td>イベントゲートと投入時期を見直す</td></tr><tr><td>C02</td><td>業界・テーマ要因</td><td>半導体、商社、食品、医薬など業界テーマの失速</td><td>SOX、業界統計、資源価格、関連指数、ニュース</td><td>テーマ適合度と業界連動の条件を見直す</td></tr><tr><td>C03</td><td>企業固有要因</td><td>下方修正、決算悪化、主力品問題、ガイダンス悪化</td><td>決算短信、IR、TDnet、EDINET、有報</td><td>該当銘柄を停止候補にする</td></tr><tr><td>C04</td><td>割高・PER要因</td><td>高PERや期待先行に対して利益成長が追いつかなかった</td><td>PER、EPS成長、営業利益成長、FCF、52週位置</td><td>高PER銘柄の候補額上限を下げる</td></tr><tr><td>C05</td><td>買付タイミング要因</td><td>銘柄は悪くないが、買う時期や分割比率が早すぎた</td><td>25/75/200日線、出来高、イベント前後リターン</td><td>分割投入と移動平均ゲートを見直す</td></tr><tr><td>C06</td><td>データ品質要因</td><td>必要データが未取得、古い、手入力、比較条件が不統一</td><td>取得元、更新日、欠損率、手入力欄</td><td>数式変更ではなくデータ整備を優先する</td></tr><tr><td>C07</td><td>リスク管理要因</td><td>ストップ安、急落、最大ドローダウンなど安全ルール不足</td><td>最大下落率、ボラティリティ、出来高、流動性</td><td>投入上限と停止条件を厳しくする</td></tr><tr><td>C08</td><td>ベンチマーク要因</td><td>比較対象の急騰、円換算差、配当込み/なしのズレ</td><td>S&amp;P500投信、日経/TOPIX投信、為替、配当込み指数</td><td>比較対象と計算条件を統一する</td></tr></tbody></table></div>
+
+  <h2>改善ルール</h2>
+  <div class="table-wrap"><table><thead><tr><th>rule_id</th><th>condition</th><th>severity</th><th>action</th><th>change_policy</th></tr></thead><tbody><tr><td>R01</td><td>ベンチマーク+1%ポイントを上回る</td><td>合格</td><td>重み変更なし。成功条件を記録する。</td><td>変更しない</td></tr><tr><td>R02</td><td>未達だが差分が-1%ポイント以内</td><td>軽微</td><td>売買判断は維持。原因メモを残して次回確認。</td><td>まだ変更しない</td></tr><tr><td>R03</td><td>差分が-1%ポイント超、同じ原因が1回目</td><td>注意</td><td>原因分類と追加データを記録。重み変更は保留。</td><td>保留</td></tr><tr><td>R04</td><td>同じ原因が3回以上連続または累積</td><td>改善対象</td><td>該当ファクターの重み・ゲート・候補額上限を見直す。</td><td>変更候補</td></tr><tr><td>R05</td><td>最大下落率-8%以上、または企業固有悪材料</td><td>高</td><td>追加購入停止。該当銘柄の除外または候補額0円を検討。</td><td>即時安全側へ変更</td></tr><tr><td>R06</td><td>データ品質要因がある</td><td>未判定</td><td>モデル評価に使わず、取得元・更新日・欠損を修正。</td><td>数式変更しない</td></tr></tbody></table></div>
+
+  <h2>改善ログの列</h2>
+  <div class="table-wrap"><table><thead><tr><th>review_id</th><th>review_date</th><th>period</th><th>portfolio_return_pct</th><th>best_benchmark_name</th><th>best_benchmark_return_pct</th><th>target_return_pct</th><th>gap_pct_point</th><th>max_drawdown_pct</th><th>cause_id</th><th>cause_memo</th><th>action</th><th>model_change</th><th>evidence</th></tr></thead><tbody><tr><td>REV-YYYYMMDD-001</td><td></td><td>1か月/3か月/6か月/1年</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+</main>
+<script>
+const causes = [{"cause_id":"C01","cause":"市場・金利要因","meaning":"CPI、FRB、日銀、金利、為替、VIXなど市場全体の逆風","check_data":"CPI/PPI、米10年金利、VIX、ドル円、日経平均/TOPIX","first_action":"イベントゲートと投入時期を見直す"},{"cause_id":"C02","cause":"業界・テーマ要因","meaning":"半導体、商社、食品、医薬など業界テーマの失速","check_data":"SOX、業界統計、資源価格、関連指数、ニュース","first_action":"テーマ適合度と業界連動の条件を見直す"},{"cause_id":"C03","cause":"企業固有要因","meaning":"下方修正、決算悪化、主力品問題、ガイダンス悪化","check_data":"決算短信、IR、TDnet、EDINET、有報","first_action":"該当銘柄を停止候補にする"},{"cause_id":"C04","cause":"割高・PER要因","meaning":"高PERや期待先行に対して利益成長が追いつかなかった","check_data":"PER、EPS成長、営業利益成長、FCF、52週位置","first_action":"高PER銘柄の候補額上限を下げる"},{"cause_id":"C05","cause":"買付タイミング要因","meaning":"銘柄は悪くないが、買う時期や分割比率が早すぎた","check_data":"25/75/200日線、出来高、イベント前後リターン","first_action":"分割投入と移動平均ゲートを見直す"},{"cause_id":"C06","cause":"データ品質要因","meaning":"必要データが未取得、古い、手入力、比較条件が不統一","check_data":"取得元、更新日、欠損率、手入力欄","first_action":"数式変更ではなくデータ整備を優先する"},{"cause_id":"C07","cause":"リスク管理要因","meaning":"ストップ安、急落、最大ドローダウンなど安全ルール不足","check_data":"最大下落率、ボラティリティ、出来高、流動性","first_action":"投入上限と停止条件を厳しくする"},{"cause_id":"C08","cause":"ベンチマーク要因","meaning":"比較対象の急騰、円換算差、配当込み/なしのズレ","check_data":"S&P500投信、日経/TOPIX投信、為替、配当込み指数","first_action":"比較対象と計算条件を統一する"}];
+const rules = [{"rule_id":"R01","condition":"ベンチマーク+1%ポイントを上回る","severity":"合格","action":"重み変更なし。成功条件を記録する。","change_policy":"変更しない"},{"rule_id":"R02","condition":"未達だが差分が-1%ポイント以内","severity":"軽微","action":"売買判断は維持。原因メモを残して次回確認。","change_policy":"まだ変更しない"},{"rule_id":"R03","condition":"差分が-1%ポイント超、同じ原因が1回目","severity":"注意","action":"原因分類と追加データを記録。重み変更は保留。","change_policy":"保留"},{"rule_id":"R04","condition":"同じ原因が3回以上連続または累積","severity":"改善対象","action":"該当ファクターの重み・ゲート・候補額上限を見直す。","change_policy":"変更候補"},{"rule_id":"R05","condition":"最大下落率-8%以上、または企業固有悪材料","severity":"高","action":"追加購入停止。該当銘柄の除外または候補額0円を検討。","change_policy":"即時安全側へ変更"},{"rule_id":"R06","condition":"データ品質要因がある","severity":"未判定","action":"モデル評価に使わず、取得元・更新日・欠損を修正。","change_policy":"数式変更しない"}];
+const storageKey = "kabu_model_improvement_review_v1";
+function num(v){ const n = Number(v); return Number.isFinite(n) ? n : null; }
+function pct(n){ return n == null ? "-" : (Math.round(n*100)/100).toFixed(2) + "%"; }
+function load(){ try { return JSON.parse(localStorage.getItem(storageKey) || "{}"); } catch { return {}; } }
+function save(){ localStorage.setItem(storageKey, JSON.stringify(readInput())); }
+function setInput(data){
+  document.getElementById("period").value = data.period || "1か月";
+  document.getElementById("portfolioReturn").value = data.portfolioReturn || "";
+  document.getElementById("benchmarkReturn").value = data.benchmarkReturn || "";
+  document.getElementById("drawdown").value = data.drawdown || "";
+  document.getElementById("cause").value = data.cause || "C01";
+  document.getElementById("repeatCount").value = data.repeatCount || "1";
+  document.getElementById("memo").value = data.memo || "";
+}
+function readInput(){
+  return {
+    period: document.getElementById("period").value,
+    portfolioReturn: document.getElementById("portfolioReturn").value,
+    benchmarkReturn: document.getElementById("benchmarkReturn").value,
+    drawdown: document.getElementById("drawdown").value,
+    cause: document.getElementById("cause").value,
+    repeatCount: document.getElementById("repeatCount").value,
+    memo: document.getElementById("memo").value
+  };
+}
+function selectedCause(){
+  const id = document.getElementById("cause").value;
+  return causes.find(c => c.cause_id === id) || causes[0];
+}
+function evaluate(){
+  const d = readInput();
+  const pr = num(d.portfolioReturn);
+  const br = num(d.benchmarkReturn);
+  const dd = num(d.drawdown);
+  const repeat = Number(d.repeatCount || 1);
+  if (pr == null || br == null) return {status:"未判定", cls:"warn", label:"未判定", gap:null, target:null, action:"本ポートフォリオとベンチマークのリターンを入力してください。", modelChange:"なし"};
+  const target = br + 1;
+  const gap = pr - target;
+  const cause = selectedCause();
+  if (cause.cause_id === "C06") return {status:"未判定", cls:"warn", label:"データ品質確認", gap, target, action:"データ品質要因があるため、モデル評価に使わず取得元・更新日・欠損を修正します。", modelChange:"数式変更しない"};
+  if (dd != null && dd <= -8) return {status:"改善対象", cls:"bad", label:"安全側へ変更", gap, target, action:"最大下落率が-8%以上です。追加購入を止め、投入上限と停止条件を厳しくします。", modelChange:"リスク条件を即時見直し"};
+  if (gap >= 0) return {status:"合格", cls:"ok", label:"変更なし", gap, target, action:"目標を上回りました。重み変更はせず、成功条件を記録します。", modelChange:"変更しない"};
+  if (gap > -1) return {status:"軽微未達", cls:"warn", label:"記録のみ", gap, target, action:"未達ですが差分は-1%ポイント以内です。原因メモを残して次回確認します。", modelChange:"まだ変更しない"};
+  if (repeat >= 3) return {status:"改善対象", cls:"bad", label:"重み変更候補", gap, target, action:"同じ原因が3回以上出ています。該当ファクターの重み、ゲート、候補額上限を見直します。", modelChange:"変更候補"};
+  return {status:"注意", cls:"warn", label:"保留", gap, target, action:"未達ですが同じ原因の蓄積が不足しています。原因分類と追加データを記録し、重み変更は保留します。", modelChange:"保留"};
+}
+function render(){
+  const d = readInput();
+  const ev = evaluate();
+  const cause = selectedCause();
+  document.getElementById("cards").innerHTML =
+    '<div class="card"><b>'+(ev.target == null ? "-" : pct(ev.target))+'</b>合格ライン</div>'
+    + '<div class="card"><b>'+(ev.gap == null ? "-" : pct(ev.gap))+'</b>差分</div>'
+    + '<div class="card"><b>'+cause.cause+'</b>主原因</div>'
+    + '<div class="card"><b>'+ev.label+'</b>変更方針</div>';
+  const box = document.getElementById("decisionBox");
+  box.className = "box " + ev.cls;
+  const pill = ev.status === "合格" ? '<span class="pill pass">合格</span>' : ev.status === "改善対象" ? '<span class="pill fail">改善対象</span>' : '<span class="pill hold">'+ev.status+'</span>';
+  document.getElementById("decisionText").innerHTML = pill + " " + ev.action + "<br>モデル変更: " + ev.modelChange + "<br>確認データ: " + cause.check_data;
+  document.getElementById("copySummary").textContent =
+    "モデル改善・予実差レビュー\n"
+    + "評価期間: " + d.period + "\n"
+    + "本ポートフォリオ: " + pct(num(d.portfolioReturn)) + "\n"
+    + "最良ベンチマーク: " + pct(num(d.benchmarkReturn)) + "\n"
+    + "合格ライン: " + pct(ev.target) + "\n"
+    + "差分: " + pct(ev.gap) + "\n"
+    + "主原因: " + cause.cause_id + " " + cause.cause + "\n"
+    + "判定: " + ev.status + "\n"
+    + "アクション: " + ev.action + "\n"
+    + "モデル変更: " + ev.modelChange + "\n"
+    + "メモ: " + (d.memo || "-");
+}
+function csvCell(value){
+  const text = String(value == null ? "" : value);
+  return /[",
+]/.test(text) ? '"' + text.replaceAll('"','""') + '"' : text;
+}
+function exportCsv(){
+  const d = readInput();
+  const ev = evaluate();
+  const cause = selectedCause();
+  const row = {
+    review_id: "REV-" + new Date().toISOString().slice(0,10).replaceAll("-","") + "-001",
+    review_date: new Date().toISOString().slice(0,10),
+    period: d.period,
+    portfolio_return_pct: d.portfolioReturn,
+    best_benchmark_name: "最良ベンチマーク",
+    best_benchmark_return_pct: d.benchmarkReturn,
+    target_return_pct: ev.target == null ? "" : ev.target,
+    gap_pct_point: ev.gap == null ? "" : ev.gap,
+    max_drawdown_pct: d.drawdown,
+    cause_id: cause.cause_id,
+    cause_memo: d.memo,
+    action: ev.action,
+    model_change: ev.modelChange,
+    evidence: cause.check_data
+  };
+  const header = Object.keys(row);
+  const csv = header.join(",") + "\n" + header.map(k => csvCell(row[k])).join(",");
+  const blob = new Blob(["\uFEFF" + csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "model_improvement_review_" + new Date().toISOString().slice(0,10).replaceAll("-","") + ".csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+document.getElementById("cause").innerHTML = causes.map(c => '<option value="'+c.cause_id+'">'+c.cause_id+' '+c.cause+'</option>').join("");
+setInput(load());
+document.querySelectorAll("input,select,textarea").forEach(el => el.addEventListener("input", render));
+document.getElementById("saveBtn").addEventListener("click", () => { save(); alert("このブラウザ内に保存しました。"); });
+document.getElementById("exportBtn").addEventListener("click", () => { save(); exportCsv(); });
+document.getElementById("resetBtn").addEventListener("click", () => { setInput({}); save(); render(); });
+render();
+</script>
+</body>
+</html>

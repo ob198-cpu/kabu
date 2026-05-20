@@ -1,0 +1,2 @@
+review_id,review_date,period,portfolio_return_pct,best_benchmark_name,best_benchmark_return_pct,target_return_pct,gap_pct_point,max_drawdown_pct,cause_id,cause_memo,action,model_change,evidence,updated_at
+REV-YYYYMMDD-001,,1か月/3か月/6か月/1年,,,,,,,,,,,,2026/05/20 12:23
