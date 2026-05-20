@@ -55,7 +55,7 @@ li{margin:4px 0}
 <header>
   <h1>本日の進捗報告書</h1>
   <p class="lead">NISA 1年保有スコア / 時流候補選定システム / 2026年6月テスト開始前の開発状況</p>
-  <p class="date">対象日: 2026年5月20日　作成: 2026/05/20 18:18</p>
+  <p class="date">対象日: 2026年5月20日　作成: 2026/05/20 18:26</p>
 </header>
 
 <section class="cards">
@@ -72,14 +72,14 @@ li{margin:4px 0}
       <div class="flow-title"><span>1. 時流に沿った銘柄選定</span></div>
       <div class="flow-cols">
         <div class="flow-col"><b>目的</b><p>金利、AI・電力、守り枠、資源、設備投資など、今の資金が向かいやすいテーマから候補を出す</p></div>
-        <div class="flow-col"><b>進捗</b><p>12銘柄の1年株価・出来高を取得し、一次候補4、監視2、保留6に整理。さらに6銘柄へPER、PBR、EPS、ROE、配当利回りを追加</p></div>
+        <div class="flow-col"><b>進捗</b><p>12銘柄の1年株価・出来高を取得し、次の確認に進める候補4、監視2、保留6に整理。さらに6銘柄へPER、PBR、EPS、ROE、配当利回りを追加</p></div>
         <div class="flow-col"><b>現状</b><p>候補を絞る入口まで作成済み。正式判断には公式IR数値の入力が必要</p></div>
       </div>
     </div><div class="flow-item">
       <div class="flow-title"><span>2. テスト</span></div>
       <div class="flow-cols">
         <div class="flow-col"><b>目的</b><p>点数が実際に銘柄選びの補助として使えるか、価格・財務・イベントの3方向で検算する</p></div>
-        <div class="flow-col"><b>進捗</b><p>価格一次ゲート、財務二次ゲート、公式IR確認ゲート、Excel記録シートを作成。公開リンクとCSVの欠落チェックも実施</p></div>
+        <div class="flow-col"><b>進捗</b><p>株価データ確認、財務データ確認、公式IR確認、Excel記録シートを作成。公開リンクとCSVの欠落チェックも実施</p></div>
         <div class="flow-col"><b>現状</b><p>6月上旬は仮想売買・監視で、スコアと実際の値動きのズレを記録する段階</p></div>
       </div>
     </div><div class="flow-item">
@@ -96,26 +96,26 @@ li{margin:4px 0}
 <table>
     <thead><tr><th>項目</th><th>内容</th><th>結果</th></tr></thead>
     <tbody>
-      <tr><td class="">時流候補・株価一次ゲート</td><td class="">1年株価、出来高、移動平均、下落率で候補を一次判定</td><td class="status">12銘柄を確認。一次候補4、監視2、保留6</td></tr><tr><td class="">時流候補・財務二次ゲート</td><td class="">PER、PBR、EPS、ROE、配当利回り等を参考値として追加</td><td class="status">6銘柄を確認。正式確認へ進む候補3、継続監視3</td></tr><tr><td class="">公式IR確認ゲート</td><td class="">各社公式IR、決算、説明資料ページへ到達できるか確認</td><td class="status">6銘柄、17リンク到達。48の正式入力欄を作成</td></tr><tr><td class="">Excelブック更新</td><td class="">計算・記録用のシートを追加し、画面と表をつなげる</td><td class="status">161〜172番台のシートを追加</td></tr><tr><td class="">公開物チェック</td><td class="">HTML、CSV、Excel、PDFのリンク欠落を確認</td><td class="status">主要アセット20、CSV25、リンク66、欠落0</td></tr>
+      <tr><td class="">株価データによる候補絞り込み</td><td class="">1年株価、出来高、移動平均、下落率で候補を絞る</td><td class="status">12銘柄を確認。次の確認に進める候補4、監視2、保留6</td></tr><tr><td class="">財務データによる追加確認</td><td class="">PER、PBR、EPS、ROE、配当利回り等を参考値として追加</td><td class="status">6銘柄を確認。公式数値確認へ進む候補3、継続監視3</td></tr><tr><td class="">公式IRによる正式確認準備</td><td class="">各社公式IR、決算、説明資料ページへ到達できるか確認</td><td class="status">6銘柄、17リンク到達。48の正式入力欄を作成</td></tr><tr><td class="">Excelブック更新</td><td class="">計算・記録用のシートを追加し、画面と表をつなげる</td><td class="status">161〜172番台のシートを追加</td></tr><tr><td class="">公開物チェック</td><td class="">HTML、CSV、Excel、PDFのリンク欠落を確認</td><td class="status">主要アセット20、CSV25、リンク66、欠落0</td></tr>
     </tbody>
   </table>
 
-<h2>3. 本日算出した候補スコア</h2>
+<h2>3. 候補銘柄の点数化と絞り込み結果</h2>
 <div class="mini-note">
-  この欄の数値は、候補銘柄を絞るための暫定スコアです。株価一次スコアは1年株価・出来高・移動平均・下落率、財務二次スコアはPER・PBR・EPS・ROE・配当利回り等の参考値を使っています。
+  この欄は、候補銘柄を点数化して、次に詳しく確認する銘柄を絞るための暫定結果です。株価データの点数は1年株価・出来高・移動平均・下落率、財務データの点数はPER・PBR・EPS・ROE・配当利回り等の参考値を使っています。
 </div>
 <div class="two">
   <div>
-    <h3>株価一次スコア</h3>
+    <h3>株価データで点数化した結果</h3>
     <table>
     <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>理由</th></tr></thead>
     <tbody>
-      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">100</td><td class="status">一次候補</td><td class="">金利テーマ。1年価格と出来高の一次条件が強い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">92</td><td class="status">一次候補</td><td class="">保険・金利・円安耐性テーマ。価格面は強い</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">84</td><td class="status">一次候補</td><td class="">守り枠。値動きは安定寄りだが、上昇力は再確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">73</td><td class="status">一次候補</td><td class="">電力・FA・防衛関連テーマ。財務確認が必要</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">88</td><td class="status">監視</td><td class="">空調・電力効率テーマ。ただし出来高条件が弱い</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">56</td><td class="status">監視</td><td class="">資源・商社テーマ。価格勢いは強くない</td></tr>
+      <tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">100</td><td class="status">次の確認へ</td><td class="">金利テーマ。1年価格と出来高の条件が強い</td></tr><tr><td class="">8766.T</td><td class="">東京海上HD</td><td class="">92</td><td class="status">次の確認へ</td><td class="">保険・金利・円安耐性テーマ。価格面は強い</td></tr><tr><td class="">9433.T</td><td class="">KDDI</td><td class="">84</td><td class="status">次の確認へ</td><td class="">守り枠。値動きは安定寄りだが、上昇力は再確認が必要</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">73</td><td class="status">次の確認へ</td><td class="">電力・FA・防衛関連テーマ。財務確認が必要</td></tr><tr><td class="">6367.T</td><td class="">ダイキン</td><td class="">88</td><td class="status">監視</td><td class="">空調・電力効率テーマ。ただし出来高条件が弱い</td></tr><tr><td class="">8031.T</td><td class="">三井物産</td><td class="">56</td><td class="status">監視</td><td class="">資源・商社テーマ。価格勢いは強くない</td></tr>
     </tbody>
   </table>
   </div>
   <div>
-    <h3>財務二次スコア</h3>
+    <h3>財務データで点数化した結果</h3>
     <table>
     <thead><tr><th>コード</th><th>銘柄</th><th>点数</th><th>判定</th><th>理由</th></tr></thead>
     <tbody>
@@ -145,7 +145,7 @@ li{margin:4px 0}
 <table>
     <thead><tr><th>順番</th><th>作業</th><th>目的</th></tr></thead>
     <tbody>
-      <tr><td class="">1</td><td class="">上位候補3銘柄の公式数値入力</td><td class="">三井住友FG、東京海上HD、ダイキンなどから優先</td></tr><tr><td class="">2</td><td class="">スコア式の検算</td><td class="">価格ゲート、財務ゲート、イベントゲートの重みを再確認</td></tr><tr><td class="">3</td><td class="">6月イベント入力画面の安全確認</td><td class="">未入力時0円、悪化時延期、条件確認後のみ小額テストに固定</td></tr>
+      <tr><td class="">1</td><td class="">上位候補3銘柄の公式数値入力</td><td class="">三井住友FG、東京海上HD、ダイキンなどから優先</td></tr><tr><td class="">2</td><td class="">スコア式の検算</td><td class="">株価データ、財務データ、イベント条件の重みを再確認</td></tr><tr><td class="">3</td><td class="">6月イベント入力画面の安全確認</td><td class="">未入力時0円、悪化時延期、条件確認後のみ小額テストに固定</td></tr>
     </tbody>
   </table>
 
