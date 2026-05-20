@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>時流候補 財務・IR二次判定</title>
+  <style>
+    :root{--ink:#172033;--muted:#637082;--blue:#0b6e9e;--green:#147a55;--amber:#b36a00;--red:#b32732;--line:#d7e3ee;--bg:#eef5f8}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:#123d5c;color:#fff;padding:32px 24px}.wrap,main{max-width:1320px;margin:auto}main{padding:20px 16px 48px}
+    h1{font-size:30px;margin:0 0 8px}h2{font-size:21px;margin:30px 0 12px;border-left:8px solid var(--blue);padding-left:10px}h3{font-size:17px;margin:2px 0}
+    .lead{max-width:1050px;color:#eaf6ff}.notice{background:#fff8e8;border:1px solid #ecc16f;border-left:8px solid #d48600;border-radius:10px;padding:13px 15px;margin:12px 0}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;box-shadow:0 4px 14px rgba(20,50,80,.05)}
+    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.kpi{background:#f8fbfe;border:1px solid var(--line);border-radius:10px;padding:12px}.kpi b{display:block;font-size:25px;color:#0b658f}
+    .stock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stock{border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:13px}.stock.ok{border-left:8px solid var(--green)}.stock.watch{border-left:8px solid var(--amber)}.stock.hold{border-left:8px solid var(--red)}
+    .stock-head{display:flex;justify-content:space-between;gap:10px}.ticker{font-weight:900;color:#0b6e9e}.stock p{margin:2px 0;color:var(--muted);font-size:12px}.score{text-align:right;min-width:92px}.score b{display:block;font-size:27px;color:#123d5c}.score span{font-weight:900;font-size:12px}
+    .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-top:8px}.metrics span{background:#eef5f8;border:1px solid #dbe8f2;border-radius:8px;padding:4px 7px;font-size:12px}.reason{font-weight:900;color:#37475c}
+    .formula{font-weight:900;background:#eef6fb;border:1px solid #cddfeb;border-radius:10px;padding:12px;margin:8px 0}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:1220px}th,td{border-bottom:1px solid #e8eff6;padding:9px 10px;font-size:12px;vertical-align:top;text-align:left}th{background:#eaf2f8;color:#1d405f;font-weight:900}tr:last-child td{border-bottom:none}
+    a{color:#0b6ea8}.small{font-size:12px;color:var(--muted)}
+    @media(max-width:1050px){.kpis{grid-template-columns:repeat(2,1fr)}.stock-grid{grid-template-columns:1fr}table{min-width:1080px}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>時流候補 財務・IR二次判定</h1>
+    <p class="lead">価格一次判定で残った銘柄に、Yahoo!ファイナンス日本版から取れるPER/PBR/EPS/ROE/配当利回りを加え、直近TDnetログと照合します。これは正式な買い候補ではなく、公式決算短信・IR確認へ進める優先順位です。</p>
+  </div></header>
+  <main>
+    <section>
+      <h2>このページの位置づけ</h2>
+      <div class="kpis">
+        <div class="kpi"><b>6</b>二次判定対象</div>
+        <div class="kpi"><b>6</b>参考指標取得</div>
+        <div class="kpi"><b>3</b>暫定通過</div>
+        <div class="kpi"><b>3</b>確認継続</div>
+        <div class="kpi"><b>0</b>保留/未判定</div>
+        <div class="kpi"><b>0</b>本体反映</div>
+      </div>
+      <div class="notice">Yahoo!ファイナンスの数値は参考値です。正式な判断には、企業IR・決算短信・決算説明資料で売上成長、営業利益成長、FCF、自己資本比率、還元方針を確認します。</div>
+      <div class="formula">二次入口スコア = 価格一次35点 + PER/PBR 20点 + EPS/ROE 15点 + 配当 10点 + TDnet直近5点 + データ充足15点</div>
+    </section>
+    <section>
+      <h2>銘柄別カード</h2>
+      <div class="stock-grid">
+  <article class="stock ok">
+    <div class="stock-head">
+      <div><span class="ticker">8316.T</span><h3>三井住友FG</h3><p>銀行・金利上昇</p></div>
+      <div class="score"><b>85</b><span>二次確認通過（暫定）</span></div>
+    </div>
+    <div class="metrics">
+      <span>価格 100点</span>
+      <span>PER 13.21倍</span>
+      <span>PBR 1.42倍</span>
+      <span>ROE 10.38%</span>
+      <span>配当 3.06%</span>
+      <span>TDnet 0件</span>
+    </div>
+    <p class="reason">PER 13.21倍 / PBR 1.42倍 / ROE 10.38% / 配当利回り 3.06% / 価格一次 100点 / 直近TDnet照合は未ヒット</p>
+  </article>
+
+  <article class="stock ok">
+    <div class="stock-head">
+      <div><span class="ticker">8766.T</span><h3>東京海上HD</h3><p>保険・運用収益</p></div>
+      <div class="score"><b>81.2</b><span>二次確認通過（暫定）</span></div>
+    </div>
+    <div class="metrics">
+      <span>価格 92点</span>
+      <span>PER 14.63倍</span>
+      <span>PBR 2.79倍</span>
+      <span>ROE 20.58%</span>
+      <span>配当 2.7%</span>
+      <span>TDnet 0件</span>
+    </div>
+    <p class="reason">PER 14.63倍 / PBR 2.79倍 / ROE 20.58% / 配当利回り 2.7% / 価格一次 92点 / 直近TDnet照合は未ヒット</p>
+  </article>
+
+  <article class="stock ok">
+    <div class="stock-head">
+      <div><span class="ticker">6367.T</span><h3>ダイキン</h3><p>空調・冷却</p></div>
+      <div class="score"><b>75.8</b><span>二次確認通過（暫定）</span></div>
+    </div>
+    <div class="metrics">
+      <span>価格 88点</span>
+      <span>PER 24.87倍</span>
+      <span>PBR 2.13倍</span>
+      <span>ROE 9.1%</span>
+      <span>配当 1.53%</span>
+      <span>TDnet 0件</span>
+    </div>
+    <p class="reason">PER 24.87倍 / PBR 2.13倍 / ROE 9.1% / 配当利回り 1.53% / 価格一次 88点 / 直近TDnet照合は未ヒット</p>
+  </article>
+
+  <article class="stock watch">
+    <div class="stock-head">
+      <div><span class="ticker">8031.T</span><h3>三井物産</h3><p>商社・資源</p></div>
+      <div class="score"><b>66.6</b><span>確認継続</span></div>
+    </div>
+    <div class="metrics">
+      <span>価格 56点</span>
+      <span>PER 17.88倍</span>
+      <span>PBR 1.88倍</span>
+      <span>ROE 10.22%</span>
+      <span>配当 2.41%</span>
+      <span>TDnet 0件</span>
+    </div>
+    <p class="reason">PER 17.88倍 / PBR 1.88倍 / ROE 10.22% / 配当利回り 2.41% / 価格一次 56点 / 直近TDnet照合は未ヒット</p>
+  </article>
+
+  <article class="stock watch">
+    <div class="stock-head">
+      <div><span class="ticker">6503.T</span><h3>三菱電機</h3><p>電力制御・FA・データセンター周辺</p></div>
+      <div class="score"><b>66.5</b><span>確認継続</span></div>
+    </div>
+    <div class="metrics">
+      <span>価格 73点</span>
+      <span>PER 24.76倍</span>
+      <span>PBR 2.62倍</span>
+      <span>ROE 9.67%</span>
+      <span>配当 1.04%</span>
+      <span>TDnet 0件</span>
+    </div>
+    <p class="reason">PER 24.76倍 / PBR 2.62倍 / ROE 9.67% / 配当利回り 1.04% / 価格一次 73点 / 直近TDnet照合は未ヒット</p>
+  </article>
+
+  <article class="stock watch">
+    <div class="stock-head">
+      <div><span class="ticker">9433.T</span><h3>KDDI</h3><p>通信・防災/復旧</p></div>
+      <div class="score"><b>66.4</b><span>確認継続</span></div>
+    </div>
+    <div class="metrics">
+      <span>価格 84点</span>
+      <span>PER 未取得倍</span>
+      <span>PBR 2.08倍</span>
+      <span>ROE 13.99%</span>
+      <span>配当 3.02%</span>
+      <span>TDnet 2件</span>
+    </div>
+    <p class="reason">PBR 2.08倍 / ROE 13.99% / 配当利回り 3.02% / 価格一次 84点</p>
+  </article>
+</div>
+    </section>
+    <section>
+      <h2>二次判定結果</h2>
+      <div class="table-wrap"><table><thead><tr><th>updated_at</th><th>ticker</th><th>company</th><th>theme_id</th><th>role</th><th>price_status</th><th>price_precheck_score_100</th><th>per_forecast</th><th>per_date</th><th>pbr_actual</th><th>pbr_date</th><th>eps_forecast_yen</th><th>eps_date</th><th>roe_actual_pct</th><th>roe_date</th><th>dividend_yield_pct</th><th>dividend_yield_date</th><th>dividend_per_share_yen</th><th>dividend_per_share_date</th><th>source_status</th><th>source_url</th><th>price_component_35</th><th>valuation_component_20</th><th>quality_component_15</th><th>shareholder_return_component_10</th><th>tdnet_recent_component_5</th><th>data_coverage_score_15</th><th>tdnet_recent_count</th><th>missing_or_manual_items</th><th>fundamental_gate_score_100</th><th>fundamental_gate_status</th><th>reason</th><th>next_action</th><th>note</th></tr></thead><tbody><tr><td>2026/05/20 17:12</td><td>8316.T</td><td>三井住友FG</td><td>TREND-RATE-BANK</td><td>銀行・金利上昇</td><td>入口通過</td><td>100</td><td>13.21</td><td>15:30)</td><td>1.42</td><td>15:30)</td><td>445.39</td><td>2027/03)</td><td>10.38</td><td></td><td>3.06</td><td>15:30)</td><td>180</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8316.T">https://finance.yahoo.co.jp/quote/8316.T</a></td><td>35</td><td>13</td><td>13</td><td>8</td><td>1</td><td>15</td><td>0</td><td>決算短信の売上/営業利益成長 / FCF / 自己資本比率 / 自社株買い/還元方針</td><td>85</td><td>二次確認通過（暫定）</td><td>PER 13.21倍 / PBR 1.42倍 / ROE 10.38% / 配当利回り 3.06% / 価格一次 100点 / 直近TDnet照合は未ヒット</td><td>決算短信/IRから売上成長、営業利益成長、FCF、自己資本比率、還元方針を確認</td><td>価格・Yahoo!ファイナンス参考指標・直近TDnet照合による二次入口。正式な買い候補ではない。</td></tr><tr><td>2026/05/20 17:12</td><td>8766.T</td><td>東京海上HD</td><td>TREND-RATE-BANK</td><td>保険・運用収益</td><td>入口通過</td><td>92</td><td>14.63</td><td>15:30)</td><td>2.79</td><td>15:30)</td><td>534.19</td><td>2026/03)</td><td>20.58</td><td></td><td>2.7</td><td>15:30)</td><td>211</td><td>2026/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8766.T">https://finance.yahoo.co.jp/quote/8766.T</a></td><td>32.2</td><td>10</td><td>15</td><td>8</td><td>1</td><td>15</td><td>0</td><td>決算短信の売上/営業利益成長 / FCF / 自己資本比率 / 自社株買い/還元方針</td><td>81.2</td><td>二次確認通過（暫定）</td><td>PER 14.63倍 / PBR 2.79倍 / ROE 20.58% / 配当利回り 2.7% / 価格一次 92点 / 直近TDnet照合は未ヒット</td><td>決算短信/IRから売上成長、営業利益成長、FCF、自己資本比率、還元方針を確認</td><td>価格・Yahoo!ファイナンス参考指標・直近TDnet照合による二次入口。正式な買い候補ではない。</td></tr><tr><td>2026/05/20 17:12</td><td>6367.T</td><td>ダイキン</td><td>TREND-AI-POWER</td><td>空調・冷却</td><td>監視</td><td>88</td><td>24.87</td><td>15:30)</td><td>2.13</td><td>15:30)</td><td>949.32</td><td>2027/03)</td><td>9.1</td><td></td><td>1.53</td><td>15:30)</td><td>360</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6367.T">https://finance.yahoo.co.jp/quote/6367.T</a></td><td>30.8</td><td>10</td><td>13</td><td>6</td><td>1</td><td>15</td><td>0</td><td>決算短信の売上/営業利益成長 / FCF / 自己資本比率 / 自社株買い/還元方針</td><td>75.8</td><td>二次確認通過（暫定）</td><td>PER 24.87倍 / PBR 2.13倍 / ROE 9.1% / 配当利回り 1.53% / 価格一次 88点 / 直近TDnet照合は未ヒット</td><td>決算短信/IRから売上成長、営業利益成長、FCF、自己資本比率、還元方針を確認</td><td>価格・Yahoo!ファイナンス参考指標・直近TDnet照合による二次入口。正式な買い候補ではない。</td></tr><tr><td>2026/05/20 17:12</td><td>8031.T</td><td>三井物産</td><td>TREND-YEN-RESOURCE</td><td>商社・資源</td><td>監視</td><td>56</td><td>17.88</td><td>15:30)</td><td>1.88</td><td>15:30)</td><td>324.61</td><td>2027/03)</td><td>10.22</td><td></td><td>2.41</td><td>15:30)</td><td>140</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8031.T">https://finance.yahoo.co.jp/quote/8031.T</a></td><td>19.6</td><td>12</td><td>13</td><td>6</td><td>1</td><td>15</td><td>0</td><td>決算短信の売上/営業利益成長 / FCF / 自己資本比率 / 自社株買い/還元方針</td><td>66.6</td><td>確認継続</td><td>PER 17.88倍 / PBR 1.88倍 / ROE 10.22% / 配当利回り 2.41% / 価格一次 56点 / 直近TDnet照合は未ヒット</td><td>決算短信/IRから売上成長、営業利益成長、FCF、自己資本比率、還元方針を確認</td><td>価格・Yahoo!ファイナンス参考指標・直近TDnet照合による二次入口。正式な買い候補ではない。</td></tr><tr><td>2026/05/20 17:12</td><td>6503.T</td><td>三菱電機</td><td>TREND-AI-POWER</td><td>電力制御・FA・データセンター周辺</td><td>入口通過</td><td>73</td><td>24.76</td><td>15:30)</td><td>2.62</td><td>15:30)</td><td>232.11</td><td>2027/03)</td><td>9.67</td><td></td><td>1.04</td><td>15:30)</td><td>60</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6503.T">https://finance.yahoo.co.jp/quote/6503.T</a></td><td>25.5</td><td>8</td><td>13</td><td>4</td><td>1</td><td>15</td><td>0</td><td>決算短信の売上/営業利益成長 / FCF / 自己資本比率 / 自社株買い/還元方針</td><td>66.5</td><td>確認継続</td><td>PER 24.76倍 / PBR 2.62倍 / ROE 9.67% / 配当利回り 1.04% / 価格一次 73点 / 直近TDnet照合は未ヒット</td><td>決算短信/IRから売上成長、営業利益成長、FCF、自己資本比率、還元方針を確認</td><td>価格・Yahoo!ファイナンス参考指標・直近TDnet照合による二次入口。正式な買い候補ではない。</td></tr><tr><td>2026/05/20 17:12</td><td>9433.T</td><td>KDDI</td><td>TREND-DISASTER-INFRA</td><td>通信・防災/復旧</td><td>入口通過</td><td>84</td><td></td><td>--:--)</td><td>2.08</td><td>15:30)</td><td></td><td>2027/03)</td><td>13.99</td><td></td><td>3.02</td><td>15:30)</td><td>84</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/9433.T">https://finance.yahoo.co.jp/quote/9433.T</a></td><td>29.4</td><td>6</td><td>10</td><td>8</td><td>3</td><td>10</td><td>2</td><td>PER / EPS / 決算短信の売上/営業利益成長 / FCF / 自己資本比率 / 自社株買い/還元方針</td><td>66.4</td><td>確認継続</td><td>PBR 2.08倍 / ROE 13.99% / 配当利回り 3.02% / 価格一次 84点</td><td>決算短信/IRから売上成長、営業利益成長、FCF、自己資本比率、還元方針を確認</td><td>価格・Yahoo!ファイナンス参考指標・直近TDnet照合による二次入口。正式な買い候補ではない。</td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>取得できた参考指標</h2>
+      <div class="table-wrap"><table><thead><tr><th>updated_at</th><th>ticker</th><th>company</th><th>theme_id</th><th>role</th><th>price_status</th><th>price_precheck_score_100</th><th>per_forecast</th><th>per_date</th><th>pbr_actual</th><th>pbr_date</th><th>eps_forecast_yen</th><th>eps_date</th><th>roe_actual_pct</th><th>roe_date</th><th>dividend_yield_pct</th><th>dividend_yield_date</th><th>dividend_per_share_yen</th><th>dividend_per_share_date</th><th>source_status</th><th>source_url</th></tr></thead><tbody><tr><td>2026/05/20 17:12</td><td>8316.T</td><td>三井住友FG</td><td>TREND-RATE-BANK</td><td>銀行・金利上昇</td><td>入口通過</td><td>100</td><td>13.21</td><td>15:30)</td><td>1.42</td><td>15:30)</td><td>445.39</td><td>2027/03)</td><td>10.38</td><td></td><td>3.06</td><td>15:30)</td><td>180</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8316.T">https://finance.yahoo.co.jp/quote/8316.T</a></td></tr><tr><td>2026/05/20 17:12</td><td>8766.T</td><td>東京海上HD</td><td>TREND-RATE-BANK</td><td>保険・運用収益</td><td>入口通過</td><td>92</td><td>14.63</td><td>15:30)</td><td>2.79</td><td>15:30)</td><td>534.19</td><td>2026/03)</td><td>20.58</td><td></td><td>2.7</td><td>15:30)</td><td>211</td><td>2026/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8766.T">https://finance.yahoo.co.jp/quote/8766.T</a></td></tr><tr><td>2026/05/20 17:12</td><td>9433.T</td><td>KDDI</td><td>TREND-DISASTER-INFRA</td><td>通信・防災/復旧</td><td>入口通過</td><td>84</td><td></td><td>--:--)</td><td>2.08</td><td>15:30)</td><td></td><td>2027/03)</td><td>13.99</td><td></td><td>3.02</td><td>15:30)</td><td>84</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/9433.T">https://finance.yahoo.co.jp/quote/9433.T</a></td></tr><tr><td>2026/05/20 17:12</td><td>6503.T</td><td>三菱電機</td><td>TREND-AI-POWER</td><td>電力制御・FA・データセンター周辺</td><td>入口通過</td><td>73</td><td>24.76</td><td>15:30)</td><td>2.62</td><td>15:30)</td><td>232.11</td><td>2027/03)</td><td>9.67</td><td></td><td>1.04</td><td>15:30)</td><td>60</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6503.T">https://finance.yahoo.co.jp/quote/6503.T</a></td></tr><tr><td>2026/05/20 17:12</td><td>6367.T</td><td>ダイキン</td><td>TREND-AI-POWER</td><td>空調・冷却</td><td>監視</td><td>88</td><td>24.87</td><td>15:30)</td><td>2.13</td><td>15:30)</td><td>949.32</td><td>2027/03)</td><td>9.1</td><td></td><td>1.53</td><td>15:30)</td><td>360</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6367.T">https://finance.yahoo.co.jp/quote/6367.T</a></td></tr><tr><td>2026/05/20 17:12</td><td>8031.T</td><td>三井物産</td><td>TREND-YEN-RESOURCE</td><td>商社・資源</td><td>監視</td><td>56</td><td>17.88</td><td>15:30)</td><td>1.88</td><td>15:30)</td><td>324.61</td><td>2027/03)</td><td>10.22</td><td></td><td>2.41</td><td>15:30)</td><td>140</td><td>2027/03)</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8031.T">https://finance.yahoo.co.jp/quote/8031.T</a></td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>IR・TDnet確認キュー</h2>
+      <div class="table-wrap"><table><thead><tr><th>updated_at</th><th>ticker</th><th>company</th><th>source_type</th><th>source_url</th><th>obtained_values</th><th>status</th><th>next_check</th></tr></thead><tbody><tr><td>2026/05/20 17:12</td><td>8316.T</td><td>三井住友FG</td><td>Yahoo!ファイナンス</td><td><a href="https://finance.yahoo.co.jp/quote/8316.T">https://finance.yahoo.co.jp/quote/8316.T</a></td><td>PER/PBR/EPS/ROE/配当利回り/1株配当の参考値</td><td>取得</td><td>公式決算短信・決算説明資料で同じ項目を照合</td></tr><tr><td>2026/05/20 17:12</td><td>8316.T</td><td>三井住友FG</td><td>TDnet直近開示</td><td></td><td></td><td>既存ログ未ヒット</td><td>対象期間を広げるか、企業IRページから決算短信を確認</td></tr><tr><td>2026/05/20 17:12</td><td>8766.T</td><td>東京海上HD</td><td>Yahoo!ファイナンス</td><td><a href="https://finance.yahoo.co.jp/quote/8766.T">https://finance.yahoo.co.jp/quote/8766.T</a></td><td>PER/PBR/EPS/ROE/配当利回り/1株配当の参考値</td><td>取得</td><td>公式決算短信・決算説明資料で同じ項目を照合</td></tr><tr><td>2026/05/20 17:12</td><td>8766.T</td><td>東京海上HD</td><td>TDnet直近開示</td><td></td><td></td><td>既存ログ未ヒット</td><td>対象期間を広げるか、企業IRページから決算短信を確認</td></tr><tr><td>2026/05/20 17:12</td><td>9433.T</td><td>KDDI</td><td>Yahoo!ファイナンス</td><td><a href="https://finance.yahoo.co.jp/quote/9433.T">https://finance.yahoo.co.jp/quote/9433.T</a></td><td>PER/PBR/EPS/ROE/配当利回り/1株配当の参考値</td><td>取得</td><td>公式決算短信・決算説明資料で同じ項目を照合</td></tr><tr><td>2026/05/20 17:12</td><td>9433.T</td><td>KDDI</td><td>TDnet直近開示</td><td><a href="https://www.release.tdnet.info/inbs/140120260512524146.pdf">https://www.release.tdnet.info/inbs/140120260512524146.pdf</a></td><td>2026年３月期 決算説明会資料（中期経営戦略）</td><td>既存ログ照合</td><td>PDF本文を確認し、会社予想・配当・還元方針があれば正式入力へ進める</td></tr><tr><td>2026/05/20 17:12</td><td>9433.T</td><td>KDDI</td><td>TDnet直近開示</td><td><a href="https://www.release.tdnet.info/inbs/140120260512524156.pdf">https://www.release.tdnet.info/inbs/140120260512524156.pdf</a></td><td>auフィナンシャルホールディングス株式会社の東京証券取引所への株式上場準備の開始について</td><td>既存ログ照合</td><td>PDF本文を確認し、会社予想・配当・還元方針があれば正式入力へ進める</td></tr><tr><td>2026/05/20 17:12</td><td>6503.T</td><td>三菱電機</td><td>Yahoo!ファイナンス</td><td><a href="https://finance.yahoo.co.jp/quote/6503.T">https://finance.yahoo.co.jp/quote/6503.T</a></td><td>PER/PBR/EPS/ROE/配当利回り/1株配当の参考値</td><td>取得</td><td>公式決算短信・決算説明資料で同じ項目を照合</td></tr><tr><td>2026/05/20 17:12</td><td>6503.T</td><td>三菱電機</td><td>TDnet直近開示</td><td></td><td></td><td>既存ログ未ヒット</td><td>対象期間を広げるか、企業IRページから決算短信を確認</td></tr><tr><td>2026/05/20 17:12</td><td>6367.T</td><td>ダイキン</td><td>Yahoo!ファイナンス</td><td><a href="https://finance.yahoo.co.jp/quote/6367.T">https://finance.yahoo.co.jp/quote/6367.T</a></td><td>PER/PBR/EPS/ROE/配当利回り/1株配当の参考値</td><td>取得</td><td>公式決算短信・決算説明資料で同じ項目を照合</td></tr><tr><td>2026/05/20 17:12</td><td>6367.T</td><td>ダイキン</td><td>TDnet直近開示</td><td></td><td></td><td>既存ログ未ヒット</td><td>対象期間を広げるか、企業IRページから決算短信を確認</td></tr><tr><td>2026/05/20 17:12</td><td>8031.T</td><td>三井物産</td><td>Yahoo!ファイナンス</td><td><a href="https://finance.yahoo.co.jp/quote/8031.T">https://finance.yahoo.co.jp/quote/8031.T</a></td><td>PER/PBR/EPS/ROE/配当利回り/1株配当の参考値</td><td>取得</td><td>公式決算短信・決算説明資料で同じ項目を照合</td></tr><tr><td>2026/05/20 17:12</td><td>8031.T</td><td>三井物産</td><td>TDnet直近開示</td><td></td><td></td><td>既存ログ未ヒット</td><td>対象期間を広げるか、企業IRページから決算短信を確認</td></tr></tbody></table></div>
+    </section>
+  </main>
+</body>
+</html>

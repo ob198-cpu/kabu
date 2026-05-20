@@ -1,4 +1,5 @@
 name,file,role
+時流候補 財務IR二次判定,trend_candidate_fundamental_gate.html,価格一次通過・監視銘柄をPER/PBR/EPS/ROE/配当利回りで二次確認するページ
 運用コックピット,operation_cockpit.html,全体入口
 顧客向け納品ガイドPDF,client_handoff_guide.pdf,顧客へ渡す説明資料
 データ取得完了状況,data_acquisition_completion_dashboard.html,取得済み・未完了データの説明
