@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>イベント判定CSV 読み込み確認</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#c87900;--red:#b43c3c;--line:#d8e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1280px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:980px;color:#eaf7ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.ok{border-left:8px solid var(--green)}.warn{border-left:8px solid var(--amber)}.bad{border-left:8px solid var(--red)}
+input[type=file]{width:100%;padding:12px;border:1px dashed #aabbd0;border-radius:12px;background:#fff}.small{font-size:12px;color:#536273}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:980px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.pill{display:inline-block;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:800}
+.pass{background:#e9f8f1;color:var(--green)}.attention{background:#fff3db;color:#9b6500}.negative{background:#fdecec;color:var(--red)}.pending{background:#edf2f7;color:#526171}
+pre{white-space:pre-wrap;background:#102438;color:#eaf7ff;border-radius:12px;padding:14px;overflow:auto}
+</style>
+</head>
+<body>
+<header>
+  <h1>イベント判定CSV 読み込み確認</h1>
+  <p class="lead">6月イベント入力ダッシュボードから出力したCSVを読み込み、総合判定・イベント結果・銘柄別候補額を再表示します。サーバーへ送信せず、この画面内だけで確認します。</p>
+</header>
+<main>
+  <section class="box warn">
+    <h2>CSVを読み込む</h2>
+    <input type="file" id="csvFile" accept=".csv,text/csv">
+    <p class="small">対象ファイル例: june_event_decision_record_20260618.csv。文字化けする場合は、元CSVをそのまま読み込んでください。</p>
+  </section>
+
+  <section class="grid" id="summaryCards">
+    <div class="card"><b>-</b>読み込み待ち</div>
+  </section>
+
+  <section class="box" id="checkBox">
+    <h2>整合性チェック</h2>
+    <div id="checkList">CSVを読み込むと表示します。</div>
+  </section>
+
+  <h2>総合判定</h2>
+  <div id="decisionTable"></div>
+
+  <h2>イベント結果</h2>
+  <div id="eventTable"></div>
+
+  <h2>銘柄別候補額</h2>
+  <div id="allocationTable"></div>
+
+  <h2>運用ログへ転記する要約</h2>
+  <pre id="copySummary">CSVを読み込むと表示します。</pre>
+
+  <h2>使い方</h2>
+  <div class="table-wrap"><table><thead><tr><th>step</th><th>action</th><th>output</th><th>check_point</th></tr></thead><tbody><tr><td>1</td><td>6月イベント入力ダッシュボードでCPI・日銀・FOMC・最終確認を入力</td><td>ブラウザ内の判定結果</td><td>未入力が残っていないか、悪化がないかを確認</td></tr><tr><td>2</td><td>判定CSVを出力</td><td>june_event_decision_record_YYYYMMDD.csv</td><td>decision/event/allocationの3種類の行が入っていること</td></tr><tr><td>3</td><td>この確認ページでCSVを読み込む</td><td>総合判定、イベント結果、銘柄別候補額、整合性チェック</td><td>合計候補額とイベント状態に矛盾がないかを確認</td></tr><tr><td>4</td><td>購入・見送り判断の根拠として保存</td><td>運用ログへ転記する要約</td><td>実売買前に証券会社画面と最新IRを再確認</td></tr><tr><td>5</td><td>購入後は1か月・3か月・6か月・1年で実績を追記</td><td>予実差、ベンチマーク差、改善メモ</td><td>S&amp;P500投信・日経平均/TOPIX比で+1%ポイントを確認</td></tr></tbody></table></div>
+</main>
+<script>
+const requiredColumns = ["record_type","event_id","ticker","item","status","amount_yen","actual","memo","reason","created_at"];
+
+function parseCsv(text){
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+  const rows = [];
+  let row = [], cell = "", quote = false;
+  for (let i=0; i<text.length; i++){
+    const ch = text[i], next = text[i+1];
+    if (quote && ch === '"' && next === '"') { cell += '"'; i++; }
+    else if (ch === '"') quote = !quote;
+    else if (!quote && ch === ",") { row.push(cell); cell = ""; }
+    else if (!quote && (ch === "\n" || ch === "\r")) {
+      if (ch === "\r" && next === "\n") i++;
+      row.push(cell);
+      if (row.some(v => v !== "")) rows.push(row);
+      row = []; cell = "";
+    } else cell += ch;
+  }
+  row.push(cell);
+  if (row.some(v => v !== "")) rows.push(row);
+  const header = rows.shift() || [];
+  return rows.map(values => Object.fromEntries(header.map((key, idx) => [key, values[idx] || ""])));
+}
+function yen(n){ return Math.round(Number(n)||0).toLocaleString("ja-JP") + "円"; }
+function pctStatus(text){
+  const s = String(text || "");
+  const cls = s.includes("悪化") ? "negative" : s.includes("注意") ? "attention" : s.includes("通過") ? "pass" : "pending";
+  return '<span class="pill '+cls+'">'+(s || "-")+'</span>';
+}
+function table(rows, header){
+  if (!rows.length) return '<div class="box">該当行なし</div>';
+  return '<div class="table-wrap"><table><thead><tr>'+header.map(h=>'<th>'+h+'</th>').join("")+'</tr></thead><tbody>'
+    + rows.map(r => '<tr>'+header.map(h => '<td>'+(h==="status" ? pctStatus(r[h]) : String(r[h] || ""))+'</td>').join("")+'</tr>').join("")
+    + '</tbody></table></div>';
+}
+function checkRows(rows){
+  const issues = [];
+  const headerKeys = rows[0] ? Object.keys(rows[0]) : [];
+  for (const col of requiredColumns) if (!headerKeys.includes(col)) issues.push("列が不足: " + col);
+  const decisions = rows.filter(r => r.record_type === "decision");
+  const events = rows.filter(r => r.record_type === "event");
+  const allocations = rows.filter(r => r.record_type === "allocation");
+  if (decisions.length !== 1) issues.push("decision行が1件ではありません: " + decisions.length + "件");
+  if (events.length !== 4) issues.push("event行が4件ではありません: " + events.length + "件");
+  if (allocations.length === 0) issues.push("allocation行がありません");
+  const hasPending = events.some(r => r.status === "未入力");
+  const hasBad = events.some(r => r.status === "悪化");
+  const total = allocations.reduce((sum, r) => sum + Number(r.amount_yen || 0), 0);
+  if (hasPending && total > 0) issues.push("未入力イベントがあるのに候補額が0円ではありません");
+  if (hasBad && total > 0) issues.push("悪化イベントがあるのに候補額が0円ではありません");
+  if (total > 350000) issues.push("6月テスト上限35万円を超えています");
+  return { issues, decisions, events, allocations, total, hasPending, hasBad };
+}
+function render(rows){
+  const result = checkRows(rows);
+  const attention = result.events.filter(r => r.status === "注意").length;
+  const bad = result.events.filter(r => r.status === "悪化").length;
+  document.getElementById("summaryCards").innerHTML =
+    '<div class="card"><b>'+result.events.length+'/4</b>イベント行</div>'
+    + '<div class="card"><b>'+yen(result.total)+'</b>候補額合計</div>'
+    + '<div class="card"><b>'+attention+'</b>注意</div>'
+    + '<div class="card"><b>'+bad+'</b>悪化</div>';
+  const checkBox = document.getElementById("checkBox");
+  checkBox.className = "box " + (result.issues.length ? "bad" : "ok");
+  document.getElementById("checkList").innerHTML = result.issues.length
+    ? '<ul>'+result.issues.map(i => '<li>'+i+'</li>').join("")+'</ul>'
+    : '形式チェックはOKです。実売買前には証券会社画面、最新決算、適時開示を別途確認します。';
+  document.getElementById("decisionTable").innerHTML = table(result.decisions, ["item","status","amount_yen","reason","created_at"]);
+  document.getElementById("eventTable").innerHTML = table(result.events, ["event_id","item","status","actual","memo","reason","created_at"]);
+  document.getElementById("allocationTable").innerHTML = table(result.allocations, ["ticker","item","status","amount_yen","memo","reason"]);
+  const decision = result.decisions[0] || {};
+  const buyRows = result.allocations.filter(r => Number(r.amount_yen || 0) > 0);
+  document.getElementById("copySummary").textContent =
+    "6月イベント判定記録\n"
+    + "総合判定: " + (decision.status || "-") + "\n"
+    + "候補額合計: " + yen(result.total) + "\n"
+    + "イベント: " + result.events.map(r => r.item + "=" + r.status).join(" / ") + "\n"
+    + "候補銘柄: " + (buyRows.length ? buyRows.map(r => r.ticker + " " + r.item + " " + yen(r.amount_yen)).join(" / ") : "なし") + "\n"
+    + "確認: 実売買前に証券会社画面・最新IR・適時開示を再確認";
+}
+document.getElementById("csvFile").addEventListener("change", async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const text = await file.text();
+  render(parseCsv(text));
+});
+</script>
+</body>
+</html>
