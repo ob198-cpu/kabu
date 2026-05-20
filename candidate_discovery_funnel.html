@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>テスト価値銘柄探索ファネル</title>
+  <style>
+    :root{--ink:#182335;--muted:#617086;--blue:#0d6b9f;--green:#147a55;--amber:#b36a00;--red:#b32732;--line:#d8e4ef;--bg:#eef5f8}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:#123d5c;color:#fff;padding:30px 24px}.wrap,main{max-width:1260px;margin:auto}main{padding:20px 16px 48px}
+    h1{font-size:29px;margin:0 0 8px}h2{font-size:21px;margin:28px 0 12px;border-left:8px solid var(--blue);padding-left:10px}.lead{max-width:1000px;color:#eaf6ff}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;box-shadow:0 4px 14px rgba(20,50,80,.05)}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:10px;padding:12px;background:#f8fbfe}.card b{display:block;font-size:24px;color:#0b658f}
+    .notice{background:#fff8e8;border:1px solid #edc477;border-left:8px solid #d48300;border-radius:10px;padding:13px 15px;margin:12px 0}
+    .formula{background:#f5f9fc;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:Consolas,"Yu Gothic",monospace}
+    .flow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.step{background:#eef6fb;border:1px solid #cddfeb;border-radius:10px;padding:10px;font-weight:800;text-align:center;min-height:78px}.arrow{color:#0b658f;font-size:20px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:1120px}th,td{border-bottom:1px solid #e8eff6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}th{background:#eaf2f8;color:#1d405f;font-weight:900}tr:last-child td{border-bottom:none}
+    .pill{font-weight:900;border-radius:999px;padding:4px 9px;display:inline-block;white-space:nowrap}.ok{background:#e5f6ef;color:var(--green)}.mid{background:#fff4dc;color:var(--amber)}.ng{background:#fff0f1;color:var(--red)}.score{font-size:18px;font-weight:900;color:#0a638f}
+    .small{font-size:12px;color:var(--muted)}a{color:#0b6ea8}
+    @media(max-width:980px){.cards{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr 1fr}table{min-width:980px}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>テスト価値銘柄探索ファネル</h1>
+    <p class="lead">既存の候補をそのまま買い候補にせず、「本当に6月テストへ進める価値があるか」をデータ充足、財務、テーマ実証、複合条件、割高・下落リスクでふるい分けます。</p>
+  </div></header>
+  <main>
+    <section>
+      <h2>現在の結論</h2>
+      <div class="cards">
+        <div class="card"><b>8</b>現MVPの候補銘柄</div>
+        <div class="card"><b>0</b>本命テスト候補</div>
+        <div class="card"><b>1</b>少額テスト候補</div>
+        <div class="card"><b>6</b>停止/注意フラグあり</div>
+      </div>
+      <div class="notice">このページは全日本株の完全ランキングではありません。現在は既存候補をふるいにかけるMVPです。次工程で東証プライム等の母集団を広げ、同じルールで落としていきます。</div>
+      <div class="formula">テスト価値スコア = NISA基礎40 + データ充足15 + テーマ実証15 + 複合条件10 + リスク10 + 割高度10 - 欠損/過熱ペナルティ</div>
+    </section>
+    <section>
+      <h2>探索ファネル</h2>
+      <div class="flow">
+        <div class="step">母集団<br><span class="small">広く集める</span></div>
+        <div class="step">データ充足<br><span class="small">計算可能か</span></div>
+        <div class="step">財務<br><span class="small">1年持てるか</span></div>
+        <div class="step">テーマ実証<br><span class="small">時流が効くか</span></div>
+        <div class="step">リスク<br><span class="small">高値掴み回避</span></div>
+        <div class="step">テスト価値<br><span class="small">少額検証へ</span></div>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>step</th><th>purpose</th><th>current_status</th><th>pass_rule</th><th>fail_rule</th></tr></thead><tbody><tr><td>1. 母集団</td><td>検証対象を広げる</td><td>現MVPは既存候補8銘柄中心</td><td>次工程で東証プライム大型/中型、出来高、データ取得可否で広げる</td><td>出来高不足、時価総額小、データ未取得は除外</td></tr><tr><td>2. データ充足</td><td>計算したふりを防ぐ</td><td>NISAスコアの確認済み点数を使用</td><td>coverage 70点以上を最低ライン、90点以上を高信頼候補</td><td>coverage 70点未満はテスト保留</td></tr><tr><td>3. 事業・財務</td><td>1年持てる土台を見る</td><td>売上/営業利益/EPS/FCF/自己資本/還元の入力値を使用</td><td>成長・FCF・還元のいずれかに説明可能な強みがある</td><td>赤字、下方修正、重要データ未確認は保留</td></tr><tr><td>4. テーマ実証</td><td>時流が株価に効くかを見る</td><td>イベントテーマ点、複合条件の勝率/基準比を参考使用</td><td>観測数、勝率、基準比が一定以上</td><td>テーマ名だけで実績が弱いものは加点しない</td></tr><tr><td>5. リスク・割高</td><td>高値掴みを避ける</td><td>PER/PBR、52週位置、20日下落率、20日ボラを使用</td><td>下落耐性があり、PER過熱が説明可能</td><td>急落中、PER過熱、52週極端位置は保留</td></tr><tr><td>6. テスト価値</td><td>買う前の検証候補を決める</td><td>既存候補に対してテスト価値スコアを算出</td><td>80点以上は本命テスト候補、70点以上は少額テスト候補</td><td>停止フラグがある場合は点数が高くても保留</td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>テスト価値ランキング</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>テスト価値</th><th>判定</th><th>停止/注意</th><th>NISA基礎</th><th>データ</th><th>テーマ</th><th>複合</th><th>リスク</th><th>割高</th><th>減点</th><th>理由</th><th>次に確認</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><b>8058.T</b><br>三菱商事</td><td><span class="score">72.9</span></td><td><span class="pill ok">少額テスト候補</span></td><td>なし</td><td>58.6<br><span class="small">23.4/40</span></td><td>15/15<br><span class="small">coverage 93</span></td><td>12/15<br><span class="small">素材・資源 76.1</span></td><td>7/10<br><span class="small">個別株プラス + 市場プラス</span></td><td>10/10</td><td>7/10<br><span class="small">PER 19.47 / PBR 2.27</span></td><td>1.5</td><td>データ充足度が高い / テーマ検証点76.1 / 複合条件で参考+2点 / 直近20日の急落は限定的</td><td>6月イベント通過後に再判定</td></tr><tr><td>2</td><td><b>2802.T</b><br>味の素</td><td><span class="score">65.2</span></td><td><span class="pill mid">監視候補</span></td><td>なし</td><td>66.7<br><span class="small">26.7/40</span></td><td>15/15<br><span class="small">coverage 93</span></td><td>12/15<br><span class="small">素材・資源 77</span></td><td>1/10<br><span class="small">市場3か月トレンドがプラス</span></td><td>10/10</td><td>2/10<br><span class="small">PER 42.08 / PBR 6.55</span></td><td>1.5</td><td>データ充足度が高い / テーマ検証点77 / 直近20日の急落は限定的 / PER高めで追い買い注意</td><td>6月イベント通過後に再判定</td></tr><tr><td>3</td><td><b>8306.T</b><br>三菱UFJフィナンシャル・グループ</td><td><span class="score">60.1</span></td><td><span class="pill mid">監視候補</span></td><td>重要データ未確認</td><td>64.1<br><span class="small">25.6/40</span></td><td>9/15<br><span class="small">coverage 75</span></td><td>15/15<br><span class="small">金利上昇 90.8</span></td><td>0/10<br><span class="small"></span></td><td>10/10</td><td>5/10<br><span class="small">PER  / PBR 1.55</span></td><td>4.5</td><td>テーマ検証点90.8 / 直近20日の急落は限定的 / 停止/注意: 重要データ未確認</td><td>停止/注意フラグの正式確認</td></tr><tr><td>4</td><td><b>8035.T</b><br>東京エレクトロン</td><td><span class="score">56.8</span></td><td><span class="pill ng">テストしない/保留</span></td><td>重要データ未確認</td><td>57.1<br><span class="small">22.8/40</span></td><td>12/15<br><span class="small">coverage 85</span></td><td>6/15<br><span class="small">AI・半導体需要 61.3</span></td><td>7/10<br><span class="small">業界 + 個別株 + 市場がすべてプラス</span></td><td>10/10</td><td>2/10<br><span class="small">PER  / PBR 11.18</span></td><td>3</td><td>複合条件で参考+2点 / 直近20日の急落は限定的 / 停止/注意: 重要データ未確認</td><td>停止/注意フラグの正式確認</td></tr><tr><td>5</td><td><b>6857.T</b><br>アドバンテスト</td><td><span class="score">50.4</span></td><td><span class="pill ng">テスト保留</span></td><td>データ充足不足 / 重要データ未確認</td><td>53.4<br><span class="small">21.4/40</span></td><td>6/15<br><span class="small">coverage 67</span></td><td>15/15<br><span class="small">AI・半導体需要 93.8</span></td><td>7/10<br><span class="small">業界 + 個別株 + 市場がすべてプラス</span></td><td>6/10</td><td>1/10<br><span class="small">PER 41.08 / PBR 24.02</span></td><td>6</td><td>テーマ検証点93.8 / 複合条件で参考+2点 / PER高めで追い買い注意 / 停止/注意: データ充足不足、重要データ未確認</td><td>停止/注意フラグの正式確認</td></tr><tr><td>6</td><td><b>7974.T</b><br>任天堂</td><td><span class="score">46.3</span></td><td><span class="pill ng">テスト保留</span></td><td>急落中 / 重要データ未確認</td><td>58.2<br><span class="small">23.3/40</span></td><td>12/15<br><span class="small">coverage 83</span></td><td>6/15<br><span class="small">円安進行 62.2</span></td><td>0/10<br><span class="small">全期間</span></td><td>3/10</td><td>5/10<br><span class="small">PER 26.59 / PBR 2.79</span></td><td>3</td><td>停止/注意: 急落中、重要データ未確認</td><td>停止/注意フラグの正式確認</td></tr><tr><td>7</td><td><b>9433.T</b><br>KDDI</td><td><span class="score">41.6</span></td><td><span class="pill ng">テストしない/保留</span></td><td>重要データ未確認</td><td>57.7<br><span class="small">23.1/40</span></td><td>9/15<br><span class="small">coverage 72</span></td><td>0/15<br><span class="small">市場ストレス 37.1</span></td><td>0/10<br><span class="small"></span></td><td>10/10</td><td>4/10<br><span class="small">PER  / PBR 2.04</span></td><td>4.5</td><td>直近20日の急落は限定的 / 停止/注意: 重要データ未確認</td><td>停止/注意フラグの正式確認</td></tr><tr><td>8</td><td><b>4519.T</b><br>中外製薬</td><td><span class="score">20.4</span></td><td><span class="pill ng">テスト保留</span></td><td>データ充足不足 / 基礎スコア不足 / 重要データ未確認</td><td>33.4<br><span class="small">13.4/40</span></td><td>3/15<br><span class="small">coverage 49</span></td><td>3/15<br><span class="small">市場ストレス 54.2</span></td><td>0/10<br><span class="small">全期間</span></td><td>6/10</td><td>3/10<br><span class="small">PER  / PBR 6.85</span></td><td>8</td><td>停止/注意: データ充足不足、基礎スコア不足、重要データ未確認</td><td>停止/注意フラグの正式確認</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+    <section>
+      <h2>停止ルール</h2>
+      <div class="table-wrap"><table><thead><tr><th>rule_id</th><th>rule</th><th>condition</th><th>action</th><th>reason</th></tr></thead><tbody><tr><td>S1</td><td>データ充足不足</td><td>coverage &lt; 70</td><td>テスト保留</td><td>計算根拠が薄い銘柄を候補にしない</td></tr><tr><td>S2</td><td>基礎スコア不足</td><td>NISA 1年保有スコア &lt; 50</td><td>テスト保留</td><td>まず通常スコアの土台が足りない</td></tr><tr><td>S3</td><td>急落中</td><td>20日最大下落率 &lt;= -20%</td><td>原因確認まで停止</td><td>落ちている理由が未確認のまま入らない</td></tr><tr><td>S4</td><td>PER過熱</td><td>PER &gt;= 60</td><td>決算/成長確認まで停止</td><td>成長鈍化時の下落が大きい</td></tr><tr><td>S5</td><td>重要データ未確認</td><td>PER/FCF/EPSなどが欠損</td><td>小さくても正式確認後</td><td>NISA 1年保有の根拠が弱くなる</td></tr><tr><td>S6</td><td>イベント未通過</td><td>CPI/FOMC/日銀/決算が未確認</td><td>購入判断へ直結させない</td><td>6月イベントで地合いが変わる可能性がある</td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>次工程</h2>
+      <p>次に進める場合は、東証プライム大型・中型、出来高、データ取得可否で母集団を広げます。最初から全銘柄を完全分析するのではなく、50銘柄程度まで広げ、同じファネルで10銘柄以内へ落とします。</p>
+    </section>
+  </main>
+</body>
+</html>
