@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6月イベント判定エンジン</title>
+<style>
+:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#d88700;--red:#b43c3c;--line:#d9e4ef;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1320px;margin:auto;padding:22px}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:980px;color:#e8f6ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
+.card b{display:block;font-size:30px;color:var(--blue)}.warn{border-left:8px solid var(--amber);background:#fff8ea}.ok{border-left:8px solid var(--green);background:#effaf5}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.control{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+select,input{width:100%;padding:9px;border:1px solid #cbd8e4;border-radius:8px;background:#fff;margin-top:6px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
+table{border-collapse:collapse;width:100%;min-width:1180px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
+th{background:#eaf2f9;color:#1d405f}.status{font-weight:800}.status-wait{color:#9b6500}.status-bad{color:#b43c3c}.status-good{color:#16805d}
+</style>
+</head>
+<body>
+<header>
+  <h1>6月イベント判定エンジン</h1>
+  <p class="lead">米CPI、日銀、FOMC、最終購入前確認の結果を入力すると、候補復帰・延期・保留・初回除外が銘柄別に変わる判定ページです。入力内容はブラウザ上の試算で、保存はされません。</p>
+  <p>更新: 2026/05/20 09:53</p>
+</header>
+<main>
+  <section class="grid" id="summaryCards"></section>
+  <div class="box warn">初期状態はイベント未入力です。実イベント前に「通過」として扱うことはしません。</div>
+  <h2>イベント結果入力</h2>
+  <div class="controls" id="eventControls"></div>
+  <h2>自動判定結果</h2>
+  <div id="engineOutput"></div>
+  <h2>イベント判定ルール</h2>
+  <div class="table-wrap"><table><thead><tr><th>event_id</th><th>event</th><th>bad_signal</th><th>affected_tags</th><th>if_attention</th><th>if_bad</th><th>severity</th></tr></thead><tbody><tr><td>E01</td><td>米CPI</td><td>インフレ再加速、米10年金利急騰、NASDAQ/SOX急落</td><td>半導体/高PER/高ボラ</td><td>高PER・半導体候補は購入前ゲートを保留</td><td>高PER・半導体候補を延期。初回投入対象にしない</td><td>高</td></tr><tr><td>E02</td><td>日銀会合</td><td>円高ショック、日経平均急落、金融株の急反応</td><td>日本株/外需/銀行/商社/食品/通信/ゲーム/医薬</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td><td>高</td></tr><tr><td>E03</td><td>FOMC</td><td>米長期金利急騰、NASDAQ/SOX急落、ドル円急変</td><td>半導体/高PER/高ボラ/外需</td><td>半導体・高PER・外需候補を保留</td><td>半導体・高PER・外需候補を延期</td><td>高</td></tr><tr><td>E04</td><td>最終購入前確認</td><td>停止条件、未確認データ、イベント悪化が残る</td><td>全銘柄</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td><td>最重要</td></tr></tbody></table></div>
+  <h2>現在のイベント入力CSV</h2>
+  <div class="table-wrap"><table><thead><tr><th>event_id</th><th>planned_date</th><th>event</th><th>input_required</th><th>actual_value</th><th>market_reaction</th><th>pass_condition</th><th>current_status</th><th>action_if_fail</th></tr></thead><tbody><tr><td>E01</td><td>2026-06-10</td><td>米5月CPI</td><td>CPI前年比、前月比、米10年金利反応、NASDAQ/SOX反応</td><td></td><td></td><td>インフレ再加速と金利急騰が同時に起きない</td><td>未入力</td><td>半導体・高PER候補を延期</td></tr><tr><td>E02</td><td>2026-06-15〜2026-06-16</td><td>日銀会合</td><td>政策変更、円高ショック、日経平均反応、銀行株反応</td><td></td><td></td><td>急な円高ショックと日経平均急落がない</td><td>未入力</td><td>日本株候補の予定買いを縮小または延期</td></tr><tr><td>E03</td><td>2026-06-16〜2026-06-17</td><td>FOMC</td><td>政策金利見通し、米10年金利、NASDAQ/SOX、ドル円</td><td></td><td></td><td>米長期金利急騰とハイテク急落がない</td><td>未入力</td><td>半導体・高PER候補を延期</td></tr><tr><td>E04</td><td>2026-06-18以降</td><td>最終購入前確認</td><td>候補分類、PER、下落率、未確認データ、イベント結果</td><td></td><td></td><td>停止条件なし、未確認データなし、イベント悪化なし</td><td>未入力</td><td>監視継続または初回除外</td></tr></tbody></table></div>
+  <h2>銘柄別イベント影響マトリクス</h2>
+  <div class="table-wrap"><table><thead><tr><th>ticker</th><th>name</th><th>tags</th><th>event_id</th><th>event</th><th>affected</th><th>if_attention</th><th>if_bad</th></tr></thead><tbody><tr><td>2802.T</td><td>味の素</td><td>高PER/食品/内需</td><td>E01</td><td>米CPI</td><td>対象</td><td>高PER・半導体候補は購入前ゲートを保留</td><td>高PER・半導体候補を延期。初回投入対象にしない</td></tr><tr><td>2802.T</td><td>味の素</td><td>高PER/食品/内需</td><td>E02</td><td>日銀会合</td><td>対象</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td></tr><tr><td>2802.T</td><td>味の素</td><td>高PER/食品/内需</td><td>E03</td><td>FOMC</td><td>対象</td><td>半導体・高PER・外需候補を保留</td><td>半導体・高PER・外需候補を延期</td></tr><tr><td>2802.T</td><td>味の素</td><td>高PER/食品/内需</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr><tr><td>8306.T</td><td>三菱UFJ</td><td>銀行/金利</td><td>E01</td><td>米CPI</td><td>対象外</td><td>原則影響なし</td><td>原則影響なし</td></tr><tr><td>8306.T</td><td>三菱UFJ</td><td>銀行/金利</td><td>E02</td><td>日銀会合</td><td>対象</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td></tr><tr><td>8306.T</td><td>三菱UFJ</td><td>銀行/金利</td><td>E03</td><td>FOMC</td><td>対象外</td><td>原則影響なし</td><td>原則影響なし</td></tr><tr><td>8306.T</td><td>三菱UFJ</td><td>銀行/金利</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>商社/資源/日本株</td><td>E01</td><td>米CPI</td><td>対象外</td><td>原則影響なし</td><td>原則影響なし</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>商社/資源/日本株</td><td>E02</td><td>日銀会合</td><td>対象</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>商社/資源/日本株</td><td>E03</td><td>FOMC</td><td>対象外</td><td>原則影響なし</td><td>原則影響なし</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>商社/資源/日本株</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>半導体/高PER/外需</td><td>E01</td><td>米CPI</td><td>対象</td><td>高PER・半導体候補は購入前ゲートを保留</td><td>高PER・半導体候補を延期。初回投入対象にしない</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>半導体/高PER/外需</td><td>E02</td><td>日銀会合</td><td>対象</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>半導体/高PER/外需</td><td>E03</td><td>FOMC</td><td>対象</td><td>半導体・高PER・外需候補を保留</td><td>半導体・高PER・外需候補を延期</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>半導体/高PER/外需</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr><tr><td>7974.T</td><td>任天堂</td><td>ゲーム/外需/高ボラ</td><td>E01</td><td>米CPI</td><td>対象</td><td>高PER・半導体候補は購入前ゲートを保留</td><td>高PER・半導体候補を延期。初回投入対象にしない</td></tr><tr><td>7974.T</td><td>任天堂</td><td>ゲーム/外需/高ボラ</td><td>E02</td><td>日銀会合</td><td>対象</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td></tr><tr><td>7974.T</td><td>任天堂</td><td>ゲーム/外需/高ボラ</td><td>E03</td><td>FOMC</td><td>対象</td><td>半導体・高PER・外需候補を保留</td><td>半導体・高PER・外需候補を延期</td></tr><tr><td>7974.T</td><td>任天堂</td><td>ゲーム/外需/高ボラ</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr><tr><td>9433.T</td><td>KDDI</td><td>通信/守り</td><td>E01</td><td>米CPI</td><td>対象外</td><td>原則影響なし</td><td>原則影響なし</td></tr><tr><td>9433.T</td><td>KDDI</td><td>通信/守り</td><td>E02</td><td>日銀会合</td><td>対象</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td></tr><tr><td>9433.T</td><td>KDDI</td><td>通信/守り</td><td>E03</td><td>FOMC</td><td>対象外</td><td>原則影響なし</td><td>原則影響なし</td></tr><tr><td>9433.T</td><td>KDDI</td><td>通信/守り</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>半導体/高PER/高ボラ</td><td>E01</td><td>米CPI</td><td>対象</td><td>高PER・半導体候補は購入前ゲートを保留</td><td>高PER・半導体候補を延期。初回投入対象にしない</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>半導体/高PER/高ボラ</td><td>E02</td><td>日銀会合</td><td>対象外</td><td>原則影響なし</td><td>原則影響なし</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>半導体/高PER/高ボラ</td><td>E03</td><td>FOMC</td><td>対象</td><td>半導体・高PER・外需候補を保留</td><td>半導体・高PER・外需候補を延期</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>半導体/高PER/高ボラ</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr><tr><td>4519.T</td><td>中外製薬</td><td>医薬/高ボラ</td><td>E01</td><td>米CPI</td><td>対象</td><td>高PER・半導体候補は購入前ゲートを保留</td><td>高PER・半導体候補を延期。初回投入対象にしない</td></tr><tr><td>4519.T</td><td>中外製薬</td><td>医薬/高ボラ</td><td>E02</td><td>日銀会合</td><td>対象</td><td>日本株全体の投入額を縮小して再確認</td><td>予定買いを延期または半分以下に縮小</td></tr><tr><td>4519.T</td><td>中外製薬</td><td>医薬/高ボラ</td><td>E03</td><td>FOMC</td><td>対象</td><td>半導体・高PER・外需候補を保留</td><td>半導体・高PER・外需候補を延期</td></tr><tr><td>4519.T</td><td>中外製薬</td><td>医薬/高ボラ</td><td>E04</td><td>最終購入前確認</td><td>対象</td><td>確認未了の銘柄を保留</td><td>停止条件がある銘柄は初回除外</td></tr></tbody></table></div>
+</main>
+<script>
+const events = [{"event_id":"E01","planned_date":"2026-06-10","event":"米5月CPI","input_required":"CPI前年比、前月比、米10年金利反応、NASDAQ/SOX反応","actual_value":"","market_reaction":"","pass_condition":"インフレ再加速と金利急騰が同時に起きない","current_status":"未入力","action_if_fail":"半導体・高PER候補を延期"},{"event_id":"E02","planned_date":"2026-06-15〜2026-06-16","event":"日銀会合","input_required":"政策変更、円高ショック、日経平均反応、銀行株反応","actual_value":"","market_reaction":"","pass_condition":"急な円高ショックと日経平均急落がない","current_status":"未入力","action_if_fail":"日本株候補の予定買いを縮小または延期"},{"event_id":"E03","planned_date":"2026-06-16〜2026-06-17","event":"FOMC","input_required":"政策金利見通し、米10年金利、NASDAQ/SOX、ドル円","actual_value":"","market_reaction":"","pass_condition":"米長期金利急騰とハイテク急落がない","current_status":"未入力","action_if_fail":"半導体・高PER候補を延期"},{"event_id":"E04","planned_date":"2026-06-18以降","event":"最終購入前確認","input_required":"候補分類、PER、下落率、未確認データ、イベント結果","actual_value":"","market_reaction":"","pass_condition":"停止条件なし、未確認データなし、イベント悪化なし","current_status":"未入力","action_if_fail":"監視継続または初回除外"}];
+const gates = [{"ticker":"2802.T","name":"味の素","tags":["高PER","食品","内需"],"base_final_status":"イベント未入力","high_blockers":1,"medium_blockers":2},{"ticker":"8306.T","name":"三菱UFJ","tags":["銀行","金利"],"base_final_status":"イベント未入力","high_blockers":1,"medium_blockers":2},{"ticker":"8058.T","name":"三菱商事","tags":["商社","資源","日本株"],"base_final_status":"イベント未入力","high_blockers":1,"medium_blockers":1},{"ticker":"8035.T","name":"東京エレクトロン","tags":["半導体","高PER","外需"],"base_final_status":"イベント未入力","high_blockers":1,"medium_blockers":1},{"ticker":"7974.T","name":"任天堂","tags":["ゲーム","外需","高ボラ"],"base_final_status":"初回除外","high_blockers":4,"medium_blockers":0},{"ticker":"9433.T","name":"KDDI","tags":["通信","守り"],"base_final_status":"イベント未入力","high_blockers":2,"medium_blockers":2},{"ticker":"6857.T","name":"アドバンテスト","tags":["半導体","高PER","高ボラ"],"base_final_status":"初回除外","high_blockers":5,"medium_blockers":1},{"ticker":"4519.T","name":"中外製薬","tags":["医薬","高ボラ"],"base_final_status":"初回除外","high_blockers":6,"medium_blockers":0}];
+const rules = [{"event_id":"E01","event":"米CPI","bad_signal":"インフレ再加速、米10年金利急騰、NASDAQ/SOX急落","affected_tags":["半導体","高PER","高ボラ"],"if_attention":"高PER・半導体候補は購入前ゲートを保留","if_bad":"高PER・半導体候補を延期。初回投入対象にしない","severity":"高"},{"event_id":"E02","event":"日銀会合","bad_signal":"円高ショック、日経平均急落、金融株の急反応","affected_tags":["日本株","外需","銀行","商社","食品","通信","ゲーム","医薬"],"if_attention":"日本株全体の投入額を縮小して再確認","if_bad":"予定買いを延期または半分以下に縮小","severity":"高"},{"event_id":"E03","event":"FOMC","bad_signal":"米長期金利急騰、NASDAQ/SOX急落、ドル円急変","affected_tags":["半導体","高PER","高ボラ","外需"],"if_attention":"半導体・高PER・外需候補を保留","if_bad":"半導体・高PER・外需候補を延期","severity":"高"},{"event_id":"E04","event":"最終購入前確認","bad_signal":"停止条件、未確認データ、イベント悪化が残る","affected_tags":["全銘柄"],"if_attention":"確認未了の銘柄を保留","if_bad":"停止条件がある銘柄は初回除外","severity":"最重要"}];
+const statuses = new Map(events.map(e => [e.event_id, e.current_status || "未入力"]));
+const labels = ["未入力", "通過", "注意", "悪化"];
+function applies(rule, gate) {
+  return rule.affected_tags.includes("全銘柄") || gate.tags.some(tag => rule.affected_tags.includes(tag));
+}
+function evaluate() {
+  const allEntered = [...statuses.values()].every(status => status !== "未入力");
+  const anyBad = [...statuses.values()].includes("悪化");
+  const anyAttention = [...statuses.values()].includes("注意");
+  const rows = gates.map(gate => {
+    const hitBad = rules.filter(rule => applies(rule, gate) && statuses.get(rule.event_id) === "悪化");
+    const hitAttention = rules.filter(rule => applies(rule, gate) && statuses.get(rule.event_id) === "注意");
+    let engine_status = "イベント未入力";
+    let action = "6月イベント結果を入力してから再判定";
+    if (gate.base_final_status === "初回除外") {
+      engine_status = "初回除外";
+      action = "追加データで改善するまで対象外";
+    } else if (!allEntered) {
+      engine_status = "イベント未入力";
+      action = "米CPI・日銀・FOMC・最終確認の結果を入力";
+    } else if (hitBad.length || anyBad) {
+      engine_status = hitBad.length ? "延期" : "全体保留";
+      action = hitBad.length ? hitBad.map(rule => rule.if_bad).join(" / ") : "市場全体の悪化があるため予定買いを延期または縮小";
+    } else if (hitAttention.length || anyAttention) {
+      engine_status = "保留";
+      action = hitAttention.length ? hitAttention.map(rule => rule.if_attention).join(" / ") : "イベント注意判定のため投入額を縮小して再確認";
+    } else if (gate.high_blockers > 0) {
+      engine_status = "停止";
+      action = "高重要度の未解消項目を解消するまで購入候補にしない";
+    } else if (gate.medium_blockers > 0) {
+      engine_status = "確認待ち";
+      action = "中重要度の未解消項目を確認してから再判定";
+    } else {
+      engine_status = "候補復帰";
+      action = "証券会社画面と最新IRを確認し、6月テスト候補として再判定";
+    }
+    return { ...gate, engine_status, action, event_status_summary: events.map(e => e.event_id + ":" + statuses.get(e.event_id)).join(" / ") };
+  });
+  renderSummary(rows);
+  renderRows(rows);
+}
+function renderSummary(rows) {
+  const keys = ["候補復帰", "確認待ち", "保留", "延期", "イベント未入力", "初回除外", "停止"];
+  document.getElementById("summaryCards").innerHTML = keys.map(key => '<div class="card"><b>' + rows.filter(r => r.engine_status === key).length + '</b>' + key + '</div>').join("");
+}
+function renderRows(rows) {
+  const header = ["ticker","name","tags","base_final_status","event_status_summary","high_blockers","medium_blockers","engine_status","action"];
+  const html = '<div class="table-wrap"><table><thead><tr>' + header.map(h => '<th>'+h+'</th>').join("") + '</tr></thead><tbody>' + rows.map(row => '<tr>' + header.map(h => '<td class="' + (h === "engine_status" ? "status " + (row[h] === "候補復帰" ? "status-good" : row[h] === "イベント未入力" ? "status-wait" : row[h] === "延期" || row[h] === "停止" || row[h] === "初回除外" ? "status-bad" : "") : "") + '">' + String(Array.isArray(row[h]) ? row[h].join("/") : (row[h] ?? "")) + '</td>').join("") + '</tr>').join("") + '</tbody></table></div>';
+  document.getElementById("engineOutput").innerHTML = html;
+}
+function renderControls() {
+  document.getElementById("eventControls").innerHTML = events.map(event => '<div class="control"><strong>' + event.event_id + ' ' + event.event + '</strong><br><span>' + event.planned_date + '</span><select data-event="' + event.event_id + '">' + labels.map(label => '<option ' + (label === statuses.get(event.event_id) ? 'selected' : '') + '>' + label + '</option>').join("") + '</select><input placeholder="実測値メモ"><input placeholder="市場反応メモ"></div>').join("");
+  document.querySelectorAll("select[data-event]").forEach(select => {
+    select.addEventListener("change", () => {
+      statuses.set(select.dataset.event, select.value);
+      evaluate();
+    });
+  });
+}
+renderControls();
+evaluate();
+</script>
+</body>
+</html>
