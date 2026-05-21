@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>テンバガー探索 時価総額・株数 取得結果</title>
+<style>
+  :root{--ink:#172033;--muted:#5b6675;--line:#d7e3ee;--blue:#0b6e9e;--green:#147a55;--amber:#ad6500;--bg:#edf5f8}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.7}
+  header{background:#123d5c;color:#fff;padding:30px 24px}.wrap,main{max-width:1220px;margin:auto}main{padding:18px 16px 42px}
+  h1{margin:0 0 8px;font-size:29px}h2{font-size:21px;border-left:8px solid var(--blue);padding-left:10px;margin:28px 0 12px}
+  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;box-shadow:0 5px 16px rgba(20,50,80,.05)}
+  .lead{max-width:980px;color:#eaf6ff}.note{background:#fff8e8;border:1px solid #edc77a;border-left:8px solid #cf7c00;border-radius:10px;padding:12px 14px;margin:12px 0}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.kpi{background:#f8fbfe;border:1px solid var(--line);border-radius:10px;padding:12px}.kpi b{display:block;font-size:25px;color:#0b658f}
+  .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center}.step{border:1px solid var(--line);background:#f9fcff;border-radius:10px;padding:12px}.arrow{font-size:24px;color:#0b6e9e;font-weight:900}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:100%}th,td{border-bottom:1px solid #e8eff6;padding:9px 10px;font-size:12px;text-align:left;vertical-align:top}th{background:#eaf2f8;color:#1d405f;font-weight:900}tr:last-child td{border-bottom:none}
+  th:nth-child(-n+11),td:nth-child(-n+11){white-space:nowrap}
+  .small{font-size:12px;color:var(--muted)}a{color:#0b6ea8}
+  @media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr}.arrow{display:none}h1{font-size:23px}table{min-width:980px}}
+  @media print{@page{size:A4 landscape;margin:9mm}body{background:#fff}header{padding:16px 18px}main{max-width:none;padding:10px}section{box-shadow:none;break-inside:avoid}th,td{font-size:9px;padding:5px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>テンバガー探索 時価総額・株数 取得結果</h1>
+  <p class="lead">作成日時: 2026/05/21 12:00 / 既存候補が「10倍を狙える規模か」を確認するため、Yahoo!ファイナンス日本版から時価総額と発行済株式数を取得しました。</p>
+</div></header>
+<main>
+  <section>
+    <h2>今回の目的</h2>
+    <div class="flow">
+      <div class="step"><b>候補銘柄</b><br><span class="small">NISA/時流テスト候補</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>時価総額・株数</b><br><span class="small">大型すぎるか、希薄化確認が必要かを見る</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><b>テンバガー適性</b><br><span class="small">本命候補か、参考枠かを分ける</span></div>
+    </div>
+    <div class="note">今回取れたのは「現在の時価総額」と「現在の発行済株式数」です。3年売上CAGR、株数の増減履歴、長期材料履歴は別工程です。</div>
+  </section>
+  <section>
+    <h2>取得状況</h2>
+    <div class="kpis">
+      <div class="kpi"><b>6</b>対象銘柄</div>
+      <div class="kpi"><b>6</b>時価総額・株数取得</div>
+      <div class="kpi"><b>0</b>10倍向き規模</div>
+      <div class="kpi"><b>6</b>大型参考枠</div>
+      <div class="kpi"><b>3</b>残る不足項目</div>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>item</th><th>value</th><th>status</th></tr></thead><tbody><tr><td>対象銘柄</td><td>6件</td><td>既存の時流/NISAテスト候補を対象。</td></tr><tr><td>時価総額取得</td><td>6件</td><td>Yahoo!ファイナンス日本版の銘柄ページから取得。</td></tr><tr><td>発行済株式数取得</td><td>6件</td><td>現時点の株数。増減履歴ではない。</td></tr><tr><td>テンバガー本命規模</td><td>0件</td><td>現在の候補群では大型株が多く、少数。</td></tr><tr><td>まだ不足</td><td>3年売上CAGR / 株数増減履歴 / 長期材料履歴</td><td>今回の自動取得だけでは未完成。</td></tr></tbody></table></div>
+  </section>
+  <section>
+    <h2>銘柄別 時価総額スコア</h2>
+    <div class="table-wrap"><table><thead><tr><th>順位</th><th>銘柄</th><th>会社</th><th>テーマ</th><th>時価総額</th><th>規模帯</th><th>上値余地点</th><th>発行済株式数</th><th>PER</th><th>PBR</th><th>ROE</th><th>判定メモ</th></tr></thead><tbody><tr><td>1</td><td>6367.T</td><td>ダイキン</td><td>空調・冷却</td><td>6.97兆円</td><td>5兆円〜10兆円</td><td>1.5/10</td><td>293,113,973</td><td>25.05</td><td>2.14</td><td>9.1</td><td>大型株。1年保有の安定性確認には使えるが、10倍余地は小さい。</td></tr><tr><td>2</td><td>8316.T</td><td>三井住友FG</td><td>銀行・金利上昇</td><td>23.31兆円</td><td>10兆円以上</td><td>0.5/10</td><td>3,827,498,140</td><td>13.68</td><td>1.47</td><td>10.38</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>3</td><td>8766.T</td><td>東京海上HD</td><td>保険・運用収益</td><td>15.07兆円</td><td>10兆円以上</td><td>0.5/10</td><td>1,934,000,000</td><td>17.63</td><td>2.7</td><td>18.68</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>4</td><td>8031.T</td><td>三井物産</td><td>商社・資源</td><td>16.44兆円</td><td>10兆円以上</td><td>0.5/10</td><td>2,864,666,576</td><td>17.68</td><td>1.85</td><td>10.22</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>5</td><td>6503.T</td><td>三菱電機</td><td>電力制御・FA・データセンター周辺</td><td>12.79兆円</td><td>10兆円以上</td><td>0.5/10</td><td>2,113,201,551</td><td>26.07</td><td>2.76</td><td>9.67</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>6</td><td>9433.T</td><td>KDDI</td><td>通信・防災/復旧</td><td>11.58兆円</td><td>10兆円以上</td><td>0.5/10</td><td>4,187,847,474</td><td></td><td>2.07</td><td>13.99</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr></tbody></table></div>
+  </section>
+  <section>
+    <h2>保存CSV</h2>
+    <div class="table-wrap"><table><thead><tr><th>rank</th><th>updated_at</th><th>ticker</th><th>company</th><th>role</th><th>market_cap_million_jpy</th><th>market_cap_display</th><th>market_cap_band</th><th>market_cap_upside_score_10</th><th>shares_outstanding</th><th>market_cap_date</th><th>shares_date</th><th>per_forecast</th><th>pbr_actual</th><th>roe_actual_pct</th><th>source_status</th><th>source_url</th><th>source_metric_count</th><th>tenbagger_comment</th></tr></thead><tbody><tr><td>1</td><td>2026/05/21 12:00</td><td>6367.T</td><td>ダイキン</td><td>空調・冷却</td><td>6970250</td><td>6.97兆円</td><td>5兆円〜10兆円</td><td>1.5</td><td>293113973</td><td>11:30</td><td>05/21</td><td>25.05</td><td>2.14</td><td>9.1</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6367.T">開く</a></td><td>27</td><td>大型株。1年保有の安定性確認には使えるが、10倍余地は小さい。</td></tr><tr><td>2</td><td>2026/05/21 12:00</td><td>8316.T</td><td>三井住友FG</td><td>銀行・金利上昇</td><td>23313291</td><td>23.31兆円</td><td>10兆円以上</td><td>0.5</td><td>3827498140</td><td>11:30</td><td>05/21</td><td>13.68</td><td>1.47</td><td>10.38</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8316.T">開く</a></td><td>27</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>3</td><td>2026/05/21 12:00</td><td>8766.T</td><td>東京海上HD</td><td>保険・運用収益</td><td>15065860</td><td>15.07兆円</td><td>10兆円以上</td><td>0.5</td><td>1934000000</td><td>11:30</td><td>05/21</td><td>17.63</td><td>2.7</td><td>18.68</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8766.T">開く</a></td><td>27</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>4</td><td>2026/05/21 12:00</td><td>8031.T</td><td>三井物産</td><td>商社・資源</td><td>16437457</td><td>16.44兆円</td><td>10兆円以上</td><td>0.5</td><td>2864666576</td><td>11:30</td><td>05/21</td><td>17.68</td><td>1.85</td><td>10.22</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8031.T">開く</a></td><td>27</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>5</td><td>2026/05/21 12:00</td><td>6503.T</td><td>三菱電機</td><td>電力制御・FA・データセンター周辺</td><td>12789096</td><td>12.79兆円</td><td>10兆円以上</td><td>0.5</td><td>2113201551</td><td>11:30</td><td>05/21</td><td>26.07</td><td>2.76</td><td>9.67</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6503.T">開く</a></td><td>27</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr><tr><td>6</td><td>2026/05/21 12:00</td><td>9433.T</td><td>KDDI</td><td>通信・防災/復旧</td><td>11579398</td><td>11.58兆円</td><td>10兆円以上</td><td>0.5</td><td>4187847474</td><td>11:30</td><td>05/21</td><td></td><td>2.07</td><td>13.99</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/9433.T">開く</a></td><td>27</td><td>超大型株。テンバガー本命ではなく、指数・大型株比較の参考枠。</td></tr></tbody></table></div>
+  </section>
+</main>
+</body>
+</html>
