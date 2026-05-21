@@ -1,0 +1,101 @@
+updated_at,ticker,code4,match_status,edinet_code,submitter_name,submitter_name_en,securities_code,industry,fiscal_year_end,listed_flag,consolidated_flag,corporate_number,source_url
+2026/05/21 17:39,7203.T,7203,取得済み,E02144,トヨタ自動車株式会社,TOYOTA MOTOR CORPORATION,72030,輸送用機器,3月31日,上場,有,1180301018771,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6758.T,6758,取得済み,E01777,ソニーグループ株式会社,SONY GROUP CORPORATION,67580,電気機器,3月31日,上場,有,5010401067252,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8306.T,8306,取得済み,E03606,株式会社三菱ＵＦＪフィナンシャル・グループ,"Mitsubishi UFJ Financial Group, Inc.",83060,銀行業,3月31日,上場,有,4010001073486,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8316.T,8316,取得済み,E03614,株式会社三井住友フィナンシャルグループ,"Sumitomo Mitsui Financial Group, Inc.",83160,銀行業,3月31日,上場,有,2010001081053,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8411.T,8411,取得済み,E03615,株式会社みずほフィナンシャルグループ,"Mizuho Financial Group, Inc.",84110,銀行業,3月31日,上場,有,9010001081419,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8766.T,8766,取得済み,E03847,東京海上ホールディングス株式会社,"Tokio Marine Holdings, Inc.",87660,保険業,3月末日,上場,有,7010001078061,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8750.T,8750,取得済み,E06141,株式会社第一ライフグループ,,87500,保険業,3月31日,上場,有,8010001131752,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8725.T,8725,取得済み,E03854,ＭＳ＆ＡＤインシュアランスグループホールディングス株式会社,"MS&AD Insurance Group Holdings, Inc.",87250,保険業,3月31日,上場,有,4010001116542,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9432.T,9432,取得済み,E04430,ＮＴＴ株式会社,"NTT, Inc.",94320,情報・通信業,3月31日,上場,有,7010001065142,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9433.T,9433,取得済み,E04425,ＫＤＤＩ株式会社,KDDI CORPORATION,94330,情報・通信業,3月31日,上場,有,9011101031552,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9984.T,9984,取得済み,E02778,ソフトバンクグループ株式会社,SoftBank Group Corp.,99840,情報・通信業,3月31日,上場,有,1010401056795,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9434.T,9434,取得済み,E04426,ソフトバンク株式会社,,94340,情報・通信業,3月31日,上場,有,9010401052465,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9983.T,9983,取得済み,E03217,株式会社ファーストリテイリング,"FAST RETAILING CO., LTD.",99830,小売業,8月31日,上場,有,9250001000684,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6098.T,6098,取得済み,E07801,株式会社リクルートホールディングス,"Recruit Holdings Co., Ltd.",60980,サービス業,3月31日,上場,有,5010001060426,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7974.T,7974,取得済み,E02367,任天堂株式会社,"Nintendo Co., Ltd.",79740,その他製品,3月31日,上場,有,1130001011420,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6861.T,6861,取得済み,E01967,株式会社キーエンス,KEYENCE CORPORATION,68610,電気機器,3月20日,上場,有,4120001051530,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6501.T,6501,取得済み,E01737,株式会社日立製作所,"Hitachi, Ltd.",65010,電気機器,3月末日,上場,有,7010001008844,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6503.T,6503,取得済み,E01739,三菱電機株式会社,Mitsubishi Electric Corporation,65030,電気機器,3月31日,上場,有,4010001008772,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7011.T,7011,取得済み,E02126,三菱重工業株式会社,"Mitsubishi Heavy Industries,Ltd.",70110,機械,3月31日,上場,有,8010401050387,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7012.T,7012,取得済み,E02127,川崎重工業株式会社,"Kawasaki Heavy Industries,Ltd.",70120,輸送用機器,3月31日,上場,有,1140001005719,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7013.T,7013,取得済み,E02128,株式会社ＩＨＩ,IHI Corporation,70130,機械,3月31日,上場,有,4010601031604,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8035.T,8035,取得済み,E02652,東京エレクトロン株式会社,Tokyo Electron Limited,80350,電気機器,3月31日,上場,有,4010401020757,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6857.T,6857,取得済み,E01950,株式会社アドバンテスト,ADVANTEST CORPORATION,68570,電気機器,3月31日,上場,有,9011601000379,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6920.T,6920,取得済み,E01991,レーザーテック株式会社,Lasertec corporation,69200,電気機器,6月30日,上場,有,1020001022180,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6146.T,6146,取得済み,E01506,株式会社ディスコ,DISCO CORPORATION,61460,機械,3月31日,上場,有,6010801007501,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6723.T,6723,取得済み,E02081,ルネサスエレクトロニクス株式会社,Renesas Electronics Corporation,67230,電気機器,12月31日,上場,有,8020001075701,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6526.T,6526,取得済み,E37978,株式会社ソシオネクスト,Socionext Inc.,65260,電気機器,3月31日,上場,有,7020001107604,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7735.T,7735,取得済み,E02288,株式会社ＳＣＲＥＥＮホールディングス,"SCREEN Holdings Co., Ltd.",77350,電気機器,3月31日,上場,有,6130001003272,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6981.T,6981,取得済み,E01914,株式会社村田製作所,,69810,電気機器,3月31日,上場,有,4130001030475,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6762.T,6762,取得済み,E01780,ＴＤＫ株式会社,TDK Corporation,67620,電気機器,3月31日,上場,有,7010001034849,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6971.T,6971,取得済み,E01182,京セラ株式会社,KYOCERA CORPORATION,69710,電気機器,3月31日,上場,有,4130001000049,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6594.T,6594,取得済み,E01975,ニデック株式会社,NIDEC CORPORATION,65940,電気機器,3月31日,上場,有,9130001002387,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6954.T,6954,取得済み,E01946,ファナック株式会社,FANUC CORPORATION,69540,電気機器,3月31日,上場,有,3090001010053,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6273.T,6273,取得済み,E01673,ＳＭＣ株式会社,SMC CORPORATION,62730,機械,3月31日,上場,有,3010001097635,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6645.T,6645,取得済み,E01755,オムロン株式会社,OMRON CORPORATION,66450,電気機器,3月31日,上場,有,1130001016824,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,5803.T,5803,取得済み,E01334,株式会社フジクラ,Fujikura Ltd.,58030,非鉄金属,3月31日,上場,有,2010601007861,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,5802.T,5802,取得済み,E01333,住友電気工業株式会社,"Sumitomo Electric Industries, Ltd.",58020,非鉄金属,3月31日,上場,有,5120001077450,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,5801.T,5801,取得済み,E01332,古河電気工業株式会社,"Furukawa Electric Co., Ltd.",58010,非鉄金属,3月31日,上場,有,5010001008796,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6701.T,6701,取得済み,E01765,日本電気株式会社,NEC Corporation,67010,電気機器,3月31日,上場,有,7010401022916,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6702.T,6702,取得済み,E01766,富士通株式会社,FUJITSU LIMITED,67020,電気機器,3月31日,上場,有,1020001071491,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6367.T,6367,取得済み,E01570,ダイキン工業株式会社,"DAIKIN INDUSTRIES, LTD.",63670,機械,3月31日,上場,有,8120001059660,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6301.T,6301,取得済み,E01532,株式会社小松製作所,KOMATSU LTD.,63010,機械,3月31日,上場,有,1010401010455,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6326.T,6326,取得済み,E01267,株式会社　クボタ,KUBOTA CORPORATION,63260,機械,12月31日,上場,有,1120001037978,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6902.T,6902,取得済み,E01892,株式会社デンソー,DENSO CORPORATION,69020,輸送用機器,3月31日,上場,有,9180301014251,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6201.T,6201,取得済み,E01514,株式会社豊田自動織機,TOYOTA INDUSTRIES CORPORATION,62010,輸送用機器,3月31日,上場,有,3180301014273,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7267.T,7267,取得済み,E02166,本田技研工業株式会社,"HONDA MOTOR CO., LTD.",72670,輸送用機器,3月31日,上場,有,6010401027577,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7269.T,7269,取得済み,E02167,スズキ株式会社,suzuki motor corporation,72690,輸送用機器,3月31日,上場,有,8080401002431,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7270.T,7270,取得済み,E02152,株式会社ＳＵＢＡＲＵ,SUBARU CORPORATION,72700,輸送用機器,3月31日,上場,有,5011101019196,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7202.T,7202,取得済み,E02143,いすゞ自動車株式会社,ISUZU MOTORS LIMITED,72020,輸送用機器,3月31日,上場,有,5010701000904,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,5108.T,5108,取得済み,E01086,株式会社ブリヂストン,BRIDGESTONE CORPORATION,51080,ゴム製品,12月31日,上場,有,3010001034943,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8001.T,8001,取得済み,E02497,伊藤忠商事株式会社,ITOCHU Corporation,80010,卸売業,3月31日,上場,有,7120001077358,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8031.T,8031,取得済み,E02513,三井物産株式会社,"MITSUI & CO., LTD.",80310,卸売業,3月31日,上場,有,1010001008767,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8058.T,8058,取得済み,E02529,三菱商事株式会社,Mitsubishi Corporation,80580,卸売業,3月31日,上場,有,5010001008771,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8053.T,8053,取得済み,E02528,住友商事株式会社,SUMITOMO CORPORATION,80530,卸売業,3月31日,上場,有,1010001008692,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8002.T,8002,取得済み,E02498,丸紅株式会社,Marubeni Corporation,80020,卸売業,3月31日,上場,有,9010001008776,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,1605.T,1605,取得済み,E00043,株式会社ＩＮＰＥＸ,INPEX CORPORATION,16050,鉱業,12月31日,上場,有,7010401078520,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,5020.T,5020,取得済み,E24050,ＥＮＥＯＳホールディングス株式会社,"ENEOS Holdings,Inc.",50200,石油・石炭製品,3月31日,上場,有,9010001131743,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,5019.T,5019,取得済み,E01084,出光興産株式会社,"Idemitsu Kosan Co.,Ltd.",50190,石油・石炭製品,3月31日,上場,有,9010001011318,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4063.T,4063,取得済み,E00776,信越化学工業株式会社,"Shin-Etsu Chemical Co., Ltd.",40630,化学,3月31日,上場,有,5010001008680,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4188.T,4188,取得済み,E00808,三菱ケミカルグループ株式会社,Mitsubishi Chemical Gloup Corporation,41880,化学,3月31日,上場,有,8010401059206,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,3402.T,3402,取得済み,E00873,東レ株式会社,"TORAY INDUSTRIES,INC.",34020,繊維製品,3月31日,上場,有,5010001034867,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,3407.T,3407,取得済み,E00877,旭化成株式会社,Asahi Kasei Corporation,34070,化学,3月31日,上場,有,5120001059606,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4005.T,4005,取得済み,E00752,住友化学株式会社,"SUMITOMO CHEMICAL COMPANY, LIMITED",40050,化学,3月31日,上場,有,2010001071327,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4519.T,4519,取得済み,E00932,中外製薬株式会社,"CHUGAI PHARMACEUTICAL CO., LTD.",45190,医薬品,12月31日,上場,有,5011501002900,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4568.T,4568,取得済み,E00984,第一三共株式会社,"DAIICHI SANKYO COMPANY, LIMITED",45680,医薬品,3月31日,上場,有,1010001095640,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4503.T,4503,取得済み,E00920,アステラス製薬株式会社,Astellas Pharma Inc.,45030,医薬品,3月31日,上場,有,5010001034966,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4502.T,4502,取得済み,E00919,武田薬品工業株式会社,Takeda Pharmaceutical Company Limited,45020,医薬品,3月31日,上場,有,2120001077461,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4523.T,4523,取得済み,E00939,エーザイ株式会社,"Eisai Co., Ltd.",45230,医薬品,3月31日,上場,有,6010001000001,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4543.T,4543,取得済み,E01630,テルモ株式会社,TERUMO CORPORATION,45430,精密機器,3月31日,上場,有,3011001015116,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,6869.T,6869,取得済み,E02015,シスメックス株式会社,SYSMEX CORPORATION,68690,電気機器,3月31日,上場,有,9140001009530,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,2802.T,2802,取得済み,E00436,味の素株式会社,"Ajinomoto Co., Inc.",28020,食料品,3月31日,上場,有,8010001034740,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,2801.T,2801,取得済み,E00435,キッコーマン株式会社,KIKKOMAN CORPORATION,28010,食料品,3月31日,上場,有,2040001071167,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,2502.T,2502,取得済み,E00394,アサヒグループホールディングス株式会社,"ASAHI GROUP HOLDINGS,LTD.",25020,食料品,12月31日,上場,有,6010601036386,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,2503.T,2503,取得済み,E00395,キリンホールディングス株式会社,"Kirin Holdings Company, Limited",25030,食料品,12月31日,上場,有,5010001034768,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4452.T,4452,取得済み,E00883,花王株式会社,Kao Corporation,44520,化学,12月31日,上場,有,4010001034760,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4911.T,4911,取得済み,E00990,株式会社資生堂,"Shiseido Company, Limited",49110,化学,12月31日,上場,有,1010001034813,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,8113.T,8113,取得済み,E00678,ユニ・チャーム株式会社,UNICHARM CORPORATION,81130,化学,12月31日,上場,有,8500001014833,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9843.T,9843,取得済み,E03144,株式会社ニトリホールディングス,"Nitori Holdings Co., Ltd.",98430,小売業,3月31日,上場,有,5430001012905,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7532.T,7532,取得済み,E03280,株式会社パン・パシフィック・インターナショナルホールディングス,Pan Pacific International Holdings Corporation,75320,小売業,6月30日,上場,有,7013201016303,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4661.T,4661,取得済み,E04707,株式会社オリエンタルランド,"ORIENTAL LAND CO.,LTD.",46610,サービス業,3月31日,上場,有,3040001029379,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,2413.T,2413,取得済み,E05425,エムスリー株式会社,"M3, Inc.",24130,サービス業,3月31日,上場,有,1010401063016,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4689.T,4689,取得済み,E05000,ＬＩＮＥヤフー株式会社,LY Corporation,46890,情報・通信業,3月31日,上場,有,4010401039979,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4755.T,4755,取得済み,E05080,楽天グループ株式会社,"Rakuten Group,Inc.",47550,サービス業,12月31日,上場,有,9010701020592,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4751.T,4751,取得済み,E05072,株式会社サイバーエージェント,"CyberAgent,Inc.",47510,サービス業,9月30日,上場,有,4011001034156,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,4385.T,4385,取得済み,E34064,株式会社メルカリ,"Mercari, Inc.",43850,情報・通信業,6月30日,上場,有,6010701027558,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,2432.T,2432,取得済み,E05460,株式会社ディー・エヌ・エー,"DeNA Co., Ltd",24320,サービス業,3月31日,上場,有,4011001032721,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,7832.T,7832,取得済み,E02481,株式会社バンダイナムコホールディングス,Bandai Namco Holdings Inc.,78320,その他製品,3月31日,上場,有,5010701022329,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9766.T,9766,取得済み,E01956,コナミグループ株式会社,KONAMI GROUP CORPORATION,97660,情報・通信業,3月31日,上場,有,9010401070789,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9697.T,9697,取得済み,E02417,株式会社カプコン,"CAPCOM CO., LTD.",96970,情報・通信業,3月31日,上場,有,3120001077023,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,3659.T,3659,取得済み,E25850,株式会社ネクソン,"NEXON Co., Ltd.",36590,情報・通信業,12月末日,上場,有,6010001081280,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,1925.T,1925,取得済み,E00048,大和ハウス工業株式会社,"DAIWA HOUSE INDUSTRY CO., LTD.",19250,建設業,3月31日,上場,有,6120001059662,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,1801.T,1801,取得済み,E00052,大成建設株式会社,taisei corporation,18010,建設業,3月31日,上場,有,4011101011880,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,1802.T,1802,取得済み,E00055,株式会社大林組,OBAYASHI  CORPORATION,18020,建設業,3月31日,上場,有,7010401088742,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,1803.T,1803,取得済み,E00053,清水建設株式会社,SHIMIZU CORPORATION,18030,建設業,3月31日,上場,有,1010401013565,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,1812.T,1812,取得済み,E00058,鹿島建設株式会社,KAJIMA  CORPORATION,18120,建設業,3月31日,上場,有,8010401006744,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9020.T,9020,取得済み,E04147,東日本旅客鉄道株式会社,East Japan Railway Company,90200,陸運業,3月31日,上場,有,9011001029597,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9022.T,9022,取得済み,E04149,東海旅客鉄道株式会社,Central Japan Railway Company,90220,陸運業,3月31日,上場,有,3180001031569,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9021.T,9021,取得済み,E04148,西日本旅客鉄道株式会社,West Japan Railway Company,90210,陸運業,3月31日,上場,有,1120001059675,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,9202.T,9202,取得済み,E04273,ＡＮＡホールディングス株式会社,ANA HOLDINGSINC.,92020,空運業,3月31日,上場,有,6010401050876,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,3092.T,3092,取得済み,E05725,株式会社ＺＯＺＯ,"ZOZO, Inc.",30920,小売業,3月末日,上場,有,4040001010503,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip

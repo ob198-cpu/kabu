@@ -1,0 +1,7 @@
+item,formula,required_data,preferred_source,current_state
+時価総額,終値 × 発行済株式数,株価、発行済株式数,株価: J-QuantsまたはYahoo chart / 株式数: EDINETまたはJ-Quants,EDINETコード照合は完了。発行済株式数のXBRL抽出は次工程。
+PER,株価 ÷ EPS,株価、1株利益（実績または会社予想）,EPS: J-Quants財務情報、EDINET、有報、決算短信,Yahoo表示値からの取得は暫定。公式数値からの自前計算へ移行対象。
+PBR,株価 ÷ BPS,株価、1株純資産,BPS: J-Quants財務情報、EDINET、有報,公式BPS取得または純資産/株式数から計算する設計。
+ROE,当期純利益 ÷ 平均自己資本,純利益、期首自己資本、期末自己資本,J-Quants財務情報、EDINET、有報XBRL,J-QuantsまたはXBRLが必要。Yahoo表示値は検算用に留める。
+売上成長率,(直近期売上 ÷ 比較期売上)^(1/年数) - 1,複数期の売上高,J-Quants財務情報、EDINET、有報XBRL、企業IR,Yahoo業績ページからの2年換算CAGRは暫定。公式データへ置換対象。
+イベント後リターン,イベント後n営業日終値 ÷ イベント前日終値 - 1,イベント日、株価時系列,TDnet/J-Quants/EDINET/SEC、株価API,一部イベントログは作成済み。長期イベント履歴は未完成。

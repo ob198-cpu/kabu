@@ -1,0 +1,12 @@
+updated_at,source,data_obtained,status,necessity,records,actual_use,limitation,source_url
+2026/05/21 17:39,EDINETコードリスト,EDINETコード、正式提出者名、業種、証券コード、決算日、法人番号,取得済み,高,11311件 / 100社照合 100件,有報・XBRL取得の入口。企業名の正式表記とEDINETコードを確定する。,財務数値そのものはまだ含まない。次工程で文書IDとXBRL取得が必要。,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip
+2026/05/21 17:39,JPX 上場銘柄一覧Excel,上場銘柄一覧Excelファイル,取得済み,中,829952 bytes,銘柄コード、上場市場、業種分類の確認。100社ユニバースの基礎名簿に使える。,PER、PBR、ROE、EPSは含まない。Excel解析処理は次工程。,https://www.jpx.co.jp/markets/statistics-equities/misc/tvdivq0000001vg2-att/data_j.xls
+2026/05/21 17:39,J-Quants API,上場銘柄一覧、株価四本値、財務情報、配当、決算発表予定日,未取得（認証情報なし）,最重要,,Yahoo表示値を置き換える本命候補。EPS/BPS/売上/利益/配当を構造化データで取得し、自前計算する。,アカウント登録とIDトークンが必要。プランにより取得範囲が変わる。,https://jpx.gitbook.io/j-quants-ja/api-reference
+2026/05/21 17:39,EDINET API v2 文書一覧,有価証券報告書、四半期報告書、臨時報告書などの文書ID,未取得（APIキー未設定）,高,,有報XBRLから発行済株式数、セグメント、地域別売上、財務値を抽出する入口。,EDINETコードリストは取得済み。文書一覧とXBRLダウンロードにはAPIキー設定が必要。,https://api.edinet-fsa.go.jp/api/v2/documents.json
+2026/05/21 17:39,SEC EDGAR NVDA,米国開示の直近提出履歴,取得済み,中,10,米国株、ADR、競合比較、AI/半導体テーマのイベント確認。,日本株の公式財務とは別枠。日本株ユニバースには直接使わない。,https://data.sec.gov/submissions/CIK0001045810.json
+2026/05/21 17:39,SEC EDGAR GOOGL,米国開示の直近提出履歴,取得済み,中,10,米国株、ADR、競合比較、AI/半導体テーマのイベント確認。,日本株の公式財務とは別枠。日本株ユニバースには直接使わない。,https://data.sec.gov/submissions/CIK0001652044.json
+2026/05/21 17:39,SEC EDGAR MSFT,米国開示の直近提出履歴,取得済み,中,10,米国株、ADR、競合比較、AI/半導体テーマのイベント確認。,日本株の公式財務とは別枠。日本株ユニバースには直接使わない。,https://data.sec.gov/submissions/CIK0000789019.json
+2026/05/21 17:39,SEC EDGAR AMZN,米国開示の直近提出履歴,取得済み,中,10,米国株、ADR、競合比較、AI/半導体テーマのイベント確認。,日本株の公式財務とは別枠。日本株ユニバースには直接使わない。,https://data.sec.gov/submissions/CIK0001018724.json
+2026/05/21 17:39,SEC EDGAR TSM,米国開示の直近提出履歴,取得済み,中,10,米国株、ADR、競合比較、AI/半導体テーマのイベント確認。,日本株の公式財務とは別枠。日本株ユニバースには直接使わない。,https://data.sec.gov/submissions/CIK0001046179.json
+2026/05/21 17:39,SEC EDGAR VRT,米国開示の直近提出履歴,取得済み,中,10,米国株、ADR、競合比較、AI/半導体テーマのイベント確認。,日本株の公式財務とは別枠。日本株ユニバースには直接使わない。,https://data.sec.gov/submissions/CIK0001674101.json
+2026/05/21 17:39,TDnet API,適時開示PDF、決算短信、XBRL関連ファイル,未取得（契約が必要）,高,,上方修正、下方修正、自社株買い、決算短信イベントを長期DB化する。,JPXの有料API。契約なしで本番データ取得とは言えない。,https://www.jpx.co.jp/markets/paid-info-listing/tdnet/02.html
