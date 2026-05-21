@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>本日の進捗報告書 2026年5月21日</title>
 <style>
-  :root{--navy:#14395b;--blue:#176b93;--ink:#172033;--muted:#5c6878;--line:#d8e3ef;--bg:#f5f8fb;--green:#0b7a4b;--orange:#a86600;--gray:#667085}
+  :root{--navy:#14395b;--blue:#176b93;--ink:#000;--muted:#000;--line:#d8e3ef;--bg:#f5f8fb;--green:#0b7a4b;--orange:#a86600;--gray:#4b5563}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.62}
   header{background:linear-gradient(135deg,#123a5a,#176b93);color:#fff;padding:30px 28px}
@@ -14,26 +14,30 @@
   p{margin:8px 0}.lead{color:#eaf7ff;max-width:980px}.meta{margin-top:10px;color:#dbeeff}
   .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
   .kpi{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;min-height:104px}
-  .kpi b{display:block;color:var(--blue);font-size:30px;line-height:1.15}.kpi span{font-size:12.5px;color:var(--muted)}
+  .kpi b{display:block;color:var(--blue);font-size:30px;line-height:1.15}.kpi span{font-size:12.5px;color:#000}
   .box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;margin:14px 0}
+  .overview-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  .overview-card{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;background:#fff;border:1px solid #cddcec;border-radius:8px;padding:14px 16px}
+  .overview-number{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-weight:900}
+  .overview-card b{display:block;color:#000;font-size:15px;margin-bottom:4px}.overview-card p{margin:0;color:#000;font-size:14px}
   .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;margin-bottom:16px}
-  table{width:100%;border-collapse:collapse;min-width:900px}th,td{border-bottom:1px solid #e8eef5;padding:9px 10px;text-align:left;vertical-align:top;font-size:12.5px;word-break:normal;overflow-wrap:anywhere}
-  th{background:#eaf2f9;color:#183b57;white-space:nowrap}tr:last-child td{border-bottom:0}
+  table{width:100%;border-collapse:collapse;min-width:900px;color:#000}th,td{border-bottom:1px solid #e8eef5;padding:9px 10px;text-align:left;vertical-align:top;font-size:12.5px;word-break:normal;overflow-wrap:anywhere;color:#000}
+  th{background:#eaf2f9;color:#000;white-space:nowrap}tr:last-child td{border-bottom:0}
   .overview{min-width:760px}.overview th:nth-child(1),.overview td:nth-child(1){width:150px;font-weight:800;color:var(--navy)}
   .progress th:nth-child(1),.progress td:nth-child(1){width:160px;font-weight:800}.progress th:nth-child(4),.progress td:nth-child(4){width:90px}
   .data th:nth-child(1),.data td:nth-child(1){width:150px}.data th:nth-child(5),.data td:nth-child(5){width:92px}
   .candidate th:nth-child(1),.candidate td:nth-child(1){width:54px;text-align:right}.candidate th:nth-child(3),.candidate td:nth-child(3){width:68px;text-align:right;font-weight:800}
   .badge{display:inline-block;border-radius:999px;padding:3px 9px;color:#fff;font-weight:800;white-space:nowrap;font-size:12px}.green{background:var(--green)}.orange{background:var(--orange)}.gray{background:var(--gray)}.blue{background:var(--blue)}
-  a{color:#155f85;font-weight:700}.note{color:var(--muted);font-size:12.5px}.decision{background:#fff7e8;border-color:#ecc17a}.decision b{color:#8a5200}.footer{color:#5c6878;font-size:12px;margin-top:24px}
+  a{color:#004b73;font-weight:700}.note{color:#000;font-size:12.5px}.decision{background:#fff7e8;border-color:#ecc17a}.decision b{color:#000}.footer{color:#000;font-size:12px;margin-top:24px}
   @media(max-width:800px){main{padding:16px}.kpis{grid-template-columns:repeat(2,1fr)}}
-  @media print{body{background:#fff}main{padding:16px;max-width:none}.box,.table-wrap,.kpi{break-inside:avoid}h2{break-after:avoid}th,td{font-size:10.5px;padding:6px}.kpi b{font-size:24px}}
+  @media print{body{background:#fff}main{padding:16px;max-width:none}.box,.table-wrap,.kpi,.overview-card{break-inside:avoid}.table-wrap{overflow:visible}table{min-width:0;table-layout:fixed}h2{break-after:avoid}th,td{font-size:10.5px;padding:6px}.kpi b{font-size:24px}}
 </style>
 </head>
 <body>
 <header>
   <h1>本日の進捗報告書</h1>
   <p class="lead">NISA 1年保有テストに向けた銘柄選定補助システムの開発状況を整理した報告です。対象日は2026年5月21日です。</p>
-  <p class="meta">作成日時: 2026/05/21 17:58</p>
+  <p class="meta">作成日時: 2026/05/21 18:06</p>
 </header>
 <main>
   <section class="kpis">
@@ -45,7 +49,7 @@
 
   <section class="box">
     <h2>1. 概要</h2>
-    <div class="table-wrap"><table class="overview"><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>本日の目的</td><td>6月のNISA 1年保有テストに向け、銘柄選定の根拠を数値化し、Yahoo表示値への依存を減らすための公式データ取得ルートを確認した。</td></tr><tr><td>本日の到達点</td><td>100社一次スクリーニング、テンバガー探索の基礎表、Yahoo以外の公式データ取得状況を作成した。</td></tr><tr><td>現在の判断</td><td>候補の比較・観察には使える段階。購入候補を確定する段階ではなく、公式IR・J-Quants・EDINET XBRLによる検算が次工程。</td></tr></tbody></table></div>
+    <div class="overview-grid"><div class="overview-card"><div class="overview-number">1</div><div><b>本日の目的</b><p>6月のNISA 1年保有テストに向け、銘柄選定の根拠を数値化し、Yahoo表示値への依存を減らすための公式データ取得ルートを確認した。</p></div></div><div class="overview-card"><div class="overview-number">2</div><div><b>本日の到達点</b><p>100社一次スクリーニング、テンバガー探索の基礎表、Yahoo以外の公式データ取得状況を作成した。</p></div></div><div class="overview-card"><div class="overview-number">3</div><div><b>現在の判断</b><p>候補の比較・観察には使える段階。購入候補を確定する段階ではなく、公式IR・J-Quants・EDINET XBRLによる検算が次工程。</p></div></div></div>
   </section>
 
   <section>
