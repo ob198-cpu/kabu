@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>本日の進捗報告書 2026年5月21日</title>
+<style>
+  :root{--navy:#14395b;--blue:#176b93;--ink:#172033;--muted:#5c6878;--line:#d8e3ef;--bg:#f5f8fb;--green:#0b7a4b;--orange:#a86600;--gray:#667085}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.62}
+  header{background:linear-gradient(135deg,#123a5a,#176b93);color:#fff;padding:30px 28px}
+  main{max-width:1180px;margin:auto;padding:24px}
+  h1{margin:0;font-size:30px;letter-spacing:0} h2{font-size:20px;margin:24px 0 10px;color:var(--navy);border-left:6px solid var(--blue);padding-left:10px}
+  p{margin:8px 0}.lead{color:#eaf7ff;max-width:980px}.meta{margin-top:10px;color:#dbeeff}
+  .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;min-height:104px}
+  .kpi b{display:block;color:var(--blue);font-size:30px;line-height:1.15}.kpi span{font-size:12.5px;color:var(--muted)}
+  .box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;margin:14px 0}
+  .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;min-width:900px}th,td{border-bottom:1px solid #e8eef5;padding:9px 10px;text-align:left;vertical-align:top;font-size:12.5px;word-break:normal;overflow-wrap:anywhere}
+  th{background:#eaf2f9;color:#183b57;white-space:nowrap}tr:last-child td{border-bottom:0}
+  .overview{min-width:760px}.overview th:nth-child(1),.overview td:nth-child(1){width:150px;font-weight:800;color:var(--navy)}
+  .progress th:nth-child(1),.progress td:nth-child(1){width:160px;font-weight:800}.progress th:nth-child(4),.progress td:nth-child(4){width:90px}
+  .data th:nth-child(1),.data td:nth-child(1){width:150px}.data th:nth-child(5),.data td:nth-child(5){width:92px}
+  .candidate th:nth-child(1),.candidate td:nth-child(1){width:54px;text-align:right}.candidate th:nth-child(3),.candidate td:nth-child(3){width:68px;text-align:right;font-weight:800}
+  .badge{display:inline-block;border-radius:999px;padding:3px 9px;color:#fff;font-weight:800;white-space:nowrap;font-size:12px}.green{background:var(--green)}.orange{background:var(--orange)}.gray{background:var(--gray)}.blue{background:var(--blue)}
+  a{color:#155f85;font-weight:700}.note{color:var(--muted);font-size:12.5px}.decision{background:#fff7e8;border-color:#ecc17a}.decision b{color:#8a5200}.footer{color:#5c6878;font-size:12px;margin-top:24px}
+  @media(max-width:800px){main{padding:16px}.kpis{grid-template-columns:repeat(2,1fr)}}
+  @media print{body{background:#fff}main{padding:16px;max-width:none}.box,.table-wrap,.kpi{break-inside:avoid}h2{break-after:avoid}th,td{font-size:10.5px;padding:6px}.kpi b{font-size:24px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>本日の進捗報告書</h1>
+  <p class="lead">NISA 1年保有テストに向けた銘柄選定補助システムの開発状況を整理した報告です。対象日は2026年5月21日です。</p>
+  <p class="meta">作成日時: 2026/05/21 17:58</p>
+</header>
+<main>
+  <section class="kpis">
+    <div class="kpi"><b>100社</b><span>一次スクリーニング母集団</span></div>
+    <div class="kpi"><b>10社</b><span>詳細確認へ進める暫定候補</span></div>
+    <div class="kpi"><b>100/100</b><span>EDINETコード照合</span></div>
+    <div class="kpi"><b>8件</b><span>取得済みソース区分</span></div>
+  </section>
+
+  <section class="box">
+    <h2>1. 概要</h2>
+    <div class="table-wrap"><table class="overview"><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>本日の目的</td><td>6月のNISA 1年保有テストに向け、銘柄選定の根拠を数値化し、Yahoo表示値への依存を減らすための公式データ取得ルートを確認した。</td></tr><tr><td>本日の到達点</td><td>100社一次スクリーニング、テンバガー探索の基礎表、Yahoo以外の公式データ取得状況を作成した。</td></tr><tr><td>現在の判断</td><td>候補の比較・観察には使える段階。購入候補を確定する段階ではなく、公式IR・J-Quants・EDINET XBRLによる検算が次工程。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>2. 本日の進捗</h2>
+    <div class="table-wrap"><table class="progress"><thead><tr><th>区分</th><th>実施内容</th><th>数値結果</th><th>状態</th></tr></thead><tbody><tr><td>100社一次スクリーニング</td><td>時流テーマ・主要大型/中堅・既存候補を混ぜた100社母集団を作成し、株価・業績・PER等を横断比較した。</td><td>1年株価 100/100、時価総額/PER/PBR/ROE 53/100、最新3期業績 52/100、一次選抜 10社</td><td><span class="badge green">完了</span></td></tr><tr><td>テンバガー探索</td><td>既存候補6社について、時価総額・発行済株式数・PER/PBR/ROE・最新3期CAGRを取得し、テンバガー候補としての適性を確認した。</td><td>時価総額/株数 6/6、最新3期CAGR 6/6。現候補は大型株中心で、テンバガー本命規模 0/6</td><td><span class="badge green">完了</span></td></tr><tr><td>公式データ代替ルート</td><td>Yahoo以外の取得元としてEDINET、JPX、SEC、J-Quants、TDnetの実用性を整理した。</td><td>EDINETコード 100/100照合、JPX上場銘柄一覧Excel取得、SEC 6社×10件取得。J-Quants/EDINET文書API/TDnetは認証・契約が必要</td><td><span class="badge orange">進行中</span></td></tr><tr><td>公式IR数値確認</td><td>三井住友FG、東京海上HD、ダイキンについて公式資料から主要数値を抽出し、スコア反映前の確認表を作成した。</td><td>3社×8項目。例: 三井住友FG 経常利益 +34.0%、東京海上HD 経常利益 -7.6%、ダイキン 営業利益 +3.3%</td><td><span class="badge orange">確認中</span></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>3. 取得データの状況</h2>
+    <div class="table-wrap"><table class="data"><thead><tr><th>データ</th><th>取得元</th><th>本日の結果</th><th>用途</th><th>状態</th></tr></thead><tbody><tr><td>株価・出来高</td><td>Yahoo Finance chart API</td><td>100社分取得</td><td>1年騰落率、60日騰落率、200日線乖離、下落耐性の一次判定</td><td><span class="badge green">取得済み</span></td></tr><tr><td>時価総額・PER・PBR・ROE</td><td>Yahoo!ファイナンス日本版</td><td>100社中53社取得</td><td>割高度、資本効率、規模の一次判定</td><td><span class="badge orange">一部取得</span></td></tr><tr><td>最新3期業績</td><td>Yahoo!ファイナンス日本版 業績ページ</td><td>100社中52社取得</td><td>売上CAGR、利益CAGR、成長点の計算</td><td><span class="badge orange">一部取得</span></td></tr><tr><td>EDINETコード</td><td>EDINETコードリスト</td><td>100社中100社照合</td><td>有価証券報告書・XBRL取得の入口</td><td><span class="badge green">取得済み</span></td></tr><tr><td>JPX上場銘柄一覧</td><td>JPX公式Excel</td><td>Excelファイル取得済み</td><td>銘柄コード、市場、業種分類の確認</td><td><span class="badge green">取得済み</span></td></tr><tr><td>SEC開示履歴</td><td>SEC EDGAR</td><td>NVDA/GOOGL/MSFT/AMZN/TSM/VRT 各10件</td><td>米国AI・半導体テーマ、競合、ADRのイベント確認</td><td><span class="badge green">取得済み</span></td></tr><tr><td>J-Quants財務・株価</td><td>J-Quants API</td><td>認証情報なしのため未取得</td><td>Yahoo表示値の置換、EPS/BPS/売上/利益/配当の構造化取得</td><td><span class="badge gray">認証待ち</span></td></tr><tr><td>TDnet長期イベント</td><td>TDnet API</td><td>有料契約が必要</td><td>上方修正、下方修正、自社株買い、決算短信イベントの長期DB化</td><td><span class="badge gray">契約待ち</span></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>4. 暫定一次選抜 上位5社</h2>
+    <p class="note">下表は購入候補の確定ではなく、公式資料で詳細確認する優先順位です。</p>
+    <div class="table-wrap"><table class="candidate"><thead><tr><th>順位</th><th>銘柄</th><th>スコア</th><th>主な根拠</th><th>注意点</th></tr></thead><tbody><tr><td>1</td><td>8766 東京海上HD</td><td>74</td><td>売上CAGR 9.3%、利益CAGR 26.5%、ROE 18.68%、1年騰落 +37.7%</td><td>購入候補確定ではなく、IRと金利感応度の確認対象</td></tr><tr><td>2</td><td>6920 レーザーテック</td><td>70</td><td>売上CAGR 28.3%、利益CAGR 40.4%、1年騰落 +171.4%</td><td>PER 47.95倍、PBR 15.28倍で過熱確認が必要</td></tr><tr><td>3</td><td>8316 三井住友FG</td><td>69</td><td>利益CAGR 25.3%、PER 13.61倍、1年騰落 +69.9%</td><td>金利イベントと銀行セクター全体の確認対象</td></tr><tr><td>4</td><td>7012 川崎重工業</td><td>69</td><td>利益CAGR 113.3%、防衛・水素テーマ、1年騰落 +54.5%</td><td>60日騰落 -16.6%、受注・利益継続性を確認</td></tr><tr><td>5</td><td>5803 フジクラ</td><td>68</td><td>売上CAGR 21.6%、利益CAGR 64.8%、1年騰落 +346.2%</td><td>60日最大下落 -45.3%、急変動リスク大</td></tr></tbody></table></div>
+  </section>
+
+  <section class="box decision">
+    <h2>5. 購入判断への影響</h2>
+    <p><b>本日の成果により、銘柄候補を広く並べて比較する段階には進みました。</b></p>
+    <p>一方で、まだ購入判断を確定する段階ではありません。特にPER・PBR・ROE・EPS・BPS・発行済株式数は、Yahoo表示値だけでなく、J-QuantsまたはEDINET XBRLを使った公式データ計算へ移す必要があります。</p>
+    <p>6月のテストに向けては、上位10社を詳細確認対象とし、公式IR・決算短信・市場イベントを通して候補を絞る方針です。</p>
+  </section>
+
+  <section>
+    <h2>6. 課題</h2>
+    <div class="table-wrap"><table class=""><thead><tr><th>課題</th><th>内容</th><th>対応</th></tr></thead><tbody><tr><td>Yahoo表示値の取得失敗</td><td>100社のうち、時価総額/PER/PBR/ROEは53社、最新3期業績は52社まで。HTTP 500が発生した銘柄がある。</td><td>J-QuantsまたはEDINET XBRLで補完する。</td></tr><tr><td>公式データの自前計算は未完了</td><td>EDINETコード照合はできたが、発行済株式数・EPS・BPS・自己資本のXBRL抽出は未実装。</td><td>APIキー確認後、XBRL取得・項目抽出を実装する。</td></tr><tr><td>一次選抜は購入判断ではない</td><td>上位10社は詳細確認対象であり、NISA購入候補の確定ではない。</td><td>公式IR、決算、イベント、6月市場環境を確認してから判断する。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>7. 次回作業</h2>
+    <div class="table-wrap"><table class=""><thead><tr><th>優先度</th><th>次の作業</th><th>目的</th></tr></thead><tbody><tr><td>1</td><td>J-Quants認証情報の準備可否を確認</td><td>PER/PBR/ROEをYahoo表示値から公式・構造化データ計算へ移すため</td></tr><tr><td>2</td><td>EDINET文書APIキーの有無を確認し、XBRL取得テストへ進む</td><td>発行済株式数、セグメント、地域別売上、財務値を公式データから取得するため</td></tr><tr><td>3</td><td>一次選抜10社の公式IR・決算短信で数値を検算</td><td>6月のNISAテスト候補を、暫定ランキングから検証済み候補へ進めるため</td></tr><tr><td>4</td><td>データ不足47社の扱いを決める</td><td>Yahoo取得失敗を理由に良い銘柄を落とさないため。公式データまたは代替APIで補完する</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>8. 関連成果物</h2>
+    <div class="table-wrap"><table class=""><thead><tr><th>名称</th><th>内容</th><th>リンク</th></tr></thead><tbody><tr><td>100社比較 暫定一次選抜</td><td>100社の株価・業績・バリュエーションを横断比較した一覧</td><td><a href="https://ob198-cpu.github.io/kabu/universe100_screening.html">HTML</a></td></tr><tr><td>Yahoo以外の公式データ取得状況</td><td>EDINET、JPX、SEC、J-Quants、TDnetの取得可否を整理</td><td><a href="https://ob198-cpu.github.io/kabu/alternative_source_intake.html">HTML</a></td></tr><tr><td>テンバガー探索 情報コーナー</td><td>テンバガー候補の見る項目、PER/PBR/ROE、除外条件を整理</td><td><a href="https://ob198-cpu.github.io/kabu/tenbagger_research_corner.html">HTML</a></td></tr><tr><td>時価総額・株数取得結果</td><td>既存候補6社の時価総額、発行済株式数、PER/PBR/ROE</td><td><a href="https://ob198-cpu.github.io/kabu/tenbagger_marketcap_intake.html">HTML</a></td></tr><tr><td>売上・利益CAGR取得結果</td><td>既存候補6社の最新3期売上・利益CAGR</td><td><a href="https://ob198-cpu.github.io/kabu/tenbagger_growth_cagr_intake.html">HTML</a></td></tr></tbody></table></div>
+  </section>
+
+  <p class="footer">本報告書は、投資判断を自動確定するものではありません。システム開発・データ取得・候補比較の進捗を記録するための資料です。</p>
+</main>
+</body>
+</html>
