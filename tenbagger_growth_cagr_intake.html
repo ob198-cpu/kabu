@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>テンバガー探索 売上・利益CAGR取得結果</title>
+<style>
+  :root{--ink:#172033;--muted:#5d6876;--line:#d7e3ee;--blue:#0b6e9e;--bg:#edf5f8;--orange:#c97700}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.7}
+  header{background:#123d5c;color:#fff;padding:30px 24px}.wrap,main{max-width:1240px;margin:auto}main{padding:18px 16px 42px}
+  h1{margin:0 0 8px;font-size:29px}h2{font-size:21px;border-left:8px solid var(--blue);padding-left:10px;margin:28px 0 12px}
+  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;box-shadow:0 5px 16px rgba(20,50,80,.05)}
+  .lead{max-width:1000px;color:#eaf6ff}.note{background:#fff8e8;border:1px solid #edc77a;border-left:8px solid var(--orange);border-radius:10px;padding:12px 14px;margin:12px 0}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.kpi{background:#f8fbfe;border:1px solid var(--line);border-radius:10px;padding:12px}.kpi b{display:block;font-size:25px;color:#0b658f}
+  .formula{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.box{background:#f8fbfe;border:1px solid var(--line);border-radius:10px;padding:12px}.box b{display:block;font-size:23px;color:#0b6e9e}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:100%}th,td{border-bottom:1px solid #e8eff6;padding:9px 10px;font-size:12px;text-align:left;vertical-align:top}th{background:#eaf2f8;color:#1d405f;font-weight:900}tr:last-child td{border-bottom:none}
+  th:nth-child(-n+12),td:nth-child(-n+12){white-space:nowrap}.small{font-size:12px;color:var(--muted)}a{color:#0b6ea8}
+  @media(max-width:900px){.kpis,.formula{grid-template-columns:1fr 1fr}h1{font-size:23px}}
+  @media print{@page{size:A4 landscape;margin:9mm}body{background:#fff}header{padding:16px 18px}main{max-width:none;padding:10px}section{box-shadow:none;break-inside:avoid}th,td{font-size:9px;padding:5px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>テンバガー探索 売上・利益CAGR取得結果</h1>
+  <p class="lead">作成日時: 2026/05/21 13:10 / 候補銘柄の業績ページから最新3期分を取得し、売上と利益の伸びを数値化しました。</p>
+</div></header>
+<main>
+  <section>
+    <h2>この資料の扱い</h2>
+    <div class="note">厳密な3年CAGRは4期分の業績が必要です。Yahoo!ファイナンス日本版で安定して取れたのは最新3期分のため、このページでは「最新3期CAGR（2年換算）」として扱います。買い判断ではなく、候補を絞るための成長確認です。</div>
+    <div class="formula">
+      <div class="box"><b>売上CAGR</b>(最新売上 ÷ 最古売上)^(1/年数)-1</div>
+      <div class="box"><b>利益CAGR</b>営業利益、金融等は経常利益で代替</div>
+      <div class="box"><b>20点</b>売上10点 + 利益10点</div>
+      <div class="box"><b>注意</b>セグメント別成長ではない</div>
+    </div>
+  </section>
+  <section>
+    <h2>取得状況</h2>
+    <div class="kpis">
+      <div class="kpi"><b>6</b>対象銘柄</div>
+      <div class="kpi"><b>6</b>業績取得</div>
+      <div class="kpi"><b>6</b>売上CAGR計算</div>
+      <div class="kpi"><b>6</b>利益CAGR計算</div>
+      <div class="kpi"><b>2</b>成長強め</div>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>item</th><th>value</th><th>status</th></tr></thead><tbody><tr><td>対象銘柄</td><td>6件</td><td>既存の時流/NISAテスト候補を対象。</td></tr><tr><td>業績ページ取得</td><td>6件</td><td>Yahoo!ファイナンス日本版の業績ページから取得。</td></tr><tr><td>売上CAGR計算</td><td>6件</td><td>最新3期分から2年換算で計算。</td></tr><tr><td>利益CAGR計算</td><td>6件</td><td>営業利益がない金融等は経常利益を使用。</td></tr><tr><td>残る不足</td><td>4期以上の長期データ / セグメント別売上 / 株数増減履歴</td><td>テンバガー探索では次工程。</td></tr></tbody></table></div>
+  </section>
+  <section>
+    <h2>銘柄別 成長スコア</h2>
+    <div class="table-wrap"><table><thead><tr><th>順位</th><th>銘柄</th><th>会社</th><th>テーマ</th><th>期間</th><th>売上CAGR</th><th>売上前年比</th><th>利益指標</th><th>利益CAGR</th><th>利益前年比</th><th>成長点</th><th>判定</th></tr></thead><tbody><tr><td>1</td><td>8316.T</td><td>三井住友FG</td><td>銀行・金利上昇</td><td>2024年3月期 → 2026年3月期</td><td>7.4%</td><td>6.1%</td><td>経常利益</td><td>25.3%</td><td>34%</td><td>16/20</td><td>安定成長</td></tr><tr><td>2</td><td>8766.T</td><td>東京海上HD</td><td>保険・運用収益</td><td>2024年3月期 → 2026年3月期</td><td>9.3%</td><td>5.1%</td><td>経常利益</td><td>26.5%</td><td>-7.6%</td><td>16/20</td><td>安定成長</td></tr><tr><td>3</td><td>6503.T</td><td>三菱電機</td><td>電力制御・FA・データセンター周辺</td><td>2024年3月期 → 2026年3月期</td><td>5.9%</td><td>6.8%</td><td>営業利益</td><td>14.8%</td><td>10.5%</td><td>12/20</td><td>安定成長</td></tr><tr><td>4</td><td>6367.T</td><td>ダイキン</td><td>空調・冷却</td><td>2024年3月期 → 2026年3月期</td><td>6.8%</td><td>5.5%</td><td>営業利益</td><td>2.9%</td><td>3.3%</td><td>9/20</td><td>確認継続</td></tr><tr><td>5</td><td>9433.T</td><td>KDDI</td><td>通信・防災/復旧</td><td>2024年3月期 → 2026年3月期</td><td>3.2%</td><td>4.1%</td><td>営業利益</td><td>9.8%</td><td>1.1%</td><td>9/20</td><td>確認継続</td></tr><tr><td>6</td><td>8031.T</td><td>三井物産</td><td>商社・資源</td><td>2024年3月期 → 2026年3月期</td><td>2.5%</td><td>-4.6%</td><td>経常利益</td><td>-8.6%</td><td>-4.2%</td><td>3/20</td><td>利益鈍化に注意</td></tr></tbody></table></div>
+  </section>
+  <section>
+    <h2>保存CSV</h2>
+    <div class="table-wrap"><table><thead><tr><th>rank</th><th>updated_at</th><th>ticker</th><th>company</th><th>role</th><th>actual_period_count</th><th>latest_period</th><th>oldest_period_used</th><th>cagr_interval_years</th><th>latest_revenue_million_jpy</th><th>oldest_revenue_million_jpy</th><th>revenue_yoy_pct</th><th>revenue_cagr_3period_pct</th><th>profit_metric_used</th><th>latest_profit_million_jpy</th><th>oldest_profit_million_jpy</th><th>profit_yoy_pct</th><th>profit_cagr_3period_pct</th><th>growth_score_20</th><th>growth_judgment</th><th>source_status</th><th>source_url</th><th>limitation</th></tr></thead><tbody><tr><td>1</td><td>2026/05/21 13:10</td><td>8316.T</td><td>三井住友FG</td><td>銀行・金利上昇</td><td>3</td><td>2026年3月期</td><td>2024年3月期</td><td>2</td><td>10790853</td><td>9353590</td><td>6.1</td><td>7.4</td><td>経常利益</td><td>2303350</td><td>1466128</td><td>34</td><td>25.3</td><td>16</td><td>安定成長</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8316.T/performance">開く</a></td><td>Yahoo!ファイナンス表示上は最新3期分。厳密な3年CAGRには4期分が必要なため、ここでは最新3期CAGR（2年換算）として扱う。</td></tr><tr><td>2</td><td>2026/05/21 13:10</td><td>8766.T</td><td>東京海上HD</td><td>保険・運用収益</td><td>3</td><td>2026年3月期</td><td>2024年3月期</td><td>2</td><td>8872277</td><td>7424667</td><td>5.1</td><td>9.3</td><td>経常利益</td><td>1348630</td><td>842576</td><td>-7.6</td><td>26.5</td><td>16</td><td>安定成長</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8766.T/performance">開く</a></td><td>Yahoo!ファイナンス表示上は最新3期分。厳密な3年CAGRには4期分が必要なため、ここでは最新3期CAGR（2年換算）として扱う。</td></tr><tr><td>3</td><td>2026/05/21 13:10</td><td>6503.T</td><td>三菱電機</td><td>電力制御・FA・データセンター周辺</td><td>3</td><td>2026年3月期</td><td>2024年3月期</td><td>2</td><td>5894747</td><td>5257914</td><td>6.8</td><td>5.9</td><td>営業利益</td><td>433095</td><td>328525</td><td>10.5</td><td>14.8</td><td>12</td><td>安定成長</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6503.T/performance">開く</a></td><td>Yahoo!ファイナンス表示上は最新3期分。厳密な3年CAGRには4期分が必要なため、ここでは最新3期CAGR（2年換算）として扱う。</td></tr><tr><td>4</td><td>2026/05/21 13:10</td><td>6367.T</td><td>ダイキン</td><td>空調・冷却</td><td>3</td><td>2026年3月期</td><td>2024年3月期</td><td>2</td><td>5015036</td><td>4395317</td><td>5.5</td><td>6.8</td><td>営業利益</td><td>414991</td><td>392137</td><td>3.3</td><td>2.9</td><td>9</td><td>確認継続</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/6367.T/performance">開く</a></td><td>Yahoo!ファイナンス表示上は最新3期分。厳密な3年CAGRには4期分が必要なため、ここでは最新3期CAGR（2年換算）として扱う。</td></tr><tr><td>5</td><td>2026/05/21 13:10</td><td>9433.T</td><td>KDDI</td><td>通信・防災/復旧</td><td>3</td><td>2026年3月期</td><td>2024年3月期</td><td>2</td><td>6071915</td><td>5699724</td><td>4.1</td><td>3.2</td><td>営業利益</td><td>1099125</td><td>912031</td><td>1.1</td><td>9.8</td><td>9</td><td>確認継続</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/9433.T/performance">開く</a></td><td>Yahoo!ファイナンス表示上は最新3期分。厳密な3年CAGRには4期分が必要なため、ここでは最新3期CAGR（2年換算）として扱う。</td></tr><tr><td>6</td><td>2026/05/21 13:10</td><td>8031.T</td><td>三井物産</td><td>商社・資源</td><td>3</td><td>2026年3月期</td><td>2024年3月期</td><td>2</td><td>13995222</td><td>13324942</td><td>-4.6</td><td>2.5</td><td>経常利益</td><td>1087056</td><td>1302393</td><td>-4.2</td><td>-8.6</td><td>3</td><td>利益鈍化に注意</td><td>取得</td><td><a href="https://finance.yahoo.co.jp/quote/8031.T/performance">開く</a></td><td>Yahoo!ファイナンス表示上は最新3期分。厳密な3年CAGRには4期分が必要なため、ここでは最新3期CAGR（2年換算）として扱う。</td></tr></tbody></table></div>
+  </section>
+</main>
+</body>
+</html>
