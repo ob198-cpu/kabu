@@ -11,6 +11,7 @@ a{color:inherit}.layout{display:grid;grid-template-columns:240px minmax(0,1fr);m
 main{max-width:1240px;margin:0 auto;padding:28px;width:100%}.hero{background:var(--navy);color:#fff;border-radius:18px;padding:26px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:18px;align-items:center}.hero h1{font-size:clamp(28px,4vw,42px);line-height:1.15;margin:0 0 12px}.hero p{margin:0;color:#dceeff}.hero-card{background:#fff;color:var(--ink);border-radius:14px;padding:14px;display:grid;gap:10px}.kpi{border:1px solid #dce9f6;background:#f7fbff;border-radius:10px;padding:10px;display:grid;grid-template-columns:74px 1fr;gap:8px;align-items:center}.kpi b{font-size:24px;color:var(--blue)}.kpi span{font-size:12px;color:var(--muted)}
 section{margin:24px 0}.head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}h2{margin:0;color:var(--navy);font-size:24px}.head p{margin:4px 0 0;color:var(--muted);font-size:13px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}.formula{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.formula-main{background:var(--mint);border:1px solid #bee6d1;border-radius:12px;padding:16px}.formula-main b{font-size:20px;color:var(--green)}.formula-side{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;min-height:136px}.step:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:45%;color:var(--blue);font-weight:900}.step b{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;background:var(--blue);color:#fff;border-radius:50%;margin-bottom:8px}.step h3{margin:0 0 6px;font-size:15px;color:var(--navy)}.step p{margin:0;font-size:12px;color:var(--muted)}
 table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);margin:8px 0 18px}th,td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top;font-size:12px;word-break:normal;overflow-wrap:break-word}th{background:#edf2f7;font-weight:800}.score-table th:nth-child(2),.score-table td:nth-child(2){width:70px;text-align:right;white-space:nowrap}.data-table th:nth-child(5),.data-table td:nth-child(5){width:76px;white-space:nowrap;font-weight:800}.warn-table th:nth-child(1),.warn-table td:nth-child(1){width:120px;color:var(--red);font-weight:800}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}.card b{color:var(--navy)}.card p{margin:6px 0 0;color:var(--muted);font-size:13px}.links{display:flex;flex-wrap:wrap;gap:10px}.button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#fff;border:1px solid #9cc8ec;color:var(--navy);font-weight:800;border-radius:10px;min-height:38px;padding:8px 12px;font-size:13px}
+.valuation-table th:nth-child(1),.valuation-table td:nth-child(1){width:90px;font-weight:900;color:var(--navy)}
 @media(max-width:900px){.layout{display:block}.side{position:static;height:auto}.hero{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.step:not(:last-child)::after{content:"↓";right:50%;top:auto;bottom:-18px}.cards{grid-template-columns:1fr}.formula{grid-template-columns:1fr}main{padding:18px}}
 @media print{.layout{display:block}.side{display:none}main{max-width:none;padding:14px}.hero{background:#fff;color:var(--ink);border:1px solid var(--line)}.hero p{color:var(--muted)}th,td{font-size:10px;padding:6px}.step{min-height:auto}.step:not(:last-child)::after{display:none}}
 </style>
@@ -23,6 +24,7 @@ table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(-
     <a href="index.html">トップへ戻る</a>
     <a href="#purpose">目的</a>
     <a href="#formula">スコア式</a>
+    <a href="#valuation">PER/PBR/ROE</a>
     <a href="#workflow">探し方</a>
     <a href="#data">必要データ</a>
     <a href="#risk">除外条件</a>
@@ -38,7 +40,7 @@ table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(-
     </div>
     <div class="hero-card">
       <div class="kpi"><b>100</b><span>テンバガー候補スコアの満点</span></div>
-      <div class="kpi"><b>7</b><span>見る領域: 成長、時流、質、上値余地、株価、財務、材料</span></div>
+      <div class="kpi"><b>8</b><span>見る領域: 成長、時流、質、PER/PBR/ROE、上値余地、株価、財務、材料</span></div>
       <div class="kpi"><b>0</b><span>現時点では購入候補確定銘柄はなし</span></div>
     </div>
   </section>
@@ -47,36 +49,41 @@ table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(-
     <div class="head"><div><h2>1. スコア式</h2><p>候補銘柄を同じものさしで比較するための配点です。</p></div></div>
     <div class="formula">
       <div class="formula-main">
-        <b>TenbaggerScore = G + T + Q + V + M + F + E - RiskPenalty</b>
-        <p>G:売上成長、T:市場拡大、Q:事業の質、V:時価総額と上値余地、M:株価/出来高、F:財務生存力、E:材料・イベント。リスクが強い場合は減点します。</p>
+        <b>TenbaggerScore = G + T + Q + B + V + M + F + E - RiskPenalty</b>
+        <p>G:売上成長、T:市場拡大、Q:事業の質、B:PER/PBR/ROE、V:時価総額と上値余地、M:株価/出来高、F:財務生存力、E:材料・イベント。リスクが強い場合は減点します。</p>
       </div>
       <div class="formula-side">
         <b>判定目安</b>
-        <p>80点以上: 詳細調査候補。70〜79点: 観察候補。60〜69点: 数値不足なら保留。59点以下: 原則見送り。</p>
+        <p>80点以上: 詳細調査候補。70〜79点: 観察候補。60〜69点: 数値不足なら保留。59点以下: 原則見送り。PERが高いだけでは除外せず、成長率とROEで説明できるかを見ます。</p>
       </div>
     </div>
-    <table class="score-table"><thead><tr><th>項目</th><th>満点</th><th>加点ルール</th><th>主なデータ</th></tr></thead><tbody><tr><td>売上成長</td><td>25点</td><td>3年CAGRまたは直近前年比が高いほど加点。20%以上を強い候補、10%未満は低評価。</td><td>決算短信、IR資料、EDINET有報、Yahoo Finance等</td></tr><tr><td>市場拡大・時流</td><td>15点</td><td>AI、電力、半導体材料、防災、医療、省人化など、需要増の説明と業界統計がある場合に加点。</td><td>経産省統計、業界団体、会社説明資料、政策資料</td></tr><tr><td>利益率・事業の質</td><td>15点</td><td>営業利益率、粗利率、ROE、継続的な黒字化を確認。赤字でも赤字縮小なら一部加点。</td><td>決算短信、説明資料、有報</td></tr><tr><td>時価総額と上値余地</td><td>15点</td><td>大型株より中小型株を優先。ただし流動性が低すぎる銘柄は減点。</td><td>Yahoo Finance、JPX、証券会社画面</td></tr><tr><td>株価・出来高の変化</td><td>10点</td><td>52週レンジ、200日線、出来高増加を確認。急騰直後や出来高不足は減点。</td><td>Yahoo Finance chart API</td></tr><tr><td>財務生存力</td><td>10点</td><td>自己資本比率、営業CF、現金、借入負担を見る。増資依存や債務過多は減点。</td><td>決算短信、有報、IR資料</td></tr><tr><td>材料・イベント</td><td>10点</td><td>新製品、上方修正、提携、国策、増配、自社株買いなど。TDnet/IRで確認できるものだけ加点。</td><td>TDnet、企業IR、EDINET、公式発表</td></tr></tbody></table>
+    <table class="score-table"><thead><tr><th>項目</th><th>満点</th><th>加点ルール</th><th>主なデータ</th></tr></thead><tbody><tr><td>売上成長</td><td>20点</td><td>3年CAGRまたは直近前年比が高いほど加点。20%以上を強い候補、10%未満は低評価。</td><td>決算短信、IR資料、EDINET有報、Yahoo Finance等</td></tr><tr><td>市場拡大・時流</td><td>15点</td><td>AI、電力、半導体材料、防災、医療、省人化など、需要増の説明と業界統計がある場合に加点。</td><td>経産省統計、業界団体、会社説明資料、政策資料</td></tr><tr><td>利益率・事業の質</td><td>15点</td><td>営業利益率、粗利率、ROE、継続的な黒字化を確認。赤字でも赤字縮小なら一部加点。</td><td>決算短信、説明資料、有報</td></tr><tr><td>時価総額と上値余地</td><td>10点</td><td>大型株より中小型株を優先。ただし流動性が低すぎる銘柄は減点。</td><td>Yahoo Finance、JPX、証券会社画面</td></tr><tr><td>PER/PBR/ROE</td><td>15点</td><td>PERは成長率と比較して過熱を確認。PBRは資産型企業で重視。ROEは高いほど資本効率を評価。ただし赤字企業ではPERが使えないため売上成長と黒字化時期を優先。</td><td>Yahoo Finance、決算短信、有報、証券会社画面</td></tr><tr><td>株価・出来高の変化</td><td>10点</td><td>52週レンジ、200日線、出来高増加を確認。急騰直後や出来高不足は減点。</td><td>Yahoo Finance chart API</td></tr><tr><td>財務生存力</td><td>10点</td><td>自己資本比率、営業CF、現金、借入負担を見る。増資依存や債務過多は減点。</td><td>決算短信、有報、IR資料</td></tr><tr><td>材料・イベント</td><td>5点</td><td>新製品、上方修正、提携、国策、増配、自社株買いなど。TDnet/IRで確認できるものだけ加点。</td><td>TDnet、企業IR、EDINET、公式発表</td></tr></tbody></table>
+  </section>
+
+  <section id="valuation">
+    <div class="head"><div><h2>2. PER/PBR/ROEの見方</h2><p>テンバガー探索では、割安かどうかだけでなく、成長を正当化できるかを見ます。</p></div></div>
+    <table class="valuation-table"><thead><tr><th>指標</th><th>通常の意味</th><th>テンバガー探索での使い方</th><th>注意点</th></tr></thead><tbody><tr><td>PER</td><td>利益に対して株価が高すぎないかを見る</td><td>低PERだから良いとは限らない。高PERでも売上・利益成長が続くなら許容。ただし成長鈍化時の下落は大きい。</td><td>赤字企業ではPERが出ない。黒字化時期、営業損益の改善、資金繰りを別に見る。</td></tr><tr><td>PBR</td><td>純資産に対して株価が高いかを見る</td><td>製造業・金融・資産型企業では有効。ソフトウェアや知財型企業ではPBRが高くても成長で説明できる場合がある。</td><td>PBRだけで割高判断しない。ROEと利益率をセットで見る。</td></tr><tr><td>ROE</td><td>株主資本を使ってどれだけ利益を出しているかを見る</td><td>高ROEで成長している企業は評価しやすい。ROEが低いまま売上だけ伸びる企業は利益化を確認する。</td><td>自己資本が薄すぎてROEが高く見える場合があるため、自己資本比率も確認する。</td></tr><tr><td>PEG目安</td><td>PERを成長率で割って、割高さが成長で説明できるかを見る</td><td>PER 40倍でも利益成長40%なら説明余地あり。PER 40倍で成長10%なら過熱寄り。</td><td>EPS予想やコンセンサスが必要なため、初期MVPでは参考扱い。</td></tr></tbody></table>
   </section>
 
   <section id="workflow">
-    <div class="head"><div><h2>2. 探し方</h2><p>最初から1銘柄を当てにいかず、母集団を作って落としていきます。</p></div></div>
+    <div class="head"><div><h2>3. 探し方</h2><p>最初から1銘柄を当てにいかず、母集団を作って落としていきます。</p></div></div>
     <div class="flow">
       <div class="step"><b>1</b><h3>テーマを出す</h3><p>AI電力、防災、省人化、医療、半導体材料など、需要増が説明できる分野を並べる。</p></div><div class="step"><b>2</b><h3>銘柄母集団を作る</h3><p>中小型株を中心に、同じテーマで10〜30銘柄を集める。</p></div><div class="step"><b>3</b><h3>数値を入れる</h3><p>時価総額、売上成長、営業利益率、CF、希薄化、出来高を表に入れる。</p></div><div class="step"><b>4</b><h3>除外する</h3><p>赤字拡大、増資依存、流動性不足、テーマだけの銘柄を落とす。</p></div><div class="step"><b>5</b><h3>観察候補にする</h3><p>決算、TDnet材料、株価反応を記録し、候補の精度を上げる。</p></div>
     </div>
   </section>
 
   <section id="data">
-    <div class="head"><div><h2>3. 必要データ</h2><p>既存MVPで使えるものと、今後つなぐものを分けています。</p></div></div>
-    <table class="data-table"><thead><tr><th>データ</th><th>目的</th><th>取得元</th><th>現状</th><th>重要度</th></tr></thead><tbody><tr><td>時価総額</td><td>10倍余地があるサイズか確認</td><td>Yahoo Finance、JPX、証券会社画面</td><td>取得ルートあり。自動表への常時反映は未実装</td><td>高</td></tr><tr><td>売上3年CAGR・直近前年比</td><td>本当に成長しているか確認</td><td>決算短信、IR、EDINET</td><td>公式PDFから主要値取得を開始済み。複数年自動取得は未完成</td><td>最重要</td></tr><tr><td>営業利益率・営業利益成長</td><td>売上だけでなく利益が伸びる事業か確認</td><td>決算短信、説明資料、有報</td><td>公式PDFレビュー表で一部取得済み。テンバガー用の横断表は未接続</td><td>最重要</td></tr><tr><td>営業CF・現金・借入</td><td>成長前に資金切れしないか確認</td><td>決算短信、有報</td><td>一部取得済み。業種別の解釈ルールが必要</td><td>高</td></tr><tr><td>発行株式数・希薄化</td><td>増資で株主価値が薄まっていないか確認</td><td>有報、決算短信、TDnet</td><td>未接続。EDINET/XBRLで取得候補</td><td>高</td></tr><tr><td>株価1年・出来高</td><td>急騰直後、下落中、流動性不足を避ける</td><td>Yahoo Finance chart API</td><td>取得済み。既存の時流候補価格判定で使用中</td><td>最重要</td></tr><tr><td>TDnet材料分類</td><td>上方修正、提携、増配、自社株買い等の材料を拾う</td><td>TDnet</td><td>直近イベントの分類は開始済み。本文確認と長期履歴は未完成</td><td>高</td></tr><tr><td>業界需要データ</td><td>テーマだけでなく需要増が実際に起きているか検証</td><td>経産省、業界団体、電力統計、貿易統計等</td><td>一部取得済み。テンバガー候補への対応付けは未完成</td><td>中</td></tr></tbody></table>
+    <div class="head"><div><h2>4. 必要データ</h2><p>既存MVPで使えるものと、今後つなぐものを分けています。</p></div></div>
+    <table class="data-table"><thead><tr><th>データ</th><th>目的</th><th>取得元</th><th>現状</th><th>重要度</th></tr></thead><tbody><tr><td>時価総額</td><td>10倍余地があるサイズか確認</td><td>Yahoo Finance、JPX、証券会社画面</td><td>取得ルートあり。自動表への常時反映は未実装</td><td>高</td></tr><tr><td>売上3年CAGR・直近前年比</td><td>本当に成長しているか確認</td><td>決算短信、IR、EDINET</td><td>公式PDFから主要値取得を開始済み。複数年自動取得は未完成</td><td>最重要</td></tr><tr><td>営業利益率・営業利益成長</td><td>売上だけでなく利益が伸びる事業か確認</td><td>決算短信、説明資料、有報</td><td>公式PDFレビュー表で一部取得済み。テンバガー用の横断表は未接続</td><td>最重要</td></tr><tr><td>PER/PBR/ROE</td><td>割高すぎないか、資本効率が高いかを確認</td><td>Yahoo Finance、決算短信、有報、証券会社画面</td><td>一部取得済み。テンバガー探索では成長率とセットで判定する必要あり</td><td>高</td></tr><tr><td>PEG目安</td><td>PERが高くても成長率で正当化できるか確認</td><td>PER + EPS成長率または営業利益成長率</td><td>未実装。PERと成長率の接続で算出可能</td><td>中</td></tr><tr><td>営業CF・現金・借入</td><td>成長前に資金切れしないか確認</td><td>決算短信、有報</td><td>一部取得済み。業種別の解釈ルールが必要</td><td>高</td></tr><tr><td>発行株式数・希薄化</td><td>増資で株主価値が薄まっていないか確認</td><td>有報、決算短信、TDnet</td><td>未接続。EDINET/XBRLで取得候補</td><td>高</td></tr><tr><td>株価1年・出来高</td><td>急騰直後、下落中、流動性不足を避ける</td><td>Yahoo Finance chart API</td><td>取得済み。既存の時流候補価格判定で使用中</td><td>最重要</td></tr><tr><td>TDnet材料分類</td><td>上方修正、提携、増配、自社株買い等の材料を拾う</td><td>TDnet</td><td>直近イベントの分類は開始済み。本文確認と長期履歴は未完成</td><td>高</td></tr><tr><td>業界需要データ</td><td>テーマだけでなく需要増が実際に起きているか検証</td><td>経産省、業界団体、電力統計、貿易統計等</td><td>一部取得済み。テンバガー候補への対応付けは未完成</td><td>中</td></tr></tbody></table>
   </section>
 
   <section id="risk">
-    <div class="head"><div><h2>4. 除外条件</h2><p>テンバガー探索はリスクが大きいため、先に落とす条件を決めます。</p></div></div>
-    <table class="warn-table"><thead><tr><th>リスク</th><th>見るポイント</th><th>対応</th></tr></thead><tbody><tr><td>赤字拡大</td><td>売上は伸びても営業損失が拡大していないか</td><td>原則減点。黒字化計画の根拠がなければ候補から外す</td></tr><tr><td>増資・希薄化</td><td>発行株式数が増え続けていないか</td><td>3年で10%以上増えていれば注意。資金使途を確認</td></tr><tr><td>テーマだけ</td><td>AI・防衛・電力などの言葉だけで売上に反映していない状態</td><td>売上・受注・契約数の数字が出るまで加点しない</td></tr><tr><td>急騰直後</td><td>短期で+50%以上、52週高値付近、出来高急増後</td><td>即買いではなく、決算通過または押し目確認</td></tr><tr><td>流動性不足</td><td>出来高が少なく、売りたい時に売れない可能性</td><td>NISA本体ではなく観察枠。実売買前に板を確認</td></tr><tr><td>大株主売り</td><td>VC、創業者、親会社の売出し可能性</td><td>大量保有報告書、売出し、ロックアップを確認</td></tr></tbody></table>
+    <div class="head"><div><h2>5. 除外条件</h2><p>テンバガー探索はリスクが大きいため、先に落とす条件を決めます。</p></div></div>
+    <table class="warn-table"><thead><tr><th>リスク</th><th>見るポイント</th><th>対応</th></tr></thead><tbody><tr><td>赤字拡大</td><td>売上は伸びても営業損失が拡大していないか</td><td>原則減点。黒字化計画の根拠がなければ候補から外す</td></tr><tr><td>増資・希薄化</td><td>発行株式数が増え続けていないか</td><td>3年で10%以上増えていれば注意。資金使途を確認</td></tr><tr><td>テーマだけ</td><td>AI・防衛・電力などの言葉だけで売上に反映していない状態</td><td>売上・受注・契約数の数字が出るまで加点しない</td></tr><tr><td>急騰直後</td><td>短期で+50%以上、52週高値付近、出来高急増後</td><td>即買いではなく、決算通過または押し目確認</td></tr><tr><td>PER過熱</td><td>PERが高く、利益成長率や黒字化計画で説明できない状態</td><td>PER単独では除外しないが、成長率で説明できなければ減点</td></tr><tr><td>ROE低迷</td><td>利益率が低く、ROEが改善していない状態</td><td>売上成長だけでは加点しない。利益率改善を確認</td></tr><tr><td>流動性不足</td><td>出来高が少なく、売りたい時に売れない可能性</td><td>NISA本体ではなく観察枠。実売買前に板を確認</td></tr><tr><td>大株主売り</td><td>VC、創業者、親会社の売出し可能性</td><td>大量保有報告書、売出し、ロックアップを確認</td></tr></tbody></table>
   </section>
 
   <section id="operation">
-    <div class="head"><div><h2>5. 運用方法</h2><p>毎週同じ手順で候補を更新します。</p></div></div>
+    <div class="head"><div><h2>6. 運用方法</h2><p>毎週同じ手順で候補を更新します。</p></div></div>
     <div class="cards">
       <div class="card"><b>月曜: 価格と出来高</b><p>1年株価、52週位置、出来高倍率、急騰/急落を確認します。</p></div>
       <div class="card"><b>水曜: 公式資料</b><p>決算短信、説明資料、TDnet材料を確認し、売上成長と利益率を更新します。</p></div>
@@ -90,6 +97,7 @@ table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(-
         <a class="button" href="188_tenbagger_data_requirements.csv">必要データCSV</a>
         <a class="button" href="189_tenbagger_watchlist_template.csv">候補記録テンプレートCSV</a>
         <a class="button" href="190_tenbagger_warning_rules.csv">除外条件CSV</a>
+        <a class="button" href="191_tenbagger_valuation_rules.csv">PER/PBR/ROE CSV</a>
       </div>
     </div>
   </section>
