@@ -1,0 +1,4 @@
+﻿updated_at,ticker,company,source_count,downloaded_sources,metric_candidate_rows,confirmed_rows,score_reflection,next_action
+2026/05/21 10:28,6367.T,ダイキン,2,2,8,0,未反映,候補値を原文照合して正式入力する
+2026/05/21 10:28,8316.T,三井住友FG,2,2,8,0,未反映,候補値を原文照合して正式入力する
+2026/05/21 10:28,8766.T,東京海上HD,2,2,8,0,未反映,候補値を原文照合して正式入力する

@@ -1,0 +1,7 @@
+﻿updated_at,ticker,company,source_type,source_name,download_status,http_status,bytes,pages,text_chars,extract_status,file_name,url
+2026/05/21 10:28,8316.T,三井住友FG,決算短信,2026年3月期 決算短信,取得済み,200,885722,19,20476,本文抽出済み,data\official_ir_pdfs\8316_T_1_決算短信.pdf,https://www.smfg.co.jp/investor/financial/latest_statement/2026_3/2026_fy_01.pdf
+2026/05/21 10:28,8316.T,三井住友FG,決算説明資料,2026年3月期 決算説明資料,取得済み,200,5853017,83,49028,本文抽出済み,data\official_ir_pdfs\8316_T_2_決算説明資料.pdf,https://www.smfg.co.jp/investor/financial/latest_statement/2026_3/2026_fy_setumei.pdf
+2026/05/21 10:28,8766.T,東京海上HD,決算短信,2025年度期末 決算短信,取得済み,200,383863,23,25871,本文抽出済み,data\official_ir_pdfs\8766_T_3_決算短信.pdf,https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a8000000246z-att/4Q_FY2025_Summary_Report_j.pdf
+2026/05/21 10:28,8766.T,東京海上HD,決算説明資料,2025年度期末 決算概要資料,取得済み,200,2715035,56,39635,本文抽出済み,data\official_ir_pdfs\8766_T_4_決算説明資料.pdf,https://www.tokiomarinehd.com/ir/event/presentation/2025/gi58a8000000246z-att/Tokio_Marine_2025Q4_Results_Presentation_j.pdf
+2026/05/21 10:28,6367.T,ダイキン,決算短信,2026年3月期 決算短信,取得済み,200,807067,24,25702,本文抽出済み,data\official_ir_pdfs\6367_T_5_決算短信.pdf,https://www.daikin.co.jp/-/media/Project/Daikin/daikin_co_jp/investor/data/kessan/2026/4Q_brief_report_jp-pdf.pdf
+2026/05/21 10:28,6367.T,ダイキン,決算説明資料,2026年3月期 決算説明資料,取得済み,200,1238507,26,14913,本文抽出済み,data\official_ir_pdfs\6367_T_6_決算説明資料.pdf,https://www.daikin.co.jp/-/media/Project/Daikin/daikin_co_jp/investor/data/kessan/2026/4Q_financial_results_jp-pdf.pdf
