@@ -1,0 +1,4 @@
+rank,updated_at,ticker,company,theme,latest_price_date,close,price_component_35,valuation_component_20,official_quality_component_25,shareholder_return_component_10,data_confirm_component_10,official_reflected_score_100,decision,caution,main_reason,source_note
+1,2026/05/21 11:19,8316.T,三井住友FG,銀行・金利上昇,2026-05-20,5872,35,13,21.5,5,10,84.5,6月テスト候補,なし,前年比+6.1%でプラス / 前年比+34%で強い / 会社予想+7.4%で堅調,価格: Yahoo Finance chart API、参考指標: Yahoo!ファイナンス、財務: 公式IR PDF
+2,2026/05/21 11:19,6367.T,ダイキン,空調・冷却,2026-05-20,23475,30.8,10,18,5.5,10,74.3,監視継続,出来高弱い,前年比+5.5%でプラス / 前年比+3.3%でプラス / 会社予想+2.7%でプラス,価格: Yahoo Finance chart API、参考指標: Yahoo!ファイナンス、財務: 公式IR PDF
+3,2026/05/21 11:19,8766.T,東京海上HD,保険・運用収益,2026-05-20,7847,32.2,10,11.5,9,10,72.7,確認継続,なし,前年比+5.1%でプラス / 前年比-7.6%で減少 / 会社予想+56.2%で強い,価格: Yahoo Finance chart API、参考指標: Yahoo!ファイナンス、財務: 公式IR PDF
