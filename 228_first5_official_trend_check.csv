@@ -1,0 +1,6 @@
+﻿ticker,company,latest_period,previous_period,latest_sales_yoy_pct,previous_sales_yoy_pct,sales_yoy_change_pt,latest_profit_metric,latest_profit_yoy_pct,previous_profit_yoy_pct,profit_yoy_change_pt,latest_eps_yoy_calc_pct,previous_eps_yoy_calc_pct,eps_yoy_change_pt,current_read,action_for_next_step
+6857.T,アドバンテスト,2026年3月期,2026年3月期3Q,44.7,46.3,-1.6,営業利益,118.8,110.8,8,135.6,107.4,28.2,継続確認,次に株価反応・PER・出来高を接続してスコア化
+5801.T,古河電工,2026年3月期,2026年3月期3Q,8.8,7.6,1.2,営業利益,35.8,11.9,23.9,117.6,117.2,0.4,改善が見える,次に株価反応・PER・出来高を接続してスコア化
+6920.T,レーザーテック,2026年6月期3Q,2026年6月期中間期,0.4,-0.6,1,営業利益,-1.4,-1.1,-0.3,8.3,5.9,2.4,減速に注意,次に株価反応・PER・出来高を接続してスコア化
+5803.T,フジクラ,2026年3月期,2026年3月期3Q,20.7,20.2,0.5,営業利益,39.2,47.7,-8.5,72.4,89.4,-17,成長継続・利益率は確認,次に株価反応・PER・出来高を接続してスコア化
+9984.T,ソフトバンクG,2026年3月期,2026年3月期3Q,7.7,7.9,-0.2,税引前利益,259.9,228,31.9,347.5,418.8,-71.3,別枠で確認,投資損益と事業利益を分ける補正ルールを作る

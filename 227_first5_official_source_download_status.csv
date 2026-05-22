@@ -1,0 +1,11 @@
+﻿updated_at,ticker,company,period,source_kind,local_file,pdf_download_status,local_text_status,verified_status,pipeline_issue,source_url
+2026/05/22 15:07,6857.T,アドバンテスト,2026年3月期,公式PDF,6857_FY2025_FN.pdf,取得済み,抽出不可,公式PDF確認済,MVP本体では暗号化PDF対応または別抽出方式が必要,https://www.advantest.com/document/ja/investors/ir-library/result/J_FR_FY2025_FN.pdf
+2026/05/22 15:07,6857.T,アドバンテスト,2026年3月期3Q,公式PDF,6857_FY2025_3Q.pdf,取得済み,抽出不可,公式PDF確認済,MVP本体では暗号化PDF対応または別抽出方式が必要,https://www.advantest.com/document/ja/investors/ir-library/result/J_FR_FY2025_3Q.pdf
+2026/05/22 15:07,5801.T,古河電工,2026年3月期,公式PDF,5801_FY2026_FULL.pdf,取得済み,抽出成功,公式PDF確認済,なし,https://www.furukawaelectric.com/ir/library/finalreport/pdf/2026/20260512.pdf
+2026/05/22 15:07,5801.T,古河電工,2026年3月期3Q,公式PDF,5801_FY2026_3Q.pdf,取得済み,抽出成功,公式PDF確認済,なし,https://www.furukawaelectric.com/ir/library/finalreport/pdf/2026/20260209.pdf
+2026/05/22 15:07,6920.T,レーザーテック,2026年6月期3Q,TDnet PDF,6920_FY2026_3Q.pdf,取得済み,抽出成功,TDnet PDF確認済,なし,https://www2.jpx.co.jp/disc/69200/140120260430514363.pdf
+2026/05/22 15:07,6920.T,レーザーテック,2026年6月期中間期,TDnet PDF,6920_FY2026_2Q.pdf,取得済み,抽出成功,TDnet PDF確認済,なし,https://www2.jpx.co.jp/disc/69200/140120260130542527.pdf
+2026/05/22 15:07,5803.T,フジクラ,2026年3月期,TDnet PDF,5803_FY2026_FULL.pdf,取得済み,抽出不可,TDnet PDF確認済,MVP本体では暗号化PDF対応または別抽出方式が必要,https://www2.jpx.co.jp/disc/58030/140120260514532598.pdf
+2026/05/22 15:07,5803.T,フジクラ,2026年3月期3Q,TDnet PDF,5803_FY2026_3Q.pdf,取得済み,抽出不可,TDnet PDF確認済,MVP本体では暗号化PDF対応または別抽出方式が必要,https://www2.jpx.co.jp/disc/58030/140120260206550168.pdf
+2026/05/22 15:07,9984.T,ソフトバンクG,2026年3月期,公式PDF,9984_FY2025_FULL.pdf,取得済み,抽出不可,公式PDF確認済,MVP本体では暗号化PDF対応または別抽出方式が必要,https://group.softbank/media/Project/sbg/sbg/pdf/ir/financials/financial_reports/financial-report_q4fy2025_01_ja.pdf
+2026/05/22 15:07,9984.T,ソフトバンクG,2026年3月期3Q,公式PDF,9984_FY2025_3Q.pdf,取得済み,抽出成功,公式PDF確認済,なし,https://group.softbank/media/Project/sbg/sbg/pdf/ir/financials/financial_reports/financial-report_q3fy2025_01_ja.pdf
