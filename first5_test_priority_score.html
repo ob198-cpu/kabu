@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>上位5社 テスト優先スコア</title>
+  <style>
+    @page { size: A4 landscape; margin: 10mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #fff;
+      color: #000;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 22px; }
+    .hero { border: 3px solid #004b7a; padding: 18px; margin-bottom: 14px; break-inside: avoid; }
+    h1 { margin: 0 0 6px; font-size: 28px; color: #000; }
+    h2 { margin: 20px 0 10px; padding-left: 10px; border-left: 8px solid #0070a8; font-size: 20px; break-after: avoid; color: #000; }
+    p { margin: 6px 0; color: #000; }
+    .notice { border: 2px solid #b00000; padding: 10px; font-weight: 700; margin: 12px 0; break-inside: avoid; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0; }
+    .kpi { border: 2px solid #0070a8; padding: 10px; min-height: 76px; break-inside: avoid; }
+    .kpi b { display: block; font-size: 19px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 8px 0 16px; }
+    th, td { border: 1px solid #000; padding: 5px 6px; vertical-align: top; overflow-wrap: anywhere; word-break: break-word; color: #000; }
+    th { background: #d9ecf8; font-weight: 700; text-align: left; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    .compact th, .compact td { font-size: 10.5px; padding: 4px 5px; }
+    .bars { border: 2px solid #004b7a; padding: 10px; margin: 8px 0 16px; break-inside: avoid; }
+    .bar-row { display: grid; grid-template-columns: 170px 1fr 46px 120px; gap: 8px; align-items: center; margin: 7px 0; }
+    .bar-label, .bar-value, .bar-detail { color: #000; font-weight: 700; }
+    .bar-track { height: 16px; border: 1px solid #000; background: #fff; }
+    .bar-track span { display: block; height: 100%; background: #0070a8; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .box { border: 2px solid #0070a8; padding: 10px; break-inside: avoid; }
+    ul { margin: 6px 0 0 18px; padding: 0; }
+    li { margin: 3px 0; color: #000; }
+    .small { font-size: 10px; }
+    @media print {
+      .page { padding: 0; max-width: none; }
+      .hero, .kpi, .notice, .bars, .box { break-inside: avoid; page-break-inside: avoid; }
+      thead { display: table-header-group; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>上位5社 テスト優先スコア</h1>
+      <p>作成日時：2026/05/22 15:16</p>
+      <p>目的：公式決算値と既存MVPの株価・財務指標を接続し、6月のNISA 1年保有テストで深掘りする順番を決めるための表です。</p>
+    </section>
+
+    <div class="notice">このスコアは購入優先順位ではありません。数字を使って「テストにかける価値」と「危険条件」を並べるための暫定スコアです。</div>
+
+    <section class="grid">
+      <div class="kpi"><b>5社</b><span>公式決算値を入力済み</span></div>
+      <div class="kpi"><b>5因子</b><span>決算・市場・財務・リスク・データ</span></div>
+      <div class="kpi"><b>2026/05/21</b><span>株価系データの取得日</span></div>
+      <div class="kpi"><b>0社</b><span>購入確定はまだ無し</span></div>
+    </section>
+
+    <h2>1. テスト優先順位</h2>
+    <div class="bars"><div class="bar-row">
+    <div class="bar-label">1. アドバンテスト</div>
+    <div class="bar-track"><span style="width:69.8%"></span></div>
+    <div class="bar-value">69.8</div>
+    <div class="bar-detail">条件付きテスト</div>
+  </div><div class="bar-row">
+    <div class="bar-label">2. ソフトバンクG</div>
+    <div class="bar-track"><span style="width:60.9%"></span></div>
+    <div class="bar-value">60.9</div>
+    <div class="bar-detail">条件付きテスト</div>
+  </div><div class="bar-row">
+    <div class="bar-label">3. 古河電工</div>
+    <div class="bar-track"><span style="width:44%"></span></div>
+    <div class="bar-value">44</div>
+    <div class="bar-detail">今回は後回し</div>
+  </div><div class="bar-row">
+    <div class="bar-label">4. レーザーテック</div>
+    <div class="bar-track"><span style="width:36.2%"></span></div>
+    <div class="bar-value">36.2</div>
+    <div class="bar-detail">今回は後回し</div>
+  </div><div class="bar-row">
+    <div class="bar-label">5. フジクラ</div>
+    <div class="bar-track"><span style="width:32%"></span></div>
+    <div class="bar-value">32</div>
+    <div class="bar-detail">今回は後回し</div>
+  </div></div>
+    <table class="compact">
+    <thead><tr><th>順位</th><th>銘柄</th><th>テスト優先点</th><th>判定</th><th>公式決算</th><th>市場反応</th><th>財務割高</th><th>下落耐性</th><th>減点</th><th>主な注意</th></tr></thead>
+    <tbody><tr><td>1</td><td>6857.T アドバンテスト</td><td>69.8</td><td>条件付きテスト</td><td>90.6</td><td>53.2</td><td>66.5</td><td>50.1</td><td>0</td><td>大きな警戒条件なし</td></tr><tr><td>2</td><td>9984.T ソフトバンクG</td><td>60.9</td><td>条件付きテスト</td><td>76.3</td><td>69.8</td><td>63</td><td>64.3</td><td>10</td><td>投資損益の影響が大きく別枠補正が必要</td></tr><tr><td>3</td><td>5801.T 古河電工</td><td>44</td><td>今回は後回し</td><td>54.1</td><td>86</td><td>38.4</td><td>45.8</td><td>16</td><td>1年上昇率が大きく過熱確認が必要 / 200日線からの上方乖離が極端</td></tr><tr><td>4</td><td>6920.T レーザーテック</td><td>36.2</td><td>今回は後回し</td><td>21</td><td>55.1</td><td>64.4</td><td>67.8</td><td>13</td><td>直近利益前年比がマイナス / PERが高く成長鈍化時の下落が速い</td></tr><tr><td>5</td><td>5803.T フジクラ</td><td>32</td><td>今回は後回し</td><td>46.2</td><td>70.3</td><td>56.8</td><td>26</td><td>21</td><td>60日最大下落率が大きい / 1年上昇率が大きく過熱確認が必要 / PERが高く成長鈍化時の下落が速い</td></tr></tbody>
+  </table>
+
+    <h2>2. 使用した主要数値</h2>
+    <p>株価・PER・PBR・ROEは、既存MVPで取得済みの2026年5月21日時点データを使用しています。</p>
+    <table class="compact">
+    <thead><tr><th>銘柄</th><th>売上前年比</th><th>利益前年比</th><th>利益差分</th><th>EPS前年比</th><th>終値日</th><th>終値</th><th>60日</th><th>1年</th><th>200日線乖離</th><th>出来高比率</th><th>PER</th><th>PBR</th><th>ROE</th><th>最大下落</th></tr></thead>
+    <tbody><tr><td>6857.T アドバンテスト</td><td>44.7%</td><td>118.8%</td><td>8pt</td><td>135.6%</td><td>2026-05-21</td><td>26,975</td><td>0.1%</td><td>284.8%</td><td>33.4%</td><td>0.7倍</td><td>42</td><td>24.55</td><td>57.65%</td><td>-29%</td></tr><tr><td>9984.T ソフトバンクG</td><td>7.7%</td><td>259.9%</td><td>31.9pt</td><td>347.5%</td><td>2026-05-21</td><td>6,039</td><td>39.6%</td><td>220.1%</td><td>35.2%</td><td>0.85倍</td><td></td><td>1.98</td><td>34.28%</td><td>-21.6%</td></tr><tr><td>5801.T 古河電工</td><td>8.8%</td><td>35.8%</td><td>23.9pt</td><td>117.6%</td><td>2026-05-21</td><td>49,980</td><td>128.1%</td><td>792%</td><td>170.2%</td><td>0.66倍</td><td>42.96</td><td>8.45</td><td>19.12%</td><td>-15.2%</td></tr><tr><td>6920.T レーザーテック</td><td>0.4%</td><td>-1.4%</td><td>-0.3pt</td><td>8.3%</td><td>2026-05-21</td><td>38,410</td><td>23.2%</td><td>171.4%</td><td>34.1%</td><td>0.65倍</td><td>47.95</td><td>15.28</td><td>46.88%</td><td>-22.1%</td></tr><tr><td>5803.T フジクラ</td><td>20.7%</td><td>39.2%</td><td>-8.5pt</td><td>72.4%</td><td>2026-05-21</td><td>4,506</td><td>21%</td><td>346.2%</td><td>32%</td><td>1.1倍</td><td>48.47</td><td>13.49</td><td>32.48%</td><td>-45.3%</td></tr></tbody>
+  </table>
+
+    <h2>3. 計算式</h2>
+    <table class="">
+    <thead><tr><th>項目</th><th>重み</th><th>計算内容</th><th>目的</th></tr></thead>
+    <tbody><tr><td>公式決算スコア</td><td>35%</td><td>売上前年比25% + 利益前年比35% + EPS前年比25% + 直近2決算の改善度15%</td><td>公式決算で本当に伸びているかを見る</td></tr><tr><td>市場反応スコア</td><td>25%</td><td>60日騰落率30% + 1年騰落率25% + 200日線乖離25% + 出来高比率20%</td><td>市場が数字を評価しているかを見る</td></tr><tr><td>財務・割高リスク</td><td>20%</td><td>ROE45% + PER30% + PBR15% + 配当利回り10%</td><td>成長に対して高すぎないかを見る</td></tr><tr><td>下落耐性</td><td>15%</td><td>60日最大下落率55% + 200日線過熱20% + 1年過熱15% + 出来高過熱10%</td><td>NISA 1年保有で途中の大きな揺れに耐えられるかを見る</td></tr><tr><td>データ信頼度</td><td>5%</td><td>公式資料確認を基本80点、ローカル自動抽出成功率で最大20点加点</td><td>今後の自動運用に載せやすいかを見る</td></tr><tr><td>特別ペナルティ</td><td>減点</td><td>利益マイナス、極端な上昇、極端な乖離、大幅下落、投資会社性などを減点</td><td>強いが買いにくい銘柄を分ける</td></tr></tbody>
+  </table>
+
+    <div class="cols">
+      <section class="box">
+        <h2>4. 現時点の読み方</h2>
+        <ul>
+          <li>アドバンテストは公式決算の強さが最も分かりやすい。高PER・高PBRのため、次は決算後の株価反応と受注見通しを確認する。</li>
+          <li>古河電工は利益改善が強いが、1年上昇率と200日線乖離が極端。分析対象として重要だが、買い急ぎは危険。</li>
+          <li>フジクラは成長は強いが、60日最大下落率が大きい。NISA 1年保有では途中下落耐性を重点確認する。</li>
+          <li>レーザーテックはテーマ性が強い一方、直近営業利益前年比がマイナス。半導体テーマだから買う、という判定はしない。</li>
+          <li>ソフトバンクGは投資会社性が強く、他4社と同じ営業利益モデルで比較しない。別枠でNAVや投資損益を見る。</li>
+        </ul>
+      </section>
+      <section class="box">
+        <h2>5. 次工程</h2>
+        <ul>
+          <li>この5社のうち上位と注意銘柄を分け、10社テスト候補へ拡張する。</li>
+          <li>決算発表日後の株価反応を日次データと結合し、決算が本当に株価に効いたかを確認する。</li>
+          <li>6月の市場イベント前後で、同じスコアがどう動くかを記録する。</li>
+          <li>購入検討は、スコアだけでなく6月の市場条件チェックを通した後に行う。</li>
+        </ul>
+      </section>
+    </div>
+
+    <p class="small">公開CSV：229_first5_test_priority_score.csv、230_first5_test_priority_formula.csv</p>
+  </main>
+</body>
+</html>
