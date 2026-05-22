@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>意味のある母集団 設計方針</title>
+<style>
+  :root{--navy:#14395b;--blue:#176b93;--ink:#000;--line:#d8e3ef;--bg:#f5f8fb;--green:#0b7a4b;--orange:#a86600;--gray:#4b5563}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.62}
+  header{background:linear-gradient(135deg,#123a5a,#176b93);color:#fff;padding:30px 28px}
+  main{max-width:1180px;margin:auto;padding:24px}
+  h1{margin:0;font-size:30px;letter-spacing:0}
+  h2{font-size:20px;margin:24px 0 10px;color:#000;border-left:6px solid var(--blue);padding-left:10px}
+  p{margin:8px 0;color:#000}.lead{color:#fff;max-width:980px}.meta{margin-top:10px;color:#fff}
+  .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;min-height:104px}
+  .kpi b{display:block;color:var(--blue);font-size:30px;line-height:1.15}.kpi span{font-size:12.5px;color:#000}
+  .box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;margin:14px 0}
+  .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;min-width:900px;color:#000}th,td{border-bottom:1px solid #e8eef5;padding:9px 10px;text-align:left;vertical-align:top;font-size:12.5px;word-break:normal;overflow-wrap:anywhere;color:#000}
+  th{background:#eaf2f9;color:#000;white-space:nowrap}tr:last-child td{border-bottom:0}
+  tr,td,th{break-inside:avoid;page-break-inside:avoid}
+  .badge{display:inline-block;border-radius:999px;padding:3px 9px;color:#fff;font-weight:800;white-space:nowrap;font-size:12px}.green{background:var(--green)}.orange{background:var(--orange)}.gray{background:var(--gray)}.blue{background:var(--blue)}
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px}.card b{color:#000}.card p{margin:5px 0 0}
+  a{color:#004b73;font-weight:700}.footer{color:#000;font-size:12px;margin-top:24px}
+  @media(max-width:800px){main{padding:16px}.kpis,.cards{grid-template-columns:1fr}}
+  @media print{
+    @page{size:A4;margin:12mm}
+    body{background:#fff}
+    main{padding:0;max-width:none}
+    h2{break-after:avoid;page-break-after:avoid}
+    .box,.kpi,.card{break-inside:avoid;page-break-inside:avoid}
+    .table-wrap{overflow:visible;break-inside:auto;page-break-inside:auto}
+    table{min-width:0;table-layout:fixed}
+    thead{display:table-header-group}
+    tr{break-inside:avoid;page-break-inside:avoid}
+    th,td{font-size:10px;padding:5px}
+    .kpi b{font-size:24px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>意味のある母集団 設計方針</h1>
+  <p class="lead">100社という数を目的にせず、NISA 1年保有テスト、時流テーマ検証、指数比較、テンバガー探索に使える母集団へ再整理した資料です。</p>
+  <p class="meta">作成日時: 2026/05/22 12:54</p>
+</header>
+<main>
+  <section class="kpis">
+    <div class="kpi"><b>100社</b><span>現母集団</span></div>
+    <div class="kpi"><b>18社</b><span>詳細確認へ進める候補</span></div>
+    <div class="kpi"><b>25社</b><span>データ補完が必要な候補</span></div>
+    <div class="kpi"><b>15社</b><span>テンバガー探索枠</span></div>
+  </section>
+
+  <section class="box">
+    <h2>1. 結論</h2>
+    <p>現在の100社は、全上場企業から自動抽出した完成母集団ではありません。今後は、各銘柄に役割を付け、購入候補・比較対象・データ補完対象・除外候補を分けて扱います。</p>
+    <p>6月テストでは、まずA 詳細確認の銘柄を公式IRと決算短信で検算し、C データ補完後に判定の銘柄はJ-QuantsまたはEDINET XBRLで補完してから再評価します。</p>
+  </section>
+
+  <section>
+    <h2>2. 母集団の役割別内訳</h2>
+    <div class="table-wrap"><table class=""><thead><tr><th>目的</th><th>社数</th><th>使い方</th></tr></thead><tbody><tr><td>景気・マクロ感応</td><td>29社</td><td>金利、為替、資源、消費、景気循環の影響を見る</td></tr><tr><td>NISA 1年保有</td><td>23社</td><td>6月以降のNISAテスト候補</td></tr><tr><td>時流テーマ</td><td>22社</td><td>AI、半導体、防衛、電力などの資金流入仮説を検証</td></tr><tr><td>テンバガー探索</td><td>15社</td><td>大型安定株では拾えない成長余地を観察</td></tr><tr><td>補助比較</td><td>7社</td><td>代表性やデータが弱ければ除外候補</td></tr><tr><td>指数比較・大型代表</td><td>4社</td><td>投信・指数に勝つ意味があるかを測る基準</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>3. 判定レベル</h2>
+    <div class="table-wrap"><table class=""><thead><tr><th>区分</th><th>社数</th><th>意味</th></tr></thead><tbody><tr><td>現在の母集団</td><td>100社</td><td>数合わせではなく、目的別に役割を付け直した。</td></tr><tr><td>A 詳細確認</td><td>18社</td><td>公式IR・決算短信で検算して6月テスト候補へ進める。</td></tr><tr><td>B 観察継続</td><td>34社</td><td>週次で価格・出来高・イベントを確認する。</td></tr><tr><td>C データ補完後に判定</td><td>25社</td><td>Yahoo取得失敗などにより公式データ補完が必要。</td></tr><tr><td>D 低優先・比較のみ</td><td>23社</td><td>代表性が低ければ次回除外する。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>4. 詳細確認へ進める候補</h2>
+    <p>下表は購入候補の確定ではなく、公式資料で検算する優先順位です。</p>
+    <div class="table-wrap"><table class=""><thead><tr><th>銘柄</th><th>役割</th><th>スコア</th><th>母集団に入れる理由</th><th>次の確認</th></tr></thead><tbody><tr><td>8766.T 東京海上HD</td><td>NISA 1年保有</td><td>74</td><td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>6920.T レーザーテック</td><td>時流テーマ</td><td>70</td><td>EUV検査の資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>8316.T 三井住友FG</td><td>NISA 1年保有</td><td>69</td><td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>7012.T 川崎重工業</td><td>テンバガー探索</td><td>69</td><td>防衛・水素の資金流入仮説を検証 / 成長・変化率・時価総額余地を観察する枠</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>5803.T フジクラ</td><td>テンバガー探索</td><td>68</td><td>データセンター・光ファイバーの資金流入仮説を検証 / 成長・変化率・時価総額余地を観察する枠</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>5801.T 古河電工</td><td>テンバガー探索</td><td>68</td><td>光ファイバー・電力線の資金流入仮説を検証 / 成長・変化率・時価総額余地を観察する枠</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>8411.T みずほFG</td><td>NISA 1年保有</td><td>66</td><td>1年保有テストで安定性や配当/業績の確認対象</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>7735.T SCREEN HD</td><td>時流テーマ</td><td>66</td><td>洗浄装置の資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>6762.T TDK</td><td>時流テーマ</td><td>66</td><td>電池・電子部品の資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>9984.T ソフトバンクG</td><td>時流テーマ</td><td>65</td><td>AI・投資会社の資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>8306.T 三菱UFJ FG</td><td>NISA 1年保有</td><td>64</td><td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>5802.T 住友電工</td><td>時流テーマ</td><td>64</td><td>電線・自動車部品の資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>8750.T 第一生命HD</td><td>NISA 1年保有</td><td>63</td><td>1年保有テストで安定性や配当/業績の確認対象</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>9983.T ファーストリテイリング</td><td>指数比較・大型代表</td><td>61</td><td>指数・投信と比べる基準になる大型代表</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>8725.T MS&amp;AD</td><td>NISA 1年保有</td><td>60</td><td>1年保有テストで安定性や配当/業績の確認対象</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>8035.T 東京エレクトロン</td><td>時流テーマ</td><td>60</td><td>半導体サイクルの資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>6857.T アドバンテスト</td><td>時流テーマ</td><td>60</td><td>AI半導体検査の資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr><tr><td>6146.T ディスコ</td><td>時流テーマ</td><td>60</td><td>切断・研削装置の資金流入仮説を検証</td><td>公式IR・決算短信・EDINETで数値検算し、6月テスト候補へ進める</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>5. データ補完後に判定する候補</h2>
+    <p>Yahoo取得失敗等で財務・業績が足りない銘柄は、順位に混ぜず、補完対象として扱います。</p>
+    <div class="table-wrap"><table class=""><thead><tr><th>銘柄</th><th>役割</th><th>状況</th><th>補完理由</th></tr></thead><tbody><tr><td>4063.T 信越化学工業</td><td>時流テーマ</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>半導体材料・塩ビの資金流入仮説を検証 / 財務/業績データ補完が必要</td></tr><tr><td>3402.T 東レ</td><td>時流テーマ</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>炭素繊維・繊維の資金流入仮説を検証 / 財務/業績データ補完が必要</td></tr><tr><td>3407.T 旭化成</td><td>時流テーマ</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>素材・住宅の資金流入仮説を検証 / 財務/業績データ補完が必要</td></tr><tr><td>4519.T 中外製薬</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>4568.T 第一三共</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>4502.T 武田薬品</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>4543.T テルモ</td><td>時流テーマ</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 医療機器の資金流入仮説を検証 / 財務/業績データ補完が必要</td></tr><tr><td>6869.T シスメックス</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>2802.T 味の素</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>2801.T キッコーマン</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>2502.T アサヒGHD</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>2503.T キリンHD</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>4452.T 花王</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>8113.T ユニ・チャーム</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>9843.T ニトリHD</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>7532.T パン・パシフィック</td><td>NISA 1年保有</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>1年保有テストで安定性や配当/業績の確認対象 / 財務/業績データ補完が必要</td></tr><tr><td>2413.T エムスリー</td><td>テンバガー探索</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>成長・変化率・時価総額余地を観察する枠 / 財務/業績データ補完が必要</td></tr><tr><td>4689.T LINEヤフー</td><td>テンバガー探索</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>成長・変化率・時価総額余地を観察する枠 / 財務/業績データ補完が必要</td></tr><tr><td>4755.T 楽天グループ</td><td>テンバガー探索</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>成長・変化率・時価総額余地を観察する枠 / 財務/業績データ補完が必要</td></tr><tr><td>4751.T サイバーエージェント</td><td>テンバガー探索</td><td>取得失敗: HTTP 500 / 取得失敗: HTTP 500</td><td>成長・変化率・時価総額余地を観察する枠 / 財務/業績データ補完が必要</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>6. 母集団ルール</h2>
+    <div class="table-wrap"><table class=""><thead><tr><th>ルール</th><th>内容</th><th>目的</th></tr></thead><tbody><tr><td>数合わせをしない</td><td>100社に固定せず、検証目的に合う銘柄だけを母集団に残す。重複が強い場合は代表銘柄へ絞る。</td><td>母集団の品質を上げる</td></tr><tr><td>役割を必ず付ける</td><td>各銘柄に、指数比較、NISA 1年保有、時流テーマ、マクロ感応、テンバガー探索のいずれかの役割を付ける。</td><td>なぜ入っているかを説明できるようにする</td></tr><tr><td>データ不足を順位に混ぜない</td><td>株価だけ取れた銘柄と、財務・業績まで取れた銘柄を同列に扱わない。</td><td>AIが計算したふりをする状態を防ぐ</td></tr><tr><td>購入候補と比較対象を分ける</td><td>大型代表株は必要だが、必ずしも購入候補ではない。指数や投信に勝つ意味があるかを測る比較対象として扱う。</td><td>個別株を選ぶ意味を検証する</td></tr><tr><td>毎週入替可能にする</td><td>母集団は固定名簿ではなく、決算・市場イベント・データ取得状況で入替える。</td><td>6月以降のNISAテストに対応する</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>7. 次に追加・入替する枠</h2>
+    <div class="table-wrap"><table class=""><thead><tr><th>追加枠</th><th>理由</th><th>追加条件</th></tr></thead><tbody><tr><td>小中型成長株</td><td>現母集団は大型株が多く、テンバガー探索には不十分。</td><td>時価総額 500億〜5,000億円、売上成長10%以上、赤字拡大なし、出来高あり</td></tr><tr><td>政策・国策テーマ</td><td>AI電力、防衛、防災、省人化など、資金流入の連鎖を検証するため。</td><td>政策資料・業界統計・会社受注に数字がある銘柄だけ追加</td></tr><tr><td>決算上方修正銘柄</td><td>1年保有では業績修正が株価に効きやすい。</td><td>TDnet/J-Quants/IRで上方修正、増配、自社株買いを確認できる銘柄</td></tr><tr><td>比較除外候補</td><td>似た業種を入れすぎると母集団の意味が薄まる。</td><td>同業で値動き・事業構造が近い銘柄は代表1〜2社へ集約</td></tr></tbody></table></div>
+  </section>
+
+  <section class="box">
+    <h2>8. 関連CSV</h2>
+    <div class="cards">
+      <div class="card"><b>母集団v2 全銘柄</b><p><a href="209_meaningful_universe_v2.csv">209_meaningful_universe_v2.csv</a></p></div>
+      <div class="card"><b>母集団ルール</b><p><a href="208_meaningful_universe_policy.csv">208_meaningful_universe_policy.csv</a></p></div>
+      <div class="card"><b>要約</b><p><a href="210_meaningful_universe_summary.csv">210_meaningful_universe_summary.csv</a></p></div>
+      <div class="card"><b>追加・入替ルール</b><p><a href="211_universe_replenishment_rules.csv">211_universe_replenishment_rules.csv</a></p></div>
+    </div>
+  </section>
+
+  <p class="footer">本資料は、投資判断を確定するものではなく、銘柄選定補助システムの母集団設計を明確化するための資料です。</p>
+</main>
+</body>
+</html>
