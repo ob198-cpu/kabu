@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>業績モメンタム母集団・時流選定・NISAテスト設計</title>
+<style>
+  :root {
+    --ink: #000;
+    --blue: #0f5f86;
+    --navy: #123f5a;
+    --line: #b9d3e4;
+    --soft: #eef7fc;
+    --green: #0b6b53;
+    --orange: #a65b00;
+    --red: #9b1c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+    line-height: 1.75;
+    background: #f4f8fb;
+  }
+  header {
+    background: linear-gradient(120deg, #103f5a, #0e6f91);
+    color: #fff;
+    padding: 28px 34px 34px;
+  }
+  header h1 { margin: 0 0 10px; font-size: 28px; line-height: 1.35; }
+  header p { margin: 6px 0; font-weight: 700; }
+  main { max-width: 1120px; margin: 0 auto; padding: 26px 22px 48px; }
+  section {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin: 0 0 18px;
+    padding: 18px 20px;
+  }
+  h2 {
+    margin: 0 0 12px;
+    padding-left: 12px;
+    border-left: 7px solid #0c78a4;
+    font-size: 22px;
+    line-height: 1.4;
+  }
+  h3 { margin: 16px 0 8px; font-size: 17px; }
+  p { margin: 8px 0; }
+  .lead {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 18px 0 4px;
+  }
+  .flow {
+    border: 2px solid #b7d7e8;
+    background: #f8fcff;
+    border-radius: 10px;
+    padding: 13px 12px;
+    min-height: 98px;
+    position: relative;
+  }
+  .flow:not(:last-child)::after {
+    content: ">";
+    position: absolute;
+    right: -13px;
+    top: 34px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #0f5f86;
+    color: #fff;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 900;
+    z-index: 1;
+  }
+  .flow strong { display: block; font-size: 15px; margin-bottom: 6px; }
+  .flow span { display: block; font-size: 12px; line-height: 1.55; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: #fbfdff;
+  }
+  .card .big { font-size: 28px; color: var(--blue); font-weight: 900; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 10px 0 4px;
+    background: #fff;
+  }
+  th, td {
+    border: 1px solid #d7e5ee;
+    padding: 8px 9px;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    color: #000;
+  }
+  th {
+    background: #e7f2f9;
+    font-weight: 900;
+    text-align: left;
+  }
+  .note {
+    border-left: 6px solid var(--orange);
+    background: #fff7ea;
+    padding: 12px 14px;
+    margin: 12px 0;
+    font-weight: 700;
+  }
+  .ok { color: var(--green); font-weight: 900; }
+  .warn { color: var(--orange); font-weight: 900; }
+  .ng { color: var(--red); font-weight: 900; }
+  .formula {
+    background: #f2fbf5;
+    border: 1px solid #b8dfc3;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-weight: 900;
+  }
+  ul { margin: 8px 0 0 22px; padding: 0; }
+  li { margin: 4px 0; }
+  .small { font-size: 12px; }
+  @media print {
+    body { background: #fff; }
+    header { padding: 22px 28px; }
+    main { max-width: none; padding: 18px 24px; }
+    section { break-inside: avoid; page-break-inside: avoid; border-radius: 8px; }
+    h2, h3 { break-after: avoid; page-break-after: avoid; }
+    table, tr, .card, .flow, .note { break-inside: avoid; page-break-inside: avoid; }
+    th, td { font-size: 11px; line-height: 1.55; padding: 6px 7px; }
+    .grid { grid-template-columns: repeat(5, 1fr); gap: 7px; }
+    .flow { min-height: 86px; padding: 9px; }
+    .flow span { font-size: 10.5px; }
+    .cards { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    a { color: #000; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>業績モメンタム母集団・時流選定・NISAテスト設計</h1>
+  <p>目的: 数字で候補群を作り、時流テーマで絞り、NISA 1年保有テストで判断補助として検証する</p>
+  <p>作成日時: 2026/05/22 13:09</p>
+</header>
+<main>
+  <section>
+    <h2>1. 結論</h2>
+    <p class="lead">100社という数を先に決めるのではなく、直近2回決算で業績が強い会社を抽出し、結果として80〜120社程度の母集団を作る方針に変更します。</p>
+    <div class="grid">
+      <div class="flow"><strong>全上場企業</strong><span>まず広く見る。最初から主観で10社を選ばない。</span></div>
+      <div class="flow"><strong>最低条件で除外</strong><span>流動性不足、データ不足、赤字拡大、一過性要因を確認。</span></div>
+      <div class="flow"><strong>業績上位群</strong><span>直近2回決算の売上・利益・EPS・予想修正で順位化。</span></div>
+      <div class="flow"><strong>時流で絞る</strong><span>AI、電力、防衛、金利、円安など業績に効くテーマを確認。</span></div>
+      <div class="flow"><strong>NISAテスト</strong><span>候補8〜10社を1年保有前提で記録し、指数と比較。</span></div>
+    </div>
+    <div class="note">この資料は購入銘柄を確定するものではありません。購入前に、公式資料で数値を検算し、比較指数とルールを固定してから判断します。</div>
+  </section>
+
+  <section>
+    <h2>2. 母集団の作り方</h2>
+    <table>
+    <thead><tr><th>phase</th><th>rule</th><th>numeric_rule</th><th>reason</th></tr></thead>
+    <tbody><tr><td>1. 対象企業の土台</td><td>全上場企業から始める。ただし、最初から全銘柄を同列に計算せず、データ取得可否と流動性で足切りする。</td><td>売買代金・出来高が極端に少ない銘柄、直近2回決算が取得できない銘柄は一次除外。</td><td>買えない銘柄、数字を検算できない銘柄を上位に入れないため。</td></tr><tr><td>2. 業績モメンタム抽出</td><td>直近2回の決算で、売上・営業利益・EPS・会社予想修正が強い銘柄を順位化する。</td><td>各指標を0〜100点のパーセンタイルへ変換し、合計点で上位約10%を抽出。</td><td>単発の好決算ではなく、2回連続で数字が改善している会社を残すため。</td></tr><tr><td>3. 約100社への調整</td><td>上位10%が多すぎる場合は流動性・財務安全性・異常値で絞り、少なすぎる場合は上位15%まで広げる。</td><td>目安は80〜120社。100社ぴったりを目的にしない。</td><td>意味のある母集団を優先し、数字合わせを避けるため。</td></tr><tr><td>4. 時流テーマ分類</td><td>AI、電力、防衛、金利、円安、医療、インバウンドなどのテーマに分類する。</td><td>テーマはニュース名ではなく、売上・受注・利益・業界統計に数字が出ているものを優先。</td><td>話題性だけでなく、業績に効いている銘柄を選ぶため。</td></tr><tr><td>5. 公式資料で検算</td><td>候補銘柄は決算短信、IR、有報、EDINET、J-Quants等で数値を確認してからテスト候補にする。</td><td>根拠数値と取得元を記録できない銘柄は、購入検討候補ではなく観察候補に留める。</td><td>AIが数字を推測した状態で銘柄を確定しないため。</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>3. 業績モメンタムスコア</h2>
+    <p>各指標はそのまま足しません。業種差や異常値を抑えるため、同じ母集団内で0〜100点の順位点へ変換してから合計します。</p>
+    <div class="formula">業績モメンタムスコア = 売上成長20点 + 営業利益成長25点 + EPS成長15点 + 会社予想修正15点 + 利益率改善10点 + 決算後株価反応10点 + 流動性5点</div>
+    <table>
+    <thead><tr><th>item</th><th>weight</th><th>calculation</th><th>caution</th></tr></thead>
+    <tbody><tr><td>売上成長</td><td>20点</td><td>直近決算YoYと1つ前の決算YoYをパーセンタイル化</td><td>前年の落ち込みからの反動だけなら異常値フラグを付ける。</td></tr><tr><td>営業利益成長</td><td>25点</td><td>直近決算YoYと1つ前の決算YoYをパーセンタイル化</td><td>赤字から黒字化は率が暴れやすいため、金額改善と併用する。</td></tr><tr><td>EPS成長</td><td>15点</td><td>EPSまたは純利益のYoYをパーセンタイル化</td><td>一過性利益、税効果、特別利益は注記で確認する。</td></tr><tr><td>会社予想修正</td><td>15点</td><td>(新予想 - 旧予想) ÷ 旧予想</td><td>上方修正は強い材料。下方修正は原則減点。</td></tr><tr><td>利益率改善</td><td>10点</td><td>営業利益率の前年同期差、または直近推移</td><td>売上増でも利益率が悪化している銘柄を避ける。</td></tr><tr><td>決算後株価反応</td><td>10点</td><td>決算発表後1日・5日・20日の騰落率</td><td>既に買われすぎた銘柄は買い時スコアで調整する。</td></tr><tr><td>流動性</td><td>5点</td><td>平均出来高、売買代金、スプレッドの確認</td><td>NISAで保有する前提でも、売れない銘柄は避ける。</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>4. 時流で絞る基準</h2>
+    <div class="cards">
+      <div class="card"><div class="big">需要</div><p>AI、電力、防衛、医療、インバウンドなどで需要が増えているか。</p></div>
+      <div class="card"><div class="big">数字</div><p>売上、受注、利益率、会社計画、業界統計に反映されているか。</p></div>
+      <div class="card"><div class="big">株価</div><p>すでに買われすぎていないか。決算後の反応と下落余地を見る。</p></div>
+    </div>
+    <p>時流テーマは「話題だから採用」ではなく、「テーマが業績に出ている、または出る根拠がある」ものだけを採用します。</p>
+  </section>
+
+  <section>
+    <h2>5. NISAテストの目的と手続き</h2>
+    <p class="lead">NISAテストの目的は、1年で勝てることを証明することではなく、銘柄選定システムが実際の判断補助として使えるかを検証することです。</p>
+    <table>
+    <thead><tr><th>step</th><th>procedure</th><th>purpose</th></tr></thead>
+    <tbody><tr><td>1. ルール固定</td><td>銘柄抽出前に、使う指標・重み・除外条件・比較指数を固定する。</td><td>後から都合よく銘柄や数式を変えたように見えないようにする。</td></tr><tr><td>2. 母集団作成</td><td>直近2回決算の業績モメンタムで80〜120社の候補群を作る。</td><td>最初から主観で10社を選ばず、数字で候補群を作る。</td></tr><tr><td>3. 時流テーマ確認</td><td>テーマ別に、業界統計・会社資料・受注・売上寄与の数字を確認する。</td><td>ニュースではなく、業績に効くテーマか確認する。</td></tr><tr><td>4. 公式資料検算</td><td>上位候補を決算短信・IR・EDINET/J-Quantsで検算し、根拠表へ記録する。</td><td>取得元不明の数値を使った判断を避ける。</td></tr><tr><td>5. テスト候補決定</td><td>8〜10社に絞り、各銘柄の採用理由、見送り条件、下落時対応を記録する。</td><td>購入判断前に、なぜ選んだか、いつ見直すかを明確にする。</td></tr><tr><td>6. NISAテスト</td><td>1年保有を前提に、月次で指数比較、最大下落、決算変化、ルール遵守を記録する。</td><td>投資判断補助システムとして実用になるか検証する。</td></tr></tbody>
+  </table>
+    <h3>判定の考え方</h3>
+    <ul>
+      <li>主目標: S&P500円建て相当、TOPIX、日経平均など主要比較対象を1年後に+1%以上上回ることを目標にする。</li>
+      <li>3か月時点: 勝敗判定ではなく、記録・ルール運用・下落時対応ができているかを確認する。</li>
+      <li>途中見直し: 下方修正、重大リスク、指数急落、決算悪化など、事前に決めた条件でのみ行う。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>6. 現実性の整理</h2>
+    <table>
+    <thead><tr><th>item</th><th>answer</th><th>condition</th></tr></thead>
+    <tbody><tr><td>6月にNISAテスト開始</td><td>可能</td><td>5月中に業績モメンタム母集団を作り、6月上旬に公式資料で候補を検算できること。</td></tr><tr><td>全上場企業を完全自動で高精度計算</td><td>短期では難しい</td><td>J-Quants、EDINET XBRL、決算短信PDF解析、銘柄コード対応表の安定運用が必要。</td></tr><tr><td>約100社の実用的な母集団</td><td>現実的</td><td>公式データで取れる項目を優先し、取れない項目はスコアに混ぜず補完待ちにする。</td></tr><tr><td>1年で統計的に勝てる証明</td><td>できない</td><td>8〜10社・1年では標本数が少ない。できるのは運用ルールの実証と改善記録。</td></tr><tr><td>S&amp;P500等を+1%以上上回る目標</td><td>目標として設定可能</td><td>保証ではない。比較対象、開始日、資金配分、途中ルールを固定して判定する。</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>7. 5月末〜6月の工程</h2>
+    <table>
+    <thead><tr><th>date</th><th>task</th><th>output</th><th>status</th></tr></thead>
+    <tbody><tr><td>5/22〜5/24</td><td>業績モメンタム母集団の設計固定</td><td>指標一覧、重み、除外条件、テスト手続き</td><td>本資料で整理</td></tr><tr><td>5/25〜5/28</td><td>直近2回決算データの取得テーブル作成</td><td>売上、営業利益、EPS、会社予想修正、発表日、取得元URL</td><td>次工程</td></tr><tr><td>5/29〜5/31</td><td>業績モメンタム一次スコア算出</td><td>80〜120社の一次母集団、除外理由一覧</td><td>次工程</td></tr><tr><td>6/1〜6/5</td><td>時流テーマ分類と根拠資料作成</td><td>テーマ別候補、業界統計、会社資料リンク、確認待ち項目</td><td>次工程</td></tr><tr><td>6/8〜6/12</td><td>公式資料で検算し、NISAテスト候補を絞る</td><td>8〜10社の候補、採用理由、見送り条件、比較対象</td><td>次工程</td></tr><tr><td>6月中旬以降</td><td>市場イベントと候補銘柄の最新決算を確認</td><td>購入可否判断表、延期条件、記録開始表</td><td>購入確定ではなく判定工程</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>8. 次工程で作る表</h2>
+    <ul>
+      <li>直近2回決算入力表: 銘柄、決算期、売上、営業利益、EPS、会社予想、取得元URL。</li>
+      <li>業績モメンタム計算表: 各指標の順位点、異常値フラグ、総合点。</li>
+      <li>時流テーマ対応表: テーマ、根拠資料、業績寄与、候補銘柄。</li>
+      <li>NISAテスト記録表: 採用理由、購入判断日、比較指数、月次評価、予想との差。</li>
+    </ul>
+    <p class="small">取得元を記録できない数値は、スコアに混ぜず「補完待ち」として扱います。</p>
+  </section>
+</main>
+</body>
+</html>
