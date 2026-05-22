@@ -1,0 +1,109 @@
+updated_at,ticker,company,field_id,field_name,required_level,score_use,input_status,source_url,next_action
+2026/05/22 14:24,6857.T,アドバンテスト,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.advantest.com/ja/investors/ir-library/result/,公式決算資料で数値確認
+2026/05/22 14:24,6857.T,アドバンテスト,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.advantest.com/ja/investors/ir-library/result/,公式決算資料で数値確認
+2026/05/22 14:24,6857.T,アドバンテスト,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.advantest.com/ja/investors/ir-library/result/,公式決算資料で数値確認
+2026/05/22 14:24,6857.T,アドバンテスト,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.advantest.com/ja/investors/ir-library/result/,公式決算資料で数値確認
+2026/05/22 14:24,6857.T,アドバンテスト,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.advantest.com/ja/investors/ir-library/result/,公式決算資料で数値確認
+2026/05/22 14:24,6857.T,アドバンテスト,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.advantest.com/ja/investors/ir-library/result/,公式決算資料で数値確認
+2026/05/22 14:24,5801.T,古河電工,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.furukawaelectric.com/ir/library/,公式決算資料で数値確認
+2026/05/22 14:24,5801.T,古河電工,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.furukawaelectric.com/ir/library/,公式決算資料で数値確認
+2026/05/22 14:24,5801.T,古河電工,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.furukawaelectric.com/ir/library/,公式決算資料で数値確認
+2026/05/22 14:24,5801.T,古河電工,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.furukawaelectric.com/ir/library/,公式決算資料で数値確認
+2026/05/22 14:24,5801.T,古河電工,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.furukawaelectric.com/ir/library/,公式決算資料で数値確認
+2026/05/22 14:24,5801.T,古河電工,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.furukawaelectric.com/ir/library/,公式決算資料で数値確認
+2026/05/22 14:24,6920.T,レーザーテック,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.lasertec.co.jp/ir/data/,公式決算資料で数値確認
+2026/05/22 14:24,6920.T,レーザーテック,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.lasertec.co.jp/ir/data/,公式決算資料で数値確認
+2026/05/22 14:24,6920.T,レーザーテック,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.lasertec.co.jp/ir/data/,公式決算資料で数値確認
+2026/05/22 14:24,6920.T,レーザーテック,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.lasertec.co.jp/ir/data/,公式決算資料で数値確認
+2026/05/22 14:24,6920.T,レーザーテック,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.lasertec.co.jp/ir/data/,公式決算資料で数値確認
+2026/05/22 14:24,6920.T,レーザーテック,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.lasertec.co.jp/ir/data/,公式決算資料で数値確認
+2026/05/22 14:24,5803.T,フジクラ,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.fujikura.co.jp/ir/financials/,公式決算資料で数値確認
+2026/05/22 14:24,5803.T,フジクラ,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.fujikura.co.jp/ir/financials/,公式決算資料で数値確認
+2026/05/22 14:24,5803.T,フジクラ,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.fujikura.co.jp/ir/financials/,公式決算資料で数値確認
+2026/05/22 14:24,5803.T,フジクラ,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.fujikura.co.jp/ir/financials/,公式決算資料で数値確認
+2026/05/22 14:24,5803.T,フジクラ,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.fujikura.co.jp/ir/financials/,公式決算資料で数値確認
+2026/05/22 14:24,5803.T,フジクラ,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.fujikura.co.jp/ir/financials/,公式決算資料で数値確認
+2026/05/22 14:24,9984.T,ソフトバンクG,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://group.softbank/ir/financials/financial_reports,公式決算資料で数値確認
+2026/05/22 14:24,9984.T,ソフトバンクG,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://group.softbank/ir/financials/financial_reports,公式決算資料で数値確認
+2026/05/22 14:24,9984.T,ソフトバンクG,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://group.softbank/ir/financials/financial_reports,公式決算資料で数値確認
+2026/05/22 14:24,9984.T,ソフトバンクG,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://group.softbank/ir/financials/financial_reports,公式決算資料で数値確認
+2026/05/22 14:24,9984.T,ソフトバンクG,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://group.softbank/ir/financials/financial_reports,公式決算資料で数値確認
+2026/05/22 14:24,9984.T,ソフトバンクG,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://group.softbank/ir/financials/financial_reports,公式決算資料で数値確認
+2026/05/22 14:24,7012.T,川崎重工業,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.khi.co.jp/ir/calendar.html,公式決算資料で数値確認
+2026/05/22 14:24,7012.T,川崎重工業,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.khi.co.jp/ir/calendar.html,公式決算資料で数値確認
+2026/05/22 14:24,7012.T,川崎重工業,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.khi.co.jp/ir/calendar.html,公式決算資料で数値確認
+2026/05/22 14:24,7012.T,川崎重工業,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.khi.co.jp/ir/calendar.html,公式決算資料で数値確認
+2026/05/22 14:24,7012.T,川崎重工業,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.khi.co.jp/ir/calendar.html,公式決算資料で数値確認
+2026/05/22 14:24,7012.T,川崎重工業,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.khi.co.jp/ir/calendar.html,公式決算資料で数値確認
+2026/05/22 14:24,8306.T,三菱UFJ FG,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.mufg.jp/ir/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8306.T,三菱UFJ FG,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.mufg.jp/ir/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8306.T,三菱UFJ FG,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.mufg.jp/ir/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8306.T,三菱UFJ FG,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.mufg.jp/ir/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8306.T,三菱UFJ FG,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.mufg.jp/ir/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8306.T,三菱UFJ FG,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.mufg.jp/ir/index.html,公式決算資料で数値確認
+2026/05/22 14:24,6762.T,TDK,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.tdk.com/ja/ir/ir_library/financial/index.html,公式決算資料で数値確認
+2026/05/22 14:24,6762.T,TDK,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.tdk.com/ja/ir/ir_library/financial/index.html,公式決算資料で数値確認
+2026/05/22 14:24,6762.T,TDK,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.tdk.com/ja/ir/ir_library/financial/index.html,公式決算資料で数値確認
+2026/05/22 14:24,6762.T,TDK,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.tdk.com/ja/ir/ir_library/financial/index.html,公式決算資料で数値確認
+2026/05/22 14:24,6762.T,TDK,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.tdk.com/ja/ir/ir_library/financial/index.html,公式決算資料で数値確認
+2026/05/22 14:24,6762.T,TDK,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.tdk.com/ja/ir/ir_library/financial/index.html,公式決算資料で数値確認
+2026/05/22 14:24,5802.T,住友電工,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://sumitomoelectric.com/jp/ir/,公式決算資料で数値確認
+2026/05/22 14:24,5802.T,住友電工,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://sumitomoelectric.com/jp/ir/,公式決算資料で数値確認
+2026/05/22 14:24,5802.T,住友電工,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://sumitomoelectric.com/jp/ir/,公式決算資料で数値確認
+2026/05/22 14:24,5802.T,住友電工,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://sumitomoelectric.com/jp/ir/,公式決算資料で数値確認
+2026/05/22 14:24,5802.T,住友電工,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://sumitomoelectric.com/jp/ir/,公式決算資料で数値確認
+2026/05/22 14:24,5802.T,住友電工,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://sumitomoelectric.com/jp/ir/,公式決算資料で数値確認
+2026/05/22 14:24,6146.T,ディスコ,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.disco.co.jp/jp/ir/library/fr.html,公式決算資料で数値確認
+2026/05/22 14:24,6146.T,ディスコ,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.disco.co.jp/jp/ir/library/fr.html,公式決算資料で数値確認
+2026/05/22 14:24,6146.T,ディスコ,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.disco.co.jp/jp/ir/library/fr.html,公式決算資料で数値確認
+2026/05/22 14:24,6146.T,ディスコ,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.disco.co.jp/jp/ir/library/fr.html,公式決算資料で数値確認
+2026/05/22 14:24,6146.T,ディスコ,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.disco.co.jp/jp/ir/library/fr.html,公式決算資料で数値確認
+2026/05/22 14:24,6146.T,ディスコ,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.disco.co.jp/jp/ir/library/fr.html,公式決算資料で数値確認
+2026/05/22 14:24,8316.T,三井住友FG,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.smfg.co.jp/investor/financial/latest_statement.html,公式決算資料で数値確認
+2026/05/22 14:24,8316.T,三井住友FG,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.smfg.co.jp/investor/financial/latest_statement.html,公式決算資料で数値確認
+2026/05/22 14:24,8316.T,三井住友FG,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.smfg.co.jp/investor/financial/latest_statement.html,公式決算資料で数値確認
+2026/05/22 14:24,8316.T,三井住友FG,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.smfg.co.jp/investor/financial/latest_statement.html,公式決算資料で数値確認
+2026/05/22 14:24,8316.T,三井住友FG,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.smfg.co.jp/investor/financial/latest_statement.html,公式決算資料で数値確認
+2026/05/22 14:24,8316.T,三井住友FG,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.smfg.co.jp/investor/financial/latest_statement.html,公式決算資料で数値確認
+2026/05/22 14:24,9983.T,ファーストリテイリング,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.fastretailing.com/eng/ir/library/earning.html,公式決算資料で数値確認
+2026/05/22 14:24,9983.T,ファーストリテイリング,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.fastretailing.com/eng/ir/library/earning.html,公式決算資料で数値確認
+2026/05/22 14:24,9983.T,ファーストリテイリング,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.fastretailing.com/eng/ir/library/earning.html,公式決算資料で数値確認
+2026/05/22 14:24,9983.T,ファーストリテイリング,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.fastretailing.com/eng/ir/library/earning.html,公式決算資料で数値確認
+2026/05/22 14:24,9983.T,ファーストリテイリング,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.fastretailing.com/eng/ir/library/earning.html,公式決算資料で数値確認
+2026/05/22 14:24,9983.T,ファーストリテイリング,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.fastretailing.com/eng/ir/library/earning.html,公式決算資料で数値確認
+2026/05/22 14:24,8411.T,みずほFG,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.mizuho-fg.co.jp/investors/financial/tanshin/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8411.T,みずほFG,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.mizuho-fg.co.jp/investors/financial/tanshin/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8411.T,みずほFG,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.mizuho-fg.co.jp/investors/financial/tanshin/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8411.T,みずほFG,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.mizuho-fg.co.jp/investors/financial/tanshin/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8411.T,みずほFG,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.mizuho-fg.co.jp/investors/financial/tanshin/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8411.T,みずほFG,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.mizuho-fg.co.jp/investors/financial/tanshin/index.html,公式決算資料で数値確認
+2026/05/22 14:24,8766.T,東京海上HD,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.tokiomarinehd.com/ir/financial/,公式決算資料で数値確認
+2026/05/22 14:24,8766.T,東京海上HD,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.tokiomarinehd.com/ir/financial/,公式決算資料で数値確認
+2026/05/22 14:24,8766.T,東京海上HD,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.tokiomarinehd.com/ir/financial/,公式決算資料で数値確認
+2026/05/22 14:24,8766.T,東京海上HD,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.tokiomarinehd.com/ir/financial/,公式決算資料で数値確認
+2026/05/22 14:24,8766.T,東京海上HD,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.tokiomarinehd.com/ir/financial/,公式決算資料で数値確認
+2026/05/22 14:24,8766.T,東京海上HD,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.tokiomarinehd.com/ir/financial/,公式決算資料で数値確認
+2026/05/22 14:24,8750.T,第一生命HD,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.daiichilife-group.com/investor/event/,公式決算資料で数値確認
+2026/05/22 14:24,8750.T,第一生命HD,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.daiichilife-group.com/investor/event/,公式決算資料で数値確認
+2026/05/22 14:24,8750.T,第一生命HD,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.daiichilife-group.com/investor/event/,公式決算資料で数値確認
+2026/05/22 14:24,8750.T,第一生命HD,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.daiichilife-group.com/investor/event/,公式決算資料で数値確認
+2026/05/22 14:24,8750.T,第一生命HD,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.daiichilife-group.com/investor/event/,公式決算資料で数値確認
+2026/05/22 14:24,8750.T,第一生命HD,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.daiichilife-group.com/investor/event/,公式決算資料で数値確認
+2026/05/22 14:24,8035.T,東京エレクトロン,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.tel.co.jp/ir/library/report/,公式決算資料で数値確認
+2026/05/22 14:24,8035.T,東京エレクトロン,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.tel.co.jp/ir/library/report/,公式決算資料で数値確認
+2026/05/22 14:24,8035.T,東京エレクトロン,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.tel.co.jp/ir/library/report/,公式決算資料で数値確認
+2026/05/22 14:24,8035.T,東京エレクトロン,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.tel.co.jp/ir/library/report/,公式決算資料で数値確認
+2026/05/22 14:24,8035.T,東京エレクトロン,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.tel.co.jp/ir/library/report/,公式決算資料で数値確認
+2026/05/22 14:24,8035.T,東京エレクトロン,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.tel.co.jp/ir/library/report/,公式決算資料で数値確認
+2026/05/22 14:24,8725.T,MS&AD,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.ms-ad-hd.com/ja/ir/library/earnings.html,公式決算資料で数値確認
+2026/05/22 14:24,8725.T,MS&AD,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.ms-ad-hd.com/ja/ir/library/earnings.html,公式決算資料で数値確認
+2026/05/22 14:24,8725.T,MS&AD,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.ms-ad-hd.com/ja/ir/library/earnings.html,公式決算資料で数値確認
+2026/05/22 14:24,8725.T,MS&AD,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.ms-ad-hd.com/ja/ir/library/earnings.html,公式決算資料で数値確認
+2026/05/22 14:24,8725.T,MS&AD,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.ms-ad-hd.com/ja/ir/library/earnings.html,公式決算資料で数値確認
+2026/05/22 14:24,8725.T,MS&AD,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.ms-ad-hd.com/ja/ir/library/earnings.html,公式決算資料で数値確認
+2026/05/22 14:24,7735.T,SCREEN HD,latest_sales_yoy_pct,直近決算の売上前年比,必須,売上成長20点の本番入力,未入力,https://www.screen.co.jp/ir,公式決算資料で数値確認
+2026/05/22 14:24,7735.T,SCREEN HD,latest_operating_profit_yoy_pct,直近決算の営業利益前年比,必須,営業利益成長25点の本番入力,未入力,https://www.screen.co.jp/ir,公式決算資料で数値確認
+2026/05/22 14:24,7735.T,SCREEN HD,latest_eps_yoy_pct,直近決算のEPS前年比,高,EPS成長15点の本番入力,未入力,https://www.screen.co.jp/ir,公式決算資料で数値確認
+2026/05/22 14:24,7735.T,SCREEN HD,prior_sales_yoy_pct,1つ前決算の売上前年比,必須,2回連続成長の確認,未入力,https://www.screen.co.jp/ir,公式決算資料で数値確認
+2026/05/22 14:24,7735.T,SCREEN HD,prior_operating_profit_yoy_pct,1つ前決算の営業利益前年比,必須,2回連続利益改善の確認,未入力,https://www.screen.co.jp/ir,公式決算資料で数値確認
+2026/05/22 14:24,7735.T,SCREEN HD,forecast_revision_profit_pct,会社予想利益修正率,必須,上方修正/下方修正の判定,未入力,https://www.screen.co.jp/ir,公式決算資料で数値確認

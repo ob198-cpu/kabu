@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A詳細確認候補 公式資料入力キュー</title>
+<style>
+  :root {
+    --ink:#000;
+    --blue:#0b6f99;
+    --line:#b9d3e4;
+    --warn:#a65b00;
+    --green:#08664f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.72;background:#f4f8fb}
+  header{background:linear-gradient(120deg,#103f5a,#0e6f91);color:#fff;padding:28px 34px 34px}
+  header h1{margin:0 0 8px;font-size:28px;line-height:1.35}
+  header p{margin:5px 0;font-weight:700}
+  main{max-width:1160px;margin:0 auto;padding:26px 22px 48px}
+  section{background:#fff;border:1px solid var(--line);border-radius:10px;margin:0 0 18px;padding:18px 20px}
+  h2{margin:0 0 12px;padding-left:12px;border-left:7px solid var(--blue);font-size:22px;line-height:1.4}
+  p{margin:8px 0}
+  .lead{font-weight:900}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 4px}
+  .card{border:1px solid var(--line);background:#fbfdff;border-radius:8px;padding:14px}
+  .big{display:block;font-size:25px;color:var(--blue);font-weight:900}
+  .note{border-left:6px solid var(--warn);background:#fff7ea;padding:12px 14px;margin:12px 0;font-weight:800}
+  table{width:100%;border-collapse:collapse;table-layout:fixed;margin:10px 0 4px;background:#fff}
+  th,td{border:1px solid #d7e5ee;padding:8px 9px;vertical-align:top;overflow-wrap:anywhere;word-break:normal;color:#000}
+  th{background:#e7f2f9;font-weight:900;text-align:left}
+  ul{margin:8px 0 0 22px;padding:0}
+  li{margin:4px 0}
+  @media print{
+    body{background:#fff}
+    header{padding:22px 28px}
+    main{max-width:none;padding:18px 24px}
+    section{break-inside:avoid;page-break-inside:avoid;border-radius:8px}
+    h2{break-after:avoid;page-break-after:avoid}
+    table,tr,.card,.note{break-inside:avoid;page-break-inside:avoid}
+    th,td{font-size:10.5px;line-height:1.5;padding:6px 7px}
+    .cards{grid-template-columns:repeat(4,1fr);gap:8px}
+    a{color:#000;text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>A詳細確認候補 公式資料入力キュー</h1>
+  <p>目的: 代理スコア上位から公式決算資料を確認し、本番の直近2回決算スコアへ進める</p>
+  <p>作成日時: 2026/05/22 14:24</p>
+</header>
+<main>
+  <section>
+    <h2>1. 現在の到達点</h2>
+    <p class="lead">A詳細確認18社について、公式資料の入力元を設定しました。次工程は、各公式ページから決算短信・説明資料を開き、217入力表へ数値を入れることです。</p>
+    <div class="cards">
+      <div class="card"><span class="big">18社</span>A詳細確認候補</div>
+      <div class="card"><span class="big">18社</span>公式URL候補あり</div>
+      <div class="card"><span class="big">17社</span>自動アクセス200</div>
+      <div class="card"><span class="big">0社</span>公式2決算入力済み</div>
+    </div>
+    <div class="note">まだ数値入力はしていません。ここで作ったものは、公式資料へ進むための作業キューです。購入候補確定ではありません。</div>
+  </section>
+
+  <section>
+    <h2>2. 進捗表</h2>
+    <table>
+    <thead><tr><th>項目</th><th>件数</th><th>状態</th><th>意味</th></tr></thead>
+    <tbody><tr><td>A詳細確認候補</td><td>18/18</td><td>対象固定</td><td>6月テスト候補へ進める前に公式資料で検算する銘柄群。</td></tr><tr><td>公式URL候補</td><td>18/18</td><td>設定済み</td><td>決算短信・決算資料の入力元。</td></tr><tr><td>代理スコアあり</td><td>18/18</td><td>確認優先順位</td><td>公式資料を確認する順番の参考。購入判断には使わない。</td></tr><tr><td>公式2決算入力</td><td>0/18</td><td>未入力</td><td>次工程で入れる本番数値。</td></tr><tr><td>公式URLの自動アクセス確認</td><td>17/18</td><td>一部注意</td><td>200以外のサイトはブラウザ確認または手動確認で対応する。</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>3. A詳細確認18社の入力順</h2>
+    <p>代理スコアがある銘柄は、公式資料確認の優先順位として並べています。代理スコアがない銘柄は補完扱いです。</p>
+    <table>
+    <thead><tr><th>確認順</th><th>銘柄</th><th>テーマ</th><th>代理スコア</th><th>公式URL状態</th><th>自動アクセス</th><th>公式資料</th><th>次の作業</th></tr></thead>
+    <tbody><tr><td>1</td><td>6857.T アドバンテスト</td><td>AI半導体検査</td><td>87.7</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算短信ページ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>2</td><td>5801.T 古河電工</td><td>光ファイバー・電力線</td><td>86.8</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式IR資料室</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>3</td><td>6920.T レーザーテック</td><td>EUV検査</td><td>85.5</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式IR資料室</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>4</td><td>5803.T フジクラ</td><td>データセンター・光ファイバー</td><td>84.9</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算公表資料</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>5</td><td>9984.T ソフトバンクG</td><td>AI・投資会社</td><td>81.6</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算短信ページ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>6</td><td>7012.T 川崎重工業</td><td>防衛・水素</td><td>75</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式IRカレンダー/決算資料</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>7</td><td>8306.T 三菱UFJ FG</td><td>金利上昇・大手銀行</td><td>73.8</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式IRトップ/最新IR資料</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>8</td><td>6762.T TDK</td><td>電池・電子部品</td><td>73.3</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算短信ページ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>9</td><td>5802.T 住友電工</td><td>電線・自動車部品</td><td>72.9</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式IRトップ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>10</td><td>6146.T ディスコ</td><td>切断・研削装置</td><td>72</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算短信・四半期開示</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>11</td><td>8316.T 三井住友FG</td><td>金利上昇・大手銀行</td><td>69.1</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算短信ページ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>12</td><td>9983.T ファーストリテイリング</td><td>海外成長・消費</td><td>68.4</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算発表ページ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>13</td><td>8411.T みずほFG</td><td>金利上昇・大手銀行</td><td>61.3</td><td>公式URL候補設定済み</td><td>自動取得注意</td><td>公式決算関連情報</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>14</td><td>8766.T 東京海上HD</td><td>金利上昇・保険運用</td><td>61.1</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算資料ページ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>15</td><td>8750.T 第一生命HD</td><td>金利上昇・保険運用</td><td>55.5</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式IRイベント/決算日程</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>16</td><td>8035.T 東京エレクトロン</td><td>半導体サイクル</td><td>54.5</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算短信・説明会資料</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>17</td><td>8725.T MS&amp;AD</td><td>金利上昇・保険運用</td><td>53.3</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式決算短信ページ</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr><tr><td>18</td><td>7735.T SCREEN HD</td><td>洗浄装置</td><td>48.3</td><td>公式URL候補設定済み</td><td>自動取得確認済み</td><td>公式IRトップ/最新IR資料</td><td>公式ページから決算短信または決算説明資料を開き、217入力表へ数値入力</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>4. 入力する数値</h2>
+    <ul>
+      <li>直近決算: 売上、営業利益、EPS、それぞれの前年比</li>
+      <li>1つ前の決算: 売上前年比、営業利益前年比、EPS前年比</li>
+      <li>会社予想修正: 売上予想修正率、利益予想修正率</li>
+      <li>取得元: 公式IR、決算短信、決算説明資料、有価証券報告書、J-Quants、EDINET</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>5. 次工程</h2>
+    <p>まず確認順1〜5の銘柄から、公式資料を開いて数値入力を開始します。入力後、代理スコアではなく本番の業績モメンタムスコアを再計算します。</p>
+  </section>
+</main>
+</body>
+</html>
