@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-22 01:47 JST",
+  "updatedAt": "2026-05-23 01:03 JST",
   "source": "Yahoo Finance chart API via GitHub Actions",
   "summary": "停止判定が2銘柄あります。予定買いを止め、理由を確認します。",
   "errors": [],
@@ -9,7 +9,7 @@
     "action": "予定通り監視継続。ドル急落シグナルが弱ければ、他の条件と合わせて段階投資を検討します。",
     "signals": [
       {
-        "label": "DXYが100割れ: 99.38。ドルの基調が弱い可能性。",
+        "label": "DXYが100割れ: 99.31。ドルの基調が弱い可能性。",
         "severity": "watch"
       }
     ]
@@ -18,82 +18,82 @@
     {
       "symbol": "^N225",
       "name": "日経平均",
-      "value": 61684.14,
-      "changePct": 8.549723100639328,
-      "change5dPct": -2.509746222602525,
-      "change20dPct": 3.6388786413326506,
+      "value": 63339.07,
+      "changePct": 11.462014546235247,
+      "change5dPct": 1.0933358820512211,
+      "change20dPct": 8.316540134390303,
       "digits": 0
     },
     {
       "symbol": "1306.T",
       "name": "TOPIX ETF",
-      "value": 408.8,
-      "changePct": -89.78255436140964,
-      "change5dPct": -0.5836605388578828,
-      "change20dPct": 2.430466987757568,
+      "value": 412.4,
+      "changePct": -89.69257685578606,
+      "change5dPct": 0.6099063529498249,
+      "change20dPct": 2.9455800590864736,
       "digits": 0
     },
     {
       "symbol": "^GSPC",
       "name": "S&P500",
-      "value": 7403.24,
-      "changePct": 7.1456586646520455,
-      "change5dPct": -1.306453750486576,
-      "change20dPct": 4.147770267666517,
+      "value": 7493.9,
+      "changePct": 8.457763285674373,
+      "change5dPct": 1.1527299723290765,
+      "change20dPct": 4.589200934109408,
       "digits": 2
     },
     {
       "symbol": "^IXIC",
       "name": "NASDAQ",
-      "value": 26130.46,
-      "changePct": 14.176265300245955,
-      "change5dPct": -1.895087368529968,
-      "change20dPct": 6.923338175419929,
+      "value": 26459.574,
+      "changePct": 15.614319103279858,
+      "change5dPct": 0.8939260931036496,
+      "change20dPct": 6.53460786158658,
       "digits": 2
     },
     {
       "symbol": "JPY=X",
       "name": "ドル円",
-      "value": 159.141,
-      "changePct": 2.5657385924207237,
-      "change5dPct": 0.8172276971032014,
-      "change20dPct": -0.21757535203573852,
+      "value": 159.215,
+      "changePct": 2.6134312967259645,
+      "change5dPct": 0.5259412028625449,
+      "change20dPct": -0.3330228664539958,
       "digits": 2
     },
     {
       "symbol": "^TNX",
       "name": "米10年金利",
-      "value": 4.599,
-      "changePct": 12.555066079295152,
-      "change5dPct": 3.093477592341108,
-      "change20dPct": 6.384456365925042,
+      "value": 4.576,
+      "changePct": 11.992168379833561,
+      "change5dPct": -0.4134883799604768,
+      "change20dPct": 6.171695145056401,
       "digits": 2
     },
     {
       "symbol": "DX-Y.NYB",
       "name": "ドル指数DXY",
-      "value": 99.38,
-      "changePct": 1.615541922290387,
-      "change5dPct": 0.5056662221587422,
-      "change20dPct": 0.5870414274565793,
+      "value": 99.311,
+      "changePct": 1.648925281473904,
+      "change5dPct": 0.041304883973182556,
+      "change20dPct": 0.8131132335799063,
       "digits": 2
     },
     {
       "symbol": "GC=F",
       "name": "金先物",
-      "value": 4519.2,
-      "changePct": -10.675389876069818,
-      "change5dPct": -3.3966801551736756,
-      "change20dPct": -3.951033852581639,
+      "value": 4518.3,
+      "changePct": -13.18808000461121,
+      "change5dPct": -0.8231223121111679,
+      "change20dPct": -4.319924890939862,
       "digits": 1
     },
     {
       "symbol": "^VIX",
       "name": "VIX",
-      "value": 17.25,
-      "changePct": -9.638554216867469,
-      "change5dPct": -0.057938752892379236,
-      "change20dPct": -10.668045173049666,
+      "value": 16.61,
+      "changePct": -12.991094814038767,
+      "change5dPct": -9.875204964943288,
+      "change20dPct": -11.223940070715646,
       "digits": 2
     }
   ],
@@ -102,8 +102,8 @@
       "code": "8035",
       "symbol": "8035.T",
       "name": "東京エレクトロン",
-      "price": 48800,
-      "changePct": 11.010009099181074,
+      "price": 49830,
+      "changePct": 13.353048225659691,
       "per": 34,
       "signal": "確認"
     },
@@ -111,8 +111,8 @@
       "code": "6857",
       "symbol": "6857.T",
       "name": "アドバンテスト",
-      "price": 26745,
-      "changePct": 4.985279685966634,
+      "price": 26845,
+      "changePct": 5.377821393523062,
       "per": 58,
       "signal": "確認"
     },
@@ -120,8 +120,8 @@
       "code": "4519",
       "symbol": "4519.T",
       "name": "中外製薬",
-      "price": 7836,
-      "changePct": -21.087613293051362,
+      "price": 8090,
+      "changePct": -18.52970795568983,
       "per": 31,
       "signal": "停止"
     },
@@ -129,8 +129,8 @@
       "code": "8306",
       "symbol": "8306.T",
       "name": "三菱UFJ",
-      "price": 3067,
-      "changePct": 4.2488103331067295,
+      "price": 3091,
+      "changePct": 5.064581917063222,
       "per": 12,
       "signal": "確認"
     },
@@ -138,8 +138,8 @@
       "code": "8058",
       "symbol": "8058.T",
       "name": "三菱商事",
-      "price": 5411,
-      "changePct": 8.415147265077138,
+      "price": 5432,
+      "changePct": 8.835904628330995,
       "per": 11,
       "signal": "確認"
     },
@@ -147,8 +147,8 @@
       "code": "7974",
       "symbol": "7974.T",
       "name": "任天堂",
-      "price": 7274,
-      "changePct": -15.290555490858274,
+      "price": 7240,
+      "changePct": -15.686502853150111,
       "per": 32,
       "signal": "停止"
     },
@@ -156,8 +156,8 @@
       "code": "9433",
       "symbol": "9433.T",
       "name": "KDDI",
-      "price": 2718,
-      "changePct": 3.89908256880734,
+      "price": 2709.5,
+      "changePct": 3.5741590214067283,
       "per": 14,
       "signal": "確認"
     },
@@ -165,8 +165,8 @@
       "code": "2802",
       "symbol": "2802.T",
       "name": "味の素",
-      "price": 5176,
-      "changePct": 12.47283789656671,
+      "price": 5300,
+      "changePct": 15.167318557149065,
       "per": 34,
       "signal": "確認"
     }
