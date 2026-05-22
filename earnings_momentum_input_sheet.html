@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>直近2回決算入力表・業績モメンタム代理スコア</title>
+<style>
+  :root {
+    --ink: #000;
+    --navy: #123f5a;
+    --blue: #0b6f99;
+    --line: #b9d3e4;
+    --soft: #eef7fc;
+    --warn: #a65b00;
+    --green: #09684f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+    line-height: 1.72;
+    background: #f4f8fb;
+  }
+  header {
+    background: linear-gradient(120deg, #103f5a, #0e6f91);
+    color: #fff;
+    padding: 28px 34px 34px;
+  }
+  header h1 { margin: 0 0 8px; font-size: 28px; line-height: 1.35; }
+  header p { margin: 5px 0; font-weight: 700; }
+  main { max-width: 1160px; margin: 0 auto; padding: 26px 22px 48px; }
+  section {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin: 0 0 18px;
+    padding: 18px 20px;
+  }
+  h2 {
+    margin: 0 0 12px;
+    padding-left: 12px;
+    border-left: 7px solid var(--blue);
+    font-size: 22px;
+    line-height: 1.4;
+  }
+  p { margin: 8px 0; }
+  .lead { font-size: 16px; font-weight: 900; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 14px 0 4px; }
+  .card {
+    border: 1px solid var(--line);
+    background: #fbfdff;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .big { display: block; font-size: 25px; color: var(--blue); font-weight: 900; }
+  .note {
+    border-left: 6px solid var(--warn);
+    background: #fff7ea;
+    padding: 12px 14px;
+    margin: 12px 0;
+    font-weight: 800;
+  }
+  .ok { color: var(--green); font-weight: 900; }
+  .warn { color: var(--warn); font-weight: 900; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 10px 0 4px;
+    background: #fff;
+  }
+  th, td {
+    border: 1px solid #d7e5ee;
+    padding: 8px 9px;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    color: #000;
+  }
+  th { background: #e7f2f9; font-weight: 900; text-align: left; }
+  .formula {
+    background: #f2fbf5;
+    border: 1px solid #b8dfc3;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-weight: 900;
+  }
+  ul { margin: 8px 0 0 22px; padding: 0; }
+  li { margin: 4px 0; }
+  .small { font-size: 12px; }
+  @media print {
+    body { background: #fff; }
+    header { padding: 22px 28px; }
+    main { max-width: none; padding: 18px 24px; }
+    section { break-inside: avoid; page-break-inside: avoid; border-radius: 8px; }
+    h2 { break-after: avoid; page-break-after: avoid; }
+    table, tr, .card, .note, .formula { break-inside: avoid; page-break-inside: avoid; }
+    th, td { font-size: 10.5px; line-height: 1.52; padding: 6px 7px; }
+    .cards { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    a { color: #000; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>直近2回決算入力表・業績モメンタム代理スコア</h1>
+  <p>目的: 業績上位群を作るための本番入力欄と、現時点の代理順位を分離して管理する</p>
+  <p>作成日時: 2026/05/22 13:56</p>
+</header>
+<main>
+  <section>
+    <h2>1. 現在の到達点</h2>
+    <p class="lead">直近2回決算を入力する本番テーブルを100社分作成しました。公式数値はまだ未入力のため、購入判断には使いません。</p>
+    <div class="cards">
+      <div class="card"><span class="big">100社</span>入力表の対象</div>
+      <div class="card"><span class="big">52社</span>Yahoo業績系代理データあり</div>
+      <div class="card"><span class="big">6社</span>公式IR URL候補あり</div>
+      <div class="card"><span class="big">0社</span>公式2決算入力済み</div>
+    </div>
+    <div class="note">代理スコアは「どの会社から公式資料を確認するか」の優先順位です。直近2回決算、EPS、会社予想修正が入るまでは購入判断用スコアではありません。</div>
+  </section>
+
+  <section>
+    <h2>2. 進捗表</h2>
+    <table>
+    <thead><tr><th>項目</th><th>件数</th><th>状態</th><th>意味</th></tr></thead>
+    <tbody><tr><td>対象母集団</td><td>100/100</td><td>作成済み</td><td>現時点の100社を入力表に展開した。</td></tr><tr><td>株価・出来高系データ</td><td>100/100</td><td>取得済み</td><td>価格、出来高、下落耐性などの補助確認に使う。</td></tr><tr><td>Yahoo業績系代理データ</td><td>52/100</td><td>代理データ</td><td>業績モメンタム候補探索に使えるが、公式2決算の代替ではない。</td></tr><tr><td>公式IR URL候補</td><td>6/100</td><td>一部取得済み</td><td>直近2回決算の公式入力に使う。</td></tr><tr><td>公式直近2回決算の入力</td><td>0/100</td><td>未入力</td><td>次工程で入力する本番データ。ここが入るまで購入判断には使わない。</td></tr><tr><td>代理スコア算出可能</td><td>52/100</td><td>候補探索のみ</td><td>候補の優先順位を見る段階。購入判断不可。</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>3. 本番入力欄の中身</h2>
+    <p>公式資料から入力する項目です。空欄は未取得を意味し、AIの推測値は入れません。</p>
+    <ul>
+      <li>直近決算: 決算期、発表日、売上、営業利益、EPS、それぞれの前年比</li>
+      <li>1つ前の決算: 決算期、発表日、売上前年比、営業利益前年比、EPS前年比</li>
+      <li>会社予想修正: 売上予想修正率、利益予想修正率</li>
+      <li>取得元: 公式IR、決算短信、有価証券報告書、J-Quants、EDINET等</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. 代理スコアの計算</h2>
+    <p>現時点では直近2回決算が未入力のため、既存のYahoo業績系データと株価データで代理順位を作っています。</p>
+    <div class="formula">代理スコア = 売上モメンタム30% + 利益モメンタム35% + 1年株価反応15% + 流動性10% + 下落耐性10%</div>
+    <p class="small">本番スコアとは異なります。本番ではEPS、会社予想修正、決算後株価反応、利益率改善を公式資料で追加します。</p>
+  </section>
+
+  <section>
+    <h2>5. 代理スコア上位20社</h2>
+    <p>下表は購入候補の確定ではありません。公式資料確認の優先順位です。</p>
+    <table>
+    <thead><tr><th>順位</th><th>銘柄コード</th><th>会社名</th><th>代理スコア</th><th>本番式で使えている点数</th><th>売上順位点</th><th>利益順位点</th><th>使用範囲</th><th>次の確認</th></tr></thead>
+    <tbody><tr><td>1</td><td>6857.T</td><td>アドバンテスト</td><td>87.7</td><td>50</td><td>99</td><td>97</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>2</td><td>5801.T</td><td>古河電工</td><td>86.8</td><td>50</td><td>81.4</td><td>91.1</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>3</td><td>6920.T</td><td>レーザーテック</td><td>85.5</td><td>50</td><td>96.1</td><td>88.9</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>4</td><td>5803.T</td><td>フジクラ</td><td>84.9</td><td>50</td><td>96.1</td><td>90</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>5</td><td>9984.T</td><td>ソフトバンクG</td><td>81.6</td><td>50</td><td>66.2</td><td>99</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>6</td><td>7012.T</td><td>川崎重工業</td><td>75</td><td>50</td><td>82.4</td><td>89.1</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>7</td><td>8306.T</td><td>三菱UFJ FG</td><td>73.8</td><td>50</td><td>72.1</td><td>73</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>8</td><td>6762.T</td><td>TDK</td><td>73.3</td><td>50</td><td>81.4</td><td>67</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>9</td><td>5802.T</td><td>住友電工</td><td>72.9</td><td>50</td><td>73.5</td><td>78</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>10</td><td>6146.T</td><td>ディスコ</td><td>72</td><td>50</td><td>90.7</td><td>58.6</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>11</td><td>8316.T</td><td>三井住友FG</td><td>69.1</td><td>50</td><td>57.4</td><td>73.9</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>12</td><td>9983.T</td><td>ファーストリテイリング</td><td>68.4</td><td>50</td><td>81.9</td><td>58</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>13</td><td>6594.T</td><td>ニデック</td><td>65</td><td>50</td><td>77.9</td><td>90</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>14</td><td>6501.T</td><td>日立製作所</td><td>62.9</td><td>50</td><td>60.8</td><td>61.4</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>15</td><td>6503.T</td><td>三菱電機</td><td>61.6</td><td>50</td><td>55.9</td><td>50</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>16</td><td>8411.T</td><td>みずほFG</td><td>61.3</td><td>50</td><td>22.5</td><td>78.9</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>17</td><td>8766.T</td><td>東京海上HD</td><td>61.1</td><td>50</td><td>59.3</td><td>48.5</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>18</td><td>6954.T</td><td>ファナック</td><td>56.5</td><td>50</td><td>54.4</td><td>51.8</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>19</td><td>6861.T</td><td>キーエンス</td><td>56.4</td><td>50</td><td>81.4</td><td>41.9</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr><tr><td>20</td><td>6981.T</td><td>村田製作所</td><td>56.1</td><td>50</td><td>46.1</td><td>40.1</td><td>候補探索のみ（購入判断不可）</td><td>直近2回決算と会社予想修正を公式資料から入力</td></tr></tbody>
+  </table>
+  </section>
+
+  <section>
+    <h2>6. 次に行う作業</h2>
+    <ul>
+      <li>A詳細確認の銘柄から、公式IR・決算短信を開いて直近2回決算の数値を入力する。</li>
+      <li>会社予想修正の有無を入力し、下方修正銘柄を自動減点できるようにする。</li>
+      <li>本番入力済み銘柄だけで業績モメンタムスコアを再計算する。</li>
+      <li>時流テーマ資料と結合し、6月テスト候補8〜10社を作る。</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
