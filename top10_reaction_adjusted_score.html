@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社版 反応補正後テスト優先順位</title>
+  <style>
+    @page { size: A4 landscape; margin: 10mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: #000;
+      background: #f5f8fb;
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      padding: 22px 28px 40px;
+    }
+    header {
+      border: 3px solid #0b4f71;
+      background: #eff8fd;
+      padding: 22px;
+      margin-bottom: 16px;
+      break-inside: avoid;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; color: #000; letter-spacing: 0; }
+    h2 {
+      margin: 24px 0 10px;
+      padding-left: 12px;
+      border-left: 8px solid #0b6f9d;
+      font-size: 21px;
+      color: #000;
+      break-after: avoid;
+    }
+    p, td, th, li { color: #000; }
+    .lead { margin: 0; font-size: 16px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+      break-inside: avoid;
+    }
+    .card {
+      border: 2px solid #b8d7e8;
+      background: #fff;
+      padding: 12px;
+      min-height: 74px;
+      break-inside: avoid;
+    }
+    .card strong {
+      display: block;
+      font-size: 24px;
+      color: #003c57;
+      line-height: 1.2;
+    }
+    .notice {
+      border: 2px solid #d39b2a;
+      background: #fff8e8;
+      padding: 12px 14px;
+      margin: 14px 0;
+      break-inside: avoid;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin: 10px 0 18px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      background: #fff;
+      font-size: 11.4px;
+    }
+    thead { display: table-header-group; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    th, td {
+      border: 1px solid #9db8c8;
+      padding: 6px 7px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: #000;
+    }
+    th { background: #dcecf5; font-weight: 700; text-align: left; }
+    .rank-table th:nth-child(1), .rank-table td:nth-child(1) { width: 42px; text-align: center; }
+    .rank-table th:nth-child(3), .rank-table td:nth-child(3),
+    .rank-table th:nth-child(4), .rank-table td:nth-child(4),
+    .rank-table th:nth-child(5), .rank-table td:nth-child(5),
+    .rank-table th:nth-child(6), .rank-table td:nth-child(6),
+    .rank-table th:nth-child(7), .rank-table td:nth-child(7) { width: 62px; text-align: right; }
+    .bars {
+      border: 2px solid #b8d7e8;
+      padding: 10px 12px;
+      margin: 10px 0 16px;
+      break-inside: avoid;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 52px 430px;
+      gap: 8px;
+      align-items: center;
+      margin: 7px 0;
+      color: #000;
+      font-size: 12px;
+    }
+    .bar-track {
+      height: 16px;
+      border: 1px solid #8eb2c4;
+      background: #eef5f8;
+    }
+    .bar-track span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #0b6f9d, #31a67a);
+    }
+    .bar-score { font-weight: 700; text-align: right; }
+    .bar-detail { overflow-wrap: anywhere; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      break-inside: avoid;
+    }
+    .small { font-size: 11.5px; }
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      h2, table, .card, .notice, .bars { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>10社版 反応補正後テスト優先順位</h1>
+      <p class="lead">公式決算値から作った元スコアに、決算発表後の株価反応を加えて、6月以降のNISA 1年保有テストで深掘りする順番を再計算しました。</p>
+      <p class="small">作成日時: 2026/05/24 12:47</p>
+    </header>
+
+    <section class="cards">
+      <div class="card"><strong>10社</strong><span>補正対象</span></div>
+      <div class="card"><strong>70%</strong><span>元スコアの重み</span></div>
+      <div class="card"><strong>30%</strong><span>決算後反応の重み</span></div>
+      <div class="card"><strong>暫定</strong><span>20営業日未到達あり</span></div>
+    </section>
+
+    <section class="notice">
+      <strong>重要:</strong>
+      この補正は購入判断ではありません。数字の良い銘柄でも、決算後に市場が弱く反応した場合は優先度を下げます。逆に反応が強くても、過熱・高PER/PBR・大きな下落率がある銘柄は追加検算が必要です。
+    </section>
+
+    <h2>1. テスト優先順位</h2>
+    <div class="bars">
+      <div class="bar-row">
+    <div class="bar-label">1. ディスコ</div>
+    <div class="bar-track"><span style="width:55.9%"></span></div>
+    <div class="bar-score">55.9</div>
+    <div class="bar-detail">暫定優先 / 元4位 / 6月イベント後の候補リストに残す</div>
+  </div><div class="bar-row">
+    <div class="bar-label">2. 古河電工</div>
+    <div class="bar-track"><span style="width:57.2%"></span></div>
+    <div class="bar-score">57.2</div>
+    <div class="bar-detail">反応強いが過熱確認 / 元7位 / 株価過熱・下落率・PER/PBRを追加検算する</div>
+  </div><div class="bar-row">
+    <div class="bar-label">3. アドバンテスト</div>
+    <div class="bar-track"><span style="width:58.6%"></span></div>
+    <div class="bar-score">58.6</div>
+    <div class="bar-detail">数字は良いが反応確認 / 元1位 / 最新決算後の弱さを再確認し、すぐには上位扱いしない</div>
+  </div><div class="bar-row">
+    <div class="bar-label">4. ソフトバンクG</div>
+    <div class="bar-track"><span style="width:47.2%"></span></div>
+    <div class="bar-score">47.2</div>
+    <div class="bar-detail">数字は良いが反応確認 / 元2位 / 最新決算後の弱さを再確認し、すぐには上位扱いしない</div>
+  </div><div class="bar-row">
+    <div class="bar-label">5. TDK</div>
+    <div class="bar-track"><span style="width:51.8%"></span></div>
+    <div class="bar-score">51.8</div>
+    <div class="bar-detail">比較継続 / 元6位 / 次回データ更新で再計算</div>
+  </div><div class="bar-row">
+    <div class="bar-label">6. 川崎重工業</div>
+    <div class="bar-track"><span style="width:47.1%"></span></div>
+    <div class="bar-score">47.1</div>
+    <div class="bar-detail">比較継続 / 元3位 / 次回データ更新で再計算</div>
+  </div><div class="bar-row">
+    <div class="bar-label">7. 三菱UFJ FG</div>
+    <div class="bar-track"><span style="width:46.3%"></span></div>
+    <div class="bar-score">46.3</div>
+    <div class="bar-detail">比較継続 / 元5位 / 次回データ更新で再計算</div>
+  </div><div class="bar-row">
+    <div class="bar-label">8. 住友電工</div>
+    <div class="bar-track"><span style="width:39.5%"></span></div>
+    <div class="bar-score">39.5</div>
+    <div class="bar-detail">見送り寄り / 元8位 / 現時点では優先度を下げる</div>
+  </div><div class="bar-row">
+    <div class="bar-label">9. フジクラ</div>
+    <div class="bar-track"><span style="width:29.3%"></span></div>
+    <div class="bar-score">29.3</div>
+    <div class="bar-detail">見送り寄り / 元10位 / 現時点では優先度を下げる</div>
+  </div><div class="bar-row">
+    <div class="bar-label">10. レーザーテック</div>
+    <div class="bar-track"><span style="width:29.2%"></span></div>
+    <div class="bar-score">29.2</div>
+    <div class="bar-detail">見送り寄り / 元9位 / 現時点では優先度を下げる</div>
+  </div>
+    </div>
+    <table class="rank-table">
+    <thead><tr><th>順位</th><th>銘柄</th><th>元順位</th><th>順位変化</th><th>元スコア</th><th>反応</th><th>補正後</th><th>判定</th><th>次アクション</th></tr></thead>
+    <tbody><tr><td>1</td><td>6146.T ディスコ</td><td>4</td><td>+3</td><td>50.4</td><td>68.7</td><td>55.9</td><td>暫定優先</td><td>6月イベント後の候補リストに残す</td></tr><tr><td>2</td><td>5801.T 古河電工</td><td>7</td><td>+5</td><td>44</td><td>88</td><td>57.2</td><td>反応強いが過熱確認</td><td>株価過熱・下落率・PER/PBRを追加検算する</td></tr><tr><td>3</td><td>6857.T アドバンテスト</td><td>1</td><td>-2</td><td>69.8</td><td>32.5</td><td>58.6</td><td>数字は良いが反応確認</td><td>最新決算後の弱さを再確認し、すぐには上位扱いしない</td></tr><tr><td>4</td><td>9984.T ソフトバンクG</td><td>2</td><td>-2</td><td>60.9</td><td>15.2</td><td>47.2</td><td>数字は良いが反応確認</td><td>最新決算後の弱さを再確認し、すぐには上位扱いしない</td></tr><tr><td>5</td><td>6762.T TDK</td><td>6</td><td>+1</td><td>47</td><td>62.9</td><td>51.8</td><td>比較継続</td><td>次回データ更新で再計算</td></tr><tr><td>6</td><td>7012.T 川崎重工業</td><td>3</td><td>-3</td><td>52.4</td><td>34.8</td><td>47.1</td><td>比較継続</td><td>次回データ更新で再計算</td></tr><tr><td>7</td><td>8306.T 三菱UFJ FG</td><td>5</td><td>-2</td><td>48.4</td><td>41.3</td><td>46.3</td><td>比較継続</td><td>次回データ更新で再計算</td></tr><tr><td>8</td><td>5802.T 住友電工</td><td>8</td><td>0</td><td>40.3</td><td>37.6</td><td>39.5</td><td>見送り寄り</td><td>現時点では優先度を下げる</td></tr><tr><td>9</td><td>5803.T フジクラ</td><td>10</td><td>+1</td><td>32</td><td>22.8</td><td>29.3</td><td>見送り寄り</td><td>現時点では優先度を下げる</td></tr><tr><td>10</td><td>6920.T レーザーテック</td><td>9</td><td>-1</td><td>36.2</td><td>12.9</td><td>29.2</td><td>見送り寄り</td><td>現時点では優先度を下げる</td></tr></tbody>
+  </table>
+
+    <h2>2. 補正に使った根拠</h2>
+    <table class="">
+    <thead><tr><th>銘柄</th><th>1日超過</th><th>5日超過</th><th>20日超過</th><th>20日件数</th><th>反応評価</th><th>注意点</th></tr></thead>
+    <tbody><tr><td>6146.T ディスコ</td><td>6.16%</td><td>9.32%</td><td>17.57%</td><td>1/2</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達あり / PBR高め</td></tr><tr><td>5801.T 古河電工</td><td>17.5%</td><td>11.75%</td><td>72.37%</td><td>1/2</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達あり / 1年上昇率が極端</td></tr><tr><td>6857.T アドバンテスト</td><td>0.3%</td><td>-5.36%</td><td>-5.16%</td><td>1/2</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達あり / PBR高め / 1年上昇率が極端</td></tr><tr><td>9984.T ソフトバンクG</td><td>-5.35%</td><td>-9.11%</td><td>-19.09%</td><td>1/2</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達あり / 投資会社は別枠</td></tr><tr><td>6762.T TDK</td><td>8.27%</td><td>6.4%</td><td>2.97%</td><td>1/2</td><td>短期反応は強い（20日未到達あり）</td><td>20営業日未到達あり</td></tr><tr><td>7012.T 川崎重工業</td><td>2.64%</td><td>-6.47%</td><td>-2.67%</td><td>1/2</td><td>決算後反応は弱め（20日未到達あり）</td><td>20営業日未到達あり</td></tr><tr><td>8306.T 三菱UFJ FG</td><td>1.76%</td><td>-0.35%</td><td>-6.86%</td><td>1/2</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達あり / 銀行は別枠</td></tr><tr><td>5802.T 住友電工</td><td>-5.93%</td><td>-2.01%</td><td>23.91%</td><td>1/2</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達あり / 1年上昇率が極端</td></tr><tr><td>5803.T フジクラ</td><td>-1.85%</td><td>-15.21%</td><td>19.2%</td><td>1/2</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達あり / PER高め / PBR高め / 1年上昇率が極端 / 直近下落率が大きい</td></tr><tr><td>6920.T レーザーテック</td><td>-6.26%</td><td>-11.37%</td><td>-11.51%</td><td>1/2</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達あり / PER高め / PBR高め</td></tr></tbody>
+  </table>
+
+    <h2>3. 見えたこと</h2>
+    <table class="">
+    <thead><tr><th>観点</th><th>内容</th></tr></thead>
+    <tbody><tr><td>上げた銘柄</td><td>古河電工、ディスコ、TDKなどは決算後反応が強く、元スコアより上位に移動。</td></tr><tr><td>下げた銘柄</td><td>ソフトバンクG、アドバンテストは元スコアは高いが、直近の決算後反応が弱く優先度を抑制。</td></tr><tr><td>未確定要素</td><td>全銘柄で最新5月決算分の20営業日が未到達。6月に再計算が必要。</td></tr><tr><td>使い方</td><td>この表は買い銘柄確定ではなく、6月テストで深掘りする順番を決める資料。</td></tr></tbody>
+  </table>
+
+    <h2>4. 数式と扱い</h2>
+    <table class="">
+    <thead><tr><th>項目</th><th>内容</th></tr></thead>
+    <tbody><tr><td>元スコア</td><td>公式決算値、株価モメンタム、PER/PBR/ROE、下落率、データ信頼度で作った既存スコア。</td></tr><tr><td>反応スコア</td><td>決算発表後1日・5日・20日の対日経平均超過リターンを0〜100点へ換算。</td></tr><tr><td>20日未到達補正</td><td>5月発表分は20営業日が未到達のため、20日反応の重みを到達率で下げる。</td></tr><tr><td>補正後スコア</td><td>補正後スコア = 元スコア70% + 反応スコア30%。現段階では購入判断ではなく、6月テスト候補の優先順位。</td></tr><tr><td>判定</td><td>最終表は点数順だけではなく、反応の強さ、20日未到達、PER/PBR、過熱、特殊業態を合わせたテスト優先順で並べる。</td></tr></tbody>
+  </table>
+  </main>
+</body>
+</html>
