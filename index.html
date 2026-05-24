@@ -456,6 +456,46 @@
       gap: 10px;
       margin-top: 12px;
     }
+    .candidate-readiness {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .readiness-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 58px;
+      border: 1px solid #c9dceb;
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: #f8fbff;
+      color: #18324a;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .readiness-badge.ok {
+      border-color: #9ed7ba;
+      background: #f3fff8;
+      color: #0b7047;
+    }
+    .readiness-badge.watch {
+      border-color: #f0c27a;
+      background: #fff9ee;
+      color: #9a5200;
+    }
+    .readiness-badge.stop {
+      border-color: #efb0b0;
+      background: #fff6f6;
+      color: #b21f1f;
+    }
+    .candidate-readiness .mechanism-card {
+      overflow-x: auto;
+    }
+    .candidate-readiness .mechanism-table {
+      min-width: 920px;
+    }
     .mechanism-card {
       border: 1px solid #b7d4ec;
       border-radius: 12px;
@@ -1567,6 +1607,9 @@
               <div class="score-ranking-summary" id="score-ranking-summary">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、NISA 1年保有スコアランキングを表示します。</div>
               </div>
+              <div class="candidate-readiness" id="candidate-readiness">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>
+              </div>
               <div class="selection-mechanism" id="selection-mechanism">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>
               </div>
@@ -2512,6 +2555,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、NISA 1年保有スコアランキングを表示します。</div>`;
     };
 
+    const renderCandidateReadinessHint = () => {
+      const target = document.getElementById("candidate-readiness");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>`;
+    };
+
     const renderCandidateConclusionHint = () => {
       const target = document.getElementById("candidate-conclusion");
       if (!target) return;
@@ -2689,6 +2738,72 @@
       `;
     };
 
+    const readinessBadge = (state, text) => `<span class="readiness-badge ${state}">${escapeHtml(text)}</span>`;
+
+    const readinessFlag = (condition, okText = "OK", watchText = "確認") => (
+      condition ? readinessBadge("watch", watchText) : readinessBadge("ok", okText)
+    );
+
+    const readinessNextAction = (row) => {
+      const gate = row.hard_gate || "";
+      const category = row.category || "";
+      const confidence = numericValue(row.data_confidence);
+      const reaction = numericValue(row.earnings_reaction_score);
+      const ret1y = numericValue(row.ret1y_pct);
+      const drawdown = numericValue(row.max_drawdown60_pct);
+      const valuation = numericValue(row.valuation_score);
+
+      if (category === "残す") return "6月イベント後に、日経75日線・米10年金利・為替・最新決算コメントを再確認する。";
+      if (gate.includes("未取得") || gate.includes("信頼度") || (confidence !== null && confidence < 70)) return "決算後反応、PER/PBR/ROE、売上・利益成長率の未取得分を埋める。";
+      if ((ret1y !== null && ret1y >= 250) || gate.includes("過熱")) return "1年上昇率が過熱しているため、押し目・出来高減速・決算後反応の改善を待つ。";
+      if ((drawdown !== null && drawdown <= -30) || (numericValue(row.downside_safety_score) ?? 100) < 50) return "60日最大下落率と急落要因を確認し、下落耐性が戻るまで候補にしない。";
+      if ((valuation !== null && valuation < 45) || gate.includes("PER") || gate.includes("PBR")) return "PER/PBRが成長率で説明できるか、同業比較と次期利益見通しで確認する。";
+      if ((reaction !== null && reaction < 35) || gate.includes("反応")) return "決算後1日・5日・20日の対日経平均反応が改善するか確認する。";
+      return row.next_check || "6月判定前に不足データと市場イベントを確認する。";
+    };
+
+    const renderCandidateReadiness = (allRankedRows) => {
+      const target = document.getElementById("candidate-readiness");
+      if (!target) return;
+      const rows = allRankedRows.map((row) => {
+        const gate = row.hard_gate || "";
+        const confidence = numericValue(row.data_confidence);
+        const reaction = numericValue(row.earnings_reaction_score);
+        const ret1y = numericValue(row.ret1y_pct);
+        const drawdown = numericValue(row.max_drawdown60_pct);
+        const valuation = numericValue(row.valuation_score);
+        const missing = gate.includes("未取得") || gate.includes("信頼度") || (confidence !== null && confidence < 70);
+        const overheat = gate.includes("過熱") || (ret1y !== null && ret1y >= 250);
+        const downside = gate.includes("60日最大下落率") || (drawdown !== null && drawdown <= -30) || (numericValue(row.downside_safety_score) ?? 100) < 50;
+        const expensive = gate.includes("PER") || gate.includes("PBR") || (valuation !== null && valuation < 45);
+        const weakReaction = gate.includes("決算後反応") || (reaction !== null && reaction < 35);
+        const statusClass = row.category === "残す" ? "ok" : row.category === "落とす" ? "stop" : "watch";
+        return `
+          <tr>
+            <td>${escapeHtml(row.nisa_rank)}</td>
+            <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}<br><small>NISA ${pointOrText(row.nisa_score)} / 信頼度 ${pointOrText(row.data_confidence)}</small></td>
+            <td>${readinessBadge(statusClass, row.category || "-")}</td>
+            <td>${readinessFlag(missing)}</td>
+            <td>${readinessFlag(overheat)}</td>
+            <td>${downside ? readinessBadge("stop", "注意") : readinessBadge("ok", "OK")}</td>
+            <td>${expensive ? readinessBadge("watch", "確認") : readinessBadge("ok", "OK")}</td>
+            <td>${readinessFlag(weakReaction)}</td>
+            <td>${escapeHtml(readinessNextAction(row))}</td>
+          </tr>
+        `;
+      }).join("");
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>6月判定前チェック表</h4>
+          <p>点数が高い順に、購入候補に進めない理由を分解します。「残す」は深掘り候補、「保留」は確認待ち、「落とす」は初回NISAテスト候補から外す扱いです。</p>
+          <table class="mechanism-table">
+            <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>未取得</th><th>過熱</th><th>下落</th><th>割高</th><th>反応</th><th>次に確認すること</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
     const renderCandidateConclusion = (allRankedRows, adjustedByTicker, baseByTicker) => {
       const target = document.getElementById("candidate-conclusion");
       if (!target) return;
@@ -2794,6 +2909,7 @@
       setLiveTableHeader(["銘柄", "価格", "前日比", "PER", "判定"]);
       renderCandidateConclusionHint();
       renderScoreRankingSummaryHint();
+      renderCandidateReadinessHint();
       renderSelectionMechanismHint();
       renderCandidateHypothesisHint();
 
@@ -2918,6 +3034,7 @@
         }).join("");
         renderCandidateConclusion(allRankedRows, adjustedByTicker, baseByTicker);
         renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
+        renderCandidateReadiness(allRankedRows);
         renderSelectionMechanism(holdingRows, triageRows, adjustedByTicker, baseByTicker);
         renderCandidateHypotheses(holdingRows, adjustedByTicker, baseByTicker);
 
@@ -2930,6 +3047,7 @@
         body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。NISA 1年保有スコアCSVを確認してください。</td></tr>`;
         renderCandidateConclusionHint();
         renderScoreRankingSummaryHint();
+        renderCandidateReadinessHint();
         renderSelectionMechanismHint();
         renderCandidateHypothesisHint();
         if (alert) {
