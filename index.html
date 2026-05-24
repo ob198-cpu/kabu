@@ -1610,6 +1610,9 @@
               <div class="candidate-readiness" id="candidate-readiness">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>
               </div>
+              <div class="candidate-readiness" id="final-decision-gate">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入可否判定ゲートを表示します。</div>
+              </div>
               <div class="selection-mechanism" id="selection-mechanism">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>
               </div>
@@ -1939,7 +1942,7 @@
         <div class="panel" style="margin-top:14px">
           <table class="rule-table">
             <tr><th>チェック</th><th>良い条件</th><th>悪い条件</th><th>行動</th></tr>
-            <tr><td>米CPI</td><td>前年比3.8%以下、前月比0.4%以下</td><td>前年比4.0%以上、前月比0.5%以上</td><td>悪ければ6/18追加を35万円から17.5万円へ半減</td></tr>
+            <tr><td>米CPI</td><td>前年比3.8%以下、前月比0.4%以下</td><td>前年比4.0%以上、前月比0.5%以上</td><td>悪ければ6月判定を延期または候補枠を縮小</td></tr>
             <tr><td>米10年金利</td><td>4.60%未満</td><td>4.70%以上</td><td>悪ければ半導体の追加を止める</td></tr>
             <tr><td>日銀後の為替</td><td>2営業日の円高が3%未満</td><td>2営業日で3%以上円高</td><td>輸出・海外比率が高い銘柄を待つ</td></tr>
             <tr><td>日経平均</td><td>75日線以上</td><td>75日線を-2%以上下回る</td><td>個別株の新規買い停止</td></tr>
@@ -2011,8 +2014,8 @@
             <div class="days">
               <div class="day"><span class="date">1</span></div><div class="day"><span class="date">2</span></div><div class="day"><span class="date">3</span></div><div class="day"><span class="date">4</span></div><div class="day"><span class="date">5</span></div><div class="day"><span class="date">6</span></div><div class="day"><span class="date">7</span></div>
               <div class="day"><span class="date">8</span></div><div class="day"><span class="date">9</span></div><div class="day"><span class="date">10</span><button class="cal-event macro" data-event="cpi-june">米CPI</button></div><div class="day"><span class="date">11</span></div><div class="day"><span class="date">12</span></div><div class="day"><span class="date">13</span></div><div class="day"><span class="date">14</span></div>
-              <div class="day"><span class="date">15</span><button class="cal-event macro" data-event="boj-june">日銀</button></div><div class="day"><span class="date">16</span><button class="cal-event macro" data-event="fomc-june">FOMC</button></div><div class="day"><span class="date">17</span></div><div class="day"><span class="date">18</span><button class="cal-event buy" data-event="add-june">35万円追加</button></div><div class="day"><span class="date">19</span></div><div class="day"><span class="date">20</span></div><div class="day"><span class="date">21</span></div>
-              <div class="day"><span class="date">22</span><button class="cal-event buy" data-event="add-june">追加期間</button></div><div class="day"><span class="date">23</span></div><div class="day"><span class="date">24</span></div><div class="day"><span class="date">25</span></div><div class="day"><span class="date">26</span></div><div class="day"><span class="date">27</span></div><div class="day"><span class="date">28</span></div>
+              <div class="day"><span class="date">15</span><button class="cal-event macro" data-event="boj-june">日銀</button></div><div class="day"><span class="date">16</span><button class="cal-event macro" data-event="fomc-june">FOMC</button></div><div class="day"><span class="date">17</span></div><div class="day"><span class="date">18</span><button class="cal-event buy" data-event="add-june">判定日</button></div><div class="day"><span class="date">19</span></div><div class="day"><span class="date">20</span></div><div class="day"><span class="date">21</span></div>
+              <div class="day"><span class="date">22</span><button class="cal-event buy" data-event="add-june">確認期間</button></div><div class="day"><span class="date">23</span></div><div class="day"><span class="date">24</span></div><div class="day"><span class="date">25</span></div><div class="day"><span class="date">26</span></div><div class="day"><span class="date">27</span></div><div class="day"><span class="date">28</span></div>
               <div class="day"><span class="date">29</span></div><div class="day"><span class="date">30</span></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div>
             </div>
           </div>
@@ -2034,7 +2037,7 @@
               <div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day"><span class="date">1</span></div><div class="day"><span class="date">2</span></div>
               <div class="day"><span class="date">3</span><button class="cal-event watch" data-event="q1-aug">決算週</button></div><div class="day"><span class="date">4</span></div><div class="day"><span class="date">5</span></div><div class="day"><span class="date">6</span></div><div class="day"><span class="date">7</span></div><div class="day"><span class="date">8</span></div><div class="day"><span class="date">9</span></div>
               <div class="day"><span class="date">10</span></div><div class="day"><span class="date">11</span></div><div class="day"><span class="date">12</span></div><div class="day"><span class="date">13</span></div><div class="day"><span class="date">14</span></div><div class="day"><span class="date">15</span></div><div class="day"><span class="date">16</span></div>
-              <div class="day"><span class="date">17</span><button class="cal-event buy" data-event="add-aug">25万円追加</button></div><div class="day"><span class="date">18</span></div><div class="day"><span class="date">19</span></div><div class="day"><span class="date">20</span></div><div class="day"><span class="date">21</span></div><div class="day"><span class="date">22</span></div><div class="day"><span class="date">23</span></div>
+              <div class="day"><span class="date">17</span><button class="cal-event buy" data-event="add-aug">再判定</button></div><div class="day"><span class="date">18</span></div><div class="day"><span class="date">19</span></div><div class="day"><span class="date">20</span></div><div class="day"><span class="date">21</span></div><div class="day"><span class="date">22</span></div><div class="day"><span class="date">23</span></div>
               <div class="day"><span class="date">24</span></div><div class="day"><span class="date">25</span></div><div class="day"><span class="date">26</span></div><div class="day"><span class="date">27</span></div><div class="day"><span class="date">28</span></div><div class="day"><span class="date">29</span></div><div class="day"><span class="date">30</span></div>
               <div class="day"><span class="date">31</span></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div>
             </div>
@@ -2074,8 +2077,8 @@
           <div class="event">
             <div class="event-date">6/15-6/17</div>
             <div class="event-body">
-              <b>日銀 + FOMC: 本格追加の最終判定</b>
-              <div class="mini"><div>見る: 米10年金利、NASDAQ、ドル円</div><div>良い: 金利4.60%未満</div><div>行動: 35万円追加</div></div>
+              <b>日銀 + FOMC: 購入可否の最終判定</b>
+              <div class="mini"><div>見る: 米10年金利、NASDAQ、ドル円</div><div>良い: 金利4.60%未満</div><div>行動: 候補別に購入可否を判定</div></div>
             </div>
           </div>
           <div class="event">
@@ -2561,6 +2564,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>`;
     };
 
+    const renderFinalDecisionGateHint = () => {
+      const target = document.getElementById("final-decision-gate");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入可否判定ゲートを表示します。</div>`;
+    };
+
     const renderCandidateConclusionHint = () => {
       const target = document.getElementById("candidate-conclusion");
       if (!target) return;
@@ -2804,6 +2813,77 @@
       `;
     };
 
+    const finalGateProfile = (row) => {
+      const ticker = row.ticker || "";
+      if (ticker === "6146.T") {
+        return {
+          pass: "NISA点58以上、決算後反応55点以上、下落耐性60点以上、AI/半導体装置需要の鈍化コメントなし。",
+          stop: "米10年金利4.80%以上、60日最大下落率-30%以下、受注・需要コメント悪化なら見送り。",
+          action: "半導体景気に敏感なため、市場ゲート通過後も小さく検討する候補。"
+        };
+      }
+      if (ticker === "8306.T") {
+        return {
+          pass: "下落耐性75点以上、割安60点以上、日銀後の金利環境が銀行に逆風でない。",
+          stop: "信用コスト悪化、長期金利急低下、金融株全体の弱さが出た場合は見送り。",
+          action: "守り寄りの候補。市場が荒れる場合も、信用コストと金利方向を必ず確認。"
+        };
+      }
+      if (ticker === "6762.T") {
+        return {
+          pass: "NISA点58以上、決算後反応55点以上、下落耐性65点以上、急な円高ショックなし。",
+          stop: "円高急進、電子部品需要悪化、60日最大下落率-30%以下なら見送り。",
+          action: "電子部品・電池テーマ候補。為替と需要コメントの確認後に判定。"
+        };
+      }
+      return {
+        pass: "NISA点58以上、データ信頼度70点以上、ハードゲートなし。",
+        stop: "未取得、過熱、急落、割高、決算後反応悪化のいずれかが残る場合は見送り。",
+        action: "現時点では確認待ち。購入候補へは上げない。"
+      };
+    };
+
+    const renderFinalDecisionGate = (allRankedRows) => {
+      const target = document.getElementById("final-decision-gate");
+      if (!target) return;
+      const safeRows = allRankedRows.filter((row) => row.category === "残す");
+      const commonRows = [
+        ["市場地合い", "日経平均が75日線以上、または下回っても-1.5%以内", "75日線を-1.5%超下回る、または高値から-10%以上"],
+        ["米金利", "米10年金利4.80%未満、FOMC後の急騰なし", "4.80%以上、またはFOMC後に+0.25pt以上急騰"],
+        ["為替", "ドル円の5営業日変化が概ね±4%以内", "急な円高で外需・電子部品の前提が崩れる"],
+        ["市場不安", "VIXが25未満でリスク回避が強すぎない", "VIX25以上、指数急落、出来高を伴う売り"],
+        ["企業イベント", "下方修正なし、最新決算コメントに需要悪化なし", "下方修正、受注鈍化、利益率悪化、事故・不祥事"]
+      ];
+      const commonTable = commonRows.map(([item, pass, stop]) => `
+        <tr><td>${escapeHtml(item)}</td><td>${escapeHtml(pass)}</td><td>${escapeHtml(stop)}</td></tr>
+      `).join("");
+      const candidateTable = safeRows.map((row) => {
+        const profile = finalGateProfile(row);
+        return `
+          <tr>
+            <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}<br><small>NISA ${pointOrText(row.nisa_score)} / 業績 ${pointOrText(row.growth_quality_score)} / 下落 ${pointOrText(row.downside_safety_score)} / 反応 ${pointOrText(row.earnings_reaction_score)}</small></td>
+            <td>${escapeHtml(profile.pass)}</td>
+            <td>${escapeHtml(profile.stop)}</td>
+            <td>${escapeHtml(profile.action)}</td>
+          </tr>
+        `;
+      }).join("") || `<tr><td colspan="4">現時点で「残す」判定の銘柄はありません。</td></tr>`;
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>6月購入可否の最終ゲート</h4>
+          <p>ここでは金額を確定しません。6月の市場イベント後に、下の共通条件と銘柄別条件を満たすかだけを判定します。</p>
+          <table class="mechanism-table">
+            <thead><tr><th>共通項目</th><th>通過条件</th><th>延期・見送り条件</th></tr></thead>
+            <tbody>${commonTable}</tbody>
+          </table>
+          <table class="mechanism-table">
+            <thead><tr><th>候補</th><th>通過条件</th><th>見送り条件</th><th>扱い</th></tr></thead>
+            <tbody>${candidateTable}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
     const renderCandidateConclusion = (allRankedRows, adjustedByTicker, baseByTicker) => {
       const target = document.getElementById("candidate-conclusion");
       if (!target) return;
@@ -2910,6 +2990,7 @@
       renderCandidateConclusionHint();
       renderScoreRankingSummaryHint();
       renderCandidateReadinessHint();
+      renderFinalDecisionGateHint();
       renderSelectionMechanismHint();
       renderCandidateHypothesisHint();
 
@@ -3035,6 +3116,7 @@
         renderCandidateConclusion(allRankedRows, adjustedByTicker, baseByTicker);
         renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
         renderCandidateReadiness(allRankedRows);
+        renderFinalDecisionGate(allRankedRows);
         renderSelectionMechanism(holdingRows, triageRows, adjustedByTicker, baseByTicker);
         renderCandidateHypotheses(holdingRows, adjustedByTicker, baseByTicker);
 
@@ -3048,6 +3130,7 @@
         renderCandidateConclusionHint();
         renderScoreRankingSummaryHint();
         renderCandidateReadinessHint();
+        renderFinalDecisionGateHint();
         renderSelectionMechanismHint();
         renderCandidateHypothesisHint();
         if (alert) {
@@ -3155,7 +3238,7 @@
         watch: "CPI前年比、前月比、コアCPI、米10年金利。",
         good: "前年比3.8%以下、前月比0.4%以下、コア前月比0.4%以下、米10年金利4.60%未満。",
         bad: "前年比4.0%以上、前月比0.5%以上、コア前月比0.5%以上、米10年金利4.70%以上。",
-        action: "良ければ6/18追加準備。悪ければ35万円追加を17.5万円に半減。"
+        action: "良ければ6/18以降の購入可否判定へ進む。悪ければ延期または候補枠を縮小。"
       },
       "boj-june": {
         title: "6/15-6/16 日銀会合",
@@ -3169,14 +3252,14 @@
         watch: "米10年金利、NASDAQ、ドル円、声明文。",
         good: "米10年金利4.60%未満、NASDAQが2営業日で-3%以内。",
         bad: "米10年金利4.70%以上、NASDAQ-3%以上、ドル円±3%以上の急変。",
-        action: "良ければ6/18-6/24に35万円追加。悪ければ半減または延期。"
+        action: "良ければ6/18-6/24に購入可否判定へ進む。悪ければ延期。"
       },
       "add-june": {
-        title: "6/18-6/24 35万円追加",
+        title: "6/18-6/24 購入可否判定",
         watch: "米CPI、日銀、FOMCを通過した後の市場反応。",
         good: "米金利急騰なし、円高ショックなし、日経平均75日線以上。",
         bad: "金利4.70%以上、日経平均75日線-2%以上、候補銘柄に下方修正。",
-        action: "条件達成なら35万円追加。未達なら17.5万円に半減。"
+        action: "条件達成なら候補別に購入可否を判定。未達なら延期または候補縮小。"
       },
       "fomc-july": {
         title: "7/28-7/29 FOMC",
@@ -3200,11 +3283,11 @@
         action: "悪い銘柄は除外。良い銘柄だけ8月中旬に追加。"
       },
       "add-aug": {
-        title: "8月中旬 25万円追加",
+        title: "8月中旬 再判定",
         watch: "4-6月期決算で本当に強い銘柄。",
         good: "営業利益YoYプラス、進捗25%以上、下方修正なし。",
         bad: "下方修正、営業利益YoY-10%以上、指数に4週間で-3%pt以上負け。",
-        action: "強い銘柄へ25万円追加。弱い銘柄は現金または指数ETFへ。"
+        action: "強い銘柄を継続候補に残す。弱い銘柄は現金または指数ETFと比較する。"
       }
     };
 
