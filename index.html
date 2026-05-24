@@ -2597,8 +2597,11 @@
       }
     };
 
-    loadMarketUpdate();
-    document.getElementById("refresh-market-data")?.addEventListener("click", loadMarketUpdate);
+    loadMarketUpdate().finally(() => loadCalculatedCandidates());
+    document.getElementById("refresh-market-data")?.addEventListener("click", async () => {
+      await loadMarketUpdate();
+      await loadCalculatedCandidates();
+    });
     document.getElementById("apply-calculated-candidates")?.addEventListener("click", loadCalculatedCandidates);
 
     const eventData = {
