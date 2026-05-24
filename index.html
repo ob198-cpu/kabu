@@ -1681,6 +1681,9 @@
               <div class="score-ranking-summary" id="score-ranking-summary">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、NISA 1年保有スコアランキングを表示します。</div>
               </div>
+              <div class="score-ranking-summary" id="score-model-revision">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入候補スコアを分けて表示します。</div>
+              </div>
               <div class="candidate-readiness" id="candidate-readiness">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>
               </div>
@@ -2635,6 +2638,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、NISA 1年保有スコアランキングを表示します。</div>`;
     };
 
+    const renderScoreModelRevisionHint = () => {
+      const target = document.getElementById("score-model-revision");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入候補スコアを分けて表示します。</div>`;
+    };
+
     const renderCandidateReadinessHint = () => {
       const target = document.getElementById("candidate-readiness");
       if (!target) return;
@@ -2825,6 +2834,162 @@
                 </tr>
               `;
             }).join("")}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
+    const purchaseScoreFields = [
+      ["growth_quality_score", "業績/質"],
+      ["downside_safety_score", "下落耐性"],
+      ["valuation_score", "割安"],
+      ["medium_trend_score", "中期トレンド"],
+      ["earnings_reaction_score", "決算後反応"],
+      ["data_confidence", "信頼度"],
+      ["per", "PER"],
+      ["pbr", "PBR"],
+      ["roe_pct", "ROE"],
+      ["revenue_yoy_pct", "売上成長"],
+      ["profit_yoy_pct", "利益成長"],
+    ];
+
+    const missingPurchaseFields = (row) => purchaseScoreFields
+      .filter(([key]) => numericValue(row[key]) === null)
+      .map(([, label]) => label);
+
+    const purchaseScoreEvaluation = (row) => {
+      const missing = missingPurchaseFields(row);
+      const hardGate = row.hard_gate && row.hard_gate !== "なし" ? row.hard_gate : "";
+      const confidence = numericValue(row.data_confidence);
+      const reaction = numericValue(row.earnings_reaction_score);
+      if (missing.length) {
+        return {
+          score: null,
+          label: "未算出",
+          state: "未算出",
+          badge: "watch",
+          reason: `未取得: ${missing.join("、")}`,
+        };
+      }
+      if (confidence !== null && confidence < 70) {
+        return {
+          score: null,
+          label: "算出停止",
+          state: "保留",
+          badge: "watch",
+          reason: `信頼度${pointOrText(confidence)}で基準70点未満`,
+        };
+      }
+      if (hardGate) {
+        return {
+          score: null,
+          label: "算出停止",
+          state: row.category === "落とす" ? "見送り" : "保留",
+          badge: row.category === "落とす" ? "stop" : "watch",
+          reason: `ハード除外: ${hardGate}`,
+        };
+      }
+      if (reaction !== null && reaction < 35) {
+        return {
+          score: null,
+          label: "算出停止",
+          state: "保留",
+          badge: "watch",
+          reason: `決算後反応${pointOrText(reaction)}で基準35点未満`,
+        };
+      }
+      const score = (
+        (numericValue(row.growth_quality_score) * 0.40) +
+        (numericValue(row.downside_safety_score) * 0.30) +
+        (numericValue(row.valuation_score) * 0.20) +
+        (numericValue(row.earnings_reaction_score) * 0.10)
+      );
+      const state = score >= 65 ? "購入候補" : "確認候補";
+      return {
+        score,
+        label: `${score.toFixed(1)}点`,
+        state,
+        badge: score >= 65 ? "ok" : "watch",
+        reason: "必須データ取得済み。購入候補用の式で再計算。",
+      };
+    };
+
+    const renderScoreModelRevision = (allRankedRows) => {
+      const target = document.getElementById("score-model-revision");
+      if (!target) return;
+      const evaluations = allRankedRows.map((row) => ({ row, evalResult: purchaseScoreEvaluation(row) }));
+      const purchasable = evaluations.filter((item) => item.evalResult.score !== null);
+      const stopped = evaluations.length - purchasable.length;
+      const revisionRows = [
+        ["1", "探索スコアと購入候補スコアを分離", "反映済み", "探索は広く比較、購入候補は必須データ取得後だけ表示。"],
+        ["2", "未取得データを点数に混ぜない", "反映済み", "購入候補スコアは未取得があると未算出。"],
+        ["3", "業種別補正", "未反映", "業種中央値の表が未整備のため、現時点では購入候補点に入れない。"],
+        ["4", "ハード除外条件を明文化", "反映済み", "未取得、信頼度不足、過熱、反応不足などで算出停止。"],
+        ["5", "スコアの内訳を銘柄ごとに表示", "反映済み", "探索点、購入候補点、信頼度、停止理由を行ごとに表示。"],
+        ["6", "信頼度スコアを追加", "反映済み", "70点未満は購入候補点を止める。"],
+        ["7", "決算後反応の未到達を別扱い", "反映済み", "未取得と35点未満を購入候補点から分離。"],
+        ["8", "過去検証・バックテスト", "未反映", "イベント後リターンDBの整備後に検証する。"],
+        ["9", "100社母集団の条件固定", "一部反映", "母集団CSVはあるが、固定条件の文書化と再現確認が残る。"],
+        ["10", "S&P500/日経平均/TOPIX比較", "一部反映", "目標は明記済み。自動比較と月次検証は継続実装。"],
+      ];
+      const statusBadge = (status) => {
+        if (status === "反映済み") return readinessBadge("ok", status);
+        if (status === "未反映") return readinessBadge("stop", status);
+        return readinessBadge("watch", status);
+      };
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>モデル修正状況</h4>
+          <p>この欄では、探索段階の参考点と、購入候補として扱うための点数を分けます。未取得データがある場合、購入候補スコアは出しません。</p>
+          <div class="candidate-conclusion">
+            <article class="conclusion-card hold">
+              <small>探索対象</small>
+              <b>${allRankedRows.length}社</b>
+              <p>広く比較するための参考順位です。</p>
+            </article>
+            <article class="conclusion-card keep">
+              <small>購入候補点を算出</small>
+              <b>${purchasable.length}社</b>
+              <p>必須データとハード除外を通過した銘柄だけです。</p>
+            </article>
+            <article class="conclusion-card drop">
+              <small>未算出・停止</small>
+              <b>${stopped}社</b>
+              <p>未取得、信頼度不足、過熱、反応不足などを混ぜません。</p>
+            </article>
+          </div>
+          <table class="mechanism-table">
+            <thead><tr><th>優先</th><th>修正点</th><th>実装状況</th><th>扱い</th></tr></thead>
+            <tbody>${revisionRows.map(([priority, item, status, note]) => `
+              <tr>
+                <td>${priority}</td>
+                <td>${escapeHtml(item)}</td>
+                <td>${statusBadge(status)}</td>
+                <td>${escapeHtml(note)}</td>
+              </tr>
+            `).join("")}</tbody>
+          </table>
+        </section>
+        <section class="mechanism-card">
+          <h4>探索スコア / 購入候補スコア 分離表</h4>
+          <p>探索スコアは候補を広く見るための参考値です。購入候補スコアは、未取得データを混ぜず、ハード除外がない場合だけ算出します。</p>
+          <div class="formula-box">
+            探索スコア = 既存のNISA 1年保有スコア。未取得や確認待ちがある場合は参考順位としてのみ使用。<br>
+            購入候補スコア = 業績/質40% + 下落耐性30% + 割安20% + 決算後反応10%。必須データ未取得、信頼度70未満、ハード除外ありの場合は未算出。
+          </div>
+          <table class="mechanism-table">
+            <thead><tr><th>順位</th><th>銘柄</th><th>探索スコア</th><th>購入候補スコア</th><th>信頼度</th><th>判定</th><th>理由</th></tr></thead>
+            <tbody>${evaluations.map(({ row, evalResult }) => `
+              <tr>
+                <td>${escapeHtml(row.nisa_rank || "")}</td>
+                <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+                <td>${pointOrText(row.nisa_score)}</td>
+                <td>${escapeHtml(evalResult.label)}</td>
+                <td>${pointOrText(row.data_confidence)}</td>
+                <td>${readinessBadge(evalResult.badge, evalResult.state)}</td>
+                <td>${escapeHtml(evalResult.reason)}</td>
+              </tr>
+            `).join("")}</tbody>
           </table>
         </section>
       `;
@@ -3334,6 +3499,7 @@
       setLiveTableHeader(["銘柄", "価格", "前日比", "PER", "判定"]);
       renderCandidateConclusionHint();
       renderScoreRankingSummaryHint();
+      renderScoreModelRevisionHint();
       renderCandidateReadinessHint();
       renderFinalDecisionGateHint();
       renderDecisionSimulatorHint();
@@ -3461,6 +3627,7 @@
         }).join("");
         renderCandidateConclusion(allRankedRows, adjustedByTicker, baseByTicker);
         renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
+        renderScoreModelRevision(allRankedRows);
         renderCandidateReadiness(allRankedRows);
         renderFinalDecisionGate(allRankedRows);
         renderDecisionSimulator(allRankedRows);
@@ -3476,6 +3643,7 @@
         body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。NISA 1年保有スコアCSVを確認してください。</td></tr>`;
         renderCandidateConclusionHint();
         renderScoreRankingSummaryHint();
+        renderScoreModelRevisionHint();
         renderCandidateReadinessHint();
         renderFinalDecisionGateHint();
         renderDecisionSimulatorHint();
