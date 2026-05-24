@@ -496,6 +496,47 @@
     .candidate-readiness .mechanism-table {
       min-width: 920px;
     }
+    .decision-simulator .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .decision-simulator label {
+      display: grid;
+      gap: 5px;
+      color: #18324a;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .decision-simulator input,
+    .decision-simulator select {
+      width: 100%;
+      border: 1px solid #c9dceb;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #102a43;
+      padding: 9px 10px;
+      font: inherit;
+      font-size: 13px;
+    }
+    .sim-result {
+      border: 1px solid #dce9f6;
+      border-radius: 12px;
+      background: #ffffff;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    .sim-result h5 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 15px;
+    }
+    .sim-result p {
+      margin: 6px 0;
+      line-height: 1.7;
+      font-size: 13px;
+    }
     .mechanism-card {
       border: 1px solid #b7d4ec;
       border-radius: 12px;
@@ -1613,6 +1654,9 @@
               <div class="candidate-readiness" id="final-decision-gate">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入可否判定ゲートを表示します。</div>
               </div>
+              <div class="candidate-readiness decision-simulator" id="decision-simulator">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月イベント後に数字を入力して判定を確認する欄を表示します。</div>
+              </div>
               <div class="selection-mechanism" id="selection-mechanism">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>
               </div>
@@ -2570,6 +2614,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入可否判定ゲートを表示します。</div>`;
     };
 
+    const renderDecisionSimulatorHint = () => {
+      const target = document.getElementById("decision-simulator");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、6月イベント後に数字を入力して判定を確認する欄を表示します。</div>`;
+    };
+
     const renderCandidateConclusionHint = () => {
       const target = document.getElementById("candidate-conclusion");
       if (!target) return;
@@ -2884,6 +2934,105 @@
       `;
     };
 
+    const simulatorNumber = (form, name) => {
+      const raw = form.querySelector(`[name="${name}"]`)?.value;
+      if (raw === undefined || raw === null || String(raw).trim() === "") return null;
+      const number = Number(raw);
+      return Number.isFinite(number) ? number : null;
+    };
+
+    const staticCandidatePass = (row) => {
+      const ticker = row.ticker || "";
+      const nisa = numericValue(row.nisa_score);
+      const reaction = numericValue(row.earnings_reaction_score);
+      const downside = numericValue(row.downside_safety_score);
+      const valuation = numericValue(row.valuation_score);
+      if (ticker === "6146.T") return (nisa ?? 0) >= 58 && (reaction ?? 0) >= 55 && (downside ?? 0) >= 60;
+      if (ticker === "8306.T") return (downside ?? 0) >= 75 && (valuation ?? 0) >= 60;
+      if (ticker === "6762.T") return (nisa ?? 0) >= 58 && (reaction ?? 0) >= 55 && (downside ?? 0) >= 65;
+      return row.category === "残す";
+    };
+
+    const renderDecisionSimulator = (allRankedRows) => {
+      const target = document.getElementById("decision-simulator");
+      if (!target) return;
+      const safeRows = allRankedRows.filter((row) => row.category === "残す");
+      const candidateRows = safeRows.map((row) => `
+        <tr data-ticker="${escapeHtml(row.ticker)}">
+          <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+          <td>${pointOrText(row.nisa_score)}</td>
+          <td>${staticCandidatePass(row) ? readinessBadge("ok", "OK") : readinessBadge("watch", "確認")}</td>
+          <td class="sim-candidate-result">${readinessBadge("watch", "未入力")}</td>
+        </tr>
+      `).join("");
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>6月イベント後 入力判定</h4>
+          <p>イベント結果を入力して、共通条件と候補別条件を同時に確認します。これは購入操作ではなく、判定根拠を記録するための補助欄です。</p>
+          <form class="sim-grid" id="decision-simulator-form">
+            <label>日経平均と75日線の差（%）<input name="nikkei_gap" type="number" step="0.1" placeholder="-1.0"></label>
+            <label>日経平均の高値からの下落率（%）<input name="nikkei_drawdown" type="number" step="0.1" placeholder="8.0"></label>
+            <label>米10年金利（%）<input name="us10y" type="number" step="0.01" placeholder="4.55"></label>
+            <label>FOMC後の米10年金利上昇幅（pt）<input name="us10y_jump" type="number" step="0.01" placeholder="0.10"></label>
+            <label>ドル円5営業日変化率の絶対値（%）<input name="fx_move" type="number" step="0.1" placeholder="2.0"></label>
+            <label>VIX<input name="vix" type="number" step="0.1" placeholder="18.0"></label>
+            <label>企業イベント<select name="company_event"><option value="">未入力</option><option value="ok">下方修正なし・需要悪化なし</option><option value="ng">下方修正/需要悪化あり</option></select></label>
+          </form>
+          <div class="sim-result" id="decision-simulator-result">
+            <h5>判定結果</h5>
+            <p>未入力です。6月イベント後に数値を入れると、通過・延期・見送りを表示します。</p>
+          </div>
+          <table class="mechanism-table">
+            <thead><tr><th>候補</th><th>NISA点</th><th>銘柄内条件</th><th>入力後判定</th></tr></thead>
+            <tbody>${candidateRows || `<tr><td colspan="4">現時点で「残す」判定の銘柄はありません。</td></tr>`}</tbody>
+          </table>
+        </section>
+      `;
+      const form = target.querySelector("#decision-simulator-form");
+      const result = target.querySelector("#decision-simulator-result");
+      const update = () => {
+        const values = {
+          nikkeiGap: simulatorNumber(form, "nikkei_gap"),
+          nikkeiDrawdown: simulatorNumber(form, "nikkei_drawdown"),
+          us10y: simulatorNumber(form, "us10y"),
+          us10yJump: simulatorNumber(form, "us10y_jump"),
+          fxMove: simulatorNumber(form, "fx_move"),
+          vix: simulatorNumber(form, "vix"),
+          companyEvent: form.querySelector('[name="company_event"]')?.value || "",
+        };
+        const missing = Object.entries(values).filter(([, value]) => value === null || value === "").map(([key]) => key);
+        const failReasons = [];
+        if (values.nikkeiGap !== null && values.nikkeiGap < -1.5) failReasons.push("日経平均が75日線を-1.5%超下回る");
+        if (values.nikkeiDrawdown !== null && values.nikkeiDrawdown > 10) failReasons.push("日経平均が高値から-10%超");
+        if (values.us10y !== null && values.us10y >= 4.80) failReasons.push("米10年金利が4.80%以上");
+        if (values.us10yJump !== null && values.us10yJump >= 0.25) failReasons.push("FOMC後の金利上昇が+0.25pt以上");
+        if (values.fxMove !== null && values.fxMove > 4) failReasons.push("ドル円変化が5営業日で4%超");
+        if (values.vix !== null && values.vix >= 25) failReasons.push("VIXが25以上");
+        if (values.companyEvent === "ng") failReasons.push("企業イベントに下方修正または需要悪化あり");
+        const commonPass = missing.length === 0 && failReasons.length === 0;
+        const commonState = missing.length ? "未入力" : commonPass ? "通過" : "延期/見送り";
+        result.innerHTML = `
+          <h5>判定結果: ${escapeHtml(commonState)}</h5>
+          <p><b>共通条件:</b> ${missing.length ? "未入力項目があります。" : commonPass ? "共通条件は通過です。" : escapeHtml(failReasons.join(" / "))}</p>
+          <p><b>扱い:</b> ${commonPass ? "候補別条件の確認に進めます。購入確定ではありません。" : "この状態では購入可否判定を進めず、延期または候補縮小として扱います。"}</p>
+        `;
+        target.querySelectorAll(".sim-candidate-result").forEach((cell, index) => {
+          const row = safeRows[index];
+          if (!row) return;
+          if (missing.length) {
+            cell.innerHTML = readinessBadge("watch", "未入力");
+          } else if (commonPass && staticCandidatePass(row)) {
+            cell.innerHTML = readinessBadge("ok", "確認へ");
+          } else {
+            cell.innerHTML = readinessBadge("stop", "見送り");
+          }
+        });
+      };
+      form.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", update));
+      form.querySelectorAll("select").forEach((el) => el.addEventListener("change", update));
+      update();
+    };
+
     const renderCandidateConclusion = (allRankedRows, adjustedByTicker, baseByTicker) => {
       const target = document.getElementById("candidate-conclusion");
       if (!target) return;
@@ -2991,6 +3140,7 @@
       renderScoreRankingSummaryHint();
       renderCandidateReadinessHint();
       renderFinalDecisionGateHint();
+      renderDecisionSimulatorHint();
       renderSelectionMechanismHint();
       renderCandidateHypothesisHint();
 
@@ -3117,6 +3267,7 @@
         renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
         renderCandidateReadiness(allRankedRows);
         renderFinalDecisionGate(allRankedRows);
+        renderDecisionSimulator(allRankedRows);
         renderSelectionMechanism(holdingRows, triageRows, adjustedByTicker, baseByTicker);
         renderCandidateHypotheses(holdingRows, adjustedByTicker, baseByTicker);
 
@@ -3131,6 +3282,7 @@
         renderScoreRankingSummaryHint();
         renderCandidateReadinessHint();
         renderFinalDecisionGateHint();
+        renderDecisionSimulatorHint();
         renderSelectionMechanismHint();
         renderCandidateHypothesisHint();
         if (alert) {
