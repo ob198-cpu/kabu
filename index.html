@@ -397,6 +397,54 @@
       gap: 12px;
       margin-top: 12px;
     }
+    .candidate-conclusion {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 8px 0 12px;
+    }
+    .candidate-conclusion .candidate-hypothesis-empty {
+      grid-column: 1 / -1;
+    }
+    .conclusion-card {
+      border: 1px solid #b7d4ec;
+      border-left: 6px solid var(--blue);
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+      color: #102a43;
+      min-width: 0;
+    }
+    .conclusion-card.keep {
+      border-left-color: #0b8f5a;
+      background: #f7fffb;
+    }
+    .conclusion-card.hold {
+      border-left-color: #d36b00;
+      background: #fffaf4;
+    }
+    .conclusion-card.drop {
+      border-left-color: #c62828;
+      background: #fff8f8;
+    }
+    .conclusion-card small {
+      display: block;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .conclusion-card b {
+      display: block;
+      color: var(--navy);
+      font-size: 17px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+    .conclusion-card p {
+      margin: 7px 0 0;
+      font-size: 12px;
+      line-height: 1.65;
+    }
     .score-ranking-summary {
       display: grid;
       gap: 10px;
@@ -1496,6 +1544,9 @@
           <div class="update-grid">
             <div>
               <h3>保有候補の更新値</h3>
+              <div class="candidate-conclusion" id="candidate-conclusion">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、数値上の1位、保有候補、保留/除外の件数を先に表示します。</div>
+              </div>
               <div class="table-wrap">
                 <table class="rule-table live-table">
                   <thead>
@@ -2448,6 +2499,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、集めたデータ上の全候補スコアランキングを表示します。</div>`;
     };
 
+    const renderCandidateConclusionHint = () => {
+      const target = document.getElementById("candidate-conclusion");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、数値上の1位、保有候補、保留/除外の件数を先に表示します。</div>`;
+    };
+
     const clampScore = (value) => Math.max(0, Math.min(100, value));
 
     const calcBaseScore = (base = {}) => {
@@ -2629,6 +2686,42 @@
       `;
     };
 
+    const renderCandidateConclusion = (allRankedRows, adjustedByTicker, baseByTicker) => {
+      const target = document.getElementById("candidate-conclusion");
+      if (!target) return;
+      const strongest = allRankedRows[0];
+      const safeRows = allRankedRows.filter((row) => row.category === "残す");
+      const holdRows = allRankedRows.filter((row) => row.category === "保留");
+      const dropRows = allRankedRows.filter((row) => row.category === "落とす");
+      const safeNames = safeRows.length
+        ? safeRows.map((row) => {
+            const base = baseByTicker.get(row.ticker) || {};
+            const model = businessModelProfile(row, base);
+            return `${escapeHtml(row.ticker)} ${escapeHtml(row.company)}（${escapeHtml(model.shortType)} / ${pointLabel(row.adjusted_score)}）`;
+          }).join("<br>")
+        : "該当なし";
+      const strongestNote = strongest?.category === "残す"
+        ? "数値順位と安全分岐の両方で候補に残った状態です。"
+        : "点数は最上位でも、安全分岐で「残す」になっていないため、上の保有候補表には入れません。";
+      target.innerHTML = `
+        <article class="conclusion-card hold">
+          <small>数値だけで見た1位</small>
+          <b>${strongest ? `${escapeHtml(strongest.ticker)} ${escapeHtml(strongest.company)}` : "未取得"}</b>
+          <p>${strongest ? `補正後${pointLabel(strongest.adjusted_score)} / 分類: ${escapeHtml(strongest.category)}。${strongestNote}` : "CSVを読み込むと表示します。"}</p>
+        </article>
+        <article class="conclusion-card keep">
+          <small>保有候補として残す</small>
+          <b>${safeNames}</b>
+          <p>この欄は「残す」判定だけです。購入確定ではなく、6月の市場イベントと追加確認に進める候補です。</p>
+        </article>
+        <article class="conclusion-card drop">
+          <small>保留・除外</small>
+          <b>保留 ${holdRows.length}件 / 落とす ${dropRows.length}件</b>
+          <p>高スコアでも、過熱・決算後反応・PER・特殊リスクで分岐します。理由は下の全ランキングと機序欄に残します。</p>
+        </article>
+      `;
+    };
+
     const categoryExplanation = (category) => {
       if (category === "残す") return "6月イベント後に深掘りする候補として残します。";
       if (category === "保留") return "数値は強くても、過熱・反応悪化・特殊要因が残るため、購入候補には上げず再判定待ちにします。";
@@ -2691,6 +2784,7 @@
       const alert = document.getElementById("market-alert");
       if (!strip || !body) return;
       setLiveTableHeader(["銘柄", "価格", "前日比", "PER", "判定"]);
+      renderCandidateConclusionHint();
       renderScoreRankingSummaryHint();
       renderSelectionMechanismHint();
       renderCandidateHypothesisHint();
@@ -2815,6 +2909,7 @@
             </tr>
           `;
         }).join("");
+        renderCandidateConclusion(allRankedRows, adjustedByTicker, baseByTicker);
         renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
         renderSelectionMechanism(holdingRows, triageRows, adjustedByTicker, baseByTicker);
         renderCandidateHypotheses(holdingRows, adjustedByTicker, baseByTicker);
@@ -2826,6 +2921,7 @@
         }
       } catch (error) {
         body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
+        renderCandidateConclusionHint();
         renderScoreRankingSummaryHint();
         renderSelectionMechanismHint();
         renderCandidateHypothesisHint();
