@@ -2489,7 +2489,8 @@
     const renderSelectionMechanism = (rowsToShow, triageRows, adjustedByTicker, baseByTicker) => {
       const target = document.getElementById("selection-mechanism");
       if (!target) return;
-      const selected = selectedMechanismRows(rowsToShow, adjustedByTicker, baseByTicker);
+      const allRankedRows = sortByAdjustedScore(triageRows);
+      const selected = selectedMechanismRows(allRankedRows, adjustedByTicker, baseByTicker);
       const gatedRows = sortByAdjustedScore(triageRows)
         .filter((row) => row.category !== "残す");
       const strongest = sortByAdjustedScore(triageRows)[0];
@@ -2497,7 +2498,7 @@
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>候補選定の機序</h4>
-          <p>この欄では、集めたデータの全候補を補正後スコア順に表示します。その上で、点数上の最強と、安全分岐後に残す候補を分けて示します。</p>
+          <p>上の「保有候補」表は、安全分岐後に「残す」になった銘柄だけを表示します。この欄では別枠として、集めたデータの全候補を補正後スコア順に表示し、保留・落とす理由も残します。</p>
           <p><b>数値上の最強:</b> ${strongest ? `${escapeHtml(strongest.ticker)} ${escapeHtml(strongest.company)} ${pointLabel(strongest.adjusted_score)} / 分類: ${escapeHtml(strongest.category)}` : "未取得"}<br>
           <b>安全分岐後の上位:</b> ${safeTop ? `${escapeHtml(safeTop.ticker)} ${escapeHtml(safeTop.company)} ${pointLabel(safeTop.adjusted_score)} / 分類: ${escapeHtml(safeTop.category)}` : "該当なし"}</p>
           <div class="mechanism-flow">
@@ -2515,11 +2516,11 @@
             基礎スコア = 決算35% + 株価25% + 質/割安20% + リスク15% + データ信頼度5% - 個別減点<br>
             決算後反応スコア = clamp(0,100, 50 + 2 × (1日超過34% + 5日超過51% + 20日超過15%))<br>
             補正後スコア = 基礎スコア70% + 決算後反応スコア30%<br>
-            表示順位 = 補正後スコアの高い順に全件表示。分類は「残す/保留/落とす」を別列で表示。
+            保有候補欄 = category が「残す」の銘柄のみ表示。全スコアランキング = 補正後スコア順に全件表示。
           </div>
         </section>
         <section class="mechanism-card">
-          <h4>全候補の代入過程</h4>
+          <h4>全スコアランキング・代入過程</h4>
           <table class="mechanism-table">
             <thead><tr><th>銘柄</th><th>基礎スコアの代入</th><th>反応スコアの代入</th><th>補正後スコア</th><th>最終分岐</th></tr></thead>
             <tbody>${selected.map((item) => `
@@ -2740,12 +2741,13 @@
         ]);
         const adjustedByTicker = new Map(adjustedRows.map((row) => [row.ticker, row]));
         const baseByTicker = new Map(baseRows.map((row) => [row.ticker, row]));
-        const rowsToShow = sortByAdjustedScore(triageRows);
-        const strongest = rowsToShow[0];
-        const safeRows = rowsToShow.filter((row) => row.category === "残す");
+        const allRankedRows = sortByAdjustedScore(triageRows);
+        const strongest = allRankedRows[0];
+        const safeRows = allRankedRows.filter((row) => row.category === "残す");
+        const holdingRows = safeRows.length ? safeRows : allRankedRows.filter((row) => row.category !== "落とす").slice(0, 3);
 
-        setLiveTableHeader(["数値順位", "銘柄", "収益型", "補正後", "基礎", "反応", "PER", "分類"]);
-        body.innerHTML = rowsToShow.map((row, index) => {
+        setLiveTableHeader(["候補順位", "銘柄", "収益型", "補正後", "基礎", "反応", "PER", "分類"]);
+        body.innerHTML = holdingRows.map((row, index) => {
           const adjusted = adjustedByTicker.get(row.ticker) || {};
           const base = baseByTicker.get(row.ticker) || {};
           const model = businessModelProfile(row, base);
@@ -2763,13 +2765,13 @@
             </tr>
           `;
         }).join("");
-        renderSelectionMechanism(rowsToShow, triageRows, adjustedByTicker, baseByTicker);
-        renderCandidateHypotheses(rowsToShow, adjustedByTicker, baseByTicker);
+        renderSelectionMechanism(holdingRows, triageRows, adjustedByTicker, baseByTicker);
+        renderCandidateHypotheses(holdingRows, adjustedByTicker, baseByTicker);
 
         if (updated) updated.textContent = `候補更新: ${generatedCandidateTime()}`;
         if (alert) {
           const safeNames = safeRows.map((row) => row.company).join("、") || "該当なし";
-          alert.innerHTML = `<b>集めたデータの全候補を数値順に表示</b><br>数値上の最上位は ${escapeHtml(strongest?.ticker || "-")} ${escapeHtml(strongest?.company || "-")}（${pointLabel(strongest?.adjusted_score)}、分類: ${escapeHtml(strongest?.category || "-")}）です。安全分岐後に「残す」は ${escapeHtml(safeNames)}。保留・落とす銘柄も隠さず表に残しています。`;
+          alert.innerHTML = `<b>保有候補欄は「残す」だけを表示</b><br>数値上の最上位は ${escapeHtml(strongest?.ticker || "-")} ${escapeHtml(strongest?.company || "-")}（${pointLabel(strongest?.adjusted_score)}、分類: ${escapeHtml(strongest?.category || "-")}）です。保有候補欄には安全分岐後に「残す」となった ${escapeHtml(safeNames)} だけを表示し、保留・落とす銘柄は下の全スコアランキングに分けて表示します。`;
         }
       } catch (error) {
         body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
