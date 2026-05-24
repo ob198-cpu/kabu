@@ -1684,6 +1684,9 @@
               <div class="score-ranking-summary" id="score-model-revision">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入候補スコアを分けて表示します。</div>
               </div>
+              <div class="score-ranking-summary" id="sector-adjustment">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、業種別補正に使える同業比較数を表示します。</div>
+              </div>
               <div class="candidate-readiness" id="candidate-readiness">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>
               </div>
@@ -2644,6 +2647,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入候補スコアを分けて表示します。</div>`;
     };
 
+    const renderSectorAdjustmentHint = () => {
+      const target = document.getElementById("sector-adjustment");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、業種別補正に使える同業比較数を表示します。</div>`;
+    };
+
     const renderCandidateReadinessHint = () => {
       const target = document.getElementById("candidate-readiness");
       if (!target) return;
@@ -2923,7 +2932,7 @@
       const revisionRows = [
         ["1", "探索スコアと購入候補スコアを分離", "反映済み", "探索は広く比較、購入候補は必須データ取得後だけ表示。"],
         ["2", "未取得データを点数に混ぜない", "反映済み", "購入候補スコアは未取得があると未算出。"],
-        ["3", "業種別補正", "未反映", "業種中央値の表が未整備のため、現時点では購入候補点に入れない。"],
+        ["3", "業種別補正", "一部反映", "同業比較数と中央値を表示。比較数不足の業種は点数へ混ぜない。"],
         ["4", "ハード除外条件を明文化", "反映済み", "未取得、信頼度不足、過熱、反応不足などで算出停止。"],
         ["5", "スコアの内訳を銘柄ごとに表示", "反映済み", "探索点、購入候補点、信頼度、停止理由を行ごとに表示。"],
         ["6", "信頼度スコアを追加", "反映済み", "70点未満は購入候補点を止める。"],
@@ -2990,6 +2999,164 @@
                 <td>${escapeHtml(evalResult.reason)}</td>
               </tr>
             `).join("")}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
+    const median = (values) => {
+      const nums = values
+        .map((value) => numericValue(value))
+        .filter((value) => value !== null)
+        .sort((a, b) => a - b);
+      if (!nums.length) return null;
+      const mid = Math.floor(nums.length / 2);
+      return nums.length % 2 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+    };
+
+    const sectorGroup = (row) => {
+      const text = `${row.sector || ""} ${row.theme || ""}`;
+      if (text.includes("半導体装置")) return "半導体装置";
+      if (text.includes("銀行")) return "銀行";
+      if (text.includes("電線") || text.includes("光ファイバー")) return "電線・光通信";
+      if (text.includes("総合電機")) return "総合電機";
+      if (text.includes("電子部品")) return "電子部品";
+      if (text.includes("食品")) return "食品";
+      if (text.includes("商社")) return "商社";
+      if (text.includes("小売")) return "小売";
+      if (text.includes("エネルギー") || text.includes("原油")) return "エネルギー";
+      return row.sector || "未分類";
+    };
+
+    const buildSectorStats = (rows) => {
+      const groups = new Map();
+      rows.forEach((row) => {
+        const group = sectorGroup(row);
+        if (!groups.has(group)) groups.set(group, []);
+        groups.get(group).push(row);
+      });
+      return new Map([...groups.entries()].map(([group, groupRows]) => {
+        const perValues = groupRows.map((row) => row.per).filter((value) => numericValue(value) !== null);
+        const pbrValues = groupRows.map((row) => row.pbr).filter((value) => numericValue(value) !== null);
+        const roeValues = groupRows.map((row) => row.roe_pct).filter((value) => numericValue(value) !== null);
+        return [group, {
+          group,
+          rows: groupRows,
+          count: groupRows.length,
+          perCount: perValues.length,
+          pbrCount: pbrValues.length,
+          roeCount: roeValues.length,
+          perMedian: median(perValues),
+          pbrMedian: median(pbrValues),
+          roeMedian: median(roeValues),
+        }];
+      }));
+    };
+
+    const sectorMetricLabel = (value, medianValue, lowerIsBetter = true) => {
+      const current = numericValue(value);
+      if (current === null || medianValue === null) return "未算出";
+      const diff = lowerIsBetter
+        ? ((medianValue - current) / Math.abs(medianValue)) * 100
+        : ((current - medianValue) / Math.abs(medianValue)) * 100;
+      const sign = diff >= 0 ? "+" : "";
+      return `${sign}${diff.toFixed(1)}%`;
+    };
+
+    const sectorAdjustmentStatus = (row, stats) => {
+      const stat = stats.get(sectorGroup(row));
+      if (!stat) return { state: "未算出", badge: "watch", reason: "業種グループなし" };
+      if (stat.count < 3) {
+        return {
+          state: "未算出",
+          badge: "watch",
+          reason: `同業比較が${stat.count}社で、基準3社未満`,
+        };
+      }
+      const usableMetrics = [
+        stat.perCount >= 3 && numericValue(row.per) !== null,
+        stat.pbrCount >= 3 && numericValue(row.pbr) !== null,
+        stat.roeCount >= 3 && numericValue(row.roe_pct) !== null,
+      ].filter(Boolean).length;
+      if (!usableMetrics) {
+        return {
+          state: "未算出",
+          badge: "watch",
+          reason: "同業数はあるが、PER/PBR/ROEの取得数が不足",
+        };
+      }
+      return {
+        state: usableMetrics >= 2 ? "参考可" : "一部参考",
+        badge: usableMetrics >= 2 ? "ok" : "watch",
+        reason: `${usableMetrics}項目で同業中央値との比較が可能`,
+      };
+    };
+
+    const renderSectorAdjustment = (allRankedRows) => {
+      const target = document.getElementById("sector-adjustment");
+      if (!target) return;
+      const stats = buildSectorStats(allRankedRows);
+      const groupRows = [...stats.values()]
+        .sort((a, b) => b.count - a.count || a.group.localeCompare(b.group, "ja"))
+        .map((stat) => `
+          <tr>
+            <td>${escapeHtml(stat.group)}</td>
+            <td>${stat.count}社</td>
+            <td>${stat.perCount >= 3 ? multipleLabel(stat.perMedian) : `未算出（${stat.perCount}件）`}</td>
+            <td>${stat.pbrCount >= 3 ? multipleLabel(stat.pbrMedian) : `未算出（${stat.pbrCount}件）`}</td>
+            <td>${stat.roeCount >= 3 ? pctValueLabel(stat.roeMedian) : `未算出（${stat.roeCount}件）`}</td>
+            <td>${stat.count >= 3 ? readinessBadge("watch", "部分参考") : readinessBadge("watch", "不足")}</td>
+          </tr>
+        `).join("");
+      const candidateRows = allRankedRows.map((row) => {
+        const group = sectorGroup(row);
+        const stat = stats.get(group);
+        const status = sectorAdjustmentStatus(row, stats);
+        return `
+          <tr>
+            <td>${escapeHtml(row.nisa_rank || "")}</td>
+            <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+            <td>${escapeHtml(group)}</td>
+            <td>${multipleLabel(row.per)}</td>
+            <td>${multipleLabel(row.pbr)}</td>
+            <td>${pctValueLabel(row.roe_pct)}</td>
+            <td>${stat ? sectorMetricLabel(row.per, stat.perCount >= 3 ? stat.perMedian : null, true) : "未算出"}</td>
+            <td>${stat ? sectorMetricLabel(row.pbr, stat.pbrCount >= 3 ? stat.pbrMedian : null, true) : "未算出"}</td>
+            <td>${stat ? sectorMetricLabel(row.roe_pct, stat.roeCount >= 3 ? stat.roeMedian : null, false) : "未算出"}</td>
+            <td>${readinessBadge(status.badge, status.state)}</td>
+            <td>${escapeHtml(status.reason)}</td>
+          </tr>
+        `;
+      }).join("");
+      const applicable = allRankedRows.filter((row) => sectorAdjustmentStatus(row, stats).state === "参考可").length;
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>業種別補正チェック</h4>
+          <p>PER/PBR/ROEは業種で水準が違うため、同じ業種の中央値と比べます。ただし、同業比較が3社未満、または指標取得数が足りない場合は、購入候補スコアには混ぜません。</p>
+          <div class="candidate-conclusion">
+            <article class="conclusion-card hold">
+              <small>業種グループ</small>
+              <b>${stats.size}分類</b>
+              <p>現在の上位20社を業種・テーマで簡易分類。</p>
+            </article>
+            <article class="conclusion-card keep">
+              <small>補正を参考にできる銘柄</small>
+              <b>${applicable}社</b>
+              <p>同業3社以上かつ複数指標で比較可能。</p>
+            </article>
+            <article class="conclusion-card drop">
+              <small>スコア反映</small>
+              <b>未反映</b>
+              <p>現段階では確認資料。購入候補スコアにはまだ入れません。</p>
+            </article>
+          </div>
+          <table class="mechanism-table">
+            <thead><tr><th>業種</th><th>同業数</th><th>PER中央値</th><th>PBR中央値</th><th>ROE中央値</th><th>扱い</th></tr></thead>
+            <tbody>${groupRows}</tbody>
+          </table>
+          <table class="mechanism-table">
+            <thead><tr><th>順位</th><th>銘柄</th><th>業種</th><th>PER</th><th>PBR</th><th>ROE</th><th>PER差</th><th>PBR差</th><th>ROE差</th><th>判定</th><th>理由</th></tr></thead>
+            <tbody>${candidateRows}</tbody>
           </table>
         </section>
       `;
@@ -3500,6 +3667,7 @@
       renderCandidateConclusionHint();
       renderScoreRankingSummaryHint();
       renderScoreModelRevisionHint();
+      renderSectorAdjustmentHint();
       renderCandidateReadinessHint();
       renderFinalDecisionGateHint();
       renderDecisionSimulatorHint();
@@ -3628,6 +3796,7 @@
         renderCandidateConclusion(allRankedRows, adjustedByTicker, baseByTicker);
         renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
         renderScoreModelRevision(allRankedRows);
+        renderSectorAdjustment(allRankedRows);
         renderCandidateReadiness(allRankedRows);
         renderFinalDecisionGate(allRankedRows);
         renderDecisionSimulator(allRankedRows);
@@ -3644,6 +3813,7 @@
         renderCandidateConclusionHint();
         renderScoreRankingSummaryHint();
         renderScoreModelRevisionHint();
+        renderSectorAdjustmentHint();
         renderCandidateReadinessHint();
         renderFinalDecisionGateHint();
         renderDecisionSimulatorHint();
