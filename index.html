@@ -2480,18 +2480,26 @@
       };
     });
 
+    const sortByAdjustedScore = (rows) => [...rows].sort((a, b) => {
+      const scoreDiff = (numericValue(b.adjusted_score) ?? -999) - (numericValue(a.adjusted_score) ?? -999);
+      if (scoreDiff !== 0) return scoreDiff;
+      return Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999);
+    });
+
     const renderSelectionMechanism = (rowsToShow, triageRows, adjustedByTicker, baseByTicker) => {
       const target = document.getElementById("selection-mechanism");
       if (!target) return;
-      const selectedTickers = new Set(rowsToShow.map((row) => row.ticker));
       const selected = selectedMechanismRows(rowsToShow, adjustedByTicker, baseByTicker);
-      const notSelected = triageRows
-        .filter((row) => !selectedTickers.has(row.ticker))
-        .sort((a, b) => Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999));
+      const gatedRows = sortByAdjustedScore(triageRows)
+        .filter((row) => row.category !== "残す");
+      const strongest = sortByAdjustedScore(triageRows)[0];
+      const safeTop = sortByAdjustedScore(triageRows).find((row) => row.category === "残す");
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>候補選定の機序</h4>
-          <p>この欄は点数の高い銘柄をそのまま買う表ではありません。候補表示は、基礎スコア、決算後反応、過熱/リスク分岐を通ったあと、最終分類が「残す」になった銘柄だけを表示します。</p>
+          <p>この欄では、集めたデータの全候補を補正後スコア順に表示します。その上で、点数上の最強と、安全分岐後に残す候補を分けて示します。</p>
+          <p><b>数値上の最強:</b> ${strongest ? `${escapeHtml(strongest.ticker)} ${escapeHtml(strongest.company)} ${pointLabel(strongest.adjusted_score)} / 分類: ${escapeHtml(strongest.category)}` : "未取得"}<br>
+          <b>安全分岐後の上位:</b> ${safeTop ? `${escapeHtml(safeTop.ticker)} ${escapeHtml(safeTop.company)} ${pointLabel(safeTop.adjusted_score)} / 分類: ${escapeHtml(safeTop.category)}` : "該当なし"}</p>
           <div class="mechanism-flow">
             <div class="mechanism-step"><b>1. 基礎データ</b>公式決算値、株価、PER/PBR/ROE、下落率、データ信頼度を入力。</div>
             <div class="mechanism-step"><b>2. 基礎スコア</b>企業数字と株価指標から0〜100点の元スコアを作る。</div>
@@ -2507,11 +2515,11 @@
             基礎スコア = 決算35% + 株価25% + 質/割安20% + リスク15% + データ信頼度5% - 個別減点<br>
             決算後反応スコア = clamp(0,100, 50 + 2 × (1日超過34% + 5日超過51% + 20日超過15%))<br>
             補正後スコア = 基礎スコア70% + 決算後反応スコア30%<br>
-            最終表示 = category が「残す」の銘柄だけ表示。保留/落とすは、点数が高くても表示対象外。
+            表示順位 = 補正後スコアの高い順に全件表示。分類は「残す/保留/落とす」を別列で表示。
           </div>
         </section>
         <section class="mechanism-card">
-          <h4>候補に残った銘柄の代入過程</h4>
+          <h4>全候補の代入過程</h4>
           <table class="mechanism-table">
             <thead><tr><th>銘柄</th><th>基礎スコアの代入</th><th>反応スコアの代入</th><th>補正後スコア</th><th>最終分岐</th></tr></thead>
             <tbody>${selected.map((item) => `
@@ -2550,10 +2558,10 @@
           </table>
         </section>
         <section class="mechanism-card">
-          <h4>点数があっても候補欄に出さなかった理由</h4>
+          <h4>数値が強くても安全分岐で保留/落とす理由</h4>
           <table class="mechanism-table">
             <thead><tr><th>順位</th><th>銘柄</th><th>補正後</th><th>分類</th><th>外した理由</th><th>次の扱い</th></tr></thead>
-            <tbody>${notSelected.map((row) => {
+            <tbody>${gatedRows.map((row) => {
               const adjusted = adjustedByTicker.get(row.ticker) || {};
               return `
                 <tr>
@@ -2571,10 +2579,17 @@
       `;
     };
 
+    const categoryExplanation = (category) => {
+      if (category === "残す") return "6月イベント後に深掘りする候補として残します。";
+      if (category === "保留") return "数値は強くても、過熱・反応悪化・特殊要因が残るため、購入候補には上げず再判定待ちにします。";
+      if (category === "落とす") return "現時点では初回テスト候補から外し、明確な改善データが出るまで監視のみとします。";
+      return "追加確認が必要です。";
+    };
+
     const renderCandidateHypotheses = (rows, adjustedByTicker, baseByTicker) => {
       const target = document.getElementById("candidate-hypothesis");
       if (!target) return;
-      target.innerHTML = rows.map((row) => {
+      target.innerHTML = rows.map((row, index) => {
         const adjusted = adjustedByTicker.get(row.ticker) || {};
         const base = baseByTicker.get(row.ticker) || {};
         const sales = pctLabel(base.sales_yoy_pct);
@@ -2594,8 +2609,8 @@
         const formula = adjusted.formula_note || "補正後スコアは、公式決算入力の基礎スコアと決算後株価反応を合成して算出。";
         return `
           <article class="candidate-hypothesis-card">
-            <h4>${escapeHtml(row.adjusted_rank)}位 ${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</h4>
-            <p><b>選定仮説:</b> 補正後スコア${pointLabel(row.adjusted_score)}、基礎スコア${pointLabel(row.base_score)}、決算後反応スコア${pointLabel(adjusted.reaction_score)}。業績数字と決算後の株価反応を合わせて見ると、現時点では「${escapeHtml(row.category)}」候補として残す根拠があります。</p>
+            <h4>${index + 1}位 ${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</h4>
+            <p><b>選定仮説:</b> 補正後スコア${pointLabel(row.adjusted_score)}、基礎スコア${pointLabel(row.base_score)}、決算後反応スコア${pointLabel(adjusted.reaction_score)}。業績数字と決算後の株価反応を合わせた現時点の分類は「${escapeHtml(row.category)}」です。${escapeHtml(categoryExplanation(row.category))}</p>
             <p><b>収益型の評価:</b> ${escapeHtml(model.type)}。${escapeHtml(model.reason)} ${escapeHtml(model.nisaView)}</p>
             <div class="hypothesis-metrics">
               <div class="hypothesis-metric"><span>収益型</span><b>${escapeHtml(model.shortType)}</b></div>
@@ -2613,7 +2628,7 @@
               <div class="hypothesis-metric"><span>60日最大下落</span><b>${drawdown}</b></div>
             </div>
             <p><b>計算根拠:</b> ${escapeHtml(formula)}</p>
-            <p class="hypothesis-warning"><b>注意点:</b> ${escapeHtml(riskNote)}。候補に残す理由は「買う理由」ではなく、6月イベント後に深掘りする優先順位です。</p>
+            <p class="hypothesis-warning"><b>注意点:</b> ${escapeHtml(riskNote)}。この分類は買う理由ではなく、6月イベント後に深掘り・保留・除外を分けるための優先順位です。</p>
           </article>
         `;
       }).join("");
@@ -2725,26 +2740,23 @@
         ]);
         const adjustedByTicker = new Map(adjustedRows.map((row) => [row.ticker, row]));
         const baseByTicker = new Map(baseRows.map((row) => [row.ticker, row]));
-        const selected = triageRows
-          .filter((row) => row.category === "残す")
-          .sort((a, b) => Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999));
-        const rowsToShow = selected.length ? selected : triageRows
-          .filter((row) => row.category !== "落とす")
-          .sort((a, b) => Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999))
-          .slice(0, 3);
+        const rowsToShow = sortByAdjustedScore(triageRows);
+        const strongest = rowsToShow[0];
+        const safeRows = rowsToShow.filter((row) => row.category === "残す");
 
-        setLiveTableHeader(["順位", "銘柄", "収益型", "補正後", "反応", "PER", "分類"]);
-        body.innerHTML = rowsToShow.map((row) => {
+        setLiveTableHeader(["数値順位", "銘柄", "収益型", "補正後", "基礎", "反応", "PER", "分類"]);
+        body.innerHTML = rowsToShow.map((row, index) => {
           const adjusted = adjustedByTicker.get(row.ticker) || {};
           const base = baseByTicker.get(row.ticker) || {};
           const model = businessModelProfile(row, base);
-          const per = base.per ? `${escapeHtml(base.per)}倍` : "-";
+          const per = multipleLabel(base.per);
           return `
             <tr>
-              <td>${escapeHtml(row.adjusted_rank)}</td>
+              <td>${index + 1}</td>
               <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
               <td>${escapeHtml(model.shortType)}</td>
               <td>${escapeHtml(row.adjusted_score)}点</td>
+              <td>${escapeHtml(row.base_score)}点</td>
               <td>${escapeHtml(adjusted.reaction_score || "-")}点</td>
               <td>${per}</td>
               <td class="${candidateClass(row.category)}">${escapeHtml(row.category)}</td>
@@ -2756,11 +2768,11 @@
 
         if (updated) updated.textContent = `候補更新: ${generatedCandidateTime()}`;
         if (alert) {
-          const names = rowsToShow.map((row) => row.company).join("、");
-          alert.innerHTML = `<b>計算結果で保有候補更新</b><br>反応補正後の3分類で「残す」候補を表示しました。対象: ${escapeHtml(names)}。購入確定ではなく、6月CPI・FOMC・日銀・日経平均75日線を確認してから再判定します。`;
+          const safeNames = safeRows.map((row) => row.company).join("、") || "該当なし";
+          alert.innerHTML = `<b>集めたデータの全候補を数値順に表示</b><br>数値上の最上位は ${escapeHtml(strongest?.ticker || "-")} ${escapeHtml(strongest?.company || "-")}（${pointLabel(strongest?.adjusted_score)}、分類: ${escapeHtml(strongest?.category || "-")}）です。安全分岐後に「残す」は ${escapeHtml(safeNames)}。保留・落とす銘柄も隠さず表に残しています。`;
         }
       } catch (error) {
-        body.innerHTML = `<tr><td colspan="7">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
+        body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
         renderSelectionMechanismHint();
         renderCandidateHypothesisHint();
         if (alert) {
