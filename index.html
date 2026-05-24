@@ -329,6 +329,69 @@
     .signal-buy { color: var(--green); font-weight: 900; }
     .signal-watch { color: var(--orange); font-weight: 900; }
     .signal-stop { color: var(--red); font-weight: 900; }
+    .candidate-hypothesis {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .candidate-hypothesis-empty {
+      border: 1px dashed #b7d4ec;
+      border-radius: 12px;
+      background: #f8fbff;
+      color: #36506a;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .candidate-hypothesis-card {
+      border: 1px solid #dce9f6;
+      border-left: 5px solid var(--blue);
+      border-radius: 12px;
+      background: #ffffff;
+      padding: 13px;
+      color: #18324a;
+    }
+    .candidate-hypothesis-card h4 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 16px;
+    }
+    .candidate-hypothesis-card p {
+      margin: 6px 0;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+    .hypothesis-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .hypothesis-metric {
+      border: 1px solid #dce9f6;
+      border-radius: 10px;
+      background: #f8fbff;
+      padding: 8px;
+      min-width: 0;
+    }
+    .hypothesis-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+    .hypothesis-metric b {
+      display: block;
+      margin-top: 3px;
+      color: var(--navy);
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+    .hypothesis-warning {
+      border-top: 1px solid #edf3f8;
+      padding-top: 8px;
+      color: #6a3f00;
+    }
     .risk-board {
       display: grid;
       grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr);
@@ -1084,6 +1147,7 @@
       .plan-hero, .plan-columns { grid-template-columns: 1fr; }
       .plan-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hypothesis-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
       .sidebar {
@@ -1147,6 +1211,7 @@
       .event { grid-template-columns: 1fr; }
       .event-body .mini { grid-template-columns: 1fr; }
       .rule-table { font-size: 12px; }
+      .hypothesis-metrics { grid-template-columns: 1fr; }
     }
     @media print {
       body { background: #ffffff; }
@@ -1367,6 +1432,9 @@
                     <tr><td colspan="5">読み込み中</td></tr>
                   </tbody>
                 </table>
+              </div>
+              <div class="candidate-hypothesis" id="candidate-hypothesis">
+                <div class="candidate-hypothesis-empty">「計算結果で保有候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>
               </div>
             </div>
             <div class="update-box">
@@ -2154,6 +2222,89 @@
       return "signal-watch";
     };
 
+    const numericValue = (value) => {
+      if (value === null || value === undefined || String(value).trim() === "") return null;
+      const number = Number(value);
+      return Number.isFinite(number) ? number : null;
+    };
+
+    const trimFixed = (number, digits = 2) => number.toFixed(digits).replace(/\.?0+$/, "");
+
+    const pctLabel = (value, digits = 1) => {
+      const number = numericValue(value);
+      if (number === null) return "-";
+      return `${number > 0 ? "+" : ""}${number.toFixed(digits)}%`;
+    };
+
+    const pctValueLabel = (value, digits = 1) => {
+      const number = numericValue(value);
+      if (number === null) return "-";
+      return `${number.toFixed(digits)}%`;
+    };
+
+    const pointLabel = (value) => {
+      const number = numericValue(value);
+      if (number === null) return "-";
+      return `${trimFixed(number, 1)}点`;
+    };
+
+    const multipleLabel = (value) => {
+      const number = numericValue(value);
+      if (number === null) return "未取得";
+      return `${trimFixed(number, 2)}倍`;
+    };
+
+    const renderCandidateHypothesisHint = () => {
+      const target = document.getElementById("candidate-hypothesis");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">「計算結果で保有候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>`;
+    };
+
+    const renderCandidateHypotheses = (rows, adjustedByTicker, baseByTicker) => {
+      const target = document.getElementById("candidate-hypothesis");
+      if (!target) return;
+      target.innerHTML = rows.map((row) => {
+        const adjusted = adjustedByTicker.get(row.ticker) || {};
+        const base = baseByTicker.get(row.ticker) || {};
+        const sales = pctLabel(base.sales_yoy_pct);
+        const profit = pctLabel(base.profit_yoy_pct);
+        const eps = pctLabel(base.eps_yoy_calc_pct);
+        const reaction1d = pctLabel(adjusted.avg_excess_1d_pct, 2);
+        const reaction5d = pctLabel(adjusted.avg_excess_5d_pct, 2);
+        const reaction20d = pctLabel(adjusted.avg_excess_20d_pct, 2);
+        const per = multipleLabel(base.per);
+        const pbr = multipleLabel(base.pbr);
+        const roe = pctValueLabel(base.roe_pct);
+        const ret1y = pctLabel(base.ret1y_pct);
+        const ma200 = pctLabel(base.ma200_gap_pct);
+        const drawdown = pctLabel(base.max_drawdown60_pct);
+        const riskNote = adjusted.risk_note || base.note || "追加確認が必要";
+        const formula = adjusted.formula_note || "補正後スコアは、公式決算入力の基礎スコアと決算後株価反応を合成して算出。";
+        return `
+          <article class="candidate-hypothesis-card">
+            <h4>${escapeHtml(row.adjusted_rank)}位 ${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</h4>
+            <p><b>選定仮説:</b> 補正後スコア${pointLabel(row.adjusted_score)}、基礎スコア${pointLabel(row.base_score)}、決算後反応スコア${pointLabel(adjusted.reaction_score)}。業績数字と決算後の株価反応を合わせて見ると、現時点では「${escapeHtml(row.category)}」候補として残す根拠があります。</p>
+            <div class="hypothesis-metrics">
+              <div class="hypothesis-metric"><span>売上成長</span><b>${sales}</b></div>
+              <div class="hypothesis-metric"><span>利益成長</span><b>${profit}</b></div>
+              <div class="hypothesis-metric"><span>EPS推計成長</span><b>${eps}</b></div>
+              <div class="hypothesis-metric"><span>ROE</span><b>${roe}</b></div>
+              <div class="hypothesis-metric"><span>決算後超過 1日</span><b>${reaction1d}</b></div>
+              <div class="hypothesis-metric"><span>決算後超過 5日</span><b>${reaction5d}</b></div>
+              <div class="hypothesis-metric"><span>決算後超過 20日</span><b>${reaction20d}</b></div>
+              <div class="hypothesis-metric"><span>1年上昇率</span><b>${ret1y}</b></div>
+              <div class="hypothesis-metric"><span>PER</span><b>${per}</b></div>
+              <div class="hypothesis-metric"><span>PBR</span><b>${pbr}</b></div>
+              <div class="hypothesis-metric"><span>200日線乖離</span><b>${ma200}</b></div>
+              <div class="hypothesis-metric"><span>60日最大下落</span><b>${drawdown}</b></div>
+            </div>
+            <p><b>計算根拠:</b> ${escapeHtml(formula)}</p>
+            <p class="hypothesis-warning"><b>注意点:</b> ${escapeHtml(riskNote)}。候補に残す理由は「買う理由」ではなく、6月イベント後に深掘りする優先順位です。</p>
+          </article>
+        `;
+      }).join("");
+    };
+
     const renderMarketUpdate = (data) => {
       const updated = document.getElementById("market-updated");
       const strip = document.getElementById("market-strip");
@@ -2161,6 +2312,7 @@
       const alert = document.getElementById("market-alert");
       if (!strip || !body) return;
       setLiveTableHeader(["銘柄", "価格", "前日比", "PER", "判定"]);
+      renderCandidateHypothesisHint();
 
       const sourceLabel = data.source ? " / Yahoo Finance取得" : "";
       updated.textContent = data.updatedAt ? `更新: ${data.updatedAt}${sourceLabel}` : "更新日時なし";
@@ -2282,6 +2434,7 @@
             </tr>
           `;
         }).join("");
+        renderCandidateHypotheses(rowsToShow, adjustedByTicker, baseByTicker);
 
         if (updated) updated.textContent = `候補更新: ${generatedCandidateTime()}`;
         if (alert) {
@@ -2290,6 +2443,7 @@
         }
       } catch (error) {
         body.innerHTML = `<tr><td colspan="6">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
+        renderCandidateHypothesisHint();
         if (alert) {
           alert.innerHTML = `<b>候補更新失敗</b><br>${escapeHtml(error.message)}。GitHub Pages上で反映直後の場合は少し待って再実行してください。`;
         }
