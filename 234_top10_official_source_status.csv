@@ -1,0 +1,21 @@
+﻿ticker,company,period_type,source_kind,verified_status,local_text_status,source_url
+6857.T,アドバンテスト,最新,公式PDF,公式PDF確認済,抽出不可,https://www.advantest.com/document/ja/investors/ir-library/result/J_FR_FY2025_FN.pdf
+6857.T,アドバンテスト,1つ前,公式PDF,公式PDF確認済,抽出不可,https://www.advantest.com/document/ja/investors/ir-library/result/J_FR_FY2025_3Q.pdf
+5801.T,古河電工,最新,公式PDF,公式PDF確認済,抽出成功,https://www.furukawaelectric.com/ir/library/finalreport/pdf/2026/20260512.pdf
+5801.T,古河電工,1つ前,公式PDF,公式PDF確認済,抽出成功,https://www.furukawaelectric.com/ir/library/finalreport/pdf/2026/20260209.pdf
+6920.T,レーザーテック,最新,TDnet PDF,TDnet PDF確認済,抽出成功,https://www2.jpx.co.jp/disc/69200/140120260430514363.pdf
+6920.T,レーザーテック,1つ前,TDnet PDF,TDnet PDF確認済,抽出成功,https://www2.jpx.co.jp/disc/69200/140120260130542527.pdf
+5803.T,フジクラ,最新,TDnet PDF,TDnet PDF確認済,抽出不可,https://www2.jpx.co.jp/disc/58030/140120260514532598.pdf
+5803.T,フジクラ,1つ前,TDnet PDF,TDnet PDF確認済,抽出不可,https://www2.jpx.co.jp/disc/58030/140120260206550168.pdf
+9984.T,ソフトバンクG,最新,公式PDF,公式PDF確認済,抽出不可,https://group.softbank/media/Project/sbg/sbg/pdf/ir/financials/financial_reports/financial-report_q4fy2025_01_ja.pdf
+9984.T,ソフトバンクG,1つ前,公式PDF,公式PDF確認済,抽出成功,https://group.softbank/media/Project/sbg/sbg/pdf/ir/financials/financial_reports/financial-report_q3fy2025_01_ja.pdf
+7012.T,川崎重工業,最新,TDnet PDF,公式PDF確認済,抽出成功,https://www2.jpx.co.jp/disc/70120/140120260511523885.pdf
+7012.T,川崎重工業,1つ前,TDnet PDF,公式PDF確認済,抽出成功,https://www2.jpx.co.jp/disc/70120/140120260205548511.pdf
+8306.T,三菱UFJ FG,最新,公式PDF,公式PDF確認済,抽出成功,https://www.mufg.jp/dam/ir/fs/2025/pdf/summary2603_ja.pdf
+8306.T,三菱UFJ FG,1つ前,公式PDF,公式PDF確認済,抽出成功,https://www.mufg.jp/dam/ir/fs/2025/pdf/summary2512_ja.pdf
+6762.T,TDK,最新,公式PDF,公式PDF確認済,抽出成功,https://www.tdk.com/system/files/2026042800_0mqf56xw_ja.pdf
+6762.T,TDK,1つ前,公式PDF,公式PDF確認済,抽出成功,https://www.tdk.com/system/files/2026020200_tpcdg8if_ja.pdf
+5802.T,住友電工,最新,公式PDF,公式PDF確認済,抽出成功,https://sumitomoelectric.com/jp/sites/japan/files/2026-05/download_documents/2025_allv.pdf
+5802.T,住友電工,1つ前,公式PDF,公式PDF確認済,抽出成功,https://sumitomoelectric.com/jp/sites/japan/files/2026-02/download_documents/2025_3.pdf
+6146.T,ディスコ,最新,公式PDF,公式PDF確認済,抽出成功,https://www.disco.co.jp/jp/ir/library/doc/fr/fr20260422.pdf
+6146.T,ディスコ,1つ前,公式PDF,公式PDF確認済,抽出成功,https://www.disco.co.jp/jp/ir/library/doc/fr/fr20260121.pdf
