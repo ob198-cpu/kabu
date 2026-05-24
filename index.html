@@ -397,6 +397,11 @@
       gap: 12px;
       margin-top: 12px;
     }
+    .score-ranking-summary {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
     .mechanism-card {
       border: 1px solid #b7d4ec;
       border-radius: 12px;
@@ -1501,6 +1506,9 @@
                   </tbody>
                 </table>
               </div>
+              <div class="score-ranking-summary" id="score-ranking-summary">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、集めたデータ上の全候補スコアランキングを表示します。</div>
+              </div>
               <div class="selection-mechanism" id="selection-mechanism">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>
               </div>
@@ -2434,6 +2442,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>`;
     };
 
+    const renderScoreRankingSummaryHint = () => {
+      const target = document.getElementById("score-ranking-summary");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、集めたデータ上の全候補スコアランキングを表示します。</div>`;
+    };
+
     const clampScore = (value) => Math.max(0, Math.min(100, value));
 
     const calcBaseScore = (base = {}) => {
@@ -2580,6 +2594,41 @@
       `;
     };
 
+    const renderScoreRankingSummary = (allRankedRows, adjustedByTicker, baseByTicker) => {
+      const target = document.getElementById("score-ranking-summary");
+      if (!target) return;
+      const strongest = allRankedRows[0];
+      const safeRows = allRankedRows.filter((row) => row.category === "残す");
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>全候補スコアランキング（保有候補とは別）</h4>
+          <p>この表は、集めたデータを補正後スコア順に並べたものです。上の保有候補表は「残す」だけ、この表は「保留」「落とす」も含めた全体順位です。</p>
+          <p><b>数値上の1位:</b> ${strongest ? `${escapeHtml(strongest.ticker)} ${escapeHtml(strongest.company)} ${pointLabel(strongest.adjusted_score)} / ${escapeHtml(strongest.category)}` : "未取得"}<br>
+          <b>保有候補として残す:</b> ${safeRows.length ? safeRows.map((row) => `${escapeHtml(row.ticker)} ${escapeHtml(row.company)}`).join("、") : "該当なし"}</p>
+          <table class="mechanism-table">
+            <thead><tr><th>数値順位</th><th>銘柄</th><th>収益型</th><th>補正後</th><th>基礎</th><th>反応</th><th>分類</th><th>理由</th></tr></thead>
+            <tbody>${allRankedRows.map((row, index) => {
+              const adjusted = adjustedByTicker.get(row.ticker) || {};
+              const base = baseByTicker.get(row.ticker) || {};
+              const model = businessModelProfile(row, base);
+              return `
+                <tr>
+                  <td>${index + 1}</td>
+                  <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+                  <td>${escapeHtml(model.shortType)}</td>
+                  <td>${pointLabel(row.adjusted_score)}</td>
+                  <td>${pointLabel(row.base_score)}</td>
+                  <td>${pointLabel(adjusted.reaction_score || row.reaction_score)}</td>
+                  <td class="${candidateClass(row.category)}">${escapeHtml(row.category)}</td>
+                  <td>${escapeHtml(row.reason || row.note || adjusted.risk_note || "")}</td>
+                </tr>
+              `;
+            }).join("")}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
     const categoryExplanation = (category) => {
       if (category === "残す") return "6月イベント後に深掘りする候補として残します。";
       if (category === "保留") return "数値は強くても、過熱・反応悪化・特殊要因が残るため、購入候補には上げず再判定待ちにします。";
@@ -2642,6 +2691,7 @@
       const alert = document.getElementById("market-alert");
       if (!strip || !body) return;
       setLiveTableHeader(["銘柄", "価格", "前日比", "PER", "判定"]);
+      renderScoreRankingSummaryHint();
       renderSelectionMechanismHint();
       renderCandidateHypothesisHint();
 
@@ -2765,6 +2815,7 @@
             </tr>
           `;
         }).join("");
+        renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
         renderSelectionMechanism(holdingRows, triageRows, adjustedByTicker, baseByTicker);
         renderCandidateHypotheses(holdingRows, adjustedByTicker, baseByTicker);
 
@@ -2775,6 +2826,7 @@
         }
       } catch (error) {
         body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
+        renderScoreRankingSummaryHint();
         renderSelectionMechanismHint();
         renderCandidateHypothesisHint();
         if (alert) {
