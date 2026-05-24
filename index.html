@@ -2254,6 +2254,97 @@
       return `${trimFixed(number, 2)}倍`;
     };
 
+    const businessModelProfiles = {
+      "6146.T": {
+        type: "フロー型",
+        shortType: "フロー",
+        reason: "半導体製造装置は、顧客の設備投資・AI半導体需要・在庫サイクルに売上が左右されやすい。",
+        nisaView: "上昇余地は出やすい一方、設備投資の減速や受注鈍化が出ると株価反応が速い。1年保有では決算後反応と受注関連コメントの確認が重要。"
+      },
+      "6857.T": {
+        type: "フロー型",
+        shortType: "フロー",
+        reason: "半導体検査装置はAI投資が強い局面では伸びるが、顧客の投資タイミングに依存しやすい。",
+        nisaView: "高成長局面では指数超過を狙えるが、高PER・高PBR時は失望決算への耐性が弱い。"
+      },
+      "6920.T": {
+        type: "フロー型",
+        shortType: "フロー",
+        reason: "半導体検査装置の需要は先端投資サイクルに強く連動し、受注・納入タイミングで業績が振れやすい。",
+        nisaView: "1年保有では利益成長の再加速確認が必要。直近利益が弱い場合は候補順位を下げる。"
+      },
+      "7012.T": {
+        type: "フロー型",
+        shortType: "フロー",
+        reason: "重工・防衛・水素関連は大型案件、受注、政策予算に左右されるため、案件型の色が強い。",
+        nisaView: "テーマ性はあるが、受注・採算・納期遅延の確認が必要。政策イベント後の反応を重視する。"
+      },
+      "5801.T": {
+        type: "混合型",
+        shortType: "混合",
+        reason: "電線・光ファイバーはインフラ更新やデータセンター需要の継続性がある一方、素材価格と投資サイクルにも左右される。",
+        nisaView: "テーマ継続なら強いが、1年上昇率が極端な場合は過熱確認が必要。"
+      },
+      "5802.T": {
+        type: "混合型",
+        shortType: "混合",
+        reason: "電線・車載部品は継続需要がある一方、自動車生産、銅価格、設備投資の影響も受ける。",
+        nisaView: "安定寄りに見えても素材・自動車サイクルで振れるため、業界統計との連動確認が必要。"
+      },
+      "5803.T": {
+        type: "混合型",
+        shortType: "混合",
+        reason: "光ファイバー・データセンター需要は継続テーマだが、株価は受注期待と素材価格で大きく動きやすい。",
+        nisaView: "テーマは強いが、過熱・急落率が大きい場合はNISA初回候補から外す判断が必要。"
+      },
+      "6762.T": {
+        type: "混合型",
+        shortType: "混合",
+        reason: "電子部品・電池は継続的な採用需要がある一方、スマホ・EV・為替・在庫循環の影響も受ける。",
+        nisaView: "純粋なストック型ほど安定はしないが、複数市場に分散しており、決算後反応が強い場合は比較候補に残しやすい。"
+      },
+      "8306.T": {
+        type: "ストック型",
+        shortType: "ストック",
+        reason: "銀行は預貸・手数料・決済など継続的な金融収益があり、金利環境の変化が収益性に反映される。",
+        nisaView: "安定枠になり得るが、日銀方針、信用コスト、金利低下局面では逆風になる。"
+      },
+      "9984.T": {
+        type: "資産価値連動型",
+        shortType: "資産連動",
+        reason: "事業会社というより投資会社要素が強く、保有資産価値、NASDAQ、AI投資先評価に連動しやすい。",
+        nisaView: "通常のストック/フロー判定では評価しにくいため、別枠でNAV、投資損益、金利感応度を確認する。"
+      }
+    };
+
+    const businessModelProfile = (row, base = {}) => {
+      const preset = businessModelProfiles[row.ticker];
+      if (preset) return preset;
+      const sectorTheme = `${base.sector || ""} ${base.theme || ""}`;
+      if (sectorTheme.includes("銀行")) {
+        return {
+          type: "ストック型",
+          shortType: "ストック",
+          reason: "継続的な金融収益が中心のため、安定収益の評価軸を重視する。",
+          nisaView: "金利と信用コストを確認し、安定枠として扱う。"
+        };
+      }
+      if (sectorTheme.includes("半導体") || sectorTheme.includes("重工")) {
+        return {
+          type: "フロー型",
+          shortType: "フロー",
+          reason: "設備投資・受注・テーマ需要に左右されやすい。",
+          nisaView: "決算後反応と受注コメントを重視する。"
+        };
+      }
+      return {
+        type: "混合型",
+        shortType: "混合",
+        reason: "継続需要と景気・投資サイクルの両方の影響を受ける。",
+        nisaView: "安定性とテーマ感応度を分けて確認する。"
+      };
+    };
+
     const renderCandidateHypothesisHint = () => {
       const target = document.getElementById("candidate-hypothesis");
       if (!target) return;
@@ -2278,13 +2369,16 @@
         const ret1y = pctLabel(base.ret1y_pct);
         const ma200 = pctLabel(base.ma200_gap_pct);
         const drawdown = pctLabel(base.max_drawdown60_pct);
+        const model = businessModelProfile(row, base);
         const riskNote = adjusted.risk_note || base.note || "追加確認が必要";
         const formula = adjusted.formula_note || "補正後スコアは、公式決算入力の基礎スコアと決算後株価反応を合成して算出。";
         return `
           <article class="candidate-hypothesis-card">
             <h4>${escapeHtml(row.adjusted_rank)}位 ${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</h4>
             <p><b>選定仮説:</b> 補正後スコア${pointLabel(row.adjusted_score)}、基礎スコア${pointLabel(row.base_score)}、決算後反応スコア${pointLabel(adjusted.reaction_score)}。業績数字と決算後の株価反応を合わせて見ると、現時点では「${escapeHtml(row.category)}」候補として残す根拠があります。</p>
+            <p><b>収益型の評価:</b> ${escapeHtml(model.type)}。${escapeHtml(model.reason)} ${escapeHtml(model.nisaView)}</p>
             <div class="hypothesis-metrics">
+              <div class="hypothesis-metric"><span>収益型</span><b>${escapeHtml(model.shortType)}</b></div>
               <div class="hypothesis-metric"><span>売上成長</span><b>${sales}</b></div>
               <div class="hypothesis-metric"><span>利益成長</span><b>${profit}</b></div>
               <div class="hypothesis-metric"><span>EPS推計成長</span><b>${eps}</b></div>
@@ -2418,15 +2512,17 @@
           .sort((a, b) => Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999))
           .slice(0, 3);
 
-        setLiveTableHeader(["順位", "銘柄", "補正後", "反応", "PER", "分類"]);
+        setLiveTableHeader(["順位", "銘柄", "収益型", "補正後", "反応", "PER", "分類"]);
         body.innerHTML = rowsToShow.map((row) => {
           const adjusted = adjustedByTicker.get(row.ticker) || {};
           const base = baseByTicker.get(row.ticker) || {};
+          const model = businessModelProfile(row, base);
           const per = base.per ? `${escapeHtml(base.per)}倍` : "-";
           return `
             <tr>
               <td>${escapeHtml(row.adjusted_rank)}</td>
               <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+              <td>${escapeHtml(model.shortType)}</td>
               <td>${escapeHtml(row.adjusted_score)}点</td>
               <td>${escapeHtml(adjusted.reaction_score || "-")}点</td>
               <td>${per}</td>
@@ -2442,7 +2538,7 @@
           alert.innerHTML = `<b>計算結果で保有候補更新</b><br>反応補正後の3分類で「残す」候補を表示しました。対象: ${escapeHtml(names)}。購入確定ではなく、6月CPI・FOMC・日銀・日経平均75日線を確認してから再判定します。`;
         }
       } catch (error) {
-        body.innerHTML = `<tr><td colspan="6">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
+        body.innerHTML = `<tr><td colspan="7">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
         renderCandidateHypothesisHint();
         if (alert) {
           alert.innerHTML = `<b>候補更新失敗</b><br>${escapeHtml(error.message)}。GitHub Pages上で反映直後の場合は少し待って再実行してください。`;
