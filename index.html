@@ -227,6 +227,12 @@
     .kpi .label { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
     .kpi .value { font-size: 30px; font-weight: 800; color: var(--navy); line-height: 1; }
     .kpi .desc { color: var(--muted); font-size: 12px; margin-top: 7px; }
+    .table-caption {
+      margin: 2px 0 10px;
+      color: #36506a;
+      font-size: 13px;
+      line-height: 1.7;
+    }
     .update-pill {
       display: inline-flex;
       align-items: center;
@@ -1543,7 +1549,8 @@
           </div>
           <div class="update-grid">
             <div>
-              <h3>保有候補の更新値</h3>
+              <h3>候補10社の更新値</h3>
+              <p class="table-caption">この表は集めた候補10社を補正後スコア順に表示します。実際に深掘りする保有候補は、分類が「残す」の銘柄です。</p>
               <div class="candidate-conclusion" id="candidate-conclusion">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、数値上の1位、保有候補、保留/除外の件数を先に表示します。</div>
               </div>
@@ -2888,10 +2895,11 @@
         const allRankedRows = sortByAdjustedScore(triageRows);
         const strongest = allRankedRows[0];
         const safeRows = allRankedRows.filter((row) => row.category === "残す");
+        const displayRows = allRankedRows.slice(0, 10);
         const holdingRows = safeRows.length ? safeRows : allRankedRows.filter((row) => row.category !== "落とす").slice(0, 3);
 
         setLiveTableHeader(["候補順位", "銘柄", "収益型", "補正後", "基礎", "反応", "PER", "分類"]);
-        body.innerHTML = holdingRows.map((row, index) => {
+        body.innerHTML = displayRows.map((row, index) => {
           const adjusted = adjustedByTicker.get(row.ticker) || {};
           const base = baseByTicker.get(row.ticker) || {};
           const model = businessModelProfile(row, base);
@@ -2917,7 +2925,7 @@
         if (updated) updated.textContent = `候補更新: ${generatedCandidateTime()}`;
         if (alert) {
           const safeNames = safeRows.map((row) => row.company).join("、") || "該当なし";
-          alert.innerHTML = `<b>保有候補欄は「残す」だけを表示</b><br>数値上の最上位は ${escapeHtml(strongest?.ticker || "-")} ${escapeHtml(strongest?.company || "-")}（${pointLabel(strongest?.adjusted_score)}、分類: ${escapeHtml(strongest?.category || "-")}）です。保有候補欄には安全分岐後に「残す」となった ${escapeHtml(safeNames)} だけを表示し、保留・落とす銘柄は下の全スコアランキングに分けて表示します。`;
+          alert.innerHTML = `<b>候補10社を表示</b><br>数値上の最上位は ${escapeHtml(strongest?.ticker || "-")} ${escapeHtml(strongest?.company || "-")}（${pointLabel(strongest?.adjusted_score)}、分類: ${escapeHtml(strongest?.category || "-")}）です。この表は10社全体を表示し、深掘りする保有候補は分類が「残す」の ${escapeHtml(safeNames)} です。`;
         }
       } catch (error) {
         body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
