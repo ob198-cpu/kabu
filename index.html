@@ -392,6 +392,72 @@
       padding-top: 8px;
       color: #6a3f00;
     }
+    .selection-mechanism {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .mechanism-card {
+      border: 1px solid #b7d4ec;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 14px;
+      color: #18324a;
+    }
+    .mechanism-card h4 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 16px;
+    }
+    .mechanism-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .mechanism-step {
+      border: 1px solid #dce9f6;
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 9px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .mechanism-step b {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .formula-box {
+      border: 1px solid #dce9f6;
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 10px;
+      margin: 8px 0;
+      font-family: Consolas, "Yu Gothic", monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .mechanism-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .mechanism-table th,
+    .mechanism-table td {
+      border: 1px solid #dce9f6;
+      padding: 7px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+    .mechanism-table th {
+      background: #e8f4ff;
+      color: var(--navy);
+      text-align: left;
+    }
+    .mechanism-table tr:nth-child(even) td { background: #ffffff; }
     .risk-board {
       display: grid;
       grid-template-columns: minmax(260px, .75fr) minmax(0, 1.25fr);
@@ -1148,6 +1214,7 @@
       .plan-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .hypothesis-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .mechanism-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 720px) {
       .sidebar {
@@ -1212,6 +1279,7 @@
       .event-body .mini { grid-template-columns: 1fr; }
       .rule-table { font-size: 12px; }
       .hypothesis-metrics { grid-template-columns: 1fr; }
+      .mechanism-flow { grid-template-columns: 1fr; }
     }
     @media print {
       body { background: #ffffff; }
@@ -1432,6 +1500,9 @@
                     <tr><td colspan="5">読み込み中</td></tr>
                   </tbody>
                 </table>
+              </div>
+              <div class="selection-mechanism" id="selection-mechanism">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>
               </div>
               <div class="candidate-hypothesis" id="candidate-hypothesis">
                 <div class="candidate-hypothesis-empty">「計算結果で保有候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>
@@ -2248,6 +2319,12 @@
       return `${trimFixed(number, 1)}点`;
     };
 
+    const rawPointLabel = (value) => {
+      const number = numericValue(value);
+      if (number === null) return "-";
+      return trimFixed(number, 1);
+    };
+
     const multipleLabel = (value) => {
       const number = numericValue(value);
       if (number === null) return "未取得";
@@ -2351,6 +2428,149 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">「計算結果で保有候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>`;
     };
 
+    const renderSelectionMechanismHint = () => {
+      const target = document.getElementById("selection-mechanism");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>`;
+    };
+
+    const clampScore = (value) => Math.max(0, Math.min(100, value));
+
+    const calcBaseScore = (base = {}) => {
+      const earnings = numericValue(base.earnings_score) ?? 0;
+      const momentum = numericValue(base.momentum_score) ?? 0;
+      const valuation = numericValue(base.valuation_quality_score) ?? 0;
+      const risk = numericValue(base.risk_score) ?? 0;
+      const data = numericValue(base.data_reliability_score) ?? 0;
+      return (earnings * 0.35) + (momentum * 0.25) + (valuation * 0.20) + (risk * 0.15) + (data * 0.05);
+    };
+
+    const calcReactionWeighted = (adjusted = {}) => {
+      const day1 = numericValue(adjusted.avg_excess_1d_pct) ?? 0;
+      const day5 = numericValue(adjusted.avg_excess_5d_pct) ?? 0;
+      const day20 = numericValue(adjusted.avg_excess_20d_pct) ?? 0;
+      return (day1 * 0.34) + (day5 * 0.51) + (day20 * 0.15);
+    };
+
+    const calcReactionScore = (adjusted = {}) => clampScore(50 + (calcReactionWeighted(adjusted) * 2));
+
+    const calcAdjustedScore = (baseScore, reactionScore) => (baseScore * 0.70) + (reactionScore * 0.30);
+
+    const selectedMechanismRows = (rowsToShow, adjustedByTicker, baseByTicker) => rowsToShow.map((row) => {
+      const adjusted = adjustedByTicker.get(row.ticker) || {};
+      const base = baseByTicker.get(row.ticker) || {};
+      const baseCsv = numericValue(row.base_score) ?? numericValue(adjusted.base_score) ?? numericValue(base.score);
+      const reactionCsv = numericValue(row.reaction_score) ?? numericValue(adjusted.reaction_score);
+      const adjustedCsv = numericValue(row.adjusted_score) ?? numericValue(adjusted.adjusted_score);
+      const baseCalc = calcBaseScore(base);
+      const reactionWeighted = calcReactionWeighted(adjusted);
+      const reactionCalc = calcReactionScore(adjusted);
+      const adjustedCalc = calcAdjustedScore(baseCsv ?? baseCalc, reactionCsv ?? reactionCalc);
+      return {
+        row,
+        adjusted,
+        base,
+        baseCsv,
+        reactionCsv,
+        adjustedCsv,
+        baseCalc,
+        reactionWeighted,
+        reactionCalc,
+        adjustedCalc,
+      };
+    });
+
+    const renderSelectionMechanism = (rowsToShow, triageRows, adjustedByTicker, baseByTicker) => {
+      const target = document.getElementById("selection-mechanism");
+      if (!target) return;
+      const selectedTickers = new Set(rowsToShow.map((row) => row.ticker));
+      const selected = selectedMechanismRows(rowsToShow, adjustedByTicker, baseByTicker);
+      const notSelected = triageRows
+        .filter((row) => !selectedTickers.has(row.ticker))
+        .sort((a, b) => Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999));
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>候補選定の機序</h4>
+          <p>この欄は点数の高い銘柄をそのまま買う表ではありません。候補表示は、基礎スコア、決算後反応、過熱/リスク分岐を通ったあと、最終分類が「残す」になった銘柄だけを表示します。</p>
+          <div class="mechanism-flow">
+            <div class="mechanism-step"><b>1. 基礎データ</b>公式決算値、株価、PER/PBR/ROE、下落率、データ信頼度を入力。</div>
+            <div class="mechanism-step"><b>2. 基礎スコア</b>企業数字と株価指標から0〜100点の元スコアを作る。</div>
+            <div class="mechanism-step"><b>3. 決算後反応</b>決算後1日/5日/20日の対日経平均超過リターンを見る。</div>
+            <div class="mechanism-step"><b>4. 反応補正</b>元スコア70%、反応スコア30%で再順位化。</div>
+            <div class="mechanism-step"><b>5. 安全分岐</b>過熱、反応悪化、特殊業態、未確認リスクで残す/保留/落とすに分ける。</div>
+          </div>
+          <div class="formula-box">
+            決算スコア = 売上前年比25% + 利益前年比35% + EPS前年比25% + 直近2回改善度15%<br>
+            株価モメンタム = 60日騰落率30% + 1年騰落率25% + 200日線乖離25% + 出来高倍率20%<br>
+            質/割安 = ROE45% + PER30% + PBR15% + 配当利回り10%<br>
+            リスク = 60日最大下落率55% + 200日線乖離20% + 1年過熱15% + 出来高急増10%<br>
+            基礎スコア = 決算35% + 株価25% + 質/割安20% + リスク15% + データ信頼度5% - 個別減点<br>
+            決算後反応スコア = clamp(0,100, 50 + 2 × (1日超過34% + 5日超過51% + 20日超過15%))<br>
+            補正後スコア = 基礎スコア70% + 決算後反応スコア30%<br>
+            最終表示 = category が「残す」の銘柄だけ表示。保留/落とすは、点数が高くても表示対象外。
+          </div>
+        </section>
+        <section class="mechanism-card">
+          <h4>候補に残った銘柄の代入過程</h4>
+          <table class="mechanism-table">
+            <thead><tr><th>銘柄</th><th>基礎スコアの代入</th><th>反応スコアの代入</th><th>補正後スコア</th><th>最終分岐</th></tr></thead>
+            <tbody>${selected.map((item) => `
+              <tr>
+                <td>${escapeHtml(item.row.ticker)}<br>${escapeHtml(item.row.company)}</td>
+                <td>
+                  0.35×${rawPointLabel(item.base.earnings_score)}
+                  + 0.25×${rawPointLabel(item.base.momentum_score)}
+                  + 0.20×${rawPointLabel(item.base.valuation_quality_score)}
+                  + 0.15×${rawPointLabel(item.base.risk_score)}
+                  + 0.05×${rawPointLabel(item.base.data_reliability_score)}
+                  = ${pointLabel(item.baseCalc)}<br>
+                  CSV採用値: ${pointLabel(item.baseCsv)}
+                </td>
+                <td>
+                  1日 ${pctLabel(item.adjusted.avg_excess_1d_pct, 2)} ×34%
+                  + 5日 ${pctLabel(item.adjusted.avg_excess_5d_pct, 2)} ×51%
+                  + 20日 ${pctLabel(item.adjusted.avg_excess_20d_pct, 2)} ×15%
+                  = 超過平均 ${pctLabel(item.reactionWeighted, 2)}<br>
+                  50 + 2×${rawPointLabel(item.reactionWeighted)} = ${pointLabel(item.reactionCalc)}<br>
+                  CSV採用値: ${pointLabel(item.reactionCsv)}
+                </td>
+                <td>
+                  0.70×${rawPointLabel(item.baseCsv ?? item.baseCalc)}
+                  + 0.30×${rawPointLabel(item.reactionCsv ?? item.reactionCalc)}
+                  = ${pointLabel(item.adjustedCalc)}<br>
+                  CSV採用値: ${pointLabel(item.adjustedCsv)}
+                </td>
+                <td>
+                  ${escapeHtml(item.row.category)}<br>
+                  ${escapeHtml(item.row.reason || item.adjusted.next_action || "")}<br>
+                  注意: ${escapeHtml(item.row.note || item.adjusted.risk_note || "")}
+                </td>
+              </tr>
+            `).join("")}</tbody>
+          </table>
+        </section>
+        <section class="mechanism-card">
+          <h4>点数があっても候補欄に出さなかった理由</h4>
+          <table class="mechanism-table">
+            <thead><tr><th>順位</th><th>銘柄</th><th>補正後</th><th>分類</th><th>外した理由</th><th>次の扱い</th></tr></thead>
+            <tbody>${notSelected.map((row) => {
+              const adjusted = adjustedByTicker.get(row.ticker) || {};
+              return `
+                <tr>
+                  <td>${escapeHtml(row.adjusted_rank)}</td>
+                  <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+                  <td>${pointLabel(row.adjusted_score)}</td>
+                  <td class="${candidateClass(row.category)}">${escapeHtml(row.category)}</td>
+                  <td>${escapeHtml(row.reason || row.note || adjusted.risk_note || "")}</td>
+                  <td>${escapeHtml(row.buy_gate || adjusted.next_action || "")}</td>
+                </tr>
+              `;
+            }).join("")}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
     const renderCandidateHypotheses = (rows, adjustedByTicker, baseByTicker) => {
       const target = document.getElementById("candidate-hypothesis");
       if (!target) return;
@@ -2406,6 +2626,7 @@
       const alert = document.getElementById("market-alert");
       if (!strip || !body) return;
       setLiveTableHeader(["銘柄", "価格", "前日比", "PER", "判定"]);
+      renderSelectionMechanismHint();
       renderCandidateHypothesisHint();
 
       const sourceLabel = data.source ? " / Yahoo Finance取得" : "";
@@ -2530,6 +2751,7 @@
             </tr>
           `;
         }).join("");
+        renderSelectionMechanism(rowsToShow, triageRows, adjustedByTicker, baseByTicker);
         renderCandidateHypotheses(rowsToShow, adjustedByTicker, baseByTicker);
 
         if (updated) updated.textContent = `候補更新: ${generatedCandidateTime()}`;
@@ -2539,6 +2761,7 @@
         }
       } catch (error) {
         body.innerHTML = `<tr><td colspan="7">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
+        renderSelectionMechanismHint();
         renderCandidateHypothesisHint();
         if (alert) {
           alert.innerHTML = `<b>候補更新失敗</b><br>${escapeHtml(error.message)}。GitHub Pages上で反映直後の場合は少し待って再実行してください。`;
