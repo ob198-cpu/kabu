@@ -1346,6 +1346,7 @@
             <p>株価・指数・為替・米金利を読み込み、ルールに使う数字を更新します。</p>
           </div>
           <div class="update-actions">
+            <button class="refresh-button" type="button" id="apply-calculated-candidates">計算結果で保有候補更新</button>
             <span class="update-pill" id="market-updated">更新確認中</span>
             <button class="refresh-button" type="button" id="refresh-market-data">データ再読み込み</button>
           </div>
@@ -2086,12 +2087,80 @@
       return "signal-watch";
     };
 
+    const escapeHtml = (value) => String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+
+    const parseCsvText = (text) => {
+      if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const ch = text[i];
+        const next = text[i + 1];
+        if (quoted) {
+          if (ch === '"' && next === '"') {
+            cell += '"';
+            i += 1;
+          } else if (ch === '"') {
+            quoted = false;
+          } else {
+            cell += ch;
+          }
+        } else if (ch === '"') {
+          quoted = true;
+        } else if (ch === ",") {
+          row.push(cell);
+          cell = "";
+        } else if (ch === "\n") {
+          row.push(cell.replace(/\r$/, ""));
+          rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += ch;
+        }
+      }
+      if (cell.length || row.length) {
+        row.push(cell.replace(/\r$/, ""));
+        rows.push(row);
+      }
+      const headers = rows.shift() || [];
+      return rows
+        .filter((items) => items.some((item) => String(item).trim() !== ""))
+        .map((items) => Object.fromEntries(headers.map((header, index) => [header, items[index] || ""])));
+    };
+
+    const fetchCsvRows = async (path) => {
+      const response = await fetch(`${path}?v=${Date.now()}`);
+      if (!response.ok) throw new Error(`${path}: ${response.status}`);
+      return parseCsvText(await response.text());
+    };
+
+    const setLiveTableHeader = (headers) => {
+      const table = document.getElementById("stock-live-body")?.closest("table");
+      const head = table?.querySelector("thead tr");
+      if (!head) return;
+      head.innerHTML = headers.map((header) => `<th>${escapeHtml(header)}</th>`).join("");
+    };
+
+    const candidateClass = (category) => {
+      if (category === "残す") return "signal-buy";
+      if (category === "落とす") return "signal-stop";
+      return "signal-watch";
+    };
+
     const renderMarketUpdate = (data) => {
       const updated = document.getElementById("market-updated");
       const strip = document.getElementById("market-strip");
       const body = document.getElementById("stock-live-body");
       const alert = document.getElementById("market-alert");
       if (!strip || !body) return;
+      setLiveTableHeader(["銘柄", "価格", "前日比", "PER", "判定"]);
 
       const sourceLabel = data.source ? " / Yahoo Finance取得" : "";
       updated.textContent = data.updatedAt ? `更新: ${data.updatedAt}${sourceLabel}` : "更新日時なし";
@@ -2171,6 +2240,78 @@
       }).join("");
     };
 
+    const loadCalculatedCandidates = async () => {
+      const button = document.getElementById("apply-calculated-candidates");
+      const body = document.getElementById("stock-live-body");
+      const alert = document.getElementById("market-alert");
+      const updated = document.getElementById("market-updated");
+      if (!body) return;
+      if (button) {
+        button.disabled = true;
+        button.textContent = "候補更新中";
+      }
+      try {
+        const [triageRows, adjustedRows, baseRows] = await Promise.all([
+          fetchCsvRows("241_june_test_triage_from_top10.csv"),
+          fetchCsvRows("239_top10_reaction_adjusted_score.csv"),
+          fetchCsvRows("233_top10_test_priority_score.csv"),
+        ]);
+        const adjustedByTicker = new Map(adjustedRows.map((row) => [row.ticker, row]));
+        const baseByTicker = new Map(baseRows.map((row) => [row.ticker, row]));
+        const selected = triageRows
+          .filter((row) => row.category === "残す")
+          .sort((a, b) => Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999));
+        const rowsToShow = selected.length ? selected : triageRows
+          .filter((row) => row.category !== "落とす")
+          .sort((a, b) => Number(a.adjusted_rank || 999) - Number(b.adjusted_rank || 999))
+          .slice(0, 3);
+
+        setLiveTableHeader(["順位", "銘柄", "補正後", "反応", "PER", "分類"]);
+        body.innerHTML = rowsToShow.map((row) => {
+          const adjusted = adjustedByTicker.get(row.ticker) || {};
+          const base = baseByTicker.get(row.ticker) || {};
+          const per = base.per ? `${escapeHtml(base.per)}倍` : "-";
+          return `
+            <tr>
+              <td>${escapeHtml(row.adjusted_rank)}</td>
+              <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+              <td>${escapeHtml(row.adjusted_score)}点</td>
+              <td>${escapeHtml(adjusted.reaction_score || "-")}点</td>
+              <td>${per}</td>
+              <td class="${candidateClass(row.category)}">${escapeHtml(row.category)}</td>
+            </tr>
+          `;
+        }).join("");
+
+        if (updated) updated.textContent = `候補更新: ${generatedCandidateTime()}`;
+        if (alert) {
+          const names = rowsToShow.map((row) => row.company).join("、");
+          alert.innerHTML = `<b>計算結果で保有候補更新</b><br>反応補正後の3分類で「残す」候補を表示しました。対象: ${escapeHtml(names)}。購入確定ではなく、6月CPI・FOMC・日銀・日経平均75日線を確認してから再判定します。`;
+        }
+      } catch (error) {
+        body.innerHTML = `<tr><td colspan="6">計算結果CSVを読み込めませんでした。個別ページの3分類CSVを確認してください。</td></tr>`;
+        if (alert) {
+          alert.innerHTML = `<b>候補更新失敗</b><br>${escapeHtml(error.message)}。GitHub Pages上で反映直後の場合は少し待って再実行してください。`;
+        }
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.textContent = "計算結果で保有候補更新";
+        }
+      }
+    };
+
+    const generatedCandidateTime = () => {
+      const now = new Date();
+      return now.toLocaleString("ja-JP", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    };
+
     const loadMarketUpdate = async () => {
       const button = document.getElementById("refresh-market-data");
       const updated = document.getElementById("market-updated");
@@ -2208,6 +2349,7 @@
 
     loadMarketUpdate();
     document.getElementById("refresh-market-data")?.addEventListener("click", loadMarketUpdate);
+    document.getElementById("apply-calculated-candidates")?.addEventListener("click", loadCalculatedCandidates);
 
     const eventData = {
       "cpi-may": {
