@@ -2986,22 +2986,57 @@
       return row.category === "残す";
     };
 
+    const candidateDecisionBase = (row) => {
+      const category = row.category || "";
+      const reason = row.hard_gate || row.hold_reason || row.reason || row.note || "追加確認が必要";
+      if (category === "残す" && staticCandidatePass(row)) {
+        return {
+          state: "確認へ",
+          badge: "ok",
+          reason: "事前スコアと安全分岐を通過。6月の市場入力後に最終確認する候補。"
+        };
+      }
+      if (category === "残す") {
+        return {
+          state: "保留",
+          badge: "watch",
+          reason: reason || "残す判定だが、銘柄内条件の再確認が必要。"
+        };
+      }
+      if (category === "保留") {
+        return {
+          state: "保留",
+          badge: "watch",
+          reason: reason || "点数は確認対象だが、過熱・未取得・反応悪化などの確認待ち。"
+        };
+      }
+      return {
+        state: "見送り",
+        badge: "stop",
+        reason: reason || "初回NISAテスト候補からは外す扱い。"
+      };
+    };
+
     const renderDecisionSimulator = (allRankedRows) => {
       const target = document.getElementById("decision-simulator");
       if (!target) return;
-      const safeRows = allRankedRows.filter((row) => row.category === "残す");
-      const candidateRows = safeRows.map((row) => `
+      const decisionRows = allRankedRows.slice(0, 10);
+      const candidateRows = decisionRows.map((row) => {
+        const baseDecision = candidateDecisionBase(row);
+        return `
         <tr data-ticker="${escapeHtml(row.ticker)}">
-          <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+          <td>${escapeHtml(row.nisa_rank || "")}</td>
+          <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}<br><small>${escapeHtml(row.category || "-")} / ${escapeHtml(baseDecision.reason)}</small></td>
           <td>${pointOrText(row.nisa_score)}</td>
-          <td>${staticCandidatePass(row) ? readinessBadge("ok", "OK") : readinessBadge("watch", "確認")}</td>
+          <td>${readinessBadge(baseDecision.badge, baseDecision.state)}</td>
           <td class="sim-candidate-result">${readinessBadge("watch", "未入力")}</td>
         </tr>
-      `).join("");
+      `;
+      }).join("");
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>6月イベント後 入力判定</h4>
-          <p>イベント結果を入力して、共通条件と候補別条件を同時に確認します。これは購入操作ではなく、判定根拠を記録するための補助欄です。</p>
+          <p>イベント結果を入力して、上位10社の扱いを同時に確認します。これは購入操作ではなく、判定根拠を記録するための補助欄です。</p>
           <form class="sim-grid" id="decision-simulator-form">
             <label>日経平均と75日線の差（%）<input name="nikkei_gap" type="number" step="0.1" placeholder="-1.0"></label>
             <label>日経平均の高値からの下落率（%）<input name="nikkei_drawdown" type="number" step="0.1" placeholder="8.0"></label>
@@ -3021,8 +3056,8 @@
             <button type="button" class="secondary" id="clear-decision-log">記録をクリア</button>
           </div>
           <table class="mechanism-table">
-            <thead><tr><th>候補</th><th>NISA点</th><th>銘柄内条件</th><th>入力後判定</th></tr></thead>
-            <tbody>${candidateRows || `<tr><td colspan="4">現時点で「残す」判定の銘柄はありません。</td></tr>`}</tbody>
+            <thead><tr><th>順位</th><th>候補</th><th>NISA点</th><th>事前判定</th><th>入力後判定</th></tr></thead>
+            <tbody>${candidateRows || `<tr><td colspan="5">計算対象の銘柄がありません。</td></tr>`}</tbody>
           </table>
           <div class="sim-result" id="decision-log-result">
             <h5>判定記録</h5>
@@ -3071,7 +3106,7 @@
           log.values.fxMove,
           log.values.vix,
           log.values.companyEvent,
-          log.candidates.map((item) => `${item.ticker}:${item.result}`).join(" / "),
+          log.candidates.map((item) => `${item.ticker}:${item.result}(${item.reason})`).join(" / "),
         ]);
         return [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
       };
@@ -3120,11 +3155,34 @@
         if (values.companyEvent === "ng") failReasons.push("企業イベントに下方修正または需要悪化あり");
         const commonPass = missing.length === 0 && failReasons.length === 0;
         const commonState = missing.length ? "未入力" : commonPass ? "通過" : "延期/見送り";
-        const candidateStates = safeRows.map((row) => ({
-          ticker: row.ticker,
-          company: row.company,
-          result: missing.length ? "未入力" : commonPass && staticCandidatePass(row) ? "確認へ" : "見送り",
-        }));
+        const candidateStates = decisionRows.map((row) => {
+          const baseDecision = candidateDecisionBase(row);
+          if (missing.length) {
+            return {
+              ticker: row.ticker,
+              company: row.company,
+              category: row.category || "",
+              result: "未入力",
+              reason: "市場イベント結果の入力待ち",
+            };
+          }
+          if (!commonPass) {
+            return {
+              ticker: row.ticker,
+              company: row.company,
+              category: row.category || "",
+              result: "全体延期",
+              reason: failReasons.join(" / "),
+            };
+          }
+          return {
+            ticker: row.ticker,
+            company: row.company,
+            category: row.category || "",
+            result: baseDecision.state,
+            reason: baseDecision.reason,
+          };
+        });
         latestRecord = {
           timestamp: new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }),
           state: commonState,
@@ -3138,14 +3196,15 @@
           <p><b>扱い:</b> ${commonPass ? "候補別条件の確認に進めます。購入確定ではありません。" : "この状態では購入可否判定を進めず、延期または候補縮小として扱います。"}</p>
         `;
         target.querySelectorAll(".sim-candidate-result").forEach((cell, index) => {
-          const row = safeRows[index];
+          const row = decisionRows[index];
           if (!row) return;
           if (missing.length) {
             cell.innerHTML = readinessBadge("watch", "未入力");
-          } else if (commonPass && staticCandidatePass(row)) {
-            cell.innerHTML = readinessBadge("ok", "確認へ");
+          } else if (!commonPass) {
+            cell.innerHTML = readinessBadge("stop", "全体延期");
           } else {
-            cell.innerHTML = readinessBadge("stop", "見送り");
+            const baseDecision = candidateDecisionBase(row);
+            cell.innerHTML = readinessBadge(baseDecision.badge, baseDecision.state);
           }
         });
       };
