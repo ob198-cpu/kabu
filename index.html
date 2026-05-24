@@ -537,6 +537,39 @@
       line-height: 1.7;
       font-size: 13px;
     }
+    .sim-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .sim-actions button {
+      border: 1px solid #0f6f95;
+      border-radius: 10px;
+      background: #0f6f95;
+      color: #ffffff;
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .sim-actions button.secondary {
+      background: #ffffff;
+      color: #0f6f95;
+    }
+    .sim-log-output {
+      width: 100%;
+      min-height: 100px;
+      border: 1px solid #c9dceb;
+      border-radius: 10px;
+      padding: 10px;
+      color: #102a43;
+      background: #ffffff;
+      font-family: Consolas, "Yu Gothic", monospace;
+      font-size: 12px;
+      line-height: 1.6;
+    }
     .mechanism-card {
       border: 1px solid #b7d4ec;
       border-radius: 12px;
@@ -2982,14 +3015,90 @@
             <h5>判定結果</h5>
             <p>未入力です。6月イベント後に数値を入れると、通過・延期・見送りを表示します。</p>
           </div>
+          <div class="sim-actions">
+            <button type="button" id="save-decision-log">この判定を記録</button>
+            <button type="button" class="secondary" id="show-decision-csv">CSVを表示</button>
+            <button type="button" class="secondary" id="clear-decision-log">記録をクリア</button>
+          </div>
           <table class="mechanism-table">
             <thead><tr><th>候補</th><th>NISA点</th><th>銘柄内条件</th><th>入力後判定</th></tr></thead>
             <tbody>${candidateRows || `<tr><td colspan="4">現時点で「残す」判定の銘柄はありません。</td></tr>`}</tbody>
           </table>
+          <div class="sim-result" id="decision-log-result">
+            <h5>判定記録</h5>
+            <p>まだ記録はありません。</p>
+          </div>
         </section>
       `;
       const form = target.querySelector("#decision-simulator-form");
       const result = target.querySelector("#decision-simulator-result");
+      const logResult = target.querySelector("#decision-log-result");
+      const storageKey = "nisa_june_decision_logs_v1";
+      let latestRecord = null;
+      const storage = (() => {
+        try {
+          return window.localStorage || null;
+        } catch {
+          return null;
+        }
+      })();
+      const loadLogs = () => {
+        if (!storage) return [];
+        try {
+          return JSON.parse(storage.getItem(storageKey) || "[]");
+        } catch {
+          return [];
+        }
+      };
+      const saveLogs = (logs) => {
+        if (!storage) return;
+        storage.setItem(storageKey, JSON.stringify(logs.slice(-50)));
+      };
+      const csvEscape = (value) => {
+        const text = String(value ?? "");
+        return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+      };
+      const logsToCsv = (logs) => {
+        const headers = ["記録時刻", "判定", "理由", "日経75日差", "日経高値下落", "米10年金利", "金利上昇幅", "ドル円変化", "VIX", "企業イベント", "候補別判定"];
+        const rows = logs.map((log) => [
+          log.timestamp,
+          log.state,
+          log.reasons,
+          log.values.nikkeiGap,
+          log.values.nikkeiDrawdown,
+          log.values.us10y,
+          log.values.us10yJump,
+          log.values.fxMove,
+          log.values.vix,
+          log.values.companyEvent,
+          log.candidates.map((item) => `${item.ticker}:${item.result}`).join(" / "),
+        ]);
+        return [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
+      };
+      const renderLogs = (showCsv = false) => {
+        const logs = loadLogs();
+        if (!logs.length) {
+          logResult.innerHTML = `<h5>判定記録</h5><p>まだ記録はありません。</p>`;
+          return;
+        }
+        const recentRows = logs.slice(-5).reverse().map((log) => `
+          <tr>
+            <td>${escapeHtml(log.timestamp)}</td>
+            <td>${readinessBadge(log.state === "通過" ? "ok" : "stop", log.state)}</td>
+            <td>${escapeHtml(log.reasons || "共通条件は通過")}</td>
+            <td>${escapeHtml(log.candidates.map((item) => `${item.ticker}:${item.result}`).join(" / "))}</td>
+          </tr>
+        `).join("");
+        logResult.innerHTML = `
+          <h5>判定記録</h5>
+          <p>直近${Math.min(logs.length, 5)}件を表示しています。記録はこのブラウザ内に保存されます。</p>
+          <table class="mechanism-table">
+            <thead><tr><th>記録時刻</th><th>判定</th><th>理由</th><th>候補別判定</th></tr></thead>
+            <tbody>${recentRows}</tbody>
+          </table>
+          ${showCsv ? `<textarea class="sim-log-output" readonly>${escapeHtml(logsToCsv(logs))}</textarea>` : ""}
+        `;
+      };
       const update = () => {
         const values = {
           nikkeiGap: simulatorNumber(form, "nikkei_gap"),
@@ -3011,6 +3120,18 @@
         if (values.companyEvent === "ng") failReasons.push("企業イベントに下方修正または需要悪化あり");
         const commonPass = missing.length === 0 && failReasons.length === 0;
         const commonState = missing.length ? "未入力" : commonPass ? "通過" : "延期/見送り";
+        const candidateStates = safeRows.map((row) => ({
+          ticker: row.ticker,
+          company: row.company,
+          result: missing.length ? "未入力" : commonPass && staticCandidatePass(row) ? "確認へ" : "見送り",
+        }));
+        latestRecord = {
+          timestamp: new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }),
+          state: commonState,
+          reasons: missing.length ? "未入力項目あり" : failReasons.join(" / "),
+          values,
+          candidates: candidateStates,
+        };
         result.innerHTML = `
           <h5>判定結果: ${escapeHtml(commonState)}</h5>
           <p><b>共通条件:</b> ${missing.length ? "未入力項目があります。" : commonPass ? "共通条件は通過です。" : escapeHtml(failReasons.join(" / "))}</p>
@@ -3030,7 +3151,23 @@
       };
       form.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", update));
       form.querySelectorAll("select").forEach((el) => el.addEventListener("change", update));
+      target.querySelector("#save-decision-log")?.addEventListener("click", () => {
+        if (!latestRecord || latestRecord.state === "未入力") {
+          logResult.innerHTML = `<h5>判定記録</h5><p>未入力の判定は記録しません。必要項目を入力してください。</p>`;
+          return;
+        }
+        const logs = loadLogs();
+        logs.push(latestRecord);
+        saveLogs(logs);
+        renderLogs(false);
+      });
+      target.querySelector("#show-decision-csv")?.addEventListener("click", () => renderLogs(true));
+      target.querySelector("#clear-decision-log")?.addEventListener("click", () => {
+        if (storage) storage.removeItem(storageKey);
+        renderLogs(false);
+      });
       update();
+      renderLogs(false);
     };
 
     const renderCandidateConclusion = (allRankedRows, adjustedByTicker, baseByTicker) => {
