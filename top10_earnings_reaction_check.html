@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社版 決算後株価反応 検算レポート</title>
+  <style>
+    @page { size: A4 landscape; margin: 10mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: #000;
+      background: #f5f8fb;
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      padding: 22px 28px 40px;
+    }
+    header {
+      border: 3px solid #0b4f71;
+      background: #eff8fd;
+      padding: 22px;
+      margin-bottom: 16px;
+      break-inside: avoid;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: 0;
+      color: #000;
+    }
+    h2 {
+      margin: 24px 0 10px;
+      padding-left: 12px;
+      border-left: 8px solid #0b6f9d;
+      font-size: 21px;
+      color: #000;
+      break-after: avoid;
+    }
+    p, td, th, li { color: #000; }
+    .lead { margin: 0; font-size: 16px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+      break-inside: avoid;
+    }
+    .card {
+      border: 2px solid #b8d7e8;
+      background: #fff;
+      padding: 12px;
+      min-height: 74px;
+      break-inside: avoid;
+    }
+    .card strong {
+      display: block;
+      font-size: 24px;
+      color: #003c57;
+      line-height: 1.2;
+    }
+    .notice {
+      border: 2px solid #d39b2a;
+      background: #fff8e8;
+      padding: 12px 14px;
+      margin: 14px 0;
+      break-inside: avoid;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin: 10px 0 18px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      background: #fff;
+      font-size: 11.5px;
+    }
+    thead { display: table-header-group; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    th, td {
+      border: 1px solid #9db8c8;
+      padding: 6px 7px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: #000;
+    }
+    th { background: #dcecf5; font-weight: 700; text-align: left; }
+    .summary-table th:nth-child(1), .summary-table td:nth-child(1) { width: 155px; }
+    .summary-table th:nth-child(2), .summary-table td:nth-child(2),
+    .summary-table th:nth-child(4), .summary-table td:nth-child(4),
+    .summary-table th:nth-child(5), .summary-table td:nth-child(5),
+    .summary-table th:nth-child(6), .summary-table td:nth-child(6),
+    .summary-table th:nth-child(7), .summary-table td:nth-child(7) { width: 66px; text-align: right; }
+    .detail-table { font-size: 10.6px; }
+    .detail-table th:nth-child(1), .detail-table td:nth-child(1) { width: 140px; }
+    .detail-table th:nth-child(2), .detail-table td:nth-child(2) { width: 54px; }
+    .detail-table th:nth-child(3), .detail-table td:nth-child(3),
+    .detail-table th:nth-child(4), .detail-table td:nth-child(4) { width: 82px; }
+    .plus-strong { background: #dff2e5; font-weight: 700; }
+    .plus { background: #edf8f1; }
+    .minus { background: #fff0eb; }
+    .minus-strong { background: #ffd9ce; font-weight: 700; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      break-inside: avoid;
+    }
+    .box {
+      border: 2px solid #b8d7e8;
+      padding: 12px;
+      background: #fff;
+      break-inside: avoid;
+    }
+    .box h3 { margin: 0 0 8px; font-size: 16px; }
+    .small { font-size: 11.5px; }
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      h2, table, .card, .notice, .box { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>10社版 決算後株価反応 検算レポート</h1>
+      <p class="lead">公式決算値から作ったスコアが、実際の株価反応と合っているかを確認するため、決算発表後1営業日・5営業日・20営業日のリターンを日経平均と比較しました。</p>
+      <p class="small">作成日時: 2026/05/24 12:37</p>
+    </header>
+
+    <section class="cards">
+      <div class="card"><strong>10社</strong><span>検算対象</span></div>
+      <div class="card"><strong>20件</strong><span>決算イベント</span></div>
+      <div class="card"><strong>1/5/20日</strong><span>発表後リターン。20日は未到達あり</span></div>
+      <div class="card"><strong>日経平均</strong><span>比較ベンチマーク</span></div>
+    </section>
+
+    <section class="notice">
+      <strong>重要:</strong>
+      発表時刻は未補正です。場中発表・引け後発表の違い、PTS、個別ニュースはまだ反映していません。また、5月発表分は20営業日がまだ経過していないため、20日平均は取得済みイベントだけの暫定値です。ここでは購入判断ではなく、スコア検算のための一次データとして扱います。
+    </section>
+
+    <h2>1. 銘柄別サマリー</h2>
+    <table class="summary-table">
+    <thead><tr><th>銘柄</th><th>スコア</th><th>判定</th><th>件数</th><th>20日件数</th><th>1日超過</th><th>5日超過</th><th>20日超過</th><th>反応評価</th><th>整合性</th></tr></thead>
+    <tbody><tr><td>5801.T 古河電工</td><td>44</td><td>比較継続</td><td>2</td><td>1/2</td><td>17.5%</td><td>11.75%</td><td>72.37%</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>5802.T 住友電工</td><td>40.3</td><td>比較継続</td><td>2</td><td>1/2</td><td>-5.93%</td><td>-2.01%</td><td>23.91%</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>5803.T フジクラ</td><td>32</td><td>見送り寄り</td><td>2</td><td>1/2</td><td>-1.85%</td><td>-15.21%</td><td>19.2%</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>6146.T ディスコ</td><td>50.4</td><td>比較継続</td><td>2</td><td>1/2</td><td>6.16%</td><td>9.32%</td><td>17.57%</td><td>決算後反応は強い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>6762.T TDK</td><td>47</td><td>比較継続</td><td>2</td><td>1/2</td><td>8.27%</td><td>6.4%</td><td>2.97%</td><td>短期反応は強い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>7012.T 川崎重工業</td><td>52.4</td><td>比較継続</td><td>2</td><td>1/2</td><td>2.64%</td><td>-6.47%</td><td>-2.67%</td><td>決算後反応は弱め（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>6857.T アドバンテスト</td><td>69.8</td><td>条件付きテスト候補</td><td>2</td><td>1/2</td><td>0.3%</td><td>-5.36%</td><td>-5.16%</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>8306.T 三菱UFJ FG</td><td>48.4</td><td>比較継続</td><td>2</td><td>1/2</td><td>1.76%</td><td>-0.35%</td><td>-6.86%</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>6920.T レーザーテック</td><td>36.2</td><td>見送り寄り</td><td>2</td><td>1/2</td><td>-6.26%</td><td>-11.37%</td><td>-11.51%</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr><tr><td>9984.T ソフトバンクG</td><td>60.9</td><td>条件付きテスト候補</td><td>2</td><td>1/2</td><td>-5.35%</td><td>-9.11%</td><td>-19.09%</td><td>決算後に弱い（20日未到達あり）</td><td>20営業日未到達イベントあり</td></tr></tbody>
+  </table>
+
+    <h2>2. 決算イベント別の株価反応</h2>
+    <table class="detail-table">
+  <thead><tr><th>銘柄</th><th>区分</th><th>発表日</th><th>基準日</th><th>1日</th><th>1日超過</th><th>5日</th><th>5日超過</th><th>20日</th><th>20日超過</th><th>状況</th></tr></thead>
+  <tbody><tr><td class="">6857.T アドバンテスト</td><td class="">最新</td><td class="">2026-04-27</td><td class="">2026-04-27</td><td class="minus-strong">-5.56%</td><td class="minus">-4.53%</td><td class="minus-strong">-5.13%</td><td class="minus-strong">-8.72%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">6857.T アドバンテスト</td><td class="">1つ前</td><td class="">2026-01-28</td><td class="">2026-01-28</td><td class="plus-strong">5.17%</td><td class="plus-strong">5.14%</td><td class="minus">-0.25%</td><td class="minus">-2.01%</td><td class="plus-strong">5.13%</td><td class="minus-strong">-5.16%</td><td class="">計算済み</td></tr><tr><td class="">5801.T 古河電工</td><td class="">最新</td><td class="">2026-05-12</td><td class="">2026-05-12</td><td class="plus-strong">15.27%</td><td class="plus-strong">14.42%</td><td class="minus">-0.36%</td><td class="plus">3.14%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">5801.T 古河電工</td><td class="">1つ前</td><td class="">2026-02-09</td><td class="">2026-02-09</td><td class="plus-strong">22.86%</td><td class="plus-strong">20.57%</td><td class="plus-strong">20.71%</td><td class="plus-strong">20.35%</td><td class="plus-strong">70%</td><td class="plus-strong">72.37%</td><td class="">計算済み</td></tr><tr><td class="">6920.T レーザーテック</td><td class="">最新</td><td class="">2026-04-30</td><td class="">2026-04-30</td><td class="plus">0.56%</td><td class="plus">0.18%</td><td class="plus">1.87%</td><td class="minus">-3.96%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">6920.T レーザーテック</td><td class="">1つ前</td><td class="">2026-01-30</td><td class="">2026-01-30</td><td class="minus-strong">-13.96%</td><td class="minus-strong">-12.71%</td><td class="minus-strong">-17.04%</td><td class="minus-strong">-18.78%</td><td class="minus-strong">-5.96%</td><td class="minus-strong">-11.51%</td><td class="">計算済み</td></tr><tr><td class="">5803.T フジクラ</td><td class="">最新</td><td class="">2026-05-14</td><td class="">2026-05-14</td><td class="minus-strong">-8.43%</td><td class="minus-strong">-6.45%</td><td class="minus-strong">-29.17%</td><td class="minus-strong">-27.63%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">5803.T フジクラ</td><td class="">1つ前</td><td class="">2026-02-09</td><td class="">2026-02-09</td><td class="plus-strong">5.03%</td><td class="plus">2.75%</td><td class="minus">-2.44%</td><td class="minus">-2.8%</td><td class="plus-strong">16.83%</td><td class="plus-strong">19.2%</td><td class="">計算済み</td></tr><tr><td class="">9984.T ソフトバンクG</td><td class="">最新</td><td class="">2026-05-13</td><td class="">2026-05-13</td><td class="minus">-4.03%</td><td class="minus">-3.05%</td><td class="minus-strong">-16.18%</td><td class="minus-strong">-10.7%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">9984.T ソフトバンクG</td><td class="">1つ前</td><td class="">2026-02-12</td><td class="">2026-02-12</td><td class="minus-strong">-8.86%</td><td class="minus-strong">-7.65%</td><td class="minus-strong">-7.83%</td><td class="minus-strong">-7.53%</td><td class="minus-strong">-25.72%</td><td class="minus-strong">-19.09%</td><td class="">計算済み</td></tr><tr><td class="">7012.T 川崎重工業</td><td class="">最新</td><td class="">2026-05-12</td><td class="">2026-05-12</td><td class="plus">0.77%</td><td class="minus">-0.08%</td><td class="minus-strong">-15.98%</td><td class="minus-strong">-12.49%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">7012.T 川崎重工業</td><td class="">1つ前</td><td class="">2026-02-09</td><td class="">2026-02-09</td><td class="plus-strong">7.64%</td><td class="plus-strong">5.36%</td><td class="minus">-0.09%</td><td class="minus">-0.45%</td><td class="minus-strong">-5.04%</td><td class="minus">-2.67%</td><td class="">計算済み</td></tr><tr><td class="">8306.T 三菱UFJ FG</td><td class="">最新</td><td class="">2026-05-15</td><td class="">2026-05-15</td><td class="plus">2.25%</td><td class="plus">3.22%</td><td class="plus-strong">5.53%</td><td class="plus">2.39%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">8306.T 三菱UFJ FG</td><td class="">1つ前</td><td class="">2026-02-09</td><td class="">2026-02-09</td><td class="plus">2.59%</td><td class="plus">0.3%</td><td class="minus">-2.74%</td><td class="minus">-3.1%</td><td class="minus-strong">-9.23%</td><td class="minus-strong">-6.86%</td><td class="">計算済み</td></tr><tr><td class="">6762.T TDK</td><td class="">最新</td><td class="">2026-04-28</td><td class="">2026-04-28</td><td class="plus-strong">7.98%</td><td class="plus-strong">9.03%</td><td class="plus-strong">9.68%</td><td class="plus-strong">5.5%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">6762.T TDK</td><td class="">1つ前</td><td class="">2026-02-02</td><td class="">2026-02-02</td><td class="plus-strong">11.43%</td><td class="plus-strong">7.51%</td><td class="plus-strong">14.35%</td><td class="plus-strong">7.31%</td><td class="plus-strong">5.99%</td><td class="plus">2.97%</td><td class="">計算済み</td></tr><tr><td class="">5802.T 住友電工</td><td class="">最新</td><td class="">2026-05-14</td><td class="">2026-05-14</td><td class="minus-strong">-9.29%</td><td class="minus-strong">-7.31%</td><td class="minus-strong">-11.36%</td><td class="minus-strong">-9.81%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">5802.T 住友電工</td><td class="">1つ前</td><td class="">2026-02-04</td><td class="">2026-02-04</td><td class="minus-strong">-5.44%</td><td class="minus">-4.56%</td><td class="plus-strong">11.96%</td><td class="plus-strong">5.8%</td><td class="plus-strong">26.35%</td><td class="plus-strong">23.91%</td><td class="">計算済み</td></tr><tr><td class="">6146.T ディスコ</td><td class="">最新</td><td class="">2026-04-22</td><td class="">2026-04-22</td><td class="minus">-3.78%</td><td class="minus">-3.03%</td><td class="minus">-1.1%</td><td class="minus">-0.59%</td><td class=""></td><td class=""></td><td class="">計算済み</td></tr><tr><td class="">6146.T ディスコ</td><td class="">1つ前</td><td class="">2026-01-21</td><td class="">2026-01-21</td><td class="plus-strong">17.07%</td><td class="plus-strong">15.34%</td><td class="plus-strong">20.33%</td><td class="plus-strong">19.23%</td><td class="plus-strong">26.46%</td><td class="plus-strong">17.57%</td><td class="">計算済み</td></tr></tbody>
+</table>
+
+    <h2>3. 計算方法</h2>
+    <table class="">
+    <thead><tr><th>項目</th><th>内容</th></tr></thead>
+    <tbody><tr><td>目的</td><td>決算数値で作ったスコアが、実際の株価反応と大きくズレていないかを確認する。</td></tr><tr><td>基準日</td><td>決算発表日の直近終値を基準にし、翌営業日以降の1日・5日・20日リターンを計算する。</td></tr><tr><td>比較対象</td><td>同じ期間の日経平均リターンを引き、指数を上回ったかを超過リターンとして見る。</td></tr><tr><td>限界</td><td>発表時刻、場中発表、PTS、個別ニュースは未補正。したがって購入判断ではなく検算資料として使う。</td></tr></tbody>
+  </table>
+
+    <h2>4. 次の使い方</h2>
+    <section class="two-col">
+      <div class="box">
+        <h3>候補に残しやすい条件</h3>
+        <ul>
+          <li>スコアが高く、決算後の超過リターンもプラス。</li>
+          <li>決算直後だけでなく20営業日でも日経平均を上回る。</li>
+          <li>高PER/PBRでも、決算反応が継続している。</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>追加確認が必要な条件</h3>
+        <ul>
+          <li>スコアは高いが、決算後リターンが弱い。</li>
+          <li>20営業日データがまだ不足している。</li>
+          <li>銀行・投資会社など、通常企業と同じ式で比べにくい。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
