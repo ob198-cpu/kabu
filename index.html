@@ -1687,6 +1687,9 @@
               <div class="score-ranking-summary" id="sector-adjustment">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、業種別補正に使える同業比較数を表示します。</div>
               </div>
+              <div class="score-ranking-summary" id="backtest-readiness">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、過去検証に使えるイベント後リターンと月次データの接続状況を表示します。</div>
+              </div>
               <div class="candidate-readiness" id="candidate-readiness">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>
               </div>
@@ -2475,6 +2478,14 @@
       return parseCsvText(await response.text());
     };
 
+    const fetchCsvRowsOptional = async (path) => {
+      try {
+        return await fetchCsvRows(path);
+      } catch {
+        return [];
+      }
+    };
+
     const setLiveTableHeader = (headers) => {
       const table = document.getElementById("stock-live-body")?.closest("table");
       const head = table?.querySelector("thead tr");
@@ -2651,6 +2662,12 @@
       const target = document.getElementById("sector-adjustment");
       if (!target) return;
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、業種別補正に使える同業比較数を表示します。</div>`;
+    };
+
+    const renderBacktestReadinessHint = () => {
+      const target = document.getElementById("backtest-readiness");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、過去検証に使えるイベント後リターンと月次データの接続状況を表示します。</div>`;
     };
 
     const renderCandidateReadinessHint = () => {
@@ -3162,6 +3179,110 @@
       `;
     };
 
+    const averageOf = (rows, key) => {
+      const values = rows.map((row) => numericValue(row[key])).filter((value) => value !== null);
+      if (!values.length) return null;
+      return values.reduce((sum, value) => sum + value, 0) / values.length;
+    };
+
+    const countUnique = (rows, key) => new Set(rows.map((row) => row[key]).filter(Boolean)).size;
+
+    const renderBacktestReadiness = (allRankedRows, eventDetailRows, eventSummaryRows, stockMonthlyRows, marketMonthlyRows) => {
+      const target = document.getElementById("backtest-readiness");
+      if (!target) return;
+      const candidateTickers = new Set(allRankedRows.map((row) => row.ticker));
+      const eventCandidateRows = eventSummaryRows.filter((row) => candidateTickers.has(row.ticker));
+      const stockMonthlyCandidateRows = stockMonthlyRows.filter((row) => candidateTickers.has(row.ticker));
+      const stockMonthlyTickers = new Set(stockMonthlyCandidateRows.map((row) => row.ticker));
+      const eventTickers = new Set(eventCandidateRows.map((row) => row.ticker));
+      const eventDetailCandidateRows = eventDetailRows.filter((row) => candidateTickers.has(row.ticker));
+      const marketMonths = new Set(marketMonthlyRows.map((row) => row.month).filter(Boolean));
+      const stockMonths = new Set(stockMonthlyCandidateRows.map((row) => row.month).filter(Boolean));
+      const joinedMonthCount = [...stockMonths].filter((month) => marketMonths.has(month)).length;
+      const eventAvgRows = eventCandidateRows.map((row) => {
+        const avg5 = numericValue(row.avg_excess_5d_pct);
+        const avg20 = numericValue(row.avg_excess_20d_pct);
+        const status = numericValue(row.event_count_calculated) >= 4
+          ? "暫定可"
+          : "不足";
+        return `
+          <tr>
+            <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company_name)}</td>
+            <td>${escapeHtml(row.event_count_calculated || "0")}件</td>
+            <td>${formatPercent(avg5)}</td>
+            <td>${formatPercent(avg20)}</td>
+            <td>${escapeHtml(row.strong_event_count || "0")} / ${escapeHtml(row.weak_event_count || "0")}</td>
+            <td>${status === "暫定可" ? readinessBadge("watch", status) : readinessBadge("stop", status)}</td>
+          </tr>
+        `;
+      }).join("") || `<tr><td colspan="6">現候補20社と一致するイベント後リターン集計はまだありません。</td></tr>`;
+      const monthlyRows = allRankedRows.map((row) => {
+        const rows = stockMonthlyCandidateRows.filter((item) => item.ticker === row.ticker);
+        const validReturns = rows.filter((item) => numericValue(item.monthly_return_pct) !== null);
+        const avgReturn = averageOf(validReturns, "monthly_return_pct");
+        const months = rows.length;
+        const usable = months >= 12 && validReturns.length >= 10;
+        return `
+          <tr>
+            <td>${escapeHtml(row.nisa_rank || "")}</td>
+            <td>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</td>
+            <td>${months}か月</td>
+            <td>${validReturns.length}件</td>
+            <td>${formatPercent(avgReturn)}</td>
+            <td>${usable ? readinessBadge("ok", "接続可") : readinessBadge("watch", "不足")}</td>
+          </tr>
+        `;
+      }).join("");
+      const progressRows = [
+        ["イベント後リターン明細", `${eventDetailRows.length}件`, `${eventDetailCandidateRows.length}件が現候補20社と一致`, eventDetailCandidateRows.length ? "一部接続済み" : "未接続"],
+        ["イベント後リターン集計", `${eventSummaryRows.length}銘柄`, `${eventTickers.size}銘柄が現候補20社と一致`, eventTickers.size ? "一部接続済み" : "未接続"],
+        ["株価月次データ", `${countUnique(stockMonthlyRows, "ticker")}銘柄`, `${stockMonthlyTickers.size}銘柄が現候補20社と一致`, stockMonthlyTickers.size ? "一部接続済み" : "不足"],
+        ["指数月次データ", `${marketMonthlyRows.length}行`, `株価月次と一致する月: ${joinedMonthCount}か月`, joinedMonthCount >= 12 ? "接続可" : "不足"],
+      ];
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>過去検証・バックテスト準備状況</h4>
+          <p>ここはモデルの有効性を証明する欄ではなく、検証に必要なデータがどこまで接続できているかを確認する欄です。現時点では、イベント後反応と月次リターンの一部接続までです。</p>
+          <div class="candidate-conclusion">
+            <article class="conclusion-card hold">
+              <small>現候補とのイベント接続</small>
+              <b>${eventTickers.size}銘柄</b>
+              <p>イベント後リターン集計と現候補20社の一致数。</p>
+            </article>
+            <article class="conclusion-card keep">
+              <small>現候補との月次接続</small>
+              <b>${stockMonthlyTickers.size}銘柄</b>
+              <p>月次株価データと現候補20社の一致数。</p>
+            </article>
+            <article class="conclusion-card drop">
+              <small>判定</small>
+              <b>準備段階</b>
+              <p>購入判断の成績検証は、6月テスト開始後の記録と接続して行います。</p>
+            </article>
+          </div>
+          <table class="mechanism-table">
+            <thead><tr><th>データ</th><th>取得済み</th><th>現候補との接続</th><th>状態</th></tr></thead>
+            <tbody>${progressRows.map(([item, acquired, connected, status]) => `
+              <tr>
+                <td>${escapeHtml(item)}</td>
+                <td>${escapeHtml(acquired)}</td>
+                <td>${escapeHtml(connected)}</td>
+                <td>${status === "接続可" ? readinessBadge("ok", status) : status.includes("一部") ? readinessBadge("watch", status) : readinessBadge("stop", status)}</td>
+              </tr>
+            `).join("")}</tbody>
+          </table>
+          <table class="mechanism-table">
+            <thead><tr><th>銘柄</th><th>イベント数</th><th>平均5日超過</th><th>平均20日超過</th><th>強/弱</th><th>扱い</th></tr></thead>
+            <tbody>${eventAvgRows}</tbody>
+          </table>
+          <table class="mechanism-table">
+            <thead><tr><th>順位</th><th>銘柄</th><th>月次取得</th><th>月次リターン件数</th><th>平均月次</th><th>扱い</th></tr></thead>
+            <tbody>${monthlyRows}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
     const readinessBadge = (state, text) => `<span class="readiness-badge ${state}">${escapeHtml(text)}</span>`;
 
     const readinessFlag = (condition, okText = "OK", watchText = "確認") => (
@@ -3668,6 +3789,7 @@
       renderScoreRankingSummaryHint();
       renderScoreModelRevisionHint();
       renderSectorAdjustmentHint();
+      renderBacktestReadinessHint();
       renderCandidateReadinessHint();
       renderFinalDecisionGateHint();
       renderDecisionSimulatorHint();
@@ -3763,10 +3885,22 @@
         button.textContent = "候補更新中";
       }
       try {
-        const [triageRows, adjustedRows, baseRows] = await Promise.all([
+        const [
+          triageRows,
+          adjustedRows,
+          baseRows,
+          eventDetailRows,
+          eventSummaryRows,
+          stockMonthlyRows,
+          marketMonthlyRows,
+        ] = await Promise.all([
           fetchCsvRows("245_nisa_1year_hold_score_top20.csv"),
           fetchCsvRows("239_top10_reaction_adjusted_score.csv"),
           fetchCsvRows("233_top10_test_priority_score.csv"),
+          fetchCsvRowsOptional("37_event_return_detail.csv"),
+          fetchCsvRowsOptional("38_event_return_summary.csv"),
+          fetchCsvRowsOptional("83_stock_monthly_returns.csv"),
+          fetchCsvRowsOptional("89_market_monthly_returns.csv"),
         ]);
         const adjustedByTicker = new Map(adjustedRows.map((row) => [row.ticker, row]));
         const baseByTicker = new Map(baseRows.map((row) => [row.ticker, row]));
@@ -3797,6 +3931,7 @@
         renderScoreRankingSummary(allRankedRows, adjustedByTicker, baseByTicker);
         renderScoreModelRevision(allRankedRows);
         renderSectorAdjustment(allRankedRows);
+        renderBacktestReadiness(allRankedRows, eventDetailRows, eventSummaryRows, stockMonthlyRows, marketMonthlyRows);
         renderCandidateReadiness(allRankedRows);
         renderFinalDecisionGate(allRankedRows);
         renderDecisionSimulator(allRankedRows);
@@ -3814,6 +3949,7 @@
         renderScoreRankingSummaryHint();
         renderScoreModelRevisionHint();
         renderSectorAdjustmentHint();
+        renderBacktestReadinessHint();
         renderCandidateReadinessHint();
         renderFinalDecisionGateHint();
         renderDecisionSimulatorHint();
