@@ -74,6 +74,7 @@
         <div class="card"><b id="candidate-count">-</b><span>時流候補接続</span><p class="small">テーマから銘柄候補へ接続</p></div>
         <div class="card"><b id="score-count">-</b><span>探索スコア</span><p class="small">購入判定と分けて試算</p></div>
         <div class="card"><b id="bridge-pass-count">-</b><span>数値ゲート通過</span><p class="small">質的候補のうち数値確認も通った候補</p></div>
+        <div class="card"><b id="priority-a-count">-</b><span>次に補完</span><p class="small">NISA点接続・信頼度補完を急ぐ候補</p></div>
       </div>
       <div class="notice">
         有料ニュース本文、四季報本文、QUICK/Bloomberg/Reuters等の契約データは、契約・APIなしでは自動取得対象にしません。MVPでは、公式開示・公的統計・企業IR・公開見出し/リンク・手入力要約を使います。
@@ -121,6 +122,7 @@
         <a class="button secondary" href="251_qualitative_theme_rules.csv">テーマルールCSV</a>
         <a class="button secondary" href="255_qualitative_theme_chain_scores.csv">連鎖点CSV</a>
         <a class="button secondary" href="254_qualitative_trend_exploration_score.csv">探索スコアCSV</a>
+        <a class="button secondary" href="257_qualitative_action_queue.csv">補完キューCSV</a>
       </div>
     </section>
 
@@ -138,6 +140,22 @@
         </table>
       </div>
       <div class="ok">目的は、ニュースや時流で拾った候補を「数値で確認済み」「数値確認中」「未接続」に分けることです。質的材料だけで購入候補にしないための安全装置です。</div>
+    </section>
+
+    <section class="section">
+      <h2>次に埋めるデータの優先順位</h2>
+      <p>6月テスト候補を10社前後まで増やすため、どの銘柄のどの不足データを先に埋めるかを並べます。同じ銘柄でも、別テーマで根拠が異なる場合は別行で表示します。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>順番</th><th>優先</th><th>作業種別</th><th>銘柄</th><th>テーマ</th><th>時流点</th><th>NISA点</th><th>止まっている理由</th><th>具体作業</th>
+            </tr>
+          </thead>
+          <tbody id="action-queue-body"><tr><td colspan="9">読み込み中</td></tr></tbody>
+        </table>
+      </div>
+      <div class="notice">Sは購入確定ではなく、6月イベント前監視です。Aは候補を増やすために優先して数値補完する対象、Bは過熱や反応不足の監視、Cは母集団追加から始める対象です。</div>
     </section>
 
     <section class="section">
@@ -205,6 +223,7 @@
       matches: "253_qualitative_candidate_match.csv",
       scores: "254_qualitative_trend_exploration_score.csv",
       bridge: "256_qualitative_numeric_gate_bridge.csv",
+      actionQueue: "257_qualitative_action_queue.csv",
     };
 
     let appData = {
@@ -214,6 +233,7 @@
       matches: [],
       scores: [],
       bridge: [],
+      actionQueue: [],
     };
 
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -263,7 +283,7 @@
 
     const statusPill = (value) => {
       const text = String(value || "");
-      const cls = text.includes("使用") || text.includes("探索候補") || text.includes("通過")
+      const cls = ["S", "A"].includes(text) || text.includes("使用") || text.includes("探索候補") || text.includes("通過")
         ? "ok"
         : text.includes("未") || text.includes("契約") || text.includes("落とす")
           ? "stop"
@@ -339,22 +359,24 @@
     };
 
     const render = async () => {
-      const [sources, rules, events, matches, scores, bridge] = await Promise.all([
+      const [sources, rules, events, matches, scores, bridge, actionQueue] = await Promise.all([
         fetchCsv(csvFiles.sources),
         fetchCsv(csvFiles.rules),
         fetchCsv(csvFiles.events),
         fetchCsv(csvFiles.matches),
         fetchCsv(csvFiles.scores),
         fetchCsv(csvFiles.bridge),
+        fetchCsv(csvFiles.actionQueue),
       ]);
 
-      appData = { sources, rules, events, matches, scores, bridge };
+      appData = { sources, rules, events, matches, scores, bridge, actionQueue };
 
       document.getElementById("source-count").textContent = sources.length;
       document.getElementById("theme-count").textContent = rules.length;
       document.getElementById("candidate-count").textContent = matches.length;
       document.getElementById("score-count").textContent = scores.length;
       document.getElementById("bridge-pass-count").textContent = bridge.filter((row) => row.bridge_status === "数値ゲート通過候補").length;
+      document.getElementById("priority-a-count").textContent = actionQueue.filter((row) => row.priority === "A").length;
 
       const paidBlocked = sources.filter((row) => row.use_in_mvp.includes("不使用")).length;
       const usableSources = sources.filter((row) => row.use_in_mvp.includes("使用")).length;
@@ -381,6 +403,20 @@
           <td>${escapeHtml(row.hard_gate || "-")}</td>
           <td>${statusPill(row.bridge_status)}</td>
           <td>${escapeHtml(row.next_action)}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("action-queue-body").innerHTML = actionQueue.slice(0, 18).map((row) => `
+        <tr>
+          <td>${escapeHtml(row.queue_rank)}</td>
+          <td>${statusPill(row.priority)}</td>
+          <td>${escapeHtml(row.task_type)}</td>
+          <td><b>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</b></td>
+          <td>${escapeHtml(row.theme_name)}</td>
+          <td>${escapeHtml(row.qualitative_score)}</td>
+          <td>${escapeHtml(row.nisa_score || "-")}</td>
+          <td>${escapeHtml(row.blocker || "-")}</td>
+          <td>${escapeHtml(row.task_detail)}</td>
         </tr>
       `).join("");
 
