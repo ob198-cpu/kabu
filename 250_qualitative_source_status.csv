@@ -1,0 +1,12 @@
+source_category,source_name,url,access_method,license_status,reliability,automation_status,use_in_mvp,comment
+公式開示,TDnet 適時開示,https://www.release.tdnet.info/inbs/I_main_00.html,HTML/PDF,公開情報の範囲で利用,95,一部開始,使用,自社株買い・上方修正・下方修正・決算短信などの一次情報
+公式開示,EDINET 有価証券報告書,https://disclosure2.edinet-fsa.go.jp/,API/XBRL,公開APIの範囲で利用,90,一部開始,使用,事業内容・リスク・セグメント・売上構成の確認に使う
+企業公式,企業IRページ,各社IR,HTML/PDF,公開情報の範囲で利用,95,候補別に手動確認,使用,決算説明資料・中計・受注・事業別売上を確認する
+中央銀行,日銀 金融政策決定会合,https://www.boj.or.jp/,HTML/CSV,公開情報の範囲で利用,95,取得候補,使用,金利テーマ・銀行株・円高円安ショックの判断材料
+中央銀行,FRB FOMC,https://www.federalreserve.gov/monetarypolicy.htm,HTML/CSV,公開情報の範囲で利用,95,取得候補,使用,米金利・グロース株・半導体リスクの判断材料
+公的統計,FRED,https://fred.stlouisfed.org/,CSV/API,公開APIの範囲で利用,90,取得済み,使用,米CPI・PPI・金利などのマクロ系列
+公的統計,統計局・e-Stat,https://www.e-stat.go.jp/,API/Excel,公開APIの範囲で利用,90,一部確認,使用,日本CPI・人口・消費などの確認先
+公的統計,経産省 統計,https://www.meti.go.jp/statistics/,HTML/Excel,公開情報の範囲で利用,85,一部開始,使用,鉱工業生産・業界統計・素材関連指標
+業界団体,自販連・全軽自協など,各団体統計ページ,HTML/PDF/Excel,公開範囲で利用,75,一部開始,使用,自動車販売など業界需要の確認先
+公開ニュース,RSS・公開見出し,各社公開RSS/公式配信,RSS/HTML,見出し・URL・短い要約のみ利用,60,未実装,限定使用,全文保存や有料記事転載はしない
+有料ニュース,日経・QUICK・Bloomberg・Reuters,契約サービス,API/端末,契約が必要,85,未取得,現時点では不使用,契約なしでの自動取得や本文保存は行わない
