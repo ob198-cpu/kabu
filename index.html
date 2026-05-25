@@ -3964,6 +3964,7 @@
       if (!target) return;
       const strongest = allRankedRows[0];
       const safeRows = allRankedRows.filter((row) => row.category === "残す");
+      const reserveRows = allRankedRows.filter((row) => row.category === "予備");
       const holdRows = allRankedRows.filter((row) => row.category === "保留");
       const dropRows = allRankedRows.filter((row) => row.category === "落とす");
       const safeNames = safeRows.length
@@ -3988,15 +3989,16 @@
           <p>この欄は「残す」判定だけです。購入確定ではなく、6月の市場イベントと追加確認に進める候補です。</p>
         </article>
         <article class="conclusion-card drop">
-          <small>保留・除外</small>
-          <b>保留 ${holdRows.length}件 / 落とす ${dropRows.length}件</b>
-          <p>高スコアでも、未取得・過熱・急落・反応悪化・割高リスクで分岐します。理由は下のランキングと機序欄に残します。</p>
+          <small>予備・保留・除外</small>
+          <b>予備 ${reserveRows.length}件 / 保留 ${holdRows.length}件 / 落とす ${dropRows.length}件</b>
+          <p>予備は購入候補ではなく、決算後20営業日反応や6月イベント後の地合いで昇格可否を確認する補充枠です。</p>
         </article>
       `;
     };
 
     const categoryExplanation = (category) => {
       if (category === "残す") return "6月イベント後に深掘りする候補として残します。";
+      if (category === "予備") return "候補数を広げるための補充枠です。決算後20営業日反応と6月イベント後の地合い確認が終わるまで購入候補には上げません。";
       if (category === "保留") return "数値は強くても、過熱・反応悪化・特殊要因が残るため、購入候補には上げず再判定待ちにします。";
       if (category === "落とす") return "現時点では初回テスト候補から外し、明確な改善データが出るまで監視のみとします。";
       return "追加確認が必要です。";
@@ -4165,6 +4167,7 @@
       }
       try {
         const [
+          tenCandidateRows,
           triageRows,
           adjustedRows,
           baseRows,
@@ -4180,6 +4183,7 @@
           benchmarkRows,
           benchmarkScheduleRows,
         ] = await Promise.all([
+          fetchCsvRowsOptional("280_nisa_test_10_candidate_plan_reaction_updated.csv"),
           fetchCsvRows("245_nisa_1year_hold_score_top20.csv"),
           fetchCsvRows("239_top10_reaction_adjusted_score.csv"),
           fetchCsvRows("233_top10_test_priority_score.csv"),
@@ -4195,13 +4199,18 @@
           fetchCsvRowsOptional("113_benchmark_tracking_template.csv"),
           fetchCsvRowsOptional("121_benchmark_review_schedule.csv"),
         ]);
+        const candidateRows = tenCandidateRows.length ? tenCandidateRows : triageRows;
+        const usingTenCandidatePlan = tenCandidateRows.length > 0;
         const adjustedByTicker = new Map(adjustedRows.map((row) => [row.ticker, row]));
         const baseByTicker = new Map(baseRows.map((row) => [row.ticker, row]));
-        const allRankedRows = sortByAdjustedScore(triageRows);
+        const allRankedRows = sortByAdjustedScore(candidateRows);
         const strongest = allRankedRows[0];
         const safeRows = allRankedRows.filter((row) => row.category === "残す");
+        const reserveRows = allRankedRows.filter((row) => row.category === "予備");
         const displayRows = allRankedRows.slice(0, 20);
-        const holdingRows = safeRows.length ? safeRows : allRankedRows.filter((row) => row.category !== "落とす").slice(0, 3);
+        const holdingRows = safeRows.concat(reserveRows).length
+          ? safeRows.concat(reserveRows)
+          : allRankedRows.filter((row) => row.category !== "落とす").slice(0, 3);
 
         setLiveTableHeader(["NISA順位", "銘柄", "収益型", "NISA1年", "業績/質", "下落耐性", "信頼度", "分類"]);
         body.innerHTML = displayRows.map((row, index) => {
@@ -4230,13 +4239,15 @@
         renderCandidateReadiness(allRankedRows);
         renderFinalDecisionGate(allRankedRows);
         renderDecisionSimulator(allRankedRows);
-        renderSelectionMechanism(holdingRows, triageRows, adjustedByTicker, baseByTicker);
+        renderSelectionMechanism(holdingRows, candidateRows, adjustedByTicker, baseByTicker);
         renderCandidateHypotheses(holdingRows, adjustedByTicker, baseByTicker);
 
         if (updated) updated.textContent = `候補更新: ${generatedCandidateTime()}`;
         if (alert) {
           const safeNames = safeRows.map((row) => row.company).join("、") || "該当なし";
-          alert.innerHTML = `<b>NISA 1年保有スコアで20社を再計算</b><br>NISA点の最上位は ${escapeHtml(strongest?.ticker || "-")} ${escapeHtml(strongest?.company || "-")}（${pointOrText(strongest?.nisa_score)}、分類: ${escapeHtml(strongest?.category || "-")}）です。この表は20社全体を表示し、深掘りする保有候補は分類が「残す」の ${escapeHtml(safeNames)} です。`;
+          const reserveNames = reserveRows.map((row) => row.company).join("、") || "該当なし";
+          const sourceLabel = usingTenCandidatePlan ? "10社候補案" : "上位20社再計算";
+          alert.innerHTML = `<b>${escapeHtml(sourceLabel)}を表示</b><br>NISA点の最上位は ${escapeHtml(strongest?.ticker || "-")} ${escapeHtml(strongest?.company || "-")}（${pointOrText(strongest?.nisa_score)}、分類: ${escapeHtml(strongest?.category || "-")}）です。分類が「残す」の ${escapeHtml(safeNames)} を深掘り候補、「予備」の ${escapeHtml(reserveNames)} を決算後反応確認中の補充候補として表示しています。`;
         }
       } catch (error) {
         body.innerHTML = `<tr><td colspan="8">計算結果CSVを読み込めませんでした。NISA 1年保有スコアCSVを確認してください。</td></tr>`;
