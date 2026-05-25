@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>投資分析モデル 学術的妥当性プロトコル</title>
+  <style>
+    :root{--ink:#061b2f;--muted:#394c62;--line:#cdddea;--bg:#f4f8fb;--navy:#123a5a;--blue:#0b6e9e;--green:#14724e;--amber:#a56300;--red:#b32632}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:var(--navy);color:#fff;padding:30px 22px}.wrap,main{max-width:1260px;margin:auto}main{padding:22px 16px 48px}
+    h1{margin:0 0 8px;font-size:30px}h2{font-size:22px;border-left:8px solid var(--blue);padding-left:10px;margin:26px 0 12px}
+    .lead{color:#e9f6ff;max-width:1020px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 6px 18px rgba(20,55,90,.06)}
+    .danger{background:#fff0f1;border:1px solid #efb8be;border-left:8px solid var(--red);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .ok{background:#eaf8f1;border:1px solid #a9dcc2;border-left:8px solid var(--green);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .notice{background:#fff7e7;border:1px solid #e9c174;border-left:8px solid var(--amber);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}
+    table{width:100%;border-collapse:collapse;min-width:1040px}th,td{border-bottom:1px solid #e5eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}th{background:#e8f2f9;color:#123b5a;font-weight:900;white-space:nowrap}
+    pre{background:#061b2f;color:#fff;border-radius:12px;padding:14px;overflow:auto;font-weight:900;white-space:pre-wrap}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:12px;padding:12px;background:#f9fcff}.card b{display:block;color:var(--navy);font-size:18px}
+    a{color:#0b638f;font-weight:800}.small{font-size:12px;color:var(--muted)}@media(max-width:900px){.cards{grid-template-columns:1fr}table{min-width:900px}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>投資分析モデル 学術的妥当性プロトコル</h1>
+    <p class="lead">雰囲気のあるスコアから脱却し、再現性・検証可能性・反証可能性を持つ研究設計へ引き上げるためのプロトコルです。検証前の式は購入判断ではなく研究仮説として扱います。</p>
+  </div></header>
+  <main>
+    <section class="panel">
+      <h2>基本方針</h2>
+      <pre>仮説を作る
+→ 事前に評価式と除外条件を固定する
+→ point-in-timeデータで検証する
+→ 過去データでベンチマークに勝ったか確認する
+→ 未知期間で外部検証する
+→ 予測と実績の誤差を記録する
+→ 採用/不採用を決める</pre>
+      <div class="danger"><b>検証前の式は、購入判断ではなく研究仮説です。</b></div>
+    </section>
+
+    <section class="panel">
+      <h2>研究としての問い</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>問い</th><th>検証方法</th></tr></thead>
+        <tbody>
+          <tr><td>質的イベントは株価に影響するか</td><td>イベントスタディで異常リターンを測る</td></tr>
+          <tr><td>その影響は一時的か、1年保有に使えるか</td><td>1日、5日、20日、60日、250営業日で比較</td></tr>
+          <tr><td>量的スコアは将来リターンを説明するか</td><td>ランキング別ポートフォリオで検証</td></tr>
+          <tr><td>質的データは量的データに上乗せ価値を持つか</td><td>量的モデル単独 vs 量的+質的モデルで比較</td></tr>
+          <tr><td>S&P500、日経平均、TOPIXを+1%以上上回れるか</td><td>円建て・配当込み・コスト込みで比較</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>学術的方法</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>方法</th><th>用途</th><th>根拠</th></tr></thead>
+        <tbody>
+          <tr><td>イベントスタディ</td><td>TOB、上方修正、新商品、戦争、金利イベント後の異常リターン測定</td><td>MacKinlay 1997, Brown & Warner 1985</td></tr>
+          <tr><td>マーケットモデル</td><td>個別株の通常リターンを市場リターンで説明し、異常リターンを出す</td><td>Event Study標準手法</td></tr>
+          <tr><td>Fama-French/Carhart補正</td><td>サイズ、バリュー、モメンタムなど既知ファクターを控除</td><td>Fama & French 1993, Carhart 1997</td></tr>
+          <tr><td>モメンタム検証</td><td>過去リターンの継続性を検証</td><td>Jegadeesh & Titman 1993</td></tr>
+          <tr><td>多重検定補正</td><td>たくさん試した結果、偶然当たる問題を抑える</td><td>Harvey, Liu & Zhu 2016</td></tr>
+          <tr><td>ウォークフォワード検証</td><td>過去で作った式を未来期間で検証</td><td>実運用に近い検証</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>イベントスタディ</h2>
+      <pre>AR_i,t = R_i,t - E(R_i,t)
+
+E(R_i,t) = α_i + β_i R_market,t
+
+または
+
+E(R_i,t) = α_i + β_m MKT_t + β_s SMB_t + β_h HML_t + β_mom MOM_t
+
+CAR_i,[a,b] = Σ AR_i,t</pre>
+      <div class="table-wrap"><table>
+        <thead><tr><th>期間</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td>[0,1]</td><td>即時反応</td></tr>
+          <tr><td>[0,5]</td><td>短期反応</td></tr>
+          <tr><td>[0,20]</td><td>約1か月の反応</td></tr>
+          <tr><td>[0,60]</td><td>四半期程度の反応</td></tr>
+          <tr><td>[0,250]</td><td>NISA 1年保有に近い反応</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>質的データの扱い</h2>
+      <div class="danger">質的データは直接加点しません。</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>層</th><th>役割</th><th>スコアへの扱い</th></tr></thead>
+        <tbody>
+          <tr><td>仮説データ層</td><td>企業を探す入口</td><td>原則、直接加点しない</td></tr>
+          <tr><td>実績データ層</td><td>過去に効いたか検証</td><td>質的評価の上限を決める</td></tr>
+          <tr><td>量的データ層</td><td>最終判断の主軸</td><td>購入候補スコアの中心</td></tr>
+        </tbody>
+      </table></div>
+      <pre>仮説S × 実績C = 質的Sにしない
+仮説C × 実績S = まず再調査
+実績なし = 購入候補スコアへ反映しない</pre>
+    </section>
+
+    <section class="panel">
+      <h2>モデル比較</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>モデル</th><th>内容</th><th>目的</th></tr></thead>
+        <tbody>
+          <tr><td>Benchmark</td><td>TOPIX、日経平均、S&P500円建て</td><td>何もしない場合との比較</td></tr>
+          <tr><td>Quant Only</td><td>量的データだけ</td><td>基礎モデル</td></tr>
+          <tr><td>Event Evidence Only</td><td>実績イベントだけ</td><td>イベントの有効性確認</td></tr>
+          <tr><td>Quant + Event Evidence</td><td>量的 + 実績イベント</td><td>質的データが上乗せ価値を持つか確認</td></tr>
+          <tr><td>Quant + Hypothesis</td><td>量的 + 仮説</td><td>原則採用しない。危険性確認用</td></tr>
+        </tbody>
+      </table></div>
+      <div class="notice">採用候補にできるのは、Quant + Event Evidence が Quant Only を未知期間で上回った場合だけです。</div>
+    </section>
+
+    <section class="panel">
+      <h2>採用基準</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>項目</th><th>採用基準</th></tr></thead>
+        <tbody>
+          <tr><td>期待リターン</td><td>ベンチマークを年率または1年で+1%以上上回る</td></tr>
+          <tr><td>勝率</td><td>ランダム選定や同業平均より有意に高い</td></tr>
+          <tr><td>最大下落</td><td>ベンチマークより極端に悪くない</td></tr>
+          <tr><td>シャープ比</td><td>ベンチマーク以上</td></tr>
+          <tr><td>多重検定</td><td>補正後も有意性が残る</td></tr>
+          <tr><td>取引可能性</td><td>売買代金、スプレッド、単元、NISA制約を満たす</td></tr>
+          <tr><td>再現性</td><td>学習期間だけでなく検証期間でも機能する</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>実装順序</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>フェーズ</th><th>内容</th><th>成果物</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>現行スコア式を全監査</td><td>採用/廃止/検証待ちリスト</td></tr>
+          <tr><td>2</td><td>100社母集団の条件固定</td><td>母集団定義表</td></tr>
+          <tr><td>3</td><td>point-in-timeデータ保存</td><td>入力データ台帳</td></tr>
+          <tr><td>4</td><td>イベント分類表を固定</td><td>イベントタクソノミー</td></tr>
+          <tr><td>5</td><td>イベントスタディ実装</td><td>AR/CAR計算表</td></tr>
+          <tr><td>6</td><td>量的モデル実装</td><td>Quant Onlyモデル</td></tr>
+          <tr><td>7</td><td>質的実績モデル結合</td><td>Quant + Event Evidenceモデル</td></tr>
+          <tr><td>8</td><td>ウォークフォワード検証</td><td>検証レポート</td></tr>
+          <tr><td>9</td><td>ベンチマーク比較</td><td>+1%判定表</td></tr>
+          <tr><td>10</td><td>10社候補を出す</td><td>テスト候補リスト</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>参考文献・基礎資料</h2>
+      <ul>
+        <li><a href="https://www.bu.edu/econ/files/2011/01/MacKinlay-1996-Event-Studies-in-Economics-and-Finance.pdf">MacKinlay 1997, Event Studies in Economics and Finance</a></li>
+        <li><a href="https://research.monash.edu/en/publications/using-daily-stock-returns-the-case-of-event-studies/">Brown & Warner 1985, Using Daily Stock Returns</a></li>
+        <li><a href="https://www.bauer.uh.edu/rsusmel/phd/Fama-French_JFE93.pdf">Fama & French 1993, Common Risk Factors</a></li>
+        <li><a href="https://ideas.repec.org/a/bla/jfinan/v52y1997i1p57-82.html">Carhart 1997, On Persistence in Mutual Fund Performance</a></li>
+        <li><a href="https://moneytothemasses.com/wp-content/uploads/2014/08/Jegadeesh_Titman_1993.pdf">Jegadeesh & Titman 1993, Momentum</a></li>
+        <li><a href="https://academic.oup.com/rfs/article/29/1/5/1843824">Harvey, Liu & Zhu 2016, Cross-Section of Expected Returns</a></li>
+        <li><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Kenneth R. French Data Library</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

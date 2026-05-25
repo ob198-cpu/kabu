@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>投資分析システム 重大課題・未告知事項・是正タスク</title>
+  <style>
+    :root{--ink:#061b2f;--muted:#394c62;--line:#cdddea;--bg:#f4f8fb;--navy:#123a5a;--blue:#0b6e9e;--green:#14724e;--amber:#a56300;--red:#b32632}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:var(--navy);color:#fff;padding:30px 22px}.wrap,main{max-width:1260px;margin:auto}main{padding:22px 16px 48px}
+    h1{margin:0 0 8px;font-size:30px}h2{font-size:22px;border-left:8px solid var(--blue);padding-left:10px;margin:26px 0 12px}
+    .lead{color:#e9f6ff;max-width:1000px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 6px 18px rgba(20,55,90,.06)}
+    .danger{background:#fff0f1;border:1px solid #efb8be;border-left:8px solid var(--red);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .ok{background:#eaf8f1;border:1px solid #a9dcc2;border-left:8px solid var(--green);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .notice{background:#fff7e7;border:1px solid #e9c174;border-left:8px solid var(--amber);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}
+    table{width:100%;border-collapse:collapse;min-width:980px}th,td{border-bottom:1px solid #e5eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}th{background:#e8f2f9;color:#123b5a;font-weight:900;white-space:nowrap}
+    code,pre{font-family:Consolas,"Yu Gothic",monospace}pre{background:#061b2f;color:#fff;border-radius:12px;padding:14px;overflow:auto;font-weight:900}
+    .tag{display:inline-block;border-radius:999px;padding:2px 8px;font-size:12px;font-weight:900;background:#e8f2f9;color:#123b5a}.small{font-size:12px;color:var(--muted)}
+    @media print{body{background:#fff}header{background:#123a5a!important;color:#fff!important}.panel{box-shadow:none;break-inside:avoid}table{min-width:0;font-size:11px}th,td{font-size:11px}}
+    @media(max-width:900px){table{min-width:900px}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>投資分析システム 重大課題・未告知事項・是正タスク</h1>
+    <p class="lead">作成日: 2026年5月25日。現時点で過大に信じてはいけない点、今日判明した課題、今後やるべきことを明文化した内部監査メモです。</p>
+  </div></header>
+  <main>
+    <section class="panel">
+      <h2>現時点の結論</h2>
+      <div class="danger"><b>現時点のシステムは、まだ株を買う判断を出す本番システムではありません。</b></div>
+      <div class="ok">正しい位置づけは、候補を探し、調査優先順位を作るためのプロトタイプです。購入判断に使うには、データ監査、数式監査、過去検証、ベンチマーク比較、人間レビューが必要です。</div>
+      <pre>AIが出したスコアをそのまま信じない。
+スコアは、入力値、計算式、除外条件、過去検証、ベンチマーク比較を通った後にだけ判断補助へ進める。</pre>
+      <div class="table-wrap"><table>
+        <thead><tr><th>区分</th><th>現時点の扱い</th></tr></thead>
+        <tbody>
+          <tr><td>候補探索</td><td>使用可能。ただし調査優先順位として扱う</td></tr>
+          <tr><td>データ整理</td><td>使用可能。ただし出典確認が必要</td></tr>
+          <tr><td>スコア計算</td><td>未監査。購入根拠として使わない</td></tr>
+          <tr><td>質的イベント評価</td><td>探索用。直接加点しない</td></tr>
+          <tr><td>最終10社選定</td><td>未完成。検証後に使用可否を判断</td></tr>
+          <tr><td>購入判断</td><td>現時点では不可</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>今日判明した重大課題</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>No</th><th>課題</th><th>何が危険か</th><th>現在の扱い</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>イベントを本体スコアへ単純加点していた</td><td>ニュースや時流だけで銘柄を高評価する危険</td><td>使用停止</td></tr>
+          <tr><td>2</td><td>仮説データ層と実績データ層を加重平均する設計が残っていた</td><td>実績が弱いのに仮説だけでS評価になる危険</td><td>修正済み</td></tr>
+          <tr><td>3</td><td>購入判断に使える段階のように見える表現があった</td><td>顧客が買えるシステムと誤解する</td><td>表現修正が必要</td></tr>
+          <tr><td>4</td><td>スコア式の監査が未完了</td><td>雑な数式が本採用に見える</td><td>全式を未監査扱い</td></tr>
+          <tr><td>5</td><td>100社評価の母集団条件が完全固定ではない</td><td>都合のよい銘柄選定に見える</td><td>条件固定が必要</td></tr>
+          <tr><td>6</td><td>過去イベント検証が不足</td><td>その材料が本当に株価に効いたか不明</td><td>イベントスタディが必要</td></tr>
+          <tr><td>7</td><td>未取得データの扱いルールが弱い</td><td>欠損を仮定で埋める危険</td><td>未取得は非加点に統一</td></tr>
+          <tr><td>8</td><td>NISA 1年保有と短期イベントの相性確認が不足</td><td>短期材料株を1年保有候補にしてしまう</td><td>保有期間ゲートが必要</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>未告知だった重要事項</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>項目</th><th>本当は先に説明すべきだったこと</th><th>影響</th></tr></thead>
+        <tbody>
+          <tr><td>現在のスコア</td><td>検証済みモデルではなく仮説スコア</td><td>そのまま買う根拠にできない</td></tr>
+          <tr><td>質的材料</td><td>ニュース、戦争、新商品、TOBなどは直接加点してはいけない</td><td>材料株を高評価しすぎる</td></tr>
+          <tr><td>仮説と実績</td><td>仮説層と実績層は足し算ではない</td><td>期待だけでS評価になる</td></tr>
+          <tr><td>100社母集団</td><td>母集団の条件固定が必要</td><td>恣意的な10社選定に見える</td></tr>
+          <tr><td>データ取得</td><td>Yahoo等のデータは便利だが公式値ではないものがある</td><td>数値の信頼性に限界</td></tr>
+          <tr><td>四季報、日経、QUICK等</td><td>有料、権利付きデータは自由に自動取得できない</td><td>取得できない指標がある</td></tr>
+          <tr><td>PER/PBR/ROE</td><td>業種ごとに意味が違う</td><td>横並び比較だけでは危険</td></tr>
+          <tr><td>決算後反応</td><td>1回、2回では統計的に弱い</td><td>たまたまを実力と誤認する</td></tr>
+          <tr><td>相関係数</td><td>相関は因果ではない</td><td>原油、BTC、為替との関係を誤る</td></tr>
+          <tr><td>バックテスト</td><td>まだ十分ではない</td><td>過去に勝てたか未確認</td></tr>
+          <tr><td>先読みバイアス</td><td>後から分かった情報を過去判断に混ぜる危険がある</td><td>成績を良く見せてしまう</td></tr>
+          <tr><td>生存者バイアス</td><td>今残っている強い会社だけを見る危険がある</td><td>過去の失敗銘柄を無視する</td></tr>
+          <tr><td>過学習</td><td>条件を増やすほど過去には合うが未来に弱くなる</td><td>見かけの精度が上がる</td></tr>
+          <tr><td>S/A/B/C評価</td><td>基準固定が必要</td><td>主観評価になる</td></tr>
+          <tr><td>イベント評価</td><td>TOB、戦争、金利、新商品は同じ式で扱えない</td><td>モデルが雑になる</td></tr>
+          <tr><td>NISA</td><td>損益通算できない</td><td>損切り設計を慎重にすべき</td></tr>
+          <tr><td>目標+1%</td><td>S&P500、日経平均、TOPIXを+1%超える根拠は未検証</td><td>目標未達の可能性がある</td></tr>
+          <tr><td>AI出力</td><td>監査なしでは信用不可</td><td>幻覚や雑な式が混ざる</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>今日修正したこと</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>修正</th><th>内容</th><th>ファイル</th></tr></thead>
+        <tbody>
+          <tr><td>イベント加点停止</td><td>イベントを本体スコアに足す方式を使用停止</td><td><code>model_integrity_audit.html</code></td></tr>
+          <tr><td>旧ページの警告</td><td>旧イベント加点ページに使用停止表示を追加</td><td><code>event_score_adjustment.html</code>, <code>reviewed_event_score.html</code></td></tr>
+          <tr><td>二軸モデル作成</td><td>質的データ軸と量的データ軸を分離</td><td><code>dual_axis_selection_model.html</code></td></tr>
+          <tr><td>仮説/実績分離</td><td>仮説層と実績層は単純加算しないルールへ修正</td><td><code>271_qualitative_layer_matrix.csv</code></td></tr>
+          <tr><td>2026イベント計画</td><td>株価に効きやすいイベント型と100社評価計画を作成</td><td><code>event_impact_2026_screening_plan.html</code></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>やることリスト</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>優先</th><th>タスク</th><th>目的</th><th>完了条件</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>全スコア式を監査する</td><td>雑な式を本採用しない</td><td>採用、修正、廃止、検証待ちに分類</td></tr>
+          <tr><td>2</td><td>購入候補と調査候補を完全分離する</td><td>誤って買えるように見せない</td><td>画面とCSVでラベル分離</td></tr>
+          <tr><td>3</td><td>未取得データ非加点を徹底する</td><td>計算したふりを防ぐ</td><td>欠損は信頼度低下または保留</td></tr>
+          <tr><td>4</td><td>100社母集団の条件を固定する</td><td>恣意性を避ける</td><td>選定条件をCSVと画面に明記</td></tr>
+          <tr><td>5</td><td>1社ごとの計算過程を表示する</td><td>なぜ選ばれたか説明する</td><td>入力値、途中点、除外理由を表示</td></tr>
+          <tr><td>6</td><td>イベントスタディを作る</td><td>過去に本当に効いたか見る</td><td>イベント前後1/5/20/60日の対指数リターン</td></tr>
+          <tr><td>7</td><td>ベンチマーク比較を接続する</td><td>S&P500、日経、TOPIX+1%目標に接続</td><td>候補別に指数差を表示</td></tr>
+          <tr><td>8</td><td>業種別補正を入れる</td><td>PER/PBR/ROEの誤比較を避ける</td><td>業種中央値との比較</td></tr>
+          <tr><td>9</td><td>NISA 1年保有ゲートを作る</td><td>短期材料株を除外する</td><td>1年保有に合う/合わないを判定</td></tr>
+          <tr><td>10</td><td>予測と実績の記録表を作る</td><td>モデル改善に使う</td><td>予測、実績、誤差、理由を保存</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>顧客説明で使う表現</h2>
+      <div class="ok">本システムは、投資候補を探索し、調査優先順位を作るためのプロトタイプです。現時点のスコアは購入判断ではありません。購入判断に使うためには、データ出典確認、数式監査、過去検証、ベンチマーク比較、人間レビューを通す必要があります。</div>
+      <div class="danger">避ける表現: このスコアで買える。この10社が購入候補として確定。イベントが強いのでS評価。AIが選んだから有望。S&P500や日経平均を上回れる。</div>
+    </section>
+  </main>
+</body>
+</html>
