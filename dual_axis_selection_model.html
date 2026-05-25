@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的×量的 二軸銘柄選定モデル</title>
+  <style>
+    :root{--ink:#061b2f;--muted:#3f5168;--line:#cdddea;--bg:#f4f8fb;--navy:#123a5a;--blue:#0b6e9e;--green:#14724e;--amber:#a56300;--red:#b32632}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:var(--navy);color:#fff;padding:30px 22px}.wrap,main{max-width:1260px;margin:auto}main{padding:22px 16px 48px}
+    h1{margin:0 0 8px;font-size:30px}h2{font-size:22px;border-left:8px solid var(--blue);padding-left:10px;margin:26px 0 12px}
+    .lead{color:#e9f6ff;max-width:1000px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 6px 18px rgba(20,55,90,.06)}
+    .notice{background:#fff7e7;border:1px solid #e9c174;border-left:8px solid var(--amber);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .ok{background:#eaf8f1;border:1px solid #a9dcc2;border-left:8px solid var(--green);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .danger{background:#fff0f1;border:1px solid #efb8be;border-left:8px solid var(--red);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:12px;padding:12px;background:#f9fcff}.card b{display:block;font-size:20px;color:var(--navy)}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{background:#f9fcff;border:1px solid var(--line);border-radius:12px;padding:12px}.step b{display:block;color:var(--blue)}
+    .formula{background:#061b2f;color:#fff;border-radius:12px;padding:14px;font-weight:900;overflow:auto}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+    table{width:100%;border-collapse:collapse;min-width:1180px}th,td{border-bottom:1px solid #e5eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}th{background:#e8f2f9;color:#123b5a;font-weight:900;white-space:nowrap}
+    .grade{display:inline-block;border-radius:999px;padding:2px 8px;font-weight:900}.s{background:#dff5ea;color:#0f6b49}.a{background:#e7f2ff;color:#0b557c}.b{background:#fff2d8;color:#8b5600}.c{background:#fde5e8;color:#a41624}
+    .matrix{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.matrix .panel{margin:0}.small{font-size:12px;color:var(--muted)}
+    a{color:#0b638f;font-weight:800}@media(max-width:900px){.cards,.flow,.matrix{grid-template-columns:1fr}table{min-width:900px}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>質的×量的 二軸銘柄選定モデル</h1>
+    <p class="lead">時流やニュースをそのまま買い材料にせず、仮説と実績を分けて評価します。最終的な10社選定は量的データを主軸にし、質的データは候補発見と優先順位調整に使います。</p>
+  </div></header>
+  <main>
+    <section class="panel">
+      <h2>結論</h2>
+      <div class="danger"><b>禁止すること:</b> 「戦争継続」「停戦」「新技術発表」「ビットコイン暴落」などのニュースを、根拠なく本体スコアへ単純加点しない。</div>
+      <div class="ok"><b>採用すること:</b> 質的データは「仮説データ層」と「実績データ層」に分ける。実績が弱い材料は、どれだけ話題でもS評価にしない。</div>
+      <div class="formula">
+        量的スコア = 企業財務60% + 株価・反応・リスク40%<br>
+        質的総合 = 実績データ層60% + 仮説データ層40%<br>
+        テスト優先度 = 量的70% + 質的実績20% + 質的仮説10%<br>
+        ただし、量的C・信頼度70未満・重大ハードゲートありは、質的Sでも購入候補にしない
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>全体フロー</h2>
+      <div class="flow">
+        <div class="step"><b>1. 100社前後</b>公式決算・株価・テーマ候補から母集団を作る。</div>
+        <div class="step"><b>2. 量的評価</b>成長、収益性、割高感、下落耐性、決算後反応を見る。</div>
+        <div class="step"><b>3. 質的仮説</b>出来事がどの業界・企業に効くか演繹する。</div>
+        <div class="step"><b>4. 質的実績</b>過去イベント後リターン、相関、KPI接続で検証する。</div>
+        <div class="step"><b>5. 10社選出</b>量的通過銘柄の中から、質的追い風もあるものを優先する。</div>
+      </div>
+    </section>
+
+    <section class="matrix">
+      <div class="panel">
+        <h2>質的データ軸</h2>
+        <p>ニュース、政策、戦争、停戦、技術発表、商品市況、暗号資産急落などを扱います。ただし、仮説だけでは弱いので、過去の株価反応や業績KPIに接続できるかを別に見ます。</p>
+        <div class="notice">質的Sは「話題が大きい」ではなく、「因果が明確で、過去反応または業績KPIに接続でき、下振れも管理できる」場合だけです。</div>
+      </div>
+      <div class="panel">
+        <h2>量的データ軸</h2>
+        <p>決算、PER/PBR/ROE、売上・利益成長、決算後超過リターン、下落率、出来高、ベンチマーク比較を扱います。NISA 1年保有ではこちらを主軸にします。</p>
+        <div class="notice">量的C、データ信頼度70点未満、極端な過熱・急落・割高は、質的材料が強くても購入候補にしません。</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>評価ルール</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>軸</th><th>層</th><th>項目</th><th>重み</th><th>評価方法</th><th>S</th><th>A</th><th>B</th><th>C</th><th>ガード</th></tr></thead>
+        <tbody id="rules-body"><tr><td colspan="10">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>イベント例</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>イベント</th><th>恩恵候補</th><th>逆風候補</th><th>仮説データ層</th><th>実績データ層で必要なもの</th><th>初期評価ルール</th><th>注意点</th></tr></thead>
+        <tbody id="events-body"><tr><td colspan="7">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>10社選定ロジック</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>工程</th><th>処理</th><th>入力</th><th>計算/判断</th><th>出力</th><th>理由</th></tr></thead>
+        <tbody id="logic-body"><tr><td colspan="6">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>最終ゲート</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>条件</th><th>通過</th><th>確認</th><th>失敗</th><th>行動</th></tr></thead>
+        <tbody id="gate-body"><tr><td colspan="5">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>代案</h2>
+      <div class="cards">
+        <div class="card"><b>推奨: ゲート方式</b>量的に通った候補だけ質的評価で優先順位を変える。初期実装に最も現実的。</div>
+        <div class="card"><b>イベントスタディ方式</b>過去イベント日の前後リターンを測る。実績データ層の核にする。</div>
+        <div class="card"><b>ベイズ更新方式</b>量的スコアを事前確率、イベント証拠を更新材料として扱う。高度だが後工程向き。</div>
+        <div class="card"><b>シナリオツリー方式</b>成立・不成立・逆流の3ケースで損益幅を見る。単一スコアの過信を防ぐ。</div>
+      </div>
+      <p class="small">現段階ではゲート方式 + イベントスタディ方式を優先し、ベイズ更新は検証データが蓄積してから導入するのが現実的です。</p>
+    </section>
+  </main>
+  <script>
+    const files = {
+      rules: "264_dual_axis_rating_rules.csv",
+      logic: "265_dual_axis_selection_logic.csv",
+      events: "266_qualitative_event_examples.csv",
+      gate: "267_dual_axis_final_gate.csv",
+    };
+    const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
+    const parseCsv = (text) => {
+      const rows = []; let row = []; let cell = ""; let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i]; const next = text[i + 1];
+        if (char === '"' && quoted && next === '"') { cell += '"'; i += 1; }
+        else if (char === '"') quoted = !quoted;
+        else if (char === "," && !quoted) { row.push(cell); cell = ""; }
+        else if ((char === "\n" || char === "\r") && !quoted) {
+          if (char === "\r" && next === "\n") i += 1;
+          row.push(cell); if (row.some((item) => item !== "")) rows.push(row); row = []; cell = "";
+        } else cell += char;
+      }
+      if (cell || row.length) { row.push(cell); rows.push(row); }
+      const [header, ...body] = rows; if (!header) return [];
+      return body.map((items) => Object.fromEntries(header.map((key, index) => [key, items[index] ?? ""])));
+    };
+    const fetchCsv = async (path) => parseCsv(await (await fetch(`${path}?v=${Date.now()}`)).text());
+    const gradeSpan = (text, cls) => `<span class="grade ${cls}">${escapeHtml(text)}</span>`;
+    const render = async () => {
+      const [rules, logic, events, gate] = await Promise.all([fetchCsv(files.rules), fetchCsv(files.logic), fetchCsv(files.events), fetchCsv(files.gate)]);
+      document.getElementById("rules-body").innerHTML = rules.map((row) => `
+        <tr><td>${escapeHtml(row.axis)}</td><td>${escapeHtml(row.layer)}</td><td><b>${escapeHtml(row.item)}</b></td><td>${escapeHtml(row.weight)}%</td><td>${escapeHtml(row.score_method)}</td><td>${gradeSpan(row.grade_s, "s")}</td><td>${gradeSpan(row.grade_a, "a")}</td><td>${gradeSpan(row.grade_b, "b")}</td><td>${gradeSpan(row.grade_c, "c")}</td><td>${escapeHtml(row.guardrail)}</td></tr>
+      `).join("");
+      document.getElementById("events-body").innerHTML = events.map((row) => `
+        <tr><td><b>${escapeHtml(row.event)}</b></td><td>${escapeHtml(row.benefit_candidates)}</td><td>${escapeHtml(row.harm_candidates)}</td><td>${escapeHtml(row.hypothesis_layer)}</td><td>${escapeHtml(row.evidence_layer_needed)}</td><td>${escapeHtml(row.initial_rating_rule)}</td><td>${escapeHtml(row.notes)}</td></tr>
+      `).join("");
+      document.getElementById("logic-body").innerHTML = logic.map((row) => `
+        <tr><td>${escapeHtml(row.step)}</td><td><b>${escapeHtml(row.process)}</b></td><td>${escapeHtml(row.input)}</td><td>${escapeHtml(row.calculation_or_judgement)}</td><td>${escapeHtml(row.output)}</td><td>${escapeHtml(row.reason)}</td></tr>
+      `).join("");
+      document.getElementById("gate-body").innerHTML = gate.map((row) => `
+        <tr><td><b>${escapeHtml(row.condition)}</b></td><td>${escapeHtml(row.pass)}</td><td>${escapeHtml(row.watch)}</td><td>${escapeHtml(row.fail)}</td><td>${escapeHtml(row.action)}</td></tr>
+      `).join("");
+    };
+    render().catch((error) => {
+      document.getElementById("rules-body").innerHTML = `<tr><td colspan="10">読み込み失敗: ${escapeHtml(error.message)}</td></tr>`;
+    });
+  </script>
+</body>
+</html>
