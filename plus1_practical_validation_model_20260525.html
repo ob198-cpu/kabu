@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>+1%超過目標 実運用向け最小検証モデル</title>
+  <style>
+    :root{--ink:#061b2f;--muted:#394c62;--line:#cdddea;--bg:#f4f8fb;--navy:#123a5a;--blue:#0b6e9e;--green:#14724e;--amber:#a56300;--red:#b32632}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:var(--navy);color:#fff;padding:30px 22px}.wrap,main{max-width:1260px;margin:auto}main{padding:22px 16px 48px}
+    h1{margin:0 0 8px;font-size:30px}h2{font-size:22px;border-left:8px solid var(--blue);padding-left:10px;margin:26px 0 12px}
+    .lead{color:#e9f6ff;max-width:1040px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 6px 18px rgba(20,55,90,.06)}
+    .danger{background:#fff0f1;border:1px solid #efb8be;border-left:8px solid var(--red);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .ok{background:#eaf8f1;border:1px solid #a9dcc2;border-left:8px solid var(--green);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .notice{background:#fff7e7;border:1px solid #e9c174;border-left:8px solid var(--amber);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:12px;padding:12px;background:#f9fcff}.card b{display:block;color:var(--navy);font-size:18px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px}table{width:100%;border-collapse:collapse;min-width:1040px}
+    th,td{border-bottom:1px solid #e5eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}th{background:#e8f2f9;color:#123b5a;font-weight:900;white-space:nowrap}
+    pre{background:#061b2f;color:#fff;border-radius:12px;padding:14px;overflow:auto;font-weight:900;white-space:pre-wrap}
+    code{font-family:Consolas,"Yu Gothic",monospace}a{color:#0b638f;font-weight:800}.small{font-size:12px;color:var(--muted)}
+    @media(max-width:900px){.cards{grid-template-columns:1fr}table{min-width:900px}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>+1%超過目標 実運用向け最小検証モデル</h1>
+    <p class="lead">論文発表ではなく、証券会社の無難運用、S&P500、日経平均、TOPIXを最低+1%上回ることを目標にした、実運用向けの最小検証モデルです。</p>
+  </div></header>
+  <main>
+    <section class="panel">
+      <h2>ゴール</h2>
+      <pre>NISA 1年保有を前提に、証券会社の無難運用、S&P500、日経平均、TOPIXを
+最低+1%上回る可能性がある候補を、実データと検証ルールで10社程度まで絞る。</pre>
+      <div class="notice">論文水準の厳密さは、恥ずかしい論理ミスを避けるために使います。目的は、実運用で+1%超過を狙える候補選定です。</div>
+    </section>
+
+    <section class="panel">
+      <h2>比較対象</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>比較対象</th><th>目的</th><th>判定</th></tr></thead>
+        <tbody>
+          <tr><td>証券会社の無難運用</td><td>顧客が任せた場合との比較</td><td>これを下回るなら個別株選定の意味が薄い</td></tr>
+          <tr><td>S&P500投信</td><td>世界株・米国株の標準代替</td><td>円建てで比較</td></tr>
+          <tr><td>日経平均連動投信</td><td>日本大型株の代表</td><td>日本株個別選定の最低比較対象</td></tr>
+          <tr><td>TOPIX連動投信</td><td>日本株全体の代表</td><td>偏りの少ない比較対象</td></tr>
+        </tbody>
+      </table></div>
+      <pre>候補10社ポートフォリオの1年リターン - 比較対象の1年リターン >= +1%</pre>
+    </section>
+
+    <section class="panel">
+      <h2>最小構成</h2>
+      <div class="cards">
+        <div class="card"><b>100社母集団</b>恣意的な10社選定を避ける。</div>
+        <div class="card"><b>量的スコア</b>売上、利益、ROE、PER/PBR、下落率、決算後反応。</div>
+        <div class="card"><b>質的イベント層</b>新商品、金利、戦争、TOB等を候補発見に使う。</div>
+        <div class="card"><b>除外ゲート</b>未取得、過熱、急落、割高、流動性不足を止める。</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>基本フロー</h2>
+      <pre>1. 100社前後の母集団を作る
+2. 量的データで一次評価する
+3. 未取得、過熱、急落、割高、流動性不足を除外する
+4. 質的イベントで追加調査の優先順位をつける
+5. 実績データがあるイベントだけ評価に残す
+6. 上位20社を作る
+7. 10社まで絞る
+8. S&P500、日経平均、TOPIX、証券会社運用と比較する
+9. +1%超過が狙えないなら個別株比率を下げる
+10. 実績を記録し、外れた理由を次回修正に使う</pre>
+    </section>
+
+    <section class="panel">
+      <h2>スコアの考え方</h2>
+      <div class="ok">主軸は量的データです。質的仮説は候補発見と調査優先度に使い、直接加点しません。質的実績は、その仮説を採用できるかの上限判定に使います。</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>項目</th><th>例</th></tr></thead>
+        <tbody>
+          <tr><td>成長</td><td>売上成長率、利益成長率、EPS成長率</td></tr>
+          <tr><td>収益性</td><td>ROE、営業利益率、FCF</td></tr>
+          <tr><td>割高/割安</td><td>PER、PBR、業種中央値との比較</td></tr>
+          <tr><td>下落耐性</td><td>60日最大下落率、ボラティリティ</td></tr>
+          <tr><td>株価反応</td><td>決算後1日、5日、20日の対指数超過リターン</td></tr>
+          <tr><td>流動性</td><td>出来高、売買代金</td></tr>
+          <tr><td>信頼度</td><td>公式データ確認率、未取得数</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>除外ゲート</h2>
+      <div class="danger">点数が高くても、以下に該当する銘柄は初回候補にしません。</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>ゲート</th><th>除外/保留条件</th></tr></thead>
+        <tbody>
+          <tr><td>未取得</td><td>PER/PBR/ROE、売上成長、利益成長、決算後反応の重要項目が不足</td></tr>
+          <tr><td>過熱</td><td>1年上昇率が極端、かつ利益成長で説明できない</td></tr>
+          <tr><td>急落</td><td>60日最大下落率が大きい</td></tr>
+          <tr><td>割高</td><td>PER/PBRが業種中央値から大きく外れる</td></tr>
+          <tr><td>反応悪化</td><td>決算後の対指数リターンが弱い</td></tr>
+          <tr><td>流動性不足</td><td>売買代金が小さく、実運用で再現しにくい</td></tr>
+          <tr><td>NISA不適合</td><td>短期材料依存で1年保有に向かない</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>10社候補の条件</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>条件</th><th>最低ライン</th></tr></thead>
+        <tbody>
+          <tr><td>量的評価</td><td>B以上</td></tr>
+          <tr><td>データ信頼度</td><td>70点以上</td></tr>
+          <tr><td>ハードゲート</td><td>該当なし</td></tr>
+          <tr><td>流動性</td><td>実運用可能</td></tr>
+          <tr><td>ベンチマーク期待</td><td>比較対象を+1%以上上回る可能性が説明できる</td></tr>
+          <tr><td>質的評価</td><td>B以上が望ましい。ただし直接加点しない</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>買わない判断</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>条件</th><th>行動</th></tr></thead>
+        <tbody>
+          <tr><td>S&P500、日経、TOPIXに勝てる根拠がない</td><td>個別株比率を下げる</td></tr>
+          <tr><td>市場全体が急落局面</td><td>購入延期</td></tr>
+          <tr><td>米金利急騰、円高ショック、VIX急騰</td><td>購入延期</td></tr>
+          <tr><td>10社の多くが同一テーマに偏る</td><td>分散不足として見直し</td></tr>
+          <tr><td>データ信頼度が低い</td><td>調査継続</td></tr>
+          <tr><td>購入理由がイベント期待だけ</td><td>購入不可</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>6月テストまでの工程</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>期間</th><th>やること</th><th>成果物</th></tr></thead>
+        <tbody>
+          <tr><td>5月中</td><td>現行式の監査、100社条件固定、未取得データ整理</td><td>監査済み式、母集団定義</td></tr>
+          <tr><td>6月上旬</td><td>100社一次評価、上位20社、除外理由整理</td><td>上位20社表</td></tr>
+          <tr><td>6月中旬</td><td>FOMC、日銀、CPIなど市場イベント確認</td><td>市場ゲート判定</td></tr>
+          <tr><td>6月下旬</td><td>10社候補をテスト対象として確定</td><td>10社候補表</td></tr>
+          <tr><td>7月以降</td><td>予実記録、ベンチマーク比較</td><td>1か月/3か月/6か月/12か月記録</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>顧客向け説明</h2>
+      <div class="ok">本システムは、NISA 1年保有を前提に、証券会社の無難運用や指数投資を最低+1%上回る候補を探すための検証システムです。現時点では購入判断ではなく、100社前後から調査候補を絞り、量的データとイベント実績で10社程度に絞る段階です。</div>
+      <div class="danger">避ける説明: AIが選んだから買える。イベントが強いからS評価。この10社で確定。必ず指数を上回る。</div>
+    </section>
+  </main>
+</body>
+</html>
