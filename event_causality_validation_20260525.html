@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>イベント因果・複合条件チェック 2026年5月25日</title>
+  <style>
+    :root {
+      --ink: #111;
+      --blue: #073a5a;
+      --line: #bed3e5;
+      --bg: #f5f8fb;
+      --card: #fff;
+      --ok: #eaf7ef;
+      --warn: #fff5df;
+      --stop: #fdecec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", Meiryo, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 56px; }
+    h1 { margin: 0 0 8px; color: var(--blue); font-size: 30px; }
+    h2 { margin: 30px 0 12px; padding-left: 10px; border-left: 8px solid #0b6f9f; color: var(--blue); }
+    .lead, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 9px rgba(0,40,80,.06);
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid #9fc1db;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .kpi small { display: block; color: #38536b; font-weight: 700; }
+    .kpi b { display: block; font-size: 25px; color: var(--blue); }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .flow div {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 86px;
+    }
+    .flow b { color: var(--blue); }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+      color: #111;
+    }
+    th { background: #e4f1fa; color: var(--blue); }
+    .badge {
+      display: inline-block;
+      min-width: 90px;
+      text-align: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .ok { background: var(--ok); color: #007a3d; }
+    .warn { background: var(--warn); color: #8a5200; }
+    .stop { background: var(--stop); color: #b00020; }
+    .note { color: #333; font-size: 13px; }
+    @media (max-width: 900px) { .kpis, .flow { grid-template-columns: 1fr; } }
+    @media print {
+      body { background: #fff; }
+      .lead, .card, .kpi, .flow div { break-inside: avoid; page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>イベント因果・複合条件チェック</h1>
+  <div class="lead">
+    <p><b>目的:</b> 「イベントがあったから株価が上がる」と決めつけないため、イベント分類、イベント後リターン、指数超過、業界統計、個別株トレンド、市場地合いを分けて確認します。</p>
+    <p><b>重要:</b> これは因果証明ではありません。現段階では、仮説を直接点数に足さず、購入検討用スコアへ混ぜる前のゲートとして扱います。</p>
+    <div class="toolbar">
+      <a class="button" href="313_event_causality_summary.csv">313 要約CSV</a>
+      <a class="button" href="314_event_type_evidence_status.csv">314 イベント種類CSV</a>
+      <a class="button" href="315_candidate_causality_gate.csv">315 候補別CSV</a>
+      <a class="button" href="316_causality_guard_rules.csv">316 ルールCSV</a>
+      <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+    <div class="flow">
+      <div><b>1. 仮説</b><br>戦争、TOB、新商品などの材料を仮説にする。</div>
+      <div><b>2. 公式確認</b><br>TDnet、IR、公式資料で確認する。</div>
+      <div><b>3. 反応確認</b><br>1/5/20日後の対指数超過を確認する。</div>
+      <div><b>4. 複合条件</b><br>業界・個別・市場がそろうかを見る。</div>
+      <div><b>5. ゲート</b><br>不足や過熱があれば点数に混ぜない。</div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    
+      <div class="kpi">
+        <small>株価反応接続済みイベント種類</small>
+        <b>3種類</b>
+        <span>現状は主に日銀イベント。TOB、新商品、M&amp;A等の長期反応DBは未完成。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>TDnet分類済みイベント種類</small>
+        <b>9種類</b>
+        <span>自社株買い、増配、M&amp;A等は分類できるが、株価反応とは未接続。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>候補10社の複合条件接続</small>
+        <b>1社</b>
+        <span>業界統計・個別株トレンド・市場トレンドの接続状況。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>検証優先</small>
+        <b>0社</b>
+        <span>複数根拠があり、かつゲートが残っていない候補。購入判断ではない。</span>
+      </div>
+    
+  </div>
+
+  <h2>1. イベント種類別の証拠状況</h2>
+  <div class="card">
+    <p class="note">「分類のみ」は、ニュースや開示を整理しただけです。株価反応と接続されるまで、購入検討用スコアには入れません。</p>
+    <table>
+      <thead><tr><th>イベント種類</th><th>レイヤー</th><th>件数</th><th>反応件数</th><th>5日超過</th><th>20日超過</th><th>検証度</th><th>扱い</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>決算短信</td>
+            <td>イベント分類のみ</td>
+            <td>108</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類のみ</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>M&amp;A・資本提携</td>
+            <td>イベント分類のみ</td>
+            <td>25</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類のみ</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>自社株買い</td>
+            <td>イベント分類のみ</td>
+            <td>22</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類のみ</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>増配</td>
+            <td>イベント分類のみ</td>
+            <td>21</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類のみ</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>上方修正</td>
+            <td>イベント分類のみ</td>
+            <td>10</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類のみ</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>減配</td>
+            <td>イベント分類のみ</td>
+            <td>7</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類少数</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>月次</td>
+            <td>イベント分類のみ</td>
+            <td>4</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類少数</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>その他</td>
+            <td>イベント分類のみ</td>
+            <td>2</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類少数</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>上場・IPO関連</td>
+            <td>イベント分類のみ</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">分類少数</span></td>
+            <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>Monetary Policy Meeting</td>
+            <td>株価反応接続済み</td>
+            <td>64</td>
+            <td>64</td>
+            <td>+0.12%</td>
+            <td>-1.62%</td>
+            <td><span class="badge warn">統計参考</span></td>
+            <td>参考検証に使用。単独加点はしない。</td>
+          </tr>
+        
+          <tr>
+            <td>FOMC</td>
+            <td>株価反応接続済み</td>
+            <td>64</td>
+            <td>64</td>
+            <td>-0.95%</td>
+            <td>-1.7%</td>
+            <td><span class="badge warn">統計参考</span></td>
+            <td>参考検証に使用。単独加点はしない。</td>
+          </tr>
+        
+          <tr>
+            <td>その他</td>
+            <td>株価反応接続済み</td>
+            <td>2</td>
+            <td>2</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span class="badge stop">件数不足</span></td>
+            <td>件数不足。点数に混ぜない。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2. 候補10社の因果ゲート</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>順位</th><th>銘柄</th><th>+1%状態</th><th>イベント反応</th><th>複合条件</th><th>観測数</th><th>3か月平均との差</th><th>ゲート</th><th>扱い</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>1</td>
+            <td>4385.T メルカリ</td>
+            <td>比較上は通過・ゲート保留</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>決算後20営業日未到達</td>
+            <td><span class="badge stop">保留: ゲート残存</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>2</td>
+            <td>2802.T 味の素</td>
+            <td>比較上は通過・ゲート保留</td>
+            <td>4件 / 5日 -0.87% / 20日 +10.43%</td>
+            <td>参考<br><span class="note">市場3か月トレンドがプラス</span></td>
+            <td>56</td>
+            <td>+0.35%</td>
+            <td>決算後20営業日未到達</td>
+            <td><span class="badge stop">保留: ゲート残存</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>3</td>
+            <td>8316.T 三井住友FG</td>
+            <td>比較上は通過・ゲート保留</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>決算後20営業日未到達</td>
+            <td><span class="badge stop">保留: ゲート残存</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>4</td>
+            <td>5020.T ENEOS HD</td>
+            <td>比較上は通過・ゲート保留</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>決算後20営業日未到達</td>
+            <td><span class="badge stop">保留: ゲート残存</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>5</td>
+            <td>8306.T 三菱UFJ FG</td>
+            <td>比較上は有力</td>
+            <td>4件 / 5日 +1.13% / 20日 -0.36%</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>なし</td>
+            <td><span class="badge warn">追加検証</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>6</td>
+            <td>6146.T ディスコ</td>
+            <td>比較上は有力</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>なし</td>
+            <td><span class="badge warn">根拠不足</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>7</td>
+            <td>6762.T TDK</td>
+            <td>比較上は有力</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>なし</td>
+            <td><span class="badge warn">根拠不足</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>8</td>
+            <td>6503.T 三菱電機</td>
+            <td>比較上は通過・ゲート保留</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>決算後20営業日未到達</td>
+            <td><span class="badge stop">保留: ゲート残存</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>9</td>
+            <td>8766.T 東京海上HD</td>
+            <td>指数優位・ゲートあり</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>決算後反応未接続 / なし / 暫定: 20営業日未到達</td>
+            <td><span class="badge stop">保留: ゲート残存</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+          <tr>
+            <td>10</td>
+            <td>6367.T ダイキン工業</td>
+            <td>指数優位・ゲートあり</td>
+            <td>0件 / 5日 - / 20日 -</td>
+            <td>未接続<br><span class="note"></span></td>
+            <td>-</td>
+            <td>-</td>
+            <td>決算後反応未接続 / なし / 暫定: 20営業日未到達</td>
+            <td><span class="badge stop">保留: ゲート残存</span><br>不足またはゲートあり。購入検討用スコアには混ぜない。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. 誤判定防止ルール</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:10%">ID</th><th style="width:22%">ルール</th><th>理由</th><th>通過条件</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>C01</td>
+            <td>単独イベント加点禁止</td>
+            <td>イベントが起きたことと株価上昇は別。イベント名だけで点数に足すと誤判定になる。</td>
+            <td>イベント後リターン、指数超過、複合条件、ゲートを別々に確認。</td>
+          </tr>
+        
+          <tr>
+            <td>C02</td>
+            <td>指数影響を分ける</td>
+            <td>相場全体が上がっただけの可能性を除くため。</td>
+            <td>1日/5日/20日の対日経平均超過リターンを見る。</td>
+          </tr>
+        
+          <tr>
+            <td>C03</td>
+            <td>複合条件で見る</td>
+            <td>業界統計、個別株トレンド、市場地合いが同時にそろうかで、単独条件の弱さを補正する。</td>
+            <td>業界・個別・市場の条件が記録され、観測数も表示されている。</td>
+          </tr>
+        
+          <tr>
+            <td>C04</td>
+            <td>分類のみイベントは購入検討へ使わない</td>
+            <td>TDnet分類だけでは、株価反応が確認されていない。</td>
+            <td>候補発見には使うが、スコアには入れない。</td>
+          </tr>
+        
+          <tr>
+            <td>C05</td>
+            <td>ゲート優先</td>
+            <td>良いイベントや強い過去反応があっても、決算未到達、過熱、データ不足があれば止める。</td>
+            <td>hard_gate が空欄または「なし」であること。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>4. 次の作業</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:8%">優先</th><th style="width:30%">作業</th><th>理由</th><th style="width:24%">成果物</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>1</td>
+            <td>TOB・上方修正・自社株買い・新商品・M&amp;Aのイベント後リターンDBを作る</td>
+            <td>分類だけでは株価への実績影響がわからない。</td>
+            <td>イベント種類別1/5/20/60日超過リターン</td>
+          </tr>
+        
+          <tr>
+            <td>2</td>
+            <td>候補10社に複合条件を接続する</td>
+            <td>イベント仮説、業界統計、個別株トレンド、市場地合いを同じ表で見られるようにする。</td>
+            <td>候補別イベント・複合条件チェック表</td>
+          </tr>
+        
+          <tr>
+            <td>3</td>
+            <td>イベント仮説を点数ではなくゲートにする</td>
+            <td>仮説を直接加点すると、また単純足し算モデルになる。</td>
+            <td>仮説S/A/B/C、実績S/A/B/C、量的スコアの三段階判定</td>
+          </tr>
+        
+      </tbody>
+    </table>
+    <p class="note">作成日: 2026/05/25 22:59</p>
+  </div>
+</main>
+</body>
+</html>
