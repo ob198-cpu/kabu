@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>予備候補 決算後反応チェック</title>
+  <style>
+    body { font-family: "Yu Gothic", Meiryo, sans-serif; color:#111; margin:0; line-height:1.65; background:#f4f8fb; }
+    main { max-width:1180px; margin:0 auto; padding:28px 18px 48px; }
+    h1 { color:#073a5a; font-size:28px; margin:0 0 10px; }
+    h2 { border-left:8px solid #0b6f9f; padding-left:10px; color:#073a5a; margin-top:30px; }
+    .lead, .card { background:#fff; border:1px solid #cbddeb; border-radius:10px; padding:16px 18px; box-shadow:0 2px 8px rgba(0,40,80,.06); }
+    .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin:16px 0; }
+    .kpi { background:#fff; border:1px solid #cbddeb; border-radius:10px; padding:14px; }
+    .kpi b { display:block; font-size:28px; color:#073a5a; }
+    table { border-collapse:collapse; width:100%; background:#fff; margin-top:12px; table-layout:fixed; }
+    th, td { border:1px solid #cbddeb; padding:8px 9px; font-size:13px; vertical-align:top; overflow-wrap:anywhere; }
+    th { background:#e4f1fa; color:#073a5a; }
+    .ok { color:#007a3d; font-weight:700; }
+    .reserve { color:#b45f00; font-weight:700; }
+    .watch { color:#7a2c00; font-weight:700; }
+    .formula { font-family:Consolas, monospace; background:#f7fbff; border:1px solid #cbddeb; border-radius:8px; padding:12px; }
+    @media print { table, tr, td, th, .lead, .card { break-inside:avoid; page-break-inside:avoid; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>予備候補 決算後反応チェック</h1>
+  <div class="lead">
+    <b>目的:</b> 10社候補案に追加した予備2社について、決算後の株価反応が日経平均を上回ったかを確認する。<br>
+    <b>注意:</b> 20営業日がまだ到達していないため、ここでの反応点は暫定です。購入判断ではなく、6月テスト候補に残せるかの確認材料です。
+  </div>
+  <div class="grid">
+    <div class="kpi"><span>反応接続対象</span><b>2社</b><p>東京海上HD、ダイキン工業の予備候補2社。</p></div><div class="kpi"><span>予備維持</span><b>2社</b><p>20営業日未到達のため、購入候補ではなく追加検証対象。</p></div><div class="kpi"><span>要確認</span><b>0社</b><p>決算後反応が弱い、または条件未達で購入候補へ進めない。</p></div>
+  </div>
+
+  <h2>決算後反応</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>銘柄</th><th>発表日</th><th>業績</th><th>1日超過</th><th>5日超過</th><th>20日超過</th><th>反応点</th><th>状態</th><th>メモ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>8766.T<br><b>東京海上HD</b></td>
+        <td>2026-05-20<br>公式決算短信</td>
+        <td>売上 5.1%<br>経常利益 -7.6%<br>EPS -4.9%</td>
+        <td>-4.68%</td>
+        <td>未到達%</td>
+        <td>未到達%</td>
+        <td>40.6</td>
+        <td>暫定: 20営業日未到達</td>
+        <td>金利上昇・保険運用テーマの予備候補。経常利益は前年比マイナスのため、株価反応と還元方針の確認が必要。</td>
+      </tr><tr>
+        <td>6367.T<br><b>ダイキン工業</b></td>
+        <td>2026-05-12<br>公式決算短信</td>
+        <td>売上 5.5%<br>営業利益 3.3%<br>EPS 3.9%</td>
+        <td>6.08%</td>
+        <td>1.92%</td>
+        <td>未到達%</td>
+        <td>57.2</td>
+        <td>暫定: 20営業日未到達</td>
+        <td>AIデータセンター冷却テーマの予備候補。ただし全社業績の伸びは強くないため、テーマが業績に入っているか確認が必要。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>10社候補案への反映</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:5%">順位</th><th style="width:17%">銘柄</th><th style="width:8%">分類</th><th style="width:8%">NISA点</th><th style="width:8%">反応点</th><th style="width:13%">ゲート</th><th>次の確認</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>4385.T<br><b>メルカリ</b></td>
+        <td class="ok">残す</td>
+        <td>79.8</td>
+        <td>56.8</td>
+        <td>決算後20営業日未到達</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>2</td>
+        <td>2802.T<br><b>味の素</b></td>
+        <td class="ok">残す</td>
+        <td>67.8</td>
+        <td>65.8</td>
+        <td>決算後20営業日未到達</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>3</td>
+        <td>8316.T<br><b>三井住友FG</b></td>
+        <td class="ok">残す</td>
+        <td>65.1</td>
+        <td>55.5</td>
+        <td>決算後20営業日未到達</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>4</td>
+        <td>5020.T<br><b>ENEOS HD</b></td>
+        <td class="ok">残す</td>
+        <td>64.3</td>
+        <td>57</td>
+        <td>決算後20営業日未到達</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>5</td>
+        <td>8306.T<br><b>三菱UFJ FG</b></td>
+        <td class="ok">残す</td>
+        <td>62.1</td>
+        <td>41.3</td>
+        <td>なし</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>6</td>
+        <td>6146.T<br><b>ディスコ</b></td>
+        <td class="ok">残す</td>
+        <td>60.9</td>
+        <td>68.7</td>
+        <td>なし</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>7</td>
+        <td>6762.T<br><b>TDK</b></td>
+        <td class="ok">残す</td>
+        <td>60.7</td>
+        <td>62.9</td>
+        <td>なし</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>8</td>
+        <td>6503.T<br><b>三菱電機</b></td>
+        <td class="ok">残す</td>
+        <td>55.6</td>
+        <td>55.1</td>
+        <td>決算後20営業日未到達</td>
+        <td>6月CPI、FOMC、日銀、日経75日線、米10年金利、為替、20営業日反応を確認して購入可否を再判定。</td>
+      </tr><tr>
+        <td>9</td>
+        <td>8766.T<br><b>東京海上HD</b></td>
+        <td class="reserve">予備</td>
+        <td>65.4</td>
+        <td>40.6</td>
+        <td>決算後反応未接続 / なし / 暫定: 20営業日未到達</td>
+        <td>20営業日反応、6月CPI/FOMC/日銀後の地合い、公式決算説明資料のセグメント要因を確認して昇格可否を判断。</td>
+      </tr><tr>
+        <td>10</td>
+        <td>6367.T<br><b>ダイキン工業</b></td>
+        <td class="reserve">予備</td>
+        <td>52.6</td>
+        <td>57.2</td>
+        <td>決算後反応未接続 / なし / 暫定: 20営業日未到達</td>
+        <td>20営業日反応、6月CPI/FOMC/日銀後の地合い、公式決算説明資料のセグメント要因を確認して昇格可否を判断。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>計算式</h2>
+  <div class="card">
+    <div class="formula">
+      決算後超過リターン = 銘柄リターン - 日経平均リターン<br>
+      20営業日未到達時: 反応点 = clamp(0,100, 50 + 2 × (1日超過40% + 5日超過60%))<br>
+      20営業日到達後: 反応点 = clamp(0,100, 50 + 2 × (1日超過34% + 5日超過51% + 20日超過15%))
+    </div>
+  </div>
+</main>
+</body>
+</html>
