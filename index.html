@@ -1493,6 +1493,7 @@
         <a href="plus1_benchmark_connection_20260525.html">+1%目標接続</a>
         <a href="event_causality_validation_20260525.html">イベント因果チェック</a>
         <a href="display_wording_audit_20260525.html">表示文言監査</a>
+        <a href="candidate_role_wording_20260526.html">候補表現ロール整理</a>
         <a href="tenbagger_research_corner.html">テンバガー探索</a>
         <a href="development_plan.html">旧開発計画（履歴）</a>
         <a href="system_spec_schedule.pdf">旧仕様・工期PDF（履歴）</a>
@@ -1546,6 +1547,7 @@
             <a class="button secondary" href="plus1_benchmark_connection_20260525.html">+1%目標接続</a>
             <a class="button secondary" href="event_causality_validation_20260525.html">イベント因果チェック</a>
             <a class="button secondary" href="display_wording_audit_20260525.html">表示文言監査</a>
+            <a class="button secondary" href="candidate_role_wording_20260526.html">候補表現ロール整理</a>
             <a class="button secondary" href="dual_axis_selection_model.html">質的×量的 二軸選定</a>
             <a class="button secondary" href="event_impact_2026_screening_plan.html">2026イベント100社評価</a>
             <a class="button secondary" href="trend_deduction_research_base.html">時流演繹リサーチ</a>
@@ -2988,7 +2990,7 @@
         (numericValue(row.valuation_score) * 0.20) +
         (numericValue(row.earnings_reaction_score) * 0.10)
       );
-      const state = score >= 65 ? "購入検討対象" : "確認候補";
+      const state = score >= 65 ? "購入検討可否の確認対象" : "追加確認対象";
       return {
         score,
         label: `${score.toFixed(1)}点`,
@@ -3024,7 +3026,7 @@
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>モデル修正状況</h4>
-          <p>この欄では、探索段階の参考点と、購入検討対象として扱うための点数を分けます。未取得データがある場合、購入検討用スコアは出しません。</p>
+          <p>この欄では、探索段階の参考点と、購入検討可否の確認対象として扱えるかを見る点数を分けます。未取得データがある場合、購入検討用スコアは出しません。</p>
           <div class="candidate-conclusion">
             <article class="conclusion-card hold">
               <small>探索対象</small>

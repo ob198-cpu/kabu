@@ -101,37 +101,38 @@
       <a class="button" href="321_display_wording_fixes.csv">321 修正CSV</a>
       <a class="button" href="current_vs_history_materials_20260525.html">資料区分台帳へ</a>
       <a class="button" href="prepublish_wording_check_20260526.html">公開前文言チェックへ</a>
+      <a class="button" href="candidate_role_wording_20260526.html">候補表現ロール整理へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>
   </div>
 
   <div class="kpis">
-    
+
       <div class="kpi">
         <small>監査対象ファイル</small>
         <b>10件</b>
         <span>現行導線の主要HTMLを対象に確認。</span>
       </div>
-    
+
       <div class="kpi">
         <small>今回修正した表現</small>
-        <b>9件</b>
+        <b>11件</b>
         <span>実施が確定したように見える旧表現を、開始判定・新規投入停止へ変更。</span>
       </div>
-    
+
       <div class="kpi">
         <small>残存する要修正表現</small>
         <b>0件</b>
         <span>現行導線では禁止表現の残存なし。</span>
       </div>
-    
+
       <div class="kpi">
         <small>条件付き表現</small>
         <b>191件</b>
         <span>購入検討用スコア、売買判断ではない等、注意文として使う表現を記録。</span>
       </div>
-    
+
   </div>
 
   <h2>1. 今回修正した表現</h2>
@@ -139,70 +140,84 @@
     <table>
       <thead><tr><th>ファイル</th><th>修正前</th><th>修正後</th><th>理由</th></tr></thead>
       <tbody>
-        
+
           <tr>
             <td>index.html</td>
             <td>買う時期</td>
             <td>開始判定</td>
             <td>日付で売買が決まる印象を避けるため。</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
             <td>買う時期を見る</td>
             <td>開始条件を見る</td>
             <td>クリック先が条件判定であることを明確化。</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
             <td>今すぐ全額ではなく、イベントを見ながら段階的に買います。</td>
             <td>今すぐ全額ではなく、イベントを見ながら段階的に実施可否を判断します。</td>
             <td>実売買指示ではなく判定プロセスであることを明確化。</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
             <td>買う/待つ</td>
             <td>開始/待機</td>
             <td>強い売買表現を条件判定表現へ変更。</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
             <td>予定通り買う条件</td>
             <td>予定通り開始する条件</td>
             <td>購入確定ではなく開始条件として表現。</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
             <td>新規買い停止</td>
             <td>新規投入停止</td>
             <td>実売買命令に見える表現を資金配分の停止へ変更。</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
             <td>買う/追加候補</td>
             <td>開始/追加候補</td>
             <td>カレンダー凡例の誤読防止。</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>「購入開始」「候補」などの言葉が強すぎる</td>
             <td>実施が確定したように見える言葉や、候補の意味が曖昧な言葉</td>
             <td>報告書自体に強い旧表現を残さないため。</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>検証候補という強い表現を、検証候補へ整理</td>
             <td>強い表現を、検証候補・確認対象・開始判定へ整理</td>
             <td>意味不明な文を修正。</td>
           </tr>
-        
+
+          <tr>
+            <td>index.html</td>
+            <td>購入検討対象</td>
+            <td>購入検討可否の確認対象</td>
+            <td>購入できる対象と誤読されないよう、確認段階の表現へ変更。</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>確認候補</td>
+            <td>追加確認対象</td>
+            <td>候補ではなく、追加で確認する対象であることを明確化。</td>
+          </tr>
+
       </tbody>
     </table>
   </div>
@@ -212,77 +227,77 @@
     <table>
       <thead><tr><th>表現</th><th>扱い</th><th>置き換え</th><th>理由</th></tr></thead>
       <tbody>
-        
+
           <tr>
             <td>購入開始</td>
             <td><span class="badge stop">禁止</span></td>
             <td>開始判定 / 実施可否判断</td>
             <td>売買を確定したように見えるため、現行表示では使わない。</td>
           </tr>
-        
+
           <tr>
             <td>買う時期</td>
             <td><span class="badge stop">禁止</span></td>
             <td>開始判定 / 開始条件</td>
             <td>日付だけで売買が決まる誤解を生むため、条件判定に置き換える。</td>
           </tr>
-        
+
           <tr>
             <td>新規買い</td>
             <td><span class="badge stop">禁止</span></td>
             <td>新規投入</td>
             <td>実売買を直接指示しているように見えるため、資金投入の判定表現へ置き換える。</td>
           </tr>
-        
+
           <tr>
             <td>購入候補</td>
             <td><span class="badge stop">禁止</span></td>
             <td>検証候補 / 確認対象</td>
             <td>購入確定に近く見えるため、現段階では使わない。</td>
           </tr>
-        
+
           <tr>
             <td>保有候補</td>
             <td><span class="badge warn">注意</span></td>
             <td>検証候補</td>
             <td>既存UIの名残。顧客向けには検証候補へ寄せる。</td>
           </tr>
-        
+
           <tr>
             <td>分割候補</td>
             <td><span class="badge warn">注意</span></td>
             <td>分割検証候補</td>
             <td>旧スコア資料に残る場合は、実施ではなく検証と明示する。</td>
           </tr>
-        
+
           <tr>
             <td>売買判断</td>
             <td><span class="badge warn">条件付き</span></td>
             <td>売買判断ではない / 判断補助</td>
             <td>否定文・注意文では使用可。肯定的に使わない。</td>
           </tr>
-        
+
           <tr>
             <td>購入検討</td>
             <td><span class="badge warn">条件付き</span></td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
             <td>ゲートや非採用説明では使用可。購入対象の断定には使わない。</td>
           </tr>
-        
+
           <tr>
             <td>見送り</td>
             <td><span class="badge warn">条件付き</span></td>
             <td>保留 / 除外 / 待機</td>
             <td>過去表では使用可。現行判断では理由を必ず併記する。</td>
           </tr>
-        
+
           <tr>
             <td>監視</td>
             <td><span class="badge warn">注意</span></td>
             <td>観察 / 確認</td>
             <td>やや運用色が強いため、顧客向けでは観察・確認が望ましい。</td>
           </tr>
-        
+
       </tbody>
     </table>
   </div>
@@ -293,7 +308,7 @@
     <table>
       <thead><tr><th style="width:22%">ファイル</th><th style="width:7%">行</th><th style="width:12%">表現</th><th style="width:10%">扱い</th><th>文脈</th><th style="width:18%">置き換え</th></tr></thead>
       <tbody>
-        
+
           <tr>
             <td>index.html</td>
             <td>1477</td>
@@ -302,466 +317,466 @@
             <td>ドル監視</td>
             <td>観察 / 確認</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>1725</td>
+            <td>1727</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>計算結果を読み込むと、探索スコアと購入検討用スコアを分けて表示します。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>1743</td>
+            <td>1745</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>計算結果を読み込むと、6月の購入検討可否判定ゲートを表示します。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>1782</td>
+            <td>1784</td>
             <td>監視</td>
             <td><span class="badge warn">注意</span></td>
             <td>DXY、ドル円、米金利、金、VIXを組み合わせて、急なドル安・円高ショックを監視します。</td>
             <td>観察 / 確認</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>1798</td>
+            <td>1800</td>
             <td>監視</td>
             <td><span class="badge warn">注意</span></td>
             <td>監視する数値</td>
             <td>観察 / 確認</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>1941</td>
+            <td>1943</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>再点検 8月中旬 4-6月期決算で、継続・追加・見送りを判断。</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2031</td>
+            <td>2033</td>
             <td>監視</td>
             <td><span class="badge warn">注意</span></td>
             <td>監視 高PER</td>
             <td>観察 / 確認</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2199</td>
+            <td>2201</td>
             <td>売買判断</td>
             <td><span class="badge warn">注意</span></td>
             <td>対象: 候補銘柄の決算反応と株価指標 条件: データ欠落と過熱リスクを確認 注意: 5月中は売買判断を確定しない</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2265</td>
+            <td>2267</td>
             <td>監視</td>
             <td><span class="badge warn">注意</span></td>
             <td>守り・監視: KDDI / 味の素</td>
             <td>観察 / 確認</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2447</td>
+            <td>2449</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>確認できた場合だけ追加候補とします。決算で営業利益見通しが-10%以上悪化、ABF成長鈍化、またはPER40倍以上のまま株価が急騰した場合は見送り。食品の安定性だけを理由に高値買いしません。</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2704</td>
+            <td>2706</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>target.innerHTML = ` 計算結果を読み込むと、探索スコアと購入検討用スコアを分けて表示します。 `;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2740</td>
+            <td>2742</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>target.innerHTML = ` 計算結果を読み込むと、6月の購入検討可否判定ゲートを表示します。 `;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2971</td>
+            <td>2973</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>state: row.category === &quot;落とす&quot; ? &quot;見送り&quot; : &quot;保留&quot;,</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2991</td>
+            <td>2993</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
-            <td>const state = score &gt;= 65 ? &quot;購入検討対象&quot; : &quot;確認候補&quot;;</td>
+            <td>const state = score &gt;= 65 ? &quot;購入検討可否の確認対象&quot; : &quot;追加確認対象&quot;;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>2997</td>
+            <td>2999</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>reason: &quot;必須データ取得済み。購入検討用の式で再計算。&quot;,</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3008</td>
+            <td>3010</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>[&quot;1&quot;, &quot;探索スコアと購入検討用スコアを分離&quot;, &quot;反映済み&quot;, &quot;探索は広く比較、購入検討用点は必須データ取得後だけ表示。&quot;],</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3009</td>
+            <td>3011</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>[&quot;2&quot;, &quot;未取得データを点数に混ぜない&quot;, &quot;反映済み&quot;, &quot;購入検討用スコアは未取得があると未算出。&quot;],</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
-          <tr>
-            <td>index.html</td>
-            <td>3012</td>
-            <td>購入検討</td>
-            <td><span class="badge warn">注意</span></td>
-            <td>[&quot;5&quot;, &quot;スコアの内訳を銘柄ごとに表示&quot;, &quot;反映済み&quot;, &quot;探索点、購入検討用点、信頼度、停止理由を行ごとに表示。&quot;],</td>
-            <td>購入検討用スコア / 購入検討へ進めない</td>
-          </tr>
-        
-          <tr>
-            <td>index.html</td>
-            <td>3013</td>
-            <td>購入検討</td>
-            <td><span class="badge warn">注意</span></td>
-            <td>[&quot;6&quot;, &quot;信頼度スコアを追加&quot;, &quot;反映済み&quot;, &quot;70点未満は購入検討用点を止める。&quot;],</td>
-            <td>購入検討用スコア / 購入検討へ進めない</td>
-          </tr>
-        
+
           <tr>
             <td>index.html</td>
             <td>3014</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
+            <td>[&quot;5&quot;, &quot;スコアの内訳を銘柄ごとに表示&quot;, &quot;反映済み&quot;, &quot;探索点、購入検討用点、信頼度、停止理由を行ごとに表示。&quot;],</td>
+            <td>購入検討用スコア / 購入検討へ進めない</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3015</td>
+            <td>購入検討</td>
+            <td><span class="badge warn">注意</span></td>
+            <td>[&quot;6&quot;, &quot;信頼度スコアを追加&quot;, &quot;反映済み&quot;, &quot;70点未満は購入検討用点を止める。&quot;],</td>
+            <td>購入検討用スコア / 購入検討へ進めない</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3016</td>
+            <td>購入検討</td>
+            <td><span class="badge warn">注意</span></td>
             <td>[&quot;7&quot;, &quot;決算後反応の未到達を別扱い&quot;, &quot;反映済み&quot;, &quot;未取得と35点未満を購入検討用点から分離。&quot;],</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3027</td>
+            <td>3029</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
-            <td>この欄では、探索段階の参考点と、購入検討対象として扱うための点数を分けます。未取得データがある場合、購入検討用スコアは出しません。</td>
+            <td>この欄では、探索段階の参考点と、購入検討可否の確認対象として扱えるかを見る点数を分けます。未取得データがある場合、購入検討用スコアは出しません。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3035</td>
+            <td>3037</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>購入検討用点を算出</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3058</td>
+            <td>3060</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>探索スコア / 購入検討用スコア 分離表</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3059</td>
+            <td>3061</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>探索スコアは候補を広く見るための参考値です。購入検討用スコアは、未取得データを混ぜず、ハード除外がない場合だけ算出します。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3062</td>
+            <td>3064</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>購入検討用スコア = 業績/質40% + 下落耐性30% + 割安20% + 決算後反応10%。必須データ未取得、信頼度70未満、ハード除外ありの場合は未算出。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3065</td>
+            <td>3067</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>順位 銘柄 探索スコア 購入検討用スコア 信頼度 判定 理由</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3210</td>
+            <td>3212</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>PER/PBR/ROEは業種で水準が違うため、同じ業種の中央値と比べます。ただし、同業比較が3社未満、または指標取得数が足りない場合は、購入検討用スコアには混ぜません。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3225</td>
+            <td>3227</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>現段階では確認資料。購入検討用スコアにはまだ入れません。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3318</td>
+            <td>3320</td>
             <td>売買判断</td>
             <td><span class="badge warn">注意</span></td>
             <td>売買判断の成績検証は、6月テスト開始後の記録と接続して行います。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3488</td>
+            <td>3490</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>[&quot;D 低優先・比較のみ&quot;, `${levelCount(universeRows, &quot;D&quot;)}社`, &quot;購入検討対象というより比較・代表性確認用。&quot;],</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3646</td>
+            <td>3648</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>点数が高い順に、購入検討へ進めない理由を分解します。「残す」は深掘り候補、「保留」は確認待ち、「落とす」は初回NISAテスト候補から外す扱いです。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3660</td>
+            <td>3662</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>stop: &quot;米10年金利4.80%以上、60日最大下落率-30%以下、受注・需要コメント悪化なら見送り。&quot;,</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3667</td>
+            <td>3669</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>stop: &quot;信用コスト悪化、長期金利急低下、金融株全体の弱さが出た場合は見送り。&quot;,</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3674</td>
+            <td>3676</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>stop: &quot;円高急進、電子部品需要悪化、60日最大下落率-30%以下なら見送り。&quot;,</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3680</td>
+            <td>3682</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>stop: &quot;未取得、過熱、急落、割高、決算後反応悪化のいずれかが残る場合は見送り。&quot;,</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3681</td>
+            <td>3683</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>action: &quot;現時点では確認待ち。購入検討対象へは上げない。&quot;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3715</td>
+            <td>3717</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>共通項目 通過条件 延期・見送り条件</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3719</td>
+            <td>3721</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>候補 通過条件 見送り条件 扱い</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3770</td>
+            <td>3772</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>state: &quot;見送り&quot;,</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3807</td>
+            <td>3809</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>未入力です。6月イベント後に数値を入れると、通過・延期・見送りを表示します。</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3913</td>
+            <td>3915</td>
             <td>見送り</td>
             <td><span class="badge warn">注意</span></td>
             <td>const commonState = missing.length ? &quot;未入力&quot; : commonPass ? &quot;通過&quot; : &quot;延期/見送り&quot;;</td>
             <td>保留 / 除外 / 待機</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>3952</td>
+            <td>3954</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>扱い: ${commonPass ? &quot;候補別条件の確認に進めます。購入確定ではありません。&quot; : &quot;この状態では購入検討可否判定を進めず、延期または候補縮小として扱います。&quot;}</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4020</td>
+            <td>4022</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>予備は購入検討対象ではなく、決算後20営業日反応や6月イベント後の地合いで昇格可否を確認する補充枠です。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4027</td>
+            <td>4029</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>egory === &quot;予備&quot;) return &quot;候補数を広げるための補充枠です。決算後20営業日反応と6月イベント後の地合い確認が終わるまで購入検討対象には上げません。&quot;;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4028</td>
+            <td>4030</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>if (category === &quot;保留&quot;) return &quot;数値は強くても、過熱・反応悪化・特殊要因が残るため、購入検討対象には上げず再判定待ちにします。&quot;;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4029</td>
+            <td>4031</td>
             <td>監視</td>
             <td><span class="badge warn">注意</span></td>
             <td>if (category === &quot;落とす&quot;) return &quot;現時点では初回テスト候補から外し、明確な改善データが出るまで監視のみとします。&quot;;</td>
             <td>観察 / 確認</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4152</td>
+            <td>4154</td>
             <td>監視</td>
             <td><span class="badge warn">注意</span></td>
             <td>actionEl.innerHTML = ` 行動 ${risk.action || &quot;通常監視。予定買いは他の条件と合わせて判断します。&quot;}`;</td>
             <td>観察 / 確認</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4376</td>
+            <td>4378</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>action: &quot;悪い銘柄は除外。良い銘柄は6月の購入検討可否判定に残す。&quot;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4390</td>
+            <td>4392</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>action: &quot;良ければ6月判定の候補に残す。悪ければ購入検討対象から外す。&quot;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4397</td>
+            <td>4399</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>action: &quot;良ければ6/18以降の購入検討可否判定へ進む。悪ければ延期または候補枠を縮小。&quot;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4411</td>
+            <td>4413</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>action: &quot;良ければ6/18-6/24に購入検討可否判定へ進む。悪ければ延期。&quot;</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>index.html</td>
-            <td>4414</td>
+            <td>4416</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>title: &quot;6/18-6/24 購入検討可否判定&quot;,</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
             <td>130</td>
@@ -770,133 +785,133 @@
             <td>重要: このフローを通過するまでは、スコアは売買判断ではなく、調査・検証の優先順位として扱います。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>152</td>
+            <td>153</td>
             <td>売買判断</td>
             <td><span class="badge warn">注意</span></td>
             <td>停止 売買判断に進めない条件</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>165</td>
+            <td>166</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>購入検討対象と検証候補の混同</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>169</td>
+            <td>170</td>
             <td>売買判断</td>
             <td><span class="badge ok">許容</span></td>
             <td>2. 売買判断から隔離</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>170</td>
+            <td>171</td>
             <td>売買判断</td>
             <td><span class="badge warn">注意</span></td>
             <td>未監査のスコアや質的イベント評価を、売買判断に使わない。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>173</td>
+            <td>174</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>予備候補は購入検討対象ではない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>211</td>
+            <td>212</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>購入検討用スコア</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>221</td>
+            <td>222</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>不明なら購入検討対象にしない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>266</td>
+            <td>267</td>
             <td>購入検討</td>
             <td><span class="badge warn">注意</span></td>
             <td>購入ではなく購入検討</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>297</td>
+            <td>298</td>
             <td>売買判断</td>
             <td><span class="badge warn">注意</span></td>
             <td>売買判断への扱い</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>320</td>
+            <td>321</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>過去検証データが未接続の銘柄は購入検討用スコアの根拠にしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>327</td>
+            <td>328</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>勝てない候補は個別株比率を下げる。ゲート残存銘柄は購入検討へ進めない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>334</td>
+            <td>335</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>複数根拠が不足する銘柄は購入検討用スコアの根拠にしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>348</td>
+            <td>349</td>
             <td>売買判断</td>
             <td><span class="badge ok">許容</span></td>
             <td>解決までの道筋は、 課題の固定 → 売買判断から隔離 → データ棚卸し → 数式監査 → 100社前後の母集団固定 → 量的選別 → 質的イベント検証 → 決算後反応 → 除外ゲート → 10社候補 → 6月イベント後判定 です。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_resolution_flowchart_20260525.html</td>
-            <td>349</td>
+            <td>350</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
             <td>このフローの途中で止まる項目がある場合、その銘柄は購入検討対象ではなく、調査候補または保留に戻します。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>42</td>
@@ -905,7 +920,7 @@
             <td>現時点の扱い: 現システムは売買判断補助システムではなく、NISA 1年保有の検証候補を絞るためのプロトタイプです。課題が未回収の項目は、売買判断には使いません。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>56</td>
@@ -914,7 +929,7 @@
             <td>2. 売買判断から隔離 未監査の式や質的イベント評価は、探索候補だけに使う。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>82</td>
@@ -923,7 +938,7 @@
             <td>イベントは「候補発見」と「確認優先度」に限定し、本体の購入検討用スコアへ直接加点しない方針へ変更。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>85</td>
@@ -932,7 +947,7 @@
             <td>売買判断には未使用。探索入口としてのみ使用。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>97</td>
@@ -941,7 +956,7 @@
             <td>購入検討対象と調査候補が混ざって見える</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>100</td>
@@ -950,7 +965,7 @@
             <td>10社は「検証候補」とし、予備2社は購入検討対象ではないと明記。6月判定ルールも追加。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>103</td>
@@ -959,7 +974,7 @@
             <td>現段階の売買判断は不可。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>109</td>
@@ -968,7 +983,7 @@
             <td>未取得は0点や仮値にせず、購入検討用スコアから外す表を追加。参考点と採用点も分離。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>112</td>
@@ -977,7 +992,7 @@
             <td>未取得が多い銘柄は購入検討へ進めない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>139</td>
@@ -986,7 +1001,7 @@
             <td>候補10社中、暫定検証可は2社。未接続銘柄は購入検討用スコアの根拠にしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>148</td>
@@ -995,7 +1010,7 @@
             <td>勝てない候補は個別株比率を下げる。ゲート残存銘柄は購入検討へ進めない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>issue_recovery_board_20260525.html</td>
             <td>157</td>
@@ -1004,7 +1019,7 @@
             <td>単独イベント加点は禁止。複数根拠が不足する銘柄は購入検討用スコアの根拠にしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>terminology_cleanup_20260525.html</td>
             <td>24</td>
@@ -1013,7 +1028,7 @@
             <td>目的: 画面上の旧表現が、実際に買ってよい銘柄のように見える問題を減らすため、現行導線の表示を「検証候補」「購入検討用スコア」「売買判断ではない判断補助」に整理しました。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>terminology_cleanup_20260525.html</td>
             <td>24</td>
@@ -1022,7 +1037,7 @@
             <td>目的: 画面上の旧表現が、実際に買ってよい銘柄のように見える問題を減らすため、現行導線の表示を「検証候補」「購入検討用スコア」「売買判断ではない判断補助」に整理しました。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>terminology_cleanup_20260525.html</td>
             <td>25</td>
@@ -1031,7 +1046,7 @@
             <td>結論: 現行ページでは、スコアは売買判断ではなく、NISA 1年保有テストの検証候補を絞るための材料として扱います。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>terminology_cleanup_20260525.html</td>
             <td>34</td>
@@ -1040,7 +1055,7 @@
             <td>旧: 購入を連想させるスコア表現 購入検討用スコア 点数が出ても売買指示ではなく、必須データと除外条件を通ったかを見る補助点だから。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>terminology_cleanup_20260525.html</td>
             <td>35</td>
@@ -1049,7 +1064,7 @@
             <td>旧: 実施確定に見える判断表現 売買判断ではない判断補助 最終判断は証券会社画面、最新IR、リスク許容度確認を通す必要があるため。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>terminology_cleanup_20260525.html</td>
             <td>53</td>
@@ -1058,7 +1073,7 @@
             <td>次は、 未取得データを点数に混ぜない表示 を進めます。銘柄ごとに「取得済み」「未取得」「代替」「非加点」を分け、未取得がある場合は購入検討用スコアを未算出または信頼度低下として扱います。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>missing_data_score_gate_20260525.html</td>
             <td>31</td>
@@ -1067,7 +1082,7 @@
             <td>目的: 空欄・未取得・未到達のデータを、0点や仮値として購入検討用スコアへ混ぜないための確認表です。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>missing_data_score_gate_20260525.html</td>
             <td>32</td>
@@ -1076,7 +1091,7 @@
             <td>結論: 探索スコアは比較用として残しますが、購入検討用スコアは「必須データ取得済み」「信頼度70点以上」「ハードゲートなし」の場合だけ表示します。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>missing_data_score_gate_20260525.html</td>
             <td>37</td>
@@ -1085,7 +1100,7 @@
             <td>対象銘柄 10社 280_nisa_test_10_candidate_plan_reaction_updated.csv 購入検討用スコア算出可 1社 必須データ取得済み、信頼度70点以上、ハードゲートなし。 未取得データあり 3社 未取得は0点や仮値にせず、購入検討用スコアから外す。 ハードゲート停止 7社 20営業日未到達、決算後反応未接続などは非通過扱い。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>missing_data_score_gate_20260525.html</td>
             <td>43</td>
@@ -1094,7 +1109,7 @@
             <td>購入検討用スコア = 業績/質40% + 下落耐性30% + 割安20% + 決算後反応10%</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>missing_data_score_gate_20260525.html</td>
             <td>184</td>
@@ -1103,7 +1118,7 @@
             <td>業績/質スコア 購入検討用スコア 購入検討用スコアには混ぜない 下落耐性スコア 購入検討用スコア 購入検討用スコアには混ぜない 割安スコア 購入検討用スコア 購入検討用スコアには混ぜない 決算後反応スコア 購入検討用スコア 購入検討用スコアには混ぜない データ信頼</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>universe_definition_20260525.html</td>
             <td>46</td>
@@ -1112,7 +1127,7 @@
             <td>100社前後の母集団は、NISA 1年保有候補を探すための比較対象群であり、この段階で購入検討対象とは呼ばない。件数は固定せず、品質を優先する。</td>
             <td>検証候補</td>
           </tr>
-        
+
           <tr>
             <td>universe_definition_20260525.html</td>
             <td>46</td>
@@ -1121,7 +1136,7 @@
             <td>100社前後の母集団は、NISA 1年保有候補を探すための比較対象群であり、この段階で購入検討対象とは呼ばない。件数は固定せず、品質を優先する。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>universe_definition_20260525.html</td>
             <td>58</td>
@@ -1130,7 +1145,7 @@
             <td>株価、業績、チャートの取得状況を同列に扱わず、未取得は順位や購入検討用スコアに混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>32</td>
@@ -1139,7 +1154,7 @@
             <td>重要: この補正値は監査値です。まだ最終売買判断へ直接足し込まず、比較数不足や候補側データ不足がある場合は未反映にします。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>49</td>
@@ -1148,7 +1163,7 @@
             <td>比較数不足として購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>101</td>
@@ -1157,7 +1172,7 @@
             <td>同業2社、PER 0件、PBR 0件、ROE 0件で基準未満。 購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>113</td>
@@ -1166,7 +1181,7 @@
             <td>同業2社、PER 0件、PBR 0件、ROE 0件で基準未満。 購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>125</td>
@@ -1175,7 +1190,7 @@
             <td>同業3社、PER 2件、PBR 3件、ROE 3件で基準未満。 購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>137</td>
@@ -1184,7 +1199,7 @@
             <td>同業3社、PER 0件、PBR 0件、ROE 0件で基準未満。 購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>149</td>
@@ -1193,7 +1208,7 @@
             <td>同業3社、PER 2件、PBR 3件、ROE 3件で基準未満。 購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>161</td>
@@ -1202,7 +1217,7 @@
             <td>同業3社以上かつ候補側指標2項目以上で比較可能。 購入検討用スコアへ入れる前の監査値</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>173</td>
@@ -1211,7 +1226,7 @@
             <td>同業3社以上かつ候補側指標2項目以上で比較可能。 購入検討用スコアへ入れる前の監査値</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>185</td>
@@ -1220,7 +1235,7 @@
             <td>同業2社、PER 2件、PBR 2件、ROE 2件で基準未満。 購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>197</td>
@@ -1229,7 +1244,7 @@
             <td>同業3社以上かつ候補側指標2項目以上で比較可能。 購入検討用スコアへ入れる前の監査値</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>209</td>
@@ -1238,7 +1253,7 @@
             <td>同業1社、PER 1件、PBR 1件、ROE 1件で基準未満。 購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>224</td>
@@ -1247,7 +1262,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>245</td>
@@ -1256,7 +1271,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>259</td>
@@ -1265,7 +1280,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>266</td>
@@ -1274,7 +1289,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>273</td>
@@ -1283,7 +1298,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>280</td>
@@ -1292,7 +1307,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>287</td>
@@ -1301,7 +1316,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>301</td>
@@ -1310,7 +1325,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>308</td>
@@ -1319,7 +1334,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>315</td>
@@ -1328,7 +1343,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>336</td>
@@ -1337,7 +1352,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>343</td>
@@ -1346,7 +1361,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>350</td>
@@ -1355,7 +1370,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>357</td>
@@ -1364,7 +1379,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>364</td>
@@ -1373,7 +1388,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>371</td>
@@ -1382,7 +1397,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>378</td>
@@ -1391,7 +1406,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>385</td>
@@ -1400,7 +1415,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>392</td>
@@ -1409,7 +1424,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>399</td>
@@ -1418,7 +1433,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>406</td>
@@ -1427,7 +1442,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>413</td>
@@ -1436,7 +1451,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>420</td>
@@ -1445,7 +1460,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>427</td>
@@ -1454,7 +1469,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>434</td>
@@ -1463,7 +1478,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>441</td>
@@ -1472,7 +1487,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>448</td>
@@ -1481,7 +1496,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>455</td>
@@ -1490,7 +1505,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>462</td>
@@ -1499,7 +1514,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>469</td>
@@ -1508,7 +1523,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>476</td>
@@ -1517,7 +1532,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>483</td>
@@ -1526,7 +1541,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>490</td>
@@ -1535,7 +1550,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>497</td>
@@ -1544,7 +1559,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>504</td>
@@ -1553,7 +1568,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>511</td>
@@ -1562,7 +1577,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>518</td>
@@ -1571,7 +1586,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>525</td>
@@ -1580,7 +1595,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>532</td>
@@ -1589,7 +1604,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>539</td>
@@ -1598,7 +1613,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>546</td>
@@ -1607,7 +1622,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>553</td>
@@ -1616,7 +1631,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>560</td>
@@ -1625,7 +1640,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>567</td>
@@ -1634,7 +1649,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>sector_adjustment_20260525.html</td>
             <td>574</td>
@@ -1643,7 +1658,7 @@
             <td>購入検討用スコアには混ぜない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>99</td>
@@ -1652,7 +1667,7 @@
             <td>重要: 100社母集団の1年騰落率は、現在時点の説明変数と同時点の株価結果を見た確認です。未来を当てたバックテストではないため、売買判断の根拠にはまだできません。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>133</td>
@@ -1661,7 +1676,7 @@
             <td>売買判断の根拠としては未到達。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>264</td>
@@ -1670,7 +1685,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>276</td>
@@ -1679,7 +1694,7 @@
             <td>参考検証に使用可能。ただし売買判断には6月以降の前向き記録が必要。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>288</td>
@@ -1688,7 +1703,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>300</td>
@@ -1697,7 +1712,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>312</td>
@@ -1706,7 +1721,7 @@
             <td>参考検証に使用可能。ただし売買判断には6月以降の前向き記録が必要。</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>324</td>
@@ -1715,7 +1730,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>336</td>
@@ -1724,7 +1739,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>348</td>
@@ -1733,7 +1748,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>360</td>
@@ -1742,7 +1757,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>backtest_validation_20260525.html</td>
             <td>372</td>
@@ -1751,7 +1766,7 @@
             <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>plus1_benchmark_connection_20260525.html</td>
             <td>96</td>
@@ -1760,7 +1775,7 @@
             <td>重要: ここで使う1年騰落率は後ろ向きの確認です。将来リターンを保証しません。ゲートが残る銘柄は、比較上強くても購入検討へ進めません。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>plus1_benchmark_connection_20260525.html</td>
             <td>215</td>
@@ -1769,7 +1784,7 @@
             <td>1年実績は合格線比 +20.15%。ただし 決算後20営業日未到達 のため売買判断へ進めない。 ゲート: 決算後20営業日未到達 / 信頼度 87点</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>plus1_benchmark_connection_20260525.html</td>
             <td>227</td>
@@ -1778,7 +1793,7 @@
             <td>1年実績は合格線比 +6.55%。ただし 決算後20営業日未到達 のため売買判断へ進めない。 ゲート: 決算後20営業日未到達 / PER 43.73倍で割高確認</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>plus1_benchmark_connection_20260525.html</td>
             <td>239</td>
@@ -1787,7 +1802,7 @@
             <td>1年実績は合格線比 +19.35%。ただし 決算後20営業日未到達 のため売買判断へ進めない。 ゲート: 決算後20営業日未到達</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>plus1_benchmark_connection_20260525.html</td>
             <td>251</td>
@@ -1796,7 +1811,7 @@
             <td>1年実績は合格線比 +40.35%。ただし 決算後20営業日未到達 のため売買判断へ進めない。 ゲート: 決算後20営業日未到達</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>plus1_benchmark_connection_20260525.html</td>
             <td>299</td>
@@ -1805,7 +1820,7 @@
             <td>1年実績は合格線比 +57.65%。ただし 決算後20営業日未到達 のため売買判断へ進めない。 ゲート: 決算後20営業日未到達</td>
             <td>売買判断ではない / 判断補助</td>
           </tr>
-        
+
           <tr>
             <td>plus1_benchmark_connection_20260525.html</td>
             <td>344</td>
@@ -1814,7 +1829,7 @@
             <td>購入検討へ進めず、6月イベント後に再判定</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>110</td>
@@ -1823,7 +1838,7 @@
             <td>重要: これは因果証明ではありません。現段階では、仮説を直接点数に足さず、購入検討用スコアへ混ぜる前のゲートとして扱います。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>158</td>
@@ -1832,7 +1847,7 @@
             <td>「分類のみ」は、ニュースや開示を整理しただけです。株価反応と接続されるまで、購入検討用スコアには入れません。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>171</td>
@@ -1841,7 +1856,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>182</td>
@@ -1850,7 +1865,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>193</td>
@@ -1859,7 +1874,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>204</td>
@@ -1868,7 +1883,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>215</td>
@@ -1877,7 +1892,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>226</td>
@@ -1886,7 +1901,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>237</td>
@@ -1895,7 +1910,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>248</td>
@@ -1904,7 +1919,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>259</td>
@@ -1913,7 +1928,7 @@
             <td>株価反応未接続。候補発見には使うが、購入検討用スコアには入れない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>314</td>
@@ -1922,7 +1937,7 @@
             <td>保留: ゲート残存 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>326</td>
@@ -1931,7 +1946,7 @@
             <td>保留: ゲート残存 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>338</td>
@@ -1940,7 +1955,7 @@
             <td>保留: ゲート残存 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>350</td>
@@ -1949,7 +1964,7 @@
             <td>保留: ゲート残存 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>362</td>
@@ -1958,7 +1973,7 @@
             <td>追加検証 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>374</td>
@@ -1967,7 +1982,7 @@
             <td>根拠不足 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>386</td>
@@ -1976,7 +1991,7 @@
             <td>根拠不足 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>398</td>
@@ -1985,7 +2000,7 @@
             <td>保留: ゲート残存 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>410</td>
@@ -1994,7 +2009,7 @@
             <td>保留: ゲート残存 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>422</td>
@@ -2003,7 +2018,7 @@
             <td>保留: ゲート残存 不足またはゲートあり。購入検討用スコアには混ぜない。</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
           <tr>
             <td>event_causality_validation_20260525.html</td>
             <td>458</td>
@@ -2012,7 +2027,7 @@
             <td>分類のみイベントは購入検討へ使わない</td>
             <td>購入検討用スコア / 購入検討へ進めない</td>
           </tr>
-        
+
       </tbody>
     </table>
   </div>
@@ -2022,17 +2037,17 @@
     <table>
       <thead><tr><th style="width:8%">優先</th><th style="width:30%">作業</th><th>理由</th><th style="width:24%">成果物</th></tr></thead>
       <tbody>
-        
+
           <tr>
             <td>1</td>
-            <td>候補という言葉の前に役割を付ける</td>
-            <td>候補だけだと購入候補に見えるため。</td>
-            <td>検証候補、確認対象、除外候補、保留候補への統一</td>
+            <td>候補10社の未接続データを補完する</td>
+            <td>候補表現の役割整理は別ページで管理済み。次は数値根拠の不足を埋めるため。</td>
+            <td>決算後反応、PER/PBR/ROE、信頼度、イベント後リターンの補完</td>
           </tr>
-        
+
       </tbody>
     </table>
-    <p class="note">作成日: 2026/05/26 08:26</p>
+    <p class="note">作成日: 2026/05/26 08:57</p>
   </div>
 </main>
 </body>

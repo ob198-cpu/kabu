@@ -143,6 +143,18 @@ const manualFixRows = [
     after: '強い表現を、検証候補・確認対象・開始判定へ整理',
     reason: '意味不明な文を修正。',
   },
+  {
+    file: 'index.html',
+    before: '購入検討対象',
+    after: '購入検討可否の確認対象',
+    reason: '購入できる対象と誤読されないよう、確認段階の表現へ変更。',
+  },
+  {
+    file: 'index.html',
+    before: '確認候補',
+    after: '追加確認対象',
+    reason: '候補ではなく、追加で確認する対象であることを明確化。',
+  },
 ];
 
 function escCsv(value) {
@@ -156,6 +168,13 @@ function writeCsv(name, rows, headers) {
     .concat(rows.map((row) => headers.map((header) => escCsv(row[header])).join(',')))
     .join('\n');
   fs.writeFileSync(path.join(ROOT, name), `\uFEFF${body}\n`, 'utf8');
+}
+
+function cleanLines(text) {
+  return text
+    .split('\n')
+    .map((line) => line.replace(/[ \t]+$/g, ''))
+    .join('\n');
 }
 
 function esc(value) {
@@ -240,9 +259,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '候補という言葉の前に役割を付ける',
-    reason: '候補だけだと購入候補に見えるため。',
-    output: '検証候補、確認対象、除外候補、保留候補への統一',
+    action: '候補10社の未接続データを補完する',
+    reason: '候補表現の役割整理は別ページで管理済み。次は数値根拠の不足を埋めるため。',
+    output: '決算後反応、PER/PBR/ROE、信頼度、イベント後リターンの補完',
   },
 ];
 
@@ -403,6 +422,7 @@ const html = `<!doctype html>
       <a class="button" href="321_display_wording_fixes.csv">321 修正CSV</a>
       <a class="button" href="current_vs_history_materials_20260525.html">資料区分台帳へ</a>
       <a class="button" href="prepublish_wording_check_20260526.html">公開前文言チェックへ</a>
+      <a class="button" href="candidate_role_wording_20260526.html">候補表現ロール整理へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>
@@ -494,6 +514,6 @@ const html = `<!doctype html>
 </html>
 `;
 
-fs.writeFileSync(path.join(ROOT, 'display_wording_audit_20260525.html'), html, 'utf8');
+fs.writeFileSync(path.join(ROOT, 'display_wording_audit_20260525.html'), cleanLines(html), 'utf8');
 
 console.log('generated display_wording_audit_20260525.html');

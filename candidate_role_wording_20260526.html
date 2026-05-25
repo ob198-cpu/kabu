@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補表現ロール整理 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #111;
+      --blue: #073a5a;
+      --line: #bed3e5;
+      --bg: #f5f8fb;
+      --card: #fff;
+      --ok: #eaf7ef;
+      --warn: #fff5df;
+      --stop: #fdecec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 56px; }
+    h1 { margin: 0 0 8px; color: var(--blue); font-size: 30px; }
+    h2 { margin: 30px 0 12px; padding-left: 10px; border-left: 8px solid #0b6f9f; color: var(--blue); }
+    .lead, .card, .kpi {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 9px rgba(0,40,80,.06);
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid #9fc1db;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .kpi small { display: block; color: #38536b; font-weight: 700; }
+    .kpi b { display: block; color: var(--blue); font-size: 24px; }
+    .role-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .role-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 12px;
+    }
+    .role-card b { color: var(--blue); font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      font-size: 13px;
+      color: #111;
+      overflow-wrap: anywhere;
+    }
+    th { background: #e4f1fa; color: var(--blue); }
+    .badge {
+      display: inline-block;
+      min-width: 78px;
+      text-align: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .ok { background: var(--ok); color: #007a3d; }
+    .warn { background: var(--warn); color: #8a5200; }
+    .stop { background: var(--stop); color: #b00020; }
+    .note { color: #333; font-size: 13px; }
+    @media (max-width: 980px) {
+      .kpis, .role-grid { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { background: #fff; }
+      .lead, .card, .kpi, .role-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>候補表現ロール整理</h1>
+  <div class="lead">
+    <p><b>目的:</b> 「候補」という言葉が、購入できる銘柄のように見える問題を避けるため、各画面の候補表現を役割別に整理します。</p>
+    <p><b>結論:</b> 今後は、候補だけで終わらせず、比較母集団・検証候補・確認対象・保留・除外・購入検討可否判定のどれかに寄せます。</p>
+    <div class="toolbar">
+      <a class="button" href="333_candidate_role_rules.csv">333 ロール定義CSV</a>
+      <a class="button" href="334_candidate_role_findings.csv">334 検出CSV</a>
+      <a class="button" href="335_candidate_role_summary.csv">335 要約CSV</a>
+      <a class="button" href="336_candidate_role_rewrite_examples.csv">336 置換例CSV</a>
+      <a class="button" href="display_wording_audit_20260525.html">表示文言監査へ</a>
+      <a class="button" href="prepublish_wording_check_20260526.html">公開前文言チェックへ</a>
+      <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+
+      <div class="kpi">
+        <small>監査対象HTML</small>
+        <b>10件</b>
+        <span>現行導線の主要HTMLで、候補表現の役割を確認。</span>
+      </div>
+
+      <div class="kpi">
+        <small>購入に見える要修正</small>
+        <b>0件</b>
+        <span>購入・保有に見える強い語は自動検出上なし。</span>
+      </div>
+
+      <div class="kpi">
+        <small>役割付けが必要</small>
+        <b>90件</b>
+        <span>候補という語に、検証・確認・保留・除外などの役割を付ける対象。</span>
+      </div>
+
+      <div class="kpi">
+        <small>文脈確認</small>
+        <b>6件</b>
+        <span>購入検討対象など、文脈により誤読される可能性がある表現。</span>
+      </div>
+
+      <div class="kpi">
+        <small>許容</small>
+        <b>13件</b>
+        <span>検証候補、確認対象、否定文など、役割が読める表現。</span>
+      </div>
+
+  </div>
+
+  <h2>1. 使うロール</h2>
+  <div class="role-grid">
+
+      <div class="role-card">
+        <b>比較母集団</b>
+        <p><b>使う表現:</b> 比較母集団 / 比較対象群 / 100社前後の母集団</p>
+        <p>候補を探す前の広いリスト。購入検討対象ではない。</p>
+        <p class="note">例: 100社前後の比較母集団から、検証候補を抽出する。</p>
+      </div>
+
+      <div class="role-card">
+        <b>検証候補</b>
+        <p><b>使う表現:</b> 検証候補 / NISA 1年保有テスト検証候補</p>
+        <p>数値・IR・イベントを深掘りする銘柄。まだ購入確定ではない。</p>
+        <p class="note">例: 6月イベント後に深掘りする検証候補として残す。</p>
+      </div>
+
+      <div class="role-card">
+        <b>確認対象</b>
+        <p><b>使う表現:</b> 確認対象 / 追加確認対象 / 条件確認対象</p>
+        <p>未取得データ、IR、決算後反応、イベント結果を確認する段階。</p>
+        <p class="note">例: 決算後20営業日反応が未到達のため、追加確認対象にする。</p>
+      </div>
+
+      <div class="role-card">
+        <b>保留</b>
+        <p><b>使う表現:</b> 保留 / 再判定待ち / 待機</p>
+        <p>数値は悪くないが、過熱・未確認・イベント待ちが残る段階。</p>
+        <p class="note">例: 高PERと金利イベント待ちが残るため、保留にする。</p>
+      </div>
+
+      <div class="role-card">
+        <b>除外</b>
+        <p><b>使う表現:</b> 除外 / 初回除外 / テスト対象外</p>
+        <p>ハードゲートにより、初回NISAテストには進めない段階。</p>
+        <p class="note">例: データ信頼度70未満のため、初回テスト対象外にする。</p>
+      </div>
+
+      <div class="role-card">
+        <b>購入検討</b>
+        <p><b>使う表現:</b> 購入検討用スコア / 購入検討可否判定</p>
+        <p>6月イベント、公式IR、証券会社画面の確認後にだけ使う最終手前の言葉。</p>
+        <p class="note">例: 購入検討用スコアは、未取得データを混ぜずに算出する。</p>
+      </div>
+
+  </div>
+
+  <h2>2. 置き換えルール</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:24%">修正前</th><th style="width:28%">修正後</th><th>理由</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>候補</td>
+            <td>検証候補 / 確認対象 / 保留 / 除外のいずれか</td>
+            <td>候補だけでは購入可能銘柄に見えるため。</td>
+          </tr>
+
+          <tr>
+            <td>10社候補 / 現候補</td>
+            <td>10社検証候補 / 現行検証候補</td>
+            <td>テスト前の深掘り対象であり、購入確定ではないため。</td>
+          </tr>
+
+          <tr>
+            <td>保有候補</td>
+            <td>NISA 1年保有テスト検証候補</td>
+            <td>保有する前提に見えるため、テスト検証段階を明示する。</td>
+          </tr>
+
+          <tr>
+            <td>購入候補</td>
+            <td>購入検討可否の確認対象</td>
+            <td>購入推奨に近く見えるため、確認段階に戻す。</td>
+          </tr>
+
+          <tr>
+            <td>確認候補</td>
+            <td>追加確認対象</td>
+            <td>候補よりも、何をする段階かが明確になるため。</td>
+          </tr>
+
+          <tr>
+            <td>候補維持</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>維持する対象が購入候補なのか検証候補なのかを分けるため。</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. 要整理リスト</h2>
+  <div class="card">
+    <p class="note">下表は、現行資料内で「候補」の役割が弱い可能性がある箇所です。許容文脈はCSVに記録し、画面では要整理分を優先表示しています。</p>
+    <table>
+      <thead><tr><th style="width:18%">ファイル</th><th style="width:7%">行</th><th style="width:12%">表現</th><th style="width:12%">扱い</th><th style="width:15%">推奨ロール</th><th style="width:20%">推奨表現</th><th>文脈</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>backtest_validation_20260525.html</td>
+            <td>113</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>現候補10社 10社</td>
+          </tr>
+
+          <tr>
+            <td>backtest_validation_20260525.html</td>
+            <td>145</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>現候補10社 10社</td>
+          </tr>
+
+          <tr>
+            <td>backtest_validation_20260525.html</td>
+            <td>152</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>候補10社のイベント集計接続 2社</td>
+          </tr>
+
+          <tr>
+            <td>backtest_validation_20260525.html</td>
+            <td>159</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>候補10社の月次株価接続 2社</td>
+          </tr>
+
+          <tr>
+            <td>backtest_validation_20260525.html</td>
+            <td>244</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>3. 現候補10社の過去データ接続</td>
+          </tr>
+
+          <tr>
+            <td>backtest_validation_20260525.html</td>
+            <td>476</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>2 候補10社すべての月次・週次株価を取得する 銘柄ごとの12か月リターン、最大下落率、指数超過を同じ条件で比較するため。</td>
+          </tr>
+
+          <tr>
+            <td>backtest_validation_20260525.html</td>
+            <td>478</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>銘柄ごとの12か月リターン、最大下落率、指数超過を同じ条件で比較するため。 候補10社の月次リターン、日経/TOPIX比較</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>33</td>
+            <td>10社候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>目的: 10社候補を、6月の米CPI・日銀・FOMC後に「購入検討へ進む」「小口検討/候補維持」「待機」「除外」に分けるための判定表です。 注意: これは売買指示ではありません。NISA 1年保有テストの候補を選ぶための判断補助で、実行前には証券会社画面・公式IR・最新決算を再確認します。</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>33</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>目的: 10社候補を、6月の米CPI・日銀・FOMC後に「購入検討へ進む」「小口検討/候補維持」「待機」「除外」に分けるための判定表です。 注意: これは売買指示ではありません。NISA 1年保有テストの候補を選ぶための判断補助で、実行前には証券会社画面・公式IR・最新決算を再確認します。</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>72</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>CPI、日銀、FOMC後の市場反応、各銘柄の20営業日決算反応、日経75日線 共通ゲート通過、日経75日線以上または下抜け-1%以内、候補銘柄に下方修正なし 日経75日線-1〜-2%、候補の20営業日反応が未到達、個別材料が未確認</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>75</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>日経75日線-2%以上、候補の決算後反応35点未満、下方修正または会計リスク 通過銘柄だけを購入検討へ進め、未到達・未確認銘柄は候補維持または待機にする。</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>130</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 NISA 64.3 反応 57 信頼度 95 PER 8.36</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>140</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 NISA 62.1 反応 41.3 信頼度 92 PER 未取得</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>150</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 NISA 60.9 反応 68.7 信頼度 92 PER 未取得</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>160</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 NISA 60.7 反応 62.9 信頼度 100 PER 26.7</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>170</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 候補維持 NISA 55.6 反応 55.1 信頼度 95 PER 26.09</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>208</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>購入検討へ進む条件あり 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>216</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>購入検討へ進む条件あり 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>224</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>購入検討へ進む条件あり 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>231</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 候補維持または小口検討</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>232</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>小口検討または候補維持 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>239</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 候補維持または小口検討</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>240</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>小口検討または候補維持 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>247</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 候補維持または小口検討</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>248</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>小口検討または候補維持 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>255</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 小口検討または候補維持 候補維持または小口検討</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>256</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>小口検討または候補維持 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>263</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>残す 候補維持 候補維持または小口検討</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>264</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>候補維持 候補維持または小口検討 購入検討不可または除外</td>
+          </tr>
+
+          <tr>
+            <td>candidate_june_rulebook.html</td>
+            <td>296</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>したがって、6月イベント後の条件を通っても、期待値が指数+1%を上回る説明ができない銘柄は、購入検討ではなく候補維持または除外にします。</td>
+          </tr>
+
+          <tr>
+            <td>event_causality_validation_20260525.html</td>
+            <td>114</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>314 イベント種類CSV 315 候補別CSV 316 ルールCSV</td>
+          </tr>
+
+          <tr>
+            <td>event_causality_validation_20260525.html</td>
+            <td>143</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>候補10社の複合条件接続 1社</td>
+          </tr>
+
+          <tr>
+            <td>event_causality_validation_20260525.html</td>
+            <td>299</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>2. 候補10社の因果ゲート</td>
+          </tr>
+
+          <tr>
+            <td>event_causality_validation_20260525.html</td>
+            <td>489</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>2 候補10社に複合条件を接続する イベント仮説、業界統計、個別株トレンド、市場地合いを同じ表で見られるようにする。</td>
+          </tr>
+
+          <tr>
+            <td>event_causality_validation_20260525.html</td>
+            <td>491</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>イベント仮説、業界統計、個別株トレンド、市場地合いを同じ表で見られるようにする。 候補別イベント・複合条件チェック表</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>1481</td>
+            <td>10社候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>上位20補完再計算 10社候補補充案 予備候補 決算反応</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>1482</td>
+            <td>予備候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>10社候補補充案 予備候補 決算反応 6月判定ルール</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>1535</td>
+            <td>10社候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>上位20補完再計算 10社候補補充案 予備候補 決算反応</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>1536</td>
+            <td>予備候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>10社候補補充案 予備候補 決算反応 6月判定ルール</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>1626</td>
+            <td>10社候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>最新分析システム入口 10社候補について、公式決算入力、決算後株価反応、反応補正後順位まで確認する入口です。</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>1942</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>0円 6/10-6/17 米CPI、日銀、FOMCの結果を確認し、購入可否の前提を整理。 判定 6/18以降 市場環境と候補銘柄の数字を再確認し、NISAテストの実施可否を判断。 再点検 8月中旬 4-6月期決算で、継続・追加・見送りを判断。</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2127</td>
+            <td>追加候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>開始/追加候補 確認・待機</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2201</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>検証開始: 決算一巡後 対象: 候補銘柄の決算反応と株価指標 条件: データ欠落と過熱リスクを確認 注意: 5月中は売買判断を確定しない</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2215</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>日銀 + FOMC: 購入可否の最終判定 見る: 米10年金利、NASDAQ、ドル円 良い: 金利4.60%未満 行動: 候補別に購入可否を判定</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2345</td>
+            <td>追加候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>この資料での対応ルール PER30倍以上の銘柄は、営業利益見通しが前年比+10%以上、または会社計画進捗が順調な場合だけ追加候補にします。PER40倍以上で営業利益見通しが下方修正、または決算後に株価が-8%以上下落した場合は追加停止。米10年金利が4.70%以上なら、高PER銘柄の追加額を半分にします。 銘柄へ戻る</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2364</td>
+            <td>追加候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>この資料での対応ルール 中外製薬は、営業利益見通しが前年比プラス、主力薬の売上が計画線、パイプラインで大きな失敗がない場合に追加候補とします。臨床試験失敗、承認遅延、営業利益見通し-10%以上悪化、または決算翌日に-8%以上下落した場合は追加停止。医薬イベント前は一括で買わず、予定額の半分までにします。 銘柄へ戻る</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2381</td>
+            <td>追加候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>この資料での対応ルール 三菱UFJは、日銀が急変せず、10年国債利回りが緩やかに上昇し、与信費用が急増していない時に追加候補とします。日経平均が75日線を明確に下回る、与信費用見通しが悪化、または日銀後に円高が3%以上進む場合は追加を延期します。 銘柄へ戻る</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2398</td>
+            <td>追加候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>この資料での対応ルール 三菱商事は、通期利益見通しが維持され、自社株買いの進捗が確認でき、配当方針が維持される場合に追加候補とします。通期利益見通し-10%以上、資源価格急落、または自社株買い終了後に株価が75日線を下回る場合は追加停止。還元だけを理由に買い増しません。 銘柄へ戻る</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2415</td>
+            <td>追加候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>この資料での対応ルール 任天堂は、Switch 2販売が会社計画以上、ソフト販売が強い、営業利益見通しが維持または上方修正なら追加候補とします。発売後に材料出尽くしで-8%以上下落、ソフト販売が弱い、円高が3%以上進む、または会社計画未達が見えた場合は追加停止。発売イベント直前は一括買いを避けます。 銘柄へ戻る</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2449</td>
+            <td>追加候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>確認対象</td>
+            <td>予備検証候補 / 追加確認対象 / 分割検証候補</td>
+            <td>この資料での対応ルール 5,300円以上では追いません。4,600円以下、または次決算で営業利益進捗が計画以上、ABF/ヘルスケアの成長が確認できた場合だけ追加候補とします。決算で営業利益見通しが-10%以上悪化、ABF成長鈍化、またはPER40倍以上のまま株価が急騰した場合は見送り。食品の安定性だけを理由に高値買いしません。 銘柄へ戻る</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3278</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>`; }).join(&quot;&quot;) || ` 現候補20社と一致するイベント後リターン集計はまだありません。 `; const monthlyRows = allRankedRows.map((row) =&gt; {</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3297</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>ws = [ [&quot;イベント後リターン明細&quot;, `${eventDetailRows.length}件`, `${eventDetailCandidateRows.length}件が現候補20社と一致`, eventDetailCandidateRows.length ? &quot;一部接続済み&quot; : &quot;未接続&quot;], [&quot;イベント後リターン集計&quot;, `${eventSummaryRows.length}銘柄`, `${eventTickers.size}銘柄が現候補20社と一致`, even</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3298</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>[&quot;イベント後リターン明細&quot;, `${eventDetailRows.length}件`, `${eventDetailCandidateRows.length}件が現候補20社と一致`, eventDetailCandidateRows.length ? &quot;一部接続済み&quot; : &quot;未接続&quot;], [&quot;イベント後リターン集計&quot;, `${eventSummaryRows.length}銘柄`, `${eventTickers.size}銘柄が現候補20社と一致`, even</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3299</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>[&quot;イベント後リターン集計&quot;, `${eventSummaryRows.length}銘柄`, `${eventTickers.size}銘柄が現候補20社と一致`, eventTickers.size ? &quot;一部接続済み&quot; : &quot;未接続&quot;], [&quot;株価月次データ&quot;, `${countUnique(stockMonthlyRows, &quot;ticker&quot;)}銘柄`, `${stockMonthlyTickers.size}銘柄が現候補20社と一致`,</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3308</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>現候補とのイベント接続 ${eventTickers.size}銘柄</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3310</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>${eventTickers.size}銘柄 イベント後リターン集計と現候補20社の一致数。</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3313</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>現候補との月次接続 ${stockMonthlyTickers.size}銘柄</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3315</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>${stockMonthlyTickers.size}銘柄 月次株価データと現候補20社の一致数。</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3324</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>データ 取得済み 現候補との接続 状態 ${progressRows.map(([item, acquired, connected, status]) =&gt; `</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3490</td>
+            <td>購入検討対象</td>
+            <td><span class="badge warn">要確認</span></td>
+            <td>購入検討</td>
+            <td>購入検討可否の確認対象 / 購入検討へ進めない</td>
+            <td>ows, &quot;C&quot;)}社`, &quot;データ取得や検算が不足している候補。&quot;], [&quot;D 低優先・比較のみ&quot;, `${levelCount(universeRows, &quot;D&quot;)}社`, &quot;購入検討対象というより比較・代表性確認用。&quot;], ];</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3683</td>
+            <td>購入検討対象</td>
+            <td><span class="badge warn">要確認</span></td>
+            <td>購入検討</td>
+            <td>購入検討可否の確認対象 / 購入検討へ進めない</td>
+            <td>stop: &quot;未取得、過熱、急落、割高、決算後反応悪化のいずれかが残る場合は見送り。&quot;, action: &quot;現時点では確認待ち。購入検討対象へは上げない。&quot; };</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3855</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>= [&quot;記録時刻&quot;, &quot;判定&quot;, &quot;理由&quot;, &quot;日経75日差&quot;, &quot;日経高値下落&quot;, &quot;米10年金利&quot;, &quot;金利上昇幅&quot;, &quot;ドル円変化&quot;, &quot;VIX&quot;, &quot;企業イベント&quot;, &quot;候補別判定&quot;]; const rows = logs.map((log) =&gt; [</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3889</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>記録時刻 判定 理由 候補別判定 ${recentRows}</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>3954</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>。&quot; : commonPass ? &quot;共通条件は通過です。&quot; : escapeHtml(failReasons.join(&quot; / &quot;))} 扱い: ${commonPass ? &quot;候補別条件の確認に進めます。購入確定ではありません。&quot; : &quot;この状態では購入検討可否判定を進めず、延期または候補縮小として扱います。&quot;} `;</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4029</td>
+            <td>購入検討対象</td>
+            <td><span class="badge warn">要確認</span></td>
+            <td>購入検討</td>
+            <td>購入検討可否の確認対象 / 購入検討へ進めない</td>
+            <td>候補として残します。&quot;; if (category === &quot;予備&quot;) return &quot;候補数を広げるための補充枠です。決算後20営業日反応と6月イベント後の地合い確認が終わるまで購入検討対象には上げません。&quot;; if (category === &quot;保留&quot;) return &quot;数値は強くても、過熱・反応悪化・特殊要因が残るため、購入検討対象には上げず再判定待ちにします。&quot;;</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4030</td>
+            <td>購入検討対象</td>
+            <td><span class="badge warn">要確認</span></td>
+            <td>購入検討</td>
+            <td>購入検討可否の確認対象 / 購入検討へ進めない</td>
+            <td>if (category === &quot;予備&quot;) return &quot;候補数を広げるための補充枠です。決算後20営業日反応と6月イベント後の地合い確認が終わるまで購入検討対象には上げません。&quot;; if (category === &quot;保留&quot;) return &quot;数値は強くても、過熱・反応悪化・特殊要因が残るため、購入検討対象には上げず再判定待ちにします。&quot;; if (category === &quot;落とす&quot;) return &quot;現時点では初回テスト候補から外し、明確な改善データが</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4277</td>
+            <td>10社候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>p((row) =&gt; row.company).join(&quot;、&quot;) || &quot;該当なし&quot;; const sourceLabel = usingTenCandidatePlan ? &quot;10社候補案&quot; : &quot;上位20社再計算&quot;; alert.innerHTML = ` ${escapeHtml(sourceLabel)}を表示 NISA点の最上位は ${escapeHtml(strongest?.ticker || &quot;-&quot;)} ${escapeHtml(strongest?.company</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4364</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>bad: &quot;金利上昇が続く場合、半導体の初回投入を控える。&quot;, action: &quot;5月中は購入せず、候補銘柄の決算反応とデータ欠落だけ確認。&quot; },</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4375</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>title: &quot;5月中旬 日本企業の本決算集中&quot;, watch: &quot;候補銘柄の下方修正、配当、自社株買い、通期予想。&quot;, good: &quot;下方修正なし、配当維持/増配、決算後5営業日で-8%以内。&quot;,</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4392</td>
+            <td>購入検討対象</td>
+            <td><span class="badge warn">要確認</span></td>
+            <td>購入検討</td>
+            <td>購入検討可否の確認対象 / 購入検討へ進めない</td>
+            <td>bad: &quot;日経平均が75日線を-1.5%以上下回る。&quot;, action: &quot;良ければ6月判定の候補に残す。悪ければ購入検討対象から外す。&quot; },</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4419</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>good: &quot;米金利急騰なし、円高ショックなし、日経平均75日線以上。&quot;, bad: &quot;金利4.70%以上、日経平均75日線-2%以上、候補銘柄に下方修正。&quot;, action: &quot;条件達成なら候補別に購入可否を判定。未達なら延期または候補縮小。&quot;</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>4420</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>bad: &quot;金利4.70%以上、日経平均75日線-2%以上、候補銘柄に下方修正。&quot;, action: &quot;条件達成なら候補別に購入可否を判定。未達なら延期または候補縮小。&quot; },</td>
+          </tr>
+
+          <tr>
+            <td>issue_recovery_board_20260525.html</td>
+            <td>127</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>一部回収済み 100社前後の母集団から業種別中央値を作り、候補10社のPER/PBR/ROEを同業比較。比較数不足は未反映にした。 sector_adjustment_20260525.html / 299_sector_peer_medians.csv / 300_candidate_sector_adjustment.csv</td>
+          </tr>
+
+          <tr>
+            <td>issue_recovery_board_20260525.html</td>
+            <td>136</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>一部回収済み 現候補10社のイベント集計・月次株価接続を確認。100社母集団ではスコアと1年騰落率の同時点検算を作成。 backtest_validation_20260525.html / 303_backtest_validation_summary.csv / 305_candidate_backtest_con</td>
+          </tr>
+
+          <tr>
+            <td>issue_recovery_board_20260525.html</td>
+            <td>138</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>3_backtest_validation_summary.csv / 305_candidate_backtest_connection.csv 次工程では、+1%目標との接続を候補別に明確化する。 候補10社中、暫定検証可は2社。未接続銘柄は購入検討用スコアの根拠にしない。</td>
+          </tr>
+
+          <tr>
+            <td>issue_recovery_board_20260525.html</td>
+            <td>139</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>次工程では、+1%目標との接続を候補別に明確化する。 候補10社中、暫定検証可は2社。未接続銘柄は購入検討用スコアの根拠にしない。</td>
+          </tr>
+
+          <tr>
+            <td>issue_recovery_board_20260525.html</td>
+            <td>145</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>一部回収済み S&amp;amp;P500・日経平均を主比較として、候補10社の1年騰落率が最良比較対象+1%を超えるかを表示。TOPIXは未取得として計算から除外。 plus1_benchmark_connection_20260525.html / 309_benchmark_plus1_reference.csv / 310_candidate_plus1_gate.c</td>
+          </tr>
+
+          <tr>
+            <td>issue_recovery_board_20260525.html</td>
+            <td>175</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>イベント種類別の株価反応DBを広げる。 候補10社の未接続データを補完する。 6月イベント後の前向きテスト記録へ接続する。</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>222</td>
+            <td>購入検討対象</td>
+            <td><span class="badge warn">要確認</span></td>
+            <td>購入検討</td>
+            <td>購入検討可否の確認対象 / 購入検討へ進めない</td>
+            <td>実績: 過去に効いたか 不明なら購入検討対象にしない</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>245</td>
+            <td>10社候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>10. 10社候補へ絞る 残った銘柄を、6月テスト候補として10社前後へ整理する。</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>312</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>PER/PBR/ROEを業種内中央値や同業比較で見ること。 業種別中央値と候補銘柄の比較表を作成済み。 次は過去検証・バックテストへ進む。</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>319</td>
+            <td>現候補</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>イベント後の株価反応を、指数比で過去検証すること。 現候補10社のイベント集計・月次株価接続を確認。100社母集団の同時点検算も作成。 次は+1%目標との接続を候補別に明確化する。</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>320</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>現候補10社のイベント集計・月次株価接続を確認。100社母集団の同時点検算も作成。 次は+1%目標との接続を候補別に明確化する。 過去検証データが未接続の銘柄は購入検討用スコアの根拠にしない。</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>326</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>S&amp;P500、日経平均、TOPIX等を最低1%上回る見込みを比較できること。 S&amp;P500・日経平均を主比較として、候補10社ごとの+1%合格線との差を作成。TOPIXは未取得として非混入。 次はイベント因果の誤解を避けるため、複合条件・イベント種類別検証へ進む。</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>333</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>イベント名だけで加点せず、株価反応、指数超過、業界・個別・市場の複合条件を分けて確認すること。 イベント分類、株価反応接続、候補10社の複合条件ゲートを作成。分類のみイベントは点数へ混ぜない。 次は表示上の誤解・旧文言の継続監査へ進む。</td>
+          </tr>
+
+          <tr>
+            <td>issue_resolution_flowchart_20260525.html</td>
+            <td>351</td>
+            <td>候補10社</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>団条件固定、業種別補正、過去検証の初期接続、+1%目標接続、イベント因果・複合条件チェック、表示文言監査、資料区分台帳、公開前文言自動チェック、候補表現ロール整理を実装済み。次は、候補10社の未接続データ補完へ進みます。 作成日: 2026年5月25日</td>
+          </tr>
+
+          <tr>
+            <td>missing_data_score_gate_20260525.html</td>
+            <td>190</td>
+            <td>候補群</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>次は、100社母集団の条件固定へ進みます。どの条件で候補群を作ったかを固定し、後から都合よく入れ替えたように見えない構造にします。 更新日時: 2026/05/25 20:19</td>
+          </tr>
+
+          <tr>
+            <td>plus1_benchmark_connection_20260525.html</td>
+            <td>100</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>309 比較対象CSV 310 候補別+1%CSV 311 配分ルールCSV</td>
+          </tr>
+
+          <tr>
+            <td>plus1_benchmark_connection_20260525.html</td>
+            <td>195</td>
+            <td>候補別</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>2. 候補別 +1%ゲート</td>
+          </tr>
+
+          <tr>
+            <td>plus1_benchmark_connection_20260525.html</td>
+            <td>262</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>比較上は有力 候補維持 1年実績が合格線を +6.25% 上回り、スコアと信頼度も最低条件を満たす。 大きな停止理由なし</td>
+          </tr>
+
+          <tr>
+            <td>plus1_benchmark_connection_20260525.html</td>
+            <td>274</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>比較上は有力 候補維持 1年実績が合格線を +47.15% 上回り、スコアと信頼度も最低条件を満たす。 60日最大下落 -23.5%</td>
+          </tr>
+
+          <tr>
+            <td>plus1_benchmark_connection_20260525.html</td>
+            <td>286</td>
+            <td>候補維持</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>保留</td>
+            <td>検証候補として継続 / 保留継続</td>
+            <td>比較上は有力 候補維持 1年実績が合格線を +55.35% 上回り、スコアと信頼度も最低条件を満たす。 60日最大下落 -20%</td>
+          </tr>
+
+          <tr>
+            <td>sector_adjustment_20260525.html</td>
+            <td>37</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>候補銘柄 10社 280_nisa_test_10_candidate_plan_reaction_updated.csv 補正参考可 3社 同業3社以上、候補側指標2項目以上。 未反映 7社 比較数不足または候補側指標不足。 次工程 過去検証・バックテスト 補正値が本当に有効か、イベント後・決算後反応で検</td>
+          </tr>
+
+          <tr>
+            <td>sector_adjustment_20260525.html</td>
+            <td>47</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>同じ業種内で比較 PER/PBR/ROEは業種で水準が違うため、候補銘柄の業種と同じ母集団内中央値と比較する。 同業3社以上、かつPER/PBR/ROEの中央値を計算できる。</td>
+          </tr>
+
+          <tr>
+            <td>sector_adjustment_20260525.html</td>
+            <td>53</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>候補側の指標不足を止める 候補銘柄側のPER/PBR/ROEが2項目未満なら、業種別補正を出さない。 PER/PBR/ROEのうち2項目以上取得済み。</td>
+          </tr>
+
+          <tr>
+            <td>sector_adjustment_20260525.html</td>
+            <td>72</td>
+            <td>候補銘柄</td>
+            <td><span class="badge warn">要役割付け</span></td>
+            <td>検証候補</td>
+            <td>10社検証候補 / 現行検証候補 / 検証候補別</td>
+            <td>候補銘柄の業種別比較</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>4. 運用</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:8%">順番</th><th style="width:24%">作業</th><th>コマンド</th><th style="width:28%">出力</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>1</td>
+            <td>候補表現を検出</td>
+            <td>node tools/build_candidate_role_wording.mjs</td>
+            <td>333〜337 CSVとHTMLを生成</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>強い表現を確認</td>
+            <td>333_candidate_role_rules.csv / 334_candidate_role_findings.csv</td>
+            <td>購入・保有に見える語と、役割付けが必要な語を分ける</td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>公開前チェックへ接続</td>
+            <td>node tools/build_prepublish_wording_check.mjs</td>
+            <td>新規ページも文言チェック対象へ入れる</td>
+          </tr>
+
+      </tbody>
+    </table>
+    <p class="note">作成日時: 2026/05/26 08:57</p>
+  </div>
+</main>
+</body>
+</html>
