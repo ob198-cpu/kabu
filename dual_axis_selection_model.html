@@ -34,9 +34,10 @@
       <div class="ok"><b>採用すること:</b> 質的データは「仮説データ層」と「実績データ層」に分ける。実績が弱い材料は、どれだけ話題でもS評価にしない。</div>
       <div class="formula">
         量的スコア = 企業財務60% + 株価・反応・リスク40%<br>
-        質的総合 = 実績データ層60% + 仮説データ層40%<br>
-        テスト優先度 = 量的70% + 質的実績20% + 質的仮説10%<br>
-        ただし、量的C・信頼度70未満・重大ハードゲートありは、質的Sでも購入候補にしない
+        質的仮説層 = 候補発見と調査優先度に使う。原則として購入候補スコアへ直接加点しない<br>
+        質的実績層 = 過去イベント反応・相関・KPI接続で検証し、質的評価の上限を決める<br>
+        購入候補スコア = 量的スコア中心。質的仮説はタイブレーク、質的実績が強い場合だけ小さく反映<br>
+        量的C・信頼度70未満・重大ハードゲートありは、質的Sでも購入候補にしない
       </div>
     </section>
 
@@ -89,6 +90,15 @@
     </section>
 
     <section class="panel">
+      <h2>仮説層と実績層の使い分け</h2>
+      <div class="notice">仮説層と実績層は単純加算しません。仮説がSでも実績がCなら、購入候補としては上限BまたはCに止めます。逆に実績が強く仮説が弱い場合は、データ異常か別要因の可能性があるため再調査に回します。</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>仮説</th><th>実績</th><th>意味</th><th>許可する出力</th><th>点数方針</th><th>行動</th></tr></thead>
+        <tbody id="matrix-body"><tr><td colspan="6">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
       <h2>最終ゲート</h2>
       <div class="table-wrap"><table>
         <thead><tr><th>条件</th><th>通過</th><th>確認</th><th>失敗</th><th>行動</th></tr></thead>
@@ -113,6 +123,7 @@
       logic: "265_dual_axis_selection_logic.csv",
       events: "266_qualitative_event_examples.csv",
       gate: "267_dual_axis_final_gate.csv",
+      matrix: "271_qualitative_layer_matrix.csv",
     };
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
     const parseCsv = (text) => {
@@ -134,7 +145,7 @@
     const fetchCsv = async (path) => parseCsv(await (await fetch(`${path}?v=${Date.now()}`)).text());
     const gradeSpan = (text, cls) => `<span class="grade ${cls}">${escapeHtml(text)}</span>`;
     const render = async () => {
-      const [rules, logic, events, gate] = await Promise.all([fetchCsv(files.rules), fetchCsv(files.logic), fetchCsv(files.events), fetchCsv(files.gate)]);
+      const [rules, logic, events, gate, matrix] = await Promise.all([fetchCsv(files.rules), fetchCsv(files.logic), fetchCsv(files.events), fetchCsv(files.gate), fetchCsv(files.matrix)]);
       document.getElementById("rules-body").innerHTML = rules.map((row) => `
         <tr><td>${escapeHtml(row.axis)}</td><td>${escapeHtml(row.layer)}</td><td><b>${escapeHtml(row.item)}</b></td><td>${escapeHtml(row.weight)}%</td><td>${escapeHtml(row.score_method)}</td><td>${gradeSpan(row.grade_s, "s")}</td><td>${gradeSpan(row.grade_a, "a")}</td><td>${gradeSpan(row.grade_b, "b")}</td><td>${gradeSpan(row.grade_c, "c")}</td><td>${escapeHtml(row.guardrail)}</td></tr>
       `).join("");
@@ -146,6 +157,9 @@
       `).join("");
       document.getElementById("gate-body").innerHTML = gate.map((row) => `
         <tr><td><b>${escapeHtml(row.condition)}</b></td><td>${escapeHtml(row.pass)}</td><td>${escapeHtml(row.watch)}</td><td>${escapeHtml(row.fail)}</td><td>${escapeHtml(row.action)}</td></tr>
+      `).join("");
+      document.getElementById("matrix-body").innerHTML = matrix.map((row) => `
+        <tr><td><b>${escapeHtml(row.hypothesis_rating)}</b></td><td><b>${escapeHtml(row.evidence_rating)}</b></td><td>${escapeHtml(row.meaning)}</td><td>${escapeHtml(row.allowed_output)}</td><td>${escapeHtml(row.score_policy)}</td><td>${escapeHtml(row.action)}</td></tr>
       `).join("");
     };
     render().catch((error) => {
