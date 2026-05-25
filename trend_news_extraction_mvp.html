@@ -73,6 +73,7 @@
         <div class="card"><b id="theme-count">-</b><span>テーマ判定ルール</span><p class="small">AI、金利、防衛、ナフサなどを分類</p></div>
         <div class="card"><b id="candidate-count">-</b><span>時流候補接続</span><p class="small">テーマから銘柄候補へ接続</p></div>
         <div class="card"><b id="score-count">-</b><span>探索スコア</span><p class="small">購入判定と分けて試算</p></div>
+        <div class="card"><b id="bridge-pass-count">-</b><span>数値ゲート通過</span><p class="small">質的候補のうち数値確認も通った候補</p></div>
       </div>
       <div class="notice">
         有料ニュース本文、四季報本文、QUICK/Bloomberg/Reuters等の契約データは、契約・APIなしでは自動取得対象にしません。MVPでは、公式開示・公的統計・企業IR・公開見出し/リンク・手入力要約を使います。
@@ -121,6 +122,22 @@
         <a class="button secondary" href="255_qualitative_theme_chain_scores.csv">連鎖点CSV</a>
         <a class="button secondary" href="254_qualitative_trend_exploration_score.csv">探索スコアCSV</a>
       </div>
+    </section>
+
+    <section class="section">
+      <h2>質的候補から数値ゲートへの接続</h2>
+      <p>時流テーマに合う銘柄が、既存のNISA 1年保有スコアまで接続できているかを確認します。ここでも「通過候補」は購入確定ではなく、6月イベント後に再判定する候補です。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>順位</th><th>銘柄</th><th>テーマ</th><th>時流点</th><th>NISA点</th><th>NISA分類</th><th>信頼度</th><th>ゲート</th><th>接続状態</th><th>次の対応</th>
+            </tr>
+          </thead>
+          <tbody id="bridge-body"><tr><td colspan="10">読み込み中</td></tr></tbody>
+        </table>
+      </div>
+      <div class="ok">目的は、ニュースや時流で拾った候補を「数値で確認済み」「数値確認中」「未接続」に分けることです。質的材料だけで購入候補にしないための安全装置です。</div>
     </section>
 
     <section class="section">
@@ -187,6 +204,7 @@
       events: "252_qualitative_event_sample_queue.csv",
       matches: "253_qualitative_candidate_match.csv",
       scores: "254_qualitative_trend_exploration_score.csv",
+      bridge: "256_qualitative_numeric_gate_bridge.csv",
     };
 
     let appData = {
@@ -195,6 +213,7 @@
       events: [],
       matches: [],
       scores: [],
+      bridge: [],
     };
 
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -244,7 +263,11 @@
 
     const statusPill = (value) => {
       const text = String(value || "");
-      const cls = text.includes("使用") || text.includes("探索候補") ? "ok" : text.includes("未") || text.includes("契約") ? "stop" : "warn";
+      const cls = text.includes("使用") || text.includes("探索候補") || text.includes("通過")
+        ? "ok"
+        : text.includes("未") || text.includes("契約") || text.includes("落とす")
+          ? "stop"
+          : "warn";
       return `<span class="pill ${cls}">${escapeHtml(text)}</span>`;
     };
 
@@ -316,30 +339,50 @@
     };
 
     const render = async () => {
-      const [sources, rules, events, matches, scores] = await Promise.all([
+      const [sources, rules, events, matches, scores, bridge] = await Promise.all([
         fetchCsv(csvFiles.sources),
         fetchCsv(csvFiles.rules),
         fetchCsv(csvFiles.events),
         fetchCsv(csvFiles.matches),
         fetchCsv(csvFiles.scores),
+        fetchCsv(csvFiles.bridge),
       ]);
 
-      appData = { sources, rules, events, matches, scores };
+      appData = { sources, rules, events, matches, scores, bridge };
 
       document.getElementById("source-count").textContent = sources.length;
       document.getElementById("theme-count").textContent = rules.length;
       document.getElementById("candidate-count").textContent = matches.length;
       document.getElementById("score-count").textContent = scores.length;
+      document.getElementById("bridge-pass-count").textContent = bridge.filter((row) => row.bridge_status === "数値ゲート通過候補").length;
 
       const paidBlocked = sources.filter((row) => row.use_in_mvp.includes("不使用")).length;
       const usableSources = sources.filter((row) => row.use_in_mvp.includes("使用")).length;
       const topThemes = [...new Set(scores.slice(0, 5).map((row) => row.theme_name))].join("、");
+      const connected = bridge.filter((row) => row.nisa_connected === "接続済み").length;
+      const unconnected = bridge.length - connected;
       document.getElementById("current-summary").innerHTML = `
         <div class="summary-line"><b>現在の実装範囲</b><span>公式・公的・公開範囲の質的材料を、時流探索候補へ変換する前段MVP。</span></div>
         <div class="summary-line"><b>使える取得元</b><span>${usableSources}件。契約なしで使えない有料系は ${paidBlocked}件として明示。</span></div>
         <div class="summary-line"><b>上位テーマ</b><span>${escapeHtml(topThemes || "-")}</span></div>
+        <div class="summary-line"><b>数値接続状況</b><span>時流候補 ${bridge.length}件中、NISA 1年保有スコア接続済み ${connected}件、未接続 ${unconnected}件。</span></div>
         <div class="summary-line"><b>注意</b><span>探索点は購入点ではありません。数値ゲートを通過しない限り、NISA候補にはしません。</span></div>
       `;
+
+      document.getElementById("bridge-body").innerHTML = bridge.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.rank)}</td>
+          <td><b>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</b></td>
+          <td>${escapeHtml(row.theme_name)}</td>
+          <td><b>${escapeHtml(row.qualitative_score)}</b></td>
+          <td>${escapeHtml(row.nisa_score || "-")}</td>
+          <td>${escapeHtml(row.nisa_category || "-")}</td>
+          <td>${escapeHtml(row.data_confidence || "-")}</td>
+          <td>${escapeHtml(row.hard_gate || "-")}</td>
+          <td>${statusPill(row.bridge_status)}</td>
+          <td>${escapeHtml(row.next_action)}</td>
+        </tr>
+      `).join("");
 
       document.getElementById("score-body").innerHTML = scores.map((row) => `
         <tr>
