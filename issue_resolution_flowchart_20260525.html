@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>課題解決までのフローチャート 2026年5月25日</title>
+  <style>
+    :root {
+      --ink: #111;
+      --blue: #073a5a;
+      --line: #b9d0e2;
+      --bg: #f5f8fb;
+      --card: #fff;
+      --warn: #fff4df;
+      --stop: #fdecec;
+      --ok: #e9f7ef;
+      --work: #eaf4ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 54px; }
+    h1 { margin: 0 0 8px; color: var(--blue); font-size: 28px; }
+    h2 { margin: 30px 0 12px; padding-left: 10px; border-left: 8px solid #0b6f9f; color: var(--blue); }
+    .lead, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 8px rgba(0,40,80,.06);
+    }
+    .lead b { color: var(--blue); }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin: 14px 0 0; }
+    .button {
+      display: inline-block;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid #9fc1db;
+      background: #fff;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .legend div, .mini {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      font-size: 13px;
+    }
+    .tag { display:inline-block; min-width:72px; text-align:center; padding:3px 8px; border-radius:999px; font-weight:800; margin-right:6px; }
+    .tag.work { background: var(--work); color:#00588a; }
+    .tag.check { background: var(--warn); color:#9a5b00; }
+    .tag.stop { background: var(--stop); color:#b00020; }
+    .tag.ok { background: var(--ok); color:#007a3d; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px 18px;
+      align-items: stretch;
+    }
+    .node {
+      position: relative;
+      min-height: 158px;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 14px 14px 12px;
+    }
+    .node h3 { margin: 0 0 6px; font-size: 17px; color: var(--blue); }
+    .node p { margin: 6px 0; font-size: 13px; }
+    .node ul { margin: 8px 0 0 18px; padding: 0; font-size: 12.5px; }
+    .node::after {
+      content: "→";
+      position: absolute;
+      right: -17px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #0b6f9f;
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .node:nth-child(4n)::after { content: "↓"; right: 50%; top: auto; bottom: -25px; transform: translateX(50%); }
+    .node:last-child::after { content: ""; }
+    .workbox { background: linear-gradient(180deg, #fff, var(--work)); }
+    .checkbox { background: linear-gradient(180deg, #fff, var(--warn)); }
+    .stopbox { background: linear-gradient(180deg, #fff, var(--stop)); }
+    .okbox { background: linear-gradient(180deg, #fff, var(--ok)); }
+    .decision {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .decision .branch {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+    th, td { border: 1px solid var(--line); padding: 9px 10px; vertical-align: top; font-size: 13px; overflow-wrap: anywhere; }
+    th { background: #e4f1fa; color: var(--blue); }
+    .note { font-size: 13px; color:#333; }
+    @media (max-width: 900px) {
+      .flow { grid-template-columns: 1fr; }
+      .node::after, .node:nth-child(4n)::after { content: "↓"; right: 50%; top: auto; bottom: -25px; transform: translateX(50%); }
+      .legend, .decision { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { background:#fff; }
+      .lead, .card, .node, .branch { break-inside: avoid; page-break-inside: avoid; box-shadow:none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>課題解決までのフローチャート</h1>
+  <div class="lead">
+    <p><b>目的:</b> 現在のプロトタイプを「雰囲気で候補を出すもの」から、「実データ・検算・除外条件・ベンチマーク比較に耐える検証候補抽出システム」へ近づけるための解決手順です。</p>
+    <p><b>重要:</b> このフローを通過するまでは、スコアは購入判断ではなく、調査・検証の優先順位として扱います。</p>
+    <div class="toolbar">
+      <a class="button" href="issue_recovery_board_20260525.html">課題回収管理表へ</a>
+      <a class="button" href="candidate_june_rulebook.html">6月判定ルールへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div><span class="tag work">作業</span>データ取得・実装・表作成</div>
+    <div><span class="tag check">検算</span>数式、根拠、表示の確認</div>
+    <div><span class="tag stop">停止</span>購入判断に進めない条件</div>
+    <div><span class="tag ok">通過</span>次工程へ進める条件</div>
+  </div>
+
+  <h2>全体フロー</h2>
+  <section class="flow">
+    <div class="node stopbox">
+      <h3>1. 課題を固定</h3>
+      <p>今日出た問題を曖昧にせず、管理表に固定する。</p>
+      <ul>
+        <li>単純加点の危険</li>
+        <li>仮説と実績の混同</li>
+        <li>未取得データ混入</li>
+        <li>購入候補と検証候補の混同</li>
+      </ul>
+    </div>
+    <div class="node stopbox">
+      <h3>2. 購入判断から隔離</h3>
+      <p>未監査のスコアや質的イベント評価を、購入判断に使わない。</p>
+      <ul>
+        <li>表示は検証候補に統一</li>
+        <li>予備候補は購入候補ではない</li>
+        <li>6月イベント後に再判定</li>
+      </ul>
+    </div>
+    <div class="node workbox">
+      <h3>3. データ棚卸し</h3>
+      <p>各銘柄で何が取れていて、何が未取得かを列で見せる。</p>
+      <ul>
+        <li>株価・出来高</li>
+        <li>PER/PBR/ROE</li>
+        <li>決算成長率</li>
+        <li>決算後反応</li>
+      </ul>
+    </div>
+    <div class="node checkbox">
+      <h3>4. 数式監査</h3>
+      <p>各スコアが何を入力にして、何を出しているかを確認する。</p>
+      <ul>
+        <li>未取得は加点しない</li>
+        <li>仮説は本体点に足さない</li>
+        <li>業種別補正を検討</li>
+      </ul>
+    </div>
+    <div class="node workbox">
+      <h3>5. 母集団を固定</h3>
+      <p>意味のある100社前後を、後から変えにくい条件で作る。</p>
+      <ul>
+        <li>業績成長</li>
+        <li>流動性</li>
+        <li>時価総額</li>
+        <li>除外条件</li>
+      </ul>
+    </div>
+    <div class="node workbox">
+      <h3>6. 量的データで一次選別</h3>
+      <p>売上、利益、ROE、PER/PBR、下落率、出来高で候補を絞る。</p>
+      <ul>
+        <li>探索スコア</li>
+        <li>購入候補スコア</li>
+        <li>信頼度スコア</li>
+      </ul>
+    </div>
+    <div class="node checkbox">
+      <h3>7. 質的イベントを検証</h3>
+      <p>イベントは直接加点せず、仮説と実績を分けて確認する。</p>
+      <ul>
+        <li>仮説: なぜ効きそうか</li>
+        <li>実績: 過去に効いたか</li>
+        <li>不明なら購入候補にしない</li>
+      </ul>
+    </div>
+    <div class="node checkbox">
+      <h3>8. 決算後反応を確認</h3>
+      <p>決算後1日、5日、20日の対指数超過リターンを見る。</p>
+      <ul>
+        <li>日経平均比</li>
+        <li>TOPIX比</li>
+        <li>未到達は未到達扱い</li>
+      </ul>
+    </div>
+    <div class="node stopbox">
+      <h3>9. 除外ゲート</h3>
+      <p>高スコアでも危険条件に当たれば止める。</p>
+      <ul>
+        <li>急騰しすぎ</li>
+        <li>急落耐性不足</li>
+        <li>流動性不足</li>
+        <li>データ信頼度70未満</li>
+      </ul>
+    </div>
+    <div class="node workbox">
+      <h3>10. 10社候補へ絞る</h3>
+      <p>残った銘柄を、6月テスト候補として10社前後へ整理する。</p>
+      <ul>
+        <li>残す</li>
+        <li>予備</li>
+        <li>保留</li>
+        <li>除外</li>
+      </ul>
+    </div>
+    <div class="node checkbox">
+      <h3>11. 6月イベント後判定</h3>
+      <p>CPI、日銀、FOMC、金利、為替、指数反応を確認する。</p>
+      <ul>
+        <li>市場ゲート通過</li>
+        <li>銘柄別ルール通過</li>
+        <li>下方修正なし</li>
+      </ul>
+    </div>
+    <div class="node okbox">
+      <h3>12. テスト対象確定</h3>
+      <p>ここで初めて、NISA 1年保有テストの対象候補として扱う。</p>
+      <ul>
+        <li>購入ではなく購入検討</li>
+        <li>証券会社画面で再確認</li>
+        <li>実行後は記録表へ</li>
+      </ul>
+    </div>
+  </section>
+
+  <h2>分岐ルール</h2>
+  <section class="decision">
+    <div class="branch">
+      <span class="tag ok">進める</span>
+      <p>量的データがそろい、未取得を点数に混ぜず、決算後反応と指数比較が一定以上ある場合。</p>
+    </div>
+    <div class="branch">
+      <span class="tag check">保留</span>
+      <p>企業は良いが、20営業日反応、業種別補正、PER/PBR/ROEなどの確認が未完了の場合。</p>
+    </div>
+    <div class="branch">
+      <span class="tag stop">止める</span>
+      <p>データ信頼度70未満、急騰・割高・流動性不足、下方修正、市場イベント悪化がある場合。</p>
+    </div>
+  </section>
+
+  <h2>未回収課題と解決条件</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">課題</th>
+        <th style="width:24%">解決条件</th>
+        <th style="width:20%">現在の位置</th>
+        <th style="width:20%">次の作業</th>
+        <th style="width:18%">購入判断への扱い</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>100社母集団の固定</td>
+        <td>選定条件を固定し、同じ条件で再生成できること。</td>
+        <td>暫定母集団あり。条件固定は未完了。</td>
+        <td>業績・流動性・時価総額・除外条件をCSV化。</td>
+        <td>未完了の間は検証候補止まり。</td>
+      </tr>
+      <tr>
+        <td>業種別補正</td>
+        <td>PER/PBR/ROEを業種内中央値や同業比較で見ること。</td>
+        <td>分類はあるが補正は弱い。</td>
+        <td>銀行、半導体、食品、保険などで比較基準を分ける。</td>
+        <td>補正前の順位は参考扱い。</td>
+      </tr>
+      <tr>
+        <td>イベント実績検証</td>
+        <td>イベント後の株価反応を、指数比で過去検証すること。</td>
+        <td>決算後反応は一部開始。TOB、新商品、戦争等は未完了。</td>
+        <td>イベント種類別に過去1/5/20/60日反応を蓄積。</td>
+        <td>仮説だけでは購入候補にしない。</td>
+      </tr>
+      <tr>
+        <td>+1%目標との接続</td>
+        <td>S&P500、日経平均、TOPIX等を最低1%上回る見込みを比較できること。</td>
+        <td>判定式は追加。銘柄別期待差は未完了。</td>
+        <td>各候補にベンチマーク比較欄を追加。</td>
+        <td>勝てないなら個別株比率を下げる。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>結論</h2>
+  <div class="card">
+    <p>解決までの道筋は、<b>課題の固定 → 購入判断から隔離 → データ棚卸し → 数式監査 → 100社母集団固定 → 量的選別 → 質的イベント検証 → 決算後反応 → 除外ゲート → 10社候補 → 6月イベント後判定</b> です。</p>
+    <p>このフローの途中で止まる項目がある場合、その銘柄は購入候補ではなく、調査候補または保留に戻します。</p>
+    <p class="note">作成日: 2026年5月25日</p>
+  </div>
+</main>
+</body>
+</html>
