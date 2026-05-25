@@ -75,6 +75,7 @@
         <div class="card"><b id="score-count">-</b><span>探索スコア</span><p class="small">購入判定と分けて試算</p></div>
         <div class="card"><b id="bridge-pass-count">-</b><span>数値ゲート通過</span><p class="small">質的候補のうち数値確認も通った候補</p></div>
         <div class="card"><b id="priority-a-count">-</b><span>次に補完</span><p class="small">NISA点接続・信頼度補完を急ぐ候補</p></div>
+        <div class="card"><b id="trial-count">-</b><span>NISA接続試算</span><p class="small">優先候補を既存数値で再計算</p></div>
       </div>
       <div class="notice">
         有料ニュース本文、四季報本文、QUICK/Bloomberg/Reuters等の契約データは、契約・APIなしでは自動取得対象にしません。MVPでは、公式開示・公的統計・企業IR・公開見出し/リンク・手入力要約を使います。
@@ -123,6 +124,7 @@
         <a class="button secondary" href="255_qualitative_theme_chain_scores.csv">連鎖点CSV</a>
         <a class="button secondary" href="254_qualitative_trend_exploration_score.csv">探索スコアCSV</a>
         <a class="button secondary" href="257_qualitative_action_queue.csv">補完キューCSV</a>
+        <a class="button secondary" href="258_qualitative_nisa_connection_trial.csv">NISA接続試算CSV</a>
       </div>
     </section>
 
@@ -156,6 +158,25 @@
         </table>
       </div>
       <div class="notice">Sは購入確定ではなく、6月イベント前監視です。Aは候補を増やすために優先して数値補完する対象、Bは過熱や反応不足の監視、Cは母集団追加から始める対象です。</div>
+    </section>
+
+    <section class="section">
+      <h2>A優先候補のNISA接続試算</h2>
+      <p>補完キューのS/A候補を、既存の100社母集団データまたは既存NISA表から計算し直した試算です。公式IR再照合前のため、本体スコアへの上書きではありません。</p>
+      <div class="formula">
+        <code>試算NISA点 = 業績/質35% + 下落耐性25% + 割安20% + 中期トレンド15% + データ信頼度5%</code>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>銘柄</th><th>テーマ</th><th>算出元</th><th>試算NISA点</th><th>分類</th><th>業績/質</th><th>下落耐性</th><th>割安</th><th>中期</th><th>信頼度</th><th>止める理由</th><th>次の対応</th>
+            </tr>
+          </thead>
+          <tbody id="nisa-trial-body"><tr><td colspan="12">読み込み中</td></tr></tbody>
+        </table>
+      </div>
+      <div class="notice">この表は「データを入れると点数がどう変わるか」を見る試算です。購入候補の確定ではなく、公式IR・決算短信で数値を照合してから6月イベント後に再判定します。</div>
     </section>
 
     <section class="section">
@@ -224,6 +245,7 @@
       scores: "254_qualitative_trend_exploration_score.csv",
       bridge: "256_qualitative_numeric_gate_bridge.csv",
       actionQueue: "257_qualitative_action_queue.csv",
+      nisaTrial: "258_qualitative_nisa_connection_trial.csv",
     };
 
     let appData = {
@@ -234,6 +256,7 @@
       scores: [],
       bridge: [],
       actionQueue: [],
+      nisaTrial: [],
     };
 
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -359,7 +382,7 @@
     };
 
     const render = async () => {
-      const [sources, rules, events, matches, scores, bridge, actionQueue] = await Promise.all([
+      const [sources, rules, events, matches, scores, bridge, actionQueue, nisaTrial] = await Promise.all([
         fetchCsv(csvFiles.sources),
         fetchCsv(csvFiles.rules),
         fetchCsv(csvFiles.events),
@@ -367,9 +390,10 @@
         fetchCsv(csvFiles.scores),
         fetchCsv(csvFiles.bridge),
         fetchCsv(csvFiles.actionQueue),
+        fetchCsv(csvFiles.nisaTrial),
       ]);
 
-      appData = { sources, rules, events, matches, scores, bridge, actionQueue };
+      appData = { sources, rules, events, matches, scores, bridge, actionQueue, nisaTrial };
 
       document.getElementById("source-count").textContent = sources.length;
       document.getElementById("theme-count").textContent = rules.length;
@@ -377,6 +401,7 @@
       document.getElementById("score-count").textContent = scores.length;
       document.getElementById("bridge-pass-count").textContent = bridge.filter((row) => row.bridge_status === "数値ゲート通過候補").length;
       document.getElementById("priority-a-count").textContent = actionQueue.filter((row) => row.priority === "A").length;
+      document.getElementById("trial-count").textContent = nisaTrial.length;
 
       const paidBlocked = sources.filter((row) => row.use_in_mvp.includes("不使用")).length;
       const usableSources = sources.filter((row) => row.use_in_mvp.includes("使用")).length;
@@ -417,6 +442,23 @@
           <td>${escapeHtml(row.nisa_score || "-")}</td>
           <td>${escapeHtml(row.blocker || "-")}</td>
           <td>${escapeHtml(row.task_detail)}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("nisa-trial-body").innerHTML = nisaTrial.map((row) => `
+        <tr>
+          <td><b>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</b></td>
+          <td>${escapeHtml(row.theme_name)}</td>
+          <td>${escapeHtml(row.source_status)}</td>
+          <td><b>${escapeHtml(row.trial_nisa_score || "-")}</b></td>
+          <td>${statusPill(row.category)}</td>
+          <td>${escapeHtml(row.growth_quality_score || "-")}</td>
+          <td>${escapeHtml(row.downside_safety_score || "-")}</td>
+          <td>${escapeHtml(row.valuation_score || "-")}</td>
+          <td>${escapeHtml(row.medium_trend_score || "-")}</td>
+          <td>${escapeHtml(row.data_confidence || "-")}</td>
+          <td>${escapeHtml(row.hard_gate || "-")}</td>
+          <td>${escapeHtml(row.next_action)}</td>
         </tr>
       `).join("");
 
