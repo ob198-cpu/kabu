@@ -76,6 +76,7 @@
         <div class="card"><b id="bridge-pass-count">-</b><span>数値ゲート通過</span><p class="small">質的候補のうち数値確認も通った候補</p></div>
         <div class="card"><b id="priority-a-count">-</b><span>次に補完</span><p class="small">NISA点接続・信頼度補完を急ぐ候補</p></div>
         <div class="card"><b id="trial-count">-</b><span>NISA接続試算</span><p class="small">優先候補を既存数値で再計算</p></div>
+        <div class="card"><b id="verify-count">-</b><span>公式照合項目</span><p class="small">本体反映前に確認する項目数</p></div>
       </div>
       <div class="notice">
         有料ニュース本文、四季報本文、QUICK/Bloomberg/Reuters等の契約データは、契約・APIなしでは自動取得対象にしません。MVPでは、公式開示・公的統計・企業IR・公開見出し/リンク・手入力要約を使います。
@@ -125,6 +126,7 @@
         <a class="button secondary" href="254_qualitative_trend_exploration_score.csv">探索スコアCSV</a>
         <a class="button secondary" href="257_qualitative_action_queue.csv">補完キューCSV</a>
         <a class="button secondary" href="258_qualitative_nisa_connection_trial.csv">NISA接続試算CSV</a>
+        <a class="button secondary" href="259_qualitative_official_verification_queue.csv">公式照合キューCSV</a>
       </div>
     </section>
 
@@ -177,6 +179,22 @@
         </table>
       </div>
       <div class="notice">この表は「データを入れると点数がどう変わるか」を見る試算です。購入候補の確定ではなく、公式IR・決算短信で数値を照合してから6月イベント後に再判定します。</div>
+    </section>
+
+    <section class="section">
+      <h2>本体スコア反映前の公式照合キュー</h2>
+      <p>試算値を本体スコアへ反映する前に、公式IR・決算短信・株価時系列で照合する項目です。照合前はすべて未反映として扱います。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>順番</th><th>優先</th><th>銘柄</th><th>試算点</th><th>項目</th><th>現在値</th><th>取得元</th><th>状態</th><th>反映</th><th>理由</th>
+            </tr>
+          </thead>
+          <tbody id="official-verify-body"><tr><td colspan="10">読み込み中</td></tr></tbody>
+        </table>
+      </div>
+      <div class="notice">反映ルール: 公式資料または株価時系列で値と出所を確認できた項目だけ、本体スコアへ反映可能にします。未入力・未照合の項目は点数に混ぜません。</div>
     </section>
 
     <section class="section">
@@ -246,6 +264,7 @@
       bridge: "256_qualitative_numeric_gate_bridge.csv",
       actionQueue: "257_qualitative_action_queue.csv",
       nisaTrial: "258_qualitative_nisa_connection_trial.csv",
+      officialVerify: "259_qualitative_official_verification_queue.csv",
     };
 
     let appData = {
@@ -257,6 +276,7 @@
       bridge: [],
       actionQueue: [],
       nisaTrial: [],
+      officialVerify: [],
     };
 
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -382,7 +402,7 @@
     };
 
     const render = async () => {
-      const [sources, rules, events, matches, scores, bridge, actionQueue, nisaTrial] = await Promise.all([
+      const [sources, rules, events, matches, scores, bridge, actionQueue, nisaTrial, officialVerify] = await Promise.all([
         fetchCsv(csvFiles.sources),
         fetchCsv(csvFiles.rules),
         fetchCsv(csvFiles.events),
@@ -391,9 +411,10 @@
         fetchCsv(csvFiles.bridge),
         fetchCsv(csvFiles.actionQueue),
         fetchCsv(csvFiles.nisaTrial),
+        fetchCsv(csvFiles.officialVerify),
       ]);
 
-      appData = { sources, rules, events, matches, scores, bridge, actionQueue, nisaTrial };
+      appData = { sources, rules, events, matches, scores, bridge, actionQueue, nisaTrial, officialVerify };
 
       document.getElementById("source-count").textContent = sources.length;
       document.getElementById("theme-count").textContent = rules.length;
@@ -402,6 +423,7 @@
       document.getElementById("bridge-pass-count").textContent = bridge.filter((row) => row.bridge_status === "数値ゲート通過候補").length;
       document.getElementById("priority-a-count").textContent = actionQueue.filter((row) => row.priority === "A").length;
       document.getElementById("trial-count").textContent = nisaTrial.length;
+      document.getElementById("verify-count").textContent = officialVerify.length;
 
       const paidBlocked = sources.filter((row) => row.use_in_mvp.includes("不使用")).length;
       const usableSources = sources.filter((row) => row.use_in_mvp.includes("使用")).length;
@@ -459,6 +481,21 @@
           <td>${escapeHtml(row.data_confidence || "-")}</td>
           <td>${escapeHtml(row.hard_gate || "-")}</td>
           <td>${escapeHtml(row.next_action)}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("official-verify-body").innerHTML = officialVerify.slice(0, 40).map((row) => `
+        <tr>
+          <td>${escapeHtml(row.queue_rank)}</td>
+          <td>${statusPill(row.priority)}</td>
+          <td><b>${escapeHtml(row.ticker)} ${escapeHtml(row.company)}</b><br><span class="small">${escapeHtml(row.theme_name)}</span></td>
+          <td>${escapeHtml(row.trial_nisa_score || "-")}</td>
+          <td>${escapeHtml(row.metric_group)} / ${escapeHtml(row.metric_name)}</td>
+          <td>${escapeHtml(row.current_value || "-")}</td>
+          <td>${escapeHtml(row.source_type)}<br><span class="small">${escapeHtml(row.source_hint)}</span></td>
+          <td>${statusPill(row.verification_status)}</td>
+          <td>${statusPill(row.reflect_status)}</td>
+          <td>${escapeHtml(row.reason)}</td>
         </tr>
       `).join("");
 
