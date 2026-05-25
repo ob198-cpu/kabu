@@ -44,11 +44,17 @@
     a.button.secondary{background:#e7f1f8;color:#0b4667;border:1px solid #c8ddeb}
     .formula{background:#071d33;color:#fff;border-radius:12px;padding:14px;font-weight:900;overflow:auto}
     .formula code{font-family:Consolas,monospace;color:#fff}
+    textarea{width:100%;min-height:116px;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;color:var(--ink);resize:vertical;background:#fbfdff}
+    .analysis-result{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+    .theme-hit{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfdff}
+    .theme-hit strong{display:block;color:#0b4667;margin-bottom:5px}
+    .hit-words{font-size:12px;color:#0b557c;font-weight:900}
+    .candidate-mini{margin-top:8px;border-top:1px solid #e5eef6;padding-top:8px;font-size:13px}
     .summary-line{display:grid;grid-template-columns:180px 1fr;gap:8px;margin:8px 0}
     .summary-line b{color:#0b4667}
     .small{font-size:12px;color:var(--muted)}
-    @media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr 1fr}table{min-width:920px}}
-    @media(max-width:640px){.grid,.flow{grid-template-columns:1fr}h1{font-size:24px}.summary-line{grid-template-columns:1fr}}
+    @media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}.flow,.analysis-result{grid-template-columns:1fr 1fr}table{min-width:920px}}
+    @media(max-width:640px){.grid,.flow,.analysis-result{grid-template-columns:1fr}h1{font-size:24px}.summary-line{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -86,6 +92,20 @@
       <div class="formula">
         <code>時流探索スコア = 材料強度30% + 資金流入連鎖30% + 企業適合25% + 証拠信頼度15%</code><br>
         <code>購入候補化 = 時流探索スコアだけでは不可。NISA 1年保有スコア、データ信頼度、ハード除外条件を通過した場合のみ。</code>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>ニュース見出し・メモからテーマ抽出</h2>
+      <p>公開ニュースの見出し、公式開示の要約、企業IRで見つけた一文などを貼り付けると、登録済みルールのキーワードに照らしてテーマ候補と関連銘柄を表示します。</p>
+      <textarea id="qualitative-input">AIデータセンター投資の増加で、電力不足、冷却設備、光ファイバー、受変電設備への需要が強まる可能性がある。</textarea>
+      <div class="toolbar">
+        <button type="button" id="analyze-qualitative">テーマ候補を抽出</button>
+        <button type="button" id="clear-qualitative">入力を消す</button>
+      </div>
+      <div class="notice">この判定は、質的材料を探索候補へ振り分けるためのものです。ここで表示された銘柄は購入候補ではなく、次に決算・株価・PER/PBR/ROE・出来高で確認します。</div>
+      <div id="qualitative-output" class="analysis-result">
+        <div class="theme-hit">データ読み込み後に判定できます。</div>
       </div>
     </section>
 
@@ -169,6 +189,14 @@
       scores: "254_qualitative_trend_exploration_score.csv",
     };
 
+    let appData = {
+      sources: [],
+      rules: [],
+      events: [],
+      matches: [],
+      scores: [],
+    };
+
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
     }[char]));
@@ -220,6 +248,73 @@
       return `<span class="pill ${cls}">${escapeHtml(text)}</span>`;
     };
 
+    const splitWords = (value) => String(value || "")
+      .split("／")
+      .map((word) => word.trim())
+      .filter(Boolean);
+
+    const analyzeQualitativeText = () => {
+      const input = document.getElementById("qualitative-input");
+      const output = document.getElementById("qualitative-output");
+      if (!input || !output) return;
+      const text = input.value.trim();
+      if (!text) {
+        output.innerHTML = `<div class="theme-hit">ニュース見出しやメモを入力してください。</div>`;
+        return;
+      }
+
+      const hits = appData.rules.map((rule) => {
+        const positiveWords = splitWords(rule.positive_keywords);
+        const negativeWords = splitWords(rule.negative_keywords);
+        const positiveHits = positiveWords.filter((word) => text.includes(word));
+        const negativeHits = negativeWords.filter((word) => text.includes(word));
+        const hitScore = positiveHits.length * 20 - negativeHits.length * 12;
+        const scoreRows = appData.scores.filter((row) => row.theme_id === rule.theme_id);
+        const matchRows = appData.matches.filter((row) => row.theme_id === rule.theme_id);
+        return {
+          rule,
+          positiveHits,
+          negativeHits,
+          hitScore,
+          scoreRows,
+          matchRows,
+        };
+      }).filter((item) => item.positiveHits.length > 0)
+        .sort((a, b) => b.hitScore - a.hitScore)
+        .slice(0, 4);
+
+      if (!hits.length) {
+        output.innerHTML = `
+          <div class="theme-hit">
+            <strong>該当テーマなし</strong>
+            登録済みキーワードに強く一致しませんでした。新しいテーマとしてルール追加するか、公式資料で確認します。
+          </div>
+        `;
+        return;
+      }
+
+      output.innerHTML = hits.map((hit) => {
+        const candidates = hit.scoreRows
+          .slice(0, 4)
+          .map((row) => `${escapeHtml(row.ticker)} ${escapeHtml(row.company)} (${escapeHtml(row.qualitative_score)}点)`)
+          .join("、");
+        const nextChecks = hit.matchRows
+          .slice(0, 3)
+          .map((row) => `${escapeHtml(row.company)}: ${escapeHtml(row.numeric_needed)}`)
+          .join("<br>");
+        return `
+          <div class="theme-hit">
+            <strong>${escapeHtml(hit.rule.theme_name)}</strong>
+            <div class="hit-words">一致: ${escapeHtml(hit.positiveHits.join(" / "))}${hit.negativeHits.length ? ` / 注意語: ${escapeHtml(hit.negativeHits.join(" / "))}` : ""}</div>
+            <p>${escapeHtml(hit.rule.capital_flow_chain)}</p>
+            <div class="candidate-mini"><b>探索候補:</b><br>${candidates || "候補未接続"}</div>
+            <div class="candidate-mini"><b>次に見る数字:</b><br>${nextChecks || escapeHtml(hit.rule.numeric_confirmation)}</div>
+            <div class="candidate-mini"><b>落とす条件:</b><br>${escapeHtml(hit.rule.reject_condition)}</div>
+          </div>
+        `;
+      }).join("");
+    };
+
     const render = async () => {
       const [sources, rules, events, matches, scores] = await Promise.all([
         fetchCsv(csvFiles.sources),
@@ -228,6 +323,8 @@
         fetchCsv(csvFiles.matches),
         fetchCsv(csvFiles.scores),
       ]);
+
+      appData = { sources, rules, events, matches, scores };
 
       document.getElementById("source-count").textContent = sources.length;
       document.getElementById("theme-count").textContent = rules.length;
@@ -293,12 +390,20 @@
           <td>${statusPill(row.status)}</td>
         </tr>
       `).join("");
+
+      analyzeQualitativeText();
     };
 
     document.getElementById("reload").addEventListener("click", () => {
       render().catch((error) => {
         document.getElementById("current-summary").innerHTML = `<div class="notice">読み込みに失敗しました: ${escapeHtml(error.message)}</div>`;
       });
+    });
+
+    document.getElementById("analyze-qualitative").addEventListener("click", analyzeQualitativeText);
+    document.getElementById("clear-qualitative").addEventListener("click", () => {
+      document.getElementById("qualitative-input").value = "";
+      analyzeQualitativeText();
     });
 
     render().catch((error) => {
