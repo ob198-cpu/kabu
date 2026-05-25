@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>現行資料・履歴資料 区分台帳 2026年5月25日</title>
+  <style>
+    :root {
+      --ink:#111;
+      --blue:#073a5a;
+      --line:#bed3e5;
+      --bg:#f5f8fb;
+      --card:#fff;
+      --ok:#eaf7ef;
+      --work:#eaf4ff;
+      --data:#f0f4ff;
+      --warn:#fff5df;
+      --stop:#fdecec;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic", Meiryo, sans-serif; color:var(--ink); background:var(--bg); line-height:1.65; }
+    main { max-width:1240px; margin:0 auto; padding:28px 18px 56px; }
+    h1 { margin:0 0 8px; color:var(--blue); font-size:30px; }
+    h2 { margin:30px 0 12px; padding-left:10px; border-left:8px solid #0b6f9f; color:var(--blue); }
+    .lead, .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; box-shadow:0 2px 9px rgba(0,40,80,.06); }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .button { display:inline-block; padding:8px 12px; border:1px solid #9fc1db; border-radius:8px; background:#fff; color:var(--blue); text-decoration:none; font-weight:700; }
+    .kpis { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; margin:18px 0; }
+    .kpi { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; min-height:116px; }
+    .kpi small { display:block; color:#38536b; font-weight:700; }
+    .kpi b { display:block; font-size:28px; color:var(--blue); }
+    .flow { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; }
+    .step { position:relative; background:#fff; border:1px solid var(--line); border-radius:10px; padding:13px; min-height:126px; }
+    .step:not(:last-child)::after { content:"→"; position:absolute; right:-13px; top:44%; color:#0b6f9f; font-weight:900; font-size:20px; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; background:#fff; }
+    th, td { border:1px solid var(--line); padding:9px 10px; vertical-align:top; font-size:13px; overflow-wrap:anywhere; color:#111; }
+    th { background:#e4f1fa; color:var(--blue); }
+    .badge { display:inline-block; min-width:84px; text-align:center; padding:2px 8px; border-radius:999px; font-weight:800; font-size:12px; }
+    .ok { background:var(--ok); color:#007a3d; }
+    .work { background:var(--work); color:#00588a; }
+    .data { background:var(--data); color:#25408f; }
+    .warn { background:var(--warn); color:#8a5200; }
+    .stop { background:var(--stop); color:#b00020; }
+    .neutral { background:#f2f2f2; color:#333; }
+    .note { font-size:13px; color:#333; }
+    .callout { border-left:6px solid #b00020; background:#fff8f8; padding:12px 14px; margin-top:12px; }
+    @media (max-width:900px) {
+      .kpis, .flow { grid-template-columns:1fr; }
+      .step:not(:last-child)::after { content:"↓"; right:50%; top:auto; bottom:-22px; transform:translateX(50%); }
+    }
+    @media print {
+      body { background:#fff; }
+      .lead, .card, .kpi, .step, table, tr, td, th { break-inside:avoid; page-break-inside:avoid; box-shadow:none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>現行資料・履歴資料 区分台帳</h1>
+  <div class="lead">
+    <p><b>目的:</b> 顧客説明で使う資料と、過去の作業履歴を明確に分けます。古いPDFや日次報告に残る旧案を、現在の方針として誤って提示しないための台帳です。</p>
+    <p><b>現行方針:</b> 現段階はNISA 1年保有の検証候補を絞るための判断補助システムです。5月は開発・検証、6月は主要イベントの結果と最新データを確認してから、テスト候補を再判定します。</p>
+    <div class="toolbar">
+      <a class="button" href="323_material_registry.csv">323 全資料台帳CSV</a>
+      <a class="button" href="324_current_materials.csv">324 現行資料CSV</a>
+      <a class="button" href="325_history_materials.csv">325 履歴資料CSV</a>
+      <a class="button" href="326_material_boundary_rules.csv">326 区分ルールCSV</a>
+      <a class="button" href="327_material_registry_summary.csv">327 要約CSV</a>
+      <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+    
+      <div class="kpi">
+        <small>データ資料</small>
+        <b>88件</b>
+        <span>計算・記録の根拠。単独説明には使わない。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>現行資料</small>
+        <b>12件</b>
+        <span>顧客説明の主資料として使える。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>現行補助</small>
+        <b>23件</b>
+        <span>主資料ではなく、根拠確認や補足として使う。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>要注意履歴</small>
+        <b>39件</b>
+        <span>古い方針や強い表現を含む可能性があり、単独提示しない。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>履歴データ</small>
+        <b>227件</b>
+        <span>過去工程のCSV。必要時だけ参照する。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>履歴資料</small>
+        <b>97件</b>
+        <span>過去の作業履歴。現行方針ではない。</span>
+      </div>
+    
+  </div>
+
+  <h2>1. 使う順番</h2>
+  <div class="flow">
+    <div class="step"><b>現行資料を見る</b><br>顧客説明では、まず現行資料から使います。</div>
+    <div class="step"><b>補助資料を添える</b><br>計算根拠や途中検証は、補助資料として添えます。</div>
+    <div class="step"><b>データ資料で確認</b><br>CSVやXLSXは根拠確認用です。単独説明にはしません。</div>
+    <div class="step"><b>履歴資料は区別</b><br>古いPDFや日次報告は、履歴として参照します。</div>
+  </div>
+
+  <h2>2. 現行資料</h2>
+  <div class="card">
+    <p class="note">ここにある資料を、現在の説明導線として優先します。補助資料は「主資料」ではなく、根拠確認として扱います。</p>
+    <table>
+      <thead><tr><th style="width:24%">ファイル</th><th style="width:11%">区分</th><th style="width:15%">使用可否</th><th>理由</th><th style="width:18%">置き換え先/関連資料</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td><a href="academic_validation_protocol_20260525.html">academic_validation_protocol_20260525.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>モデル検証の考え方を整理した補助資料。</td>
+            <td><a href="backtest_validation_20260525.html">backtest_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="backtest_validation_20260525.html">backtest_validation_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>過去検証・バックテストの初期接続ページ。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="candidate_june_rulebook.html">candidate_june_rulebook.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>6月の市場イベント確認後に使う判定ルール。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="candidate_supplement_10_plan.html">candidate_supplement_10_plan.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>10社候補を補充するための検証候補資料。購入対象の確定ではない。</td>
+            <td><a href="candidate_june_rulebook.html">candidate_june_rulebook.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="candidate_theme_scoring.html">candidate_theme_scoring.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>テーマ候補の試算資料。探索用であり、量的ゲートとセットで使う。</td>
+            <td><a href="dual_axis_selection_model.html">dual_axis_selection_model.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="client_handoff_guide.html">client_handoff_guide.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>顧客向け納品ガイドのHTML版。古いPDFよりHTML台帳を優先する。</td>
+            <td><a href="current_vs_history_materials_20260525.html">current_vs_history_materials_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="current_vs_history_materials_20260525.html">current_vs_history_materials_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>現行資料と履歴資料を分ける台帳。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="data_acquisition_completion_dashboard.html">data_acquisition_completion_dashboard.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>取得済みデータと未取得データの管理ページ。</td>
+            <td><a href="data_sources_view.html">data_sources_view.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="data_sources_view.html">data_sources_view.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>データ取得元と取得結果の確認ページ。</td>
+            <td><a href="data_acquisition_completion_dashboard.html">data_acquisition_completion_dashboard.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="delivery_check_report.html">delivery_check_report.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>納品前チェックの補助ページ。資料区分台帳で最新性を確認して使う。</td>
+            <td><a href="current_vs_history_materials_20260525.html">current_vs_history_materials_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="display_wording_audit_20260525.html">display_wording_audit_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>購入が確定したように見える文言を監査するページ。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="dual_axis_selection_model.html">dual_axis_selection_model.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>質的データと量的データを分ける設計資料。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>イベント名だけで加点しないための因果・複合条件ページ。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="event_impact_2026_screening_plan.html">event_impact_2026_screening_plan.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>2026年イベントを検証候補抽出に使うための補助資料。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="index.html">index.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>現在の入口ページ。ただし詳細判断は各検証ページで確認する。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>課題、対応済み、次作業を管理する現行台帳。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="issue_resolution_flowchart_20260525.html">issue_resolution_flowchart_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>課題をどの順番で回収するかを示す現行フロー。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="market_theme_check.html">market_theme_check.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>市場テーマの確認表。探索補助であり、直接加点には使わない。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="missing_data_score_gate_20260525.html">missing_data_score_gate_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>未取得データを点数に混ぜないためのゲート。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="model_integrity_audit.html">model_integrity_audit.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>単純加点などの設計リスク監査。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="operation_cockpit.html">operation_cockpit.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>運用手順を確認する補助ページ。最終判断は6月判定ルールで行う。</td>
+            <td><a href="candidate_june_rulebook.html">candidate_june_rulebook.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="plus1_benchmark_connection_20260525.html">plus1_benchmark_connection_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>+1%目標とベンチマーク比較を接続するページ。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="plus1_practical_validation_model_20260525.html">plus1_practical_validation_model_20260525.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>+1%目標の実運用検証設計。</td>
+            <td><a href="plus1_benchmark_connection_20260525.html">plus1_benchmark_connection_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="sector_adjustment_20260525.html">sector_adjustment_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>PER/PBR/ROEを業種内比較で見る補正ページ。</td>
+            <td>-</td>
+          </tr>
+        
+          <tr>
+            <td><a href="supplement_reaction_check.html">supplement_reaction_check.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>予備候補の決算後反応を確認する補助資料。</td>
+            <td><a href="candidate_june_rulebook.html">candidate_june_rulebook.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="tenbagger_research_corner.html">tenbagger_research_corner.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>テンバガー探索の考え方を整理した補助資料。NISA 1年候補とは別枠で扱う。</td>
+            <td><a href="index.html">index.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="terminology_cleanup_20260525.html">terminology_cleanup_20260525.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>旧表現を整理した補助ページ。表示文言監査とセットで使う。</td>
+            <td><a href="display_wording_audit_20260525.html">display_wording_audit_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="theme_stock_bridge.html">theme_stock_bridge.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>テーマと銘柄の接続表。仮説発見用であり、購入根拠にはしない。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="top20_completion_recalculated_candidates.html">top20_completion_recalculated_candidates.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>上位20社の補完再計算資料。候補抽出の途中資料。</td>
+            <td><a href="candidate_supplement_10_plan.html">candidate_supplement_10_plan.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="trend_candidate_fundamental_gate.html">trend_candidate_fundamental_gate.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>時流候補の財務・IR二次判定。未取得データは非加点で扱う。</td>
+            <td><a href="missing_data_score_gate_20260525.html">missing_data_score_gate_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="trend_candidate_official_ir_gate.html">trend_candidate_official_ir_gate.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>時流候補の公式IR確認ゲート。手作業確認の対象を示す補助資料。</td>
+            <td><a href="missing_data_score_gate_20260525.html">missing_data_score_gate_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="trend_candidate_price_intake.html">trend_candidate_price_intake.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>時流候補の株価一次判定。量的検証へ渡す前段資料。</td>
+            <td><a href="candidate_june_rulebook.html">candidate_june_rulebook.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="trend_deduction_research_base.html">trend_deduction_research_base.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>時流から銘柄仮説を作るための基礎資料。直接の購入根拠ではない。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="trend_news_extraction_mvp.html">trend_news_extraction_mvp.html</a></td>
+            <td><span class="badge work">現行補助</span></td>
+            <td>台帳経由で使用可</td>
+            <td>時流ニュースから検証テーマを拾うMVP。直接加点には使わない。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="universe_definition_20260525.html">universe_definition_20260525.html</a></td>
+            <td><span class="badge ok">現行資料</span></td>
+            <td>顧客説明に使用可</td>
+            <td>100社前後の母集団条件を固定するページ。</td>
+            <td>-</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. 要注意の履歴資料</h2>
+  <div class="card">
+    <p class="note">削除はしません。監査履歴として残します。ただし、現行方針と違う表現が含まれる可能性があるため、単独では提示しません。</p>
+    <table>
+      <thead><tr><th style="width:24%">ファイル</th><th style="width:11%">区分</th><th style="width:15%">使用可否</th><th>理由</th><th style="width:18%">現行で見る資料</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v2.html">daily_progress_report_20260518_v2.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v2.pdf">daily_progress_report_20260518_v2.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v3.html">daily_progress_report_20260518_v3.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v3.pdf">daily_progress_report_20260518_v3.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v4.html">daily_progress_report_20260518_v4.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v4.pdf">daily_progress_report_20260518_v4.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v5.html">daily_progress_report_20260518_v5.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v5.pdf">daily_progress_report_20260518_v5.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v6.html">daily_progress_report_20260518_v6.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v6.pdf">daily_progress_report_20260518_v6.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v7.html">daily_progress_report_20260518_v7.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518_v7.pdf">daily_progress_report_20260518_v7.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518.html">daily_progress_report_20260518.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260518.pdf">daily_progress_report_20260518.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260520_business.html">daily_progress_report_20260520_business.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260520_business.pdf">daily_progress_report_20260520_business.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260520_revised.pdf">daily_progress_report_20260520_revised.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260520.html">daily_progress_report_20260520.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260520.pdf">daily_progress_report_20260520.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260521.html">daily_progress_report_20260521.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260521.pdf">daily_progress_report_20260521.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260525.html">daily_progress_report_20260525.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="daily_progress_report_20260525.pdf">daily_progress_report_20260525.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>日次報告の履歴。作成時点の表現を含むため、現行方針として単独提示しない。</td>
+            <td><a href="issue_recovery_board_20260525.html">issue_recovery_board_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="development_plan.html">development_plan.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>初期の開発計画資料。現行の課題回収フローと異なる可能性がある。</td>
+            <td><a href="issue_resolution_flowchart_20260525.html">issue_resolution_flowchart_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="development_plan.pdf">development_plan.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>初期の開発計画資料。現行の課題回収フローと異なる可能性がある。</td>
+            <td><a href="issue_resolution_flowchart_20260525.html">issue_resolution_flowchart_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="event_need_analysis_prototype.csv">event_need_analysis_prototype.csv</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>初期プロトタイプ。現行の因果・複合条件ゲートに置き換える。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="event_need_analysis_prototype.html">event_need_analysis_prototype.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>初期プロトタイプ。現行の因果・複合条件ゲートに置き換える。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="event_need_analysis_prototype.pdf">event_need_analysis_prototype.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>初期プロトタイプ。現行の因果・複合条件ゲートに置き換える。</td>
+            <td><a href="event_causality_validation_20260525.html">event_causality_validation_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="formula_calculation_report.html">formula_calculation_report.html</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>数式整理の履歴。現在採用していない式も含むため単独提示しない。</td>
+            <td><a href="missing_data_score_gate_20260525.html">missing_data_score_gate_20260525.html</a></td>
+          </tr>
+        
+          <tr>
+            <td><a href="formula_calculation_report.pdf">formula_calculation_report.pdf</a></td>
+            <td><span class="badge stop">要注意履歴</span></td>
+            <td>単独提示不可</td>
+            <td>数式整理の履歴。現在採用していない式も含むため単独提示しない。</td>
+            <td><a href="missing_data_score_gate_20260525.html">missing_data_score_gate_20260525.html</a></td>
+          </tr>
+        
+      </tbody>
+    </table>
+    <div class="callout">
+      <b>重要:</b> 過去資料に「開始日」「投入率」「購入に見える表現」が残っていても、現行方針としては扱いません。現行方針は、課題解決フロー、6月判定ルール、+1%目標接続、イベント因果チェック、文言監査で確認します。
+    </div>
+  </div>
+
+  <h2>4. データ資料</h2>
+  <div class="card">
+    <p class="note">データ資料は、計算・検算・記録の根拠です。顧客説明では、HTMLの要約ページと一緒に使います。</p>
+    <table>
+      <thead><tr><th style="width:28%">ファイル</th><th style="width:12%">種類</th><th style="width:14%">区分</th><th>理由</th><th style="width:12%">サイズKB</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td><a href="245_nisa_1year_hold_score_top20.csv">245_nisa_1year_hold_score_top20.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>10</td>
+          </tr>
+        
+          <tr>
+            <td><a href="246_nisa_1year_hold_score_summary.csv">246_nisa_1year_hold_score_summary.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>0</td>
+          </tr>
+        
+          <tr>
+            <td><a href="247_nisa_1year_hold_score_formula.csv">247_nisa_1year_hold_score_formula.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>1</td>
+          </tr>
+        
+          <tr>
+            <td><a href="250_qualitative_source_status.csv">250_qualitative_source_status.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>2</td>
+          </tr>
+        
+          <tr>
+            <td><a href="251_qualitative_theme_rules.csv">251_qualitative_theme_rules.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>5</td>
+          </tr>
+        
+          <tr>
+            <td><a href="252_qualitative_event_sample_queue.csv">252_qualitative_event_sample_queue.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>2</td>
+          </tr>
+        
+          <tr>
+            <td><a href="253_qualitative_candidate_match.csv">253_qualitative_candidate_match.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>4</td>
+          </tr>
+        
+          <tr>
+            <td><a href="254_qualitative_trend_exploration_score.csv">254_qualitative_trend_exploration_score.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>5</td>
+          </tr>
+        
+          <tr>
+            <td><a href="255_qualitative_theme_chain_scores.csv">255_qualitative_theme_chain_scores.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>1</td>
+          </tr>
+        
+          <tr>
+            <td><a href="256_qualitative_numeric_gate_bridge.csv">256_qualitative_numeric_gate_bridge.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>10</td>
+          </tr>
+        
+          <tr>
+            <td><a href="257_qualitative_action_queue.csv">257_qualitative_action_queue.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>10</td>
+          </tr>
+        
+          <tr>
+            <td><a href="258_qualitative_nisa_connection_trial.csv">258_qualitative_nisa_connection_trial.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>4</td>
+          </tr>
+        
+          <tr>
+            <td><a href="259_qualitative_official_verification_queue.csv">259_qualitative_official_verification_queue.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>29</td>
+          </tr>
+        
+          <tr>
+            <td><a href="260_model_integrity_audit.csv">260_model_integrity_audit.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>226</td>
+          </tr>
+        
+          <tr>
+            <td><a href="261_event_score_repair_plan.csv">261_event_score_repair_plan.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>4</td>
+          </tr>
+        
+          <tr>
+            <td><a href="262_event_scenario_model.csv">262_event_scenario_model.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>2</td>
+          </tr>
+        
+          <tr>
+            <td><a href="263_model_guardrail_rules.csv">263_model_guardrail_rules.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>3</td>
+          </tr>
+        
+          <tr>
+            <td><a href="264_dual_axis_rating_rules.csv">264_dual_axis_rating_rules.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>4</td>
+          </tr>
+        
+          <tr>
+            <td><a href="265_dual_axis_selection_logic.csv">265_dual_axis_selection_logic.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>2</td>
+          </tr>
+        
+          <tr>
+            <td><a href="266_qualitative_event_examples.csv">266_qualitative_event_examples.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>2</td>
+          </tr>
+        
+          <tr>
+            <td><a href="267_dual_axis_final_gate.csv">267_dual_axis_final_gate.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>1</td>
+          </tr>
+        
+          <tr>
+            <td><a href="268_known_stock_impact_event_types.csv">268_known_stock_impact_event_types.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>3</td>
+          </tr>
+        
+          <tr>
+            <td><a href="269_2026_event_watch_universe.csv">269_2026_event_watch_universe.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>3</td>
+          </tr>
+        
+          <tr>
+            <td><a href="270_event_100_company_workplan.csv">270_event_100_company_workplan.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>1</td>
+          </tr>
+        
+          <tr>
+            <td><a href="271_qualitative_layer_matrix.csv">271_qualitative_layer_matrix.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>2</td>
+          </tr>
+        
+          <tr>
+            <td><a href="272_top20_yahoo_fundamental_fetch_status.csv">272_top20_yahoo_fundamental_fetch_status.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>1</td>
+          </tr>
+        
+          <tr>
+            <td><a href="273_top20_earnings_reaction_completed.csv">273_top20_earnings_reaction_completed.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>4</td>
+          </tr>
+        
+          <tr>
+            <td><a href="274_top20_completion_recalculated_candidates.csv">274_top20_completion_recalculated_candidates.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>6</td>
+          </tr>
+        
+          <tr>
+            <td><a href="275_top20_completion_summary.csv">275_top20_completion_summary.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>1</td>
+          </tr>
+        
+          <tr>
+            <td><a href="276_candidate_supplement_screening.csv">276_candidate_supplement_screening.csv</a></td>
+            <td>CSV</td>
+            <td><span class="badge data">データ資料</span></td>
+            <td>現行検証ページの根拠CSV。単独では説明資料にしない。</td>
+            <td>25</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>5. 区分ルール</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:22%">ルール</th><th>意味</th><th>理由</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td><b>現行資料を優先</b></td>
+            <td>顧客へ説明する時は、現行資料または現行補助から使う。</td>
+            <td>古いPDFや日次報告に残る旧表現を現行方針と誤認させないため。</td>
+          </tr>
+        
+          <tr>
+            <td><b>履歴資料は単独提示しない</b></td>
+            <td>履歴資料を見る場合は、台帳の「置き換え先」も一緒に確認する。</td>
+            <td>作成時点のたたき台や旧案を、現在の約束に見せないため。</td>
+          </tr>
+        
+          <tr>
+            <td><b>データ資料は根拠として使う</b></td>
+            <td>CSVやXLSXは計算根拠であり、説明資料ではない。</td>
+            <td>数字だけでは、何に使えるか、何に使えないかが伝わらないため。</td>
+          </tr>
+        
+          <tr>
+            <td><b>購入確定に見える表現を避ける</b></td>
+            <td>現段階は検証候補抽出・判断補助であり、実売買の指示ではない。</td>
+            <td>顧客説明で責任範囲と検証段階を明確にするため。</td>
+          </tr>
+        
+          <tr>
+            <td><b>5月は開発・検証、6月は結果確認後に再判定</b></td>
+            <td>5月の資料にある旧案は現行方針に上書きされる。</td>
+            <td>市場イベントやデータ未接続の課題を確認してからNISAテスト候補を扱うため。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+    <p class="note">作成日: 2026/05/25 23:59</p>
+  </div>
+</main>
+</body>
+</html>

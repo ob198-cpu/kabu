@@ -40,14 +40,14 @@
   <div class="lead">
     <p><b>目的:</b> 今日判明した設計上の課題を、感覚的な反省で終わらせず、実装・検証・表示修正の単位に分解して回収するための管理表です。</p>
     <p><strong>現時点の扱い:</strong> 現システムは売買判断補助システムではなく、NISA 1年保有の検証候補を絞るためのプロトタイプです。課題が未回収の項目は、売買判断には使いません。</p>
-    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a></p>
+    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a> / <a href="current_vs_history_materials_20260525.html">資料区分台帳を見る</a></p>
   </div>
 
   <div class="kpis">
     <div class="kpi"><span>管理対象</span><b>10件</b></div>
-    <div class="kpi"><span>回収済み/一部回収</span><b>2</b></div>
-    <div class="kpi"><span>回収中</span><b>4</b></div>
-    <div class="kpi"><span>未完了</span><b>4</b></div>
+    <div class="kpi"><span>回収済み/一部回収</span><b>8</b></div>
+    <div class="kpi"><span>回収中</span><b>2</b></div>
+    <div class="kpi"><span>未完了</span><b>0</b></div>
   </div>
 
   <h2>回収の流れ</h2>
@@ -159,10 +159,10 @@
           <td class="p-mid">中</td>
           <td><b>表示上の誤解・旧文言の残存</b></td>
           <td>実施が確定したように見える言葉や、候補の意味が曖昧な言葉は顧客説明で誤解される。</td>
-          <td class="status-done">一部回収済み</td>
-          <td>現行導線10ファイルを監査し、強い旧表現9件を修正。禁止表現の残存は0件。</td>
-          <td>display_wording_audit_20260525.html / 318_display_wording_audit_summary.csv / 321_display_wording_fixes.csv</td>
-          <td>次工程では、旧資料・過去PDFを現行資料と履歴資料に分ける。</td>
+          <td class="status-done">回収済み</td>
+          <td>現行導線10ファイルを監査し、強い旧表現9件を修正。禁止表現の残存は0件。さらに資料区分台帳を作成し、現行資料・履歴資料・要注意履歴・データ資料を分離。</td>
+          <td>display_wording_audit_20260525.html / current_vs_history_materials_20260525.html / 323_material_registry.csv</td>
+          <td>次工程では、新規ページ作成時の文言ルール確認を自動化する。</td>
           <td>顧客向け現行導線では、実売買を指示する表現を使わない。</td>
         </tr>
     </tbody>
@@ -171,7 +171,6 @@
   <h2>次にやる順番</h2>
   <div class="card">
     <ol>
-      <li>旧資料・過去PDFを現行資料と履歴資料に分ける。</li>
       <li>新規ページ作成時に文言ルールを自動確認する。</li>
       <li>イベント種類別の株価反応DBを広げる。</li>
       <li>候補10社の未接続データを補完する。</li>
