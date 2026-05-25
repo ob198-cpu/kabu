@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>6月イベント後 銘柄別判定ルール</title>
+  <style>
+    body { font-family: "Yu Gothic", Meiryo, sans-serif; color:#111; margin:0; background:#f4f8fb; line-height:1.65; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 48px; }
+    h1 { font-size:28px; color:#073a5a; margin:0 0 10px; }
+    h2 { border-left:8px solid #0b6f9f; padding-left:10px; color:#073a5a; margin-top:30px; }
+    .lead, .card { background:#fff; border:1px solid #cbddeb; border-radius:10px; padding:16px 18px; box-shadow:0 2px 8px rgba(0,40,80,.06); }
+    .grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; margin:16px 0; }
+    .kpi { background:#fff; border:1px solid #cbddeb; border-radius:10px; padding:14px; }
+    .kpi b { display:block; font-size:26px; color:#073a5a; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; background:#fff; margin-top:12px; }
+    th, td { border:1px solid #cbddeb; padding:8px 9px; font-size:12.5px; vertical-align:top; overflow-wrap:anywhere; }
+    th { background:#e4f1fa; color:#073a5a; }
+    .ok { color:#007a3d; font-weight:800; }
+    .reserve { color:#b45f00; font-weight:800; }
+    .watch { color:#7a2c00; font-weight:800; }
+    .formula { font-family:Consolas, monospace; background:#f7fbff; border:1px solid #cbddeb; border-radius:8px; padding:12px; }
+    .note { color:#333; font-size:13px; }
+    @media print {
+      body { background:#fff; }
+      table, tr, td, th, .lead, .card, .kpi { break-inside:avoid; page-break-inside:avoid; box-shadow:none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>6月イベント後 銘柄別判定ルール</h1>
+  <div class="lead">
+    <b>目的:</b> 10社候補を、6月の米CPI・日銀・FOMC後に「購入検討へ進む」「小口検討/候補維持」「待機」「除外」に分けるための判定表です。<br>
+    <b>注意:</b> これは売買指示ではありません。NISA 1年保有テストの候補を選ぶための判断補助で、実行前には証券会社画面・公式IR・最新決算を再確認します。
+  </div>
+  <div class="grid">
+    <div class="kpi"><span>対象候補</span><b>10社</b><p>残す8社、予備2社。全て購入確定ではなく6月判定対象。</p></div><div class="kpi"><span>共通イベント</span><b>4本</b><p>米CPI、日銀、FOMC、6月一次判定週を公式カレンダー確認ベースで設定。</p></div><div class="kpi"><span>+1%目標との接続</span><b>判定条件化</b><p>日経平均/TOPIX/S&amp;P500投信より1%ポイント上回る見込みが薄い場合、個別株比率を下げる。</p></div>
+  </div>
+
+  <h2>共通イベントゲート</h2>
+  <table>
+    <thead><tr><th style="width:10%">日付</th><th style="width:12%">イベント</th><th>見る数字</th><th>進める条件</th><th>注意条件</th><th>止める条件</th><th>行動</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>2026-06-10</td>
+        <td><b>米5月CPI</b><br><a href="https://www.bls.gov/schedule/news_release/cpi.htm">BLS CPI release schedule</a></td>
+        <td>総合CPI前年比、前月比、コア前月比、米10年金利</td>
+        <td>総合前年比3.8%以下、前月比0.4%以下、コア前月比0.4%以下、米10年金利4.60%未満</td>
+        <td>総合前年比3.9〜4.0%、前月比0.5%、米10年金利4.60〜4.70%</td>
+        <td>総合前年比4.0%超、コア前月比0.5%以上、米10年金利4.70%以上</td>
+        <td>悪化時は高PER・半導体・グロース寄りを購入検討へ進めない。</td>
+      </tr><tr>
+        <td>2026-06-15〜2026-06-16</td>
+        <td><b>日銀金融政策決定会合</b><br><a href="https://www.boj.or.jp/en/about/calendar/index.htm">日本銀行 2026年会合予定</a></td>
+        <td>USD/JPY、日経平均、銀行株、輸出株</td>
+        <td>会合後2営業日で円高3%未満、日経平均-3%以内、銀行株がTOPIX比で大きく崩れない</td>
+        <td>円高2〜3%、日経平均-2〜-3%、銀行株の反応が鈍い</td>
+        <td>円高3%以上、日経平均-3%以上、銀行株がTOPIX比-3%以上</td>
+        <td>円高ショック時は輸出・半導体・海外売上比率が高い銘柄を待機にする。</td>
+      </tr><tr>
+        <td>2026-06-16〜2026-06-17</td>
+        <td><b>FOMC</b><br><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve FOMC calendar</a></td>
+        <td>米10年金利、NASDAQ、SOX指数、ドル円、FOMC声明</td>
+        <td>米10年金利4.60%未満、NASDAQ/SOXが2営業日で-3%以内、ドル円急変なし</td>
+        <td>米10年金利4.60〜4.70%、NASDAQ/SOX -3〜-5%</td>
+        <td>米10年金利4.70%以上、NASDAQ/SOX -5%以上、ドル円±3%以上の急変</td>
+        <td>金利急騰時はPER高め、AI・半導体テーマの候補を購入検討へ進めない。</td>
+      </tr><tr>
+        <td>2026-06-18〜2026-06-24</td>
+        <td><b>6月一次判定週</b><br><a href="candidate_june_rulebook.html">本システム運用ルール</a></td>
+        <td>CPI、日銀、FOMC後の市場反応、各銘柄の20営業日決算反応、日経75日線</td>
+        <td>共通ゲート通過、日経75日線以上または下抜け-1%以内、候補銘柄に下方修正なし</td>
+        <td>日経75日線-1〜-2%、候補の20営業日反応が未到達、個別材料が未確認</td>
+        <td>日経75日線-2%以上、候補の決算後反応35点未満、下方修正または会計リスク</td>
+        <td>通過銘柄だけを購入検討へ進め、未到達・未確認銘柄は候補維持または待機にする。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>銘柄別ルール</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:5%">順位</th>
+        <th style="width:13%">銘柄</th>
+        <th style="width:7%">分類</th>
+        <th style="width:8%">判定帯</th>
+        <th style="width:11%">現状数値</th>
+        <th style="width:13%">主なリスク</th>
+        <th style="width:15%">進める条件</th>
+        <th style="width:14%">注意条件</th>
+        <th style="width:14%">止める条件</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>4385.T<br><b>メルカリ</b><br>グロース/ネット</td>
+        <td class="ok">残す</td>
+        <td>購入検討へ進む条件あり</td>
+        <td>NISA 79.8<br>反応 56.8<br>信頼度 87<br>PER 未取得</td>
+        <td>金利上昇と市場リスクオフで高成長株が売られやすい。PER未取得のため割高評価の完全確認が未了。</td>
+        <td>20営業日超過リターンが0%以上、PBRが急拡大していない、米10年金利4.60%未満、NASDAQが崩れていない</td>
+        <td>20営業日未到達、または超過リターン-5%以内、米金利4.60〜4.70%</td>
+        <td>20営業日超過-5%以下、米金利4.70%以上、決算後反応35点未満、PER/PBR確認不能が続く</td>
+      </tr><tr>
+        <td>2</td>
+        <td>2802.T<br><b>味の素</b><br>食品/ヘルスケア</td>
+        <td class="ok">残す</td>
+        <td>購入検討へ進む条件あり</td>
+        <td>NISA 67.8<br>反応 65.8<br>信頼度 95<br>PER 43.73</td>
+        <td>予想PER43.73倍、PBR6.81倍で割安余地は小さい。決算反応と次期成長確認が必要。</td>
+        <td>20営業日超過リターン0%以上、PER45倍未満、PBR7倍未満、会社見通しに下方修正なし</td>
+        <td>20営業日未到達、PER45倍接近、日経より強いが出来高確認不足</td>
+        <td>PER45倍以上かつPBR7倍以上、20営業日超過-5%以下、営業利益見通し悪化</td>
+      </tr><tr>
+        <td>3</td>
+        <td>8316.T<br><b>三井住友FG</b><br>銀行</td>
+        <td class="ok">残す</td>
+        <td>購入検討へ進む条件あり</td>
+        <td>NISA 65.1<br>反応 55.5<br>信頼度 95<br>PER 13.61</td>
+        <td>金利上昇は追い風だが、急な金利変動・信用コスト・政策ショックは逆風。</td>
+        <td>日銀後に銀行株がTOPIX比で崩れず、円高ショックなし、20営業日反応が0%以上</td>
+        <td>銀行株は強いが日経全体が75日線を割る、または信用コスト情報が未確認</td>
+        <td>銀行株がTOPIX比-3%以上、日経-3%以上、信用コスト悪化、日銀ショック</td>
+      </tr><tr>
+        <td>4</td>
+        <td>5020.T<br><b>ENEOS HD</b><br>エネルギー</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>NISA 64.3<br>反応 57<br>信頼度 95<br>PER 8.36</td>
+        <td>利益前年比は大きいが売上は-4.5%。原油・精製マージン・為替の影響が大きい。</td>
+        <td>20営業日反応0%以上、原油価格が急落せず、円高ショックなし、精製マージン悪化なし</td>
+        <td>原油が短期で±10%動く、売上減少の理由確認が未了</td>
+        <td>原油急落、精製マージン悪化、20営業日超過-5%以下、地政学材料の反転</td>
+      </tr><tr>
+        <td>5</td>
+        <td>8306.T<br><b>三菱UFJ FG</b><br>銀行</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>NISA 62.1<br>反応 41.3<br>信頼度 92<br>PER 未取得</td>
+        <td>金利上昇メリットはあるが、日銀イベントで市場全体が崩れると銀行も巻き込まれる。</td>
+        <td>日銀後に銀行株がTOPIX比で優位、米金利急騰なし、日経75日線を維持</td>
+        <td>銀行株は強いが日経が75日線付近、または信用コスト確認不足</td>
+        <td>銀行株がTOPIX比-3%以上、日経75日線-2%以上、信用コスト悪化</td>
+      </tr><tr>
+        <td>6</td>
+        <td>6146.T<br><b>ディスコ</b><br>半導体装置</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>NISA 60.9<br>反応 68.7<br>信頼度 92<br>PER 未取得</td>
+        <td>AI/半導体需要に強い一方、米金利上昇・SOX下落・円高に弱い。</td>
+        <td>FOMC後に米10年金利4.60%未満、SOXが2営業日で-3%以内、決算後反応50点以上維持</td>
+        <td>SOX -3〜-5%、米金利4.60〜4.70%、円高2〜3%</td>
+        <td>SOX -5%以上、米金利4.70%以上、円高3%以上、60日最大下落-25%超</td>
+      </tr><tr>
+        <td>7</td>
+        <td>6762.T<br><b>TDK</b><br>電子部品</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>NISA 60.7<br>反応 62.9<br>信頼度 100<br>PER 26.7</td>
+        <td>電池・電子部品テーマは強いが、1年上昇率が高く、円高と電子部品サイクルに注意。</td>
+        <td>FOMC後にSOX/NASDAQが崩れず、円高3%未満、20営業日反応が50点以上</td>
+        <td>1年上昇率がさらに拡大、出来高急増で上髭、円高2〜3%</td>
+        <td>円高3%以上、SOX -5%以上、20営業日超過-5%以下、PBR上昇が続く</td>
+      </tr><tr>
+        <td>8</td>
+        <td>6503.T<br><b>三菱電機</b><br>総合電機/FA</td>
+        <td class="ok">残す</td>
+        <td>候補維持</td>
+        <td>NISA 55.6<br>反応 55.1<br>信頼度 95<br>PER 26.09</td>
+        <td>電力制御・FAテーマはあるが、業績/質スコアが低め。決算反応の確定が必要。</td>
+        <td>20営業日反応50点以上、日経75日線維持、円高ショックなし、FA/電力制御の業績説明が確認できる</td>
+        <td>20営業日未到達、業績伸びが弱いまま、セグメント確認不足</td>
+        <td>20営業日反応35点未満、業績/質スコア改善なし、円高3%以上</td>
+      </tr><tr>
+        <td>9</td>
+        <td>8766.T<br><b>東京海上HD</b><br>保険/金利</td>
+        <td class="reserve">予備</td>
+        <td>予備維持</td>
+        <td>NISA 65.4<br>反応 40.6<br>信頼度 100<br>PER 17.61</td>
+        <td>予備枠。経常利益前年比-7.6%、決算後1日反応は日経比-4.68%。還元方針と20営業日反応待ち。</td>
+        <td>20営業日反応50点以上、5日/20日超過リターンが改善、還元方針に悪化なし、自然災害損失懸念が拡大しない</td>
+        <td>反応点35〜50点、20営業日未到達、利益減の一過性確認が未了</td>
+        <td>反応点35点未満、20営業日超過-5%以下、経常利益減少の継続懸念、保険セクターが弱い</td>
+      </tr><tr>
+        <td>10</td>
+        <td>6367.T<br><b>ダイキン工業</b><br>空調/冷却</td>
+        <td class="reserve">予備</td>
+        <td>予備維持</td>
+        <td>NISA 52.6<br>反応 57.2<br>信頼度 100<br>PER 24.97</td>
+        <td>予備枠。AI冷却テーマはあるが全社営業利益+3.3%で伸びは強くない。</td>
+        <td>20営業日反応50点以上、データセンター冷却・北米/アジア需要の説明確認、日経75日線維持</td>
+        <td>テーマは強いが業績寄与が確認不足、20営業日未到達</td>
+        <td>20営業日反応35点未満、営業利益成長が鈍いまま、出来高弱く株価が日経に負ける</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>行動マトリクス</h2>
+  <table>
+    <thead><tr><th>銘柄</th><th>現状</th><th>良い場合</th><th>通常の場合</th><th>悪い場合</th><th>最初にすること</th><th>資金配分メモ</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>4385.T<br>メルカリ</td>
+        <td class="ok">残す</td>
+        <td>購入検討へ進む条件あり</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>2802.T<br>味の素</td>
+        <td class="ok">残す</td>
+        <td>購入検討へ進む条件あり</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>8316.T<br>三井住友FG</td>
+        <td class="ok">残す</td>
+        <td>購入検討へ進む条件あり</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>5020.T<br>ENEOS HD</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>8306.T<br>三菱UFJ FG</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>6146.T<br>ディスコ</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>6762.T<br>TDK</td>
+        <td class="ok">残す</td>
+        <td>小口検討または候補維持</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>6503.T<br>三菱電機</td>
+        <td class="ok">残す</td>
+        <td>候補維持</td>
+        <td>候補維持または小口検討</td>
+        <td>購入検討不可または除外</td>
+        <td>共通市場ゲート通過後に個別ゲートを確認</td>
+        <td>購入検討へ進む場合でも、指数比較と+1%目標を満たせない場合は個別株比率を下げる</td>
+      </tr><tr>
+        <td>8766.T<br>東京海上HD</td>
+        <td class="reserve">予備</td>
+        <td>予備から検証候補へ昇格可能</td>
+        <td>予備維持</td>
+        <td>購入検討不可または除外</td>
+        <td>20営業日反応と公式説明資料の要因確認を優先</td>
+        <td>初回資金配分には入れない</td>
+      </tr><tr>
+        <td>6367.T<br>ダイキン工業</td>
+        <td class="reserve">予備</td>
+        <td>予備から検証候補へ昇格可能</td>
+        <td>予備維持</td>
+        <td>購入検討不可または除外</td>
+        <td>20営業日反応と公式説明資料の要因確認を優先</td>
+        <td>初回資金配分には入れない</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>+1%目標との接続</h2>
+  <div class="card">
+    <p>この運用の目的は、単に個別株を持つことではなく、日経平均/TOPIX/S&P500連動投信などの無難な選択肢を最低1%ポイント上回る可能性がある候補を探すことです。</p>
+    <div class="formula">
+      1年後評価 = 個別株ポートフォリオ実績 - max(日経平均, TOPIX, S&P500円換算投信) の同期間リターン<br>
+      合格 = +1.0%ポイント以上<br>
+      未達見込み = 個別株比率を下げる、または指数連動/現金比率を上げる
+    </div>
+    <p class="note">したがって、6月イベント後の条件を通っても、期待値が指数+1%を上回る説明ができない銘柄は、購入検討ではなく候補維持または除外にします。</p>
+  </div>
+</main>
+</body>
+</html>
