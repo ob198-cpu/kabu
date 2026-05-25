@@ -18,6 +18,7 @@ const currentFiles = new Map([
   ['issue_recovery_board_20260525.html', ['現行資料', '顧客説明に使用可', '課題、対応済み、次作業を管理する現行台帳。', '']],
   ['current_vs_history_materials_20260525.html', ['現行資料', '顧客説明に使用可', '現行資料と履歴資料を分ける台帳。', '']],
   ['display_wording_audit_20260525.html', ['現行資料', '顧客説明に使用可', '購入が確定したように見える文言を監査するページ。', '']],
+  ['prepublish_wording_check_20260526.html', ['現行資料', '顧客説明に使用可', '新規ページ作成時に文言ルールを自動確認する公開前チェック。', 'display_wording_audit_20260525.html']],
   ['terminology_cleanup_20260525.html', ['現行補助', '台帳経由で使用可', '旧表現を整理した補助ページ。表示文言監査とセットで使う。', 'display_wording_audit_20260525.html']],
   ['missing_data_score_gate_20260525.html', ['現行資料', '顧客説明に使用可', '未取得データを点数に混ぜないためのゲート。', '']],
   ['universe_definition_20260525.html', ['現行資料', '顧客説明に使用可', '100社前後の母集団条件を固定するページ。', '']],
@@ -78,7 +79,7 @@ const currentCsvPrefixes = [
   '287_', '288_', '289_', '290_', '291_', '292_', '293_', '294_', '295_', '296_', '297_', '298_', '299_',
   '300_', '301_', '302_', '303_', '304_', '305_', '306_', '307_', '308_', '309_', '310_', '311_', '312_',
   '313_', '314_', '315_', '316_', '317_', '318_', '319_', '320_', '321_', '322_', '323_', '324_', '325_',
-  '326_', '327_',
+  '326_', '327_', '328_', '329_', '330_', '331_', '332_',
 ];
 
 function escCsv(value) {
@@ -92,6 +93,13 @@ function writeCsv(name, rows, headers) {
     .concat(rows.map((row) => headers.map((header) => escCsv(row[header])).join(',')))
     .join('\n');
   fs.writeFileSync(path.join(ROOT, name), `\uFEFF${body}\n`, 'utf8');
+}
+
+function cleanLines(text) {
+  return text
+    .split('\n')
+    .map((line) => line.replace(/[ \t]+$/g, ''))
+    .join('\n');
 }
 
 function esc(value) {
@@ -490,6 +498,6 @@ const html = `<!doctype html>
 </body>
 </html>`;
 
-fs.writeFileSync(path.join(ROOT, 'current_vs_history_materials_20260525.html'), html, 'utf8');
+fs.writeFileSync(path.join(ROOT, 'current_vs_history_materials_20260525.html'), cleanLines(html), 'utf8');
 
 console.log(`generated current_vs_history_materials_20260525.html with ${registryRows.length} registry rows`);

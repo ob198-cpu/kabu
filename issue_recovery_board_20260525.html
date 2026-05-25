@@ -40,7 +40,7 @@
   <div class="lead">
     <p><b>目的:</b> 今日判明した設計上の課題を、感覚的な反省で終わらせず、実装・検証・表示修正の単位に分解して回収するための管理表です。</p>
     <p><strong>現時点の扱い:</strong> 現システムは売買判断補助システムではなく、NISA 1年保有の検証候補を絞るためのプロトタイプです。課題が未回収の項目は、売買判断には使いません。</p>
-    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a> / <a href="current_vs_history_materials_20260525.html">資料区分台帳を見る</a></p>
+    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a> / <a href="current_vs_history_materials_20260525.html">資料区分台帳を見る</a> / <a href="prepublish_wording_check_20260526.html">公開前文言チェックを見る</a></p>
   </div>
 
   <div class="kpis">
@@ -160,9 +160,9 @@
           <td><b>表示上の誤解・旧文言の残存</b></td>
           <td>実施が確定したように見える言葉や、候補の意味が曖昧な言葉は顧客説明で誤解される。</td>
           <td class="status-done">回収済み</td>
-          <td>現行導線10ファイルを監査し、強い旧表現9件を修正。禁止表現の残存は0件。さらに資料区分台帳を作成し、現行資料・履歴資料・要注意履歴・データ資料を分離。</td>
-          <td>display_wording_audit_20260525.html / current_vs_history_materials_20260525.html / 323_material_registry.csv</td>
-          <td>次工程では、新規ページ作成時の文言ルール確認を自動化する。</td>
+          <td>現行導線10ファイルを監査し、強い旧表現9件を修正。禁止表現の残存は0件。資料区分台帳に加え、公開前文言自動チェックを追加。ブロック対象は0件。</td>
+          <td>display_wording_audit_20260525.html / current_vs_history_materials_20260525.html / prepublish_wording_check_20260526.html</td>
+          <td>次工程では、「候補」という言葉の役割を検証候補・確認対象・保留・除外に整理する。</td>
           <td>顧客向け現行導線では、実売買を指示する表現を使わない。</td>
         </tr>
     </tbody>
@@ -171,7 +171,7 @@
   <h2>次にやる順番</h2>
   <div class="card">
     <ol>
-      <li>新規ページ作成時に文言ルールを自動確認する。</li>
+      <li>「候補」という言葉の前に役割を付ける。</li>
       <li>イベント種類別の株価反応DBを広げる。</li>
       <li>候補10社の未接続データを補完する。</li>
       <li>6月イベント後の前向きテスト記録へ接続する。</li>

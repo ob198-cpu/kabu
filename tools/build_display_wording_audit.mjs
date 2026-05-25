@@ -240,12 +240,6 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '新規ページ作成時に文言ルールを自動確認',
-    reason: '「買う」「購入候補」などが再混入しやすいため。',
-    output: 'ページ公開前チェック用の簡易監査',
-  },
-  {
-    priority: 2,
     action: '候補という言葉の前に役割を付ける',
     reason: '候補だけだと購入候補に見えるため。',
     output: '検証候補、確認対象、除外候補、保留候補への統一',
@@ -408,6 +402,7 @@ const html = `<!doctype html>
       <a class="button" href="320_display_wording_rules.csv">320 文言ルールCSV</a>
       <a class="button" href="321_display_wording_fixes.csv">321 修正CSV</a>
       <a class="button" href="current_vs_history_materials_20260525.html">資料区分台帳へ</a>
+      <a class="button" href="prepublish_wording_check_20260526.html">公開前文言チェックへ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>
