@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本日の進捗報告書 2026年5月25日</title>
+  <style>
+    :root{--ink:#061b2f;--muted:#34485f;--line:#cfddea;--bg:#f4f8fb;--navy:#123a5a;--blue:#0b6e9e;--green:#14724e;--amber:#a56300;--red:#b32632}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.62}
+    header{background:#123a5a;color:#fff;padding:30px 28px}
+    main{max-width:1180px;margin:auto;padding:24px}
+    h1{margin:0 0 8px;font-size:30px;letter-spacing:0}
+    h2{font-size:20px;margin:24px 0 10px;color:var(--navy);border-left:7px solid var(--blue);padding-left:10px}
+    h3{font-size:16px;margin:16px 0 8px;color:var(--navy)}
+    p{margin:8px 0}.lead{color:#eaf7ff;max-width:1020px}.meta{margin-top:10px;color:#dbeeff}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+    .kpi{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;min-height:108px}
+    .kpi b{display:block;color:var(--blue);font-size:30px;line-height:1.15}.kpi span{font-size:12.5px;color:#000}
+    .box,.section{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;margin:14px 0}
+    .ok{background:#eaf8f1;border:1px solid #a9dcc2;border-left:8px solid var(--green)}
+    .warn{background:#fff7e7;border:1px solid #e9c174;border-left:8px solid var(--amber)}
+    .risk{background:#fff0f1;border:1px solid #efb8be;border-left:8px solid var(--red)}
+    .table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;margin:10px 0 16px}
+    table{width:100%;border-collapse:collapse;min-width:900px;color:#000}
+    th,td{border-bottom:1px solid #e8eef5;padding:8px 9px;text-align:left;vertical-align:top;font-size:12.5px;word-break:normal;overflow-wrap:anywhere;color:#000}
+    th{background:#eaf2f9;color:#000;font-weight:900;white-space:nowrap}
+    tr:last-child td{border-bottom:0}
+    .badge{display:inline-block;border-radius:999px;padding:3px 9px;color:#fff;font-weight:900;white-space:nowrap;font-size:12px}
+    .green{background:var(--green)}.orange{background:var(--amber)}.red{background:var(--red)}.blue{background:var(--blue)}.gray{background:#5b6675}
+    .decision{font-weight:900;color:var(--navy)}
+    pre{background:#061b2f;color:#fff;border-radius:10px;padding:12px;overflow:auto;font-weight:900;white-space:pre-wrap}
+    a{color:#004b73;font-weight:800}.note{color:#000;font-size:12.5px}.footer{color:#000;font-size:12px;margin-top:24px}
+    .checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .check{border:1px solid var(--line);border-radius:8px;padding:10px;background:#f9fcff}
+    .check b{display:block;color:var(--navy)}
+    @media(max-width:800px){main{padding:16px}.kpis,.checklist{grid-template-columns:1fr}}
+    @media print{
+      @page{size:A4;margin:12mm}
+      body{background:#fff}
+      main{padding:0;max-width:none}
+      header{padding:20px 18px}
+      h1{font-size:24px}
+      h2{break-after:avoid;page-break-after:avoid;font-size:17px;margin-top:18px}
+      .box,.section,.kpi,.check{break-inside:avoid;page-break-inside:avoid}
+      .table-wrap{overflow:visible;break-inside:auto;page-break-inside:auto}
+      table{min-width:0;table-layout:fixed}
+      thead{display:table-header-group}
+      tr{break-inside:avoid;page-break-inside:avoid}
+      th,td{font-size:10.5px;padding:5px}
+      .kpi b{font-size:23px}
+      a{color:#000;text-decoration:none}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>本日の進捗報告書</h1>
+  <p class="lead">NISA 1年保有を前提に、証券会社の無難運用、S&P500、日経平均、TOPIXを最低+1%上回る候補を選ぶための検証システムについて、本日の進捗、是正内容、現状候補数、次工程を整理した報告書です。</p>
+  <p class="meta">対象日: 2026年5月25日 / 作成: 投資分析システム開発</p>
+</header>
+<main>
+  <section class="kpis">
+    <div class="kpi"><b>3社</b><span>現時点で厳格に「残す」判定。購入確定ではなく追加検証候補。</span></div>
+    <div class="kpi"><b>13社</b><span>保留。決算後反応未取得、信頼度不足、過熱等の確認待ち。</span></div>
+    <div class="kpi"><b>4社</b><span>初回候補から除外。割高、過熱、反応悪化等が理由。</span></div>
+    <div class="kpi"><b>+1%</b><span>証券会社運用・S&P500・日経平均・TOPIXを上回る目標を明文化。</span></div>
+  </section>
+
+  <section class="box ok">
+    <h2>1. 本日の結論</h2>
+    <p class="decision">銘柄選定の過程は、以前より現実的な形へ修正されました。ただし、現在の結果はまだ購入判断ではなく、追加検証に進むための候補整理です。</p>
+    <p>本日は、イベントやニュースを単純加点する危険な構造を停止し、質的データ・量的データ・実績検証・除外ゲート・ベンチマーク比較を分ける設計へ修正しました。最終目的は論文発表ではなく、実運用で証券会社の無難運用や指数投資を最低+1%上回る候補を選ぶことです。</p>
+  </section>
+
+  <section class="section">
+    <h2>2. 本日の主な実施事項</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>区分</th><th>実施内容</th><th>目的</th><th>状態</th></tr></thead>
+      <tbody>
+        <tr><td>モデル監査</td><td>イベントを本体スコアへ足す設計を使用停止</td><td>ニュースや期待だけで高評価になることを防ぐ</td><td><span class="badge green">完了</span></td></tr>
+        <tr><td>質的/量的分離</td><td>質的データ軸と量的データ軸を分離</td><td>量的データを主軸にし、質的材料は補助に限定</td><td><span class="badge green">完了</span></td></tr>
+        <tr><td>仮説/実績分離</td><td>仮説層と実績層は単純加算しないルールへ変更</td><td>仮説だけでS評価になることを防ぐ</td><td><span class="badge green">完了</span></td></tr>
+        <tr><td>+1%モデル</td><td>証券会社運用・S&P500・日経平均・TOPIXを+1%上回る目標を明文化</td><td>個別株を選ぶ意味をベンチマーク比較で判断</td><td><span class="badge green">完了</span></td></tr>
+        <tr><td>候補数再確認</td><td>20社中、残す3社、保留13社、落とす4社を確認</td><td>現時点で何社が検証に進めるかを把握</td><td><span class="badge green">完了</span></td></tr>
+        <tr><td>2日内課題整理</td><td>決算後反応未取得・信頼度70未満の解消手段を整理</td><td>10社候補に近づけるための具体作業を明確化</td><td><span class="badge blue">次工程</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="section">
+    <h2>3. 現在の候補状況</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>分類</th><th>件数</th><th>意味</th><th>次の扱い</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge green">残す</span></td><td>3社</td><td>データ信頼度が高く、重大なハードゲートなし</td><td>追加検証に進める</td></tr>
+        <tr><td><span class="badge orange">保留</span></td><td>13社</td><td>未取得、反応弱め、過熱、データ不足など確認待ち</td><td>2日以内に解消可能な項目を優先確認</td></tr>
+        <tr><td><span class="badge red">落とす</span></td><td>4社</td><td>過熱、割高、急落、反応悪化などが重い</td><td>初回候補から外す</td></tr>
+      </tbody>
+    </table></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>銘柄</th><th>NISA 1年スコア</th><th>信頼度</th><th>現時点の扱い</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>6146 ディスコ</td><td>61.8</td><td>95</td><td>残す</td><td>業績/質、下落耐性、割高感、決算後反応のバランス</td></tr>
+        <tr><td>8306 三菱UFJ FG</td><td>60.8</td><td>95</td><td>残す</td><td>下落耐性、割安感、金利テーマ</td></tr>
+        <tr><td>6762 TDK</td><td>59.2</td><td>100</td><td>残す</td><td>下落耐性、決算後反応、データ信頼度</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">注意: 上記3社は購入確定ではありません。6月の市場イベント、最新決算、ベンチマーク比較、除外ゲートを通過した場合のみ購入検討へ進みます。</p>
+  </section>
+
+  <section class="section">
+    <h2>4. 2日以内に解消する課題</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>課題</th><th>対象</th><th>2日以内の可否</th><th>具体作業</th><th>期待効果</th></tr></thead>
+      <tbody>
+        <tr><td>決算後反応未取得</td><td>メルカリ、信越化学、味の素、三井住友FG、丸紅、ENEOS、日立、ニデック、三菱電機など</td><td>かなり可能</td><td>決算発表日、翌日/5営業日/20営業日後の株価、同期間指数を取得し、超過リターンを計算</td><td>保留理由の一部を解消</td></tr>
+        <tr><td>データ信頼度70未満</td><td>信頼度25〜60の銘柄</td><td>可能</td><td>PER/PBR/ROE、売上成長、利益成長、決算発表日、出典URLを補完</td><td>候補の信頼度を引き上げ</td></tr>
+        <tr><td>割高・過熱判定</td><td>ファストリ、古河電工、アドバンテスト、フジクラ等</td><td>可能</td><td>1年上昇率と利益成長、PER/PBR、下落率を再確認</td><td>残せる銘柄と落とす銘柄を明確化</td></tr>
+        <tr><td>10社候補不足</td><td>現在3社</td><td>一部可能</td><td>保留13社を再判定し、条件を満たすものを追加</td><td>5〜8社程度まで増える可能性</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="section">
+    <h2>5. 本日作成・更新した成果物</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>成果物</th><th>内容</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>モデル監査ページ</td><td>イベント加点停止、危険ロジック修正</td><td>旧ロジックの誤用防止</td></tr>
+        <tr><td>質的×量的 二軸選定モデル</td><td>量的主軸、質的補助、仮説/実績分離</td><td>銘柄探索の論理整理</td></tr>
+        <tr><td>2026イベント100社評価計画</td><td>株価に効きやすいイベントと100社評価工程</td><td>時流から企業を抽出する入口</td></tr>
+        <tr><td>重大課題・未告知事項リスト</td><td>現時点のリスク、やること、顧客説明の注意点</td><td>内部監査メモ</td></tr>
+        <tr><td>学術的妥当性プロトコル</td><td>イベントスタディ、バイアス対策、検証方針</td><td>論理破綻を避けるための検証設計</td></tr>
+        <tr><td>+1%実運用検証モデル</td><td>証券会社運用・指数を+1%上回るための最小モデル</td><td>実運用目的への再整理</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="section">
+    <h2>6. 今後の実施方針</h2>
+    <div class="checklist">
+      <div class="check"><b>1. 現行スコア式の分類</b>採用、廃止、検証待ちに分け、未監査式を候補選定に使わない。</div>
+      <div class="check"><b>2. 保留13社の再判定</b>決算後反応と信頼度不足を優先的に解消する。</div>
+      <div class="check"><b>3. ベンチマーク比較</b>S&P500、日経平均、TOPIX、証券会社運用との差を出す。</div>
+      <div class="check"><b>4. 10社候補の再抽出</b>量的B以上、信頼度70以上、ハードゲートなしを基本条件にする。</div>
+      <div class="check"><b>5. 買わない判断の明確化</b>+1%超過根拠が弱い場合は個別株比率を下げる。</div>
+      <div class="check"><b>6. 予実記録</b>候補化した日、価格、理由、結果、外れ理由を記録する。</div>
+    </div>
+  </section>
+
+  <section class="box warn">
+    <h2>7. 顧客説明での注意</h2>
+    <p>本システムは、現時点では購入判断システムではありません。正しい説明は「100社前後から調査候補を絞り、量的データとイベント実績で10社程度に絞るための検証システム」です。購入可否は、6月の市場イベント、最新決算、ベンチマーク比較、除外ゲートを通過した後に判断します。</p>
+  </section>
+
+  <section class="footer">
+    <p>保存先: <code>daily_progress_report_20260525.html</code> / <code>daily_progress_report_20260525.pdf</code></p>
+  </section>
+</main>
+</body>
+</html>
