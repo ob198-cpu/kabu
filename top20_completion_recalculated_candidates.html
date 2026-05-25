@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>上位20社 データ補完・再計算結果</title>
+  <style>
+    body { font-family: "Yu Gothic", Meiryo, sans-serif; color:#111; margin: 28px; line-height: 1.65; }
+    h1 { font-size: 26px; margin: 0 0 12px; }
+    h2 { border-left: 8px solid #0b5f8a; padding-left: 10px; margin-top: 28px; }
+    .lead { border:1px solid #b8d4e8; background:#f7fbff; padding:14px 16px; border-radius:8px; }
+    table { border-collapse: collapse; width:100%; margin-top:12px; table-layout: fixed; }
+    th, td { border:1px solid #cbd7e2; padding:7px 8px; font-size:12px; vertical-align: top; overflow-wrap:anywhere; word-break:normal; }
+    th { background:#e7f2fb; color:#052f4d; }
+    .note { font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>上位20社 データ補完・再計算結果</h1>
+  <div class="lead">
+    目的は、従来「決算後反応未取得」「データ信頼度70未満」で止まっていた銘柄について、
+    追加取得できる公開データを入れ、6月NISAテスト候補を広げられるか確認することです。
+    ここでの「検証候補」は購入確定ではなく、6月イベント後に再判定する候補です。
+  </div>
+  <h2>集計</h2>
+  <table><thead><tr><th>updated_at</th><th>item</th><th>value</th><th>note</th></tr></thead><tbody><tr><td>2026/05/25 18:37</td><td>対象</td><td>20社</td><td>上位20社を対象に、Yahoo株価API、Yahoo!ファイナンス業績表、既存100社表を突合。</td></tr><tr><td>2026/05/25 18:37</td><td>検証候補</td><td>8社</td><td>6月イベント後に購入可否を再判定する候補。購入確定ではない。</td></tr><tr><td>2026/05/25 18:37</td><td>要確認</td><td>5社</td><td>不足データ、20営業日未到達、反応弱さなどが残る。</td></tr><tr><td>2026/05/25 18:37</td><td>除外</td><td>7社</td><td>過熱、割高、急落、会計関連など初回NISAテストに重い理由あり。</td></tr></tbody></table>
+  <h2>再計算ランキング</h2>
+  <table><thead><tr><th>順位</th><th>銘柄</th><th>状態</th><th>1年NISA点</th><th>信頼度</th><th>PER</th><th>PBR</th><th>ROE</th><th>売上成長</th><th>利益成長</th><th>決算反応</th><th>ゲート</th></tr></thead><tbody><tr><td>1</td><td>4385.T メルカリ</td><td>検証候補</td><td>79.8</td><td>87</td><td></td><td>5.79倍</td><td>30.52%</td><td>2.8%</td><td>59.2%</td><td>56.8 暫定: 20営業日未到達</td><td>決算後20営業日未到達</td></tr><tr><td>2</td><td>2802.T 味の素</td><td>検証候補</td><td>67.8</td><td>95</td><td>43.73倍</td><td>6.81倍</td><td>17.75%</td><td>3.5%</td><td>75%</td><td>65.8 暫定: 20営業日未到達</td><td>決算後20営業日未到達</td></tr><tr><td>3</td><td>8316.T 三井住友FG</td><td>検証候補</td><td>65.1</td><td>95</td><td>13.61倍</td><td>1.47倍</td><td>10.38%</td><td>6.1%</td><td>34%</td><td>55.5 暫定: 20営業日未到達</td><td>決算後20営業日未到達</td></tr><tr><td>4</td><td>5020.T ENEOS HD</td><td>検証候補</td><td>64.3</td><td>95</td><td>8.36倍</td><td>1.03倍</td><td>8.00%</td><td>-4.5%</td><td>339.8%</td><td>57 暫定: 20営業日未到達</td><td>決算後20営業日未到達</td></tr><tr><td>5</td><td>8306.T 三菱UFJ FG</td><td>検証候補</td><td>62.1</td><td>92</td><td></td><td>1.56倍</td><td>11.34%</td><td>7.3%</td><td>27.7%</td><td>41.3 既存値</td><td>なし</td></tr><tr><td>6</td><td>6146.T ディスコ</td><td>検証候補</td><td>60.9</td><td>92</td><td></td><td>12.32倍</td><td>25.15%</td><td>11.1%</td><td>10.9%</td><td>68.7 既存値</td><td>なし</td></tr><tr><td>7</td><td>6762.T TDK</td><td>検証候補</td><td>60.7</td><td>100</td><td>26.7倍</td><td>2.75倍</td><td>9.81%</td><td>13.6%</td><td>21.5%</td><td>62.9 既存値</td><td>なし</td></tr><tr><td>8</td><td>6503.T 三菱電機</td><td>検証候補</td><td>55.6</td><td>95</td><td>26.09倍</td><td>2.76倍</td><td>9.67%</td><td>6.8%</td><td>10.5%</td><td>55.1 暫定: 20営業日未到達</td><td>決算後20営業日未到達</td></tr><tr><td>9</td><td>9984.T ソフトバンクG</td><td>要確認</td><td>66.9</td><td>92</td><td></td><td>1.98倍</td><td>34.28%</td><td>7.7%</td><td>259.9%</td><td>15.2 既存値</td><td>決算後反応15.2点</td></tr><tr><td>10</td><td>7012.T 川崎重工業</td><td>要確認</td><td>59.9</td><td>100</td><td>21.6倍</td><td>2.71倍</td><td>13.68%</td><td>8.5%</td><td>35.4%</td><td>34.8 既存値</td><td>決算後反応34.8点</td></tr><tr><td>11</td><td>6501.T 日立製作所</td><td>要確認</td><td>59.3</td><td>95</td><td>26.81倍</td><td>3.47倍</td><td>12.93%</td><td>8.2%</td><td>24.6%</td><td>32.5 暫定: 20営業日未到達</td><td>決算後20営業日未到達 / 決算後反応32.5点</td></tr><tr><td>12</td><td>8002.T 丸紅</td><td>要確認</td><td>53</td><td>95</td><td>15.01倍</td><td>1.99倍</td><td>13.61%</td><td>6.1%</td><td>-59.2%</td><td>34 暫定: 20営業日未到達</td><td>決算後20営業日未到達 / 決算後反応34点</td></tr><tr><td>13</td><td>4063.T 信越化学工業</td><td>要確認</td><td>52.7</td><td>87</td><td></td><td>2.93倍</td><td>10.41%</td><td>0.5%</td><td>-14.4%</td><td>56.1 暫定: 20営業日未到達</td><td>決算後20営業日未到達</td></tr><tr><td>14</td><td>6857.T アドバンテスト</td><td>除外</td><td>61.6</td><td>100</td><td>42倍</td><td>24.55倍</td><td>57.65%</td><td>44.7%</td><td>118.8%</td><td>32.5 既存値</td><td>1年上昇率284.8%で過熱 / 決算後反応32.5点</td></tr><tr><td>15</td><td>9983.T ファーストリテイリング</td><td>除外</td><td>61.6</td><td>100</td><td>47.16倍</td><td>8.6倍</td><td>20.19%</td><td>9.6%</td><td>12.6%</td><td>59.7 確定: 20営業日到達</td><td>PER47.16倍/PBR8.6倍</td></tr><tr><td>16</td><td>6594.T ニデック</td><td>除外</td><td>60.4</td><td>77</td><td></td><td>1.7倍</td><td>9.81%</td><td>11.1%</td><td>47.1%</td><td>未取得</td><td>決算遅延/会計関連リスク</td></tr><tr><td>17</td><td>5801.T 古河電工</td><td>除外</td><td>59.8</td><td>100</td><td>42.96倍</td><td>8.45倍</td><td>19.12%</td><td>8.8%</td><td>35.6%</td><td>88 既存値</td><td>1年上昇率792%で過熱</td></tr><tr><td>18</td><td>6920.T レーザーテック</td><td>除外</td><td>58.9</td><td>100</td><td>47.95倍</td><td>15.28倍</td><td>46.88%</td><td>17.8%</td><td>51%</td><td>12.9 既存値</td><td>PER47.95倍/PBR15.28倍 / 決算後反応12.9点</td></tr><tr><td>19</td><td>5802.T 住友電工</td><td>除外</td><td>53.7</td><td>100</td><td>26.02倍</td><td>3.03倍</td><td>14.68%</td><td>9.2%</td><td>30.4%</td><td>37.6 既存値</td><td>1年上昇率307.5%で過熱</td></tr><tr><td>20</td><td>5803.T フジクラ</td><td>除外</td><td>46.8</td><td>100</td><td>48.47倍</td><td>13.49倍</td><td>32.48%</td><td>20.7%</td><td>39.2%</td><td>22.8 既存値</td><td>1年上昇率346.2%で過熱 / 60日最大下落率-45.3% / PER48.47倍/PBR13.49倍 / 決算後反応22.8点</td></tr></tbody></table>
+  <h2>注意</h2>
+  <p class="note">質的イベントやテーマはこの点数に直接足していません。時流テーマは発見・優先順位付けに使い、購入候補化は量的データと決算後反応で確認します。</p>
+</body>
+</html>
