@@ -1483,6 +1483,7 @@
         <a href="candidate_june_rulebook.html">6月判定ルール</a>
         <a href="issue_recovery_board_20260525.html">課題回収管理表</a>
         <a href="issue_resolution_flowchart_20260525.html">課題解決フロー</a>
+        <a href="terminology_cleanup_20260525.html">文言整理結果</a>
         <a href="tenbagger_research_corner.html">テンバガー探索</a>
         <a href="development_plan.html">開発計画</a>
         <a href="system_spec_schedule.pdf">仕様・工期PDF</a>
@@ -1526,6 +1527,7 @@
             <a class="button secondary" href="candidate_june_rulebook.html">6月判定ルール</a>
             <a class="button secondary" href="issue_recovery_board_20260525.html">課題回収管理表</a>
             <a class="button secondary" href="issue_resolution_flowchart_20260525.html">課題解決フロー</a>
+            <a class="button secondary" href="terminology_cleanup_20260525.html">文言整理結果</a>
             <a class="button secondary" href="dual_axis_selection_model.html">質的×量的 二軸選定</a>
             <a class="button secondary" href="event_impact_2026_screening_plan.html">2026イベント100社評価</a>
             <a class="button secondary" href="trend_deduction_research_base.html">時流演繹リサーチ</a>
@@ -1672,7 +1674,7 @@
             <p>株価・指数・為替・米金利を読み込み、ルールに使う数字を更新します。</p>
           </div>
           <div class="update-actions">
-            <button class="refresh-button" type="button" id="apply-calculated-candidates">計算結果で保有候補更新</button>
+            <button class="refresh-button" type="button" id="apply-calculated-candidates">計算結果で検証候補更新</button>
             <span class="update-pill" id="market-updated">更新確認中</span>
             <button class="refresh-button" type="button" id="refresh-market-data">データ再読み込み</button>
           </div>
@@ -1686,7 +1688,7 @@
               <h3>NISA 1年保有スコア 上位20社</h3>
               <p class="table-caption">100社前後の母集団から上位20社を取り、NISAで1年持つ前提に合わせて再計算します。業績/質、下落耐性、割高感を重くし、未取得や過熱がある銘柄は保留にします。</p>
               <div class="candidate-conclusion" id="candidate-conclusion">
-                <div class="candidate-hypothesis-empty">計算結果を読み込むと、NISA点1位、保有候補、保留/除外の件数を先に表示します。</div>
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、NISA点1位、検証候補、保留/除外の件数を先に表示します。</div>
               </div>
               <div class="table-wrap">
                 <table class="rule-table live-table">
@@ -1699,10 +1701,10 @@
                 </table>
               </div>
               <div class="score-ranking-summary" id="score-ranking-summary">
-                <div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、NISA 1年保有スコアランキングを表示します。</div>
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、検証候補とは別に、NISA 1年保有スコアランキングを表示します。</div>
               </div>
               <div class="score-ranking-summary" id="score-model-revision">
-                <div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入候補スコアを分けて表示します。</div>
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入検討用スコアを分けて表示します。</div>
               </div>
               <div class="score-ranking-summary" id="sector-adjustment">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、業種別補正に使える同業比較数を表示します。</div>
@@ -1720,7 +1722,7 @@
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月判定前に何を確認すべきかを銘柄ごとに表示します。</div>
               </div>
               <div class="candidate-readiness" id="final-decision-gate">
-                <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入可否判定ゲートを表示します。</div>
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入検討可否判定ゲートを表示します。</div>
               </div>
               <div class="candidate-readiness decision-simulator" id="decision-simulator">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、6月イベント後に数字を入力して判定を確認する欄を表示します。</div>
@@ -1729,7 +1731,7 @@
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>
               </div>
               <div class="candidate-hypothesis" id="candidate-hypothesis">
-                <div class="candidate-hypothesis-empty">「計算結果で保有候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>
+                <div class="candidate-hypothesis-empty">「計算結果で検証候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>
               </div>
             </div>
             <div class="update-box">
@@ -2176,7 +2178,7 @@
             <div class="event-date">5月下旬</div>
             <div class="event-body">
               <b>検証開始: 決算一巡後</b>
-              <div class="mini"><div>対象: 候補銘柄の決算反応と株価指標</div><div>条件: データ欠落と過熱リスクを確認</div><div>注意: 5月中は購入判断を確定しない</div></div>
+              <div class="mini"><div>対象: 候補銘柄の決算反応と株価指標</div><div>条件: データ欠落と過熱リスクを確認</div><div>注意: 5月中は売買判断を確定しない</div></div>
             </div>
           </div>
           <div class="event">
@@ -2663,7 +2665,7 @@
     const renderCandidateHypothesisHint = () => {
       const target = document.getElementById("candidate-hypothesis");
       if (!target) return;
-      target.innerHTML = `<div class="candidate-hypothesis-empty">「計算結果で保有候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>`;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">「計算結果で検証候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>`;
     };
 
     const renderSelectionMechanismHint = () => {
@@ -2675,13 +2677,13 @@
     const renderScoreRankingSummaryHint = () => {
       const target = document.getElementById("score-ranking-summary");
       if (!target) return;
-      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、保有候補とは別に、NISA 1年保有スコアランキングを表示します。</div>`;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、検証候補とは別に、NISA 1年保有スコアランキングを表示します。</div>`;
     };
 
     const renderScoreModelRevisionHint = () => {
       const target = document.getElementById("score-model-revision");
       if (!target) return;
-      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入候補スコアを分けて表示します。</div>`;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、探索スコアと購入検討用スコアを分けて表示します。</div>`;
     };
 
     const renderSectorAdjustmentHint = () => {
@@ -2717,7 +2719,7 @@
     const renderFinalDecisionGateHint = () => {
       const target = document.getElementById("final-decision-gate");
       if (!target) return;
-      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入可否判定ゲートを表示します。</div>`;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、6月の購入検討可否判定ゲートを表示します。</div>`;
     };
 
     const renderDecisionSimulatorHint = () => {
@@ -2729,7 +2731,7 @@
     const renderCandidateConclusionHint = () => {
       const target = document.getElementById("candidate-conclusion");
       if (!target) return;
-      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、NISA点1位、保有候補、保留/除外の件数を先に表示します。</div>`;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、NISA点1位、検証候補、保留/除外の件数を先に表示します。</div>`;
     };
 
     const clampScore = (value) => Math.max(0, Math.min(100, value));
@@ -2816,7 +2818,7 @@
             下落耐性 = 60日最大下落率55% + 1年過熱抑制30% + データ信頼度15%<br>
             割安 = PER40% + PBR25% + ROE25% + 配当利回り10%<br>
             ハードゲート = 決算後反応未取得、データ信頼度70未満、1年上昇率+250%以上、60日最大下落率-30%以下、PER/PBR極端、決算後反応35点未満は「残す」にしない。<br>
-            保有候補 = category が「残す」の銘柄。購入確定ではなく、6月イベント後に再確認する候補。
+            検証候補 = category が「残す」の銘柄。購入確定ではなく、6月イベント後に再確認する候補。
           </div>
         </section>
         <section class="mechanism-card">
@@ -2874,10 +2876,10 @@
       const safeRows = allRankedRows.filter((row) => row.category === "残す");
       target.innerHTML = `
         <section class="mechanism-card">
-          <h4>NISA 1年保有スコアランキング（保有候補とは別）</h4>
+          <h4>NISA 1年保有スコアランキング（検証候補とは別）</h4>
           <p>この表は、上位20社をNISAで1年保有する前提に合わせて再計算したものです。短期反応ではなく、業績/質、下落耐性、割高感、データ信頼度を重くしています。</p>
           <p><b>NISA点1位:</b> ${strongest ? `${escapeHtml(strongest.ticker)} ${escapeHtml(strongest.company)} ${pointOrText(strongest.nisa_score)} / ${escapeHtml(strongest.category)}` : "未取得"}<br>
-          <b>保有候補として残す:</b> ${safeRows.length ? safeRows.map((row) => `${escapeHtml(row.ticker)} ${escapeHtml(row.company)}`).join("、") : "該当なし"}</p>
+          <b>検証候補として残す:</b> ${safeRows.length ? safeRows.map((row) => `${escapeHtml(row.ticker)} ${escapeHtml(row.company)}`).join("、") : "該当なし"}</p>
           <table class="mechanism-table">
             <thead><tr><th>NISA順位</th><th>銘柄</th><th>収益型</th><th>NISA点</th><th>業績/質</th><th>下落耐性</th><th>信頼度</th><th>分類</th><th>理由</th></tr></thead>
             <tbody>${allRankedRows.map((row, index) => {
@@ -2968,13 +2970,13 @@
         (numericValue(row.valuation_score) * 0.20) +
         (numericValue(row.earnings_reaction_score) * 0.10)
       );
-      const state = score >= 65 ? "購入候補" : "確認候補";
+      const state = score >= 65 ? "購入検討対象" : "確認候補";
       return {
         score,
         label: `${score.toFixed(1)}点`,
         state,
         badge: score >= 65 ? "ok" : "watch",
-        reason: "必須データ取得済み。購入候補用の式で再計算。",
+        reason: "必須データ取得済み。購入検討用の式で再計算。",
       };
     };
 
@@ -2985,13 +2987,13 @@
       const purchasable = evaluations.filter((item) => item.evalResult.score !== null);
       const stopped = evaluations.length - purchasable.length;
       const revisionRows = [
-        ["1", "探索スコアと購入候補スコアを分離", "反映済み", "探索は広く比較、購入候補は必須データ取得後だけ表示。"],
-        ["2", "未取得データを点数に混ぜない", "反映済み", "購入候補スコアは未取得があると未算出。"],
+        ["1", "探索スコアと購入検討用スコアを分離", "反映済み", "探索は広く比較、購入検討用点は必須データ取得後だけ表示。"],
+        ["2", "未取得データを点数に混ぜない", "反映済み", "購入検討用スコアは未取得があると未算出。"],
         ["3", "業種別補正", "一部反映", "同業比較数と中央値を表示。比較数不足の業種は点数へ混ぜない。"],
         ["4", "ハード除外条件を明文化", "反映済み", "未取得、信頼度不足、過熱、反応不足などで算出停止。"],
-        ["5", "スコアの内訳を銘柄ごとに表示", "反映済み", "探索点、購入候補点、信頼度、停止理由を行ごとに表示。"],
-        ["6", "信頼度スコアを追加", "反映済み", "70点未満は購入候補点を止める。"],
-        ["7", "決算後反応の未到達を別扱い", "反映済み", "未取得と35点未満を購入候補点から分離。"],
+        ["5", "スコアの内訳を銘柄ごとに表示", "反映済み", "探索点、購入検討用点、信頼度、停止理由を行ごとに表示。"],
+        ["6", "信頼度スコアを追加", "反映済み", "70点未満は購入検討用点を止める。"],
+        ["7", "決算後反応の未到達を別扱い", "反映済み", "未取得と35点未満を購入検討用点から分離。"],
         ["8", "過去検証・バックテスト", "未反映", "イベント後リターンDBの整備後に検証する。"],
         ["9", "100社母集団の条件固定", "反映済み", "採用方針、現在の100社内訳、補充ルール、抽出工程を表示。"],
         ["10", "S&P500/日経平均/TOPIX比較", "反映済み", "S&P500・日経平均の取得値、TOPIX未接続、+1%pt合格式を表示。"],
@@ -3004,7 +3006,7 @@
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>モデル修正状況</h4>
-          <p>この欄では、探索段階の参考点と、購入候補として扱うための点数を分けます。未取得データがある場合、購入候補スコアは出しません。</p>
+          <p>この欄では、探索段階の参考点と、購入検討対象として扱うための点数を分けます。未取得データがある場合、購入検討用スコアは出しません。</p>
           <div class="candidate-conclusion">
             <article class="conclusion-card hold">
               <small>探索対象</small>
@@ -3012,7 +3014,7 @@
               <p>広く比較するための参考順位です。</p>
             </article>
             <article class="conclusion-card keep">
-              <small>購入候補点を算出</small>
+              <small>購入検討用点を算出</small>
               <b>${purchasable.length}社</b>
               <p>必須データとハード除外を通過した銘柄だけです。</p>
             </article>
@@ -3035,14 +3037,14 @@
           </table>
         </section>
         <section class="mechanism-card">
-          <h4>探索スコア / 購入候補スコア 分離表</h4>
-          <p>探索スコアは候補を広く見るための参考値です。購入候補スコアは、未取得データを混ぜず、ハード除外がない場合だけ算出します。</p>
+          <h4>探索スコア / 購入検討用スコア 分離表</h4>
+          <p>探索スコアは候補を広く見るための参考値です。購入検討用スコアは、未取得データを混ぜず、ハード除外がない場合だけ算出します。</p>
           <div class="formula-box">
             探索スコア = 既存のNISA 1年保有スコア。未取得や確認待ちがある場合は参考順位としてのみ使用。<br>
-            購入候補スコア = 業績/質40% + 下落耐性30% + 割安20% + 決算後反応10%。必須データ未取得、信頼度70未満、ハード除外ありの場合は未算出。
+            購入検討用スコア = 業績/質40% + 下落耐性30% + 割安20% + 決算後反応10%。必須データ未取得、信頼度70未満、ハード除外ありの場合は未算出。
           </div>
           <table class="mechanism-table">
-            <thead><tr><th>順位</th><th>銘柄</th><th>探索スコア</th><th>購入候補スコア</th><th>信頼度</th><th>判定</th><th>理由</th></tr></thead>
+            <thead><tr><th>順位</th><th>銘柄</th><th>探索スコア</th><th>購入検討用スコア</th><th>信頼度</th><th>判定</th><th>理由</th></tr></thead>
             <tbody>${evaluations.map(({ row, evalResult }) => `
               <tr>
                 <td>${escapeHtml(row.nisa_rank || "")}</td>
@@ -3187,7 +3189,7 @@
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>業種別補正チェック</h4>
-          <p>PER/PBR/ROEは業種で水準が違うため、同じ業種の中央値と比べます。ただし、同業比較が3社未満、または指標取得数が足りない場合は、購入候補スコアには混ぜません。</p>
+          <p>PER/PBR/ROEは業種で水準が違うため、同じ業種の中央値と比べます。ただし、同業比較が3社未満、または指標取得数が足りない場合は、購入検討用スコアには混ぜません。</p>
           <div class="candidate-conclusion">
             <article class="conclusion-card hold">
               <small>業種グループ</small>
@@ -3202,7 +3204,7 @@
             <article class="conclusion-card drop">
               <small>スコア反映</small>
               <b>未反映</b>
-              <p>現段階では確認資料。購入候補スコアにはまだ入れません。</p>
+              <p>現段階では確認資料。購入検討用スコアにはまだ入れません。</p>
             </article>
           </div>
           <table class="mechanism-table">
@@ -3295,7 +3297,7 @@
             <article class="conclusion-card drop">
               <small>判定</small>
               <b>準備段階</b>
-              <p>購入判断の成績検証は、6月テスト開始後の記録と接続して行います。</p>
+              <p>売買判断の成績検証は、6月テスト開始後の記録と接続して行います。</p>
             </article>
           </div>
           <table class="mechanism-table">
@@ -3465,7 +3467,7 @@
         ["A 詳細確認", `${levelCount(universeRows, "A")}社`, "公式IR・決算短信で検算して6月テスト候補に進める候補。"],
         ["B 観察継続", `${levelCount(universeRows, "B")}社`, "週次で価格・出来高・イベントを確認する候補。"],
         ["C データ補完後に判定", `${levelCount(universeRows, "C")}社`, "データ取得や検算が不足している候補。"],
-        ["D 低優先・比較のみ", `${levelCount(universeRows, "D")}社`, "購入候補というより比較・代表性確認用。"],
+        ["D 低優先・比較のみ", `${levelCount(universeRows, "D")}社`, "購入検討対象というより比較・代表性確認用。"],
       ];
       const roleRows = [
         ["NISA 1年保有", roleCount(universeRows, "NISA 1年保有"), "1年保有テストの主対象。"],
@@ -3623,7 +3625,7 @@
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>6月判定前チェック表</h4>
-          <p>点数が高い順に、購入候補に進めない理由を分解します。「残す」は深掘り候補、「保留」は確認待ち、「落とす」は初回NISAテスト候補から外す扱いです。</p>
+          <p>点数が高い順に、購入検討へ進めない理由を分解します。「残す」は深掘り候補、「保留」は確認待ち、「落とす」は初回NISAテスト候補から外す扱いです。</p>
           <table class="mechanism-table">
             <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>未取得</th><th>過熱</th><th>下落</th><th>割高</th><th>反応</th><th>次に確認すること</th></tr></thead>
             <tbody>${rows}</tbody>
@@ -3658,7 +3660,7 @@
       return {
         pass: "NISA点58以上、データ信頼度70点以上、ハードゲートなし。",
         stop: "未取得、過熱、急落、割高、決算後反応悪化のいずれかが残る場合は見送り。",
-        action: "現時点では確認待ち。購入候補へは上げない。"
+        action: "現時点では確認待ち。購入検討対象へは上げない。"
       };
     };
 
@@ -3929,7 +3931,7 @@
         result.innerHTML = `
           <h5>判定結果: ${escapeHtml(commonState)}</h5>
           <p><b>共通条件:</b> ${missing.length ? "未入力項目があります。" : commonPass ? "共通条件は通過です。" : escapeHtml(failReasons.join(" / "))}</p>
-          <p><b>扱い:</b> ${commonPass ? "候補別条件の確認に進めます。購入確定ではありません。" : "この状態では購入可否判定を進めず、延期または候補縮小として扱います。"}</p>
+          <p><b>扱い:</b> ${commonPass ? "候補別条件の確認に進めます。購入確定ではありません。" : "この状態では購入検討可否判定を進めず、延期または候補縮小として扱います。"}</p>
         `;
         target.querySelectorAll(".sim-candidate-result").forEach((cell, index) => {
           const row = decisionRows[index];
@@ -3982,7 +3984,7 @@
         : "該当なし";
       const strongestNote = strongest?.category === "残す"
         ? "数値順位と安全分岐の両方で候補に残った状態です。"
-        : "点数は最上位でも、安全分岐で「残す」になっていないため、保有候補としては扱いません。";
+        : "点数は最上位でも、安全分岐で「残す」になっていないため、検証候補としては扱いません。";
       target.innerHTML = `
         <article class="conclusion-card hold">
           <small>NISA点1位</small>
@@ -3990,22 +3992,22 @@
           <p>${strongest ? `NISA${pointOrText(strongest.nisa_score)} / 分類: ${escapeHtml(strongest.category)}。${strongestNote}` : "CSVを読み込むと表示します。"}</p>
         </article>
         <article class="conclusion-card keep">
-          <small>保有候補として残す</small>
+          <small>検証候補として残す</small>
           <b>${safeNames}</b>
           <p>この欄は「残す」判定だけです。購入確定ではなく、6月の市場イベントと追加確認に進める候補です。</p>
         </article>
         <article class="conclusion-card drop">
           <small>予備・保留・除外</small>
           <b>予備 ${reserveRows.length}件 / 保留 ${holdRows.length}件 / 落とす ${dropRows.length}件</b>
-          <p>予備は購入候補ではなく、決算後20営業日反応や6月イベント後の地合いで昇格可否を確認する補充枠です。</p>
+          <p>予備は購入検討対象ではなく、決算後20営業日反応や6月イベント後の地合いで昇格可否を確認する補充枠です。</p>
         </article>
       `;
     };
 
     const categoryExplanation = (category) => {
       if (category === "残す") return "6月イベント後に深掘りする候補として残します。";
-      if (category === "予備") return "候補数を広げるための補充枠です。決算後20営業日反応と6月イベント後の地合い確認が終わるまで購入候補には上げません。";
-      if (category === "保留") return "数値は強くても、過熱・反応悪化・特殊要因が残るため、購入候補には上げず再判定待ちにします。";
+      if (category === "予備") return "候補数を広げるための補充枠です。決算後20営業日反応と6月イベント後の地合い確認が終わるまで購入検討対象には上げません。";
+      if (category === "保留") return "数値は強くても、過熱・反応悪化・特殊要因が残るため、購入検討対象には上げず再判定待ちにします。";
       if (category === "落とす") return "現時点では初回テスト候補から外し、明確な改善データが出るまで監視のみとします。";
       return "追加確認が必要です。";
     };
@@ -4275,7 +4277,7 @@
       } finally {
         if (button) {
           button.disabled = false;
-          button.textContent = "計算結果で保有候補更新";
+          button.textContent = "計算結果で検証候補更新";
         }
       }
     };
@@ -4353,7 +4355,7 @@
         watch: "候補銘柄の下方修正、配当、自社株買い、通期予想。",
         good: "下方修正なし、配当維持/増配、決算後5営業日で-8%以内。",
         bad: "下方修正、営業利益見通し-10%以上、出来高急増で大陰線。",
-        action: "悪い銘柄は除外。良い銘柄は6月の購入可否判定に残す。"
+        action: "悪い銘柄は除外。良い銘柄は6月の購入検討可否判定に残す。"
       },
       "mufg-may": {
         title: "5/18前後 三菱UFJ決算確認",
@@ -4367,14 +4369,14 @@
         watch: "日経平均75日線、決算後の値動き、米金利。",
         good: "日経平均が75日線以上、または75日線割れでも-1.5%以内。",
         bad: "日経平均が75日線を-1.5%以上下回る。",
-        action: "良ければ6月判定の候補に残す。悪ければ購入候補から外す。"
+        action: "良ければ6月判定の候補に残す。悪ければ購入検討対象から外す。"
       },
       "cpi-june": {
         title: "6/10 米5月CPI",
         watch: "CPI前年比、前月比、コアCPI、米10年金利。",
         good: "前年比3.8%以下、前月比0.4%以下、コア前月比0.4%以下、米10年金利4.60%未満。",
         bad: "前年比4.0%以上、前月比0.5%以上、コア前月比0.5%以上、米10年金利4.70%以上。",
-        action: "良ければ6/18以降の購入可否判定へ進む。悪ければ延期または候補枠を縮小。"
+        action: "良ければ6/18以降の購入検討可否判定へ進む。悪ければ延期または候補枠を縮小。"
       },
       "boj-june": {
         title: "6/15-6/16 日銀会合",
@@ -4388,10 +4390,10 @@
         watch: "米10年金利、NASDAQ、ドル円、声明文。",
         good: "米10年金利4.60%未満、NASDAQが2営業日で-3%以内。",
         bad: "米10年金利4.70%以上、NASDAQ-3%以上、ドル円±3%以上の急変。",
-        action: "良ければ6/18-6/24に購入可否判定へ進む。悪ければ延期。"
+        action: "良ければ6/18-6/24に購入検討可否判定へ進む。悪ければ延期。"
       },
       "add-june": {
-        title: "6/18-6/24 購入可否判定",
+        title: "6/18-6/24 購入検討可否判定",
         watch: "米CPI、日銀、FOMCを通過した後の市場反応。",
         good: "米金利急騰なし、円高ショックなし、日経平均75日線以上。",
         bad: "金利4.70%以上、日経平均75日線-2%以上、候補銘柄に下方修正。",
