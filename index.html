@@ -1490,6 +1490,7 @@
         <a href="backtest_validation_20260525.html">過去検証</a>
         <a href="plus1_benchmark_connection_20260525.html">+1%目標接続</a>
         <a href="event_causality_validation_20260525.html">イベント因果チェック</a>
+        <a href="display_wording_audit_20260525.html">表示文言監査</a>
         <a href="tenbagger_research_corner.html">テンバガー探索</a>
         <a href="development_plan.html">開発計画</a>
         <a href="system_spec_schedule.pdf">仕様・工期PDF</a>
@@ -1498,7 +1499,7 @@
         <a href="data_sources_view.html">データ取得結果</a>
         <a href="mvp_operation_manual.md">運用手順</a>
         <a href="#benchmark">合格ライン</a>
-        <a href="#flow">買う時期</a>
+        <a href="#flow">開始判定</a>
         <a href="#portfolio">配分</a>
         <a href="#stocks">銘柄根拠</a>
         <a href="#rules">条件分岐</a>
@@ -1540,13 +1541,14 @@
             <a class="button secondary" href="backtest_validation_20260525.html">過去検証</a>
             <a class="button secondary" href="plus1_benchmark_connection_20260525.html">+1%目標接続</a>
             <a class="button secondary" href="event_causality_validation_20260525.html">イベント因果チェック</a>
+            <a class="button secondary" href="display_wording_audit_20260525.html">表示文言監査</a>
             <a class="button secondary" href="dual_axis_selection_model.html">質的×量的 二軸選定</a>
             <a class="button secondary" href="event_impact_2026_screening_plan.html">2026イベント100社評価</a>
             <a class="button secondary" href="trend_deduction_research_base.html">時流演繹リサーチ</a>
             <a class="button secondary" href="trend_candidate_price_intake.html">時流候補 株価一次判定</a>
             <a class="button secondary" href="trend_candidate_fundamental_gate.html">時流候補 財務IR二次判定</a>
             <a class="button secondary" href="trend_candidate_official_ir_gate.html">時流候補 公式IR確認ゲート</a>
-            <a class="button" href="#flow">買う時期を見る</a>
+            <a class="button" href="#flow">開始条件を見る</a>
             <a class="button secondary" href="#rules">条件分岐を見る</a>
             <a class="button secondary" href="mvp_client_summary.pdf">MVP概要PDF</a>
             <a class="button secondary" href="stock_decision_mvp_calculated.xlsx">MVPブック</a>
@@ -1802,7 +1804,7 @@
             </div>
             <div class="risk-rule">
               <b>危険 6点以上</b>
-              新規買いを停止します。ドル円が3営業日で-3%以上、DXYが5日で-2.5%以上下落、VIX25以上なら現金比率を上げます。
+              新規投入を停止します。ドル円が3営業日で-3%以上、DXYが5日で-2.5%以上下落、VIX25以上なら現金比率を上げます。
             </div>
             <div class="risk-rule">
               <b>解除条件</b>
@@ -1847,7 +1849,7 @@
                 <div class="chain-step"><small>連想材料</small><span>FOMC、米CPI、米PPI、日銀会合、ドル指数DXY、ドル円</span></div>
                 <div class="chain-step"><small>出来事</small><span>インフレ再加速、利下げ後退、日銀利上げ観測、急な円高、ドル急落</span></div>
                 <div class="chain-step"><small>付随する出来事</small><span>輸出株売り、高PER株売り、銀行株見直し、外国人投資家の日本株売買</span></div>
-                <div class="chain-step"><small>見る数値と行動</small><span>DXY5日-2.5%、ドル円5日-3%、VIX25以上なら新規買い停止。金利上昇なら高PER半分。</span></div>
+                <div class="chain-step"><small>見る数値と行動</small><span>DXY5日-2.5%、ドル円5日-3%、VIX25以上なら新規投入停止。金利上昇なら高PER半分。</span></div>
               </div>
             </div>
 
@@ -1924,8 +1926,8 @@
       <section id="flow">
         <div class="section-head">
           <div>
-            <h2>買う時期: 4ステップ</h2>
-            <p>今すぐ全額ではなく、イベントを見ながら段階的に買います。</p>
+            <h2>開始判定: 4ステップ</h2>
+            <p>今すぐ全額ではなく、イベントを見ながら段階的に実施可否を判断します。</p>
           </div>
         </div>
         <div class="flow">
@@ -2052,12 +2054,12 @@
         <div class="section-head">
           <div>
             <h2>条件分岐: 何%ならどうするか</h2>
-            <p>顧客に説明しやすいよう、買う/待つを数字で決めます。</p>
+            <p>顧客に説明しやすいよう、開始/待機を数字で決めます。</p>
           </div>
         </div>
         <div class="decision-grid">
           <div class="decision buy">
-            <b>予定通り買う条件</b>
+            <b>予定通り開始する条件</b>
             米CPIが落ち着く / 米10年金利4.60%未満 / 日経平均が75日線以上 / 決算下方修正なし
           </div>
           <div class="decision delay">
@@ -2071,7 +2073,7 @@
             <tr><td>米CPI</td><td>前年比3.8%以下、前月比0.4%以下</td><td>前年比4.0%以上、前月比0.5%以上</td><td>悪ければ6月判定を延期または候補枠を縮小</td></tr>
             <tr><td>米10年金利</td><td>4.60%未満</td><td>4.70%以上</td><td>悪ければ半導体の追加を止める</td></tr>
             <tr><td>日銀後の為替</td><td>2営業日の円高が3%未満</td><td>2営業日で3%以上円高</td><td>輸出・海外比率が高い銘柄を待つ</td></tr>
-            <tr><td>日経平均</td><td>75日線以上</td><td>75日線を-2%以上下回る</td><td>個別株の新規買い停止</td></tr>
+            <tr><td>日経平均</td><td>75日線以上</td><td>75日線を-2%以上下回る</td><td>個別株の新規投入停止</td></tr>
             <tr><td>決算</td><td>営業利益YoYプラス、進捗25%以上</td><td>営業利益YoY-10%以上、下方修正</td><td>悪い銘柄は除外</td></tr>
           </table>
         </div>
@@ -2088,7 +2090,7 @@
           <div class="scenario-card">
             <b>日経平均 -5%</b>
             <span>市場全体の軽い調整。</span>
-            <div class="action">新規買い停止。現金15万円から最大3万円だけ追加可。</div>
+            <div class="action">新規投入停止。現金15万円から最大3万円だけ追加可。</div>
           </div>
           <div class="scenario-card">
             <b>日経平均 -10%</b>
@@ -2116,7 +2118,7 @@
           </div>
         </div>
         <div class="calendar-legend" aria-label="カレンダー凡例">
-          <span><i style="background:var(--green)"></i>買う/追加候補</span>
+          <span><i style="background:var(--green)"></i>開始/追加候補</span>
           <span><i style="background:var(--orange)"></i>確認・待機</span>
           <span><i style="background:var(--red)"></i>危険判定</span>
           <span><i style="background:var(--purple)"></i>マクロイベント</span>
@@ -2173,7 +2175,7 @@
           <h3>カレンダーのイベントをクリックしてください</h3>
           <div class="event-detail-grid">
             <div><b>見る数字</b><span>イベントを選ぶと表示されます。</span></div>
-            <div><b>良い条件</b><span>買う/追加する条件です。</span></div>
+            <div><b>良い条件</b><span>開始/追加を検討できる条件です。</span></div>
             <div><b>悪い条件</b><span>延期/半減する条件です。</span></div>
             <div><b>行動</b><span>実際のアクションです。</span></div>
           </div>
@@ -2278,10 +2280,10 @@
         <div class="panel">
           <table class="rule-table">
             <tr><th>起きたこと</th><th>行動</th><th>理由</th></tr>
-            <tr><td>ポートフォリオ-5%</td><td>新規買い停止。現金から最大3万円だけ追加可。</td><td>普通の押し目か、失敗かを見分ける。</td></tr>
+            <tr><td>ポートフォリオ-5%</td><td>新規投入停止。現金から最大3万円だけ追加可。</td><td>普通の押し目か、失敗かを見分ける。</td></tr>
             <tr><td>ポートフォリオ-10%</td><td>半導体比率を下げる。追加買い停止。</td><td>高PER株が崩れた時は守る。</td></tr>
             <tr><td>日経平均が高値から-10%</td><td>予定買いを半分にする。</td><td>市場全体が悪い時は急がない。</td></tr>
-            <tr><td>日経平均が75日線を-2%以上下回る</td><td>個別株の新規買い停止。</td><td>指数トレンドが悪い時は勝率が下がる。</td></tr>
+            <tr><td>日経平均が75日線を-2%以上下回る</td><td>個別株の新規投入停止。</td><td>指数トレンドが悪い時は勝率が下がる。</td></tr>
             <tr><td>指数に4週間で-3%pt以上負け</td><td>負けている銘柄を1つ外す。</td><td>S&P500投信や日経平均連動投信に勝てないなら個別株の意味が弱い。</td></tr>
             <tr><td>3か月で比較対象を+1%pt以上上回れない</td><td>日本個別株比率を下げ、指数投信へ戻す。</td><td>この運用の最低合格ラインを下回ったため。</td></tr>
           </table>
