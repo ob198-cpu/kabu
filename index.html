@@ -1690,6 +1690,9 @@
               <div class="score-ranking-summary" id="backtest-readiness">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、過去検証に使えるイベント後リターンと月次データの接続状況を表示します。</div>
               </div>
+              <div class="score-ranking-summary" id="benchmark-comparison">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、S&P500・日経平均・TOPIXとの比較条件を表示します。</div>
+              </div>
               <div class="score-ranking-summary" id="universe-policy">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、100社前後の母集団をどう作るか、条件と現在の内訳を表示します。</div>
               </div>
@@ -2673,6 +2676,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、過去検証に使えるイベント後リターンと月次データの接続状況を表示します。</div>`;
     };
 
+    const renderBenchmarkComparisonHint = () => {
+      const target = document.getElementById("benchmark-comparison");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、S&P500・日経平均・TOPIXとの比較条件を表示します。</div>`;
+    };
+
     const renderUniversePolicyHint = () => {
       const target = document.getElementById("universe-policy");
       if (!target) return;
@@ -2965,7 +2974,7 @@
         ["7", "決算後反応の未到達を別扱い", "反映済み", "未取得と35点未満を購入候補点から分離。"],
         ["8", "過去検証・バックテスト", "未反映", "イベント後リターンDBの整備後に検証する。"],
         ["9", "100社母集団の条件固定", "反映済み", "採用方針、現在の100社内訳、補充ルール、抽出工程を表示。"],
-        ["10", "S&P500/日経平均/TOPIX比較", "一部反映", "目標は明記済み。自動比較と月次検証は継続実装。"],
+        ["10", "S&P500/日経平均/TOPIX比較", "反映済み", "S&P500・日経平均の取得値、TOPIX未接続、+1%pt合格式を表示。"],
       ];
       const statusBadge = (status) => {
         if (status === "反映済み") return readinessBadge("ok", status);
@@ -3287,6 +3296,124 @@
           <table class="mechanism-table">
             <thead><tr><th>順位</th><th>銘柄</th><th>月次取得</th><th>月次リターン件数</th><th>平均月次</th><th>扱い</th></tr></thead>
             <tbody>${monthlyRows}</tbody>
+          </table>
+        </section>
+      `;
+    };
+
+    const marketRowsBySymbol = (rows, symbol) => rows
+      .filter((row) => row.market_symbol === symbol)
+      .sort((a, b) => String(a.month || "").localeCompare(String(b.month || "")));
+
+    const trailingReturnFromMonthly = (rows, monthsBack) => {
+      const validRows = rows.filter((row) => numericValue(row.month_close) !== null);
+      if (validRows.length <= monthsBack) return null;
+      const latest = validRows[validRows.length - 1];
+      const base = validRows[validRows.length - 1 - monthsBack];
+      const latestClose = numericValue(latest.month_close);
+      const baseClose = numericValue(base.month_close);
+      if (latestClose === null || baseClose === null || baseClose === 0) return null;
+      return ((latestClose / baseClose) - 1) * 100;
+    };
+
+    const latestMarketRow = (rows) => rows[rows.length - 1] || {};
+
+    const renderBenchmarkComparison = (marketMonthlyRows, benchmarkRows, reviewScheduleRows) => {
+      const target = document.getElementById("benchmark-comparison");
+      if (!target) return;
+      const benchmarkDefs = [
+        { symbol: "^GSPC", name: "S&P500", role: "S&P500投信想定", source: "Yahoo Finance chart API" },
+        { symbol: "^N225", name: "日経平均", role: "日経平均連動想定", source: "Yahoo Finance chart API" },
+        { symbol: "TOPIX", name: "TOPIX", role: "TOPIX連動想定", source: "未接続" },
+      ];
+      const rows = benchmarkDefs.map((item) => {
+        const symbolRows = marketRowsBySymbol(marketMonthlyRows, item.symbol);
+        const latest = latestMarketRow(symbolRows);
+        const oneMonth = numericValue(latest.market_return_1m_pct);
+        const threeMonth = numericValue(latest.market_return_3m_pct);
+        const twelveMonth = trailingReturnFromMonthly(symbolRows, 12);
+        const connected = symbolRows.length > 0;
+        return {
+          ...item,
+          connected,
+          count: symbolRows.length,
+          latestMonth: latest.month || "",
+          latestClose: numericValue(latest.month_close),
+          oneMonth,
+          threeMonth,
+          twelveMonth,
+        };
+      });
+      const connectedRows = rows.filter((row) => row.connected);
+      const bestBenchmark12m = Math.max(...connectedRows.map((row) => row.twelveMonth).filter((value) => value !== null));
+      const hasBest = Number.isFinite(bestBenchmark12m);
+      const requiredReturn = hasBest ? bestBenchmark12m + 1 : null;
+      const trackingRows = benchmarkRows.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.benchmark_name)}</td>
+          <td>${escapeHtml(row.role)}</td>
+          <td>${escapeHtml(row.status)}</td>
+          <td>${escapeHtml(row.source)}</td>
+        </tr>
+      `).join("") || `<tr><td colspan="4">ベンチマーク入力表を確認中です。</td></tr>`;
+      const scheduleRows = reviewScheduleRows.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.timing)}</td>
+          <td>${escapeHtml(row.purpose)}</td>
+          <td>${escapeHtml(row.inputs)}</td>
+          <td>${escapeHtml(row.output)}</td>
+          <td>${escapeHtml(row.action_rule)}</td>
+        </tr>
+      `).join("") || `<tr><td colspan="5">評価スケジュールを確認中です。</td></tr>`;
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>S&P500・日経平均・TOPIX 比較</h4>
+          <p>本システムの合格ラインは、S&P500投信、日経平均/TOPIX連動投信、投資会社運用など、現実的な代替案の中で最も良い成績を1%ポイント以上上回ることです。現時点では購入前のため、成績判定ではなく比較ルールと取得状況を表示します。</p>
+          <div class="candidate-conclusion">
+            <article class="conclusion-card hold">
+              <small>合格条件</small>
+              <b>最良ベンチマーク +1%pt</b>
+              <p>1年後に本システム候補の実績と比較します。</p>
+            </article>
+            <article class="conclusion-card keep">
+              <small>自動取得済み</small>
+              <b>${connectedRows.length}指数</b>
+              <p>S&P500、日経平均などの月次データを接続。</p>
+            </article>
+            <article class="conclusion-card drop">
+              <small>現時点の判定</small>
+              <b>未判定</b>
+              <p>購入日・実績値が未入力のため、勝敗は判定しません。</p>
+            </article>
+          </div>
+          <div class="formula-box">
+            相対成績 = 本システム候補リターン - max(S&P500投信、日経平均/TOPIX連動投信、投資会社運用)<br>
+            合格 = 相対成績 >= +1.0%pt<br>
+            現時点の参考値: 自動取得済み指数の12か月最高リターン ${hasBest ? formatPercent(bestBenchmark12m) : "未算出"}、必要リターン ${requiredReturn !== null ? formatPercent(requiredReturn) : "未算出"}。
+          </div>
+          <table class="mechanism-table">
+            <thead><tr><th>比較対象</th><th>取得状態</th><th>月次件数</th><th>最新月</th><th>最新値</th><th>1か月</th><th>3か月</th><th>12か月</th><th>扱い</th></tr></thead>
+            <tbody>${rows.map((row) => `
+              <tr>
+                <td>${escapeHtml(row.role)}<br><small>${escapeHtml(row.name)}</small></td>
+                <td>${row.connected ? readinessBadge("ok", "取得済み") : readinessBadge("watch", "未接続")}</td>
+                <td>${row.count}件</td>
+                <td>${escapeHtml(row.latestMonth || "-")}</td>
+                <td>${row.latestClose !== null ? formatNumber(row.latestClose, 2) : "-"}</td>
+                <td>${formatPercent(row.oneMonth)}</td>
+                <td>${formatPercent(row.threeMonth)}</td>
+                <td>${formatPercent(row.twelveMonth)}</td>
+                <td>${row.connected ? "月次比較に使用" : "別途取得または手入力"}</td>
+              </tr>
+            `).join("")}</tbody>
+          </table>
+          <table class="mechanism-table">
+            <thead><tr><th>ベンチマーク</th><th>役割</th><th>入力状態</th><th>根拠元</th></tr></thead>
+            <tbody>${trackingRows}</tbody>
+          </table>
+          <table class="mechanism-table">
+            <thead><tr><th>時点</th><th>目的</th><th>入力</th><th>出力</th><th>判定ルール</th></tr></thead>
+            <tbody>${scheduleRows}</tbody>
           </table>
         </section>
       `;
@@ -3926,6 +4053,7 @@
       renderScoreModelRevisionHint();
       renderSectorAdjustmentHint();
       renderBacktestReadinessHint();
+      renderBenchmarkComparisonHint();
       renderUniversePolicyHint();
       renderCandidateReadinessHint();
       renderFinalDecisionGateHint();
@@ -4035,6 +4163,8 @@
           universeSummaryRows,
           universeReplenishmentRows,
           earningsUniverseRulesRows,
+          benchmarkRows,
+          benchmarkScheduleRows,
         ] = await Promise.all([
           fetchCsvRows("245_nisa_1year_hold_score_top20.csv"),
           fetchCsvRows("239_top10_reaction_adjusted_score.csv"),
@@ -4048,6 +4178,8 @@
           fetchCsvRowsOptional("210_meaningful_universe_summary.csv"),
           fetchCsvRowsOptional("211_universe_replenishment_rules.csv"),
           fetchCsvRowsOptional("212_earnings_momentum_universe_rules.csv"),
+          fetchCsvRowsOptional("113_benchmark_tracking_template.csv"),
+          fetchCsvRowsOptional("121_benchmark_review_schedule.csv"),
         ]);
         const adjustedByTicker = new Map(adjustedRows.map((row) => [row.ticker, row]));
         const baseByTicker = new Map(baseRows.map((row) => [row.ticker, row]));
@@ -4079,6 +4211,7 @@
         renderScoreModelRevision(allRankedRows);
         renderSectorAdjustment(allRankedRows);
         renderBacktestReadiness(allRankedRows, eventDetailRows, eventSummaryRows, stockMonthlyRows, marketMonthlyRows);
+        renderBenchmarkComparison(marketMonthlyRows, benchmarkRows, benchmarkScheduleRows);
         renderUniversePolicy(universeRows, universePolicyRows, universeSummaryRows, universeReplenishmentRows, earningsUniverseRulesRows);
         renderCandidateReadiness(allRankedRows);
         renderFinalDecisionGate(allRankedRows);
@@ -4098,6 +4231,7 @@
         renderScoreModelRevisionHint();
         renderSectorAdjustmentHint();
         renderBacktestReadinessHint();
+        renderBenchmarkComparisonHint();
         renderUniversePolicyHint();
         renderCandidateReadinessHint();
         renderFinalDecisionGateHint();
