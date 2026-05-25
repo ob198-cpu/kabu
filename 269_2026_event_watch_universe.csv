@@ -1,0 +1,13 @@
+event,period_2026,status,impact_area,company_extraction_hint,source_url,source_note,initial_priority
+FOMC,通年/次回以降も定例,公式日程あり,米金利・NASDAQ・高PER株・為替・日本株全体,銀行・半導体・グロース・輸出・商社を感応度別に抽出,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,Federal Reserve公式カレンダー,S
+日銀金融政策決定会合,通年/定例,公式日程あり,円金利・ドル円・銀行・不動産・輸出入企業,銀行・不動産・輸出比率/輸入比率の高い企業を抽出,https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm,日本銀行公式カレンダー,S
+米CPI/PPI/雇用統計,毎月,公式統計あり,米金利・為替・高PER株・半導体,高PER・海外比率・金利感応銘柄を抽出,https://www.bls.gov/schedule/news_release/cpi.htm,BLS公式リリース予定,A
+FIFA World Cup 2026,2026/06/11-2026/07/19,開催日程確定,広告・放送・旅行・飲料・スポーツ用品・ゲーム,広告代理店・放送/配信・旅行・飲料・スポーツ/ゲーム関連を抽出,https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026,FIFA公式情報,A
+TOB/MBO/非公開化案件,通年/随時,発表案件を都度確認,対象企業・親会社・同業再編・保有企業,TDnet/企業IRからTOB/MBO/公開買付を抽出,https://www.release.tdnet.info/inbs/I_main_00.html,TDnet適時開示,A
+KKRによる太陽HD非公開化,2026/03/31発表,発表済み例,TOB/MBO・半導体材料・DIC持分評価,対象4626・関係株主4631等をイベント研究例にする,https://www.taiyo-hd.co.jp/en/investor/irnews/news20260331000002/main/0/link/%28en%2920260331_05.pdf,企業IR/Business Wire発表例,A
+AI/データセンター投資継続,通年,継続テーマ,半導体・電力・冷却・光通信・素材,半導体装置・電線・電力制御・データセンター部材を抽出,https://www.iea.org/reports/energy-and-ai,IEA等の需給見通しを確認,S
+地政学/戦争/停戦/ホルムズ海峡,通年/不定期,継続リスク,原油・海運・防衛・航空・旅行・素材,防衛・商社・エネルギー・航空・旅行・化学を正負両方で抽出,https://www.eia.gov/,EIAや原油価格・海運指標と接続,A
+ビットコイン急落/急騰,通年/不定期,市場変動イベント,暗号資産関連・高PER・リスク選好,暗号資産関連・ネット証券・高PERグロースを抽出,https://finance.yahoo.com/quote/BTC-USD/,BTC価格と株価相関を見る,B
+大型新商品/新サービス,通年/企業別,企業IRで都度確認,ゲーム・半導体・EV・医薬・消費財,IRニュース・決算説明資料から新商品と売上KPIを抽出,https://www.release.tdnet.info/inbs/I_main_00.html,TDnet/企業IRで確認,A
+臨床試験/医薬承認,通年/企業別,企業IRで都度確認,医薬品・バイオ・医療機器,対象薬の売上規模・承認確率・失敗時リスクで抽出,https://www.pmda.go.jp/,PMDA/企業IRで確認,A
+米国大型IPO/指数組入れ,通年/随時,IPOカレンダー確認,米株・NASDAQ・関連サプライチェーン,Nasdaq IPOや指数組入れ候補から関連企業を抽出,https://www.nasdaq.com/market-activity/ipos,Nasdaq IPOカレンダー,B

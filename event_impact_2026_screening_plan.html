@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年 株価影響イベント抽出・100社評価計画</title>
+  <style>
+    :root{--ink:#061b2f;--muted:#40536a;--line:#cdddea;--bg:#f4f8fb;--navy:#123a5a;--blue:#0b6e9e;--green:#14724e;--amber:#a56300;--red:#b32632}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic","Meiryo",system-ui,sans-serif;line-height:1.65}
+    header{background:var(--navy);color:#fff;padding:30px 22px}.wrap,main{max-width:1260px;margin:auto}main{padding:22px 16px 48px}
+    h1{margin:0 0 8px;font-size:30px}h2{font-size:22px;border-left:8px solid var(--blue);padding-left:10px;margin:26px 0 12px}
+    .lead{color:#e9f6ff;max-width:1000px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 6px 18px rgba(20,55,90,.06)}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:12px;padding:12px;background:#f9fcff}.card b{display:block;font-size:22px;color:var(--navy)}
+    .ok{background:#eaf8f1;border:1px solid #a9dcc2;border-left:8px solid var(--green);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .notice{background:#fff7e7;border:1px solid #e9c174;border-left:8px solid var(--amber);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .danger{background:#fff0f1;border:1px solid #efb8be;border-left:8px solid var(--red);border-radius:10px;padding:12px 14px;margin:12px 0}
+    .formula{background:#061b2f;color:#fff;border-radius:12px;padding:14px;font-weight:900;overflow:auto}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+    table{width:100%;border-collapse:collapse;min-width:1180px}th,td{border-bottom:1px solid #e5eef6;padding:9px 10px;font-size:13px;vertical-align:top;text-align:left}th{background:#e8f2f9;color:#123b5a;font-weight:900;white-space:nowrap}
+    a{color:#0b638f;font-weight:800}.small{font-size:12px;color:var(--muted)}@media(max-width:900px){.cards{grid-template-columns:1fr}table{min-width:900px}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <h1>2026年 株価影響イベント抽出・100社評価計画</h1>
+    <p class="lead">TOB、新商品、金利、戦争、国策、大型スポーツイベントなど、株価に強く影響しやすいイベントを起点に、関連企業を抽出し、質的・量的の二軸で100社評価するための実行計画です。</p>
+  </div></header>
+  <main>
+    <section class="panel">
+      <h2>結論</h2>
+      <div class="ok"><b>実施可能です。</b> ただし、イベントを直接加点せず、イベント型ごとに「使い方」を分けます。TOBは発表後に織り込まれやすく、戦争・停戦は予測よりリスク管理向き、新商品は販売数や会社予想に接続できる場合だけ強い根拠になります。</div>
+      <div class="formula">
+        100社評価の基本式 = 量的スコア70% + 質的実績20% + 質的仮説10%<br>
+        質的Sでも、量的C・データ信頼度70未満・ハードゲート該当なら購入候補にしない
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>可能範囲</h2>
+      <div class="cards">
+        <div class="card"><b>即日</b>イベント型リスト、2026年イベント候補、関連業種の整理</div>
+        <div class="card"><b>1-2日</b>100社母集団と一次S-A-B-C評価</div>
+        <div class="card"><b>2-4日</b>各社検索、IR確認、量的スコア結合</div>
+        <div class="card"><b>最終</b>テスト候補10社と除外理由の提示</div>
+      </div>
+      <div class="notice">100社すべてを人間が深掘りするのは重いですが、AIで一次抽出・一次評価を行い、S/A候補だけ人間レビューに回す形なら現実的です。</div>
+    </section>
+
+    <section class="panel">
+      <h2>株価影響イベント型</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>イベント型</th><th>強度</th><th>典型影響</th><th>NISA1年向き</th><th>主なリスク</th><th>スコアでの扱い</th></tr></thead>
+        <tbody id="types-body"><tr><td colspan="6">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>2026年イベント監視表</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>イベント</th><th>時期</th><th>状態</th><th>影響領域</th><th>企業抽出ヒント</th><th>情報源</th><th>優先</th></tr></thead>
+        <tbody id="watch-body"><tr><td colspan="7">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>100社実施工程</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>工程</th><th>作業</th><th>対象数</th><th>自動化</th><th>目安時間</th><th>成果物</th><th>品質条件</th></tr></thead>
+        <tbody id="work-body"><tr><td colspan="7">読み込み中</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>注意点</h2>
+      <div class="danger">TOBやMBOは株価への影響が明確でも、発表後に対象株をNISA 1年候補にする意味は薄い場合があります。これは「株価に効くイベント」と「これから買う候補」は別物だからです。</div>
+      <div class="danger">オリンピックやワールドカップのような大型イベントは有名ですが、効果が広く薄く、織り込み済みになりやすいため、売上KPIに接続できる企業だけ評価対象にします。</div>
+      <div class="danger">戦争・停戦・ホルムズ海峡などは影響が大きい一方で予測困難です。買い根拠よりも、原油・為替・防衛・航空・旅行などのリスク分岐に使います。</div>
+    </section>
+  </main>
+  <script>
+    const files = {
+      types: "268_known_stock_impact_event_types.csv",
+      watch: "269_2026_event_watch_universe.csv",
+      work: "270_event_100_company_workplan.csv",
+    };
+    const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
+    const parseCsv = (text) => {
+      const rows = []; let row = []; let cell = ""; let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i]; const next = text[i + 1];
+        if (char === '"' && quoted && next === '"') { cell += '"'; i += 1; }
+        else if (char === '"') quoted = !quoted;
+        else if (char === "," && !quoted) { row.push(cell); cell = ""; }
+        else if ((char === "\n" || char === "\r") && !quoted) {
+          if (char === "\r" && next === "\n") i += 1;
+          row.push(cell); if (row.some((item) => item !== "")) rows.push(row); row = []; cell = "";
+        } else cell += char;
+      }
+      if (cell || row.length) { row.push(cell); rows.push(row); }
+      const [header, ...body] = rows; if (!header) return [];
+      return body.map((items) => Object.fromEntries(header.map((key, index) => [key, items[index] ?? ""])));
+    };
+    const fetchCsv = async (path) => parseCsv(await (await fetch(`${path}?v=${Date.now()}`)).text());
+    const link = (url, label = "source") => url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>` : "";
+    const render = async () => {
+      const [types, watch, work] = await Promise.all([fetchCsv(files.types), fetchCsv(files.watch), fetchCsv(files.work)]);
+      document.getElementById("types-body").innerHTML = types.map((row) => `
+        <tr><td><b>${escapeHtml(row.event_type)}</b></td><td>${escapeHtml(row.impact_strength)}</td><td>${escapeHtml(row.typical_impact)}</td><td>${escapeHtml(row.usable_for_nisa_1y)}</td><td>${escapeHtml(row.main_risk)}</td><td>${escapeHtml(row.score_use)}</td></tr>
+      `).join("");
+      document.getElementById("watch-body").innerHTML = watch.map((row) => `
+        <tr><td><b>${escapeHtml(row.event)}</b></td><td>${escapeHtml(row.period_2026)}</td><td>${escapeHtml(row.status)}</td><td>${escapeHtml(row.impact_area)}</td><td>${escapeHtml(row.company_extraction_hint)}</td><td>${link(row.source_url, row.source_note)}</td><td>${escapeHtml(row.initial_priority)}</td></tr>
+      `).join("");
+      document.getElementById("work-body").innerHTML = work.map((row) => `
+        <tr><td>${escapeHtml(row.phase)}</td><td><b>${escapeHtml(row.task)}</b></td><td>${escapeHtml(row.target_count)}</td><td>${escapeHtml(row.automation_level)}</td><td>${escapeHtml(row.estimated_time)}</td><td>${escapeHtml(row.output)}</td><td>${escapeHtml(row.quality_gate)}</td></tr>
+      `).join("");
+    };
+    render().catch((error) => {
+      document.getElementById("types-body").innerHTML = `<tr><td colspan="6">読み込み失敗: ${escapeHtml(error.message)}</td></tr>`;
+    });
+  </script>
+</body>
+</html>
