@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>+1%目標 接続チェック 2026年5月25日</title>
+  <style>
+    :root {
+      --ink: #111;
+      --blue: #073a5a;
+      --line: #bed3e5;
+      --bg: #f5f8fb;
+      --card: #fff;
+      --ok: #eaf7ef;
+      --warn: #fff5df;
+      --stop: #fdecec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", Meiryo, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 56px; }
+    h1 { margin: 0 0 8px; color: var(--blue); font-size: 30px; }
+    h2 { margin: 30px 0 12px; padding-left: 10px; border-left: 8px solid #0b6f9f; color: var(--blue); }
+    .lead, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 9px rgba(0,40,80,.06);
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid #9fc1db;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .kpi small { display: block; color: #38536b; font-weight: 700; }
+    .kpi b { display: block; font-size: 25px; color: var(--blue); }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+      color: #111;
+    }
+    th { background: #e4f1fa; color: var(--blue); }
+    .badge {
+      display: inline-block;
+      min-width: 88px;
+      text-align: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .ok { background: var(--ok); color: #007a3d; }
+    .warn { background: var(--warn); color: #8a5200; }
+    .stop { background: var(--stop); color: #b00020; }
+    .note { color: #333; font-size: 13px; }
+    @media (max-width: 900px) { .kpis { grid-template-columns: 1fr; } }
+    @media print {
+      body { background: #fff; }
+      .lead, .card, .kpi { break-inside: avoid; page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>+1%目標 接続チェック</h1>
+  <div class="lead">
+    <p><b>目的:</b> 個別株を選ぶ意味があるかを、S&P500・日経平均・TOPIX等の比較対象と接続します。目標は、比較対象のうち最も強いものを最低+1%ポイント上回ることです。</p>
+    <p><b>重要:</b> ここで使う1年騰落率は後ろ向きの確認です。将来リターンを保証しません。ゲートが残る銘柄は、比較上強くても購入検討へ進めません。</p>
+    <p><b>TOPIX:</b> 現在の手元CSVにはTOPIX月次がないため、仮値を入れず未取得として扱います。</p>
+    <div class="toolbar">
+      <a class="button" href="309_benchmark_plus1_reference.csv">309 比較対象CSV</a>
+      <a class="button" href="310_candidate_plus1_gate.csv">310 候補別+1%CSV</a>
+      <a class="button" href="311_plus1_allocation_rules.csv">311 配分ルールCSV</a>
+      <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+    
+      <div class="kpi">
+        <small>使用できる主比較</small>
+      <b>2件</b>
+        <span>S&amp;P500、日経平均を使用。TOPIXは未取得のため除外。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>参考比較</small>
+      <b>2件</b>
+        <span>NASDAQ、SMHは参考表示。+1%合格線には混ぜない。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>最も強い比較対象</small>
+      <b>日経平均 +49.55%</b>
+        <span>個別株候補は、この値に+1%ポイントした水準を超える必要がある。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>+1%合格線</small>
+      <b>+50.55%</b>
+        <span>この線を下回る候補は、個別株比率を下げる判断になる。</span>
+      </div>
+    
+  </div>
+
+  <h2>1. 比較対象</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>比較対象</th><th>区分</th><th>役割</th><th>状態</th><th>期間</th><th>12か月騰落率</th><th>扱い</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>S&amp;P500</td>
+            <td>主比較</td>
+            <td>既存の無難な米国株比較</td>
+            <td><span class="badge ok">取得済み</span></td>
+            <td>2025-05 - 2026-05</td>
+            <td>+25.05%</td>
+            <td>+1%合格線に使用</td>
+          </tr>
+        
+          <tr>
+            <td>日経平均</td>
+            <td>主比較</td>
+            <td>日本株指数比較</td>
+            <td><span class="badge ok">取得済み</span></td>
+            <td>2025-05 - 2026-05</td>
+            <td>+49.55%</td>
+            <td>+1%合格線に使用</td>
+          </tr>
+        
+          <tr>
+            <td>TOPIX</td>
+            <td>主比較</td>
+            <td>日本株広範囲比較</td>
+            <td><span class="badge stop">未取得</span></td>
+            <td>- - -</td>
+            <td>-</td>
+            <td>計算に混ぜない</td>
+          </tr>
+        
+          <tr>
+            <td>NASDAQ総合</td>
+            <td>参考比較</td>
+            <td>成長株・AI相場の参考比較</td>
+            <td><span class="badge ok">取得済み</span></td>
+            <td>2025-05 - 2026-05</td>
+            <td>+36.19%</td>
+            <td>参考比較。+1%合格線には混ぜない</td>
+          </tr>
+        
+          <tr>
+            <td>半導体ETF(SMH)</td>
+            <td>参考比較</td>
+            <td>半導体テーマの参考比較</td>
+            <td><span class="badge ok">取得済み</span></td>
+            <td>2025-05 - 2026-05</td>
+            <td>+130.03%</td>
+            <td>参考比較。+1%合格線には混ぜない</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2. 候補別 +1%ゲート</h2>
+  <div class="card">
+    <p class="note">最強の比較対象は 日経平均、12か月騰落率は +49.55%。したがって暫定合格線は +50.55% です。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>順位</th><th>銘柄</th><th>NISA点</th><th>1年騰落</th><th>合格線との差</th><th>過去検証</th><th>状態</th><th>アクション</th><th>理由</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr>
+            <td>1</td>
+            <td>4385.T メルカリ</td>
+            <td>79.8点</td>
+            <td>+70.7%</td>
+            <td>+20.15%</td>
+            <td>未接続</td>
+            <td><span class="badge warn">比較上は通過・ゲート保留</span></td>
+            <td>6月イベント後に再判定</td>
+            <td>1年実績は合格線比 +20.15%。ただし 決算後20営業日未到達 のため売買判断へ進めない。<br><span class="note">ゲート: 決算後20営業日未到達 / 信頼度 87点</span></td>
+          </tr>
+        
+          <tr>
+            <td>2</td>
+            <td>2802.T 味の素</td>
+            <td>67.8点</td>
+            <td>+57.1%</td>
+            <td>+6.55%</td>
+            <td>暫定検証可</td>
+            <td><span class="badge warn">比較上は通過・ゲート保留</span></td>
+            <td>6月イベント後に再判定</td>
+            <td>1年実績は合格線比 +6.55%。ただし 決算後20営業日未到達 のため売買判断へ進めない。<br><span class="note">ゲート: 決算後20営業日未到達 / PER 43.73倍で割高確認</span></td>
+          </tr>
+        
+          <tr>
+            <td>3</td>
+            <td>8316.T 三井住友FG</td>
+            <td>65.1点</td>
+            <td>+69.9%</td>
+            <td>+19.35%</td>
+            <td>未接続</td>
+            <td><span class="badge warn">比較上は通過・ゲート保留</span></td>
+            <td>6月イベント後に再判定</td>
+            <td>1年実績は合格線比 +19.35%。ただし 決算後20営業日未到達 のため売買判断へ進めない。<br><span class="note">ゲート: 決算後20営業日未到達</span></td>
+          </tr>
+        
+          <tr>
+            <td>4</td>
+            <td>5020.T ENEOS HD</td>
+            <td>64.3点</td>
+            <td>+90.9%</td>
+            <td>+40.35%</td>
+            <td>未接続</td>
+            <td><span class="badge warn">比較上は通過・ゲート保留</span></td>
+            <td>6月イベント後に再判定</td>
+            <td>1年実績は合格線比 +40.35%。ただし 決算後20営業日未到達 のため売買判断へ進めない。<br><span class="note">ゲート: 決算後20営業日未到達</span></td>
+          </tr>
+        
+          <tr>
+            <td>5</td>
+            <td>8306.T 三菱UFJ FG</td>
+            <td>62.1点</td>
+            <td>+56.8%</td>
+            <td>+6.25%</td>
+            <td>暫定検証可</td>
+            <td><span class="badge ok">比較上は有力</span></td>
+            <td>候補維持</td>
+            <td>1年実績が合格線を +6.25% 上回り、スコアと信頼度も最低条件を満たす。<br><span class="note">大きな停止理由なし</span></td>
+          </tr>
+        
+          <tr>
+            <td>6</td>
+            <td>6146.T ディスコ</td>
+            <td>60.9点</td>
+            <td>+97.7%</td>
+            <td>+47.15%</td>
+            <td>未接続</td>
+            <td><span class="badge ok">比較上は有力</span></td>
+            <td>候補維持</td>
+            <td>1年実績が合格線を +47.15% 上回り、スコアと信頼度も最低条件を満たす。<br><span class="note">60日最大下落 -23.5%</span></td>
+          </tr>
+        
+          <tr>
+            <td>7</td>
+            <td>6762.T TDK</td>
+            <td>60.7点</td>
+            <td>+105.9%</td>
+            <td>+55.35%</td>
+            <td>未接続</td>
+            <td><span class="badge ok">比較上は有力</span></td>
+            <td>候補維持</td>
+            <td>1年実績が合格線を +55.35% 上回り、スコアと信頼度も最低条件を満たす。<br><span class="note">60日最大下落 -20%</span></td>
+          </tr>
+        
+          <tr>
+            <td>8</td>
+            <td>6503.T 三菱電機</td>
+            <td>55.6点</td>
+            <td>+108.2%</td>
+            <td>+57.65%</td>
+            <td>未接続</td>
+            <td><span class="badge warn">比較上は通過・ゲート保留</span></td>
+            <td>6月イベント後に再判定</td>
+            <td>1年実績は合格線比 +57.65%。ただし 決算後20営業日未到達 のため売買判断へ進めない。<br><span class="note">ゲート: 決算後20営業日未到達</span></td>
+          </tr>
+        
+          <tr>
+            <td>9</td>
+            <td>8766.T 東京海上HD</td>
+            <td>65.4点</td>
+            <td>+37.7%</td>
+            <td>-12.85%</td>
+            <td>未接続</td>
+            <td><span class="badge stop">指数優位・ゲートあり</span></td>
+            <td>個別株比率を下げる</td>
+            <td>1年実績が合格線を +12.85% 下回る。現時点では指数・投信優先。<br><span class="note">ゲート: 決算後反応未接続 / なし / 暫定: 20営業日未到達</span></td>
+          </tr>
+        
+          <tr>
+            <td>10</td>
+            <td>6367.T ダイキン工業</td>
+            <td>52.6点</td>
+            <td>+49.6%</td>
+            <td>-0.95%</td>
+            <td>未接続</td>
+            <td><span class="badge stop">指数優位・ゲートあり</span></td>
+            <td>個別株比率を下げる</td>
+            <td>1年実績が合格線を +0.95% 下回る。現時点では指数・投信優先。<br><span class="note">ゲート: 決算後反応未接続 / なし / 暫定: 20営業日未到達</span></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. 個別株比率を下げるとは何をするか</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>条件</th><th>実際にすること</th><th>意味</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>合格線を上回り、ゲートなし、信頼度90点以上</td>
+            <td>個別株テスト候補として維持</td>
+            <td>指数より個別株を選ぶ理由がある。ただし6月イベント後に再確認。</td>
+          </tr>
+        
+          <tr>
+            <td>合格線を上回るが、決算後20営業日未到達などのゲートあり</td>
+            <td>購入検討へ進めず、6月イベント後に再判定</td>
+            <td>過去実績は強くても、今買う根拠としては未完成。</td>
+          </tr>
+        
+          <tr>
+            <td>合格線を下回る</td>
+            <td>個別株比率を下げる</td>
+            <td>その銘柄を買うより、指数・投信でよい可能性が高い。</td>
+          </tr>
+        
+          <tr>
+            <td>TOPIXなど比較対象が未取得</td>
+            <td>未取得として記録し、計算に混ぜない</td>
+            <td>取れていないデータを仮値で補わない。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+    <p class="note">「個別株比率を下げる」とは、候補から外す・購入額を減らす・指数投信や現金待機へ回す、という具体的な資金配分変更です。</p>
+    <p class="note">作成日: 2026/05/25 21:02</p>
+  </div>
+</main>
+</body>
+</html>

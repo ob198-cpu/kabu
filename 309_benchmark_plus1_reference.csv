@@ -1,0 +1,6 @@
+﻿updated_at,benchmark_symbol,benchmark_name,role,comparison_group,data_status,start_month,end_month,start_value,end_value,trailing_12m_return_pct,source,treatment
+2026/05/25 21:02,^GSPC,S&P500,既存の無難な米国株比較,主比較,取得済み,2025-05,2026-05,5911.69,7392.42,25.05,89_market_monthly_returns.csv / Yahoo Finance chart API 1mo,+1%合格線に使用
+2026/05/25 21:02,^N225,日経平均,日本株指数比較,主比較,取得済み,2025-05,2026-05,40487.39,60550.59,49.55,89_market_monthly_returns.csv / Yahoo Finance chart API 1mo,+1%合格線に使用
+2026/05/25 21:02,^TOPX,TOPIX,日本株広範囲比較,主比較,未取得,,,,,,未取得。追加取得が必要。,計算に混ぜない
+2026/05/25 21:02,^IXIC,NASDAQ総合,成長株・AI相場の参考比較,参考比較,取得済み,2025-05,2026-05,19113.77,26030.32,36.19,89_market_monthly_returns.csv / Yahoo Finance chart API 1mo,参考比較。+1%合格線には混ぜない
+2026/05/25 21:02,SMH,半導体ETF(SMH),半導体テーマの参考比較,参考比較,取得済み,2025-05,2026-05,239.75,551.5,130.03,89_market_monthly_returns.csv / Yahoo Finance chart API 1mo,参考比較。+1%合格線には混ぜない
