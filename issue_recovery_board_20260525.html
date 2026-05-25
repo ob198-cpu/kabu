@@ -108,17 +108,17 @@
           <td class="status-done">回収済み</td>
           <td>未取得は0点や仮値にせず、購入検討用スコアから外す表を追加。参考点と採用点も分離。</td>
           <td>missing_data_score_gate_20260525.html / 290_missing_data_score_gate.csv / 291_required_field_matrix.csv</td>
-          <td>次工程では、100社母集団の条件固定へ進む。</td>
+          <td>次工程では、100社前後の母集団条件固定へ進む。</td>
           <td>未取得が多い銘柄は購入検討へ進めない。</td>
         </tr><tr>
           <td class="p-high">高</td>
-          <td><b>100社母集団の条件が恣意的に見える</b></td>
-          <td>意味ある100社を作るには、選定条件を固定しないと後出しに見える。</td>
-          <td class="status-todo">未完了</td>
-          <td>暫定母集団と上位20補完再計算までは作成済み。</td>
-          <td>meaningful_universe_design.html / top20_completion_recalculated_candidates.html</td>
-          <td>母集団条件を「決算成長、流動性、時価総額、除外条件」で固定し、同じ条件で再生成する。</td>
-          <td>6月テスト前に優先して整える。</td>
+          <td><b>100社前後の母集団条件が恣意的に見える</b></td>
+          <td>意味ある100社前後の母集団を作るには、選定条件を固定しないと後出しに見える。</td>
+          <td class="status-done">回収済み</td>
+          <td>100社ぴったりではなく100社前後を目安にし、役割・データ取得状況・除外条件・補充ルールを固定。</td>
+          <td>universe_definition_20260525.html / 293_universe_fixed_policy.csv / 294_universe_membership_audit.csv</td>
+          <td>次工程では、業種別補正へ進む。</td>
+          <td>母集団は検証対象であり、売買対象ではない。</td>
         </tr><tr>
           <td class="p-high">高</td>
           <td><b>業種別補正がまだ弱い</b></td>
@@ -173,7 +173,7 @@
     <ol>
       <li>メイン画面の「検証候補」という強い表現を、必要箇所で「検証候補」へ整理する。</li>
       <li>未取得データを点数に混ぜない列を全候補に追加し、データ信頼度70点未満の扱いを固定する。</li>
-      <li>100社母集団の条件を固定し、再現できる選定条件として保存する。</li>
+      <li>100社前後の母集団条件を固定し、再現できる選定条件として保存する。</li>
       <li>業種別補正とベンチマーク比較を入れ、+1%目標に接続する。</li>
       <li>過去イベント後リターンを取り、質的イベント評価を「仮説」から「実績確認」へ進める。</li>
     </ol>

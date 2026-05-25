@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>100社前後の母集団 条件固定 2026年5月25日</title>
+  <style>
+    body { margin:0; font-family:"Yu Gothic", Meiryo, sans-serif; color:#111; background:#f5f8fb; line-height:1.65; }
+    main { max-width:1240px; margin:0 auto; padding:28px 18px 54px; }
+    h1 { margin:0 0 8px; color:#073a5a; font-size:28px; }
+    h2 { margin:30px 0 12px; padding-left:10px; border-left:8px solid #0b6f9f; color:#073a5a; }
+    .card, .lead { background:#fff; border:1px solid #cbddeb; border-radius:10px; padding:16px 18px; box-shadow:0 2px 8px rgba(0,40,80,.06); }
+    .grid { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .kpi { background:#fff; border:1px solid #cbddeb; border-radius:10px; padding:14px; }
+    .kpi span { display:block; color:#42526b; font-size:13px; }
+    .kpi b { display:block; color:#073a5a; font-size:24px; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; background:#fff; margin-top:12px; }
+    th, td { border:1px solid #cbddeb; padding:8px 9px; vertical-align:top; overflow-wrap:anywhere; font-size:12.5px; }
+    th { background:#e4f1fa; color:#073a5a; }
+    .ok { color:#007a3d; font-weight:800; }
+    .warn { color:#9a5b00; font-weight:800; }
+    .formula { font-family:Consolas, "Yu Gothic", Meiryo, sans-serif; background:#f7fbff; border:1px solid #cbddeb; border-radius:8px; padding:12px; }
+    a { color:#075985; font-weight:700; }
+    @media print { body { background:#fff; } table, tr, td, th, .card, .lead, .kpi { break-inside:avoid; page-break-inside:avoid; box-shadow:none; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>100社前後の母集団 条件固定</h1>
+  <div class="lead">
+    <p><b>目的:</b> 「都合のよい100社を後から選んだ」と見えないように、検証対象となる母集団の条件、除外条件、補充ルールを固定します。</p>
+    <p><b>結論:</b> 現行の100社前後の母集団は売買対象ではなく、NISA 1年保有テスト候補を探すための比較母集団です。役割・データ取得状況・除外条件を記録し、スコア結果を見てから恣意的に入れ替えない運用にします。件数は90〜120社程度を許容し、無理に100社へ合わせません。</p>
+    <p><a href="index.html">メインページへ戻る</a> / <a href="issue_resolution_flowchart_20260525.html">課題解決フローへ戻る</a></p>
+  </div>
+
+  <div class="grid">
+    <div class="kpi"><span>固定日</span><b>2026/05/25 20:39</b><p>この時点の母集団定義として扱う。</p></div><div class="kpi"><span>入力母集団</span><b>100社</b><p>209_meaningful_universe_v2.csv</p></div><div class="kpi"><span>採用扱い</span><b>53社</b><p>役割と主要データ取得状況を確認できる銘柄。</p></div><div class="kpi"><span>確認待ち</span><b>47社</b><p>母集団には残すが、検証候補化には追加確認が必要。</p></div><div class="kpi"><span>次工程</span><b>業種別補正</b><p>PER/PBR/ROEを業種内で比較する準備へ進む。</p></div>
+  </div>
+
+  <h2>固定ルール</h2>
+  <table>
+    <thead><tr><th style="width:8%">ID</th><th style="width:18%">ルール</th><th>固定内容</th><th style="width:22%">通過条件</th><th style="width:20%">落ちた場合</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>U01</td>
+        <td><b>母集団は売買対象ではなく検証対象</b></td>
+        <td>100社前後の母集団は、NISA 1年保有候補を探すための比較対象群であり、この段階で購入検討対象とは呼ばない。件数は固定せず、品質を優先する。</td>
+        <td>各銘柄に検証上の役割が付いている。</td>
+        <td>役割が説明できない銘柄は母集団から外す。</td>
+      </tr><tr>
+        <td>U02</td>
+        <td><b>役割を必ず付与</b></td>
+        <td>指数比較、大型代表、NISA 1年保有、時流テーマ、マクロ感応、テンバガー探索のいずれかの役割を付ける。</td>
+        <td>universe_roles または primary_purpose が空欄でない。</td>
+        <td>役割不明として除外または補充待ちにする。</td>
+      </tr><tr>
+        <td>U03</td>
+        <td><b>データ取得状況を分ける</b></td>
+        <td>株価、業績、チャートの取得状況を同列に扱わず、未取得は順位や購入検討用スコアに混ぜない。</td>
+        <td>quote_status、performance_status、chart_status を記録する。</td>
+        <td>未取得項目は非加点。重要項目が取れない場合は検証候補へ進めない。</td>
+      </tr><tr>
+        <td>U04</td>
+        <td><b>数合わせをしない</b></td>
+        <td>100社ぴったりにすることを目的にしない。現行版は約100社を目安にするが、品質を優先し、除外や補充はログに残す。</td>
+        <td>追加・除外理由が記録されている。</td>
+        <td>理由のない追加はしない。</td>
+      </tr><tr>
+        <td>U05</td>
+        <td><b>同一テーマの偏りを管理</b></td>
+        <td>AI、半導体、銀行などに偏りすぎると分散検証にならないため、テーマとセクターの内訳を表示する。</td>
+        <td>sector、theme、primary_purpose の分布を確認できる。</td>
+        <td>偏りが強い場合は、代表銘柄へ絞るか補充ルールで調整する。</td>
+      </tr><tr>
+        <td>U06</td>
+        <td><b>検証前に条件を固定</b></td>
+        <td>6月テスト前にこの母集団定義を固定し、スコア結果を見た後で都合よく母集団を入れ替えない。</td>
+        <td>固定日、入力ファイル、変更ルールを明記する。</td>
+        <td>変更が必要な場合は、変更前後と理由を別ログに残す。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>母集団の作り方</h2>
+  <div class="card">
+    <div class="formula">
+      1. 役割を持つ日本株を一次母集団に入れる。<br>
+      2. 株価・業績・チャートの取得状況を記録する。<br>
+      3. 役割不明、データ未取得、話題性だけの銘柄は検証候補へ進めない。<br>
+      4. スコア後に都合よく母集団を入れ替えない。変更する場合は、補充ルールと変更理由を残す。
+    </div>
+  </div>
+
+  <h2>除外条件</h2>
+  <table>
+    <thead><tr><th style="width:8%">ID</th><th>条件</th><th>理由</th><th style="width:22%">扱い</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>E01</td>
+        <td>上場銘柄コードや対象企業名が確認できない</td>
+        <td>株価・決算・公式資料へ接続できず、検証対象として再現できない。</td>
+        <td>母集団から除外。</td>
+      </tr><tr>
+        <td>E02</td>
+        <td>役割が説明できない</td>
+        <td>なぜ比較対象に入っているのか説明できない銘柄は恣意的に見える。</td>
+        <td>除外または補充待ち。</td>
+      </tr><tr>
+        <td>E03</td>
+        <td>株価・業績・チャートの主要データがほぼ未取得</td>
+        <td>スコア計算に使えず、計算したふりになる。</td>
+        <td>探索メモに留め、検証候補へ進めない。</td>
+      </tr><tr>
+        <td>E04</td>
+        <td>話題性だけで数値根拠がない</td>
+        <td>質的イベントを直接加点すると誤判定になる。</td>
+        <td>仮説メモ扱い。過去反応や公式数値が取れるまで母集団入りさせない。</td>
+      </tr><tr>
+        <td>E05</td>
+        <td>同一テーマの重複が強すぎる</td>
+        <td>10社テストが同じリスクに偏る。</td>
+        <td>代表銘柄に絞り、残りは比較候補へ移す。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>補充ルール</h2>
+  <table>
+    <thead><tr><th style="width:18%">補充枠</th><th>追加条件</th><th style="width:28%">目的</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>小中型成長株</b></td>
+        <td>時価総額500億〜5,000億円、売上成長10%以上、赤字拡大なし、出来高あり。</td>
+        <td>大型株だけでは+1%超過の余地が小さいため、成長余地を検証する。</td>
+      </tr><tr>
+        <td><b>政策・国策テーマ</b></td>
+        <td>AI電力、防衛、防災、省人化など、政策資料・業界統計・会社受注に数字がある銘柄だけ追加。</td>
+        <td>質的テーマを仮説で止めず、数字に接続できる銘柄を入れる。</td>
+      </tr><tr>
+        <td><b>決算上方修正・増配・自社株買い</b></td>
+        <td>TDnet、IR、J-Quants等で上方修正、増配、自社株買いを確認できる銘柄。</td>
+        <td>1年保有で株価反応が起きやすいイベントの検証対象にする。</td>
+      </tr><tr>
+        <td><b>指数比較・守り枠</b></td>
+        <td>大型・高流動性・配当または安定利益があり、指数との比較対象として使える銘柄。</td>
+        <td>個別株を選ぶ意味があるか、無難な運用との比較に使う。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>分布確認</h2>
+  <table>
+    <thead><tr><th style="width:22%">区分</th><th>名前</th><th style="width:12%">件数</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>sector</td>
+        <td>医薬品</td>
+        <td>5社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>商社</td>
+        <td>5社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>半導体装置</td>
+        <td>5社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>建設</td>
+        <td>4社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>自動車</td>
+        <td>4社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>FA</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>エネルギー</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>ゲーム</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>化学</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>銀行</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>重工/防衛</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>小売</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>通信</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>鉄道</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>電子部品</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>保険</td>
+        <td>3社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>ゲーム/IP</td>
+        <td>2社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>ネット</td>
+        <td>2社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>医療機器</td>
+        <td>2社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>飲料</td>
+        <td>2社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>食品</td>
+        <td>2社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>生活必需品</td>
+        <td>2社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>総合電機</td>
+        <td>2社</td>
+      </tr><tr>
+        <td>sector</td>
+        <td>電線/光通信</td>
+        <td>2社</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>母集団監査表 上位30件</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:5%">ID</th>
+        <th style="width:14%">銘柄</th>
+        <th style="width:10%">業種</th>
+        <th style="width:13%">主目的</th>
+        <th style="width:10%">有用度</th>
+        <th style="width:13%">取得状況</th>
+        <th>母集団理由</th>
+        <th style="width:10%">固定状態</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>7203.T<br><b>トヨタ自動車</b></td>
+        <td>自動車</td>
+        <td>景気・マクロ感応</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表 / 金利・円安・資源・消費など市場環境の影響を測る</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>2</td>
+        <td>6758.T<br><b>ソニーグループ</b></td>
+        <td>エンタメ/半導体</td>
+        <td>指数比較・大型代表</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>3</td>
+        <td>8306.T<br><b>三菱UFJ FG</b></td>
+        <td>銀行</td>
+        <td>NISA 1年保有</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>4</td>
+        <td>8316.T<br><b>三井住友FG</b></td>
+        <td>銀行</td>
+        <td>NISA 1年保有</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>5</td>
+        <td>8411.T<br><b>みずほFG</b></td>
+        <td>銀行</td>
+        <td>NISA 1年保有</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>6</td>
+        <td>8766.T<br><b>東京海上HD</b></td>
+        <td>保険</td>
+        <td>NISA 1年保有</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>7</td>
+        <td>8750.T<br><b>第一生命HD</b></td>
+        <td>保険</td>
+        <td>NISA 1年保有</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>8</td>
+        <td>8725.T<br><b>MS&amp;AD</b></td>
+        <td>保険</td>
+        <td>NISA 1年保有</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>9</td>
+        <td>9432.T<br><b>NTT</b></td>
+        <td>通信</td>
+        <td>NISA 1年保有</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>10</td>
+        <td>9433.T<br><b>KDDI</b></td>
+        <td>通信</td>
+        <td>NISA 1年保有</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表 / 1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>11</td>
+        <td>9984.T<br><b>ソフトバンクG</b></td>
+        <td>投資/AI</td>
+        <td>時流テーマ</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>AI・投資会社の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>12</td>
+        <td>9434.T<br><b>ソフトバンク</b></td>
+        <td>通信</td>
+        <td>NISA 1年保有</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>1年保有テストで安定性や配当/業績の確認対象</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>13</td>
+        <td>9983.T<br><b>ファーストリテイリング</b></td>
+        <td>小売</td>
+        <td>指数比較・大型代表</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>14</td>
+        <td>6098.T<br><b>リクルートHD</b></td>
+        <td>人材/IT</td>
+        <td>補助比較</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td></td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>15</td>
+        <td>7974.T<br><b>任天堂</b></td>
+        <td>ゲーム</td>
+        <td>指数比較・大型代表</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>16</td>
+        <td>6861.T<br><b>キーエンス</b></td>
+        <td>FA</td>
+        <td>指数比較・大型代表</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>17</td>
+        <td>6501.T<br><b>日立製作所</b></td>
+        <td>総合電機</td>
+        <td>時流テーマ</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>指数・投信と比べる基準になる大型代表 / 電力・DX・インフラの資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>18</td>
+        <td>6503.T<br><b>三菱電機</b></td>
+        <td>総合電機</td>
+        <td>時流テーマ</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>電力制御・FAの資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>19</td>
+        <td>7011.T<br><b>三菱重工</b></td>
+        <td>重工/防衛</td>
+        <td>時流テーマ</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>防衛・電力・宇宙の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>20</td>
+        <td>7012.T<br><b>川崎重工業</b></td>
+        <td>重工/防衛</td>
+        <td>テンバガー探索</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>防衛・水素の資金流入仮説を検証 / 成長・変化率・時価総額余地を観察する枠</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>21</td>
+        <td>7013.T<br><b>IHI</b></td>
+        <td>重工/防衛</td>
+        <td>テンバガー探索</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>航空・防衛の資金流入仮説を検証 / 成長・変化率・時価総額余地を観察する枠</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>22</td>
+        <td>8035.T<br><b>東京エレクトロン</b></td>
+        <td>半導体装置</td>
+        <td>時流テーマ</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>半導体サイクルの資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>23</td>
+        <td>6857.T<br><b>アドバンテスト</b></td>
+        <td>半導体装置</td>
+        <td>時流テーマ</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>AI半導体検査の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>24</td>
+        <td>6920.T<br><b>レーザーテック</b></td>
+        <td>半導体装置</td>
+        <td>時流テーマ</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>EUV検査の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>25</td>
+        <td>6146.T<br><b>ディスコ</b></td>
+        <td>半導体装置</td>
+        <td>時流テーマ</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>切断・研削装置の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>26</td>
+        <td>6723.T<br><b>ルネサス</b></td>
+        <td>半導体</td>
+        <td>時流テーマ</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>車載・産業半導体の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>27</td>
+        <td>6526.T<br><b>ソシオネクスト</b></td>
+        <td>半導体</td>
+        <td>テンバガー探索</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>ASIC・AI半導体の資金流入仮説を検証 / 成長・変化率・時価総額余地を観察する枠</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>28</td>
+        <td>7735.T<br><b>SCREEN HD</b></td>
+        <td>半導体装置</td>
+        <td>時流テーマ</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>洗浄装置の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>29</td>
+        <td>6981.T<br><b>村田製作所</b></td>
+        <td>電子部品</td>
+        <td>時流テーマ</td>
+        <td>B 観察継続</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>MLCC・スマホ/車載の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr><tr>
+        <td>30</td>
+        <td>6762.T<br><b>TDK</b></td>
+        <td>電子部品</td>
+        <td>時流テーマ</td>
+        <td>A 詳細確認</td>
+        <td>株価:取得<br>業績:取得<br>チャート:取得</td>
+        <td>電池・電子部品の資金流入仮説を検証</td>
+        <td class="ok">母集団採用</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>次の工程</h2>
+  <div class="card">
+    <p>次は、業種別補正へ進みます。PER/PBR/ROEは業種ごとに意味が違うため、半導体、銀行、食品、保険、通信などを同じ閾値で比較しない形に直します。</p>
+    <p>更新日時: 2026/05/25 20:39</p>
+  </div>
+</main>
+</body>
+</html>
