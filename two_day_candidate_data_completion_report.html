@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2日間データ補完・テスト候補10社選定計画</title>
+  <style>
+    :root {
+      --ink: #0b1720;
+      --navy: #0b3558;
+      --blue: #0f6ea8;
+      --line: #c9d8e6;
+      --soft: #f4f8fc;
+      --green: #0b7047;
+      --orange: #a55300;
+      --red: #b21f1f;
+    }
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #ffffff;
+      color: var(--ink);
+      font-family: "Yu Gothic", "Meiryo", "Noto Sans JP", Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 18mm 16mm;
+      background: #ffffff;
+    }
+    header {
+      border-bottom: 4px solid var(--navy);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      color: #000000;
+      margin-bottom: 8px;
+    }
+    h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 26px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    .lead {
+      margin: 10px 0 0;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    h2 {
+      break-after: avoid;
+      margin: 22px 0 10px;
+      border-left: 6px solid var(--blue);
+      padding-left: 10px;
+      color: var(--navy);
+      font-size: 18px;
+    }
+    h3 {
+      break-after: avoid;
+      margin: 16px 0 8px;
+      color: var(--navy);
+      font-size: 15px;
+    }
+    p { margin: 7px 0; }
+    .note {
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--blue);
+      background: var(--soft);
+      padding: 10px 12px;
+      margin: 12px 0;
+      break-inside: avoid;
+    }
+    .note strong { color: var(--navy); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+      break-inside: avoid;
+    }
+    .card {
+      border: 1px solid var(--line);
+      background: #ffffff;
+      padding: 10px;
+      min-height: 84px;
+    }
+    .card small {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card b {
+      display: block;
+      color: var(--navy);
+      font-size: 20px;
+      line-height: 1.2;
+    }
+    .card p {
+      margin: 6px 0 0;
+      font-size: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px;
+      table-layout: fixed;
+      break-inside: auto;
+    }
+    tr { break-inside: avoid; }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 7px 8px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+    th {
+      background: #eaf3fb;
+      color: var(--navy);
+      font-weight: 800;
+      text-align: left;
+    }
+    .w-12 { width: 12%; }
+    .w-16 { width: 16%; }
+    .w-18 { width: 18%; }
+    .w-22 { width: 22%; }
+    .w-28 { width: 28%; }
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--line);
+      padding: 2px 7px;
+      font-weight: 800;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .ok { color: var(--green); border-color: #9ed7ba; background: #f4fff8; }
+    .watch { color: var(--orange); border-color: #e6bb76; background: #fff8ee; }
+    .stop { color: var(--red); border-color: #e3a1a1; background: #fff6f6; }
+    .formula {
+      font-family: Consolas, "Yu Gothic", monospace;
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      margin: 8px 0 12px;
+      break-inside: avoid;
+    }
+    ul {
+      margin: 6px 0 10px 22px;
+      padding: 0;
+    }
+    li { margin: 3px 0; }
+    footer {
+      margin-top: 22px;
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      font-size: 11px;
+    }
+    @media print {
+      body { background: #ffffff; }
+      .page { width: auto; min-height: auto; margin: 0; padding: 0; }
+      a { color: var(--ink); text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="meta">
+        <span>作成日: 2026年5月25日</span>
+        <span>対象: NISA 1年保有テスト候補選定</span>
+      </div>
+      <h1>2日間データ補完・テスト候補10社選定計画</h1>
+      <p class="lead">目的は、購入を確定することではなく、6月の市場イベント後に検証できる「根拠付きテスト候補10社」を作ることです。</p>
+    </header>
+
+    <section>
+      <h2>1. 結論</h2>
+      <div class="note">
+        <strong>2026年5月27日までに、テスト候補10社を選定することは可能です。</strong><br>
+        ただし、これは「買う10社」ではありません。PER/PBR/ROE、売上成長率、利益成長率、決算後反応、データ信頼度を補完し、6月に観察・検証する候補を10社に整理する計画です。
+      </div>
+      <div class="grid">
+        <div class="card">
+          <small>現在</small>
+          <b>20社中1社</b>
+          <p>購入候補スコアを厳格に算出可能。</p>
+        </div>
+        <div class="card">
+          <small>2日後目標</small>
+          <b>5〜10社</b>
+          <p>購入候補スコアを算出できる候補数を増やす。</p>
+        </div>
+        <div class="card">
+          <small>最終成果</small>
+          <b>10社リスト</b>
+          <p>購入確定ではなく、6月テスト対象として整理。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 現在候補が少ない理由</h2>
+      <p>現状で購入候補スコアを出せる銘柄が少ない主因は、データ不足と安全条件です。未取得をAI推測で補完せず、空欄を点数化しない設計にしているため、候補数は少なく見えます。</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="w-22">停止要因</th>
+            <th>内容</th>
+            <th class="w-22">現状の扱い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PER/PBR/ROE 未取得</td>
+            <td>割高・割安、資本効率を判断できない。</td>
+            <td><span class="badge watch">未算出</span></td>
+          </tr>
+          <tr>
+            <td>売上成長率 未取得</td>
+            <td>成長が売上から来ているのか判断できない。</td>
+            <td><span class="badge watch">補完対象</span></td>
+          </tr>
+          <tr>
+            <td>利益成長率 未取得</td>
+            <td>増収だけでなく利益が伸びているか判断できない。</td>
+            <td><span class="badge watch">補完対象</span></td>
+          </tr>
+          <tr>
+            <td>決算後反応 未取得</td>
+            <td>市場が決算を評価したか、1日/5日/20日で見られない。</td>
+            <td><span class="badge watch">補完対象</span></td>
+          </tr>
+          <tr>
+            <td>データ信頼度70点未満</td>
+            <td>根拠データが不足しており、購入候補点に混ぜられない。</td>
+            <td><span class="badge stop">停止</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. 2日で行う作戦</h2>
+      <p>候補を増やすために基準を甘くするのではなく、上位20〜30社の不足データを補完し、判定可能な銘柄を増やします。</p>
+      <table>
+        <thead>
+          <tr>
+            <th class="w-18">対象</th>
+            <th class="w-22">実施内容</th>
+            <th>取得元・確認方法</th>
+            <th class="w-18">目的</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PER/PBR/ROE</td>
+            <td>未取得銘柄の数値補完</td>
+            <td>Yahoo Finance、公式IR、決算短信、EDINET、証券会社画面で確認</td>
+            <td>割高/割安判定</td>
+          </tr>
+          <tr>
+            <td>売上成長率</td>
+            <td>直近決算と前年同期の比較</td>
+            <td>決算短信、決算説明資料、企業IR</td>
+            <td>成長力確認</td>
+          </tr>
+          <tr>
+            <td>利益成長率</td>
+            <td>営業利益・純利益の前年比確認</td>
+            <td>決算短信、決算説明資料、企業IR</td>
+            <td>利益の質確認</td>
+          </tr>
+          <tr>
+            <td>決算後反応</td>
+            <td>決算日後1日/5日/20日の対日経平均超過リターン計算</td>
+            <td>株価時系列、日経平均時系列、決算日</td>
+            <td>市場評価確認</td>
+          </tr>
+          <tr>
+            <td>データ信頼度</td>
+            <td>取得済み項目数と取得元で再計算</td>
+            <td>CSV記録、公式資料リンク、取得ログ</td>
+            <td>計算したふり防止</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. 計算方法</h2>
+      <h3>探索スコア</h3>
+      <p>探索スコアは、候補を広く見るための参考点です。未取得がある銘柄も、購入候補ではなく探索対象として残します。</p>
+      <div class="formula">NISA 1年保有スコア = 業績/質35% + 下落耐性25% + 割安20% + 中期トレンド10% + 決算後反応10%</div>
+      <h3>購入候補スコア</h3>
+      <p>購入候補スコアは、必須データがそろい、ハード除外に該当しない銘柄だけに出します。</p>
+      <div class="formula">購入候補スコア = 業績/質40% + 下落耐性30% + 割安20% + 決算後反応10%</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="w-22">停止条件</th>
+            <th>理由</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>必須データ未取得</td><td>空欄を推測で補完しないため、購入候補スコアを出さない。</td></tr>
+          <tr><td>信頼度70点未満</td><td>根拠の薄い数字を購入候補点に混ぜない。</td></tr>
+          <tr><td>過熱しすぎ</td><td>1年上昇率が高すぎる銘柄は高値掴みリスクを確認する。</td></tr>
+          <tr><td>決算後反応が弱い</td><td>市場が決算を評価していない可能性がある。</td></tr>
+          <tr><td>急落・割高リスク</td><td>60日最大下落率、PER/PBR極端値を確認する。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>5. 5月27日までの工程</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="w-16">日付</th>
+            <th class="w-22">作業</th>
+            <th>内容</th>
+            <th class="w-22">成果物</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>5/25</td>
+            <td>停止理由の整理</td>
+            <td>上位20〜30社について、未取得項目とハード除外条件を一覧化する。</td>
+            <td>補完対象リスト</td>
+          </tr>
+          <tr>
+            <td>5/26</td>
+            <td>不足データ補完</td>
+            <td>PER/PBR/ROE、売上成長率、利益成長率、決算後反応を優先補完する。</td>
+            <td>再計算用データ表</td>
+          </tr>
+          <tr>
+            <td>5/27</td>
+            <td>10社選定</td>
+            <td>購入候補スコア、探索スコア、未取得、リスクを分けてA/B/C/Dに分類する。</td>
+            <td>6月テスト候補10社</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6. 5月27日時点の分類イメージ</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="w-16">分類</th>
+            <th class="w-18">意味</th>
+            <th>条件</th>
+            <th class="w-22">扱い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td>購入検討候補</td>
+            <td>必須データ取得済み、信頼度70点以上、ハード除外なし。</td>
+            <td>6月イベント後に最終確認</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>テスト観察候補</td>
+            <td>データは概ねあるが、過熱・反応不足・業種補正など確認が残る。</td>
+            <td>6月は観察中心</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>補欠・保留</td>
+            <td>テーマ性はあるが、重要データがまだ不足している。</td>
+            <td>補完後に再判定</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td>除外</td>
+            <td>過熱、急落、割高、決算反応悪化などが重い。</td>
+            <td>初回テスト候補から外す</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>7. 報告時の言い方</h2>
+      <div class="note">
+        <strong>報告文例</strong><br>
+        2日間で、購入候補を無理に増やすのではなく、現在スコア停止になっている原因を潰します。PER/PBR/ROE、売上成長率、利益成長率、決算後反応、データ信頼度を上位20〜30社から優先補完し、5月27日までに6月テスト候補10社を作成します。これは購入確定ではなく、6月イベント後に検証するための候補リストです。
+      </div>
+      <ul>
+        <li>「2日で買う10社を決める」とは言わない。</li>
+        <li>「2日でテスト候補10社を作る」と説明する。</li>
+        <li>データ不足の銘柄は、候補から落とすのではなく、補完後に再判定する。</li>
+        <li>補完しても過熱・割高・反応不足なら、候補には上げない。</li>
+      </ul>
+    </section>
+
+    <footer>
+      本資料は、株式購入判断を補助する分析システムの開発・検証計画です。購入を確定するものではありません。実売買前には証券会社画面、公式決算資料、最新市場イベントを再確認します。
+    </footer>
+  </main>
+</body>
+</html>
