@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>過去検証・バックテスト確認 2026年5月25日</title>
+  <style>
+    :root {
+      --ink: #111;
+      --blue: #073a5a;
+      --line: #bed3e5;
+      --bg: #f5f8fb;
+      --card: #fff;
+      --ok: #eaf7ef;
+      --warn: #fff5df;
+      --stop: #fdecec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", Meiryo, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 56px; }
+    h1 { margin: 0 0 8px; color: var(--blue); font-size: 30px; }
+    h2 { margin: 30px 0 12px; padding-left: 10px; border-left: 8px solid #0b6f9f; color: var(--blue); }
+    .lead, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 9px rgba(0,40,80,.06);
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid #9fc1db;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .kpi small { display: block; color: #38536b; font-weight: 700; }
+    .kpi b { display: block; font-size: 26px; color: var(--blue); }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+      color: #111;
+    }
+    th { background: #e4f1fa; color: var(--blue); }
+    .badge {
+      display: inline-block;
+      min-width: 78px;
+      text-align: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .ok { background: var(--ok); color: #007a3d; }
+    .warn { background: var(--warn); color: #8a5200; }
+    .stop { background: var(--stop); color: #b00020; }
+    .note { color: #333; font-size: 13px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 900px) {
+      .kpis, .split { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { background: #fff; }
+      .lead, .card, .kpi { break-inside: avoid; page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>過去検証・バックテスト確認</h1>
+  <div class="lead">
+    <p><b>目的:</b> 現在のスコアがどこまで実データで検証できるかを確認します。ここでは「有効性が証明済み」とは言いません。使える過去検証、まだ不足している過去検証、6月以降に前向き記録すべき検証を分けます。</p>
+    <p><b>重要:</b> 100社母集団の1年騰落率は、現在時点の説明変数と同時点の株価結果を見た確認です。未来を当てたバックテストではないため、売買判断の根拠にはまだできません。</p>
+    <div class="toolbar">
+      <a class="button" href="303_backtest_validation_summary.csv">303 要約CSV</a>
+      <a class="button" href="304_universe_score_sanity_check.csv">304 スコア検算CSV</a>
+      <a class="button" href="305_candidate_backtest_connection.csv">305 候補接続CSV</a>
+      <a class="button" href="306_event_reaction_validation.csv">306 イベント検証CSV</a>
+      <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+    
+      <div class="kpi">
+        <small>現候補10社</small>
+        <b>10社</b>
+        <span>現在の検証対象。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>イベント接続</small>
+        <b>2社</b>
+        <span>市場イベント反応と接続できた候補。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>月次株価接続</small>
+        <b>2社</b>
+        <span>12か月リターンを確認できる候補。</span>
+      </div>
+    
+      <div class="kpi">
+        <small>結論</small>
+        <b>準備段階</b>
+        <span>売買判断の根拠としては未到達。</span>
+      </div>
+    
+  </div>
+
+  <h2>1. 結論</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:22%">項目</th><th style="width:15%">値</th><th style="width:16%">状態</th><th>解釈</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>現候補10社</td>
+            <td>10社</td>
+            <td><span class="badge ok">対象</span></td>
+            <td>現在の検証候補を対象に、過去データ接続状況を確認。</td>
+          </tr>
+        
+          <tr>
+            <td>候補10社のイベント集計接続</td>
+            <td>2社</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>現時点では2802、8306など一部に限られる。全10社の検証には追加取得が必要。</td>
+          </tr>
+        
+          <tr>
+            <td>候補10社の月次株価接続</td>
+            <td>2社</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>既存月次データと一致する銘柄だけ、12か月リターンを確認可能。</td>
+          </tr>
+        
+          <tr>
+            <td>100社母集団の同時点検算</td>
+            <td>100社</td>
+            <td><span class="badge ok">実施</span></td>
+            <td>スコアと1年騰落率の関係を確認。ただし、未来予測のバックテストではない。</td>
+          </tr>
+        
+          <tr>
+            <td>真のバックテストに必要なもの</td>
+            <td>過去時点の財務・株価・イベント履歴</td>
+            <td><span class="badge stop">未到達</span></td>
+            <td>2018年時点の財務で2019年を予測、という形のウォークフォワード検証が必要。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2. 100社母集団の同時点検算</h2>
+  <div class="card">
+    <p class="note">これは「今のスコアが、同時点で強かった銘柄をどの程度拾っているか」の確認です。未来予測ではないため、過信禁止です。</p>
+    <table>
+      <thead><tr><th>確認軸</th><th>件数</th><th>1年騰落率との相関</th><th>強さ</th><th>上位10平均</th><th>その他平均</th><th>注意</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>総合スコア</td>
+            <td>100</td>
+            <td>0.458</td>
+            <td>強め</td>
+            <td>+199.35%</td>
+            <td>+35%</td>
+            <td>同時点の確認であり、未来を当てたバックテストではない。過去時点の財務スナップショットが必要。</td>
+          </tr>
+        
+          <tr>
+            <td>成長スコア</td>
+            <td>100</td>
+            <td>0.461</td>
+            <td>強め</td>
+            <td>+199.35%</td>
+            <td>+35%</td>
+            <td>同時点の確認であり、未来を当てたバックテストではない。過去時点の財務スナップショットが必要。</td>
+          </tr>
+        
+          <tr>
+            <td>質/割安スコア</td>
+            <td>100</td>
+            <td>0.169</td>
+            <td>ほぼなし</td>
+            <td>+199.35%</td>
+            <td>+35%</td>
+            <td>同時点の確認であり、未来を当てたバックテストではない。過去時点の財務スナップショットが必要。</td>
+          </tr>
+        
+          <tr>
+            <td>モメンタムスコア</td>
+            <td>100</td>
+            <td>0.584</td>
+            <td>強め</td>
+            <td>+199.35%</td>
+            <td>+35%</td>
+            <td>同時点の確認であり、未来を当てたバックテストではない。過去時点の財務スナップショットが必要。</td>
+          </tr>
+        
+          <tr>
+            <td>60日最大下落率</td>
+            <td>100</td>
+            <td>-0.153</td>
+            <td>ほぼなし</td>
+            <td>+199.35%</td>
+            <td>+35%</td>
+            <td>同時点の確認であり、未来を当てたバックテストではない。過去時点の財務スナップショットが必要。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. 現候補10社の過去データ接続</h2>
+  <div class="card">
+    <p class="note">イベント反応と月次株価が両方つながった銘柄だけ、最低限の参考検証に進めます。つながらない銘柄は点数に混ぜません。</p>
+    <table>
+      <thead>
+        <tr>
+          <th>順位</th><th>銘柄</th><th>イベント数</th><th>平均5日超過</th><th>平均20日超過</th><th>月次</th><th>12か月超過</th><th>状態</th><th>扱い</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr>
+            <td>1</td>
+            <td>4385.T メルカリ</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+          <tr>
+            <td>2</td>
+            <td>2802.T 味の素</td>
+            <td>4件</td>
+            <td>-0.87%</td>
+            <td>+10.43%</td>
+            <td>97か月</td>
+            <td>-17.09%</td>
+            <td><span class="badge ok">暫定検証可</span></td>
+            <td>参考検証に使用可能。ただし売買判断には6月以降の前向き記録が必要。</td>
+          </tr>
+        
+          <tr>
+            <td>3</td>
+            <td>8316.T 三井住友FG</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+          <tr>
+            <td>4</td>
+            <td>5020.T ENEOS HD</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+          <tr>
+            <td>5</td>
+            <td>8306.T 三菱UFJ FG</td>
+            <td>4件</td>
+            <td>+1.13%</td>
+            <td>-0.36%</td>
+            <td>97か月</td>
+            <td>+7.18%</td>
+            <td><span class="badge ok">暫定検証可</span></td>
+            <td>参考検証に使用可能。ただし売買判断には6月以降の前向き記録が必要。</td>
+          </tr>
+        
+          <tr>
+            <td>6</td>
+            <td>6146.T ディスコ</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+          <tr>
+            <td>7</td>
+            <td>6762.T TDK</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+          <tr>
+            <td>8</td>
+            <td>6503.T 三菱電機</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+          <tr>
+            <td>9</td>
+            <td>8766.T 東京海上HD</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+          <tr>
+            <td>10</td>
+            <td>6367.T ダイキン工業</td>
+            <td>0件</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0か月</td>
+            <td>-</td>
+            <td><span class="badge stop">未接続</span></td>
+            <td>過去検証データが未接続。購入検討用スコアの根拠にはしない。</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>4. イベント反応の暫定検証</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>銘柄</th><th>イベント数</th><th>平均5日超過</th><th>平均20日超過</th><th>強/弱</th><th>扱い</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>8035.T 東京エレクトロン</td>
+            <td>4件</td>
+            <td>+0.36%</td>
+            <td>+1.75%</td>
+            <td>2 / 0</td>
+            <td>暫定参考</td>
+          </tr>
+        
+          <tr>
+            <td>6857.T アドバンテスト</td>
+            <td>4件</td>
+            <td>+3.4%</td>
+            <td>+5.89%</td>
+            <td>3 / 0</td>
+            <td>暫定参考</td>
+          </tr>
+        
+          <tr>
+            <td>4519.T 中外製薬</td>
+            <td>4件</td>
+            <td>-3.29%</td>
+            <td>-1.54%</td>
+            <td>2 / 2</td>
+            <td>暫定参考</td>
+          </tr>
+        
+          <tr>
+            <td>8306.T 三菱UFJ</td>
+            <td>4件</td>
+            <td>+1.13%</td>
+            <td>-0.36%</td>
+            <td>0 / 1</td>
+            <td>暫定参考</td>
+          </tr>
+        
+          <tr>
+            <td>8058.T 三菱商事</td>
+            <td>4件</td>
+            <td>+2.29%</td>
+            <td>+1.01%</td>
+            <td>2 / 2</td>
+            <td>暫定参考</td>
+          </tr>
+        
+          <tr>
+            <td>7974.T 任天堂</td>
+            <td>4件</td>
+            <td>-4.89%</td>
+            <td>-22.6%</td>
+            <td>0 / 4</td>
+            <td>暫定参考</td>
+          </tr>
+        
+          <tr>
+            <td>9433.T KDDI</td>
+            <td>4件</td>
+            <td>+1.21%</td>
+            <td>-7.85%</td>
+            <td>0 / 4</td>
+            <td>暫定参考</td>
+          </tr>
+        
+          <tr>
+            <td>2802.T 味の素</td>
+            <td>4件</td>
+            <td>-0.87%</td>
+            <td>+10.43%</td>
+            <td>2 / 2</td>
+            <td>暫定参考</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <h2>5. 次の作業</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:8%">優先</th><th style="width:27%">作業</th><th>理由</th><th style="width:24%">成果物</th></tr></thead>
+      <tbody>
+        
+          <tr>
+            <td>1</td>
+            <td>過去時点の財務スナップショットを作る</td>
+            <td>現行の財務データは現在値中心なので、未来を知った後の情報が混ざる危険がある。</td>
+            <td>年度別PER/PBR/ROE/売上成長/利益成長テーブル</td>
+          </tr>
+        
+          <tr>
+            <td>2</td>
+            <td>候補10社すべての月次・週次株価を取得する</td>
+            <td>銘柄ごとの12か月リターン、最大下落率、指数超過を同じ条件で比較するため。</td>
+            <td>候補10社の月次リターン、日経/TOPIX比較</td>
+          </tr>
+        
+          <tr>
+            <td>3</td>
+            <td>決算日・上方修正・自社株買い・新商品等のイベント履歴を結合する</td>
+            <td>イベント仮説を単純加点せず、過去反応で確認するため。</td>
+            <td>イベント種類別1/5/20/60日超過リターン</td>
+          </tr>
+        
+          <tr>
+            <td>4</td>
+            <td>6月テストは前向き記録として分離する</td>
+            <td>過去データ検証と実運用テストを混ぜると、成績評価が不明になるため。</td>
+            <td>予測値、実績値、誤差、修正理由の記録表</td>
+          </tr>
+        
+      </tbody>
+    </table>
+    <p class="note">作成日: 2026/05/25 20:57</p>
+  </div>
+</main>
+</body>
+</html>
