@@ -1,5 +1,5 @@
 ﻿updated_at,step,operation,command,output
-2026/05/26 22:35,1,ページ作成後にスクリプトを実行,node tools/build_prepublish_wording_check.mjs,328〜331 CSVとHTMLレポートを更新
-2026/05/26 22:35,2,要修正が0件か確認,329_prepublish_wording_findings.csv の treatment を確認,要修正が1件以上なら公開前に修正
-2026/05/26 22:35,3,資料区分台帳へ登録,node tools/build_material_registry.mjs,現行資料・履歴資料の区分を再生成
-2026/05/26 22:35,4,公開前の最終確認,HTML表示確認 + GitHub Pages反映確認,顧客向け導線に入れる
+2026/05/26 22:41,1,ページ作成後にスクリプトを実行,node tools/build_prepublish_wording_check.mjs,328〜331 CSVとHTMLレポートを更新
+2026/05/26 22:41,2,要修正が0件か確認,329_prepublish_wording_findings.csv の treatment を確認,要修正が1件以上なら公開前に修正
+2026/05/26 22:41,3,資料区分台帳へ登録,node tools/build_material_registry.mjs,現行資料・履歴資料の区分を再生成
+2026/05/26 22:41,4,公開前の最終確認,HTML表示確認 + GitHub Pages反映確認,顧客向け導線に入れる

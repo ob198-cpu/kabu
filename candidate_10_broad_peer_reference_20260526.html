@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 広義同業参考 2026年5月26日</title>
+  <style>
+    :root { --ink:#061a33; --muted:#3f5168; --line:#c9d9ea; --bg:#f4f8fc; --navy:#0d3658; --blue:#0b6fa4; --soft:#eef7ff; --amber:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.72; letter-spacing:0; }
+    header { background:var(--navy); color:#fff; padding:34px clamp(18px,4vw,58px); }
+    h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); letter-spacing:0; }
+    header p { margin:0; color:#e7f3ff; font-weight:800; max-width:1120px; }
+    main { width:min(1240px, calc(100% - 32px)); margin:24px auto 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px; margin:18px 0; break-inside:avoid; }
+    h2 { margin:0 0 14px; padding-left:12px; border-left:8px solid var(--blue); font-size:24px; }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .metric { border:1px solid var(--line); border-radius:8px; padding:14px; background:var(--soft); min-height:118px; }
+    .metric span { display:block; color:var(--muted); font-weight:900; }
+    .metric strong { display:block; color:var(--blue); font-size:30px; line-height:1.2; }
+    .notice { border-left:8px solid var(--amber); background:#fff7ed; padding:14px; border-radius:8px; font-weight:900; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .button { display:inline-flex; align-items:center; min-height:38px; padding:8px 12px; border-radius:8px; border:1px solid #9cc8ec; background:#fff; color:var(--navy); text-decoration:none; font-weight:900; font-size:13px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+    table { width:100%; min-width:1320px; border-collapse:collapse; table-layout:fixed; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px; vertical-align:top; text-align:left; overflow-wrap:anywhere; word-break:break-word; }
+    th { background:#e6f1fb; color:#073b63; font-weight:900; }
+    tr:last-child td { border-bottom:0; }
+    th:last-child,td:last-child { border-right:0; }
+    @media (max-width:900px) { main { width:min(100% - 20px,1240px); } .summary { grid-template-columns:1fr; } section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 広義同業参考</h1>
+    <p>厳密な同業比較が不足する銘柄について、近い業種まで広げた場合に説明補助として使えるかを確認します。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>候補10社</span>
+          <strong>10社</strong>
+          <small>厳密な同業比較が不足する銘柄に対し、広義比較が可能か確認。</small>
+        </div>
+        <div class="metric">
+          <span>広義参考可</span>
+          <strong>7社</strong>
+          <small>説明補助として使えるが、テスト判定用スコアには混ぜない。</small>
+        </div>
+        <div class="metric">
+          <span>広義でも不足</span>
+          <strong>3社</strong>
+          <small>近い業種まで広げても公開CSV内では指標不足。</small>
+        </div>
+      </div>
+      <p class="notice">広義比較は説明補助です。厳密な同業比較と違うため、テスト判定用スコアには混ぜません。</p>
+      <div class="toolbar">
+        <a class="button" href="527_candidate_10_broad_peer_reference_summary.csv">527 要約CSV</a>
+        <a class="button" href="528_candidate_10_broad_peer_reference_detail.csv">528 詳細CSV</a>
+        <a class="button" href="sector_adjustment_20260525.html">厳密同業比較へ</a>
+        <a class="button" href="candidate_10_tomorrow_brief_20260526.html">明日説明ブリーフへ</a>
+        <a class="button" href="index.html">メインページへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>広義比較表</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>銘柄</th><th>会社</th><th>厳密業種</th><th>広義グループ</th><th>社数</th><th>PER件数</th><th>PBR件数</th><th>ROE件数</th><th>広義PER中央値</th><th>広義PBR中央値</th><th>広義ROE中央値</th><th>厳密比較</th><th>広義比較</th><th>扱い</th><th>理由</th></tr></thead>
+        <tbody>
+          <tr><td>4385.T</td><td>メルカリ</td><td>ネット</td><td>ネット / ネット/通信 / ネット広告 / EC / IT / 人材/IT</td><td>7</td><td>3</td><td>2</td><td>2</td><td>21.59</td><td>5.63</td><td>27.46</td><td>未反映</td><td>広義でも不足</td><td>不足理由を表示し、無理に比較しない。</td><td>広義7社、PER 3件、PBR 2件、ROE 2件。</td></tr><tr><td>2802.T</td><td>味の素</td><td>食品</td><td>食品 / 飲料 / 生活必需品 / 化粧品</td><td>7</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td><td>未反映</td><td>広義でも不足</td><td>不足理由を表示し、無理に比較しない。</td><td>広義7社、PER 0件、PBR 0件、ROE 0件。</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>銀行</td><td>銀行</td><td>3</td><td>3</td><td>3</td><td>3</td><td>13.79</td><td>1.56</td><td>11.34</td><td>補正参考可</td><td>広義参考可</td><td>説明補助。テスト判定用スコアには混ぜない。</td><td>広義グループで3社以上、PER/PBR/ROEが3件以上そろう。</td></tr><tr><td>5020.T</td><td>ENEOS HD</td><td>エネルギー</td><td>エネルギー / 素材 / 化学</td><td>7</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td><td>未反映</td><td>広義でも不足</td><td>不足理由を表示し、無理に比較しない。</td><td>広義7社、PER 0件、PBR 0件、ROE 0件。</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>銀行</td><td>銀行</td><td>3</td><td>3</td><td>3</td><td>3</td><td>13.79</td><td>1.56</td><td>11.34</td><td>補正参考可</td><td>広義参考可</td><td>説明補助。テスト判定用スコアには混ぜない。</td><td>広義グループで3社以上、PER/PBR/ROEが3件以上そろう。</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>半導体装置</td><td>半導体装置</td><td>5</td><td>4</td><td>5</td><td>5</td><td>44.98</td><td>12.32</td><td>29.56</td><td>補正参考可</td><td>広義参考可</td><td>説明補助。テスト判定用スコアには混ぜない。</td><td>広義グループで3社以上、PER/PBR/ROEが3件以上そろう。</td></tr><tr><td>6762.T</td><td>TDK</td><td>電子部品</td><td>電子部品</td><td>3</td><td>3</td><td>3</td><td>3</td><td>27.62</td><td>2.75</td><td>8.83</td><td>補正参考可</td><td>広義参考可</td><td>説明補助。テスト判定用スコアには混ぜない。</td><td>広義グループで3社以上、PER/PBR/ROEが3件以上そろう。</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>総合電機</td><td>総合電機 / FA / 制御機器 / 電子部品</td><td>9</td><td>8</td><td>9</td><td>9</td><td>27.21</td><td>2.76</td><td>9.28</td><td>未反映</td><td>広義参考可</td><td>説明補助。テスト判定用スコアには混ぜない。</td><td>広義グループで3社以上、PER/PBR/ROEが3件以上そろう。</td></tr><tr><td>8766.T</td><td>東京海上HD</td><td>保険</td><td>保険</td><td>3</td><td>3</td><td>3</td><td>3</td><td>15.06</td><td>1.42</td><td>17.96</td><td>補正参考可</td><td>広義参考可</td><td>説明補助。テスト判定用スコアには混ぜない。</td><td>広義グループで3社以上、PER/PBR/ROEが3件以上そろう。</td></tr><tr><td>6367.T</td><td>ダイキン工業</td><td>空調</td><td>空調 / 機械 / FA / 制御機器 / 建機</td><td>7</td><td>6</td><td>7</td><td>7</td><td>24.41</td><td>1.92</td><td>9.1</td><td>未反映</td><td>広義参考可</td><td>説明補助。テスト判定用スコアには混ぜない。</td><td>広義グループで3社以上、PER/PBR/ROEが3件以上そろう。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>
