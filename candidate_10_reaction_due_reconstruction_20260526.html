@@ -207,7 +207,7 @@
         </div>
         <div class="kpi">
           <div class="label">1日/5日反応を確認できる銘柄</div>
-          <div class="value">8社</div>
+          <div class="value">9社</div>
           <div>短期反応の説明補助には使える。ただし20営業日反応が未確定なら採点には接続しない。</div>
         </div>
         <div class="kpi">
@@ -217,12 +217,12 @@
         </div>
         <div class="kpi">
           <div class="label">20営業日到達予定あり</div>
-          <div class="value">8社</div>
+          <div class="value">10社</div>
           <div>到達日が見える銘柄。到達後に再取得すれば、決算後反応の信頼度を上げられる。</div>
         </div>
         <div class="kpi">
           <div class="label">イベント日未接続</div>
-          <div class="value">2社</div>
+          <div class="value">0社</div>
           <div>まず公式決算日、基準株価、指数比較を接続する必要がある。</div>
         </div>
         <div class="kpi">
@@ -281,14 +281,14 @@
             <tr>
               <td>3</td>
               <td><strong>8766.T 東京海上HD</strong><br>保険</td>
-              <td>未接続<br><small>未接続</small></td>
-              <td>未接続<br><small></small></td>
+              <td>1日接続済み・5日未到達<br><small>公式決算日接続 + Yahoo反応計算</small></td>
+              <td>2026-05-20<br><small>2026年3月期通期決算</small></td>
+              <td>2026-05-21<br><strong>-4.68%</strong></td>
               <td><br><strong></strong></td>
-              <td><br><strong></strong></td>
+              <td>2026-06-17</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
               <td>未接続</td>
-              <td><span class="badge gap">イベント日未接続</span></td>
-              <td>未接続</td>
-              <td>決算日または基準株価が未接続のため、まず公式発表日と基準株価を確認する。</td>
+              <td>1日反応は確認できるが、5日反応と20営業日反応が未到達のため採点へ接続しない。</td>
             </tr>
             <tr>
               <td>4</td>
@@ -317,14 +317,14 @@
             <tr>
               <td>6</td>
               <td><strong>6367.T ダイキン工業</strong><br>空調</td>
-              <td>未接続<br><small>未接続</small></td>
-              <td>未接続<br><small></small></td>
-              <td><br><strong></strong></td>
-              <td><br><strong></strong></td>
+              <td>1日/5日接続済み<br><small>公式決算日接続 + Yahoo反応計算</small></td>
+              <td>2026-05-12<br><small>2026年3月期通期決算</small></td>
+              <td>2026-05-13<br><strong>6.08%</strong></td>
+              <td>2026-05-19<br><strong>1.92%</strong></td>
+              <td>2026-06-09</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
               <td>未接続</td>
-              <td><span class="badge gap">イベント日未接続</span></td>
-              <td>未接続</td>
-              <td>決算日または基準株価が未接続のため、まず公式発表日と基準株価を確認する。</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
             </tr>
             <tr>
               <td>7</td>
@@ -384,18 +384,6 @@
       <div class="cards">
 
         <div class="card">
-          <h3>優先1 6367.T ダイキン工業</h3>
-          <p><strong>現状:</strong> 未接続 / イベント日未接続</p>
-          <p><strong>作業:</strong> 公式決算日と基準株価の接続</p>
-          <p><strong>出力:</strong> 公式発表日、基準終値、1日/5日反応を取得する。</p>
-        </div>
-        <div class="card">
-          <h3>優先1 8766.T 東京海上HD</h3>
-          <p><strong>現状:</strong> 未接続 / イベント日未接続</p>
-          <p><strong>作業:</strong> 公式決算日と基準株価の接続</p>
-          <p><strong>出力:</strong> 公式発表日、基準終値、1日/5日反応を取得する。</p>
-        </div>
-        <div class="card">
           <h3>優先2 6146.T ディスコ</h3>
           <p><strong>現状:</strong> 1日/5日接続済み / 20営業日確定済み</p>
           <p><strong>作業:</strong> 20営業日反応の検算と採点接続判定</p>
@@ -414,6 +402,12 @@
           <p><strong>出力:</strong> イベント日、基準株価、指数比較が説明資料に使える状態か確認する。</p>
         </div>
         <div class="card">
+          <h3>優先2 8766.T 東京海上HD</h3>
+          <p><strong>現状:</strong> 1日接続済み・5日未到達 / 20営業日未到達</p>
+          <p><strong>作業:</strong> 5日反応の到達後再取得</p>
+          <p><strong>出力:</strong> 5営業日反応が到達した後、日経平均との超過リターンを再計算する。</p>
+        </div>
+        <div class="card">
           <h3>優先3 2802.T 味の素</h3>
           <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
           <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
@@ -427,6 +421,12 @@
         </div>
         <div class="card">
           <h3>優先3 5020.T ENEOS HD</h3>
+          <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
+          <p><strong>出力:</strong> 20営業日到達後に終値、日経平均、超過リターンを再計算する。</p>
+        </div>
+        <div class="card">
+          <h3>優先3 6367.T ダイキン工業</h3>
           <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
           <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
           <p><strong>出力:</strong> 20営業日到達後に終値、日経平均、超過リターンを再計算する。</p>

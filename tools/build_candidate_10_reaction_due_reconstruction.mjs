@@ -145,6 +145,7 @@ const currentRows = readCsv('491_candidate_10_reaction_maturity_detail.csv');
 const detailRows236 = readCsv('236_top10_earnings_reaction_detail.csv');
 const completedRows273 = readCsv('273_top20_earnings_reaction_completed.csv');
 const overrideRows = readOptionalCsv('503_candidate_10_disco_20d_reaction_detail.csv');
+const missingEventRows = readOptionalCsv('506_candidate_10_missing_event_reaction_detail.csv');
 
 const latest236ByTicker = new Map();
 for (const row of detailRows236) {
@@ -157,6 +158,11 @@ const completed273ByTicker = new Map(completedRows273.map((row) => [row.ticker, 
 const overrideByTicker = new Map(
   overrideRows
     .filter((row) => row.data_status === '20営業日反応取得済み')
+    .map((row) => [row.ticker, row]),
+);
+const missingEventByTicker = new Map(
+  missingEventRows
+    .filter((row) => row.event_connection_status === '接続済み')
     .map((row) => [row.ticker, row]),
 );
 
@@ -177,6 +183,23 @@ function sourceForTicker(current) {
       excess_20d_pct: normalizePct(override.excess_20d_pct),
       existing_reaction_score: override.reaction_score_with_20d || source236?.score || current.existing_reaction_score || '',
       source_url: source236?.source_url || current.source_url || '',
+    };
+  }
+  const missingEvent = missingEventByTicker.get(current.ticker);
+  if (missingEvent) {
+    return {
+      source_kind: '公式決算日接続 + Yahoo反応計算',
+      event_date: missingEvent.event_date || '',
+      event_type: missingEvent.event_type || '',
+      base_date: missingEvent.base_date || missingEvent.event_date || '',
+      after_1d_date: missingEvent.after_1d_date || '',
+      excess_1d_pct: normalizePct(missingEvent.excess_1d_pct),
+      after_5d_date: missingEvent.after_5d_date || '',
+      excess_5d_pct: normalizePct(missingEvent.excess_5d_pct),
+      after_20d_date: '',
+      excess_20d_pct: '',
+      existing_reaction_score: '',
+      source_url: missingEvent.source_url || current.source_url || '',
     };
   }
   if (source236) {
@@ -231,7 +254,9 @@ function sourceForTicker(current) {
 }
 
 function classify(row, source) {
-  const hasShort = present(source.excess_1d_pct) && present(source.excess_5d_pct);
+  const has1 = present(source.excess_1d_pct);
+  const has5 = present(source.excess_5d_pct);
+  const hasShort = has1 && has5;
   const has20 = present(source.excess_20d_pct);
   const due20 = source.base_date ? addBusinessDays(source.base_date, 20) : '';
   const dateCmp = due20 ? compareDate(due20, TODAY) : null;
@@ -247,6 +272,8 @@ function classify(row, source) {
     ? source.source_kind === '既存詳細CSVから復元'
       ? '1日/5日復元済み'
       : '1日/5日接続済み'
+    : has1
+      ? '1日接続済み・5日未到達'
     : source.existing_reaction_score
       ? '既存反応点のみ'
       : '未接続';
@@ -257,7 +284,11 @@ function classify(row, source) {
     : dueStatus === '20営業日到達済み・再取得必要'
       ? '20営業日目は概算上到達しているが、終値と指数比較の再取得が必要。再取得まで採点へ接続しない。'
       : dueStatus === '20営業日未到達'
-        ? '1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。'
+        ? hasShort
+          ? '1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。'
+          : has1
+            ? '1日反応は確認できるが、5日反応と20営業日反応が未到達のため採点へ接続しない。'
+            : '決算日は確認できるが、短期反応が未到達または未取得のため採点へ接続しない。'
         : '決算日または基準株価が未接続のため、まず公式発表日と基準株価を確認する。';
 
   return {
@@ -312,6 +343,10 @@ const queueRows = detailRows.map((row) => {
     priority = 1;
     task = '公式決算日と基準株価の接続';
     expected_output = '公式発表日、基準終値、1日/5日反応を取得する。';
+  } else if (row.reconstruction_status === '1日接続済み・5日未到達') {
+    priority = 2;
+    task = '5日反応の到達後再取得';
+    expected_output = '5営業日反応が到達した後、日経平均との超過リターンを再計算する。';
   } else if (row.due_status === '20営業日到達済み・再取得必要') {
     priority = 1;
     task = '20営業日反応の再取得';
