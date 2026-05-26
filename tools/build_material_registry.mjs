@@ -83,6 +83,7 @@ const currentFiles = new Map([
   ['nisa_test_record_ledger_20260527.html', ['現行資料', '顧客説明に使用可', '6月以降の判定、投入、保有中の差分、指数比較を記録するための台帳ページ。投資実行判断ではない。', 'nisa_one_year_test_operation_plan_20260527.html']],
   ['qualitative_gate_scoring_20260527.html', ['現行資料', '顧客説明に使用可', '時流・イベント・テーマ材料をS/A/B/Cで整理し、量的スコアへ足さず上限・通過条件・除外条件として扱うページ。', 'candidate_10_client_explanation_20260527.html']],
   ['qualitative_idea_map_20260527.html', ['現行資料', '顧客説明に使用可', '時流仮説を、出来事、需要連鎖、候補業種、確認数字、否定条件に分解して管理するページ。投資実行判断ではない。', 'qualitative_gate_scoring_20260527.html']],
+  ['qualitative_theme_stock_bridge_20260527.html', ['現行資料', '顧客説明に使用可', '質的アイデア地図を10社へ接続し、銘柄別にテーマ、確認数字、否定条件、質的ゲートを整理するページ。投資実行判断ではない。', 'qualitative_idea_map_20260527.html']],
   ['dual_axis_integrated_selection_20260527.html', ['現行資料', '顧客説明に使用可', '量的評価と質的評価ゲートを統合し、弱い根拠で上げすぎないよう上限処理するページ。投資実行判断ではない。', 'qualitative_gate_scoring_20260527.html']],
   ['candidate_10_current_test_set_20260527.html', ['現行資料', '顧客説明に使用可', '統合判定後の10社を、優先確認、条件付き確認、補完・検算・比較に分けて整理するページ。投資実行判断ではない。', 'dual_axis_integrated_selection_20260527.html']],
   ['candidate_10_universe_lineage_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社が固定母集団のどの役割・採用理由から詳細確認へ進んだかを示す選出経路ページ。投資判断ではない。', 'candidate_10_selection_readiness_20260526.html']],
@@ -196,6 +197,7 @@ const currentCsvPrefixes = [
   '562_', '563_', '564_',
   '565_', '566_', '567_',
   '568_', '569_', '570_',
+  '571_', '572_', '573_',
 ];
 
 function escCsv(value) {
