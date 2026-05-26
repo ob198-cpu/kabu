@@ -1,0 +1,5 @@
+﻿updated_at,check,result,detail
+2026/05/26 16:10,サンプルCSV読込,OK,status=サンプルCSV 6件を読み込みました。これはドライラン用で、実績値ではありません。; previewRows=6
+2026/05/26 16:10,一次判定ログCSV出力,OK,status=一次判定ログCSVを出力しました。; downloads=semiconductor_june_decision_log.csv|semiconductor_june_prediction_actual_log.csv
+2026/05/26 16:10,予実差テンプレートCSV出力,OK,status=予実差テンプレートCSVを出力しました。; downloads=semiconductor_june_decision_log.csv|semiconductor_june_prediction_actual_log.csv
+2026/05/26 16:10,ブラウザ実操作,未完了,現在の実行環境では in-app browser の操作対象を取得できなかったため、DOM関数検証で代替。ユーザー画面ではサンプルCSVボタンから確認可能。

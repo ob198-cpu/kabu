@@ -35,6 +35,7 @@ const targetFiles = [
   'semiconductor_forward_log_bridge_20260526.html',
   'semiconductor_june_dry_run_test_20260526.html',
   'semiconductor_dry_run_verification_20260526.html',
+  'candidate_10_priority_completion_20260526.html',
 ];
 
 const phraseRules = [
@@ -446,6 +447,7 @@ const html = `<!doctype html>
       <a class="button" href="semiconductor_forward_log_bridge_20260526.html">半導体判定ログ接続へ</a>
       <a class="button" href="semiconductor_june_dry_run_test_20260526.html">半導体ドライランへ</a>
       <a class="button" href="semiconductor_dry_run_verification_20260526.html">半導体ドライラン検算へ</a>
+      <a class="button" href="candidate_10_priority_completion_20260526.html">候補10社優先補完へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

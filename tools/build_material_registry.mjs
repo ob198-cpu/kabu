@@ -40,6 +40,7 @@ const currentFiles = new Map([
   ['semiconductor_forward_log_bridge_20260526.html', ['現行資料', '顧客説明に使用可', '半導体6月実績入力の判定結果CSVを、前向きテスト記録と予実差ログへ変換するページ。', 'semiconductor_june_result_input_cockpit_20260526.html']],
   ['semiconductor_june_dry_run_test_20260526.html', ['現行補助', '台帳経由で使用可', '6月実績入力から判定ログ保存までの流れを架空データで確認するドライランページ。実績値ではない。', 'semiconductor_forward_log_bridge_20260526.html']],
   ['semiconductor_dry_run_verification_20260526.html', ['現行補助', '台帳経由で使用可', 'ドライランCSV一式の件数・列・変換内容を機械検算するページ。実績値ではない。', 'semiconductor_june_dry_run_test_20260526.html']],
+  ['candidate_10_priority_completion_20260526.html', ['現行資料', '顧客説明に使用可', '80社前後の母集団から10社テスト候補へ絞るための不足データ補完順と2日作業を示すページ。購入判断ではない。', 'candidate_data_completion_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
@@ -115,6 +116,7 @@ const currentCsvPrefixes = [
   '395_', '396_', '397_', '398_', '399_', '400_',
   '401_', '402_', '403_', '404_', '405_',
   '406_', '407_', '408_', '409_', '410_', '411_',
+  '412_', '413_', '414_', '415_', '416_', '417_',
 ];
 
 function escCsv(value) {

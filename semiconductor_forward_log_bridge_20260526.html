@@ -181,10 +181,13 @@
     <h2>1. CSV変換</h2>
     <section class="section">
       <p>6月実績入力コックピットで出力した <b>semiconductor_june_result_log.csv</b> を選択してください。ブラウザ内だけで変換します。</p>
+      <div class="actions">
+        <button id="loadSample" type="button" onclick="loadSampleCsv()">サンプルCSVを読み込む</button>
+      </div>
       <input id="csvFile" type="file" accept=".csv,text/csv">
       <div class="actions">
-        <button class="primary" type="button" onclick="downloadDecisionLog()">一次判定ログCSVを出力</button>
-        <button type="button" onclick="downloadPredictionLog()">予実差テンプレートCSVを出力</button>
+        <button id="downloadDecision" class="primary" type="button" onclick="downloadDecisionLog()">一次判定ログCSVを出力</button>
+        <button id="downloadPrediction" type="button" onclick="downloadPredictionLog()">予実差テンプレートCSVを出力</button>
       </div>
       <div id="status" class="card" style="margin-top:14px">CSV未読込</div>
       <div class="preview" id="preview"></div>
@@ -218,7 +221,7 @@
     <section class="section">
       <table>
     <thead><tr><th>ファイル</th><th>内容</th></tr></thead>
-    <tbody><tr><td><a href="395_semiconductor_forward_log_bridge_summary.csv">395_semiconductor_forward_log_bridge_summary.csv</a></td><td>要約</td></tr><tr><td><a href="396_semiconductor_forward_log_column_map.csv">396_semiconductor_forward_log_column_map.csv</a></td><td>列対応表</td></tr><tr><td><a href="397_semiconductor_forward_decision_log_template.csv">397_semiconductor_forward_decision_log_template.csv</a></td><td>一次判定ログテンプレート</td></tr><tr><td><a href="398_semiconductor_forward_prediction_actual_template.csv">398_semiconductor_forward_prediction_actual_template.csv</a></td><td>予実差テンプレート</td></tr><tr><td><a href="399_semiconductor_forward_log_operation.csv">399_semiconductor_forward_log_operation.csv</a></td><td>操作手順</td></tr><tr><td><a href="400_semiconductor_forward_log_limitations.csv">400_semiconductor_forward_log_limitations.csv</a></td><td>制約と対応</td></tr></tbody>
+    <tbody><tr><td><a href="395_semiconductor_forward_log_bridge_summary.csv">395_semiconductor_forward_log_bridge_summary.csv</a></td><td>要約</td></tr><tr><td><a href="396_semiconductor_forward_log_column_map.csv">396_semiconductor_forward_log_column_map.csv</a></td><td>列対応表</td></tr><tr><td><a href="397_semiconductor_forward_decision_log_template.csv">397_semiconductor_forward_decision_log_template.csv</a></td><td>一次判定ログテンプレート</td></tr><tr><td><a href="398_semiconductor_forward_prediction_actual_template.csv">398_semiconductor_forward_prediction_actual_template.csv</a></td><td>予実差テンプレート</td></tr><tr><td><a href="399_semiconductor_forward_log_operation.csv">399_semiconductor_forward_log_operation.csv</a></td><td>操作手順</td></tr><tr><td><a href="400_semiconductor_forward_log_limitations.csv">400_semiconductor_forward_log_limitations.csv</a></td><td>制約と対応</td></tr><tr><td><a href="417_semiconductor_forward_bridge_operation_check.csv">417_semiconductor_forward_bridge_operation_check.csv</a></td><td>読込・出力の自動確認結果</td></tr></tbody>
   </table>
     </section>
   </main>
@@ -330,16 +333,26 @@
       renderPreview();
     });
 
+    async function loadSampleCsv() {
+      const response = await fetch('402_semiconductor_dry_run_sample_result_log.csv', { cache: 'no-store' });
+      const text = await response.text();
+      importedRows = parseCsv(text);
+      document.getElementById('status').textContent = 'サンプルCSV ' + importedRows.length + '件を読み込みました。これはドライラン用で、実績値ではありません。';
+      renderPreview();
+    }
+
     function downloadDecisionLog() {
       if (!importedRows.length) { alert('先にCSVを読み込んでください。'); return; }
       const headers = ['updated_at','decision_logged_at','ticker','company','cpi_gate','boj_gate','fomc_gate','index_gate','june_first_status','decision_reason','next_record_due','storage_note'];
       download('semiconductor_june_decision_log.csv', decisionRows(), headers);
+      document.getElementById('status').textContent = '一次判定ログCSVを出力しました。';
     }
 
     function downloadPredictionLog() {
       if (!importedRows.length) { alert('先にCSVを読み込んでください。'); return; }
       const headers = ['updated_at','ticker','company','event_date','event','before_event_price','event_day_price','return_1d_pct','return_5d_pct','return_20d_pct','benchmark_return_1d_pct','benchmark_return_5d_pct','benchmark_return_20d_pct','excess_1d_pct','excess_5d_pct','excess_20d_pct','pre_event_prediction','actual_result','prediction_error_note','next_model_fix'];
       download('semiconductor_june_prediction_actual_log.csv', predictionRows(), headers);
+      document.getElementById('status').textContent = '予実差テンプレートCSVを出力しました。';
     }
   </script>
 </body>
