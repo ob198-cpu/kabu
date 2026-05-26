@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 選出準備状況 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --muted: #40536a;
+      --line: #c8d9ea;
+      --soft: #edf6ff;
+      --blue: #0b66a0;
+      --green: #087f5b;
+      --amber: #b45309;
+      --red: #b42318;
+      --bg: #f6f9fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    header {
+      background: linear-gradient(135deg, #062a4a, #0b668d);
+      color: #fff;
+      padding: 34px clamp(18px, 4vw, 58px);
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; color: #eaf5ff; font-weight: 800; max-width: 1060px; }
+    main { width: min(1220px, calc(100% - 32px)); margin: 24px auto 56px; }
+    section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin: 18px 0;
+      break-inside: avoid;
+    }
+    h2 {
+      margin: 0 0 14px;
+      padding-left: 12px;
+      border-left: 8px solid var(--blue);
+      font-size: 24px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--soft);
+      min-height: 120px;
+    }
+    .metric span { display: block; color: var(--muted); font-weight: 900; }
+    .metric strong { display: block; font-size: 30px; color: var(--blue); }
+    .notice {
+      border-left: 8px solid var(--amber);
+      background: #fff7ed;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 900;
+      margin-top: 14px;
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #9cc8ec;
+      background: #fff;
+      color: #062a4a;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1160px; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px;
+      text-align: left;
+      vertical-align: top;
+      color: var(--ink);
+      word-break: break-word;
+    }
+    th { background: #e6f1fb; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    .ok { color: var(--green); font-weight: 900; }
+    .pending { color: var(--amber); font-weight: 900; }
+    .gap { color: var(--red); font-weight: 900; }
+    @media (max-width: 860px) {
+      .summary { grid-template-columns: 1fr; }
+      main { width: min(100% - 20px, 1220px); }
+      section { padding: 16px; }
+    }
+    @media print {
+      body { background: #fff; }
+      section { break-inside: avoid; }
+      .table-wrap { overflow: visible; }
+      table { min-width: 0; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 選出準備状況</h1>
+    <p>候補10社を確定する前に、PER、決算成長率、株価リスク、決算後反応がどこまでそろっているかを整理します。ここでの点数はデータ準備状況であり、投資判断スコアではありません。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>比較対象</span>
+          <strong>10社</strong>
+          <small>候補10社を、投資判断ではなくデータ準備状況として再整理。</small>
+        </div>
+        <div class="metric">
+          <span>採点用PERあり</span>
+          <strong>7社</strong>
+          <small>既存のPERをそのまま比較材料にできる銘柄。</small>
+        </div>
+        <div class="metric">
+          <span>実績PER試算あり</span>
+          <strong>2社</strong>
+          <small>説明補助には使えるが、採点へは未接続の銘柄。</small>
+        </div>
+        <div class="metric">
+          <span>20営業日反応確定</span>
+          <strong>0社</strong>
+          <small>決算後反応を強く使える段階の銘柄数。</small>
+        </div>
+      </div>
+      <p class="notice">結論: 10社の比較表は作れます。ただし20営業日反応が0社のため、6月テスト候補の根拠としては「量的データ中心、決算後反応は補助」という扱いになります。</p>
+      <div class="toolbar">
+        <a class="button" href="493_candidate_10_selection_readiness_summary.csv">493 要約CSV</a>
+        <a class="button" href="494_candidate_10_selection_readiness_detail.csv">494 詳細CSV</a>
+        <a class="button" href="495_candidate_10_selection_next_tasks.csv">495 次タスクCSV</a>
+        <a class="button" href="candidate_10_reaction_maturity_bridge_20260526.html">決算後反応確認へ</a>
+        <a class="button" href="index.html">メインページへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>銘柄別の準備状況</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>準備順位</th><th>銘柄</th><th>参考NISA点</th><th>量的評価</th><th>信頼度</th><th>PER状態</th><th>決算後反応</th><th>データ準備点</th><th>準備根拠</th><th>次の作業</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>1</td>
+              <td>6762.T TDK</td>
+              <td>60.7</td>
+              <td>A</td>
+              <td>100</td>
+              <td>採点用PERあり<br><small>26.7倍</small></td>
+              <td>既存スコアのみ<br><small>内訳確認待ち</small></td>
+              <td><b>90点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PER/PBR/ROEそろい / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>既存反応点の内訳を確認し、イベント日と指数比較を復元する。</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>2802.T 味の素</td>
+              <td>67.8</td>
+              <td>B</td>
+              <td>95</td>
+              <td>採点用PERあり<br><small>43.73倍</small></td>
+              <td>1日/5日暫定<br><small>20営業日未到達</small></td>
+              <td><b>90点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PER/PBR/ROEそろい / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>20営業日到達後に対指数反応を再計算する。</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>8316.T 三井住友FG</td>
+              <td>65.1</td>
+              <td>B</td>
+              <td>95</td>
+              <td>採点用PERあり<br><small>13.61倍</small></td>
+              <td>1日/5日暫定<br><small>20営業日未到達</small></td>
+              <td><b>90点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PER/PBR/ROEそろい / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>20営業日到達後に対指数反応を再計算する。</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>6503.T 三菱電機</td>
+              <td>55.6</td>
+              <td>C</td>
+              <td>95</td>
+              <td>採点用PERあり<br><small>26.09倍</small></td>
+              <td>1日/5日暫定<br><small>20営業日未到達</small></td>
+              <td><b>90点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PER/PBR/ROEそろい / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>20営業日到達後に対指数反応を再計算する。</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>5020.T ENEOS HD</td>
+              <td>64.3</td>
+              <td>C</td>
+              <td>95</td>
+              <td>採点用PERあり<br><small>8.36倍</small></td>
+              <td>1日/5日暫定<br><small>20営業日未到達</small></td>
+              <td><b>90点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PER/PBR/ROEそろい / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>20営業日到達後に対指数反応を再計算する。</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>8306.T 三菱UFJ FG</td>
+              <td>62.1</td>
+              <td>C</td>
+              <td>92</td>
+              <td>実績PER試算あり<br><small>17倍、採点未接続</small></td>
+              <td>既存スコアのみ<br><small>内訳確認待ち</small></td>
+              <td><b>82点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PERは試算、PBR/ROEあり / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>実績PERと予想PERの扱いを固定し、採点へ戻すか判断する。</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>6146.T ディスコ</td>
+              <td>60.9</td>
+              <td>C</td>
+              <td>92</td>
+              <td>実績PER試算あり<br><small>61.44倍、採点未接続</small></td>
+              <td>既存スコアのみ<br><small>内訳確認待ち</small></td>
+              <td><b>82点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PERは試算、PBR/ROEあり / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>実績PERと予想PERの扱いを固定し、採点へ戻すか判断する。</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>8766.T 東京海上HD</td>
+              <td>65.4</td>
+              <td>B</td>
+              <td>100</td>
+              <td>採点用PERあり<br><small>17.61倍</small></td>
+              <td>未接続<br><small>対象銘柄の決算後反応データが見つからない。</small></td>
+              <td><b>80点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PER/PBR/ROEそろい / 売上/利益成長あり / 株価推移/下落率あり / 決算後反応不足</td>
+              <td>決算日、基準株価、1日/5日/20営業日反応を追加する。</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>6367.T ダイキン工業</td>
+              <td>52.6</td>
+              <td>C</td>
+              <td>100</td>
+              <td>採点用PERあり<br><small>24.97倍</small></td>
+              <td>未接続<br><small>対象銘柄の決算後反応データが見つからない。</small></td>
+              <td><b>80点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>PER/PBR/ROEそろい / 売上/利益成長あり / 株価推移/下落率あり / 決算後反応不足</td>
+              <td>決算日、基準株価、1日/5日/20営業日反応を追加する。</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>4385.T メルカリ</td>
+              <td>79.8</td>
+              <td>保留</td>
+              <td>87</td>
+              <td>PER未取得<br><small>追加取得が必要</small></td>
+              <td>1日/5日暫定<br><small>20営業日未到達</small></td>
+              <td><b>61点</b><br><small>データ準備状況。投資判断スコアではない</small></td>
+              <td>財務指標不足 / 売上/利益成長あり / 株価推移/下落率あり</td>
+              <td>PERの公式取得またはEPS基準の確認を優先する。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>次の優先タスク</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>優先</th><th>タスク</th><th>理由</th><th>成果物</th></tr></thead>
+          <tbody>
+
+            <tr><td>1</td><td>20営業日反応の到達確認</td><td>現時点では0社のため、決算後反応を本格接続できない。</td><td>20営業日反応CSVの更新</td></tr>
+            <tr><td>2</td><td>既存反応点の内訳確認</td><td>TDK、三菱UFJ FG、ディスコなどは反応点だけでは説明が弱い。</td><td>イベント日、1日/5日/20日、指数比較の復元</td></tr>
+            <tr><td>3</td><td>PER種別の固定</td><td>実績PERと予想PERを混ぜると比較基準が崩れる。</td><td>採用PERルールの確定</td></tr>
+            <tr><td>4</td><td>イベント実績層の追加</td><td>質的仮説は加点ではなく、過去反応と照合してから評価する必要がある。</td><td>イベント日と株価反応の対応表</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
