@@ -83,6 +83,7 @@ function cleanLines(text) {
 function inputType(task) {
   if (task.includes('財務')) return 'financial';
   if (task.includes('同業')) return 'peer';
+  if (task.includes('PBR') || task.includes('ROE') || task.includes('PER')) return 'valuation';
   if (task.includes('決算後')) return 'reaction';
   if (task.includes('イベント')) return 'event';
   return 'market';
@@ -90,6 +91,7 @@ function inputType(task) {
 
 function requiredFields(type) {
   if (type === 'financial') return 'source_url / source_date / forecast_per / actual_per / eps_basis';
+  if (type === 'valuation') return 'source_url / source_date / per / pbr / roe / sector_median_basis';
   if (type === 'peer') return 'peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median';
   if (type === 'reaction') return 'event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating';
   if (type === 'event') return 'event_name / event_date / hypothesis / price_reaction / evidence_rating';
@@ -98,6 +100,7 @@ function requiredFields(type) {
 
 function sourceHint(type) {
   if (type === 'financial') return '会社IR、決算短信、EDINET、J-Quants';
+  if (type === 'valuation') return '会社IR、J-Quants、EDINET、同業中央値CSV';
   if (type === 'peer') return '同業会社IR、J-Quants、既存CSV';
   if (type === 'reaction') return '株価OHLCV、日経平均/TOPIX、イベント日';
   if (type === 'event') return '企業IR、TDnet、公式発表、株価OHLCV';
@@ -132,6 +135,7 @@ const byTickerRows = cards.map((card) => {
     company: card.company,
     total_tasks: tasks.length,
     financial_tasks: tasks.filter((row) => row.input_type === 'financial').length,
+    valuation_tasks: tasks.filter((row) => row.input_type === 'valuation').length,
     peer_tasks: tasks.filter((row) => row.input_type === 'peer').length,
     reaction_tasks: tasks.filter((row) => row.input_type === 'reaction').length,
     event_tasks: tasks.filter((row) => row.input_type === 'event').length,
@@ -226,6 +230,7 @@ writeCsv('476_candidate_10_input_by_ticker.csv', byTickerRows, [
   'company',
   'total_tasks',
   'financial_tasks',
+  'valuation_tasks',
   'peer_tasks',
   'reaction_tasks',
   'event_tasks',

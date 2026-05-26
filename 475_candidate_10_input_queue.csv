@@ -1,34 +1,34 @@
 ﻿updated_at,input_id,ticker,company,task_no,input_type,task,required_fields,source_hint,pass_condition,status
-2026/05/26 19:05,IN-01,6762.T,TDK,1,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-02,2802.T,味の素,1,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-03,2802.T,味の素,2,market,PBR,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-04,2802.T,味の素,3,market,ROE中央値を確認,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-05,2802.T,味の素,4,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-06,8766.T,東京海上HD,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-07,8766.T,東京海上HD,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-08,8316.T,三井住友FG,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-09,8316.T,三井住友FG,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-10,8306.T,三菱UFJ FG,1,financial,PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認,source_url / source_date / forecast_per / actual_per / eps_basis,会社IR、決算短信、EDINET、J-Quants,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-11,8306.T,三菱UFJ FG,2,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-12,8306.T,三菱UFJ FG,3,market,PBR,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-13,8306.T,三菱UFJ FG,4,market,ROE中央値を確認,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-14,6367.T,ダイキン工業,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-15,6367.T,ダイキン工業,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-16,6503.T,三菱電機,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-17,6503.T,三菱電機,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-18,5020.T,ENEOS HD,1,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-19,5020.T,ENEOS HD,2,market,PBR,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-20,5020.T,ENEOS HD,3,market,ROE中央値を確認,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-21,5020.T,ENEOS HD,4,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-22,5020.T,ENEOS HD,5,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-23,6146.T,ディスコ,1,financial,PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認,source_url / source_date / forecast_per / actual_per / eps_basis,会社IR、決算短信、EDINET、J-Quants,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-24,6146.T,ディスコ,2,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-25,6146.T,ディスコ,3,market,PBR,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-26,6146.T,ディスコ,4,market,ROE中央値を確認,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-27,6146.T,ディスコ,5,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-28,4385.T,メルカリ,1,financial,PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認,source_url / source_date / forecast_per / actual_per / eps_basis,会社IR、決算短信、EDINET、J-Quants,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-29,4385.T,メルカリ,2,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-30,4385.T,メルカリ,3,market,PBR,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-31,4385.T,メルカリ,4,market,ROE中央値を確認,cpi_result / fomc_result / boj_result / nikkei_status,FRED、日銀、統計局、指数データ,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-32,4385.T,メルカリ,5,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
-2026/05/26 19:05,IN-33,4385.T,メルカリ,6,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-01,6762.T,TDK,1,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-02,2802.T,味の素,1,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-03,2802.T,味の素,2,valuation,PBR,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-04,2802.T,味の素,3,valuation,ROE中央値を確認,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-05,2802.T,味の素,4,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-06,8766.T,東京海上HD,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-07,8766.T,東京海上HD,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-08,8316.T,三井住友FG,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-09,8316.T,三井住友FG,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-10,8306.T,三菱UFJ FG,1,financial,PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認,source_url / source_date / forecast_per / actual_per / eps_basis,会社IR、決算短信、EDINET、J-Quants,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-11,8306.T,三菱UFJ FG,2,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-12,8306.T,三菱UFJ FG,3,valuation,PBR,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-13,8306.T,三菱UFJ FG,4,valuation,ROE中央値を確認,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-14,6367.T,ダイキン工業,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-15,6367.T,ダイキン工業,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-16,6503.T,三菱電機,1,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-17,6503.T,三菱電機,2,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-18,5020.T,ENEOS HD,1,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-19,5020.T,ENEOS HD,2,valuation,PBR,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-20,5020.T,ENEOS HD,3,valuation,ROE中央値を確認,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-21,5020.T,ENEOS HD,4,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-22,5020.T,ENEOS HD,5,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-23,6146.T,ディスコ,1,financial,PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認,source_url / source_date / forecast_per / actual_per / eps_basis,会社IR、決算短信、EDINET、J-Quants,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-24,6146.T,ディスコ,2,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-25,6146.T,ディスコ,3,valuation,PBR,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-26,6146.T,ディスコ,4,valuation,ROE中央値を確認,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-27,6146.T,ディスコ,5,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-28,4385.T,メルカリ,1,financial,PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認,source_url / source_date / forecast_per / actual_per / eps_basis,会社IR、決算短信、EDINET、J-Quants,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-29,4385.T,メルカリ,2,peer,同業2社以上のPER,peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median,同業会社IR、J-Quants、既存CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-30,4385.T,メルカリ,3,valuation,PBR,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-31,4385.T,メルカリ,4,valuation,ROE中央値を確認,source_url / source_date / per / pbr / roe / sector_median_basis,会社IR、J-Quants、EDINET、同業中央値CSV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-32,4385.T,メルカリ,5,reaction,決算後1日、5日、20日の対ベンチマーク超過リターンを確認,event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating,株価OHLCV、日経平均/TOPIX、イベント日,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
+2026/05/26 19:17,IN-33,4385.T,メルカリ,6,event,質的仮説に対応するイベント日と株価反応を確認,event_name / event_date / hypothesis / price_reaction / evidence_rating,企業IR、TDnet、公式発表、株価OHLCV,出典、基準日、入力値がそろうこと。未確認値は採点に使わない,未入力
