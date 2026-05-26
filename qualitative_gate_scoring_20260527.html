@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的評価ゲート 2026年5月27日</title>
+  <style>
+    :root { --ink:#061a33; --muted:#334155; --line:#c9d9ea; --bg:#f4f8fc; --navy:#0d3658; --blue:#0b6fa4; --soft:#eef7ff; --amber:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.72; letter-spacing:0; }
+    header { background:var(--navy); color:#fff; padding:34px clamp(18px,4vw,58px); }
+    h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); letter-spacing:0; }
+    header p { margin:0; color:#fff; font-weight:800; max-width:1120px; }
+    main { width:min(1280px, calc(100% - 32px)); margin:24px auto 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px; margin:18px 0; break-inside:avoid; }
+    h2 { margin:0 0 14px; padding-left:12px; border-left:8px solid var(--blue); font-size:24px; }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .metric { border:1px solid var(--line); border-radius:8px; padding:14px; background:var(--soft); min-height:120px; }
+    .metric span { display:block; color:var(--muted); font-weight:900; }
+    .metric strong { display:block; color:var(--blue); font-size:24px; line-height:1.35; }
+    .notice { border-left:8px solid var(--amber); background:#fff7ed; padding:14px; border-radius:8px; font-weight:900; color:#111827; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .button { display:inline-flex; align-items:center; min-height:38px; padding:8px 12px; border-radius:8px; border:1px solid #9cc8ec; background:#fff; color:var(--navy); text-decoration:none; font-weight:900; font-size:13px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+    table { width:100%; min-width:1240px; border-collapse:collapse; table-layout:fixed; }
+    .rules table { min-width:900px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px; vertical-align:top; text-align:left; overflow-wrap:anywhere; word-break:break-word; color:#061a33; }
+    th { background:#e6f1fb; color:#073b63; font-weight:900; }
+    tr:last-child td { border-bottom:0; }
+    th:last-child,td:last-child { border-right:0; }
+    @media (max-width:900px) { .summary { grid-template-columns:1fr; } main { width:min(100% - 20px,1280px); } section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>質的評価ゲート</h1>
+    <p>時流・イベント・テーマ材料をS/A/B/Cで整理し、量的スコアへ足さず、上限・通過条件・除外条件として扱う資料です。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>質的評価の扱い</span>
+          <strong>ゲート方式</strong>
+          <small>量的スコアへ足さず、上限・通過条件・除外条件として使う。</small>
+        </div>
+        <div class="metric">
+          <span>現時点のS評価</span>
+          <strong>0社</strong>
+          <small>公式数字と20営業日株価反応の両方がそろうまでS評価にしない。</small>
+        </div>
+        <div class="metric">
+          <span>主候補の質的評価</span>
+          <strong>A〜B</strong>
+          <small>TDKはA、三井住友FGと味の素はBとして開始。6月反応で更新。</small>
+        </div>
+      </div>
+      <p class="notice">質的材料は単純加点しません。公式数字と株価反応で確認できた場合にだけ、量的評価の上限を広げます。</p>
+      <div class="toolbar">
+        <a class="button" href="559_qualitative_gate_summary.csv">559 要約CSV</a>
+        <a class="button" href="560_qualitative_gate_detail.csv">560 詳細CSV</a>
+        <a class="button" href="561_qualitative_gate_rules.csv">561 ルールCSV</a>
+        <a class="button" href="candidate_10_client_explanation_20260527.html">候補10社説明へ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>S/A/B/C ルール</h2>
+
+    <div class="table-wrap rules">
+      <table>
+        <thead><tr><th>評価</th><th>条件</th><th>扱い</th><th>例</th></tr></thead>
+        <tbody>
+          <tr><td>S</td><td>公式資料の数字と株価反応の両方で仮説が確認できる</td><td>量的評価の上限をSまで許容</td><td>セグメント売上・利益・受注が伸び、20営業日反応も指数超過</td></tr><tr><td>A</td><td>公式資料の数字では確認できるが、株価反応は確認待ち</td><td>量的評価の上限をAまで許容</td><td>会社資料では需要継続が確認できるが、20営業日反応が未到達</td></tr><tr><td>B</td><td>仮説は妥当だが、数字への接続が弱い、または反応が限定的</td><td>量的評価の上限をBまでに抑える</td><td>テーマはあるが、売上・利益・受注への接続がまだ不十分</td></tr><tr><td>C</td><td>数字で確認できない、または反応が悪い</td><td>量的評価の上限をCまでに抑え、必要なら見送り</td><td>テーマ性はあるが、決算後反応が指数に大きく劣後</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>候補10社 質的評価</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>順位</th><th>コード</th><th>銘柄</th><th>役割</th><th>量的評価</th><th>質的評価</th><th>質的材料</th><th>現時点の根拠</th><th>必要な確認</th><th>外す条件</th><th>上限ルール</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>6762.T</td><td>TDK</td><td>主候補</td><td>A</td><td>A</td><td>AIサーバー、HDD/電源周辺部材、電池・磁性材料</td><td>量的評価が比較的強く、質的仮説も業績確認条件に接続できる。ただし株価反応の20営業日確認が残る。</td><td>電子部品セグメントの売上・利益、受注または会社コメント、AIサーバー関連需要の継続、為替影響を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>AI関連コメントが弱い、利益率が悪化、在庫調整や顧客需要鈍化が明記される。</td><td>量的評価の上限をAまで許容。株価反応がそろえばS候補へ進める。</td></tr><tr><td>2</td><td>8316.T</td><td>三井住友FG</td><td>主候補</td><td>B</td><td>B</td><td>日銀政策、利ざや、信用コスト、株主還元</td><td>質的仮説は説明可能だが、量的評価はBのため、公式数字と20営業日反応の確認が必要。</td><td>資金利益増加、信用コスト抑制、自己株式取得・増配、日銀イベント後の銀行株反応を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>信用コスト急増、金利上昇が景気悪化扱いになる、日銀後に銀行株が市場劣後。</td><td>量的評価の上限をBまでに抑える。確認条件がそろうまで主候補化しない。</td></tr><tr><td>3</td><td>2802.T</td><td>味の素</td><td>主候補</td><td>B</td><td>B</td><td>食品値上げ耐性、ABF、ヘルスケア、原材料・為替</td><td>質的仮説は説明可能だが、量的評価はBのため、公式数字と20営業日反応の確認が必要。</td><td>ABF/ヘルスケアの成長、値上げ後の数量維持、原材料費の吸収、通期見通しの維持を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>PERの高さに対して成長鈍化、原材料費再上昇、値上げ後の数量減、下方修正。</td><td>量的評価の上限をBまでに抑える。確認条件がそろうまで主候補化しない。</td></tr><tr><td>4</td><td>5020.T</td><td>ENEOS HD</td><td>比較枠</td><td>C</td><td>B</td><td>原油、精製マージン、中東・海上輸送、脱炭素投資</td><td>テーマはあるが、量的評価がCのため、質的材料だけでは主候補に上げない。</td><td>精製マージン、在庫影響、油価、為替、通期見通しの感応度を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>油価下落で在庫評価損、精製マージン悪化、脱炭素投資負担の増加。</td><td>量的評価の上限をBまでに抑える。確認条件がそろうまで主候補化しない。</td></tr><tr><td>5</td><td>6367.T</td><td>ダイキン工業</td><td>比較枠</td><td>C</td><td>B</td><td>データセンター冷却、地域別空調需要、中国・為替</td><td>テーマはあるが、量的評価がCのため、質的材料だけでは主候補に上げない。</td><td>データセンター/大型空調関連の受注・売上、地域別利益、為替影響、通期見通しを確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>中国・欧州の需要鈍化、利益率低下、データセンター需要が数字に出ない。</td><td>量的評価の上限をBまでに抑える。確認条件がそろうまで主候補化しない。</td></tr><tr><td>6</td><td>6503.T</td><td>三菱電機</td><td>比較枠</td><td>C</td><td>B</td><td>電力・データセンター、FA、設備投資、防衛・宇宙</td><td>テーマはあるが、量的評価がCのため、質的材料だけでは主候補に上げない。</td><td>インフラ・FA・防衛関連の受注または利益改善、電力設備需要の継続を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>FA市況低迷、受注鈍化、コスト増、政策テーマが業績に接続しない。</td><td>量的評価の上限をBまでに抑える。確認条件がそろうまで主候補化しない。</td></tr><tr><td>7</td><td>8766.T</td><td>東京海上HD</td><td>反応待ち</td><td>B</td><td>B</td><td>保険料率、金利、自然災害、政策保有株売却</td><td>質的仮説はあるが、決算後反応が短期確認中のため、20営業日まで待つ。</td><td>保険引受利益、資産運用益、政策保有株売却、自然災害損害率を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>自然災害損失の増加、保険引受悪化、決算後反応の弱さが継続。</td><td>量的評価の上限をBまでに抑える。確認条件がそろうまで主候補化しない。</td></tr><tr><td>8</td><td>4385.T</td><td>メルカリ</td><td>補完待ち</td><td>保留</td><td>C</td><td>国内消費、FinTech、広告、規制・競争</td><td>質的仮説より先に、PER・同業比較・公式値の補完が必要。</td><td>GMV、MAU、FinTech収益、広告収益、利益率改善、規制リスクの有無を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>競争激化、成長鈍化、3Q累計PERを通期PERのように扱えない、同業比較不足。</td><td>量的評価の上限をCまでに抑える。確認条件が崩れる場合は見送り。</td></tr><tr><td>9</td><td>8306.T</td><td>三菱UFJ FG</td><td>補完待ち</td><td>C</td><td>C</td><td>日銀政策、海外金利、株主還元、与信費用</td><td>質的仮説より先に、PER・同業比較・公式値の補完が必要。</td><td>資金利益、ROE、自己株式取得、与信費用、日銀後の銀行株反応を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>信用コスト増加、PERが同業より高い状態、金利上昇が景気悪化へ転ぶ。</td><td>量的評価の上限をCまでに抑える。確認条件が崩れる場合は見送り。</td></tr><tr><td>10</td><td>6146.T</td><td>ディスコ</td><td>検算枠</td><td>C</td><td>C</td><td>AI半導体、HBM、半導体設備投資、高シェア製造工程</td><td>テーマ性はあるが、20営業日反応が弱いため、仮説の検算を優先する。</td><td>AI/HBM向け需要、受注・出荷、利益率、同業比較、SOXに対する下落耐性を確認。 / 株価反応: 20営業日対日経平均超過リターン / 比較: 指数、同業、必要に応じてSOX/NASDAQ/金利/為替</td><td>20営業日反応の弱さが継続、高PER調整、半導体設備投資の鈍化。</td><td>量的評価の上限をCまでに抑える。確認条件が崩れる場合は見送り。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>
