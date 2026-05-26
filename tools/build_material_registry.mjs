@@ -59,6 +59,7 @@ const currentFiles = new Map([
   ['candidate_10_current_data_connection_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、既存CSVに入っているPER/PBR/ROE、成長率、決算後反応の接続状況を整理し、使える数値と残課題を分けた確認表。', 'candidate_10_official_source_queue_20260526.html']],
   ['candidate_10_per_estimate_bridge_20260526.html', ['現行資料', '顧客説明に使用可', 'PER未取得銘柄について、公式EPSと既存株価から実績PER試算の可否を確認するページ。試算値は採点へ接続しない。', 'candidate_10_current_data_connection_20260526.html']],
   ['candidate_10_reaction_maturity_bridge_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社の決算後反応を1日・5日・20営業日に分け、スコア接続可否を整理するページ。20営業日未到達は採点へ接続しない。', 'candidate_10_per_estimate_bridge_20260526.html']],
+  ['candidate_10_reaction_due_reconstruction_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社の決算後1日/5日反応の復元状況と20営業日到達予定を整理するページ。未確定反応は採点へ接続しない。', 'candidate_10_reaction_maturity_bridge_20260526.html']],
   ['candidate_10_selection_readiness_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社を確定する前に、PER、成長率、株価リスク、決算後反応の準備状況を統合して確認するページ。投資判断スコアではない。', 'candidate_10_reaction_maturity_bridge_20260526.html']],
   ['candidate_10_universe_lineage_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社が固定母集団のどの役割・採用理由から詳細確認へ進んだかを示す選出経路ページ。投資判断ではない。', 'candidate_10_selection_readiness_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
@@ -149,6 +150,7 @@ const currentCsvPrefixes = [
   '471_', '472_', '473_', '474_', '475_', '476_', '477_', '478_', '479_', '480_',
   '481_', '482_', '483_', '484_', '485_', '486_', '487_', '488_', '489_',
   '490_', '491_', '492_', '493_', '494_', '495_', '496_', '497_', '498_',
+  '499_', '500_', '501_',
 ];
 
 function escCsv(value) {

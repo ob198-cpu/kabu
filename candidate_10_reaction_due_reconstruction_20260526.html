@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 決算後反応の到達予定と復元状況 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --muted: #3b4f66;
+      --line: #cbdceb;
+      --soft: #eef6ff;
+      --blue: #0b66a0;
+      --green: #087f5b;
+      --amber: #b45309;
+      --red: #b42318;
+      --bg: #f6f9fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #08345f, #0b66a0);
+      color: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 18px 40px rgba(6, 26, 51, .18);
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4vw, 44px);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 920px;
+      color: #e8f3ff;
+      font-size: 16px;
+    }
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+    }
+    .nav a {
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.42);
+      border-radius: 999px;
+      padding: 7px 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      background: rgba(255,255,255,.1);
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 16px 0;
+      box-shadow: 0 10px 22px rgba(6, 26, 51, .06);
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      border-left: 8px solid var(--blue);
+      padding-left: 12px;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .kpi {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .kpi .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .kpi .value {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--blue);
+      margin-top: 4px;
+    }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      word-break: normal;
+      overflow-wrap: anywhere;
+      color: #061a33;
+    }
+    th {
+      background: #e5f1fb;
+      white-space: nowrap;
+      font-weight: 900;
+    }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+      border: 1px solid currentColor;
+    }
+    .ok { color: var(--green); background: #e9f8f1; }
+    .warn { color: var(--amber); background: #fff7ed; }
+    .wait { color: var(--blue); background: #eef6ff; }
+    .gap { color: var(--red); background: #fff1f0; }
+    .note {
+      border-left: 5px solid var(--amber);
+      background: #fff7ed;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 12px;
+      font-weight: 700;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: #fbfdff;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .links a {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      padding: 9px 13px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 900;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100% - 20px, 1180px); }
+      .hero { padding: 20px; border-radius: 14px; }
+      .kpis, .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>候補10社 決算後反応の到達予定と復元状況</h1>
+      <p>候補10社の決算後反応について、既存CSVから復元できる1日/5日反応、20営業日の到達予定、採点へ接続してよいかを分けて整理しました。未確定値は点数へ混ぜません。</p>
+      <div class="nav">
+        <a href="index.html">トップへ戻る</a>
+        <a href="#summary">要約</a>
+        <a href="#detail">銘柄別</a>
+        <a href="#queue">次の作業</a>
+        <a href="499_candidate_10_reaction_due_summary.csv">要約CSV</a>
+        <a href="500_candidate_10_reaction_due_detail.csv">詳細CSV</a>
+        <a href="501_candidate_10_reaction_reconstruction_queue.csv">作業CSV</a>
+      </div>
+    </section>
+
+    <section class="panel" id="summary">
+      <h2>1. 要約</h2>
+      <div class="kpis">
+
+        <div class="kpi">
+          <div class="label">対象銘柄</div>
+          <div class="value">10社</div>
+          <div>現在の候補10社について、決算後反応データの到達状況を確認した。</div>
+        </div>
+        <div class="kpi">
+          <div class="label">1日/5日反応を確認できる銘柄</div>
+          <div class="value">8社</div>
+          <div>短期反応の説明補助には使える。ただし20営業日反応が未確定なら採点には接続しない。</div>
+        </div>
+        <div class="kpi">
+          <div class="label">20営業日反応が確定している銘柄</div>
+          <div class="value">0社</div>
+          <div>現時点で採点接続候補まで進められる銘柄数。検算前のため最終判断ではない。</div>
+        </div>
+        <div class="kpi">
+          <div class="label">20営業日到達予定あり</div>
+          <div class="value">8社</div>
+          <div>到達日が見える銘柄。到達後に再取得すれば、決算後反応の信頼度を上げられる。</div>
+        </div>
+        <div class="kpi">
+          <div class="label">イベント日未接続</div>
+          <div class="value">2社</div>
+          <div>まず公式決算日、基準株価、指数比較を接続する必要がある。</div>
+        </div>
+        <div class="kpi">
+          <div class="label">採点へ接続した銘柄</div>
+          <div class="value">0社</div>
+          <div>現段階では未確定値を点数へ混ぜない。購入判断ではなく、データ補完のための整理である。</div>
+        </div>
+      </div>
+      <div class="note">このページは、候補10社を絞るためのデータ到達状況です。採点へ接続した銘柄は0社であり、購入判断ではありません。</div>
+    </section>
+
+    <section class="panel" id="detail">
+      <h2>2. 銘柄別の到達予定</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>順位</th>
+              <th>銘柄</th>
+              <th>復元状況</th>
+              <th>決算日</th>
+              <th>1日超過</th>
+              <th>5日超過</th>
+              <th>20営業日概算</th>
+              <th>到達状況</th>
+              <th>採点接続</th>
+              <th>理由</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>1</td>
+              <td><strong>6762.T TDK</strong><br>電子部品</td>
+              <td>1日/5日復元済み<br><small>既存詳細CSVから復元</small></td>
+              <td>2026-04-28<br><small>2026年3月期 決算</small></td>
+              <td>2026-04-30<br><strong>9.03%</strong></td>
+              <td>2026-05-11<br><strong>5.5%</strong></td>
+              <td>2026-06-01</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
+              <td>未接続</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>2802.T 味の素</strong><br>食品</td>
+              <td>1日/5日接続済み<br><small>既存完了CSVから使用</small></td>
+              <td>2026-05-07<br><small>2026年3月期通期決算</small></td>
+              <td>2026-05-08<br><strong>1.64%</strong></td>
+              <td>2026-05-14<br><strong>12.07%</strong></td>
+              <td>2026-06-04</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
+              <td>未接続</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>8766.T 東京海上HD</strong><br>保険</td>
+              <td>未接続<br><small>未接続</small></td>
+              <td>未接続<br><small></small></td>
+              <td><br><strong></strong></td>
+              <td><br><strong></strong></td>
+              <td>未接続</td>
+              <td><span class="badge gap">イベント日未接続</span></td>
+              <td>未接続</td>
+              <td>決算日または基準株価が未接続のため、まず公式発表日と基準株価を確認する。</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>8316.T 三井住友FG</strong><br>銀行</td>
+              <td>1日/5日接続済み<br><small>既存完了CSVから使用</small></td>
+              <td>2026-05-13<br><small>2026年3月期通期決算</small></td>
+              <td>2026-05-14<br><strong>-2.05%</strong></td>
+              <td>2026-05-20<br><strong>5.99%</strong></td>
+              <td>2026-06-10</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
+              <td>未接続</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>8306.T 三菱UFJ FG</strong><br>銀行</td>
+              <td>1日/5日復元済み<br><small>既存詳細CSVから復元</small></td>
+              <td>2026-05-15<br><small>2026年3月期 決算</small></td>
+              <td>2026-05-18<br><strong>3.22%</strong></td>
+              <td>2026-05-22<br><strong>2.39%</strong></td>
+              <td>2026-06-12</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
+              <td>未接続</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><strong>6367.T ダイキン工業</strong><br>空調</td>
+              <td>未接続<br><small>未接続</small></td>
+              <td>未接続<br><small></small></td>
+              <td><br><strong></strong></td>
+              <td><br><strong></strong></td>
+              <td>未接続</td>
+              <td><span class="badge gap">イベント日未接続</span></td>
+              <td>未接続</td>
+              <td>決算日または基準株価が未接続のため、まず公式発表日と基準株価を確認する。</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><strong>6503.T 三菱電機</strong><br>総合電機</td>
+              <td>1日/5日接続済み<br><small>既存完了CSVから使用</small></td>
+              <td>2026-04-28<br><small>2026年3月期通期決算</small></td>
+              <td>2026-04-30<br><strong>3.57%</strong></td>
+              <td>2026-05-11<br><strong>1.9%</strong></td>
+              <td>2026-06-01</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
+              <td>未接続</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><strong>5020.T ENEOS HD</strong><br>エネルギー</td>
+              <td>1日/5日接続済み<br><small>既存完了CSVから使用</small></td>
+              <td>2026-05-14<br><small>2026年3月期通期決算</small></td>
+              <td>2026-05-15<br><strong>7.35%</strong></td>
+              <td>2026-05-21<br><strong>0.94%</strong></td>
+              <td>2026-06-11</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
+              <td>未接続</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><strong>6146.T ディスコ</strong><br>半導体装置</td>
+              <td>1日/5日復元済み<br><small>既存詳細CSVから復元</small></td>
+              <td>2026-04-22<br><small>2026年3月期 決算</small></td>
+              <td>2026-04-23<br><strong>-3.03%</strong></td>
+              <td>2026-04-30<br><strong>-0.59%</strong></td>
+              <td>2026-05-26</td>
+              <td><span class="badge warn">20営業日到達済み・再取得必要</span></td>
+              <td>未接続</td>
+              <td>20営業日目は概算上到達しているが、終値と指数比較の再取得が必要。再取得まで採点へ接続しない。</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td><strong>4385.T メルカリ</strong><br>ネット</td>
+              <td>1日/5日接続済み<br><small>既存完了CSVから使用</small></td>
+              <td>2026-05-11<br><small>2026年6月期3Q決算</small></td>
+              <td>2026-05-12<br><strong>-2.42%</strong></td>
+              <td>2026-05-18<br><strong>7.3%</strong></td>
+              <td>2026-06-08</td>
+              <td><span class="badge wait">20営業日未到達</span></td>
+              <td>未接続</td>
+              <td>1日/5日反応は確認できるが、20営業日反応が未到達のため採点へ接続しない。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="queue">
+      <h2>3. 次の作業</h2>
+      <div class="cards">
+
+        <div class="card">
+          <h3>優先1 6146.T ディスコ</h3>
+          <p><strong>現状:</strong> 1日/5日復元済み / 20営業日到達済み・再取得必要</p>
+          <p><strong>作業:</strong> 20営業日反応の再取得</p>
+          <p><strong>出力:</strong> 20営業日超過リターンを取得し、採点接続候補にできるか検算する。</p>
+        </div>
+        <div class="card">
+          <h3>優先1 6367.T ダイキン工業</h3>
+          <p><strong>現状:</strong> 未接続 / イベント日未接続</p>
+          <p><strong>作業:</strong> 公式決算日と基準株価の接続</p>
+          <p><strong>出力:</strong> 公式発表日、基準終値、1日/5日反応を取得する。</p>
+        </div>
+        <div class="card">
+          <h3>優先1 8766.T 東京海上HD</h3>
+          <p><strong>現状:</strong> 未接続 / イベント日未接続</p>
+          <p><strong>作業:</strong> 公式決算日と基準株価の接続</p>
+          <p><strong>出力:</strong> 公式発表日、基準終値、1日/5日反応を取得する。</p>
+        </div>
+        <div class="card">
+          <h3>優先2 6762.T TDK</h3>
+          <p><strong>現状:</strong> 1日/5日復元済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 復元済み1日/5日反応の出典確認</p>
+          <p><strong>出力:</strong> イベント日、基準株価、指数比較が説明資料に使える状態か確認する。</p>
+        </div>
+        <div class="card">
+          <h3>優先2 8306.T 三菱UFJ FG</h3>
+          <p><strong>現状:</strong> 1日/5日復元済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 復元済み1日/5日反応の出典確認</p>
+          <p><strong>出力:</strong> イベント日、基準株価、指数比較が説明資料に使える状態か確認する。</p>
+        </div>
+        <div class="card">
+          <h3>優先3 2802.T 味の素</h3>
+          <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
+          <p><strong>出力:</strong> 20営業日到達後に終値、日経平均、超過リターンを再計算する。</p>
+        </div>
+        <div class="card">
+          <h3>優先3 4385.T メルカリ</h3>
+          <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
+          <p><strong>出力:</strong> 20営業日到達後に終値、日経平均、超過リターンを再計算する。</p>
+        </div>
+        <div class="card">
+          <h3>優先3 5020.T ENEOS HD</h3>
+          <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
+          <p><strong>出力:</strong> 20営業日到達後に終値、日経平均、超過リターンを再計算する。</p>
+        </div>
+        <div class="card">
+          <h3>優先3 6503.T 三菱電機</h3>
+          <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
+          <p><strong>出力:</strong> 20営業日到達後に終値、日経平均、超過リターンを再計算する。</p>
+        </div>
+        <div class="card">
+          <h3>優先3 8316.T 三井住友FG</h3>
+          <p><strong>現状:</strong> 1日/5日接続済み / 20営業日未到達</p>
+          <p><strong>作業:</strong> 20営業日反応の到達待ち</p>
+          <p><strong>出力:</strong> 20営業日到達後に終値、日経平均、超過リターンを再計算する。</p>
+        </div>
+      </div>
+      <div class="links">
+        <a href="candidate_10_reaction_maturity_bridge_20260526.html">前工程を見る</a>
+        <a href="candidate_10_selection_readiness_20260526.html">選出準備状況を見る</a>
+        <a href="candidate_10_universe_lineage_20260526.html">選出経路を見る</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
