@@ -68,6 +68,7 @@ const currentFiles = new Map([
   ['candidate_10_evidence_pack_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、量的根拠、質的層、決算後反応、注意点を銘柄別カードで整理するページ。投資判断ではない。', 'candidate_10_tomorrow_finalization_queue_20260526.html']],
   ['candidate_10_completion_closure_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、今日処理できた項目と日付・データ待ちで残る項目を分ける完了状況ページ。実行判断ではない。', 'candidate_10_evidence_pack_20260526.html']],
   ['candidate_10_selection_draft_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社を根拠付きで説明するための作業順位を、量的データ、決算後反応、同業比較、残課題で整理するページ。投資判断ではない。', 'candidate_10_completion_closure_20260526.html']],
+  ['candidate_10_qualitative_validation_checklist_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、時流・イベント・新商品・政策テーマをどの数字で確認するかを整理するページ。仮説単独では点数へ混ぜない。', 'candidate_10_selection_draft_20260526.html']],
   ['candidate_10_universe_lineage_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社が固定母集団のどの役割・採用理由から詳細確認へ進んだかを示す選出経路ページ。投資判断ではない。', 'candidate_10_selection_readiness_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
@@ -162,6 +163,7 @@ const currentCsvPrefixes = [
   '505_', '506_', '507_',
   '508_', '509_', '510_', '511_', '512_', '513_', '514_', '515_', '516_', '517_',
   '518_', '519_', '520_',
+  '521_', '522_', '523_',
 ];
 
 function escCsv(value) {
