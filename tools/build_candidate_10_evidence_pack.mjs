@@ -116,12 +116,15 @@ function roleOrder(role) {
   }[role] || 9;
 }
 
-function explain(row, quant, queue) {
+function explain(row, quant, queue, sector) {
   const points = [];
   points.push(`量的評価${row.quantitative_grade}、データ信頼度${row.data_confidence}、準備点${row.data_readiness_score}`);
   if (quant) {
     points.push(`PER ${display(quant.per)}、PBR ${display(quant.pbr)}、ROE ${display(quant.roe_pct)}`);
     points.push(`売上成長 ${display(quant.revenue_yoy_pct)}、利益成長 ${display(quant.profit_yoy_pct)}、1年騰落 ${display(quant.ret1y_pct)}`);
+  }
+  if (sector) {
+    points.push(`同業比較: ${display(sector.adjustment_status)}、PER中央値 ${display(sector.sector_per_median)}、補正 ${display(sector.adjustment_delta, '0')}`);
   }
   points.push(`決算後反応: ${row.reaction_layer}（${row.reaction_note}）`);
   points.push(`質的層: ${row.qualitative_layer}（${row.qualitative_note}）`);
@@ -129,12 +132,13 @@ function explain(row, quant, queue) {
   return points.join('。');
 }
 
-function caution(row, quant) {
+function caution(row, quant, sector) {
   const items = [];
   if (row.gate_result === '要検算') items.push('実績反応が弱いため、構造仮説をそのまま採用しない。');
   if (row.gate_result === '反応待ち') items.push('1日反応のみのため、5営業日と20営業日を待つ。');
   if (row.gate_result === '補完待ち') items.push('PERまたは財務指標の不足を解消するまで順位を固定しない。');
   if (quant?.data_gap && quant.data_gap !== '主な不足なし') items.push(`不足: ${quant.data_gap}`);
+  if (sector?.adjustment_status === '未反映') items.push(`同業比較は未接続: ${sector.reason}`);
   if (!items.length) items.push('20営業日反応の到達後に再判定する。');
   return items.join(' ');
 }
@@ -143,15 +147,20 @@ const gateRows = readCsv('509_candidate_10_test_selection_gate_detail.csv');
 const quantRows = readCsv('466_candidate_10_quantitative_evidence.csv');
 const queueRows = readCsv('511_candidate_10_tomorrow_finalization_queue.csv');
 const perBridgeRows = readCsv('488_candidate_10_per_estimate_detail.csv');
+const sectorRows = fs.existsSync(path.join(ROOT, '300_candidate_sector_adjustment.csv'))
+  ? readCsv('300_candidate_sector_adjustment.csv')
+  : [];
 
 const quantByTicker = byTicker(quantRows);
 const queueByTicker = byTicker(queueRows);
 const perBridgeByTicker = byTicker(perBridgeRows);
+const sectorByTicker = byTicker(sectorRows);
 
 const evidenceRows = gateRows.map((row) => {
   const quant = quantByTicker.get(row.ticker);
   const queue = queueByTicker.get(row.ticker);
   const perBridge = perBridgeByTicker.get(row.ticker);
+  const sector = sectorByTicker.get(row.ticker);
   const perDisplay = quant?.per && quant.per !== '未取得'
     ? quant.per
     : perBridge?.actual_per_estimate
@@ -182,13 +191,21 @@ const evidenceRows = gateRows.map((row) => {
     profit_yoy_pct: quant?.profit_yoy_pct || '未取得',
     ret1y_pct: quant?.ret1y_pct || '未取得',
     max_drawdown60_pct: quant?.max_drawdown60_pct || '未取得',
+    sector_adjustment_status: sector?.adjustment_status || '未確認',
+    sector_per_median: sector?.sector_per_median || '未算出',
+    sector_pbr_median: sector?.sector_pbr_median || '未算出',
+    sector_roe_median_pct: sector?.sector_roe_median_pct || '未算出',
+    sector_adjustment_delta: sector?.adjustment_delta || '',
+    sector_adjusted_valuation_score: sector?.sector_adjusted_valuation_score || '',
+    sector_score_treatment: sector?.score_treatment || '未確認',
+    sector_reason: sector?.reason || '',
     decision_boundary: row.gate_result,
-    evidence_summary: explain(row, { ...quant, per: perDisplay }, queue),
-    caution: caution(row, quant),
+    evidence_summary: explain(row, { ...quant, per: perDisplay }, queue, sector),
+    caution: caution(row, quant, sector),
     tomorrow_priority: priority,
     tomorrow_action: queue?.action || '',
     output_expected: queue?.output || '',
-    purchase_status: '購入判断ではない',
+    purchase_status: '投資実行判断ではない',
   };
 });
 
@@ -208,7 +225,7 @@ const summaryRows = [
     updated_at: generatedAt,
     item: '暫定候補',
     value: `${evidenceRows.length}社`,
-    interpretation: '明日説明するための候補母集団。購入判断ではない。',
+    interpretation: '明日説明するための候補母集団。投資実行判断ではない。',
   },
   {
     updated_at: generatedAt,
@@ -227,6 +244,12 @@ const summaryRows = [
     item: '明日の主作業',
     value: '根拠整理',
     interpretation: '優先候補の説明、反応待ちの更新、弱い実績反応の検算を進める。',
+  },
+  {
+    updated_at: generatedAt,
+    item: '同業比較',
+    value: `${evidenceRows.filter((row) => row.sector_adjustment_status === '補正参考可').length}/${evidenceRows.length}社`,
+    interpretation: 'PER/PBR/ROEを同業中央値と比較できる銘柄数。基準未満の銘柄は点数へ混ぜない。',
   },
 ];
 
@@ -259,6 +282,14 @@ writeCsv('514_candidate_10_evidence_pack_detail.csv', evidenceRows, [
   'profit_yoy_pct',
   'ret1y_pct',
   'max_drawdown60_pct',
+  'sector_adjustment_status',
+  'sector_per_median',
+  'sector_pbr_median',
+  'sector_roe_median_pct',
+  'sector_adjustment_delta',
+  'sector_adjusted_valuation_score',
+  'sector_score_treatment',
+  'sector_reason',
   'decision_boundary',
   'evidence_summary',
   'caution',
@@ -354,10 +385,11 @@ const html = cleanLines(`<!doctype html>
           <small>${esc(row.interpretation)}</small>
         </div>`).join('')}
       </div>
-      <p class="notice">この資料は候補説明用です。購入判断は、6月の市場イベント実数と20営業日反応の確認後に別途行います。</p>
+      <p class="notice">この資料は候補説明用です。投資実行判断は、6月の市場イベント実数と20営業日反応の確認後に別途行います。</p>
       <div class="toolbar">
         <a class="button" href="513_candidate_10_evidence_pack_summary.csv">513 要約CSV</a>
         <a class="button" href="514_candidate_10_evidence_pack_detail.csv">514 詳細CSV</a>
+        <a class="button" href="sector_adjustment_20260525.html">同業比較へ</a>
         <a class="button" href="candidate_10_test_selection_gate_20260526.html">テスト選定ゲートへ</a>
         <a class="button" href="candidate_10_tomorrow_finalization_queue_20260526.html">明日作業キューへ</a>
         <a class="button" href="index.html">メインページへ</a>
@@ -393,6 +425,8 @@ const html = cleanLines(`<!doctype html>
           { key: 'per', label: 'PER' },
           { key: 'pbr', label: 'PBR' },
           { key: 'roe_pct', label: 'ROE' },
+          { key: 'sector_adjustment_status', label: '同業比較' },
+          { key: 'sector_adjustment_delta', label: '同業補正' },
           { key: 'revenue_yoy_pct', label: '売上成長' },
           { key: 'profit_yoy_pct', label: '利益成長' },
           { key: 'purchase_status', label: '扱い' },

@@ -133,6 +133,24 @@ function metricAdjustment(value, medianValue, lowerIsBetter = true, weight = 1) 
 
 const universeRows = readCsv(UNIVERSE_FILE);
 const candidateRows = readCsv(CANDIDATE_FILE);
+const perBridgeRows = fs.existsSync(path.join(ROOT, '488_candidate_10_per_estimate_detail.csv'))
+  ? readCsv('488_candidate_10_per_estimate_detail.csv')
+  : [];
+const perBridgeByTicker = new Map(perBridgeRows.map((row) => [row.ticker, row]));
+
+for (const row of universeRows) {
+  const bridge = perBridgeByTicker.get(row.ticker);
+  if ((!row.per_forecast || row.per_forecast === '未取得') && bridge?.actual_per_estimate) {
+    row.per_forecast = bridge.actual_per_estimate;
+  }
+}
+
+for (const row of candidateRows) {
+  const bridge = perBridgeByTicker.get(row.ticker);
+  if ((!row.per || row.per === '未取得') && bridge?.actual_per_estimate) {
+    row.per = bridge.actual_per_estimate;
+  }
+}
 
 const groups = new Map();
 for (const row of universeRows) {
@@ -165,7 +183,7 @@ const peerRows = [...groups.entries()]
       pbr_median: round(pbrMedian),
       roe_median_pct: round(roeMedian),
       adjustment_status: enough ? '参考可' : '比較数不足',
-      treatment: enough ? '業種内比較に使用可' : '購入検討用スコアには混ぜない',
+      treatment: enough ? '業種内比較に使用可' : 'テスト判定用スコアには混ぜない',
     };
   });
 
@@ -222,7 +240,7 @@ const candidateAdjustmentRows = candidateRows.map((row) => {
     adjustment_delta: canUse ? round(delta, 1) : '',
     sector_adjusted_valuation_score: adjusted === null ? '' : round(adjusted, 1),
     adjustment_status: status,
-    score_treatment: canUse ? '購入検討用スコアへ入れる前の監査値' : '購入検討用スコアには混ぜない',
+    score_treatment: canUse ? 'テスト判定用スコアへ入れる前の監査値' : 'テスト判定用スコアには混ぜない',
     reason,
   };
 });
@@ -233,7 +251,7 @@ const ruleRows = [
     rule_name: '同じ業種内で比較',
     detail: 'PER/PBR/ROEは業種で水準が違うため、候補銘柄の業種と同じ母集団内中央値と比較する。',
     pass_condition: '同業3社以上、かつPER/PBR/ROEの中央値を計算できる。',
-    fail_action: '比較数不足として購入検討用スコアには混ぜない。',
+    fail_action: '比較数不足としてテスト判定用スコアには混ぜない。',
   },
   {
     rule_id: 'S02',
@@ -245,7 +263,7 @@ const ruleRows = [
   {
     rule_id: 'S03',
     rule_name: '自動加点しない',
-    detail: '業種別補正値は監査値であり、ただちに最終購入判断へ足し込まない。',
+    detail: '業種別補正値は監査値であり、ただちに最終判断へ足し込まない。',
     pass_condition: '補正方向と理由が表示されている。',
     fail_action: '説明できない補正は使用しない。',
   },

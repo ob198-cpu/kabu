@@ -63,6 +63,10 @@ const currentFiles = new Map([
   ['candidate_10_disco_20d_reaction_update_20260526.html', ['現行資料', '顧客説明に使用可', 'ディスコの20営業日反応をYahoo Finance chart APIの日次データで再取得したページ。検算後の採点接続候補であり、購入判断ではない。', 'candidate_10_reaction_due_reconstruction_20260526.html']],
   ['candidate_10_missing_event_reaction_connect_20260526.html', ['現行資料', '顧客説明に使用可', '決算日未接続だった東京海上HDとダイキン工業について、公式決算日と株価反応を接続したページ。20営業日反応までは採点へ接続しない。', 'candidate_10_reaction_due_reconstruction_20260526.html']],
   ['candidate_10_selection_readiness_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社を確定する前に、PER、成長率、株価リスク、決算後反応の準備状況を統合して確認するページ。投資判断スコアではない。', 'candidate_10_reaction_maturity_bridge_20260526.html']],
+  ['candidate_10_test_selection_gate_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社を確定する前に、量的評価、質的仮説、決算後反応を分けて分類するページ。投資判断ではない。', 'candidate_10_selection_readiness_20260526.html']],
+  ['candidate_10_tomorrow_finalization_queue_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社の根拠説明へ向けて、優先1と優先2の確認作業を銘柄別に整理するページ。投資判断ではない。', 'candidate_10_test_selection_gate_20260526.html']],
+  ['candidate_10_evidence_pack_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、量的根拠、質的層、決算後反応、注意点を銘柄別カードで整理するページ。投資判断ではない。', 'candidate_10_tomorrow_finalization_queue_20260526.html']],
+  ['candidate_10_completion_closure_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、今日処理できた項目と日付・データ待ちで残る項目を分ける完了状況ページ。実行判断ではない。', 'candidate_10_evidence_pack_20260526.html']],
   ['candidate_10_universe_lineage_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社が固定母集団のどの役割・採用理由から詳細確認へ進んだかを示す選出経路ページ。投資判断ではない。', 'candidate_10_selection_readiness_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
@@ -155,6 +159,7 @@ const currentCsvPrefixes = [
   '499_', '500_', '501_',
   '502_', '503_', '504_',
   '505_', '506_', '507_',
+  '508_', '509_', '510_', '511_', '512_', '513_', '514_', '515_', '516_', '517_',
 ];
 
 function escCsv(value) {
