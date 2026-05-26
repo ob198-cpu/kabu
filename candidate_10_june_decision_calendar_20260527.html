@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 6月再判定カレンダー 2026年5月27日</title>
+  <style>
+    :root { --ink:#061a33; --muted:#334155; --line:#c9d9ea; --bg:#f4f8fc; --navy:#0d3658; --blue:#0b6fa4; --soft:#eef7ff; --amber:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.72; letter-spacing:0; }
+    header { background:var(--navy); color:#fff; padding:34px clamp(18px,4vw,58px); }
+    h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); letter-spacing:0; }
+    header p { margin:0; color:#fff; font-weight:800; max-width:1120px; }
+    main { width:min(1260px, calc(100% - 32px)); margin:24px auto 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px; margin:18px 0; break-inside:avoid; }
+    h2 { margin:0 0 14px; padding-left:12px; border-left:8px solid var(--blue); font-size:24px; }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .metric { border:1px solid var(--line); border-radius:8px; padding:14px; background:var(--soft); min-height:120px; }
+    .metric span { display:block; color:var(--muted); font-weight:900; }
+    .metric strong { display:block; color:var(--blue); font-size:24px; line-height:1.35; }
+    .notice { border-left:8px solid var(--amber); background:#fff7ed; padding:14px; border-radius:8px; font-weight:900; color:#111827; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .button { display:inline-flex; align-items:center; min-height:38px; padding:8px 12px; border-radius:8px; border:1px solid #9cc8ec; background:#fff; color:var(--navy); text-decoration:none; font-weight:900; font-size:13px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+    table { width:100%; min-width:1160px; border-collapse:collapse; table-layout:fixed; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px; vertical-align:top; text-align:left; overflow-wrap:anywhere; word-break:break-word; color:#061a33; }
+    th { background:#e6f1fb; color:#073b63; font-weight:900; }
+    a { color:#0b5cab; font-weight:900; }
+    tr:last-child td { border-bottom:0; }
+    th:last-child,td:last-child { border-right:0; }
+    @media (max-width:900px) { .summary { grid-template-columns:1fr; } main { width:min(100% - 20px,1260px); } section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 6月再判定カレンダー</h1>
+    <p>市場イベントと候補10社の決算後反応を同じ時系列で確認し、6月の再判定に使う資料です。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>6月の判定軸</span>
+          <strong>市場イベント + 銘柄反応</strong>
+          <small>CPI・日銀・FOMCと、候補10社の決算後20営業日反応を合わせて見る。</small>
+        </div>
+        <div class="metric">
+          <span>購入判断</span>
+          <strong>イベント後に再判定</strong>
+          <small>日付前に購入確定扱いにしない。</small>
+        </div>
+        <div class="metric">
+          <span>+1%目標</span>
+          <strong>指数超過が前提</strong>
+          <small>S&amp;P500・日経平均・TOPIXを1%以上上回る見込みが弱い場合、個別株比率を下げる。</small>
+        </div>
+      </div>
+      <p class="notice">日付前に購入を確定しません。イベント結果と銘柄反応を更新してから再判定します。</p>
+      <div class="toolbar">
+        <a class="button" href="542_candidate_10_june_decision_calendar_summary.csv">542 要約CSV</a>
+        <a class="button" href="543_candidate_10_june_decision_calendar_events.csv">543 イベントCSV</a>
+        <a class="button" href="544_candidate_10_june_decision_calendar_reactions.csv">544 反応CSV</a>
+        <a class="button" href="candidate_10_client_explanation_20260527.html">顧客向け説明整理へ</a>
+        <a class="button" href="index.html">メインページへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>時系列チェック</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>日付</th><th>区分</th><th>対象</th><th>確認する数値</th><th>条件分岐</th><th>出典</th></tr></thead>
+        <tbody>
+          <tr><td>2026-05-26</td><td>銘柄イベント</td><td>ディスコ（6146.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>弱い反応の原因が説明できなければ主候補へ戻さない。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-01</td><td>銘柄イベント</td><td>TDK（6762.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>20営業日反応が悪化しなければ主候補を維持。悪化時は比較枠へ下げる。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-01</td><td>銘柄イベント</td><td>三菱電機（6503.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>結果を見て、主候補化・比較維持・除外のいずれかに再分類。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-04</td><td>銘柄イベント</td><td>味の素（2802.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>20営業日反応が悪化しなければ主候補を維持。悪化時は比較枠へ下げる。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-08</td><td>銘柄イベント</td><td>メルカリ（4385.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>結果を見て、主候補化・比較維持・除外のいずれかに再分類。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-09</td><td>銘柄イベント</td><td>ダイキン工業（6367.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>結果を見て、主候補化・比較維持・除外のいずれかに再分類。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-10</td><td>市場イベント</td><td>米5月CPI発表</td><td>前年比、前月比、コアCPI、米10年金利、ドル円、NASDAQ/SOX反応</td><td>インフレ再加速と金利急騰が同時に出た場合、6月の個別株比率を下げる。予想内なら候補再判定を継続。</td><td><a href="https://www.bls.gov/schedule/news_release/cpi.htm" target="_blank" rel="noopener">BLS</a></td></tr><tr><td>2026-06-10</td><td>銘柄イベント</td><td>三井住友FG（8316.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>20営業日反応が悪化しなければ主候補を維持。悪化時は比較枠へ下げる。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-11</td><td>銘柄イベント</td><td>ENEOS HD（5020.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>結果を見て、主候補化・比較維持・除外のいずれかに再分類。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-12</td><td>銘柄イベント</td><td>三菱UFJ FG（8306.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>結果を見て、主候補化・比較維持・除外のいずれかに再分類。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-06-15〜2026-06-16</td><td>市場イベント</td><td>日銀金融政策決定会合</td><td>政策金利、声明、国債買入れ、円高/円安、銀行株・輸出株・内需株の反応</td><td>急な円高または銀行株の市場劣後が出た場合、銀行・海外比率が高い候補の比率を抑える。</td><td><a href="https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm" target="_blank" rel="noopener">日本銀行</a></td></tr><tr><td>2026-06-16〜2026-06-17</td><td>市場イベント</td><td>FOMC</td><td>政策金利、SEP、ドットプロット、米10年金利、NASDAQ/SOX、ドル円</td><td>金利上振れ・高PER株売りが強い場合、半導体・成長株の候補を減点。落ち着けば候補維持。</td><td><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">FRB</a></td></tr><tr><td>2026-06-17</td><td>銘柄イベント</td><td>東京海上HD（8766.T）</td><td>決算後20営業日の対日経平均超過リターンを確認</td><td>結果を見て、主候補化・比較維持・除外のいずれかに再分類。</td><td><a href="" target="_blank" rel="noopener">既存株価データ / 日経平均比較</a></td></tr><tr><td>2026-07-28〜2026-07-29</td><td>市場イベント</td><td>FOMC追加確認</td><td>6月判断後の金利・株式市場の継続性</td><td>6月に小さく開始した場合の継続・停止・追加判断に使う。</td><td><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">FRB</a></td></tr><tr><td>2026-07-30〜2026-07-31</td><td>市場イベント</td><td>日銀追加確認</td><td>円相場、銀行株、内需株、輸出株の反応</td><td>夏の追加判断で、銀行・輸出・内需の比率を調整する。</td><td><a href="https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm" target="_blank" rel="noopener">日本銀行</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>
