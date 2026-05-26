@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 明日説明ブリーフ 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --muted: #3f5168;
+      --line: #c9d9ea;
+      --bg: #f4f8fc;
+      --navy: #0d3658;
+      --blue: #0b6fa4;
+      --soft: #eef7ff;
+      --amber: #b45309;
+      --green: #087f5b;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.72; letter-spacing: 0; }
+    header { background: var(--navy); color: #fff; padding: 34px clamp(18px, 4vw, 58px); }
+    h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; color: #e7f3ff; font-weight: 800; max-width: 1120px; }
+    main { width: min(1240px, calc(100% - 32px)); margin: 24px auto 56px; }
+    section { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 22px; margin: 18px 0; break-inside: avoid; }
+    h2 { margin: 0 0 14px; padding-left: 12px; border-left: 8px solid var(--blue); font-size: 24px; }
+    .cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+    .card { border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: var(--soft); min-height: 150px; }
+    .card span { display: block; color: var(--muted); font-weight: 900; }
+    .card strong { display: block; color: var(--blue); font-size: 30px; line-height: 1.2; }
+    .line-box { border-left: 8px solid var(--green); background: #f0fff8; padding: 14px; border-radius: 8px; font-weight: 900; }
+    .notice { border-left: 8px solid var(--amber); background: #fff7ed; padding: 14px; border-radius: 8px; font-weight: 900; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button { display: inline-flex; align-items: center; min-height: 38px; padding: 8px 12px; border-radius: 8px; border: 1px solid #9cc8ec; background: #fff; color: var(--navy); text-decoration: none; font-weight: 900; font-size: 13px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; min-width: 980px; border-collapse: collapse; table-layout: fixed; }
+    th, td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 9px; vertical-align: top; text-align: left; overflow-wrap: anywhere; word-break: break-word; }
+    th { background: #e6f1fb; color: #073b63; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    @media (max-width: 1000px) {
+      main { width: min(100% - 20px, 1240px); }
+      .cards { grid-template-columns: 1fr; }
+      section { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 明日説明ブリーフ</h1>
+    <p>候補10社を明日説明するための要点整理です。実行判断ではなく、根拠整理と再判定準備の資料です。</p>
+  </header>
+  <main>
+    <section>
+      <h2>分類サマリー</h2>
+      <div class="cards">
+
+        <div class="card">
+          <span>説明優先</span>
+          <strong>3社</strong>
+          <small>TDK（6762.T）、三井住友FG（8316.T）、味の素（2802.T）</small>
+        </div>
+        <div class="card">
+          <span>比較維持</span>
+          <strong>3社</strong>
+          <small>ENEOS HD（5020.T）、ダイキン工業（6367.T）、三菱電機（6503.T）</small>
+        </div>
+        <div class="card">
+          <span>反応更新待ち</span>
+          <strong>1社</strong>
+          <small>東京海上HD（8766.T）</small>
+        </div>
+        <div class="card">
+          <span>補完後に再判定</span>
+          <strong>2社</strong>
+          <small>メルカリ（4385.T）、三菱UFJ FG（8306.T）</small>
+        </div>
+        <div class="card">
+          <span>検算優先</span>
+          <strong>1社</strong>
+          <small>ディスコ（6146.T）</small>
+        </div>
+      </div>
+      <p class="notice">6月の市場イベントと20営業日反応を確認するまでは、最終判断として扱いません。</p>
+      <div class="toolbar">
+        <a class="button" href="524_candidate_10_tomorrow_brief_status.csv">524 分類CSV</a>
+        <a class="button" href="525_candidate_10_tomorrow_brief_tasks.csv">525 タスクCSV</a>
+        <a class="button" href="526_candidate_10_tomorrow_line_text.csv">526 LINE文CSV</a>
+        <a class="button" href="candidate_10_selection_draft_20260526.html">選定ドラフトへ</a>
+        <a class="button" href="candidate_10_qualitative_validation_checklist_20260526.html">質的仮説チェックへ</a>
+        <a class="button" href="index.html">メインページへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>報告文</h2>
+      <div class="line-box">
+        <p>候補10社について、量的データ・決算後反応・同業比較・質的仮説を分けて整理し、明日説明する作業順位を作成しました。</p><p>現時点ではTDK、三井住友FG、味の素を説明優先、ENEOS・ダイキン・三菱電機を比較維持、東京海上HDなどは反応待ち・補完・検算に分類しています。</p><p>質的仮説は単独で加点せず、売上・利益・受注・決算後反応などで確認できるものだけ根拠として扱う方針にしています。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>明日の作業</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順番</th><th>作業</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>説明優先3社の根拠整理</td><td>TDK、三井住友FG、味の素について、量的根拠、質的仮説、残課題、6月再判定条件を1社ずつ説明できる形にする。</td></tr><tr><td>2</td><td>比較維持3社の位置づけ整理</td><td>ENEOS、ダイキン工業、三菱電機について、なぜ上位ではなく比較維持なのかを数字で説明する。</td></tr><tr><td>3</td><td>反応待ち・補完・検算の分岐確認</td><td>東京海上HD、メルカリ、三菱UFJ FG、ディスコは、足りないデータまたは弱い反応を明記して扱う。</td></tr><tr><td>4</td><td>6月再判定条件との接続</td><td>CPI、日銀、FOMC、20営業日反応の到達後に、10社を再分類する条件へ接続する。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>分類詳細</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>分類</th><th>件数</th><th>銘柄</th><th>説明</th></tr></thead>
+        <tbody>
+          <tr><td>説明優先</td><td>3社</td><td>TDK（6762.T）、三井住友FG（8316.T）、味の素（2802.T）</td><td>明日、最初に根拠を説明する対象。数字は比較的そろっているが、6月再判定までは実行判断ではない。</td></tr><tr><td>比較維持</td><td>3社</td><td>ENEOS HD（5020.T）、ダイキン工業（6367.T）、三菱電機（6503.T）</td><td>10社内に残し、上位候補との差と弱点を説明する対象。</td></tr><tr><td>反応更新待ち</td><td>1社</td><td>東京海上HD（8766.T）</td><td>決算後反応がまだ不足しているため、反応更新後に扱いを決める対象。</td></tr><tr><td>補完後に再判定</td><td>2社</td><td>メルカリ（4385.T）、三菱UFJ FG（8306.T）</td><td>不足値または試算値があり、補完後に順位を固定する対象。</td></tr><tr><td>検算優先</td><td>1社</td><td>ディスコ（6146.T）</td><td>実績反応が弱く、構造仮説を残すかどうかを検算する対象。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>
