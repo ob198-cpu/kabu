@@ -248,9 +248,10 @@
         <p class="small">市場全体が上がっただけの反応を、個別銘柄の実力として扱わないための式です。</p>
       </div>
       <div class="panel">
-        <h2>CSV読み込み確認</h2>
-        <p class="small">入力後のCSVをここへ読み込むと、件数と先頭行を確認できます。実績値が入っていないCSVは未判定のままです。</p>
+        <h2>CSV読み込み・計算・出力</h2>
+        <p class="small">入力後のCSVをここへ読み込むと、個別リターン、ベンチマークリターン、超過リターン、S〜C判定をブラウザ内で計算します。実績値が入っていない行は未判定のままです。</p>
         <label class="button" for="csvFile">CSVを読み込む</label>
+        <button class="button" id="downloadCsv" type="button" hidden>計算済みCSVを出力</button>
         <input id="csvFile" type="file" accept=".csv,text/csv">
         <div id="csvPreview" class="small">未読み込み</div>
       </div>
@@ -636,6 +637,8 @@
   <script>
     const fileInput = document.getElementById('csvFile');
     const preview = document.getElementById('csvPreview');
+    const downloadButton = document.getElementById('downloadCsv');
+    let calculatedRows = [];
 
     function parseCsv(text) {
       if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
@@ -667,6 +670,77 @@
       return rows.filter((items) => items.some((item) => String(item).trim() !== ''));
     }
 
+    function toNumber(value) {
+      const n = Number(String(value ?? '').replace(/,/g, ''));
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function pct(after, before) {
+      const a = toNumber(after);
+      const b = toNumber(before);
+      if (a === null || b === null || b === 0) return '';
+      return Number((((a - b) / b) * 100).toFixed(2));
+    }
+
+    function diff(a, b) {
+      if (a === '' || b === '') return '';
+      return Number((Number(a) - Number(b)).toFixed(2));
+    }
+
+    function evaluate(row) {
+      const reverse = String(row.direction_match || '').includes('逆');
+      const ex1 = toNumber(row.excess_return_1d_pct);
+      const ex5 = toNumber(row.excess_return_5d_pct);
+      const ex20 = toNumber(row.excess_return_20d_pct);
+      if ([ex1, ex5, ex20].some((v) => v === null)) return '未判定';
+      if (reverse) return 'C';
+      if (ex1 >= 0 && (ex5 >= 3 || ex20 >= 3)) return 'S';
+      if (ex5 >= 1 || ex20 >= 1) return 'A';
+      if (ex5 > -1 && ex20 > -1) return 'B';
+      return 'C';
+    }
+
+    function rowObjects(rows) {
+      const headers = rows[0] || [];
+      return rows.slice(1).map((items) => Object.fromEntries(headers.map((h, i) => [h, items[i] ?? ''])));
+    }
+
+    function calculateRows(rows) {
+      return rows.map((row) => {
+        const stock1 = pct(row.stock_price_1d, row.stock_price_before);
+        const stock5 = pct(row.stock_price_5d, row.stock_price_before);
+        const stock20 = pct(row.stock_price_20d, row.stock_price_before);
+        const bench1 = pct(row.benchmark_1d, row.benchmark_before);
+        const bench5 = pct(row.benchmark_5d, row.benchmark_before);
+        const bench20 = pct(row.benchmark_20d, row.benchmark_before);
+        const next = {
+          ...row,
+          stock_return_1d_pct: stock1,
+          stock_return_5d_pct: stock5,
+          stock_return_20d_pct: stock20,
+          benchmark_return_1d_pct: bench1,
+          benchmark_return_5d_pct: bench5,
+          benchmark_return_20d_pct: bench20,
+          excess_return_1d_pct: diff(stock1, bench1),
+          excess_return_5d_pct: diff(stock5, bench5),
+          excess_return_20d_pct: diff(stock20, bench20),
+        };
+        next.evidence_rating = evaluate(next);
+        next.purchase_status = '購入判断不可';
+        return next;
+      });
+    }
+
+    function toCsv(rows) {
+      if (!rows.length) return '';
+      const headers = Object.keys(rows[0]);
+      const esc = (value) => {
+        const text = String(value ?? '');
+        return /[",\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+      };
+      return '\uFEFF' + [headers.join(','), ...rows.map((row) => headers.map((h) => esc(row[h])).join(','))].join('\n') + '\n';
+    }
+
     function escHtml(value) {
       return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
         '&': '&amp;',
@@ -683,13 +757,30 @@
       const text = await file.text();
       const rows = parseCsv(text);
       const headers = rows[0] || [];
-      const data = rows.slice(1);
-      const headHtml = headers.slice(0, 8).map((h) => `<th>${escHtml(h)}</th>`).join('');
-      const bodyHtml = data.slice(0, 5).map((items) => `<tr>${items.slice(0, 8).map((v) => `<td>${escHtml(v)}</td>`).join('')}</tr>`).join('');
+      const data = rowObjects(rows);
+      calculatedRows = calculateRows(data);
+      const previewHeaders = ['event_id', 'ticker', 'event_theme', 'stock_return_5d_pct', 'benchmark_return_5d_pct', 'excess_return_5d_pct', 'evidence_rating', 'purchase_status'];
+      const headHtml = previewHeaders.map((h) => `<th>${escHtml(h)}</th>`).join('');
+      const bodyHtml = calculatedRows.slice(0, 8).map((row) => `<tr>${previewHeaders.map((h) => `<td>${escHtml(row[h])}</td>`).join('')}</tr>`).join('');
+      const judged = calculatedRows.filter((row) => row.evidence_rating !== '未判定').length;
+      downloadButton.hidden = false;
       preview.innerHTML = `
-        <p><b>${escHtml(file.name)}</b> を読み込みました。データ行: ${data.length}件、列: ${headers.length}列。</p>
+        <p><b>${escHtml(file.name)}</b> を読み込みました。データ行: ${data.length}件、列: ${headers.length}列。S〜C判定済み: ${judged}件。</p>
         <div class="table-wrap"><table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table></div>
       `;
+    });
+
+    downloadButton.addEventListener('click', () => {
+      const csv = toCsv(calculatedRows);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'candidate_10_event_evidence_calculated.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
