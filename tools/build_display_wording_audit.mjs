@@ -25,6 +25,7 @@ const targetFiles = [
   'event_causality_validation_20260525.html',
   'event_type_reaction_db_20260526.html',
   'june_forward_test_record_20260526.html',
+  'semiconductor_structural_advantage_gate_20260526.html',
 ];
 
 const phraseRules = [
@@ -261,9 +262,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: 'TDnet分類済み企業イベントを株価時系列へ接続する',
-    reason: '6月イベント後の実績入力、候補別ゲート、予実差記録の台帳を作成したため。',
-    output: 'TOB、自社株買い、上方修正、決算短信などのイベント後1日/5日/20日超過リターン',
+    action: '半導体構造優位銘柄の下落耐性を検証する',
+    reason: '半導体・AI周辺の構造優位ゲートを作成し、質的仮説を本体スコアへ直接混ぜない形にしたため。',
+    output: 'SOX、日経平均、NASDAQ下落局面での1日/5日/20日相対リターン',
   },
 ];
 
@@ -428,6 +429,7 @@ const html = `<!doctype html>
       <a class="button" href="candidate_data_completion_20260526.html">候補10社データ補完へ</a>
       <a class="button" href="event_type_reaction_db_20260526.html">イベント種類別反応DBへ</a>
       <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
+      <a class="button" href="semiconductor_structural_advantage_gate_20260526.html">半導体構造優位ゲートへ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

@@ -26,6 +26,7 @@ const fallbackTargets = [
   'event_causality_validation_20260525.html',
   'event_type_reaction_db_20260526.html',
   'june_forward_test_record_20260526.html',
+  'semiconductor_structural_advantage_gate_20260526.html',
   'candidate_june_rulebook.html',
   'prepublish_wording_check_20260526.html',
   'candidate_role_wording_20260526.html',

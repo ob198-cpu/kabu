@@ -30,6 +30,7 @@ const currentFiles = new Map([
   ['event_causality_validation_20260525.html', ['現行資料', '顧客説明に使用可', 'イベント名だけで加点しないための因果・複合条件ページ。', '']],
   ['event_type_reaction_db_20260526.html', ['現行資料', '顧客説明に使用可', 'イベント種類別に株価反応DBの有無、分類DB、未接続キューを分けるページ。', 'event_causality_validation_20260525.html']],
   ['june_forward_test_record_20260526.html', ['現行資料', '顧客説明に使用可', '6月イベント後の実績入力、候補別ゲート、予実差を記録するページ。', 'event_type_reaction_db_20260526.html']],
+  ['semiconductor_structural_advantage_gate_20260526.html', ['現行資料', '顧客説明に使用可', '半導体・AI周辺の不可欠工程、高シェア、代替困難性を質的ゲートとして扱うページ。', 'june_forward_test_record_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
@@ -88,6 +89,7 @@ const currentCsvPrefixes = [
   '338_', '339_', '340_', '341_', '342_',
   '343_', '344_', '345_', '346_', '347_',
   '348_', '349_', '350_', '351_', '352_', '353_',
+  '354_', '355_', '356_', '357_', '358_',
 ];
 
 function escCsv(value) {

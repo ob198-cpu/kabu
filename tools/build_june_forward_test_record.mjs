@@ -569,6 +569,7 @@ const html = cleanLines(`<!doctype html>
       <a class="button" href="350_forward_candidate_checklist.csv">350 候補別チェックCSV</a>
       <a class="button" href="351_forward_decision_rules.csv">351 判定ルールCSV</a>
       <a class="button" href="352_forward_test_result_template.csv">352 予実差テンプレートCSV</a>
+      <a class="button" href="semiconductor_structural_advantage_gate_20260526.html">半導体構造優位ゲートへ</a>
       <a class="button" href="event_type_reaction_db_20260526.html">イベント種類別反応DBへ</a>
       <a class="button" href="candidate_data_completion_20260526.html">候補10社データ補完へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
