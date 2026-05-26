@@ -1,0 +1,4 @@
+﻿updated_at,priority,ticker,company,missing_item,required_basis,acceptable_source_1,acceptable_source_2,acceptable_source_3,calculation_rule,score_rule,status
+2026/05/26 17:38,1,2802.T,味の素,同業中央値,同業2社以上のPER/PBR/ROE中央値,同業会社IR/決算短信 + 株価,J-Quants/JPX系データ,EDINET有報は実績財務の補助。株価と基準日を合わせる,同業2社未満なら中央値として使わない。欠損値を0扱いしない,中央値が成立するまで業種補正へ接続しない,未補完
+2026/05/26 17:38,2,5020.T,ENEOS HD,同業中央値,同業2社以上のPER/PBR/ROE中央値,同業会社IR/決算短信 + 株価,J-Quants/JPX系データ,EDINET有報は実績財務の補助。株価と基準日を合わせる,同業2社未満なら中央値として使わない。欠損値を0扱いしない,中央値が成立するまで業種補正へ接続しない,未補完
+2026/05/26 17:38,3,4385.T,メルカリ,同業中央値,同業2社以上のPER/PBR/ROE中央値,同業会社IR/決算短信 + 株価,J-Quants/JPX系データ,EDINET有報は実績財務の補助。株価と基準日を合わせる,同業2社未満なら中央値として使わない。欠損値を0扱いしない,中央値が成立するまで業種補正へ接続しない,未補完

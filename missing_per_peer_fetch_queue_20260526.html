@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>不足PER・同業中央値 補完キュー</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --red: #b42318;
+      --orange: #b65c00;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.2;
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    h2 {
+      font-size: 24px;
+      color: var(--navy);
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .kpi {
+      background: white;
+      color: var(--ink);
+      border: 1px solid #c9def3;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .kpi b { display: block; color: var(--blue); font-size: 28px; line-height: 1; }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0 4px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fbff;
+      padding: 12px;
+      min-height: 120px;
+      position: relative;
+    }
+    .step b { color: var(--navy); display: block; margin-bottom: 6px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      background: white;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th {
+      background: #e8f4ff;
+      color: #073b63;
+      font-weight: 800;
+    }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      table { min-width: 820px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>不足PER・同業中央値 補完キュー</h1>
+      <p>即時補完8件のうち、点数へ接続できない理由をPER不足と同業中央値不足に分けました。ここで埋める対象、使える出典、点数へ戻す条件を固定します。</p>
+      <div class="actions">
+        <a class="button" href="immediate_completion_score_bridge_20260526.html">スコア接続状況へ戻る</a>
+        <a class="button" href="452_per_fetch_queue.csv">PER補完CSV</a>
+        <a class="button" href="453_peer_median_fetch_queue.csv">同業中央値CSV</a>
+        <a class="button" href="455_score_reentry_rules.csv">再接続ルールCSV</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>3</b><span>PER不足</span></div>
+        <div class="kpi"><b>3</b><span>同業中央値不足</span></div>
+        <div class="kpi"><b>5</b><span>説明補助止まり</span></div>
+        <div class="kpi"><b>0社</b><span>購入判断</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      重要: 不足値は0点でも0倍でもなく「未接続」です。予想PER・実績PER・同業中央値の基準がそろうまで、購入候補スコアへは戻しません。
+    </div>
+
+    <section class="panel">
+      <h2>解消までの流れ</h2>
+      <div class="flow">
+        <div class="step"><b>1. 即時</b><span>不足値をPER不足と同業中央値不足に分離</span></div><div class="step"><b>2. 次作業</b><span>8306/6146/4385のPERを同一基準で補完</span></div><div class="step"><b>3. 次作業</b><span>2802/5020/4385の同業中央値を再構成</span></div><div class="step"><b>4. 補完後</b><span>探索スコアと購入候補スコアを再計算</span></div><div class="step"><b>5. 6月イベント後</b><span>CPI、FOMC、日銀後の実数を入れて再判定</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>PER補完キュー</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>優先</th><th>銘柄</th><th>会社</th><th>必要な基準</th><th>第一候補</th><th>計算ルール</th><th>点数への扱い</th><th>状態</th></tr></thead>
+        <tbody>
+
+                <tr><td>1</td><td>8306.T</td><td>三菱UFJ FG</td><td>予想PERまたは同一基準の実績PER</td><td>会社IR/決算短信のEPS予想 + 同日株価で計算</td><td>PER = 基準株価 ÷ 1株利益。予想EPSと実績EPSを混在させない</td><td>値が入るまで割安スコアへ接続しない</td><td>未補完</td></tr>
+
+                <tr><td>2</td><td>6146.T</td><td>ディスコ</td><td>予想PERまたは同一基準の実績PER</td><td>会社IR/決算短信のEPS予想 + 同日株価で計算</td><td>PER = 基準株価 ÷ 1株利益。予想EPSと実績EPSを混在させない</td><td>値が入るまで割安スコアへ接続しない</td><td>未補完</td></tr>
+
+                <tr><td>3</td><td>4385.T</td><td>メルカリ</td><td>予想PERまたは同一基準の実績PER</td><td>会社IR/決算短信のEPS予想 + 同日株価で計算</td><td>PER = 基準株価 ÷ 1株利益。予想EPSと実績EPSを混在させない</td><td>値が入るまで割安スコアへ接続しない</td><td>未補完</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>同業中央値補完キュー</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>優先</th><th>銘柄</th><th>会社</th><th>必要な基準</th><th>第一候補</th><th>計算ルール</th><th>点数への扱い</th><th>状態</th></tr></thead>
+        <tbody>
+
+                <tr><td>1</td><td>2802.T</td><td>味の素</td><td>同業2社以上のPER/PBR/ROE中央値</td><td>同業会社IR/決算短信 + 株価</td><td>同業2社未満なら中央値として使わない。欠損値を0扱いしない</td><td>中央値が成立するまで業種補正へ接続しない</td><td>未補完</td></tr>
+
+                <tr><td>2</td><td>5020.T</td><td>ENEOS HD</td><td>同業2社以上のPER/PBR/ROE中央値</td><td>同業会社IR/決算短信 + 株価</td><td>同業2社未満なら中央値として使わない。欠損値を0扱いしない</td><td>中央値が成立するまで業種補正へ接続しない</td><td>未補完</td></tr>
+
+                <tr><td>3</td><td>4385.T</td><td>メルカリ</td><td>同業2社以上のPER/PBR/ROE中央値</td><td>同業会社IR/決算短信 + 株価</td><td>同業2社未満なら中央値として使わない。欠損値を0扱いしない</td><td>中央値が成立するまで業種補正へ接続しない</td><td>未補完</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>点数へ戻す条件</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ルール</th><th>扱い</th><th>理由</th></tr></thead>
+        <tbody>
+
+                <tr><td>欠損値</td><td>NULLとして扱う</td><td>0にすると低PER・低PBRのように誤って有利になるため。</td></tr>
+
+                <tr><td>PER</td><td>予想PERと実績PERを分ける</td><td>成長株・景気敏感株では基準混在で評価が歪むため。</td></tr>
+
+                <tr><td>同業中央値</td><td>同業2社以上で成立</td><td>1社だけでは比較ではなく単一事例になり、業種補正として弱いため。</td></tr>
+
+                <tr><td>部分接続</td><td>説明補助まで</td><td>候補理由の説明には使えるが、点数化にはまだ不足があるため。</td></tr>
+
+                <tr><td>購入判断</td><td>6月イベント後まで0社</td><td>現在は候補選定の検算段階で、売買実行判断ではないため。</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+  </main>
+</body>
+</html>

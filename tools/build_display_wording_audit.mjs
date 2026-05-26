@@ -43,6 +43,7 @@ const targetFiles = [
   'june_10_finalization_sprint_20260526.html',
   'immediate_completion_input_map_20260526.html',
   'immediate_completion_score_bridge_20260526.html',
+  'missing_per_peer_fetch_queue_20260526.html',
 ];
 
 const phraseRules = [

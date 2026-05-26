@@ -1,0 +1,4 @@
+﻿updated_at,priority,ticker,company,missing_item,required_basis,acceptable_source_1,acceptable_source_2,acceptable_source_3,calculation_rule,score_rule,status
+2026/05/26 17:38,1,8306.T,三菱UFJ FG,PER,予想PERまたは同一基準の実績PER,会社IR/決算短信のEPS予想 + 同日株価で計算,J-Quants/JPX系の公式・準公式データ,EDINET有報の実績EPSは補助。予想PERとは分けて記録,PER = 基準株価 ÷ 1株利益。予想EPSと実績EPSを混在させない,値が入るまで割安スコアへ接続しない,未補完
+2026/05/26 17:38,2,6146.T,ディスコ,PER,予想PERまたは同一基準の実績PER,会社IR/決算短信のEPS予想 + 同日株価で計算,J-Quants/JPX系の公式・準公式データ,EDINET有報の実績EPSは補助。予想PERとは分けて記録,PER = 基準株価 ÷ 1株利益。予想EPSと実績EPSを混在させない,値が入るまで割安スコアへ接続しない,未補完
+2026/05/26 17:38,3,4385.T,メルカリ,PER,予想PERまたは同一基準の実績PER,会社IR/決算短信のEPS予想 + 同日株価で計算,J-Quants/JPX系の公式・準公式データ,EDINET有報の実績EPSは補助。予想PERとは分けて記録,PER = 基準株価 ÷ 1株利益。予想EPSと実績EPSを混在させない,値が入るまで割安スコアへ接続しない,未補完
