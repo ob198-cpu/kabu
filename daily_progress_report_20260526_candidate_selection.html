@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本日の進捗報告書 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #000000;
+      --navy: #123c5a;
+      --blue: #176da3;
+      --line: #c8d6e6;
+      --pale: #eef6ff;
+      --warn: #fff4d8;
+      --ok: #eaf8ef;
+      --stop: #fff0f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 52px;
+    }
+    header {
+      border: 3px solid var(--navy);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      background: #ffffff;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.25;
+      color: var(--navy);
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 0 0 12px;
+      padding-left: 10px;
+      border-left: 8px solid var(--blue);
+      font-size: 21px;
+      color: var(--navy);
+      letter-spacing: 0;
+    }
+    p { margin: 0 0 10px; }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .meta div,
+    .kpi,
+    section {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+    }
+    .meta div {
+      padding: 10px 12px;
+      font-weight: 700;
+    }
+    .meta span {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    section {
+      padding: 18px;
+      margin: 14px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .lead {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .kpi {
+      padding: 12px;
+      min-height: 94px;
+      background: var(--pale);
+    }
+    .kpi strong {
+      display: block;
+      font-size: 24px;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .kpi span {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin-top: 8px;
+      background: #ffffff;
+    }
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 8px 9px;
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: #000000;
+    }
+    th {
+      background: var(--pale);
+      color: #000000;
+      font-weight: 800;
+    }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    .status-ok { background: var(--ok); font-weight: 800; }
+    .status-warn { background: var(--warn); font-weight: 800; }
+    .status-stop { background: var(--stop); font-weight: 800; }
+    .note {
+      border: 2px solid #e7b84c;
+      background: var(--warn);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-weight: 800;
+      margin: 10px 0 0;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      min-height: 118px;
+      background: #ffffff;
+    }
+    .step strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+    .footer {
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 2px solid var(--line);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    @media print {
+      @page { size: A4; margin: 11mm; }
+      main { width: 100%; padding: 0; }
+      body { font-size: 11.5px; }
+      header, section { break-inside: avoid; page-break-inside: avoid; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 17px; }
+      .kpi strong { font-size: 19px; }
+      .flow { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>本日の進捗報告書</h1>
+      <p class="lead">NISA 1年保有テストに向けた、候補10社選出準備の進捗報告です。</p>
+      <div class="meta">
+        <div><span>作成日</span>2026年5月26日</div>
+        <div><span>翌日の目標</span>2026年5月27日中に候補10社を根拠付きで選出</div>
+        <div><span>現在の位置づけ</span>購入判断ではなく、テスト候補選出の準備段階</div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. 結論</h2>
+      <p>現在は、約100社前後の母集団から、NISA 1年保有テストにかける10社を合理的に選ぶための仕組みを整備しています。</p>
+      <p>選出方法は、量的スコアを主軸にし、質的スコアを補助軸として扱います。質的情報は単純加点せず、イベント仮説、過去反応、現在の数値条件を分けて確認します。</p>
+      <div class="note">本日時点では、購入候補の確定ではありません。明日中の目標は、候補10社の「根拠付き選出」です。</div>
+      <div class="kpis">
+        <div class="kpi"><strong>10社</strong><span>明日選出を目指すテスト候補数</span></div>
+        <div class="kpi"><strong>量的 主</strong><span>株価、出来高、下落率、PER/PBR/ROE、決算成長率</span></div>
+        <div class="kpi"><strong>質的 補助</strong><span>AI、半導体、金利、IPO、製品、政策などのイベント仮説</span></div>
+        <div class="kpi"><strong>0社</strong><span>本日時点の購入判断</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 本日の進捗</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 19%;">作業項目</th>
+            <th style="width: 34%;">実施内容</th>
+            <th style="width: 29%;">確認できたこと</th>
+            <th style="width: 18%;">状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>質的イベント検証台</td>
+            <td>10社に対して、AI・半導体・金利・IPO・新商品などの時流イベント仮説を記録する枠を作成。</td>
+            <td>質的情報は直接加点せず、仮説と実績検証を分ける運用に変更。</td>
+            <td class="status-ok">枠組み完了</td>
+          </tr>
+          <tr>
+            <td>イベント反応計算</td>
+            <td>イベント後の個別株リターン、ベンチマーク比、S〜C評価をCSVで計算する仕組みを作成。</td>
+            <td>架空データで計算・出力の流れを確認。実データ投入は次工程。</td>
+            <td class="status-ok">動作確認済み</td>
+          </tr>
+          <tr>
+            <td>10社確定スプリント</td>
+            <td>候補10社を選ぶまでに必要な40タスクを整理し、うち即時対応できる8件を分離。</td>
+            <td>候補選定までの作業順序が見える化された。</td>
+            <td class="status-ok">整理完了</td>
+          </tr>
+          <tr>
+            <td>即時補完8件</td>
+            <td>不足している財務指標・同業比較・反応データを、どの列に入れるかまで分解。</td>
+            <td>財務指標は0/3件が完全接続、業種補正は2/5件が部分接続。未入力値は点数に混ぜない。</td>
+            <td class="status-warn">補完中</td>
+          </tr>
+          <tr>
+            <td>PER・同業中央値キュー</td>
+            <td>PER不足3件、同業中央値不足3件を分け、取得元と再接続条件を固定。</td>
+            <td>PER不足は8306、6146、4385。同業中央値不足は2802、5020、4385。</td>
+            <td class="status-warn">補完対象確定</td>
+          </tr>
+          <tr>
+            <td>既存CSV横断スキャン</td>
+            <td>既存CSV 431件を横断確認し、PER/PBR/ROE/EPS等の候補値を探索。</td>
+            <td>対象PER不足3銘柄について、直接使えるPERは既存CSV内では未発見。外部取得が必要。</td>
+            <td class="status-ok">確認完了</td>
+          </tr>
+          <tr>
+            <td>外部取得ルート確認</td>
+            <td>J-Quants、EDINET、会社IR、Yahoo Financeの現実性を確認。</td>
+            <td>J-Quantsは認証必須、Yahooは429で不安定。公式補完はIR/EDINETを中心にする方針。</td>
+            <td class="status-warn">方針整理中</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. 選出ロジックの現在形</h2>
+      <div class="flow">
+        <div class="step"><strong>1. 母集団</strong>約100社前後を、業績・テーマ・流動性・候補性で構成。</div>
+        <div class="step"><strong>2. 量的評価</strong>成長率、PER/PBR/ROE、株価反応、下落耐性、出来高を確認。</div>
+        <div class="step"><strong>3. 質的評価</strong>イベント仮説をS〜C評価。ただし単純加点はしない。</div>
+        <div class="step"><strong>4. ゲート判定</strong>欠損値、過熱、下落、信頼度不足を分ける。</div>
+        <div class="step"><strong>5. 10社選出</strong>量的に耐え、質的仮説も説明できる銘柄をテスト候補化。</div>
+      </div>
+      <div class="note">質的スコアは、量的スコアを上書きしません。質的スコアは「なぜ今その銘柄を調べる価値があるか」を示す補助指標として扱います。</div>
+    </section>
+
+    <section>
+      <h2>4. 現時点で未完了の重要タスク</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 20%;">未完了項目</th>
+            <th style="width: 31%;">必要な理由</th>
+            <th style="width: 30%;">明日の対応</th>
+            <th style="width: 19%;">影響</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PER不足3件</td>
+            <td>割安性と過熱判定に必要。欠けたまま点数に入れると評価が歪む。</td>
+            <td>8306、6146、4385について、IR/J-Quants/EDINETルートで補完可否を判断。</td>
+            <td class="status-warn">候補順位に影響</td>
+          </tr>
+          <tr>
+            <td>同業中央値不足3件</td>
+            <td>PER/PBR/ROEは業種差が大きく、単純比較では誤判定が起きる。</td>
+            <td>2802、5020、4385の同業2社以上を同一基準で再構成。</td>
+            <td class="status-warn">保留/残す判定に影響</td>
+          </tr>
+          <tr>
+            <td>イベント実績層</td>
+            <td>時流仮説が本当に株価へ効いたかを見るために必要。</td>
+            <td>イベント後1日・5日・20日の対ベンチマーク超過リターンを確認。</td>
+            <td class="status-warn">質的評価の信頼性に影響</td>
+          </tr>
+          <tr>
+            <td>10社の根拠文章</td>
+            <td>顧客説明では、なぜその10社なのかを数値と文章で説明する必要がある。</td>
+            <td>候補ごとに、量的根拠、質的仮説、注意点、未確認点を1枚にまとめる。</td>
+            <td class="status-ok">明日の主作業</td>
+          </tr>
+          <tr>
+            <td>6月イベント実数</td>
+            <td>CPI、FOMC、日銀後の市場環境により、購入可否は変わる。</td>
+            <td>明日は候補選出まで。購入判断は6月イベント後に再判定。</td>
+            <td class="status-stop">購入判断には必須</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>5. 明日2026年5月27日の作業計画</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 14%;">順番</th>
+            <th style="width: 31%;">作業</th>
+            <th style="width: 36%;">完了条件</th>
+            <th style="width: 19%;">成果物</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>不足PER・同業中央値の補完可否を確定</td>
+            <td>取得できた値、取得できない値、代替する値を分け、未確認値は採点に混ぜない。</td>
+            <td>補完ステータス表</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>量的スコアを再計算</td>
+            <td>利用可能な実データだけで、探索スコアとテスト候補スコアを分ける。</td>
+            <td>候補順位表</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>質的スコアを整理</td>
+            <td>AI、半導体、金利、IPO、新商品、政策などの仮説をS〜Cで記録し、実績未確認を明示。</td>
+            <td>質的根拠表</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>候補10社を選出</td>
+            <td>量的根拠、質的仮説、注意点、除外理由をセットで出す。</td>
+            <td>テスト候補10社一覧</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>6月再判定ルールに接続</td>
+            <td>6月のCPI、FOMC、日銀後に何を見て残す/保留/除外にするかを各銘柄に付ける。</td>
+            <td>6月確認リスト</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6. 報告時の言い方</h2>
+      <p>本日は、候補10社を合理的に選ぶための評価基盤を整理しました。質的な時流情報を単純加点せず、量的データと分けて検証する形に修正しています。</p>
+      <p>既存CSVを横断確認した結果、PER不足など一部の重要データは既存データだけでは埋まらないことが分かりました。そのため、明日は公式IR、EDINET、J-Quants等の取得ルートを確認し、取得できる値だけを使ってテスト候補10社を根拠付きで選出する予定です。</p>
+      <p>なお、明日の作業は購入確定ではなく、6月の市場イベント後に再判定するためのテスト候補選出です。</p>
+    </section>
+
+    <div class="footer">
+      作成ファイル: daily_progress_report_20260526_candidate_selection.html / daily_progress_report_20260526_candidate_selection.pdf
+    </div>
+  </main>
+</body>
+</html>
