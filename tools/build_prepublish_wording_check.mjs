@@ -28,6 +28,7 @@ const fallbackTargets = [
   'june_forward_test_record_20260526.html',
   'semiconductor_structural_advantage_gate_20260526.html',
   'semiconductor_downside_resilience_20260526.html',
+  'semiconductor_quant_gate_connection_20260526.html',
   'candidate_june_rulebook.html',
   'prepublish_wording_check_20260526.html',
   'candidate_role_wording_20260526.html',

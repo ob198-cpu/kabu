@@ -527,6 +527,7 @@ const html = cleanLines(`<!doctype html>
       <a class="button" href="363_downside_resilience_method.csv">363 計算式CSV</a>
       <a class="button" href="364_downside_resilience_sources.csv">364 取得元CSV</a>
       <a class="button" href="semiconductor_structural_advantage_gate_20260526.html">構造優位ゲートへ</a>
+      <a class="button" href="semiconductor_quant_gate_connection_20260526.html">量的ゲート接続へ</a>
       <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

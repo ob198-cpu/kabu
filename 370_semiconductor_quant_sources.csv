@@ -1,0 +1,6 @@
+﻿updated_at,source_name,contents,treatment
+2026/05/26 13:33,355_structural_advantage_candidates.csv,構造優位、シェア、需要接続、公式ソース,質的仮説の入口。購入スコアへ直接加点しない。
+2026/05/26 13:33,360_downside_resilience_by_stock.csv,1年日次株価、指数下落日の相対反応,下落耐性ゲートに使用。
+2026/05/26 13:33,245_nisa_1year_hold_score_top20.csv,NISA 1年保有スコア、PER/PBR/ROE、売上/利益成長、決算反応,接続済み銘柄のみ割高・決算ゲートに使用。
+2026/05/26 13:33,309_benchmark_plus1_reference.csv,S&P500、日経平均、NASDAQ、SMHの1年騰落率,+1%比較と半導体テーマ参考比較に使用。
+2026/05/26 13:33,300_candidate_sector_adjustment.csv,PER/PBR/ROEの業種内比較,参考。比較数不足や未反映のものは本体スコアへ混ぜない。

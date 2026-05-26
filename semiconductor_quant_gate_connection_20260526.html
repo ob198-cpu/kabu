@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>半導体構造優位 量的ゲート接続</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cbd5e1;
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --navy: #12385f;
+      --blue: #1f6f9f;
+      --green: #047857;
+      --green-bg: #ecfdf5;
+      --amber: #b45309;
+      --amber-bg: #fffbeb;
+      --red: #b91c1c;
+      --red-bg: #fef2f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 26px 0 48px; }
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 28px rgba(17, 24, 39, .12);
+    }
+    h1 { margin: 0 0 10px; font-size: 30px; line-height: 1.25; }
+    h2 { margin: 0 0 12px; color: var(--navy); font-size: 22px; line-height: 1.35; }
+    h3 { margin: 0 0 8px; color: var(--navy); font-size: 17px; }
+    p { margin: 0 0 10px; }
+    .lead { color: #e5eefb; max-width: 900px; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #b8d5ef;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .button.dark { background: transparent; color: #fff; border-color: #7eb3df; }
+    section, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(17, 24, 39, .06);
+    }
+    .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; }
+    .kpi b { display: block; color: var(--navy); font-size: 22px; line-height: 1.2; margin-top: 4px; }
+    .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+    .step { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: #f8fbff; min-height: 112px; position: relative; }
+    .step:not(:last-child)::after { content: "→"; position: absolute; right: -14px; top: 40%; color: var(--blue); font-weight: 800; }
+    .step b { display: block; color: var(--navy); margin-bottom: 4px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    table { width: 100%; border-collapse: collapse; min-width: 980px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; color: #111827; overflow-wrap: anywhere; }
+    th { background: #eaf3fb; color: #0f3b63; font-size: 13px; white-space: nowrap; }
+    td { font-size: 13px; }
+    .good { color: var(--green); font-weight: 800; }
+    .warn { color: var(--amber); font-weight: 800; }
+    .bad { color: var(--red); font-weight: 800; }
+    .note { border-left: 5px solid var(--blue); padding: 12px 14px; background: #f8fbff; border-radius: 10px; }
+    .warning { border-color: #f59e0b; background: var(--amber-bg); }
+    .danger { border-color: #ef4444; background: var(--red-bg); }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin: 3px 0; }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); }
+      .kpis, .flow { grid-template-columns: 1fr; }
+      .step:not(:last-child)::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>半導体構造優位 量的ゲート接続</h1>
+    <p class="lead">構造的に強そうな半導体・AI周辺銘柄を、下落耐性、割高、決算反応、S&P500/日経平均+1%比較へ接続しました。ここでは「質的に良いから買う」ではなく、数値ゲートを通ったか、どこで止まったかを表示します。</p>
+    <div class="toolbar">
+      <a class="button dark" href="semiconductor_downside_resilience_20260526.html">半導体下落耐性検証へ</a>
+      <a class="button dark" href="semiconductor_structural_advantage_gate_20260526.html">構造優位ゲートへ</a>
+      <a class="button dark" href="plus1_benchmark_connection_20260525.html">+1%比較へ</a>
+      <a class="button dark" href="index.html">メインページへ</a>
+      <a class="button" href="365_semiconductor_quant_gate_summary.csv">365 要約CSV</a>
+      <a class="button" href="366_semiconductor_quant_gate_matrix.csv">366 接続表CSV</a>
+      <a class="button" href="367_semiconductor_quant_priority_queue.csv">367 優先対応CSV</a>
+      <a class="button" href="368_semiconductor_quant_gap_queue.csv">368 未接続CSV</a>
+      <a class="button" href="369_semiconductor_quant_gate_rules.csv">369 ルールCSV</a>
+    </div>
+  </section>
+
+  <div class="kpis">
+    <div class="kpi"><span>接続対象</span><b>6社</b></div>
+<div class="kpi"><span>主比較+1%通過</span><b>6社</b></div>
+<div class="kpi"><span>半導体テーマ比も通過</span><b>3社</b></div>
+<div class="kpi"><span>下落耐性通過</span><b>0社</b></div>
+<div class="kpi"><span>追加確認対象</span><b>1社</b></div>
+  </div>
+
+  <section>
+    <h2>今回の結論</h2>
+    <div class="note warning">
+      <p><b>半導体テーマは強いが、即時に購入候補へ昇格できる状態ではありません。</b></p>
+      <p>1年騰落率だけなら主比較+1%線を上回る銘柄が多い一方、SOX/NASDAQ/日経平均の下落日に強かったとは言えません。さらにレーザーテック、アドバンテストは割高・過熱・決算後反応のゲートで止まります。</p>
+      <p>次に進める価値があるのは、データが揃っているTDKの継続確認と、構造本命である東京エレクトロン・SCREENの決算/割高データ補完です。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>接続フロー</h2>
+    <div class="flow">
+      <div class="step"><b>1. 構造優位</b><span>高シェア、不可欠工程、需要継続性を確認。ここでは加点しない。</span></div>
+      <div class="step"><b>2. 下落耐性</b><span>SOX/NASDAQ/日経平均の下落日に、相対的に耐えたかを見る。</span></div>
+      <div class="step"><b>3. 決算・割高</b><span>PER/PBR/ROE、売上・利益成長、決算後反応で止める。</span></div>
+      <div class="step"><b>4. +1%比較</b><span>S&P500/日経平均の強い方を1%pt上回ったかを見る。</span></div>
+      <div class="step"><b>5. 6月再判定</b><span>CPI、FOMC、日銀、日経75日線を見て、候補へ残すか決める。</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>半導体6社 接続結果</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>順位</th><th>銘柄</th><th>構造</th><th>下落耐性</th><th>1年騰落</th><th>+1%差</th><th>SMH比差</th><th>PER/PBR/ROE</th><th>割高</th><th>決算反応</th><th>統合</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>6920.T レーザーテック</td><td>A / 84点</td><td class="warn">52点 / 弱いが観察可</td><td>191.3%</td><td>140.8pt</td><td>60.3pt</td><td>47.95 / 15.28 / 46.88%</td><td class="">割高強め</td><td class="warn">12.9点 / 決算反応弱い</td><td class="bad">除外継続</td></tr>
+<tr><td>2</td><td>6762.T TDK</td><td>B / 65点</td><td class="warn">45点 / 弱いが観察可</td><td>143.4%</td><td>92.8pt</td><td>12.3pt</td><td>26.7 / 2.75 / 9.81%</td><td class="good">確認可</td><td class="good">62.9点 / 決算反応確認可</td><td class="good">追加確認対象</td></tr>
+<tr><td>3</td><td>8035.T 東京エレクトロン</td><td>S / 90点</td><td class="bad">37点 / 下落耐性不足</td><td>123.8%</td><td>73.2pt</td><td>-7.3pt</td><td>未 / 未 / 未%</td><td class="bad">未接続</td><td class="bad">未点 / 未接続</td><td class="warn">補完待ち</td></tr>
+<tr><td>4</td><td>7735.T SCREEN HD</td><td>A / 85点</td><td class="bad">37点 / 下落耐性不足</td><td>108.9%</td><td>58.3pt</td><td>-22.2pt</td><td>未 / 未 / 未%</td><td class="bad">未接続</td><td class="bad">未点 / 未接続</td><td class="warn">補完待ち</td></tr>
+<tr><td>5</td><td>6857.T アドバンテスト</td><td>B / 70点</td><td class="bad">37点 / 下落耐性不足</td><td>267.5%</td><td>217.0pt</td><td>136.5pt</td><td>42 / 24.55 / 57.65%</td><td class="">割高強め</td><td class="warn">32.5点 / 決算反応弱い</td><td class="bad">除外継続</td></tr>
+<tr><td>6</td><td>6146.T ディスコ</td><td>A- / 82点</td><td class="bad">26点 / 下落耐性不足</td><td>98.7%</td><td>48.1pt</td><td>-32.4pt</td><td>未 / 12.32 / 25.15%</td><td class="">一部未取得</td><td class="good">68.7点 / 決算反応確認可</td><td class="warn">保留</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </section>
+
+  <section>
+    <h2>なぜその扱いになるか</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>順位</th><th>銘柄</th><th>現在の扱い</th><th>理由</th><th>次の作業</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>6920.T レーザーテック</td><td class="bad">除外継続</td><td>既存スコア表では「落とす」。停止理由: PER47.95倍/PBR15.28倍 / 決算後反応12.9点</td><td>すぐ候補へ戻さない。PER/PBR、過熱、決算後反応が改善した時だけ再評価する。</td></tr>
+<tr><td>2</td><td>6762.T TDK</td><td class="good">追加確認対象</td><td>量的には確認を続けられるが、半導体製造工程の高シェア本命ではなく周辺部品枠として扱う。</td><td>6月イベント後に、購入検討用チェックリストへ接続できるか確認する。</td></tr>
+<tr><td>3</td><td>8035.T 東京エレクトロン</td><td class="warn">補完待ち</td><td>構造優位は強いが、候補スコア表に未接続。決算・PER/PBR/ROE・決算後反応を補完するまで候補昇格は不可。</td><td>公式決算、PER/PBR/ROE、1年騰落、決算後反応を候補表へ接続する。</td></tr>
+<tr><td>4</td><td>7735.T SCREEN HD</td><td class="warn">補完待ち</td><td>構造優位は強いが、候補スコア表に未接続。決算・PER/PBR/ROE・決算後反応を補完するまで候補昇格は不可。</td><td>公式決算、PER/PBR/ROE、1年騰落、決算後反応を候補表へ接続する。</td></tr>
+<tr><td>5</td><td>6857.T アドバンテスト</td><td class="bad">除外継続</td><td>既存スコア表では「落とす」。停止理由: 1年上昇率284.8%で過熱 / 決算後反応32.5点</td><td>すぐ候補へ戻さない。PER/PBR、過熱、決算後反応が改善した時だけ再評価する。</td></tr>
+<tr><td>6</td><td>6146.T ディスコ</td><td class="warn">保留</td><td>主比較+1%は通っても、指数下落局面の相対反応が弱く、1年保有候補としては資金投入前に再確認が必要。</td><td>下落局面の再検証、SOX急落時の5営業日反応、6月イベント後の再判定を行う。</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </section>
+
+  <section>
+    <h2>未接続・課題</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>銘柄</th><th>課題</th><th>影響</th><th>必要作業</th></tr></thead>
+      <tbody>
+        <tr><td>6920.T レーザーテック</td><td>下落耐性</td><td>半導体テーマ急落時に1年保有で耐えられる根拠が弱い。</td><td>SOX/NASDAQ/日経平均の下落イベント後1/5/20営業日反応を継続観察する。</td></tr>
+<tr><td>6762.T TDK</td><td>下落耐性</td><td>半導体テーマ急落時に1年保有で耐えられる根拠が弱い。</td><td>SOX/NASDAQ/日経平均の下落イベント後1/5/20営業日反応を継続観察する。</td></tr>
+<tr><td>8035.T 東京エレクトロン</td><td>候補スコア未接続</td><td>構造優位は評価できるが、購入候補の比較表には入れられない。</td><td>PER/PBR/ROE、売上・利益成長、決算後反応、1年騰落を候補表へ追加する。</td></tr>
+<tr><td>8035.T 東京エレクトロン</td><td>割高確認不足</td><td>高シェア企業でも、価格が高すぎるか判断できない。</td><td>PER/PBR/ROEを公式資料、Yahoo等の取得済み候補表、または手入力で補完する。</td></tr>
+<tr><td>8035.T 東京エレクトロン</td><td>下落耐性</td><td>半導体テーマ急落時に1年保有で耐えられる根拠が弱い。</td><td>SOX/NASDAQ/日経平均の下落イベント後1/5/20営業日反応を継続観察する。</td></tr>
+<tr><td>7735.T SCREEN HD</td><td>候補スコア未接続</td><td>構造優位は評価できるが、購入候補の比較表には入れられない。</td><td>PER/PBR/ROE、売上・利益成長、決算後反応、1年騰落を候補表へ追加する。</td></tr>
+<tr><td>7735.T SCREEN HD</td><td>割高確認不足</td><td>高シェア企業でも、価格が高すぎるか判断できない。</td><td>PER/PBR/ROEを公式資料、Yahoo等の取得済み候補表、または手入力で補完する。</td></tr>
+<tr><td>7735.T SCREEN HD</td><td>下落耐性</td><td>半導体テーマ急落時に1年保有で耐えられる根拠が弱い。</td><td>SOX/NASDAQ/日経平均の下落イベント後1/5/20営業日反応を継続観察する。</td></tr>
+<tr><td>6857.T アドバンテスト</td><td>下落耐性</td><td>半導体テーマ急落時に1年保有で耐えられる根拠が弱い。</td><td>SOX/NASDAQ/日経平均の下落イベント後1/5/20営業日反応を継続観察する。</td></tr>
+<tr><td>6146.T ディスコ</td><td>割高確認不足</td><td>高シェア企業でも、価格が高すぎるか判断できない。</td><td>PER/PBR/ROEを公式資料、Yahoo等の取得済み候補表、または手入力で補完する。</td></tr>
+<tr><td>6146.T ディスコ</td><td>下落耐性</td><td>半導体テーマ急落時に1年保有で耐えられる根拠が弱い。</td><td>SOX/NASDAQ/日経平均の下落イベント後1/5/20営業日反応を継続観察する。</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </section>
+
+  <section>
+    <h2>数式・ルール</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>項目</th><th>計算式</th><th>扱い</th></tr></thead>
+      <tbody>
+        <tr><td>構造優位</td><td>構造スコア = 技術/シェア/不可欠性/需要継続/収益接続を0〜100点化</td><td>単独では加点しない。候補追加の入口にだけ使う。</td></tr>
+<tr><td>下落耐性</td><td>下落耐性 = 指数下落日の1/5/20営業日超過リターン + 5日勝率 + 最大ドローダウン</td><td>65点以上で通過、45〜64点は観察、44点以下は保留または停止。</td></tr>
+<tr><td>+1%比較</td><td>主比較+1%差 = 銘柄1年騰落率 - max(S&amp;P500, 日経平均) - 1%pt</td><td>通過しても購入候補確定ではない。割高・決算・下落耐性で止める。</td></tr>
+<tr><td>半導体テーマ比較</td><td>参考テーマ差 = 銘柄1年騰落率 - SMH騰落率 - 1%pt</td><td>参考値。半導体テーマの中でわざわざ個別株を選ぶ根拠があるかを見る。</td></tr>
+<tr><td>割高ゲート</td><td>PER/PBR/ROEを確認。PER45倍以上またはPBR10倍以上は割高強め。</td><td>割高強め、決算反応弱い、過熱ゲートありは候補昇格しない。</td></tr>
+<tr><td>統合判断</td><td>構造優位 → 下落耐性 → 決算/割高 → +1%比較 → 6月イベント後の最終確認</td><td>足し算で一発採点しない。各ゲートを順番に通過したものだけ次工程へ進める。</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </section>
+
+  <section>
+    <h2>取得元</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>データ</th><th>内容</th><th>扱い</th></tr></thead>
+      <tbody>
+        <tr><td>355_structural_advantage_candidates.csv</td><td>構造優位、シェア、需要接続、公式ソース</td><td>質的仮説の入口。購入スコアへ直接加点しない。</td></tr>
+<tr><td>360_downside_resilience_by_stock.csv</td><td>1年日次株価、指数下落日の相対反応</td><td>下落耐性ゲートに使用。</td></tr>
+<tr><td>245_nisa_1year_hold_score_top20.csv</td><td>NISA 1年保有スコア、PER/PBR/ROE、売上/利益成長、決算反応</td><td>接続済み銘柄のみ割高・決算ゲートに使用。</td></tr>
+<tr><td>309_benchmark_plus1_reference.csv</td><td>S&amp;P500、日経平均、NASDAQ、SMHの1年騰落率</td><td>+1%比較と半導体テーマ参考比較に使用。</td></tr>
+<tr><td>300_candidate_sector_adjustment.csv</td><td>PER/PBR/ROEの業種内比較</td><td>参考。比較数不足や未反映のものは本体スコアへ混ぜない。</td></tr>
+      </tbody>
+    </table>
+  </div>
+  </section>
+</main>
+</body>
+</html>

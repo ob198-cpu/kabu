@@ -32,6 +32,7 @@ const currentFiles = new Map([
   ['june_forward_test_record_20260526.html', ['現行資料', '顧客説明に使用可', '6月イベント後の実績入力、候補別ゲート、予実差を記録するページ。', 'event_type_reaction_db_20260526.html']],
   ['semiconductor_structural_advantage_gate_20260526.html', ['現行資料', '顧客説明に使用可', '半導体・AI周辺の不可欠工程、高シェア、代替困難性を質的ゲートとして扱うページ。', 'june_forward_test_record_20260526.html']],
   ['semiconductor_downside_resilience_20260526.html', ['現行資料', '顧客説明に使用可', '半導体構造優位銘柄がSOX/NASDAQ/日経平均の下落局面で相対的に耐えたかを検証するページ。', 'semiconductor_structural_advantage_gate_20260526.html']],
+  ['semiconductor_quant_gate_connection_20260526.html', ['現行資料', '顧客説明に使用可', '半導体構造優位を下落耐性、決算、割高、+1%比較へ接続し、どこで止まるかを示すページ。', 'semiconductor_downside_resilience_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
@@ -78,6 +79,13 @@ const historyPatterns = [
   [/^alternative_source_/i, '代替データ取得の途中確認資料。', 'data_sources_view.html'],
 ];
 
+const excludedWorkingFiles = new Set([
+  'formula_calculation_report.html',
+  'formula_calculation_report.pdf',
+  'nisa_financial_input_template.csv',
+  'nisa_financial_input_template.html',
+]);
+
 const currentCsvPrefixes = [
   '245_', '246_', '247_', '250_', '251_', '252_', '253_', '254_', '255_', '256_', '257_', '258_', '259_',
   '260_', '261_', '262_', '263_', '264_', '265_', '266_', '267_', '268_', '269_', '270_', '271_', '272_',
@@ -92,6 +100,7 @@ const currentCsvPrefixes = [
   '348_', '349_', '350_', '351_', '352_', '353_',
   '354_', '355_', '356_', '357_', '358_',
   '359_', '360_', '361_', '362_', '363_', '364_',
+  '365_', '366_', '367_', '368_', '369_', '370_',
 ];
 
 function escCsv(value) {
@@ -201,6 +210,7 @@ const files = fs.readdirSync(ROOT, { withFileTypes: true })
   .filter((entry) => entry.isFile())
   .map((entry) => entry.name)
   .filter((name) => /\.(html|pdf|csv|xlsx|md|json)$/i.test(name))
+  .filter((name) => !excludedWorkingFiles.has(name))
   .sort((a, b) => a.localeCompare(b, 'ja'));
 
 const registryRows = files.map((file) => {

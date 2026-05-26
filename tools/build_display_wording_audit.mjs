@@ -27,6 +27,7 @@ const targetFiles = [
   'june_forward_test_record_20260526.html',
   'semiconductor_structural_advantage_gate_20260526.html',
   'semiconductor_downside_resilience_20260526.html',
+  'semiconductor_quant_gate_connection_20260526.html',
 ];
 
 const phraseRules = [
@@ -263,9 +264,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '下落耐性上位だけを決算・割高・+1%比較へ接続する',
-    reason: '半導体構造優位6社について、SOX/NASDAQ/日経平均下落局面の相対耐性を計算したため。',
-    output: '下落耐性スコア上位銘柄のPER/PBR/ROE、決算反応、+1%比較への接続',
+    action: '構造本命の未接続データを補完する',
+    reason: '半導体構造優位6社を下落耐性、決算・割高、+1%比較へ接続した結果、東京エレクトロン・SCREENなどの構造本命に決算・割高データの未接続が残ったため。',
+    output: '東京エレクトロン・SCREEN等のPER/PBR/ROE、売上・利益成長、決算後反応、+1%比較の補完表',
   },
 ];
 

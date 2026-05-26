@@ -541,6 +541,7 @@ const html = cleanLines(`<!doctype html>
       <a class="button" href="357_structural_source_log.csv">357 公式ソースCSV</a>
       <a class="button" href="358_structural_integration_policy.csv">358 反映方針CSV</a>
       <a class="button" href="semiconductor_downside_resilience_20260526.html">半導体下落耐性検証へ</a>
+      <a class="button" href="semiconductor_quant_gate_connection_20260526.html">半導体量的ゲート接続へ</a>
       <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
       <a class="button" href="event_type_reaction_db_20260526.html">イベント種類別反応DBへ</a>
       <a class="button" href="index.html">メインページへ</a>
