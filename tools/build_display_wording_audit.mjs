@@ -41,6 +41,7 @@ const targetFiles = [
   'candidate_10_event_evidence_workbench_20260526.html',
   'candidate_10_event_evidence_dryrun_verification_20260526.html',
   'june_10_finalization_sprint_20260526.html',
+  'immediate_completion_input_map_20260526.html',
 ];
 
 const phraseRules = [

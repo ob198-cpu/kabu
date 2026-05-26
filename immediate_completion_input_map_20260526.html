@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>即時補完8件 入力マップ</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --green: #087a4d;
+      --orange: #b65c00;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.2;
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    h2 {
+      font-size: 24px;
+      color: var(--navy);
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .kpi {
+      background: white;
+      color: var(--ink);
+      border: 1px solid #c9def3;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .kpi b { display: block; color: var(--blue); font-size: 28px; line-height: 1; }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table {
+      width: 100%;
+      min-width: 960px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      background: white;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th {
+      background: #e8f4ff;
+      color: #073b63;
+      font-weight: 800;
+    }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid #ffd7a3;
+      color: var(--orange);
+      background: #fff3e2;
+      font-weight: 800;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      table { min-width: 780px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>即時補完8件 入力マップ</h1>
+      <p>6月テスト10社確定スプリントで「2日以内に補完」となった項目を、具体的な入力欄、取得元、同業比較対象まで分解した作業表です。未入力の数値はスコアに混ぜません。</p>
+      <div class="actions">
+        <a class="button" href="june_10_finalization_sprint_20260526.html">確定スプリントへ戻る</a>
+        <a class="button" href="443_immediate_completion_input_map.csv">入力マップCSV</a>
+        <a class="button" href="446_immediate_completion_execution_order.csv">実行順CSV</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>8</b><span>即時補完対象</span></div>
+        <div class="kpi"><b>3</b><span>財務指標</span></div>
+        <div class="kpi"><b>5</b><span>業種別補正</span></div>
+        <div class="kpi"><b>0社</b><span>購入判断</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      このページは入力作業の地図です。ここにあるデータが埋まるまで、該当項目は点数に入れません。
+    </div>
+
+    <section class="panel">
+      <h2>入力対象</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 70px;">順</th>
+              <th style="width: 100px;">銘柄</th>
+              <th style="width: 150px;">会社</th>
+              <th style="width: 120px;">カテゴリ</th>
+              <th>入力欄</th>
+              <th>焦点</th>
+              <th>同業比較</th>
+              <th style="width: 120px;">状態</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr>
+                <td>1</td>
+                <td>2802.T</td>
+                <td>味の素</td>
+                <td>業種別補正</td>
+                <td>peer_group、peer_PER_median、peer_PBR_median、peer_ROE_median、sector_adjustment、出典URL</td>
+                <td>高PERの妥当性を食品・ヘルスケア・半導体材料のどの枠で見るか整理</td>
+                <td>キッコーマン、日清食品HD、明治HD、信越化学の材料比較を別枠で確認</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+
+              <tr>
+                <td>2</td>
+                <td>8306.T</td>
+                <td>三菱UFJ FG</td>
+                <td>財務指標</td>
+                <td>PER、PBR、ROE、売上成長率、利益成長率、EPS成長率、出典URL、更新日</td>
+                <td>PER未取得の補完、銀行業内でのPBR/ROE比較</td>
+                <td>三井住友FG、みずほFG、りそなHD</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+
+              <tr>
+                <td>3</td>
+                <td>8306.T</td>
+                <td>三菱UFJ FG</td>
+                <td>業種別補正</td>
+                <td>peer_group、peer_PER_median、peer_PBR_median、peer_ROE_median、sector_adjustment、出典URL</td>
+                <td>PER未取得の補完、銀行業内でのPBR/ROE比較</td>
+                <td>三井住友FG、みずほFG、りそなHD</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+
+              <tr>
+                <td>4</td>
+                <td>5020.T</td>
+                <td>ENEOS HD</td>
+                <td>業種別補正</td>
+                <td>peer_group、peer_PER_median、peer_PBR_median、peer_ROE_median、sector_adjustment、出典URL</td>
+                <td>資源・精製マージン影響が強いため、PER/PBRだけでなく原油・マージン連動を補正</td>
+                <td>出光興産、コスモエネルギーHD、INPEX</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+
+              <tr>
+                <td>5</td>
+                <td>6146.T</td>
+                <td>ディスコ</td>
+                <td>財務指標</td>
+                <td>PER、PBR、ROE、売上成長率、利益成長率、EPS成長率、出典URL、更新日</td>
+                <td>PER未取得の補完、半導体製造装置・精密加工同業との比較</td>
+                <td>東京エレクトロン、SCREEN、レーザーテック、アドバンテスト</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+
+              <tr>
+                <td>6</td>
+                <td>6146.T</td>
+                <td>ディスコ</td>
+                <td>業種別補正</td>
+                <td>peer_group、peer_PER_median、peer_PBR_median、peer_ROE_median、sector_adjustment、出典URL</td>
+                <td>PER未取得の補完、半導体製造装置・精密加工同業との比較</td>
+                <td>東京エレクトロン、SCREEN、レーザーテック、アドバンテスト</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+
+              <tr>
+                <td>7</td>
+                <td>4385.T</td>
+                <td>メルカリ</td>
+                <td>財務指標</td>
+                <td>PER、PBR、ROE、売上成長率、利益成長率、EPS成長率、出典URL、更新日</td>
+                <td>PER未取得の補完、ネットサービス/EC/FinTech同業との比較</td>
+                <td>ZOZO、楽天G、BASE、マネーフォワード</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+
+              <tr>
+                <td>8</td>
+                <td>4385.T</td>
+                <td>メルカリ</td>
+                <td>業種別補正</td>
+                <td>peer_group、peer_PER_median、peer_PBR_median、peer_ROE_median、sector_adjustment、出典URL</td>
+                <td>PER未取得の補完、ネットサービス/EC/FinTech同業との比較</td>
+                <td>ZOZO、楽天G、BASE、マネーフォワード</td>
+                <td><span class="badge">未入力</span></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>取得元の優先順位</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 180px;">取得元</th>
+              <th style="width: 80px;">信頼度</th>
+              <th>用途</th>
+              <th>限界</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr>
+                <td>企業IR</td>
+                <td>高</td>
+                <td>決算短信、決算説明資料、通期見通し、セグメント説明</td>
+                <td>PDF表の自動抽出は崩れることがあるため、重要項目は確認が必要</td>
+              </tr>
+
+              <tr>
+                <td>EDINET</td>
+                <td>高</td>
+                <td>有価証券報告書、XBRL財務データ</td>
+                <td>提出後データ中心。速報性は決算短信より遅い</td>
+              </tr>
+
+              <tr>
+                <td>J-Quants / JPX系</td>
+                <td>高</td>
+                <td>上場銘柄情報、財務、株価、業種分類</td>
+                <td>APIキーや利用条件の確認が必要</td>
+              </tr>
+
+              <tr>
+                <td>Yahoo等の株価指標</td>
+                <td>中</td>
+                <td>PER/PBR/ROEの補助確認、株価・出来高</td>
+                <td>公式値との突合が必要。単独の最終根拠にしない</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>CSV</h2>
+      <div class="actions">
+        <a class="button" href="442_immediate_completion_summary.csv">概要CSV</a>
+        <a class="button" href="443_immediate_completion_input_map.csv">入力マップCSV</a>
+        <a class="button" href="444_immediate_completion_source_priority.csv">取得元CSV</a>
+        <a class="button" href="445_immediate_completion_column_definition.csv">列定義CSV</a>
+        <a class="button" href="446_immediate_completion_execution_order.csv">実行順CSV</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
