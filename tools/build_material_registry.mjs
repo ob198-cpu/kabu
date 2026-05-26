@@ -87,6 +87,7 @@ const currentFiles = new Map([
   ['candidate_10_presentation_brief_20260527.html', ['現行資料', '顧客説明に使用可', '本日説明するための結論、選定方法、銘柄別根拠、確認条件を1枚にまとめたページ。投資実行判断ではない。', 'qualitative_theme_stock_bridge_20260527.html']],
   ['candidate_10_presentation_qa_20260527.html', ['現行資料', '顧客説明に使用可', '10社選出について聞かれやすい質問への回答と避ける表現を整理したページ。投資実行判断ではない。', 'candidate_10_presentation_brief_20260527.html']],
   ['candidate_10_talk_script_20260527.html', ['現行資料', '顧客説明に使用可', '本日説明でそのまま読める短い説明文とLINE報告文を整理したページ。投資実行判断ではない。', 'candidate_10_presentation_qa_20260527.html']],
+  ['theme_expansion_queue_20260527.html', ['現行資料', '顧客説明に使用可', '10社の次に100社前後の母集団へ広げるためのテーマ別作業表ページ。投資実行判断ではない。', 'candidate_10_talk_script_20260527.html']],
   ['dual_axis_integrated_selection_20260527.html', ['現行資料', '顧客説明に使用可', '量的評価と質的評価ゲートを統合し、弱い根拠で上げすぎないよう上限処理するページ。投資実行判断ではない。', 'qualitative_gate_scoring_20260527.html']],
   ['candidate_10_current_test_set_20260527.html', ['現行資料', '顧客説明に使用可', '統合判定後の10社を、優先確認、条件付き確認、補完・検算・比較に分けて整理するページ。投資実行判断ではない。', 'dual_axis_integrated_selection_20260527.html']],
   ['candidate_10_universe_lineage_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社が固定母集団のどの役割・採用理由から詳細確認へ進んだかを示す選出経路ページ。投資判断ではない。', 'candidate_10_selection_readiness_20260526.html']],
@@ -204,6 +205,7 @@ const currentCsvPrefixes = [
   '574_', '575_', '576_',
   '577_', '578_', '579_',
   '580_', '581_',
+  '582_', '583_',
 ];
 
 function escCsv(value) {
