@@ -259,9 +259,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '候補10社の未接続データを補完する',
-    reason: '候補表現の役割整理は別ページで管理済み。次は数値根拠の不足を埋めるため。',
-    output: '決算後反応、PER/PBR/ROE、信頼度、イベント後リターンの補完',
+    action: 'イベント種類別の株価反応DBを広げる',
+    reason: '候補表現と未接続データの整理は別ページで管理済み。次はイベント実績の母数を増やすため。',
+    output: 'イベント種別、発生日、対象銘柄、1日/5日/20日超過リターンの追加',
   },
 ];
 
@@ -423,6 +423,7 @@ const html = `<!doctype html>
       <a class="button" href="current_vs_history_materials_20260525.html">資料区分台帳へ</a>
       <a class="button" href="prepublish_wording_check_20260526.html">公開前文言チェックへ</a>
       <a class="button" href="candidate_role_wording_20260526.html">候補表現ロール整理へ</a>
+      <a class="button" href="candidate_data_completion_20260526.html">候補10社データ補完へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

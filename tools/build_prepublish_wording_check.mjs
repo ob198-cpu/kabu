@@ -27,6 +27,7 @@ const fallbackTargets = [
   'candidate_june_rulebook.html',
   'prepublish_wording_check_20260526.html',
   'candidate_role_wording_20260526.html',
+  'candidate_data_completion_20260526.html',
 ];
 
 const rules = [

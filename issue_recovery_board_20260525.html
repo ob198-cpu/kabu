@@ -40,7 +40,7 @@
   <div class="lead">
     <p><b>目的:</b> 今日判明した設計上の課題を、感覚的な反省で終わらせず、実装・検証・表示修正の単位に分解して回収するための管理表です。</p>
     <p><strong>現時点の扱い:</strong> 現システムは売買判断補助システムではなく、NISA 1年保有の検証候補を絞るためのプロトタイプです。課題が未回収の項目は、売買判断には使いません。</p>
-    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a> / <a href="current_vs_history_materials_20260525.html">資料区分台帳を見る</a> / <a href="prepublish_wording_check_20260526.html">公開前文言チェックを見る</a> / <a href="candidate_role_wording_20260526.html">候補表現ロール整理を見る</a></p>
+    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a> / <a href="current_vs_history_materials_20260525.html">資料区分台帳を見る</a> / <a href="prepublish_wording_check_20260526.html">公開前文言チェックを見る</a> / <a href="candidate_role_wording_20260526.html">候補表現ロール整理を見る</a> / <a href="candidate_data_completion_20260526.html">候補10社データ補完を見る</a></p>
   </div>
 
   <div class="kpis">
@@ -133,10 +133,10 @@
           <td><b>過去検証・バックテストが不足</b></td>
           <td>スコア上位が本当に指数を上回ったかを確認しないと、モデルの有効性は言えない。</td>
           <td class="status-done">一部回収済み</td>
-          <td>現候補10社のイベント集計・月次株価接続を確認。100社母集団ではスコアと1年騰落率の同時点検算を作成。</td>
-          <td>backtest_validation_20260525.html / 303_backtest_validation_summary.csv / 305_candidate_backtest_connection.csv</td>
-          <td>次工程では、+1%目標との接続を候補別に明確化する。</td>
-          <td>候補10社中、暫定検証可は2社。未接続銘柄は購入検討用スコアの根拠にしない。</td>
+          <td>現候補10社のイベント集計・月次株価接続を確認。100社母集団の同時点検算と、候補10社の未接続データ補完表を作成。</td>
+          <td>backtest_validation_20260525.html / candidate_data_completion_20260526.html / 303_backtest_validation_summary.csv / 305_candidate_backtest_connection.csv</td>
+          <td>次工程では、イベント種類別の株価反応DBを広げる。</td>
+          <td>候補10社の平均接続率は83点。未接続タスク23件を補完キューで管理する。</td>
         </tr><tr>
           <td class="p-high">高</td>
           <td><b>+1%目標との接続が弱い</b></td>
@@ -172,10 +172,9 @@
   <div class="card">
     <ol>
       <li>イベント種類別の株価反応DBを広げる。</li>
-      <li>候補10社の未接続データを補完する。</li>
       <li>6月イベント後の前向きテスト記録へ接続する。</li>
     </ol>
-    <p class="note">更新日時: 2026/05/26 08:55</p>
+    <p class="note">更新日時: 2026/05/26 10:21</p>
   </div>
 </main>
 </body>

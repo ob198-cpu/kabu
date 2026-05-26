@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 未接続データ補完 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #111;
+      --blue: #073a5a;
+      --line: #bed3e5;
+      --bg: #f5f8fb;
+      --card: #fff;
+      --ok: #eaf7ef;
+      --warn: #fff5df;
+      --stop: #fdecec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 56px; }
+    h1 { margin: 0 0 8px; color: var(--blue); font-size: 30px; }
+    h2 { margin: 30px 0 12px; padding-left: 10px; border-left: 8px solid #0b6f9f; color: var(--blue); }
+    .lead, .card, .kpi {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 9px rgba(0,40,80,.06);
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid #9fc1db;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .kpi small { display: block; color: #38536b; font-weight: 700; }
+    .kpi b { display: block; color: var(--blue); font-size: 24px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      font-size: 13px;
+      color: #111;
+      overflow-wrap: anywhere;
+    }
+    th { background: #e4f1fa; color: var(--blue); }
+    .badge {
+      display: inline-block;
+      min-width: 78px;
+      text-align: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .ok { background: var(--ok); color: #007a3d; }
+    .warn { background: var(--warn); color: #8a5200; }
+    .stop { background: var(--stop); color: #b00020; }
+    .note { color: #333; font-size: 13px; }
+    @media (max-width: 1000px) { .kpis { grid-template-columns: 1fr; } }
+    @media print {
+      body { background: #fff; }
+      .lead, .card, .kpi { break-inside: avoid; page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>候補10社 未接続データ補完</h1>
+  <div class="lead">
+    <p><b>目的:</b> NISA 1年保有テストの検証候補10社について、どのデータが接続済みで、どこが未接続かを銘柄別に見える化します。</p>
+    <p><b>結論:</b> 10社すべてにNISAスコアと+1%比較は接続済みです。一方、決算後20営業日反応、業種補正、イベント後リターン/因果は銘柄ごとに補完が必要です。</p>
+    <div class="toolbar">
+      <a class="button" href="338_candidate_data_completion_summary.csv">338 要約CSV</a>
+      <a class="button" href="339_candidate_data_completion_matrix.csv">339 接続マトリクスCSV</a>
+      <a class="button" href="340_candidate_data_gap_queue.csv">340 補完キューCSV</a>
+      <a class="button" href="341_candidate_data_completion_sources.csv">341 取得元CSV</a>
+      <a class="button" href="342_candidate_data_completion_rules.csv">342 ルールCSV</a>
+      <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+
+      <div class="kpi">
+        <small>対象銘柄</small>
+        <b>10社</b>
+        <span>280_nisa_test_10_candidate_plan_reaction_updated.csvのNISA検証候補10社。</span>
+      </div>
+
+      <div class="kpi">
+        <small>平均接続率</small>
+        <b>83点</b>
+        <span>財務、株価/下落耐性、決算後反応、+1%比較、業種補正、イベント因果の接続度。</span>
+      </div>
+
+      <div class="kpi">
+        <small>85点以上</small>
+        <b>6社</b>
+        <span>接続率上位。ただし未接続が残る場合は追加確認対象で、購入確定ではない。</span>
+      </div>
+
+      <div class="kpi">
+        <small>70〜84点</small>
+        <b>3社</b>
+        <span>追加確認対象。20営業日反応やイベント接続を補う。</span>
+      </div>
+
+      <div class="kpi">
+        <small>70点未満</small>
+        <b>1社</b>
+        <span>保留。重要データの補完が必要。</span>
+      </div>
+
+      <div class="kpi">
+        <small>未接続タスク</small>
+        <b>23件</b>
+        <span>銘柄別に補完すべきデータ領域の数。</span>
+      </div>
+
+  </div>
+
+  <h2>1. 銘柄別 接続状況</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:6%">順位</th><th style="width:14%">銘柄</th><th style="width:8%">接続点</th><th style="width:12%">扱い</th><th>財務</th><th>決算後反応</th><th>+1%比較</th><th>イベント/因果</th><th>残る不足</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>1</td>
+            <td>4385.T<br>メルカリ</td>
+            <td>68点</td>
+            <td><span class="badge stop">保留</span></td>
+            <td><span class="badge warn">一部接続</span><br>4/5項目接続。</td>
+            <td><span class="badge warn">一部接続</span><br>暫定: 20営業日未到達</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は通過・ゲート保留</td>
+            <td><span class="badge warn">一部接続</span><br>保留: ゲート残存</td>
+            <td>財務指標 / 決算後20営業日反応 / 業種別補正 / イベント後リターン/因果</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>2802.T<br>味の素</td>
+            <td>85点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge ok">接続済み</span><br>売上成長、利益成長、PER/PBR/ROEを接続。</td>
+            <td><span class="badge warn">一部接続</span><br>暫定: 20営業日未到達</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は通過・ゲート保留</td>
+            <td><span class="badge ok">接続済み</span><br>4件のイベント後リターン接続。</td>
+            <td>決算後20営業日反応 / 業種別補正</td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>8316.T<br>三井住友FG</td>
+            <td>85点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge ok">接続済み</span><br>売上成長、利益成長、PER/PBR/ROEを接続。</td>
+            <td><span class="badge warn">一部接続</span><br>暫定: 20営業日未到達</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は通過・ゲート保留</td>
+            <td><span class="badge warn">一部接続</span><br>保留: ゲート残存</td>
+            <td>決算後20営業日反応 / イベント後リターン/因果</td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>5020.T<br>ENEOS HD</td>
+            <td>80点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge ok">接続済み</span><br>売上成長、利益成長、PER/PBR/ROEを接続。</td>
+            <td><span class="badge warn">一部接続</span><br>暫定: 20営業日未到達</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は通過・ゲート保留</td>
+            <td><span class="badge warn">一部接続</span><br>保留: ゲート残存</td>
+            <td>決算後20営業日反応 / 業種別補正 / イベント後リターン/因果</td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td>8306.T<br>三菱UFJ FG</td>
+            <td>83点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge warn">一部接続</span><br>4/5項目接続。</td>
+            <td><span class="badge ok">接続済み</span><br>既存値</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は有力</td>
+            <td><span class="badge ok">接続済み</span><br>4件のイベント後リターン接続。</td>
+            <td>財務指標 / 業種別補正</td>
+          </tr>
+
+          <tr>
+            <td>6</td>
+            <td>6146.T<br>ディスコ</td>
+            <td>78点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge warn">一部接続</span><br>4/5項目接続。</td>
+            <td><span class="badge ok">接続済み</span><br>既存値</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は有力</td>
+            <td><span class="badge warn">一部接続</span><br>根拠不足</td>
+            <td>財務指標 / 業種別補正 / イベント後リターン/因果</td>
+          </tr>
+
+          <tr>
+            <td>7</td>
+            <td>6762.T<br>TDK</td>
+            <td>95点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge ok">接続済み</span><br>売上成長、利益成長、PER/PBR/ROEを接続。</td>
+            <td><span class="badge ok">接続済み</span><br>既存値</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は有力</td>
+            <td><span class="badge warn">一部接続</span><br>根拠不足</td>
+            <td>イベント後リターン/因果</td>
+          </tr>
+
+          <tr>
+            <td>8</td>
+            <td>6503.T<br>三菱電機</td>
+            <td>85点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge ok">接続済み</span><br>売上成長、利益成長、PER/PBR/ROEを接続。</td>
+            <td><span class="badge warn">一部接続</span><br>暫定: 20営業日未到達</td>
+            <td><span class="badge ok">接続済み</span><br>比較上は通過・ゲート保留</td>
+            <td><span class="badge warn">一部接続</span><br>保留: ゲート残存</td>
+            <td>決算後20営業日反応 / イベント後リターン/因果</td>
+          </tr>
+
+          <tr>
+            <td>9</td>
+            <td>8766.T<br>東京海上HD</td>
+            <td>85点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge ok">接続済み</span><br>売上成長、利益成長、PER/PBR/ROEを接続。</td>
+            <td><span class="badge warn">一部接続</span><br>暫定: 20営業日未到達</td>
+            <td><span class="badge ok">接続済み</span><br>指数優位・ゲートあり</td>
+            <td><span class="badge warn">一部接続</span><br>保留: ゲート残存</td>
+            <td>決算後20営業日反応 / イベント後リターン/因果</td>
+          </tr>
+
+          <tr>
+            <td>10</td>
+            <td>6367.T<br>ダイキン工業</td>
+            <td>85点</td>
+            <td><span class="badge warn">追加確認対象</span></td>
+            <td><span class="badge ok">接続済み</span><br>売上成長、利益成長、PER/PBR/ROEを接続。</td>
+            <td><span class="badge warn">一部接続</span><br>暫定: 20営業日未到達</td>
+            <td><span class="badge ok">接続済み</span><br>指数優位・ゲートあり</td>
+            <td><span class="badge warn">一部接続</span><br>保留: ゲート残存</td>
+            <td>決算後20営業日反応 / イベント後リターン/因果</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2. 補完キュー</h2>
+  <div class="card">
+    <p class="note">下表は、6月判定前に埋めたい未接続領域です。未取得を仮点で埋めるのではなく、取得・確認できたものだけ次の判定に使います。</p>
+    <table>
+      <thead><tr><th style="width:14%">銘柄</th><th style="width:16%">領域</th><th style="width:10%">状態</th><th style="width:8%">優先</th><th>作業</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>4385.T<br>メルカリ</td>
+            <td>財務指標</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>PER/PBR/ROE・売上成長・利益成長の欠けを公式決算または既存CSVで確認。</td>
+          </tr>
+
+          <tr>
+            <td>4385.T<br>メルカリ</td>
+            <td>決算後反応</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>20営業日到達後に対日経平均の1日/5日/20日超過リターンを再計算。</td>
+          </tr>
+
+          <tr>
+            <td>4385.T<br>メルカリ</td>
+            <td>業種別補正</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>同業数と候補側指標数を増やせる場合のみ補正値へ反映。</td>
+          </tr>
+
+          <tr>
+            <td>4385.T<br>メルカリ</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+          <tr>
+            <td>2802.T<br>味の素</td>
+            <td>決算後反応</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>20営業日到達後に対日経平均の1日/5日/20日超過リターンを再計算。</td>
+          </tr>
+
+          <tr>
+            <td>2802.T<br>味の素</td>
+            <td>業種別補正</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>同業数と候補側指標数を増やせる場合のみ補正値へ反映。</td>
+          </tr>
+
+          <tr>
+            <td>8316.T<br>三井住友FG</td>
+            <td>決算後反応</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>20営業日到達後に対日経平均の1日/5日/20日超過リターンを再計算。</td>
+          </tr>
+
+          <tr>
+            <td>8316.T<br>三井住友FG</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+          <tr>
+            <td>5020.T<br>ENEOS HD</td>
+            <td>決算後反応</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>20営業日到達後に対日経平均の1日/5日/20日超過リターンを再計算。</td>
+          </tr>
+
+          <tr>
+            <td>5020.T<br>ENEOS HD</td>
+            <td>業種別補正</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>同業数と候補側指標数を増やせる場合のみ補正値へ反映。</td>
+          </tr>
+
+          <tr>
+            <td>5020.T<br>ENEOS HD</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+          <tr>
+            <td>8306.T<br>三菱UFJ FG</td>
+            <td>財務指標</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>PER/PBR/ROE・売上成長・利益成長の欠けを公式決算または既存CSVで確認。</td>
+          </tr>
+
+          <tr>
+            <td>8306.T<br>三菱UFJ FG</td>
+            <td>業種別補正</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>同業数と候補側指標数を増やせる場合のみ補正値へ反映。</td>
+          </tr>
+
+          <tr>
+            <td>6146.T<br>ディスコ</td>
+            <td>財務指標</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>PER/PBR/ROE・売上成長・利益成長の欠けを公式決算または既存CSVで確認。</td>
+          </tr>
+
+          <tr>
+            <td>6146.T<br>ディスコ</td>
+            <td>業種別補正</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>中</td>
+            <td>同業数と候補側指標数を増やせる場合のみ補正値へ反映。</td>
+          </tr>
+
+          <tr>
+            <td>6146.T<br>ディスコ</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+          <tr>
+            <td>6762.T<br>TDK</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+          <tr>
+            <td>6503.T<br>三菱電機</td>
+            <td>決算後反応</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>20営業日到達後に対日経平均の1日/5日/20日超過リターンを再計算。</td>
+          </tr>
+
+          <tr>
+            <td>6503.T<br>三菱電機</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+          <tr>
+            <td>8766.T<br>東京海上HD</td>
+            <td>決算後反応</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>20営業日到達後に対日経平均の1日/5日/20日超過リターンを再計算。</td>
+          </tr>
+
+          <tr>
+            <td>8766.T<br>東京海上HD</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+          <tr>
+            <td>6367.T<br>ダイキン工業</td>
+            <td>決算後反応</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>20営業日到達後に対日経平均の1日/5日/20日超過リターンを再計算。</td>
+          </tr>
+
+          <tr>
+            <td>6367.T<br>ダイキン工業</td>
+            <td>イベント後リターン/因果</td>
+            <td><span class="badge warn">一部接続</span></td>
+            <td>高</td>
+            <td>イベント日と株価時系列を結合し、類似イベントの超過リターンを確認。</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. 使用データとルール</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:18%">データ領域</th><th style="width:30%">取得元</th><th>目的</th><th style="width:12%">状態</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>候補10社本体</td>
+            <td>280_nisa_test_10_candidate_plan_reaction_updated.csv</td>
+            <td>NISA 1年保有スコア、カテゴリ、PER/PBR/ROE、成長率、信頼度の基礎。</td>
+            <td><span class="badge ok">接続済み</span></td>
+          </tr>
+
+          <tr>
+            <td>決算後反応</td>
+            <td>273_top20_earnings_reaction_completed.csv / 279_supplement_earnings_reaction_check.csv</td>
+            <td>決算後1日、5日、20営業日反応。20営業日未到達は一部接続扱い。</td>
+            <td><span class="badge warn">一部接続</span></td>
+          </tr>
+
+          <tr>
+            <td>業種別補正</td>
+            <td>300_candidate_sector_adjustment.csv</td>
+            <td>PER/PBR/ROEを業種内で比較できるか確認。</td>
+            <td><span class="badge warn">一部接続</span></td>
+          </tr>
+
+          <tr>
+            <td>+1%比較</td>
+            <td>310_candidate_plus1_gate.csv</td>
+            <td>日経平均など比較対象を+1%上回る線と接続。</td>
+            <td><span class="badge ok">接続済み</span></td>
+          </tr>
+
+          <tr>
+            <td>イベント後リターン</td>
+            <td>305_candidate_backtest_connection.csv / 315_candidate_causality_gate.csv</td>
+            <td>イベント後リターン、複合条件、因果ゲートへの接続。</td>
+            <td><span class="badge warn">一部接続</span></td>
+          </tr>
+
+      </tbody>
+    </table>
+    <table style="margin-top:14px">
+      <thead><tr><th style="width:22%">ルール</th><th>チェック内容</th><th style="width:28%">理由</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td><b>未取得は加点しない</b></td>
+            <td>PER/PBR/ROE、決算後反応、イベント後リターンが空欄なら、点数ではなく未接続として表示。</td>
+            <td>計算したふりを防ぐため。</td>
+          </tr>
+
+          <tr>
+            <td><b>20営業日未到達は一部接続</b></td>
+            <td>決算後1日/5日は見えても20営業日が未到達なら、購入検討用スコアの根拠としては未完成。</td>
+            <td>短期反応だけで1年保有判断をしないため。</td>
+          </tr>
+
+          <tr>
+            <td><b>同業比較は参考条件つき</b></td>
+            <td>同業3社以上かつ候補側指標2項目以上を原則とし、基準未満は未反映。</td>
+            <td>業種差を補正するが、比較数不足の過信を避けるため。</td>
+          </tr>
+
+          <tr>
+            <td><b>+1%比較は後ろ向き確認</b></td>
+            <td>1年騰落率で比較対象+1%を超えても、将来の保証ではなく追加検証条件として扱う。</td>
+            <td>目的との接続は必要だが、過去成績だけで買わないため。</td>
+          </tr>
+
+          <tr>
+            <td><b>イベント因果は本体点に直足ししない</b></td>
+            <td>イベント後リターンや複合条件は確認優先度・ゲートに使い、未検証の仮説点は本体点に混ぜない。</td>
+            <td>質的材料の単純加点ミスを避けるため。</td>
+          </tr>
+
+      </tbody>
+    </table>
+    <p class="note">作成日時: 2026/05/26 10:25</p>
+  </div>
+</main>
+</body>
+</html>

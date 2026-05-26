@@ -1,0 +1,6 @@
+﻿updated_at,data_area,source_file,purpose,status
+2026/05/26 10:25,候補10社本体,280_nisa_test_10_candidate_plan_reaction_updated.csv,NISA 1年保有スコア、カテゴリ、PER/PBR/ROE、成長率、信頼度の基礎。,接続済み
+2026/05/26 10:25,決算後反応,273_top20_earnings_reaction_completed.csv / 279_supplement_earnings_reaction_check.csv,決算後1日、5日、20営業日反応。20営業日未到達は一部接続扱い。,一部接続
+2026/05/26 10:25,業種別補正,300_candidate_sector_adjustment.csv,PER/PBR/ROEを業種内で比較できるか確認。,一部接続
+2026/05/26 10:25,+1%比較,310_candidate_plus1_gate.csv,日経平均など比較対象を+1%上回る線と接続。,接続済み
+2026/05/26 10:25,イベント後リターン,305_candidate_backtest_connection.csv / 315_candidate_causality_gate.csv,イベント後リターン、複合条件、因果ゲートへの接続。,一部接続
