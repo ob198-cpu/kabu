@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>バフェット・バークシャー売買監視 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1240px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1000px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:900px; }
+    .wide table { min-width:1450px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    .links a { color:#064f80; font-weight:700; }
+    @media (max-width:900px) { main { padding:12px 10px 36px; } header,section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>バフェット・バークシャー売買監視</h1>
+      <p class="lead">バークシャーの13F・10-Q・年次書簡を、質的データの監視項目として扱うページです。売買事実と理由仮説を分け、急な売却を通知対象にします。</p>
+    </header>
+    <section>
+      <h2>1. 追加した質的項目</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody><tr><td>追加項目</td><td>バフェット・バークシャー売買銘柄監視を質的データ項目に追加。</td></tr><tr><td>使い方</td><td>13Fで確認できる売買事実を入口にし、理由は仮説として分ける。量的スコアへ直接加点しない。</td></tr><tr><td>監視対象</td><td>新規取得、買い増し、大幅売却、全売却、上位保有の急減、現金比率や自社株買い停止。</td></tr><tr><td>注意</td><td>13Fは四半期遅れの開示であり、本人の売買理由は直接開示されない。売買理由は10-Q、年次報告、株主総会発言、業界状況から検証する。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="note">「バフェットが買ったから買う」とは扱いません。売買事実を入口にし、理由仮説と量的確認を通ったものだけ検証対象にします。</div>
+    </section>
+    <section>
+      <h2>2. 最新確認メモ</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>対象</th><th>基準日</th><th>提出日</th><th>出典</th><th>確認事実</th><th>扱い</th></tr></thead>
+        <tbody><tr><td>2026 Q1</td><td>2026-03-31</td><td>2026-05-15</td><td>Berkshire Hathaway Form 13F / SEC EDGAR / 13F.info</td><td>集約ベースで29銘柄、時価約2631億ドルの米国上場株保有が確認される。</td><td>保有リスト全体の変化を見る材料。購入判断の直接根拠ではない。</td></tr><tr><td>2026 Q1</td><td>2026-03-31</td><td>2026-05-15</td><td>13F集計サイト、報道記事</td><td>新規取得、買い増し、売却、全売却が発生。報道ではDelta Air Linesの新規取得やNew York Timesの買い増し、ChevronやBank of Americaの一部売却が話題。</td><td>日本株では直接銘柄候補にしない。航空、メディア、エネルギー、銀行などの資金配分変化を質的監視材料にする。</td></tr><tr><td>2026 Q1</td><td>2026-03-31</td><td>2026-05-15</td><td>Berkshire 10-Q/13F、報道</td><td>売買理由は13Fに明記されない。</td><td>理由は「割安」「業界見通し」「資本配分」「担当者変更」「リスク削減」など複数仮説に分け、決め打ちしない。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>3. 通知・判定ルール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>ルール</th><th>トリガー</th><th>アクション</th><th>スコアでの扱い</th></tr></thead>
+        <tbody><tr><td>新規取得</td><td>13Fで前四半期ゼロから新規保有が出た場合</td><td>業界、バリュエーション、売上・利益の安定性、同業の日本株候補を確認する。</td><td>質的テーマ候補。直接加点しない。</td></tr><tr><td>買い増し</td><td>保有株数が前四半期比で10%以上増加、または保有順位が大きく上昇した場合</td><td>買い増し理由の仮説を作り、同業や関連日本株に波及するか確認する。</td><td>確認条件。量的評価A/Bと合う場合のみ検証対象に残す。</td></tr><tr><td>大幅売却</td><td>保有株数が前四半期比で20%以上減少した場合</td><td>急な売却として通知対象。業界見通し悪化、割高、資本配分変更、担当者変更などを分けて確認する。</td><td>除外条件または警戒条件。</td></tr><tr><td>全売却</td><td>前四半期にあった銘柄が13Fから消えた場合</td><td>強い警戒材料として通知対象。類似業界の候補は、量的評価が強くても追加確認まで保留する。</td><td>ハード警戒条件。</td></tr><tr><td>上位保有の急減</td><td>上位10銘柄の保有株数が5%以上減少した場合</td><td>市場全体への示唆が大きい可能性があるため、関連セクターと指数反応を確認する。</td><td>市場環境ゲート。</td></tr><tr><td>開示遅れ補正</td><td>13F開示日は四半期末から約45日後</td><td>現在の株価・決算・ニュースで鮮度を補正する。</td><td>古い情報の過信防止。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>4. 監視元</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>監視項目</th><th>取得元</th><th>頻度</th><th>通知条件</th></tr></thead>
+        <tbody><tr><td>13F提出日</td><td>SEC EDGAR、13F.info、HoldingsChannel</td><td>四半期ごと</td><td>新規提出が出たら保有増減表を更新</td></tr><tr><td>Berkshire 10-Q/10-K</td><td>Berkshire Hathaway IR、SEC EDGAR</td><td>四半期・年次</td><td>株式売買総額、現金、自己株買い、保険損益を確認</td></tr><tr><td>株主総会・年次書簡</td><td>Berkshire Hathaway公式資料、主要報道</td><td>年次・イベント時</td><td>本人または経営陣の資本配分コメントを確認</td></tr><tr><td>大幅売却ニュース</td><td>SEC、主要金融報道、13F集計</td><td>随時</td><td>20%以上売却、全売却、上位保有急減を通知</td></tr></tbody>
+      </table>
+    </div>
+      <p class="links">
+        参照先:
+        <a href="https://www.sec.gov/edgar/search/" target="_blank" rel="noreferrer">SEC EDGAR</a> /
+        <a href="https://13f.info/13f/000119312526226661-berkshire-hathaway-inc-q1-2026" target="_blank" rel="noreferrer">13F.info Q1 2026</a> /
+        <a href="https://www.berkshirehathaway.com/reports.html" target="_blank" rel="noreferrer">Berkshire Hathaway Reports</a>
+      </p>
+      <div class="actions">
+        <a href="598_buffett_monitor_summary.csv">概要CSV</a>
+        <a href="599_buffett_monitor_rules.csv">ルールCSV</a>
+        <a href="600_buffett_monitor_latest_snapshot.csv">最新メモCSV</a>
+        <a href="601_buffett_monitor_watch_sources.csv">監視元CSV</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

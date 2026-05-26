@@ -1,0 +1,5 @@
+﻿watch_item,source,frequency,alert
+13F提出日,SEC EDGAR、13F.info、HoldingsChannel,四半期ごと,新規提出が出たら保有増減表を更新
+Berkshire 10-Q/10-K,Berkshire Hathaway IR、SEC EDGAR,四半期・年次,株式売買総額、現金、自己株買い、保険損益を確認
+株主総会・年次書簡,Berkshire Hathaway公式資料、主要報道,年次・イベント時,本人または経営陣の資本配分コメントを確認
+大幅売却ニュース,SEC、主要金融報道、13F集計,随時,20%以上売却、全売却、上位保有急減を通知
