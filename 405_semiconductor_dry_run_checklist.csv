@@ -1,0 +1,6 @@
+﻿updated_at,check,expected,result
+2026/05/26 15:26,サンプルCSVを開けるか,402_semiconductor_dry_run_sample_result_log.csvをダウンロードまたはリンクから確認できる。,作成済み
+2026/05/26 15:26,ログ接続ページに読み込めるか,半導体 判定ログ接続ページでファイル選択し、6件のプレビューが出る。,手動確認対象
+2026/05/26 15:26,一次判定ログへ変換できるか,semiconductor_june_decision_log.csvを出力できる。,手動確認対象
+2026/05/26 15:26,予実差テンプレートへ変換できるか,semiconductor_june_prediction_actual_log.csvを出力できる。,手動確認対象
+2026/05/26 15:26,実績値と誤認しないか,ページとCSVにダミーであることを明記している。,作成済み

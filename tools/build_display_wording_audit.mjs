@@ -33,6 +33,7 @@ const targetFiles = [
   'semiconductor_june_recheck_checklist_20260526.html',
   'semiconductor_june_result_input_cockpit_20260526.html',
   'semiconductor_forward_log_bridge_20260526.html',
+  'semiconductor_june_dry_run_test_20260526.html',
 ];
 
 const phraseRules = [
@@ -269,9 +270,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '6月発表後に実績値を入力して判定ログを保存する',
-    reason: '判定CSVを一次判定ログと予実差テンプレートへ変換する導線まで作成済み。次は6月10日以降、実際のCPI・金利・為替・指数を入力して記録する段階。',
-    output: '半導体6月一次判定ログ、1/5/20営業日後の予実差ログ',
+    action: 'ドライランCSVを使って手動操作確認を行う',
+    reason: '実績値は未来だが、入力CSVから一次判定ログ・予実差テンプレートへ変換する流れは事前確認できるため。',
+    output: 'サンプルCSV読込確認、一次判定ログ出力確認、予実差テンプレート出力確認',
   },
 ];
 
@@ -442,6 +443,7 @@ const html = `<!doctype html>
       <a class="button" href="semiconductor_june_recheck_checklist_20260526.html">半導体6月再判定へ</a>
       <a class="button" href="semiconductor_june_result_input_cockpit_20260526.html">半導体6月実績入力へ</a>
       <a class="button" href="semiconductor_forward_log_bridge_20260526.html">半導体判定ログ接続へ</a>
+      <a class="button" href="semiconductor_june_dry_run_test_20260526.html">半導体ドライランへ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>
