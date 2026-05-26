@@ -142,13 +142,21 @@ function caution(row, quant) {
 const gateRows = readCsv('509_candidate_10_test_selection_gate_detail.csv');
 const quantRows = readCsv('466_candidate_10_quantitative_evidence.csv');
 const queueRows = readCsv('511_candidate_10_tomorrow_finalization_queue.csv');
+const perBridgeRows = readCsv('488_candidate_10_per_estimate_detail.csv');
 
 const quantByTicker = byTicker(quantRows);
 const queueByTicker = byTicker(queueRows);
+const perBridgeByTicker = byTicker(perBridgeRows);
 
 const evidenceRows = gateRows.map((row) => {
   const quant = quantByTicker.get(row.ticker);
   const queue = queueByTicker.get(row.ticker);
+  const perBridge = perBridgeByTicker.get(row.ticker);
+  const perDisplay = quant?.per && quant.per !== '未取得'
+    ? quant.per
+    : perBridge?.actual_per_estimate
+      ? `${perBridge.actual_per_estimate}（${perBridge.source_type}）`
+      : '未取得';
   const role = candidateRole(row);
   const priority = queue?.priority || '';
   return {
@@ -167,7 +175,7 @@ const evidenceRows = gateRows.map((row) => {
     reaction_note: row.reaction_note,
     qualitative_layer: row.qualitative_layer,
     qualitative_note: row.qualitative_note,
-    per: quant?.per || '未取得',
+    per: perDisplay,
     pbr: quant?.pbr || '未取得',
     roe_pct: quant?.roe_pct || '未取得',
     revenue_yoy_pct: quant?.revenue_yoy_pct || '未取得',
@@ -175,7 +183,7 @@ const evidenceRows = gateRows.map((row) => {
     ret1y_pct: quant?.ret1y_pct || '未取得',
     max_drawdown60_pct: quant?.max_drawdown60_pct || '未取得',
     decision_boundary: row.gate_result,
-    evidence_summary: explain(row, quant, queue),
+    evidence_summary: explain(row, { ...quant, per: perDisplay }, queue),
     caution: caution(row, quant),
     tomorrow_priority: priority,
     tomorrow_action: queue?.action || '',

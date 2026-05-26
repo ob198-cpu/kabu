@@ -107,6 +107,21 @@ for (const row of officialRows) {
   latestOfficialByTicker.set(row.ticker, row);
 }
 
+const supplementalOfficialRows = [
+  {
+    ticker: '4385.T',
+    company: 'メルカリ',
+    period: '2026年6月期3Q累計',
+    release_date: '2026-05-11',
+    eps_yen: '117.93',
+    source_url: 'https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260511/20260508520767.pdf',
+    note: '公式決算短信で基本的1株当たり四半期利益117.93円を確認。3Q累計EPSであり通期予想PERではない。',
+  },
+];
+for (const row of supplementalOfficialRows) {
+  if (!latestOfficialByTicker.has(row.ticker)) latestOfficialByTicker.set(row.ticker, row);
+}
+
 const universeByTicker = new Map();
 for (const row of universeRows) {
   if (!universeByTicker.has(row.ticker)) universeByTicker.set(row.ticker, row);
@@ -121,6 +136,7 @@ const detailRows = perMissingRows.map((row) => {
   const eps = num(official.eps_yen);
   const estimate = price !== null && eps !== null && eps !== 0 ? round(price / eps, 2) : null;
   const hasEstimate = estimate !== null;
+  const isQuarterCumulative = /3Q|第3四半期/.test(String(official.period || ''));
   return {
     updated_at: generatedAt,
     ticker: row.ticker,
@@ -134,10 +150,12 @@ const detailRows = perMissingRows.map((row) => {
     eps_yen: eps !== null ? eps : '',
     actual_per_estimate: hasEstimate ? estimate : '',
     calculation: hasEstimate ? `基準株価 ${price}円 ÷ 公式EPS ${eps}円 = ${estimate}倍` : '公式EPSまたは基準株価が不足',
-    source_type: hasEstimate ? '公式EPS + 既存株価CSV' : '未接続',
+    source_type: hasEstimate ? (isQuarterCumulative ? '公式3Q累計EPS + 既存株価CSV' : '公式EPS + 既存株価CSV') : '未接続',
     score_connection: '未接続',
-    handling: hasEstimate
-      ? '説明補助として使用。予想PERではないため、採点へ戻す前に基準日と採用PER種別を確認する。'
+    handling: hasEstimate && isQuarterCumulative
+      ? '説明補助として使用。3Q累計EPS基準であり、通期PERや予想PERではないため採点へ接続しない。'
+      : hasEstimate
+        ? '説明補助として使用。予想PERではないため、採点へ戻す前に基準日と採用PER種別を確認する。'
       : '未取得のまま扱う。値を推定して採点へ入れない。',
     source_url: official.source_url || '',
   };
