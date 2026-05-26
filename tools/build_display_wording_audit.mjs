@@ -31,6 +31,7 @@ const targetFiles = [
   'semiconductor_quant_gate_connection_20260526.html',
   'semiconductor_fundamental_completion_20260526.html',
   'semiconductor_june_recheck_checklist_20260526.html',
+  'semiconductor_june_result_input_cockpit_20260526.html',
 ];
 
 const phraseRules = [
@@ -267,9 +268,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '6月イベント後の結果入力表へ実数を入れる',
-    reason: '半導体構造本命の再判定条件は固定できたため、次は6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後の実際の数値を入力して、昇格・保留・除外を記録する段階に進む。',
-    output: '387_semiconductor_recheck_input_template.csv の実績入力版と、6月一次判定ログ',
+    action: '実績入力コックピットを6月前向きテスト記録へ接続する',
+    reason: '6月イベント後の実数入力と自動判定の器ができたため、次は判定結果CSVを予実差ログ・6月前向きテスト記録に保管する流れを接続する。',
+    output: '6月一次判定ログ、予実差ログ、候補昇格/保留/除外の記録導線',
   },
 ];
 
@@ -438,6 +439,7 @@ const html = `<!doctype html>
       <a class="button" href="semiconductor_downside_resilience_20260526.html">半導体下落耐性検証へ</a>
       <a class="button" href="semiconductor_fundamental_completion_20260526.html">半導体決算・割高補完へ</a>
       <a class="button" href="semiconductor_june_recheck_checklist_20260526.html">半導体6月再判定へ</a>
+      <a class="button" href="semiconductor_june_result_input_cockpit_20260526.html">半導体6月実績入力へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

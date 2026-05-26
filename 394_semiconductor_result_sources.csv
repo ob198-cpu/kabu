@@ -1,0 +1,5 @@
+﻿updated_at,source,role
+2026/05/26 14:25,385_semiconductor_common_gate_rules.csv,共通ゲートの閾値
+2026/05/26 14:25,386_semiconductor_ticker_recheck_conditions.csv,銘柄別の昇格・保留・除外条件
+2026/05/26 14:25,387_semiconductor_recheck_input_template.csv,6月イベント後の入力項目
+2026/05/26 14:25,BLS / FRB / BOJ official calendars,6月イベント日程の確認

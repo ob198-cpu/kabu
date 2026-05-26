@@ -546,6 +546,7 @@ const html = `<!doctype html>
       <a href="index.html">トップ</a>
       <a href="semiconductor_fundamental_completion_20260526.html">決算・割高補完</a>
       <a href="semiconductor_quant_gate_connection_20260526.html">量的ゲート接続</a>
+      <a href="semiconductor_june_result_input_cockpit_20260526.html">実績入力</a>
       <a href="june_forward_test_record_20260526.html">6月前向きテスト記録</a>
       <a href="current_vs_history_materials_20260525.html">資料一覧</a>
     </div>
