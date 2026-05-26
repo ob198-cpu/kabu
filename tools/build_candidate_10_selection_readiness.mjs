@@ -94,7 +94,7 @@ function toNumber(value) {
 
 const quantRows = readCsv('466_candidate_10_quantitative_evidence.csv');
 const perRows = readCsv('488_candidate_10_per_estimate_detail.csv');
-const reactionRows = readCsv('491_candidate_10_reaction_maturity_detail.csv');
+const reactionRows = readCsv('500_candidate_10_reaction_due_detail.csv');
 
 const perByTicker = new Map(perRows.map((row) => [row.ticker, row]));
 const reactionByTicker = new Map(reactionRows.map((row) => [row.ticker, row]));
@@ -111,9 +111,14 @@ function perStatus(row) {
 function reactionStatus(row) {
   const reaction = reactionByTicker.get(row.ticker);
   if (!reaction) return { label: '未接続', type: 'gap', note: '決算後反応データが未接続' };
-  if (reaction.maturity === '20営業日確定') return { label: '20営業日確定', type: 'score', note: '接続候補' };
-  if (reaction.maturity === '1日/5日暫定') return { label: '1日/5日暫定', type: 'assist', note: '20営業日未到達' };
-  if (reaction.maturity === '既存スコアのみ') return { label: '既存スコアのみ', type: 'assist', note: '内訳確認待ち' };
+  if (reaction.due_status === '20営業日確定済み') return { label: '20営業日確定済み', type: 'score', note: `20日超過 ${reaction.excess_20d_pct || ''}` };
+  if (reaction.reconstruction_status === '1日/5日接続済み' || reaction.reconstruction_status === '1日/5日復元済み') {
+    return { label: '1日/5日暫定', type: 'assist', note: '20営業日未到達' };
+  }
+  if (reaction.reconstruction_status === '1日接続済み・5日未到達') {
+    return { label: '1日暫定', type: 'partial', note: '5日/20営業日未到達' };
+  }
+  if (reaction.reconstruction_status === '既存反応点のみ') return { label: '既存スコアのみ', type: 'assist', note: '内訳確認待ち' };
   return { label: '未接続', type: 'gap', note: reaction.reason || '追加取得が必要' };
 }
 
@@ -140,6 +145,7 @@ function readiness(row, p, r) {
 
   if (r.type === 'score') score += 20;
   else if (r.type === 'assist') score += 10;
+  else if (r.type === 'partial') score += 5;
   else details.push('決算後反応不足');
 
   const confidence = toNumber(row.data_confidence);
@@ -154,6 +160,7 @@ function nextAction(p, r, row) {
   if (p.type === 'assist') return '実績PERと予想PERの扱いを固定し、採点へ戻すか判断する。';
   if (r.label === '未接続') return '決算日、基準株価、1日/5日/20営業日反応を追加する。';
   if (r.label === '既存スコアのみ') return '既存反応点の内訳を確認し、イベント日と指数比較を復元する。';
+  if (r.label === '1日暫定') return '5営業日到達後に対指数反応を再計算する。';
   if (r.label === '1日/5日暫定') return '20営業日到達後に対指数反応を再計算する。';
   if (String(row.data_gap || '').includes('イベント因果')) return 'イベント実績層を追加して、質的仮説を別枠で確認する。';
   return '6月イベント後の市場データで再確認する。';
@@ -205,22 +212,22 @@ const summaryRows = [
   {
     updated_at: generatedAt,
     item: '20営業日反応確定',
-    value: `${detailRows.filter((row) => row.reaction_status === '20営業日確定').length}社`,
-    interpretation: '決算後反応を強く使える段階の銘柄数。',
+    value: `${detailRows.filter((row) => row.reaction_status === '20営業日確定済み').length}社`,
+    interpretation: '20営業日まで到達した銘柄数。結果の良し悪しは別途検算する。',
   },
 ];
 
 const taskRows = [
   {
     priority: 1,
-    task: '20営業日反応の到達確認',
-    reason: '現時点では0社のため、決算後反応を本格接続できない。',
-    output: '20営業日反応CSVの更新',
+    task: '20営業日反応の検算と接続可否確認',
+    reason: 'ディスコは20営業日反応がそろったが、対日経-19.66%のため、基準日・終値・指数比較を確認してから扱いを決める。',
+    output: '20営業日反応の検算記録と採点接続可否',
   },
   {
     priority: 2,
     task: '既存反応点の内訳確認',
-    reason: 'TDK、三菱UFJ FG、ディスコなどは反応点だけでは説明が弱い。',
+    reason: 'TDK、三菱UFJ FGなどは反応点だけでは説明が弱いため、イベント日と指数比較を復元する。',
     output: 'イベント日、1日/5日/20日、指数比較の復元',
   },
   {
@@ -399,12 +406,12 @@ const html = cleanLines(`<!doctype html>
           <small>${esc(row.interpretation)}</small>
         </div>`).join('')}
       </div>
-      <p class="notice">結論: 10社の比較表は作れます。ただし20営業日反応が0社のため、6月テスト候補の根拠としては「量的データ中心、決算後反応は補助」という扱いになります。</p>
+      <p class="notice">結論: 10社の比較表は作れます。20営業日反応はディスコ1社が到達済みですが、対日経-19.66%のため、現時点では購入候補を強める材料ではなく検算対象として扱います。</p>
       <div class="toolbar">
         <a class="button" href="493_candidate_10_selection_readiness_summary.csv">493 要約CSV</a>
         <a class="button" href="494_candidate_10_selection_readiness_detail.csv">494 詳細CSV</a>
         <a class="button" href="495_candidate_10_selection_next_tasks.csv">495 次タスクCSV</a>
-        <a class="button" href="candidate_10_reaction_maturity_bridge_20260526.html">決算後反応確認へ</a>
+        <a class="button" href="candidate_10_reaction_due_reconstruction_20260526.html">決算後反応確認へ</a>
         <a class="button" href="index.html">メインページへ</a>
       </div>
     </section>

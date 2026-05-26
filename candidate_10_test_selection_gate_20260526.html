@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 テスト選定ゲート 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #071b31;
+      --muted: #3f5168;
+      --line: #c9d9ea;
+      --bg: #f4f8fc;
+      --navy: #0d3658;
+      --blue: #0b6fa4;
+      --green: #087f5b;
+      --amber: #b45309;
+      --red: #b42318;
+      --soft: #eef7ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 34px clamp(18px, 4vw, 58px);
+    }
+    h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; color: #e7f3ff; font-weight: 800; max-width: 1100px; }
+    main { width: min(1240px, calc(100% - 32px)); margin: 24px auto 56px; }
+    section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin: 18px 0;
+      break-inside: avoid;
+    }
+    h2 { margin: 0 0 14px; padding-left: 12px; border-left: 8px solid var(--blue); font-size: 24px; }
+    .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .metric { border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: var(--soft); min-height: 128px; }
+    .metric span { display: block; color: var(--muted); font-weight: 900; }
+    .metric strong { display: block; color: var(--blue); font-size: 30px; line-height: 1.2; }
+    .notice { border-left: 8px solid var(--amber); background: #fff7ed; padding: 14px; border-radius: 8px; font-weight: 900; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; min-width: 1220px; border-collapse: collapse; table-layout: fixed; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    th { background: #e6f1fb; color: #073b63; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #9cc8ec;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 13px;
+    }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1240px); }
+      .summary { grid-template-columns: 1fr; }
+      section { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 テスト選定ゲート</h1>
+    <p>量的データを主軸に、質的情報と決算後反応を別層で確認します。強い仮説があっても、実績反応が弱い場合は候補を強めず、検算対象として扱います。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>確認対象</span>
+          <strong>10社</strong>
+          <small>100社前後の母集団から一段絞った候補10社を確認。</small>
+        </div>
+        <div class="metric">
+          <span>継続確認</span>
+          <strong>3社</strong>
+          <small>量的データと信頼度が比較に使える銘柄。20営業日反応で再判定。</small>
+        </div>
+        <div class="metric">
+          <span>要検算</span>
+          <strong>1社</strong>
+          <small>重要データはそろったが、結果が弱く検算が必要な銘柄。</small>
+        </div>
+        <div class="metric">
+          <span>反応待ち</span>
+          <strong>1社</strong>
+          <small>決算後反応が1日分だけで、5日/20営業日を待つ銘柄。</small>
+        </div>
+        <div class="metric">
+          <span>購入判断</span>
+          <strong>0社</strong>
+          <small>この表はテスト候補の選別補助であり、購入判断ではない。</small>
+        </div>
+      </div>
+      <p class="notice">現時点ではテスト候補の優先確認表です。購入判断ではなく、明日までに10社を根拠付きで説明するための検算順を決める資料です。</p>
+      <div class="toolbar">
+        <a class="button" href="508_candidate_10_test_selection_gate_summary.csv">508 要約CSV</a>
+        <a class="button" href="509_candidate_10_test_selection_gate_detail.csv">509 詳細CSV</a>
+        <a class="button" href="510_candidate_10_test_selection_gate_rules.csv">510 ルールCSV</a>
+        <a class="button" href="candidate_10_selection_readiness_20260526.html">選出準備状況へ</a>
+        <a class="button" href="index.html">メインページへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>テスト候補ゲート</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>扱い</th><th>銘柄</th><th>会社</th><th>量的評価</th><th>参考点</th><th>信頼度</th><th>データ準備点</th><th>質的層</th><th>実績反応層</th><th>反応根拠</th><th>扱いの理由</th></tr></thead>
+        <tbody>
+          <tr><td>継続確認</td><td>6762.T</td><td>TDK</td><td>A</td><td>60.7</td><td>100</td><td>90</td><td>仮説のみ</td><td>暫定A</td><td>5日 対日経 5.5%、20営業日待ち</td><td>量的データと信頼度は候補比較に使える。20営業日反応の到達後に再判定する</td></tr><tr><td>継続確認</td><td>2802.T</td><td>味の素</td><td>B</td><td>67.8</td><td>95</td><td>90</td><td>仮説のみ</td><td>暫定A</td><td>5日 対日経 12.07%、20営業日待ち</td><td>量的データと信頼度は候補比較に使える。20営業日反応の到達後に再判定する</td></tr><tr><td>継続確認</td><td>8316.T</td><td>三井住友FG</td><td>B</td><td>65.1</td><td>95</td><td>90</td><td>仮説のみ</td><td>暫定A</td><td>5日 対日経 5.99%、20営業日待ち</td><td>量的データと信頼度は候補比較に使える。20営業日反応の到達後に再判定する</td></tr><tr><td>比較対象</td><td>6367.T</td><td>ダイキン工業</td><td>C</td><td>52.6</td><td>100</td><td>90</td><td>仮説のみ</td><td>暫定B</td><td>5日 対日経 1.92%、20営業日待ち</td><td>データはそろいつつあるが、量的評価は上位候補より弱い</td></tr><tr><td>比較対象</td><td>6503.T</td><td>三菱電機</td><td>C</td><td>55.6</td><td>95</td><td>90</td><td>仮説のみ</td><td>暫定B</td><td>5日 対日経 1.9%、20営業日待ち</td><td>データはそろいつつあるが、量的評価は上位候補より弱い</td></tr><tr><td>比較対象</td><td>5020.T</td><td>ENEOS HD</td><td>C</td><td>64.3</td><td>95</td><td>90</td><td>仮説のみ</td><td>暫定B</td><td>5日 対日経 0.94%、20営業日待ち</td><td>データはそろいつつあるが、量的評価は上位候補より弱い</td></tr><tr><td>反応待ち</td><td>8766.T</td><td>東京海上HD</td><td>B</td><td>65.4</td><td>100</td><td>85</td><td>仮説のみ</td><td>1日暫定</td><td>1日 対日経 -4.68%、5日/20営業日待ち</td><td>1日反応のみで、5営業日と20営業日の確認が未到達</td></tr><tr><td>要検算</td><td>6146.T</td><td>ディスコ</td><td>C</td><td>60.9</td><td>92</td><td>92</td><td>仮説のみ</td><td>D 実績弱い</td><td>20営業日 対日経 -19.66%</td><td>20営業日反応が弱いため、検算まで候補強化しない</td></tr><tr><td>補完待ち</td><td>8306.T</td><td>三菱UFJ FG</td><td>C</td><td>62.1</td><td>92</td><td>82</td><td>仮説のみ</td><td>暫定B</td><td>5日 対日経 2.39%、20営業日待ち</td><td>PERまたは財務指標の不足が残るため、候補確定前に補完する</td></tr><tr><td>補完待ち</td><td>4385.T</td><td>メルカリ</td><td>保留</td><td>79.8</td><td>87</td><td>61</td><td>仮説のみ</td><td>暫定A</td><td>5日 対日経 7.3%、20営業日待ち</td><td>PERまたは財務指標の不足が残るため、候補確定前に補完する</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>運用ルール</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ルール</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>量的データ主軸</td><td>PER/PBR/ROE、売上成長、利益成長、下落率、出来高、決算後反応を優先する。</td></tr><tr><td>質的情報は別層</td><td>AI、半導体、金利、原油、新商品などは調査理由に使い、実績確認前は単純加点しない。</td></tr><tr><td>決算後反応は到達確認</td><td>1日/5日は暫定。20営業日まで到達した銘柄だけを検算後に採点接続候補にする。</td></tr><tr><td>弱い実績は警告</td><td>構造仮説が強くても、20営業日の対指数反応が弱い場合は候補強化せず、検算対象にする。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>
