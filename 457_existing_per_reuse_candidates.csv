@@ -1,0 +1,23 @@
+﻿updated_at,ticker,company,source_file,source_row,per_column,per_value,use_decision,reason
+2026/05/26 17:46,2802.T,味の素,108_capital_allocation_by_ticker.csv,2,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,115_june_interactive_candidates.csv,2,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,142_candidate_discovery_funnel_score.csv,3,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,16_candidate_theme_scoring.csv,5,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,245_nisa_1year_hold_score_top20.csv,3,per,43.73,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,5020.T,ENEOS HD,245_nisa_1year_hold_score_top20.csv,5,per,8.36,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,274_top20_completion_recalculated_candidates.csv,3,per,43.73,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,5020.T,ENEOS HD,274_top20_completion_recalculated_candidates.csv,5,per,8.36,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,277_nisa_test_10_candidate_plan.csv,3,per,43.73,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,5020.T,ENEOS HD,277_nisa_test_10_candidate_plan.csv,5,per,8.36,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,280_nisa_test_10_candidate_plan_reaction_updated.csv,3,per,43.73,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,5020.T,ENEOS HD,280_nisa_test_10_candidate_plan_reaction_updated.csv,5,per,8.36,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,285_june_ticker_rulebook.csv,3,per,43.73,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,5020.T,ENEOS HD,285_june_ticker_rulebook.csv,5,per,8.36,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,300_candidate_sector_adjustment.csv,3,per,43.73,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,5020.T,ENEOS HD,300_candidate_sector_adjustment.csv,5,per,8.36,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,30_june_test_candidate_ranking.csv,5,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,413_candidate_10_priority_matrix.csv,3,per,43.73,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,5020.T,ENEOS HD,413_candidate_10_priority_matrix.csv,9,per,8.36,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,97_june_test_composite_decision.csv,2,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,99_june_prebuy_gate.csv,2,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了
+2026/05/26 17:46,2802.T,味の素,nisa_1year_score_preview.csv,2,per,42.08,未採用,列名と値は見つかったが、予想PER/実績PERの基準と出典確認が未完了

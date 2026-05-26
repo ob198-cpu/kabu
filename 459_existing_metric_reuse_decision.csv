@@ -1,0 +1,4 @@
+﻿updated_at,ticker,company,missing_item,candidate_count,current_decision,score_connection,next_action
+2026/05/26 17:46,8306.T,三菱UFJ FG,PER,0,既存CSV内では未発見,未接続,公式IR/J-Quants/EDINET等から取得
+2026/05/26 17:46,6146.T,ディスコ,PER,0,既存CSV内では未発見,未接続,公式IR/J-Quants/EDINET等から取得
+2026/05/26 17:46,4385.T,メルカリ,PER,0,既存CSV内では未発見,未接続,公式IR/J-Quants/EDINET等から取得
