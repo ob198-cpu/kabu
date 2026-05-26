@@ -37,6 +37,7 @@ const currentFiles = new Map([
   ['semiconductor_fundamental_completion_20260526.html', ['現行資料', '顧客説明に使用可', '東京エレクトロン・SCREENなど構造本命のPER/PBR/ROE、決算伸び、保留理由を補完するページ。', 'semiconductor_quant_gate_connection_20260526.html']],
   ['semiconductor_june_recheck_checklist_20260526.html', ['現行資料', '顧客説明に使用可', '半導体構造本命を6月イベント後に昇格・保留・除外する条件を固定するページ。', 'semiconductor_fundamental_completion_20260526.html']],
   ['semiconductor_june_result_input_cockpit_20260526.html', ['現行資料', '顧客説明に使用可', '6月イベント後の実数を入力し、半導体候補の通過・保留・停止を自動判定するページ。', 'semiconductor_june_recheck_checklist_20260526.html']],
+  ['semiconductor_forward_log_bridge_20260526.html', ['現行資料', '顧客説明に使用可', '半導体6月実績入力の判定結果CSVを、前向きテスト記録と予実差ログへ変換するページ。', 'semiconductor_june_result_input_cockpit_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
@@ -109,6 +110,7 @@ const currentCsvPrefixes = [
   '377_', '378_', '379_', '380_', '381_', '382_',
   '383_', '384_', '385_', '386_', '387_', '388_', '389_',
   '390_', '391_', '392_', '393_', '394_',
+  '395_', '396_', '397_', '398_', '399_', '400_',
 ];
 
 function escCsv(value) {

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>半導体 判定ログ接続</title>
+  <style>
+    :root {
+      --ink: #061d35;
+      --muted: #334155;
+      --blue: #0b5f92;
+      --green: #047857;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --line: #cfe0f3;
+      --panel: #fff;
+      --soft: #f6fbff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--soft);
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #082f49, #0b5f92);
+      color: #fff;
+      padding: 34px 26px 30px;
+    }
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 22px auto 60px;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.35; }
+    h1 { font-size: clamp(26px, 4vw, 42px); }
+    h2 {
+      margin-top: 34px;
+      padding-left: 12px;
+      border-left: 7px solid var(--blue);
+      font-size: 24px;
+    }
+    p { color: var(--muted); margin: 8px 0; }
+    a { color: #075985; font-weight: 800; }
+    .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .toolbar a, button, .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: #fff;
+      color: #07385b;
+      text-decoration: none;
+      border: 1px solid #b8d4ee;
+      box-shadow: 0 2px 6px rgba(0,0,0,.08);
+      font-weight: 800;
+      cursor: pointer;
+    }
+    button.primary { background: #0b5f92; color: #fff; border-color: #0b5f92; }
+    .notice {
+      margin-top: 16px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.35);
+      padding: 14px 16px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .card, .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 6px 20px rgba(8, 42, 73, .06);
+      break-inside: avoid;
+    }
+    .section { margin-top: 14px; }
+    .kpi { font-size: 28px; color: var(--blue); font-weight: 900; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: #fff;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #d5e4f4;
+      padding: 10px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th { background: #e7f2fb; text-align: left; font-weight: 900; }
+    tbody tr:nth-child(even) { background: #fbfdff; }
+    .good { color: var(--green); font-weight: 900; }
+    .warn { color: var(--amber); font-weight: 900; }
+    .bad { color: var(--red); font-weight: 900; }
+    input[type=file] {
+      width: 100%;
+      padding: 12px;
+      border: 1px dashed #8bb9dd;
+      border-radius: 10px;
+      background: #fbfdff;
+      margin-top: 10px;
+    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .preview {
+      max-height: 360px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-top: 12px;
+      background: #fff;
+    }
+    @media (max-width: 860px) { table { font-size: 14px; } }
+    @media print {
+      body { background: #fff; color: #000; }
+      header { background: #fff; color: #000; border-bottom: 3px solid #000; }
+      .toolbar, .actions, input { display: none; }
+      .card, .section { box-shadow: none; page-break-inside: avoid; }
+      tr { page-break-inside: avoid; }
+      th, td { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>半導体 判定ログ接続</h1>
+    <p style="color:#e6f3ff">6月実績入力コックピットの判定結果CSVを、6月前向きテスト記録と予実差ログへ変換するページです。</p>
+    <div class="notice">正直な制約: GitHub Pagesだけでは入力結果をサーバーへ直接保存できません。このページでは、CSVを読み込み、記録用CSVへ整形して出力します。</div>
+    <div class="toolbar">
+      <a href="index.html">トップ</a>
+      <a href="semiconductor_june_result_input_cockpit_20260526.html">6月実績入力</a>
+      <a href="june_forward_test_record_20260526.html">6月前向きテスト記録</a>
+      <a href="semiconductor_june_recheck_checklist_20260526.html">6月再判定</a>
+      <a href="current_vs_history_materials_20260525.html">資料一覧</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid">
+      
+        <div class="card">
+          <h3>目的</h3>
+          <div class="kpi">判定結果の記録化</div>
+          <p>6月実績入力コックピットで出した判定CSVを、6月前向きテスト記録と予実差ログへ移す。</p>
+        </div>
+      
+        <div class="card">
+          <h3>保存方式</h3>
+          <div class="kpi">CSV整形出力</div>
+          <p>GitHub Pages単体ではサーバー保存できないため、ブラウザ内でCSVを読み込み、記録用CSVを出力する。</p>
+        </div>
+      
+        <div class="card">
+          <h3>接続先</h3>
+          <div class="kpi">2種類</div>
+          <p>一次判定ログと予実差テンプレートへ接続する。</p>
+        </div>
+      
+        <div class="card">
+          <h3>未対応</h3>
+          <div class="kpi">自動DB保存</div>
+          <p>Google Sheets、DB、GitHub API等を使う場合は別実装。現段階では静的サイト内のCSV変換まで。</p>
+        </div>
+      
+    </section>
+
+    <h2>1. CSV変換</h2>
+    <section class="section">
+      <p>6月実績入力コックピットで出力した <b>semiconductor_june_result_log.csv</b> を選択してください。ブラウザ内だけで変換します。</p>
+      <input id="csvFile" type="file" accept=".csv,text/csv">
+      <div class="actions">
+        <button class="primary" type="button" onclick="downloadDecisionLog()">一次判定ログCSVを出力</button>
+        <button type="button" onclick="downloadPredictionLog()">予実差テンプレートCSVを出力</button>
+      </div>
+      <div id="status" class="card" style="margin-top:14px">CSV未読込</div>
+      <div class="preview" id="preview"></div>
+    </section>
+
+    <h2>2. 列の対応</h2>
+    <section class="section">
+      <table>
+    <thead><tr><th>入力列</th><th>出力列</th><th>意味</th><th>接続先</th></tr></thead>
+    <tbody><tr><td>updated_at</td><td>decision_logged_at</td><td>判定CSVの作成時刻</td><td>一次判定ログ</td></tr><tr><td>ticker</td><td>ticker</td><td>銘柄コード</td><td>一次判定ログ / 予実差ログ</td></tr><tr><td>company</td><td>company</td><td>会社名</td><td>一次判定ログ / 予実差ログ</td></tr><tr><td>cpi_gate</td><td>cpi_gate</td><td>CPIゲート結果</td><td>一次判定ログ</td></tr><tr><td>boj_gate</td><td>boj_gate</td><td>日銀ゲート結果</td><td>一次判定ログ</td></tr><tr><td>fomc_gate</td><td>fomc_gate</td><td>FOMCゲート結果</td><td>一次判定ログ</td></tr><tr><td>index_gate</td><td>index_gate</td><td>指数トレンドゲート結果</td><td>一次判定ログ</td></tr><tr><td>final_status</td><td>june_first_status</td><td>6月一次判定</td><td>一次判定ログ</td></tr><tr><td>reason</td><td>decision_reason</td><td>判定理由</td><td>一次判定ログ / 予実差ログ</td></tr><tr><td>event_5d_excess_after</td><td>pre_event_prediction</td><td>5営業日後の事前仮説または入力値</td><td>予実差ログ</td></tr><tr><td>final_status</td><td>actual_result</td><td>一次判定結果</td><td>予実差ログ</td></tr></tbody>
+  </table>
+    </section>
+
+    <h2>3. 手順</h2>
+    <section class="section">
+      <table>
+    <thead><tr><th>手順</th><th>作業</th><th>内容</th></tr></thead>
+    <tbody><tr><td>1</td><td>6月実績入力コックピットで判定</td><td>実数を入力し、判定結果CSVを出力する。</td></tr><tr><td>2</td><td>このページでCSVを読み込む</td><td>ファイル選択でコックピット出力CSVを読み込む。</td></tr><tr><td>3</td><td>一次判定ログCSVへ変換</td><td>銘柄別にCPI、日銀、FOMC、指数、最終判定、理由を整理する。</td></tr><tr><td>4</td><td>予実差テンプレートCSVへ変換</td><td>1/5/20営業日後に価格反応と予測誤差を追記できる形へ変換する。</td></tr><tr><td>5</td><td>記録表へ保存</td><td>静的サイトでは自動保存不可。出力CSVをExcel/スプレッドシート/リポジトリへ保存する。</td></tr></tbody>
+  </table>
+    </section>
+
+    <h2>4. 制約と対応</h2>
+    <section class="section">
+      <table>
+    <thead><tr><th>制約</th><th>影響</th><th>対応</th></tr></thead>
+    <tbody><tr><td><strong>GitHub Pagesは静的サイト</strong></td><td>ページ上で入力した内容をサーバーへ直接保存できない。</td><td>CSVとして出力し、Excel/スプレッドシート/リポジトリへ保存する。</td></tr><tr><td><strong>自動保存には認証が必要</strong></td><td>Google Sheets APIやGitHub APIへ保存するには認証・権限管理が必要。</td><td>本格運用ではGoogle Sheets、SQLite/DB、またはApps Script接続を追加する。</td></tr><tr><td><strong>未来値は自動入力しない</strong></td><td>CPI、日銀、FOMC後の実数は発表後に入力する必要がある。</td><td>発表後に公式値または取得APIから入力し、判定ログを保存する。</td></tr></tbody>
+  </table>
+    </section>
+
+    <h2>5. 出力ファイル</h2>
+    <section class="section">
+      <table>
+    <thead><tr><th>ファイル</th><th>内容</th></tr></thead>
+    <tbody><tr><td><a href="395_semiconductor_forward_log_bridge_summary.csv">395_semiconductor_forward_log_bridge_summary.csv</a></td><td>要約</td></tr><tr><td><a href="396_semiconductor_forward_log_column_map.csv">396_semiconductor_forward_log_column_map.csv</a></td><td>列対応表</td></tr><tr><td><a href="397_semiconductor_forward_decision_log_template.csv">397_semiconductor_forward_decision_log_template.csv</a></td><td>一次判定ログテンプレート</td></tr><tr><td><a href="398_semiconductor_forward_prediction_actual_template.csv">398_semiconductor_forward_prediction_actual_template.csv</a></td><td>予実差テンプレート</td></tr><tr><td><a href="399_semiconductor_forward_log_operation.csv">399_semiconductor_forward_log_operation.csv</a></td><td>操作手順</td></tr><tr><td><a href="400_semiconductor_forward_log_limitations.csv">400_semiconductor_forward_log_limitations.csv</a></td><td>制約と対応</td></tr></tbody>
+  </table>
+    </section>
+  </main>
+
+  <script>
+    let importedRows = [];
+
+    function parseCsv(text) {
+      if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+      const rows = [];
+      let row = [];
+      let cell = '';
+      let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const ch = text[i];
+        const next = text[i + 1];
+        if (quoted) {
+          if (ch === '"' && next === '"') { cell += '"'; i += 1; }
+          else if (ch === '"') quoted = false;
+          else cell += ch;
+        } else if (ch === '"') quoted = true;
+        else if (ch === ',') { row.push(cell); cell = ''; }
+        else if (ch === '\n') { row.push(cell.replace(/\r$/, '')); rows.push(row); row = []; cell = ''; }
+        else cell += ch;
+      }
+      if (cell.length || row.length) { row.push(cell.replace(/\r$/, '')); rows.push(row); }
+      const headers = rows.shift() || [];
+      return rows.filter((items) => items.some((item) => String(item).trim() !== '')).map((items) => Object.fromEntries(headers.map((header, index) => [header, items[index] || ''])));
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? '');
+      return /[",\n\r]/.test(text) ? '"' + text.replaceAll('"', '""') + '"' : text;
+    }
+
+    function toCsv(rows, headers) {
+      return '\uFEFF' + [headers.join(',')].concat(rows.map((row) => headers.map((header) => csvEscape(row[header])).join(','))).join('\n');
+    }
+
+    function download(name, rows, headers) {
+      const blob = new Blob([toCsv(rows, headers)], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function decisionRows() {
+      return importedRows.map((row) => ({
+        updated_at: new Date().toISOString(),
+        decision_logged_at: row.updated_at || '',
+        ticker: row.ticker || '',
+        company: row.company || '',
+        cpi_gate: row.cpi_gate || '',
+        boj_gate: row.boj_gate || '',
+        fomc_gate: row.fomc_gate || '',
+        index_gate: row.index_gate || '',
+        june_first_status: row.final_status || '',
+        decision_reason: row.reason || '',
+        next_record_due: '1営業日後 / 5営業日後 / 20営業日後',
+        storage_note: '6月実績入力コックピット出力CSVから変換',
+      }));
+    }
+
+    function predictionRows() {
+      return importedRows.map((row) => ({
+        updated_at: new Date().toISOString(),
+        ticker: row.ticker || '',
+        company: row.company || '',
+        event_date: '2026-06-18〜2026-06-24',
+        event: '半導体6月一次判定',
+        before_event_price: '',
+        event_day_price: '',
+        return_1d_pct: '',
+        return_5d_pct: '',
+        return_20d_pct: '',
+        benchmark_return_1d_pct: '',
+        benchmark_return_5d_pct: '',
+        benchmark_return_20d_pct: '',
+        excess_1d_pct: '',
+        excess_5d_pct: '',
+        excess_20d_pct: '',
+        pre_event_prediction: row.final_status || '',
+        actual_result: '',
+        prediction_error_note: row.reason || '',
+        next_model_fix: '',
+      }));
+    }
+
+    function renderPreview() {
+      if (!importedRows.length) {
+        document.getElementById('preview').innerHTML = '';
+        return;
+      }
+      const rows = decisionRows();
+      document.getElementById('preview').innerHTML = '<table><thead><tr><th>銘柄</th><th>CPI</th><th>日銀</th><th>FOMC</th><th>指数</th><th>一次判定</th><th>理由</th></tr></thead><tbody>' +
+        rows.map((row) => '<tr><td><b>' + row.ticker + ' ' + row.company + '</b></td><td>' + row.cpi_gate + '</td><td>' + row.boj_gate + '</td><td>' + row.fomc_gate + '</td><td>' + row.index_gate + '</td><td>' + row.june_first_status + '</td><td>' + row.decision_reason + '</td></tr>').join('') +
+        '</tbody></table>';
+    }
+
+    document.getElementById('csvFile').addEventListener('change', async (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      importedRows = parseCsv(text);
+      document.getElementById('status').textContent = importedRows.length + '件を読み込みました。サーバー保存はしていません。必要なCSVを出力してください。';
+      renderPreview();
+    });
+
+    function downloadDecisionLog() {
+      if (!importedRows.length) { alert('先にCSVを読み込んでください。'); return; }
+      const headers = ['updated_at','decision_logged_at','ticker','company','cpi_gate','boj_gate','fomc_gate','index_gate','june_first_status','decision_reason','next_record_due','storage_note'];
+      download('semiconductor_june_decision_log.csv', decisionRows(), headers);
+    }
+
+    function downloadPredictionLog() {
+      if (!importedRows.length) { alert('先にCSVを読み込んでください。'); return; }
+      const headers = ['updated_at','ticker','company','event_date','event','before_event_price','event_day_price','return_1d_pct','return_5d_pct','return_20d_pct','benchmark_return_1d_pct','benchmark_return_5d_pct','benchmark_return_20d_pct','excess_1d_pct','excess_5d_pct','excess_20d_pct','pre_event_prediction','actual_result','prediction_error_note','next_model_fix'];
+      download('semiconductor_june_prediction_actual_log.csv', predictionRows(), headers);
+    }
+  </script>
+</body>
+</html>

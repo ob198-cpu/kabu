@@ -1,0 +1,4 @@
+﻿updated_at,limitation,impact,workaround
+2026/05/26 15:18,GitHub Pagesは静的サイト,ページ上で入力した内容をサーバーへ直接保存できない。,CSVとして出力し、Excel/スプレッドシート/リポジトリへ保存する。
+2026/05/26 15:18,自動保存には認証が必要,Google Sheets APIやGitHub APIへ保存するには認証・権限管理が必要。,本格運用ではGoogle Sheets、SQLite/DB、またはApps Script接続を追加する。
+2026/05/26 15:18,未来値は自動入力しない,CPI、日銀、FOMC後の実数は発表後に入力する必要がある。,発表後に公式値または取得APIから入力し、判定ログを保存する。

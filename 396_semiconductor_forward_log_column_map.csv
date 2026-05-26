@@ -1,0 +1,12 @@
+﻿updated_at,source_column,output_column,meaning,destination
+2026/05/26 15:18,updated_at,decision_logged_at,判定CSVの作成時刻,一次判定ログ
+2026/05/26 15:18,ticker,ticker,銘柄コード,一次判定ログ / 予実差ログ
+2026/05/26 15:18,company,company,会社名,一次判定ログ / 予実差ログ
+2026/05/26 15:18,cpi_gate,cpi_gate,CPIゲート結果,一次判定ログ
+2026/05/26 15:18,boj_gate,boj_gate,日銀ゲート結果,一次判定ログ
+2026/05/26 15:18,fomc_gate,fomc_gate,FOMCゲート結果,一次判定ログ
+2026/05/26 15:18,index_gate,index_gate,指数トレンドゲート結果,一次判定ログ
+2026/05/26 15:18,final_status,june_first_status,6月一次判定,一次判定ログ
+2026/05/26 15:18,reason,decision_reason,判定理由,一次判定ログ / 予実差ログ
+2026/05/26 15:18,event_5d_excess_after,pre_event_prediction,5営業日後の事前仮説または入力値,予実差ログ
+2026/05/26 15:18,final_status,actual_result,一次判定結果,予実差ログ

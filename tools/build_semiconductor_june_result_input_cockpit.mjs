@@ -499,6 +499,7 @@ const html = `<!doctype html>
     <div class="toolbar">
       <a href="index.html">トップ</a>
       <a href="semiconductor_june_recheck_checklist_20260526.html">6月再判定チェックリスト</a>
+      <a href="semiconductor_forward_log_bridge_20260526.html">判定ログ接続</a>
       <a href="semiconductor_fundamental_completion_20260526.html">決算・割高補完</a>
       <a href="june_forward_test_record_20260526.html">6月前向きテスト記録</a>
       <a href="current_vs_history_materials_20260525.html">資料一覧</a>

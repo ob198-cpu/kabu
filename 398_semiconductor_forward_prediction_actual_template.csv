@@ -1,0 +1,7 @@
+﻿updated_at,ticker,company,event_date,event,before_event_price,event_day_price,return_1d_pct,return_5d_pct,return_20d_pct,benchmark_return_1d_pct,benchmark_return_5d_pct,benchmark_return_20d_pct,excess_1d_pct,excess_5d_pct,excess_20d_pct,pre_event_prediction,actual_result,prediction_error_note,next_model_fix
+2026/05/26 15:18,8035.T,東京エレクトロン,2026-06-18〜2026-06-24,半導体6月一次判定,,,,,,,,,,,,,,,
+2026/05/26 15:18,7735.T,SCREEN HD,2026-06-18〜2026-06-24,半導体6月一次判定,,,,,,,,,,,,,,,
+2026/05/26 15:18,6146.T,ディスコ,2026-06-18〜2026-06-24,半導体6月一次判定,,,,,,,,,,,,,,,
+2026/05/26 15:18,6920.T,レーザーテック,2026-06-18〜2026-06-24,半導体6月一次判定,,,,,,,,,,,,,,,
+2026/05/26 15:18,6857.T,アドバンテスト,2026-06-18〜2026-06-24,半導体6月一次判定,,,,,,,,,,,,,,,
+2026/05/26 15:18,6762.T,TDK,2026-06-18〜2026-06-24,半導体6月一次判定,,,,,,,,,,,,,,,

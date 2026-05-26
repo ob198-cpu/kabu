@@ -33,6 +33,7 @@ const fallbackTargets = [
   'semiconductor_fundamental_completion_20260526.html',
   'semiconductor_june_recheck_checklist_20260526.html',
   'semiconductor_june_result_input_cockpit_20260526.html',
+  'semiconductor_forward_log_bridge_20260526.html',
   'candidate_june_rulebook.html',
   'prepublish_wording_check_20260526.html',
   'candidate_role_wording_20260526.html',
