@@ -1,0 +1,4 @@
+﻿updated_at,ticker,company,task_category,per,pbr,roe_pct,revenue_yoy_pct,profit_yoy_pct,source_file,usable_fields,missing_fields,score_policy,completion_status
+2026/05/26 17:30,8306.T,三菱UFJ FG,財務指標,,1.56,11.34,7.3,27.7,245_nisa_1year_hold_score_top20.csv,4,per,欠けた項目は点数に混ぜない,部分接続
+2026/05/26 17:30,6146.T,ディスコ,財務指標,,12.32,25.15,11.1,10.9,245_nisa_1year_hold_score_top20.csv,4,per,欠けた項目は点数に混ぜない,部分接続
+2026/05/26 17:30,4385.T,メルカリ,財務指標,,5.79,30.52,2.8,59.2,245_nisa_1year_hold_score_top20.csv,4,per,欠けた項目は点数に混ぜない,部分接続

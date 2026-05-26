@@ -47,6 +47,7 @@ const currentFiles = new Map([
   ['candidate_10_event_evidence_dryrun_verification_20260526.html', ['現行補助', '台帳経由で使用可', 'イベント実績層のCSV計算・S〜C判定を架空データで検算するページ。実績値ではない。', 'candidate_10_event_evidence_workbench_20260526.html']],
   ['june_10_finalization_sprint_20260526.html', ['現行資料', '顧客説明に使用可', '10社候補を6月テスト候補へ確定するまでの財務・業種・決算反応・イベント実績層タスクを管理する作業ボード。購入判断ではない。', 'candidate_10_event_evidence_workbench_20260526.html']],
   ['immediate_completion_input_map_20260526.html', ['現行資料', '顧客説明に使用可', '2日以内に補完する8件を入力欄・取得元・同業比較対象まで分解する作業表。未入力項目はスコアに混ぜない。', 'june_10_finalization_sprint_20260526.html']],
+  ['immediate_completion_score_bridge_20260526.html', ['現行資料', '顧客説明に使用可', '即時補完8件について既存CSVの再利用可否、業種中央値、スコア接続可否を分ける表。未入力項目は点数に混ぜない。', 'immediate_completion_input_map_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
@@ -129,6 +130,7 @@ const currentCsvPrefixes = [
   '432_', '433_', '434_', '435_', '436_',
   '437_', '438_', '439_', '440_', '441_',
   '442_', '443_', '444_', '445_', '446_',
+  '447_', '448_', '449_', '450_',
 ];
 
 function escCsv(value) {

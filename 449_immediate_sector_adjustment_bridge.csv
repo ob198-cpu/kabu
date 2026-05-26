@@ -1,0 +1,6 @@
+﻿updated_at,ticker,company,task_category,target_per,target_pbr,target_roe_pct,peer_group,peer_tickers_used,usable_peer_count,peer_per_median,peer_pbr_median,peer_roe_median,per_vs_peer,pbr_vs_peer,roe_vs_peer,source_files,score_policy,completion_status
+2026/05/26 17:30,2802.T,味の素,業種別補正,43.73,6.81,17.75,キッコーマン、日清食品HD、明治HD、信越化学の材料比較を別枠で確認,2801.T / 2502.T / 2503.T / 4452.T,0,,,,,,,199_universe100_screening.csv,同業中央値が不足。業種補正は点数に混ぜない,未接続
+2026/05/26 17:30,8306.T,三菱UFJ FG,業種別補正,,1.56,11.34,三井住友FG、みずほFG、りそなHD,8316.T / 8411.T,2,13.7,1.52,10.93,,0.04,0.41,245_nisa_1year_hold_score_top20.csv / 199_universe100_screening.csv,同業中央値は説明補助として接続。購入判断には未使用,部分接続
+2026/05/26 17:30,5020.T,ENEOS HD,業種別補正,8.36,1.03,8.00,出光興産、コスモエネルギーHD、INPEX,1605.T / 5019.T,0,,,,,,,199_universe100_screening.csv,同業中央値が不足。業種補正は点数に混ぜない,未接続
+2026/05/26 17:30,6146.T,ディスコ,業種別補正,,12.32,25.15,東京エレクトロン、SCREEN、レーザーテック、アドバンテスト,6857.T / 6920.T / 7735.T / 8035.T,4,42,13.04,38.22,,-0.72,-13.07,245_nisa_1year_hold_score_top20.csv / 378_semiconductor_fundamental_completion_matrix.csv,同業中央値は説明補助として接続。購入判断には未使用,部分接続
+2026/05/26 17:30,4385.T,メルカリ,業種別補正,,5.79,30.52,ZOZO、楽天G、BASE、マネーフォワード,3092.T / 4755.T / 4689.T / 6098.T,1,21.59,8.5,31.05,,-2.71,-0.53,199_universe100_screening.csv,同業中央値が不足。業種補正は点数に混ぜない,未接続
