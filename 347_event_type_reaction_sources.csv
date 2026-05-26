@@ -1,6 +1,6 @@
 ﻿updated_at,data_source,records,role,current_limit
-2026/05/26 11:04,37_event_return_detail.csv,130,イベント日と株価を結合した明細。FOMC/日銀会合が中心。,企業イベントの株価反応はまだ少ない。
-2026/05/26 11:04,307_event_type_backtest_summary.csv,3,イベント種別ごとの平均超過リターン。,FOMC/日銀は統計参考、その他は件数不足。
-2026/05/26 11:04,39_tdnet_action_classification.csv,200,TDnet直近開示をイベント分類した表。,分類済みだが、株価時系列との結合は未完了。
-2026/05/26 11:04,268_known_stock_impact_event_types.csv,16,株価に影響しやすいイベント種類の分類表。,分類は仮説であり、株価反応DBとの接続が必要。
-2026/05/26 11:04,315_candidate_causality_gate.csv,10,候補10社へのイベント因果ゲート。,多くの銘柄はイベント後リターン/複合条件が未接続。
+2026/05/26 11:15,37_event_return_detail.csv,130,イベント日と株価を結合した明細。FOMC/日銀会合が中心。,企業イベントの株価反応はまだ少ない。
+2026/05/26 11:15,307_event_type_backtest_summary.csv,3,イベント種別ごとの平均超過リターン。,FOMC/日銀は統計参考、その他は件数不足。
+2026/05/26 11:15,39_tdnet_action_classification.csv,200,TDnet直近開示をイベント分類した表。,分類済みだが、株価時系列との結合は未完了。
+2026/05/26 11:15,268_known_stock_impact_event_types.csv,16,株価に影響しやすいイベント種類の分類表。,分類は仮説であり、株価反応DBとの接続が必要。
+2026/05/26 11:15,315_candidate_causality_gate.csv,10,候補10社へのイベント因果ゲート。,多くの銘柄はイベント後リターン/複合条件が未接続。

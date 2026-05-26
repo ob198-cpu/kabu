@@ -23,6 +23,8 @@ const targetFiles = [
   'backtest_validation_20260525.html',
   'plus1_benchmark_connection_20260525.html',
   'event_causality_validation_20260525.html',
+  'event_type_reaction_db_20260526.html',
+  'june_forward_test_record_20260526.html',
 ];
 
 const phraseRules = [
@@ -259,9 +261,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '6月イベント後の前向きテスト記録へ接続する',
-    reason: 'イベント種類別DBを作成し、分類DBと株価反応DBの差を見える化したため。',
-    output: '6月CPI・日銀・FOMC後の入力欄、判断ログ、予実差記録への接続',
+    action: 'TDnet分類済み企業イベントを株価時系列へ接続する',
+    reason: '6月イベント後の実績入力、候補別ゲート、予実差記録の台帳を作成したため。',
+    output: 'TOB、自社株買い、上方修正、決算短信などのイベント後1日/5日/20日超過リターン',
   },
 ];
 
@@ -425,6 +427,7 @@ const html = `<!doctype html>
       <a class="button" href="candidate_role_wording_20260526.html">候補表現ロール整理へ</a>
       <a class="button" href="candidate_data_completion_20260526.html">候補10社データ補完へ</a>
       <a class="button" href="event_type_reaction_db_20260526.html">イベント種類別反応DBへ</a>
+      <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

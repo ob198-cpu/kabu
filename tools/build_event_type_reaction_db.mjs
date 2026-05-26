@@ -500,6 +500,7 @@ const html = `<!doctype html>
       <a class="button" href="345_event_type_reaction_gap_queue.csv">345 未接続キューCSV</a>
       <a class="button" href="346_event_type_score_policy.csv">346 スコア方針CSV</a>
       <a class="button" href="347_event_type_reaction_sources.csv">347 取得元CSV</a>
+      <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
       <a class="button" href="event_causality_validation_20260525.html">イベント因果チェックへ</a>
       <a class="button" href="candidate_data_completion_20260526.html">候補10社データ補完へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>

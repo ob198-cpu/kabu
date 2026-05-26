@@ -1,0 +1,7 @@
+﻿source_name,file,use,status
+6月市場イベントゲート,284_june_market_event_gates.csv,CPI、日銀、FOMC、一次判定週のチェック条件,接続済み
+候補別6月アクション表,286_june_candidate_action_matrix.csv,候補10社の6月シナリオと初回確認,接続済み
++1%比較ゲート,310_candidate_plus1_gate.csv,S&P500/日経平均等を+1%上回る目的との接続,接続済み
+候補10社データ補完表,339_candidate_data_completion_matrix.csv,データ信頼度、未接続項目、候補別の残課題,接続済み
+イベント種類別反応DB,344_event_type_reaction_database.csv,イベントを本体スコアへ混ぜてよいかの判定,接続済み
+今後の手入力,352_forward_test_result_template.csv,イベント後1/5/20営業日の価格反応、指数超過、予実差,6月以降入力
