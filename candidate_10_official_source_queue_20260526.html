@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 公式データ取得キュー</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --muted: #52677f;
+      --line: #c8d9ea;
+      --soft: #eef6ff;
+      --blue: #0b66a0;
+      --amber: #b45309;
+      --bg: #f6f9fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #052c50, #0b668d);
+      color: #fff;
+      padding: 34px clamp(18px, 4vw, 58px);
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; color: #eaf5ff; font-weight: 800; max-width: 980px; }
+    main { width: min(1180px, calc(100% - 32px)); margin: 24px auto 56px; }
+    section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin: 18px 0;
+      break-inside: avoid;
+    }
+    h2 {
+      margin: 0 0 14px;
+      padding-left: 12px;
+      border-left: 8px solid var(--blue);
+      font-size: 24px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--soft);
+      min-height: 110px;
+    }
+    .metric strong { display: block; font-size: 26px; color: var(--blue); }
+    .notice {
+      border-left: 8px solid var(--amber);
+      background: #fff7ed;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 900;
+    }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 980px; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+      color: var(--ink);
+      word-break: break-word;
+    }
+    th { background: #e6f1fb; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    a { color: var(--blue); font-weight: 800; }
+    @media (max-width: 860px) {
+      .summary { grid-template-columns: 1fr; }
+      main { width: min(100% - 20px, 1180px); }
+      section { padding: 16px; }
+    }
+    @media print {
+      body { background: #fff; }
+      section { break-inside: avoid; }
+      .table-wrap { overflow: visible; }
+      table { min-width: 0; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 公式データ取得キュー</h1>
+    <p>明日、候補10社を根拠付きで絞るために、まず確認する公式IRページと取得する数値を固定した一覧です。</p>
+  </header>
+  <main>
+    <section>
+      <h2>位置づけ</h2>
+      <div class="summary">
+        <div class="metric"><span>公式IR取得先</span><strong>10社</strong><small>候補10社すべて</small></div>
+        <div class="metric"><span>共通取得元</span><strong>4系統</strong><small>EDINET等の補助ルート</small></div>
+        <div class="metric"><span>採点接続</span><strong>未接続</strong><small>数値入力後に検算</small></div>
+        <div class="metric"><span>購入判断</span><strong>0社</strong><small>6月イベント後に別判定</small></div>
+      </div>
+      <p class="notice">取得先を確認しただけでは点数に入れません。実際の数値、基準日、出典URL、予想/実績区分がそろった行だけをCSV入力・検証画面で検算します。</p>
+    </section>
+
+    <section>
+      <h2>10社ごとの公式取得先</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>銘柄</th><th>取得先</th><th>取得する主な数値</th><th>接続する入力作業</th><th>状態</th></tr></thead>
+          <tbody>
+
+            <tr>
+              <td>SRC-01</td>
+              <td>6762.T TDK</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">公式IR 決算資料</a></td>
+              <td>売上、営業利益、純利益、EPS、通期予想、決算説明資料</td>
+              <td>IN-01のイベント実績、必要に応じて財務補足</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-02</td>
+              <td>2802.T 味の素</td>
+              <td><a href="https://www.ajinomoto.co.jp/company/jp/ir/library/result.html" target="_blank" rel="noopener">公式IR 決算短信</a></td>
+              <td>売上、事業利益、EPS、通期予想、セグメント情報</td>
+              <td>IN-02からIN-05の同業比較、PBR/ROE、決算後反応</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-03</td>
+              <td>8766.T 東京海上HD</td>
+              <td><a href="https://www.tokiomarinehd.com/ir/event/presentation/" target="_blank" rel="noopener">公式IR 決算IR電話会議</a></td>
+              <td>決算短信、説明資料、自然災害影響、修正純利益、株主還元</td>
+              <td>IN-06、IN-07の決算後反応とイベント実績</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-04</td>
+              <td>8316.T 三井住友FG</td>
+              <td><a href="https://www.smfg.co.jp/investor/financial/" target="_blank" rel="noopener">公式IR 決算関連情報</a></td>
+              <td>決算短信、説明資料、純利益、ROE、自己資本比率、金利感応度</td>
+              <td>IN-08、IN-09の決算後反応と金利イベント実績</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-05</td>
+              <td>8306.T 三菱UFJ FG</td>
+              <td><a href="https://www.mufg.jp/ir/index.html" target="_blank" rel="noopener">公式IR 最新IR資料</a></td>
+              <td>決算短信、決算ハイライト、データブック、ROE、PBR関連資料</td>
+              <td>IN-10からIN-13の財務、同業比較、PBR/ROE</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-06</td>
+              <td>6367.T ダイキン工業</td>
+              <td><a href="https://www.daikin.co.jp/investor/library/results_materials" target="_blank" rel="noopener">公式IR 決算情報</a></td>
+              <td>決算短信、説明資料、売上、営業利益、地域別、空調需要</td>
+              <td>IN-14、IN-15の決算後反応とイベント実績</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-07</td>
+              <td>6503.T 三菱電機</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/investors/data/financial-result/" target="_blank" rel="noopener">公式IR 決算関連</a></td>
+              <td>決算短信、説明資料、FA/半導体関連、受注、営業利益率</td>
+              <td>IN-16、IN-17の決算後反応とイベント実績</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-08</td>
+              <td>5020.T ENEOS HD</td>
+              <td><a href="https://www.hd.eneos.co.jp/ir/library/" target="_blank" rel="noopener">公式IR 決算短信・説明資料</a></td>
+              <td>決算短信、説明資料、原油・ナフサ影響、在庫影響、セグメント利益</td>
+              <td>IN-18からIN-22の同業比較、PBR/ROE、反応、イベント実績</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-09</td>
+              <td>6146.T ディスコ</td>
+              <td><a href="https://www.disco.co.jp/jp/ir/library/fr.html" target="_blank" rel="noopener">公式IR 決算短信・四半期開示</a></td>
+              <td>決算短信、個別売上速報、出荷額、受注、利益率、通期見通し</td>
+              <td>IN-23からIN-27の財務、同業比較、PBR/ROE、イベント実績</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+            <tr>
+              <td>SRC-10</td>
+              <td>4385.T メルカリ</td>
+              <td><a href="https://about.mercari.com/ir/library/results/" target="_blank" rel="noopener">公式IR 決算情報</a></td>
+              <td>決算短信、説明資料、流通総額、売上収益、営業利益、Fintech関連指標</td>
+              <td>IN-28からIN-33の財務、同業比較、PBR/ROE、反応、イベント実績</td>
+              <td>取得先確認済み。数値入力は未実施</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>共通取得元</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>取得元</th><th>用途</th><th>注意点</th></tr></thead>
+          <tbody>
+
+            <tr>
+              <td>COMMON-01</td>
+              <td><a href="https://disclosure2.edinet-fsa.go.jp/" target="_blank" rel="noopener">EDINET</a></td>
+              <td>有価証券報告書でセグメント、リスク、海外売上比率、財務注記を補う</td>
+              <td>書類IDやXBRL抽出の実装が必要。すぐ点数へ入れず、公式補完資料として扱う</td>
+            </tr>
+            <tr>
+              <td>COMMON-02</td>
+              <td><a href="https://jpx-jquants.com/" target="_blank" rel="noopener">J-Quants</a></td>
+              <td>PER/PBR/ROEなどの統一取得候補</td>
+              <td>認証が必要。認証未設定では自動取得に接続しない</td>
+            </tr>
+            <tr>
+              <td>COMMON-03</td>
+              <td><a href="https://query1.finance.yahoo.com/" target="_blank" rel="noopener">株価OHLCV</a></td>
+              <td>決算後1日、5日、20日の超過リターン計算</td>
+              <td>アクセス制限があるため、取得失敗時は再試行または別経路を使う</td>
+            </tr>
+            <tr>
+              <td>COMMON-04</td>
+              <td><a href="日経平均、TOPIX、S&amp;P500相当指数" target="_blank" rel="noopener">ベンチマーク</a></td>
+              <td>+1%目標の比較基準と決算後反応の超過リターン計算</td>
+              <td>比較対象と期間を固定し、都合のよい基準に後から変えない</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

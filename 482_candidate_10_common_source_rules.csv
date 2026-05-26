@@ -1,0 +1,5 @@
+﻿updated_at,source_id,source_type,url,purpose,limitation
+2026/05/26 19:26,COMMON-01,EDINET,https://disclosure2.edinet-fsa.go.jp/,有価証券報告書でセグメント、リスク、海外売上比率、財務注記を補う,書類IDやXBRL抽出の実装が必要。すぐ点数へ入れず、公式補完資料として扱う
+2026/05/26 19:26,COMMON-02,J-Quants,https://jpx-jquants.com/,PER/PBR/ROEなどの統一取得候補,認証が必要。認証未設定では自動取得に接続しない
+2026/05/26 19:26,COMMON-03,株価OHLCV,https://query1.finance.yahoo.com/,決算後1日、5日、20日の超過リターン計算,アクセス制限があるため、取得失敗時は再試行または別経路を使う
+2026/05/26 19:26,COMMON-04,ベンチマーク,日経平均、TOPIX、S&P500相当指数,+1%目標の比較基準と決算後反応の超過リターン計算,比較対象と期間を固定し、都合のよい基準に後から変えない

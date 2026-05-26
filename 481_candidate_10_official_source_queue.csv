@@ -1,0 +1,11 @@
+﻿updated_at,source_id,ticker,company,source_type,url,fields_to_collect,connected_input_ids,priority,status,score_policy
+2026/05/26 19:26,SRC-01,6762.T,TDK,公式IR 決算資料,https://www.tdk.com/en/ir/ir_library/financial/index.html,売上、営業利益、純利益、EPS、通期予想、決算説明資料,IN-01のイベント実績、必要に応じて財務補足,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-02,2802.T,味の素,公式IR 決算短信,https://www.ajinomoto.co.jp/company/jp/ir/library/result.html,売上、事業利益、EPS、通期予想、セグメント情報,IN-02からIN-05の同業比較、PBR/ROE、決算後反応,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-03,8766.T,東京海上HD,公式IR 決算IR電話会議,https://www.tokiomarinehd.com/ir/event/presentation/,決算短信、説明資料、自然災害影響、修正純利益、株主還元,IN-06、IN-07の決算後反応とイベント実績,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-04,8316.T,三井住友FG,公式IR 決算関連情報,https://www.smfg.co.jp/investor/financial/,決算短信、説明資料、純利益、ROE、自己資本比率、金利感応度,IN-08、IN-09の決算後反応と金利イベント実績,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-05,8306.T,三菱UFJ FG,公式IR 最新IR資料,https://www.mufg.jp/ir/index.html,決算短信、決算ハイライト、データブック、ROE、PBR関連資料,IN-10からIN-13の財務、同業比較、PBR/ROE,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-06,6367.T,ダイキン工業,公式IR 決算情報,https://www.daikin.co.jp/investor/library/results_materials,決算短信、説明資料、売上、営業利益、地域別、空調需要,IN-14、IN-15の決算後反応とイベント実績,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-07,6503.T,三菱電機,公式IR 決算関連,https://www.mitsubishielectric.co.jp/investors/data/financial-result/,決算短信、説明資料、FA/半導体関連、受注、営業利益率,IN-16、IN-17の決算後反応とイベント実績,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-08,5020.T,ENEOS HD,公式IR 決算短信・説明資料,https://www.hd.eneos.co.jp/ir/library/,決算短信、説明資料、原油・ナフサ影響、在庫影響、セグメント利益,IN-18からIN-22の同業比較、PBR/ROE、反応、イベント実績,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-09,6146.T,ディスコ,公式IR 決算短信・四半期開示,https://www.disco.co.jp/jp/ir/library/fr.html,決算短信、個別売上速報、出荷額、受注、利益率、通期見通し,IN-23からIN-27の財務、同業比較、PBR/ROE、イベント実績,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない
+2026/05/26 19:26,SRC-10,4385.T,メルカリ,公式IR 決算情報,https://about.mercari.com/ir/library/results/,決算短信、説明資料、流通総額、売上収益、営業利益、Fintech関連指標,IN-28からIN-33の財務、同業比較、PBR/ROE、反応、イベント実績,最優先,取得先確認済み。数値入力は未実施,出典URL、基準日、数値がそろうまで採点へ接続しない

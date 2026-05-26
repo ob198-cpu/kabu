@@ -50,6 +50,7 @@ const targetFiles = [
   'candidate_10_explanation_cards_20260526.html',
   'candidate_10_input_cockpit_20260526.html',
   'candidate_10_input_template_validator_20260526.html',
+  'candidate_10_official_source_queue_20260526.html',
 ];
 
 const phraseRules = [
