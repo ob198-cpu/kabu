@@ -57,6 +57,7 @@ const currentFiles = new Map([
   ['candidate_10_input_template_validator_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社の不足データをCSVで入力し、出典・基準日・必要値がそろっているかをブラウザ上で検証する画面。未入力値は採点へ接続しない。', 'candidate_10_input_cockpit_20260526.html']],
   ['candidate_10_official_source_queue_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社の公式IR取得先と、取得する数値、入力テンプレートへの接続先を整理した取得キュー。取得先の確認だけでは採点へ接続しない。', 'candidate_10_input_template_validator_20260526.html']],
   ['candidate_10_current_data_connection_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、既存CSVに入っているPER/PBR/ROE、成長率、決算後反応の接続状況を整理し、使える数値と残課題を分けた確認表。', 'candidate_10_official_source_queue_20260526.html']],
+  ['candidate_10_per_estimate_bridge_20260526.html', ['現行資料', '顧客説明に使用可', 'PER未取得銘柄について、公式EPSと既存株価から実績PER試算の可否を確認するページ。試算値は採点へ接続しない。', 'candidate_10_current_data_connection_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
@@ -140,6 +141,10 @@ const currentCsvPrefixes = [
   '437_', '438_', '439_', '440_', '441_',
   '442_', '443_', '444_', '445_', '446_',
   '447_', '448_', '449_', '450_',
+  '451_', '452_', '453_', '454_', '455_', '456_', '457_', '458_', '459_', '460_',
+  '461_', '462_', '463_', '464_', '465_', '466_', '467_', '468_', '469_', '470_',
+  '471_', '472_', '473_', '474_', '475_', '476_', '477_', '478_', '479_', '480_',
+  '481_', '482_', '483_', '484_', '485_', '486_', '487_', '488_', '489_',
 ];
 
 function escCsv(value) {
