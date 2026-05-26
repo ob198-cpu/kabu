@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 根拠付き選定作業表</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+    h1 { font-size: clamp(26px, 4vw, 42px); line-height: 1.2; margin: 0 0 10px; letter-spacing: 0; }
+    h2 { font-size: 24px; color: var(--navy); margin: 0 0 10px; letter-spacing: 0; }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+    .kpi { background: white; color: var(--ink); border: 1px solid #c9def3; border-radius: 12px; padding: 12px; }
+    .kpi b { display: block; color: var(--blue); font-size: 28px; line-height: 1; }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table { width: 100%; min-width: 1120px; border-collapse: collapse; table-layout: fixed; background: white; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th { background: #e8f4ff; color: #073b63; font-weight: 800; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      table { min-width: 920px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>候補10社 根拠付き選定作業表</h1>
+      <p>明日2026年5月27日に候補10社を根拠付きで説明するため、量的評価、質的評価、未完了項目、次の確認作業を分けて整理しました。</p>
+      <div class="actions">
+        <a class="button" href="june_test_10_selection_board_20260526.html">既存10社表へ戻る</a>
+        <a class="button" href="466_candidate_10_quantitative_evidence.csv">量的根拠CSV</a>
+        <a class="button" href="467_candidate_10_qualitative_evidence.csv">質的根拠CSV</a>
+        <a class="button" href="468_candidate_10_selection_decision.csv">選定作業CSV</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>10</b><span>確認対象銘柄</span></div>
+        <div class="kpi"><b>30</b><span>質的仮説</span></div>
+        <div class="kpi"><b>未加点</b><span>質的情報の扱い</span></div>
+        <div class="kpi"><b>0社</b><span>購入判断</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      重要: この表は候補10社を説明するための選定作業表です。購入判断は6月の市場イベント実数を入れた後に再判定します。
+    </div>
+
+    <section class="panel">
+      <h2>選定作業表</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>会社</th><th>現在の役割</th><th>量的評価</th><th>質的評価</th><th>選定理由</th><th>未完了項目</th><th>購入判断</th></tr></thead>
+        <tbody>
+
+                <tr><td>1</td><td>6762.T</td><td>TDK</td><td>最初に確認</td><td>A</td><td>仮説のみ 3件・未加点</td><td>一次候補。データ完成度が最も高いが、イベント因果は未完了。 数値: PER 26.7 / PBR 2.75 / ROE 9.81% / 売上 13.6% / 利益 21.5%</td><td>イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>2</td><td>2802.T</td><td>味の素</td><td>補完後に確認</td><td>B</td><td>仮説のみ 3件・未加点</td><td>補完後候補。財務・+1%接続は概ねあるが、決算後反応または同業補正を確認する。 数値: PER 43.73 / PBR 6.81 / ROE 17.75% / 売上 3.5% / 利益 75%</td><td>決算後反応未完了または未到達 / 業種別補正未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>3</td><td>8766.T</td><td>東京海上HD</td><td>補完後に確認</td><td>B</td><td>仮説のみ 3件・未加点</td><td>補完後候補。財務・+1%接続は概ねあるが、決算後反応または同業補正を確認する。 数値: PER 17.61 / PBR 2.7 / ROE 18.68% / 売上 5.1% / 利益 -7.6%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>4</td><td>8316.T</td><td>三井住友FG</td><td>補完後に確認</td><td>B</td><td>仮説のみ 3件・未加点</td><td>補完後候補。財務・+1%接続は概ねあるが、決算後反応または同業補正を確認する。 数値: PER 13.61 / PBR 1.47 / ROE 10.38% / 売上 6.1% / 利益 34%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>5</td><td>8306.T</td><td>三菱UFJ FG</td><td>補完後に確認</td><td>C</td><td>仮説のみ 3件・未加点</td><td>補完後候補。財務・+1%接続は概ねあるが、決算後反応または同業補正を確認する。 数値: PER 未取得 / PBR 1.56 / ROE 11.34% / 売上 7.3% / 利益 27.7%</td><td>財務指標未完了 / 業種別補正未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>6</td><td>6367.T</td><td>ダイキン工業</td><td>補完後に確認</td><td>C</td><td>仮説のみ 3件・未加点</td><td>補完後候補。財務・+1%接続は概ねあるが、決算後反応または同業補正を確認する。 数値: PER 24.97 / PBR 2.14 / ROE 9.1% / 売上 5.5% / 利益 3.3%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>7</td><td>6503.T</td><td>三菱電機</td><td>補完後に確認</td><td>C</td><td>仮説のみ 3件・未加点</td><td>補完後候補。財務・+1%接続は概ねあるが、決算後反応または同業補正を確認する。 数値: PER 26.09 / PBR 2.76 / ROE 9.67% / 売上 6.8% / 利益 10.5%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>8</td><td>5020.T</td><td>ENEOS HD</td><td>補完優先</td><td>C</td><td>仮説のみ 3件・未加点</td><td>補完優先。テーマ性はあるが、残課題が多いため10社内では観察寄り。 数値: PER 8.36 / PBR 1.03 / ROE 8.00% / 売上 -4.5% / 利益 339.8%</td><td>決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>9</td><td>6146.T</td><td>ディスコ</td><td>補完優先</td><td>C</td><td>仮説のみ 3件・未加点</td><td>補完優先。テーマ性はあるが、残課題が多いため10社内では観察寄り。 数値: PER 未取得 / PBR 12.32 / ROE 25.15% / 売上 11.1% / 利益 10.9%</td><td>財務指標未完了 / 業種別補正未完了 / イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+                <tr><td>10</td><td>4385.T</td><td>メルカリ</td><td>補欠比較</td><td>保留</td><td>仮説のみ 3件・未加点</td><td>補欠保留。点数は高いが不足が多く、候補確定にはまだ早い。 数値: PER 未取得 / PBR 5.79 / ROE 30.52% / 売上 2.8% / 利益 59.2%</td><td>財務指標未完了 / 決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了</td><td>購入判断ではない</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>量的根拠</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>会社</th><th>優先点</th><th>NISA点</th><th>信頼度</th><th>PER</th><th>PBR</th><th>ROE</th><th>売上成長</th><th>利益成長</th><th>不足</th></tr></thead>
+        <tbody>
+
+                <tr><td>1</td><td>6762.T</td><td>TDK</td><td>87</td><td>60.7</td><td>100</td><td>26.7</td><td>2.75</td><td>9.81%</td><td>13.6%</td><td>21.5%</td><td>イベント因果未完了</td></tr>
+
+                <tr><td>2</td><td>2802.T</td><td>味の素</td><td>82</td><td>67.8</td><td>95</td><td>43.73</td><td>6.81</td><td>17.75%</td><td>3.5%</td><td>75%</td><td>決算後反応未完了または未到達 / 業種別補正未完了 / 業種別補正:接続不可</td></tr>
+
+                <tr><td>3</td><td>8766.T</td><td>東京海上HD</td><td>81</td><td>65.4</td><td>100</td><td>17.61</td><td>2.7</td><td>18.68%</td><td>5.1%</td><td>-7.6%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td></tr>
+
+                <tr><td>4</td><td>8316.T</td><td>三井住友FG</td><td>80</td><td>65.1</td><td>95</td><td>13.61</td><td>1.47</td><td>10.38%</td><td>6.1%</td><td>34%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td></tr>
+
+                <tr><td>5</td><td>8306.T</td><td>三菱UFJ FG</td><td>79</td><td>62.1</td><td>92</td><td>未取得</td><td>1.56</td><td>11.34%</td><td>7.3%</td><td>27.7%</td><td>財務指標未完了 / 業種別補正未完了 / 財務指標:説明補助まで / 業種別補正:説明補助まで / PER:既存CSV内では未発見</td></tr>
+
+                <tr><td>6</td><td>6367.T</td><td>ダイキン工業</td><td>79</td><td>52.6</td><td>100</td><td>24.97</td><td>2.14</td><td>9.1%</td><td>5.5%</td><td>3.3%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td></tr>
+
+                <tr><td>7</td><td>6503.T</td><td>三菱電機</td><td>78</td><td>55.6</td><td>95</td><td>26.09</td><td>2.76</td><td>9.67%</td><td>6.8%</td><td>10.5%</td><td>決算後反応未完了または未到達 / イベント因果未完了</td></tr>
+
+                <tr><td>8</td><td>5020.T</td><td>ENEOS HD</td><td>76</td><td>64.3</td><td>95</td><td>8.36</td><td>1.03</td><td>8.00%</td><td>-4.5%</td><td>339.8%</td><td>決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了 / 業種別補正:接続不可</td></tr>
+
+                <tr><td>9</td><td>6146.T</td><td>ディスコ</td><td>74</td><td>60.9</td><td>92</td><td>未取得</td><td>12.32</td><td>25.15%</td><td>11.1%</td><td>10.9%</td><td>財務指標未完了 / 業種別補正未完了 / イベント因果未完了 / 財務指標:説明補助まで / 業種別補正:説明補助まで / PER:既存CSV内では未発見</td></tr>
+
+                <tr><td>10</td><td>4385.T</td><td>メルカリ</td><td>72</td><td>79.8</td><td>87</td><td>未取得</td><td>5.79</td><td>30.52%</td><td>2.8%</td><td>59.2%</td><td>財務指標未完了 / 決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了 / 財務指標:説明補助まで / 業種別補正:接続不可 / PER:既存CSV内では未発見</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>質的根拠</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>会社</th><th>状態</th><th>時流・イベント仮説</th><th>扱い</th></tr></thead>
+        <tbody>
+
+                <tr><td>1</td><td>6762.T</td><td>TDK</td><td>仮説のみ 3件・未加点</td><td>AIサーバー需要 / 為替・海外売上 / 電池・磁性材料</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>2</td><td>2802.T</td><td>味の素</td><td>仮説のみ 3件・未加点</td><td>食品値上げ耐性 / ABF・ヘルスケア / 円安・原材料</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>3</td><td>8766.T</td><td>東京海上HD</td><td>仮説のみ 3件・未加点</td><td>保険料率・金利 / 自然災害・損害率 / 政策保有株売却</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>4</td><td>8316.T</td><td>三井住友FG</td><td>仮説のみ 3件・未加点</td><td>日銀・金利 / 信用コスト / 海外金利・為替</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>5</td><td>8306.T</td><td>三菱UFJ FG</td><td>仮説のみ 3件・未加点</td><td>日銀・金利 / 海外金利・景気 / 株主還元</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>6</td><td>6367.T</td><td>ダイキン工業</td><td>仮説のみ 3件・未加点</td><td>データセンター冷却 / 地域別空調需要 / 中国・為替</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>7</td><td>6503.T</td><td>三菱電機</td><td>仮説のみ 3件・未加点</td><td>電力・データセンター / FA・設備投資 / 防衛・宇宙</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>8</td><td>5020.T</td><td>ENEOS HD</td><td>仮説のみ 3件・未加点</td><td>原油・精製マージン / 中東・海上輸送 / 脱炭素・構造転換</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>9</td><td>6146.T</td><td>ディスコ</td><td>仮説のみ 3件・未加点</td><td>AI半導体・HBM / 半導体設備投資 / 高PER・過熱</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+                <tr><td>10</td><td>4385.T</td><td>メルカリ</td><td>仮説のみ 3件・未加点</td><td>国内消費 / FinTech・広告 / 規制・競争</td><td>調査理由として使用。実績確認前は加点しない</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>明日の作業</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>優先</th><th>作業</th><th>内容</th><th>成果物</th></tr></thead>
+        <tbody>
+
+                <tr><td>1</td><td>候補10社の量的根拠を確定</td><td>PER/PBR/ROE、売上成長、利益成長、下落率、出来高、決算後反応を候補別に確認する。</td><td>量的評価表の更新</td></tr>
+
+                <tr><td>2</td><td>質的仮説の扱いを固定</td><td>AI、半導体、金利、食品値上げ、原油、データセンター等を調査理由として整理し、実績確認前は加点しない。</td><td>質的評価表の更新</td></tr>
+
+                <tr><td>3</td><td>不足値の採用可否を決める</td><td>PER不足3件、同業中央値不足3件を公式IR/EDINET/J-Quantsルートで確認し、取れない値は未接続として残す。</td><td>不足データ処理表</td></tr>
+
+                <tr><td>4</td><td>テスト候補10社の説明を作成</td><td>各銘柄について、選定理由、確認すべきリスク、6月イベント後の再判定条件を記載する。</td><td>候補10社説明表</td></tr>
+
+                <tr><td>5</td><td>6月再判定に接続</td><td>CPI、FOMC、日銀、指数下落、金利急騰、個別決算の結果を入れて残す/保留/除外を判定する。</td><td>6月確認リスト</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+  </main>
+</body>
+</html>

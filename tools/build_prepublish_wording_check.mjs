@@ -47,6 +47,7 @@ const fallbackTargets = [
   'missing_per_peer_fetch_queue_20260526.html',
   'existing_metric_reuse_scan_20260526.html',
   'external_metric_source_feasibility_20260526.html',
+  'candidate_10_rational_selection_board_20260526.html',
   'candidate_june_rulebook.html',
   'prepublish_wording_check_20260526.html',
   'candidate_role_wording_20260526.html',
