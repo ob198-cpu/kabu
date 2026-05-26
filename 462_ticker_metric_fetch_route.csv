@@ -1,0 +1,7 @@
+﻿updated_at,ticker,company,missing_metric,preferred_route,fallback_route,current_status,score_policy
+2026/05/26 17:55,8306.T,三菱UFJ FG,PER,J-Quantsまたは会社IR EPS + 株価,EDINET実績EPS + 株価は実績PERとして別列管理,外部取得待ち,未接続
+2026/05/26 17:55,6146.T,ディスコ,PER,J-Quantsまたは会社IR EPS + 株価,EDINET実績EPS + 株価は実績PERとして別列管理,外部取得待ち,未接続
+2026/05/26 17:55,4385.T,メルカリ,PER,J-Quantsまたは会社IR EPS + 株価,EDINET実績EPS + 株価は実績PERとして別列管理,外部取得待ち,未接続
+2026/05/26 17:55,2802.T,味の素,同業中央値,同業2社以上のJ-Quantsまたは会社IR指標,既存CSVの同業候補を再点検し、不足銘柄のみ追加,外部取得待ち,未接続
+2026/05/26 17:55,5020.T,ENEOS HD,同業中央値,同業2社以上のJ-Quantsまたは会社IR指標,既存CSVの同業候補を再点検し、不足銘柄のみ追加,外部取得待ち,未接続
+2026/05/26 17:55,4385.T,メルカリ,同業中央値,同業2社以上のJ-Quantsまたは会社IR指標,ネット/EC同業の比較対象を再固定,外部取得待ち,未接続

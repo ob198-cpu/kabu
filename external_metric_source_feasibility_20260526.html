@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>外部指標取得ルート 現実性判定</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+    h1 { font-size: clamp(26px, 4vw, 42px); line-height: 1.2; margin: 0 0 10px; letter-spacing: 0; }
+    h2 { font-size: 24px; color: var(--navy); margin: 0 0 10px; letter-spacing: 0; }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+    .kpi { background: white; color: var(--ink); border: 1px solid #c9def3; border-radius: 12px; padding: 12px; }
+    .kpi b { display: block; color: var(--blue); font-size: 26px; line-height: 1.15; }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table { width: 100%; min-width: 980px; border-collapse: collapse; table-layout: fixed; background: white; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th { background: #e8f4ff; color: #073b63; font-weight: 800; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      table { min-width: 820px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>外部指標取得ルート 現実性判定</h1>
+      <p>既存CSVに直接使えるPERがなかったため、外部から取得するルートを信頼性・必要条件・スコア接続可否で分けました。</p>
+      <div class="actions">
+        <a class="button" href="existing_metric_reuse_scan_20260526.html">既存CSVスキャンへ戻る</a>
+        <a class="button" href="461_per_source_feasibility.csv">取得元CSV</a>
+        <a class="button" href="462_ticker_metric_fetch_route.csv">銘柄別ルートCSV</a>
+        <a class="button" href="464_next_connector_tasks.csv">次作業CSV</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>J-Quants</b><span>第一候補・認証必須</span></div>
+        <div class="kpi"><b>IR/EDINET</b><span>公式補完ルート</span></div>
+        <div class="kpi"><b>Yahoo 429</b><span>現在は不安定</span></div>
+        <div class="kpi"><b>0件</b><span>スコア接続</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      重要: 外部値は、出典URL・取得日時・予想/実績区分・基準株価がそろうまで採点へ接続しません。
+    </div>
+
+    <section class="panel">
+      <h2>取得元の現実性</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>取得元</th><th>取れるデータ</th><th>信頼性</th><th>現在の結果</th><th>必要条件</th><th>使い方</th></tr></thead>
+        <tbody>
+
+                <tr><td>J-Quants</td><td>株価、上場銘柄情報、財務系データ</td><td>高</td><td>認証なしでは403</td><td>APIアカウント、IDトークン、取得項目の契約範囲確認</td><td>キー取得後は第一候補。スコア接続可</td></tr>
+
+                <tr><td>EDINET XBRL</td><td>有価証券報告書の実績EPS、純資産、利益、ROE計算材料</td><td>高</td><td>コード・文書ID取得ルートは既に開始済み</td><td>XBRLタグ対応、年度差、実績値と予想値の分離</td><td>実績指標の補完に使用。予想PERは会社予想または別ソースが必要</td></tr>
+
+                <tr><td>会社IR/決算短信</td><td>会社予想、EPS、配当、セグメント説明</td><td>高</td><td>PDF/HTML取得は可能だが会社別の表構造差がある</td><td>銘柄別テンプレート、PDF表抽出または手入力欄</td><td>公式値として採用可。ただし抽出ログを残す</td></tr>
+
+                <tr><td>TDnet</td><td>決算短信、上方修正、下方修正、自社株買い</td><td>高</td><td>ページ取得は可能。長期安定抽出は未完成</td><td>開示分類、PDF/HTML/XBRL取得、イベント履歴DB</td><td>イベント実績層に使用。指標値は抽出確認後に限定</td></tr>
+
+                <tr><td>Yahoo Finance quote API</td><td>PER/PBR等の参考値が取れる可能性</td><td>中</td><td>現在の確認では429 Too Many Requests</td><td>レート制限回避不可。一次ソースにはしない</td><td>参考値まで。公式/準公式確認なしにスコア接続しない</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>銘柄別の取得ルート</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>銘柄</th><th>会社</th><th>不足指標</th><th>第一ルート</th><th>代替ルート</th><th>状態</th><th>スコア</th></tr></thead>
+        <tbody>
+
+                <tr><td>8306.T</td><td>三菱UFJ FG</td><td>PER</td><td>J-Quantsまたは会社IR EPS + 株価</td><td>EDINET実績EPS + 株価は実績PERとして別列管理</td><td>外部取得待ち</td><td>未接続</td></tr>
+
+                <tr><td>6146.T</td><td>ディスコ</td><td>PER</td><td>J-Quantsまたは会社IR EPS + 株価</td><td>EDINET実績EPS + 株価は実績PERとして別列管理</td><td>外部取得待ち</td><td>未接続</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>PER</td><td>J-Quantsまたは会社IR EPS + 株価</td><td>EDINET実績EPS + 株価は実績PERとして別列管理</td><td>外部取得待ち</td><td>未接続</td></tr>
+
+                <tr><td>2802.T</td><td>味の素</td><td>同業中央値</td><td>同業2社以上のJ-Quantsまたは会社IR指標</td><td>既存CSVの同業候補を再点検し、不足銘柄のみ追加</td><td>外部取得待ち</td><td>未接続</td></tr>
+
+                <tr><td>5020.T</td><td>ENEOS HD</td><td>同業中央値</td><td>同業2社以上のJ-Quantsまたは会社IR指標</td><td>既存CSVの同業候補を再点検し、不足銘柄のみ追加</td><td>外部取得待ち</td><td>未接続</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>同業中央値</td><td>同業2社以上のJ-Quantsまたは会社IR指標</td><td>ネット/EC同業の比較対象を再固定</td><td>外部取得待ち</td><td>未接続</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>次の実装タスク</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>優先</th><th>タスク</th><th>実施内容</th><th>成果物</th></tr></thead>
+        <tbody>
+
+                <tr><td>1</td><td>J-Quants接続可否を決める</td><td>APIキーが使えるなら自動取得、使えないなら会社IR/EDINETルートへ切替</td><td>データ取得方法の確定</td></tr>
+
+                <tr><td>2</td><td>PER計算列を分離する</td><td>forecast_per、actual_per、per_source、per_dateを別列化</td><td>基準混在しない入力表</td></tr>
+
+                <tr><td>3</td><td>会社IR/EDINETから3銘柄のEPSを補完</td><td>8306、6146、4385のEPS/利益/株式数または1株利益を取得</td><td>PER計算候補</td></tr>
+
+                <tr><td>4</td><td>同業中央値を再計算</td><td>2802、5020、4385の同業2社以上を同じ基準で補完</td><td>業種補正の再接続可否</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+  </main>
+</body>
+</html>

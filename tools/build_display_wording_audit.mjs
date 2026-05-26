@@ -45,6 +45,7 @@ const targetFiles = [
   'immediate_completion_score_bridge_20260526.html',
   'missing_per_peer_fetch_queue_20260526.html',
   'existing_metric_reuse_scan_20260526.html',
+  'external_metric_source_feasibility_20260526.html',
 ];
 
 const phraseRules = [
