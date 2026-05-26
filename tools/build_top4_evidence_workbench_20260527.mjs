@@ -1,0 +1,299 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+const ROOT = process.cwd();
+const generatedAt = new Intl.DateTimeFormat('ja-JP', {
+  timeZone: 'Asia/Tokyo',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+}).format(new Date());
+
+function parseCsv(text) {
+  if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+  const rows = [];
+  let row = [];
+  let cell = '';
+  let quoted = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i];
+    const next = text[i + 1];
+    if (quoted) {
+      if (ch === '"' && next === '"') {
+        cell += '"';
+        i += 1;
+      } else if (ch === '"') quoted = false;
+      else cell += ch;
+    } else if (ch === '"') quoted = true;
+    else if (ch === ',') {
+      row.push(cell);
+      cell = '';
+    } else if (ch === '\n') {
+      row.push(cell.replace(/\r$/, ''));
+      rows.push(row);
+      row = [];
+      cell = '';
+    } else cell += ch;
+  }
+  if (cell.length || row.length) {
+    row.push(cell.replace(/\r$/, ''));
+    rows.push(row);
+  }
+  const headers = rows.shift() || [];
+  return rows
+    .filter((items) => items.some((item) => String(item).trim() !== ''))
+    .map((items) => Object.fromEntries(headers.map((header, index) => [header, items[index] || ''])));
+}
+
+function readCsv(name) {
+  return parseCsv(fs.readFileSync(path.join(ROOT, name), 'utf8'));
+}
+
+function escCsv(value) {
+  const text = String(value ?? '');
+  if (/[",\n\r]/.test(text)) return `"${text.replaceAll('"', '""')}"`;
+  return text;
+}
+
+function writeCsv(name, rows, headers) {
+  const body = [headers.join(',')]
+    .concat(rows.map((row) => headers.map((header) => escCsv(row[header])).join(',')))
+    .join('\n');
+  fs.writeFileSync(path.join(ROOT, name), `\uFEFF${body}\n`, 'utf8');
+}
+
+function esc(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+function cleanLines(text) {
+  return text
+    .split('\n')
+    .map((line) => line.replace(/[ \t]+$/g, ''))
+    .join('\n');
+}
+
+function table(headers, rows, className = '') {
+  return `
+    <div class="table-wrap ${className}">
+      <table>
+        <thead><tr>${headers.map((header) => `<th>${esc(header.label)}</th>`).join('')}</tr></thead>
+        <tbody>${rows.map((row) => `<tr>${headers.map((header) => `<td>${esc(row[header.key])}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+const allCandidates = readCsv('590_candidate_10_final_checklist_detail.csv');
+const top4 = allCandidates.filter((row) => ['最優先確認', '条件付き確認'].includes(row.priority));
+
+const evidenceRows = [
+  {
+    ticker: '6762.T',
+    company: 'TDK',
+    must_confirm: 'AI/HBM関連の売上・受注・利益率、PER/PBR/ROE、20営業日反応、為替感応度',
+    source_priority: '公式決算資料、決算説明資料、証券会社画面、株価時系列',
+    reason_if_confirmed: 'AI半導体周辺需要と電子部品需要が決算数字に出ていれば、1年保有テストの中心候補として説明しやすい。',
+    caution: 'AIテーマだけで上げない。決算後反応が指数劣後、または利益率・受注が弱ければ優先度を下げる。',
+    status: '最優先で補完',
+  },
+  {
+    ticker: '8316.T',
+    company: '三井住友FG',
+    must_confirm: '資金利益、信用コスト、自己株式取得、増配、日銀後の銀行株反応',
+    source_priority: '決算短信、決算説明資料、日銀イベント後の株価、金利データ',
+    reason_if_confirmed: '金利上昇局面で資金利益が伸び、信用コストが悪化していなければ、指数対比の候補として残せる。',
+    caution: '金利上昇だけで評価しない。信用コスト悪化や日銀後の銀行株反応悪化があれば中心候補から外す。',
+    status: '条件付きで補完',
+  },
+  {
+    ticker: '2802.T',
+    company: '味の素',
+    must_confirm: '値上げ後の数量、原材料費、ABF/ヘルスケア成長、PER妥当性、決算後反応',
+    source_priority: '決算説明資料、セグメント情報、CPI/原材料関連データ、証券会社画面',
+    reason_if_confirmed: '価格転嫁後も数量が維持され、ABF/ヘルスケア成長が続けば、防御力と成長性の両面で説明できる。',
+    caution: 'PERが高いまま成長鈍化が出ると下落が速い。割高感の説明ができない場合は中心候補に置かない。',
+    status: '条件付きで補完',
+  },
+  {
+    ticker: '8766.T',
+    company: '東京海上HD',
+    must_confirm: '保険引受利益、自然災害損害率、政策保有株売却、金利感応度、決算後反応',
+    source_priority: '決算短信、決算説明資料、保険セグメント資料、金利データ',
+    reason_if_confirmed: '保険料率・金利・資本効率の改善が数字で確認できれば、安定枠として説明しやすい。',
+    caution: '自然災害損害率や引受利益悪化が出た場合は、金利テーマだけで残さない。',
+    status: '条件付きで補完',
+  },
+];
+
+const scoreInputRows = evidenceRows.flatMap((row) => [
+  {
+    ticker: row.ticker,
+    company: row.company,
+    metric: 'PER/PBR/ROE',
+    input_value: '',
+    source_url_or_file: '',
+    use_in_score: '質/割安、業種別補正、ハード除外条件',
+    decision_rule: '同業比較で割高すぎる場合は中心候補から下げる',
+  },
+  {
+    ticker: row.ticker,
+    company: row.company,
+    metric: '売上成長率・営業利益成長率',
+    input_value: '',
+    source_url_or_file: '',
+    use_in_score: '成長スコア',
+    decision_rule: '成長鈍化または下方修正があれば候補順位を下げる',
+  },
+  {
+    ticker: row.ticker,
+    company: row.company,
+    metric: '決算後1日/5日/20営業日反応',
+    input_value: '',
+    source_url_or_file: '',
+    use_in_score: '決算後反応スコア、指数比較',
+    decision_rule: '指数劣後が続く場合は中心候補から外す',
+  },
+  {
+    ticker: row.ticker,
+    company: row.company,
+    metric: '質的テーマ確認数字',
+    input_value: '',
+    source_url_or_file: '',
+    use_in_score: '確認条件・除外条件',
+    decision_rule: 'テーマが売上・利益・受注に接続しない場合は加点しない',
+  },
+]);
+
+const summaryRows = [
+  {
+    updated_at: generatedAt,
+    item: '対象',
+    detail: '本日説明で前に置く4社。TDK、三井住友FG、味の素、東京海上HD。',
+  },
+  {
+    updated_at: generatedAt,
+    item: '目的',
+    detail: '10社全体の前に、説明上重要な4社の根拠不足を先に補完する。',
+  },
+  {
+    updated_at: generatedAt,
+    item: '入力方針',
+    detail: '空欄は未取得として残す。取得できた数字だけをスコアに使う。',
+  },
+  {
+    updated_at: generatedAt,
+    item: '次の作業',
+    detail: '公式資料と証券会社画面で数値を入力し、4社の残す・下げる・外すを再判定する。',
+  },
+];
+
+writeCsv('595_top4_evidence_workbench_summary.csv', summaryRows, ['updated_at', 'item', 'detail']);
+writeCsv('596_top4_evidence_workbench.csv', evidenceRows, [
+  'ticker',
+  'company',
+  'must_confirm',
+  'source_priority',
+  'reason_if_confirmed',
+  'caution',
+  'status',
+]);
+writeCsv('597_top4_score_input_template.csv', scoreInputRows, [
+  'ticker',
+  'company',
+  'metric',
+  'input_value',
+  'source_url_or_file',
+  'use_in_score',
+  'decision_rule',
+]);
+
+const html = cleanLines(`<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>前面4社 根拠補完ワークベンチ 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1240px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1000px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:900px; }
+    .wide table { min-width:1500px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    @media (max-width:900px) { main { padding:12px 10px 36px; } header,section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>前面4社 根拠補完ワークベンチ</h1>
+      <p class="lead">本日説明で前に置く4社について、確認すべき数字、取得元、残せる条件、下げる条件を整理した入力用資料です。</p>
+    </header>
+    <section>
+      <h2>1. 概要</h2>
+      ${table([
+        { key: 'item', label: '項目' },
+        { key: 'detail', label: '内容' },
+      ], summaryRows)}
+      <div class="note">空欄は未取得として扱います。未取得のまま点数へ混ぜません。</div>
+    </section>
+    <section>
+      <h2>2. 4社別の確認ポイント</h2>
+      ${table([
+        { key: 'ticker', label: '銘柄' },
+        { key: 'company', label: '会社名' },
+        { key: 'must_confirm', label: '確認する数字' },
+        { key: 'source_priority', label: '取得元候補' },
+        { key: 'reason_if_confirmed', label: '確認できた場合の説明' },
+        { key: 'caution', label: '注意点' },
+        { key: 'status', label: '状態' },
+      ], evidenceRows, 'wide')}
+    </section>
+    <section>
+      <h2>3. 数値入力テンプレート</h2>
+      ${table([
+        { key: 'ticker', label: '銘柄' },
+        { key: 'company', label: '会社名' },
+        { key: 'metric', label: '入力項目' },
+        { key: 'input_value', label: '入力値' },
+        { key: 'source_url_or_file', label: '出典' },
+        { key: 'use_in_score', label: '使い道' },
+        { key: 'decision_rule', label: '判定ルール' },
+      ], scoreInputRows, 'wide')}
+      <div class="actions">
+        <a href="595_top4_evidence_workbench_summary.csv">概要CSV</a>
+        <a href="596_top4_evidence_workbench.csv">4社確認CSV</a>
+        <a href="597_top4_score_input_template.csv">入力テンプレートCSV</a>
+        <a href="candidate_10_data_completion_board_20260527.html">10社補完表へ</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>`);
+
+fs.writeFileSync(path.join(ROOT, 'top4_evidence_workbench_20260527.html'), html, 'utf8');
+
+console.log(JSON.stringify({
+  generatedAt,
+  top4: top4.length,
+  inputRows: scoreInputRows.length,
+  output: 'top4_evidence_workbench_20260527.html',
+}, null, 2));
