@@ -24,6 +24,7 @@ const targetFiles = [
   'plus1_benchmark_connection_20260525.html',
   'event_causality_validation_20260525.html',
   'event_type_reaction_db_20260526.html',
+  'ipo_special_watch_corner_20260526.html',
   'june_forward_test_record_20260526.html',
   'semiconductor_structural_advantage_gate_20260526.html',
   'semiconductor_downside_resilience_20260526.html',

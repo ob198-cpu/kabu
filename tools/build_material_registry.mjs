@@ -29,6 +29,7 @@ const currentFiles = new Map([
   ['plus1_benchmark_connection_20260525.html', ['現行資料', '顧客説明に使用可', '+1%目標とベンチマーク比較を接続するページ。', '']],
   ['event_causality_validation_20260525.html', ['現行資料', '顧客説明に使用可', 'イベント名だけで加点しないための因果・複合条件ページ。', '']],
   ['event_type_reaction_db_20260526.html', ['現行資料', '顧客説明に使用可', 'イベント種類別に株価反応DBの有無、分類DB、未接続キューを分けるページ。', 'event_causality_validation_20260525.html']],
+  ['ipo_special_watch_corner_20260526.html', ['現行資料', '顧客説明に使用可', 'SpaceX、OpenAI級のIPO・未上場メガイベントを通常候補と分けて監視する特別枠ページ。', 'event_type_reaction_db_20260526.html']],
   ['june_forward_test_record_20260526.html', ['現行資料', '顧客説明に使用可', '6月イベント後の実績入力、候補別ゲート、予実差を記録するページ。', 'event_type_reaction_db_20260526.html']],
   ['semiconductor_structural_advantage_gate_20260526.html', ['現行資料', '顧客説明に使用可', '半導体・AI周辺の不可欠工程、高シェア、代替困難性を質的ゲートとして扱うページ。', 'june_forward_test_record_20260526.html']],
   ['semiconductor_downside_resilience_20260526.html', ['現行資料', '顧客説明に使用可', '半導体構造優位銘柄がSOX/NASDAQ/日経平均の下落局面で相対的に耐えたかを検証するページ。', 'semiconductor_structural_advantage_gate_20260526.html']],
@@ -101,6 +102,7 @@ const currentCsvPrefixes = [
   '354_', '355_', '356_', '357_', '358_',
   '359_', '360_', '361_', '362_', '363_', '364_',
   '365_', '366_', '367_', '368_', '369_', '370_',
+  '371_', '372_', '373_', '374_', '375_', '376_',
 ];
 
 function escCsv(value) {
