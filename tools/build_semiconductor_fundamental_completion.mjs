@@ -663,6 +663,7 @@ const html = `<!doctype html>
       <a href="index.html">トップ</a>
       <a href="semiconductor_quant_gate_connection_20260526.html">半導体 量的接続</a>
       <a href="semiconductor_downside_resilience_20260526.html">下落耐性</a>
+      <a href="semiconductor_june_recheck_checklist_20260526.html">6月再判定</a>
       <a href="ipo_special_watch_corner_20260526.html">IPO特別枠</a>
       <a href="current_vs_history_materials_20260525.html">資料一覧</a>
     </div>

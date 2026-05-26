@@ -30,6 +30,7 @@ const targetFiles = [
   'semiconductor_downside_resilience_20260526.html',
   'semiconductor_quant_gate_connection_20260526.html',
   'semiconductor_fundamental_completion_20260526.html',
+  'semiconductor_june_recheck_checklist_20260526.html',
 ];
 
 const phraseRules = [
@@ -266,9 +267,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '半導体構造本命を6月再判定チェックリストへ接続する',
-    reason: '東京エレクトロン・SCREENのPER/PBR/ROE・決算伸びは補完できたが、購入候補ではなく保留であるため、6月イベント後と次決算で何を見れば昇格/除外になるかを明文化する必要がある。',
-    output: '東京エレクトロン・SCREEN等の6月イベント後チェック条件、次決算確認項目、除外条件の一覧',
+    action: '6月イベント後の結果入力表へ実数を入れる',
+    reason: '半導体構造本命の再判定条件は固定できたため、次は6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後の実際の数値を入力して、昇格・保留・除外を記録する段階に進む。',
+    output: '387_semiconductor_recheck_input_template.csv の実績入力版と、6月一次判定ログ',
   },
 ];
 
@@ -436,6 +437,7 @@ const html = `<!doctype html>
       <a class="button" href="semiconductor_structural_advantage_gate_20260526.html">半導体構造優位ゲートへ</a>
       <a class="button" href="semiconductor_downside_resilience_20260526.html">半導体下落耐性検証へ</a>
       <a class="button" href="semiconductor_fundamental_completion_20260526.html">半導体決算・割高補完へ</a>
+      <a class="button" href="semiconductor_june_recheck_checklist_20260526.html">半導体6月再判定へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>
