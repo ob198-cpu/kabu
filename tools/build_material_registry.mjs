@@ -43,6 +43,7 @@ const currentFiles = new Map([
   ['candidate_10_priority_completion_20260526.html', ['現行資料', '顧客説明に使用可', '80社前後の母集団から10社テスト候補へ絞るための不足データ補完順と2日作業を示すページ。購入判断ではない。', 'candidate_data_completion_20260526.html']],
   ['june_test_10_selection_board_20260526.html', ['現行資料', '顧客説明に使用可', '6月イベント後に再判定する10社ワークボードを、先行観察・補完後候補・補完優先・補欠保留に分けるページ。購入判断ではない。', 'candidate_10_priority_completion_20260526.html']],
   ['candidate_10_completion_workbench_20260526.html', ['現行資料', '顧客説明に使用可', '10社に残る不足データを、埋める・待つ・仮説と実績を分ける作業単位へ分解するページ。購入判断ではない。', 'june_test_10_selection_board_20260526.html']],
+  ['candidate_10_event_evidence_workbench_20260526.html', ['現行資料', '顧客説明に使用可', '10社の時流イベント仮説を、イベント日・株価反応・指数比較で検証する実績層の作業台。仮説だけでは加点しない。', 'candidate_10_completion_workbench_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
@@ -121,6 +122,7 @@ const currentCsvPrefixes = [
   '412_', '413_', '414_', '415_', '416_', '417_',
   '418_', '419_', '420_', '421_',
   '422_', '423_', '424_', '425_', '426_',
+  '427_', '428_', '429_', '430_', '431_',
 ];
 
 function escCsv(value) {

@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 イベント実績層ワークベンチ</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --sky: #e8f4ff;
+      --green: #087a4d;
+      --red: #b42318;
+      --orange: #b65c00;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr);
+      gap: 20px;
+      align-items: center;
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.2;
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    h2 {
+      font-size: 24px;
+      color: var(--navy);
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    h3 { margin: 0 0 8px; color: var(--navy); }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .kpi {
+      background: white;
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid #c9def3;
+    }
+    .kpi b { display: block; color: var(--blue); font-size: 26px; line-height: 1; }
+    .kpi span { color: var(--muted); font-size: 12px; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 700;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .flow .step {
+      min-height: 96px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      border-radius: 12px;
+      padding: 10px;
+      position: relative;
+    }
+    .flow .step:not(:last-child)::after {
+      content: ">";
+      position: absolute;
+      right: -8px;
+      top: 36px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+    .step b { color: var(--blue); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      font-weight: 700;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .badge.red { color: var(--red); background: #fff1f1; border-color: #ffd1d1; }
+    .badge.green { color: var(--green); background: #edf9f3; border-color: #bce7d2; }
+    .badge.orange { color: var(--orange); background: #fff3e2; border-color: #ffd7a3; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table {
+      width: 100%;
+      min-width: 920px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      background: white;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th {
+      background: #e8f4ff;
+      color: #073b63;
+      font-weight: 800;
+    }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    .small { color: var(--muted); font-size: 13px; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    a.button, button.button, label.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    input[type="file"] { display: none; }
+    #csvPreview { margin-top: 12px; }
+    .formula {
+      background: #f7fafc;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      font-family: Consolas, "Yu Gothic", monospace;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .hero { grid-template-columns: 1fr; padding: 20px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .flow .step:not(:last-child)::after { display: none; }
+      table { min-width: 760px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <h1>候補10社 イベント実績層ワークベンチ</h1>
+        <p>質的データで「なぜ伸びるか」の仮説を作り、株価・指数・出来高の実績反応で検証するための作業台です。仮説は候補発見に使いますが、実績が入るまでは購入候補スコアへ加点しません。</p>
+        <div class="actions">
+          <a class="button" href="index.html">トップへ戻る</a>
+          <a class="button" href="june_test_10_selection_board_20260526.html">10社選定表</a>
+          <a class="button" href="428_candidate_10_event_evidence_input_template.csv">入力テンプレートCSV</a>
+        </div>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>10社</b><span>対象銘柄</span></div>
+<div class="kpi"><b>30件</b><span>イベント仮説</span></div>
+<div class="kpi"><b>0件</b><span>実績入力済み</span></div>
+<div class="kpi"><b>0点</b><span>今回の質的加点</span></div>
+<div class="kpi"><b>0社</b><span>購入判断</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      重要: 現時点ではイベント仮説の実績層が未入力です。したがって、質的データによる加点は0点、購入判断は0社です。
+    </div>
+
+    <section class="panel">
+      <h2>このページで行うこと</h2>
+      <div class="flow">
+        <div class="step"><b>1. 仮説</b><br>時流・ニュース・製品・政策から関連テーマを出す。</div>
+        <div class="step"><b>2. 銘柄</b><br>テーマに関係する候補10社へひも付ける。</div>
+        <div class="step"><b>3. 日付</b><br>イベント日と公式ソースを記録する。</div>
+        <div class="step"><b>4. 反応</b><br>1日・5日・20日の株価反応を入れる。</div>
+        <div class="step"><b>5. 比較</b><br>日経平均/TOPIX等を上回ったかを見る。</div>
+        <div class="step"><b>6. 判定</b><br>S〜Cで実績層を評価し、10社を再判定する。</div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="panel">
+        <h2>計算式</h2>
+        <div class="formula">
+          個別リターン = (イベント後株価 - イベント前株価) ÷ イベント前株価 × 100<br>
+          ベンチマークリターン = (イベント後指数 - イベント前指数) ÷ イベント前指数 × 100<br>
+          超過リターン = 個別リターン - ベンチマークリターン
+        </div>
+        <p class="small">市場全体が上がっただけの反応を、個別銘柄の実力として扱わないための式です。</p>
+      </div>
+      <div class="panel">
+        <h2>CSV読み込み確認</h2>
+        <p class="small">入力後のCSVをここへ読み込むと、件数と先頭行を確認できます。実績値が入っていないCSVは未判定のままです。</p>
+        <label class="button" for="csvFile">CSVを読み込む</label>
+        <input id="csvFile" type="file" accept=".csv,text/csv">
+        <div id="csvPreview" class="small">未読み込み</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>候補10社の実績層ステータス</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 110px;">銘柄</th>
+              <th style="width: 170px;">会社</th>
+              <th style="width: 120px;">区分</th>
+              <th style="width: 110px;">仮説件数</th>
+              <th style="width: 130px;">実績入力</th>
+              <th>次に必要な作業</th>
+              <th style="width: 130px;">判定</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr>
+                <td>6762.T</td>
+                <td>TDK</td>
+                <td>A 先行観察</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>2802.T</td>
+                <td>味の素</td>
+                <td>B 補完後候補</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>8766.T</td>
+                <td>東京海上HD</td>
+                <td>B 補完後候補</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>8316.T</td>
+                <td>三井住友FG</td>
+                <td>B 補完後候補</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>8306.T</td>
+                <td>三菱UFJ FG</td>
+                <td>B 補完後候補</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>6367.T</td>
+                <td>ダイキン工業</td>
+                <td>B 補完後候補</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>6503.T</td>
+                <td>三菱電機</td>
+                <td>B 補完後候補</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>5020.T</td>
+                <td>ENEOS HD</td>
+                <td>C 補完優先</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>6146.T</td>
+                <td>ディスコ</td>
+                <td>C 補完優先</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+
+              <tr>
+                <td>4385.T</td>
+                <td>メルカリ</td>
+                <td>D 補欠保留</td>
+                <td>3件</td>
+                <td>0 / 3</td>
+                <td>イベント日、公式ソース、株価1日/5日/20日、ベンチマーク反応を入力</td>
+                <td><span class="badge red">購入判断不可</span></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>イベント実績層 入力テンプレート</h2>
+      <p class="small">下表は入力対象の一部です。全件はCSVに出力しています。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 110px;">ID</th>
+              <th style="width: 110px;">銘柄</th>
+              <th style="width: 170px;">テーマ</th>
+              <th>質的シグナル</th>
+              <th>仮説層</th>
+              <th style="width: 170px;">比較対象</th>
+              <th style="width: 120px;">評価</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr>
+                <td>6762-01</td>
+                <td>6762.T</td>
+                <td>AIサーバー需要</td>
+                <td>データセンター増設、AIサーバー投資、電源部品需要</td>
+                <td>電子部品需要の増加が確認できれば追い風</td>
+                <td>日経平均 / TOPIX / 電子部品同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>6762-02</td>
+                <td>6762.T</td>
+                <td>為替・海外売上</td>
+                <td>円安、海外売上比率、材料費</td>
+                <td>円安は売上換算に追い風だが材料費上昇は逆風</td>
+                <td>日経平均 / ドル円</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>6762-03</td>
+                <td>6762.T</td>
+                <td>電池・磁性材料</td>
+                <td>EV、蓄電池、HDD/データセンター関連部品</td>
+                <td>AI周辺需要が電子部品の構造需要へ波及するか確認</td>
+                <td>日経平均 / 電子部品同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>2802-01</td>
+                <td>2802.T</td>
+                <td>食品値上げ耐性</td>
+                <td>食品価格、原材料価格、値上げ浸透</td>
+                <td>値上げ後も販売数量が崩れなければ利益率改善の可能性</td>
+                <td>TOPIX / 食品同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>2802-02</td>
+                <td>2802.T</td>
+                <td>ABF・ヘルスケア</td>
+                <td>半導体材料ABF、アミノ酸、ヘルスケア売上</td>
+                <td>高PERを正当化できる成長が続くか確認</td>
+                <td>TOPIX / 食品同業 / 半導体材料関連</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>2802-03</td>
+                <td>2802.T</td>
+                <td>円安・原材料</td>
+                <td>為替、穀物、物流費、エネルギー価格</td>
+                <td>原価上昇が利益を圧迫しないか確認</td>
+                <td>日経平均 / ドル円</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8766-01</td>
+                <td>8766.T</td>
+                <td>保険料率・金利</td>
+                <td>保険料改定、国内外金利、運用収益</td>
+                <td>金利上昇と保険料率改善が利益へつながるか確認</td>
+                <td>TOPIX / 保険同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8766-02</td>
+                <td>8766.T</td>
+                <td>自然災害・損害率</td>
+                <td>台風、豪雨、地震、損害率</td>
+                <td>大規模災害による損害率悪化を確認</td>
+                <td>TOPIX / 保険同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8766-03</td>
+                <td>8766.T</td>
+                <td>政策保有株売却</td>
+                <td>政策保有株売却、自己株買い、株主還元</td>
+                <td>資本効率改善が株価評価に反映されるか確認</td>
+                <td>TOPIX / 保険同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8316-01</td>
+                <td>8316.T</td>
+                <td>日銀・金利</td>
+                <td>日銀会合、長短金利、利ざや</td>
+                <td>金利上昇が利ざや改善につながるか確認</td>
+                <td>TOPIX / 銀行指数</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8316-02</td>
+                <td>8316.T</td>
+                <td>信用コスト</td>
+                <td>貸倒引当、景気悪化、企業倒産</td>
+                <td>利ざや改善を信用コストが相殺しないか確認</td>
+                <td>TOPIX / 銀行指数</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8316-03</td>
+                <td>8316.T</td>
+                <td>海外金利・為替</td>
+                <td>米金利、ドル円、海外事業</td>
+                <td>海外金利と為替が利益に与える影響を確認</td>
+                <td>TOPIX / ドル円</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8306-01</td>
+                <td>8306.T</td>
+                <td>日銀・金利</td>
+                <td>日銀会合、短期金利、長期金利</td>
+                <td>金利正常化が利ざや改善につながるか確認</td>
+                <td>TOPIX / 銀行指数</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8306-02</td>
+                <td>8306.T</td>
+                <td>海外金利・景気</td>
+                <td>米金利、海外融資、信用コスト</td>
+                <td>海外景気悪化時の下押しを確認</td>
+                <td>TOPIX / 銀行指数</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>8306-03</td>
+                <td>8306.T</td>
+                <td>株主還元</td>
+                <td>自社株買い、配当、資本効率</td>
+                <td>大型銀行の還元強化が評価されるか確認</td>
+                <td>TOPIX / 銀行指数</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>6367-01</td>
+                <td>6367.T</td>
+                <td>データセンター冷却</td>
+                <td>AIデータセンター、空調・冷却需要</td>
+                <td>AI電力・冷却需要が空調需要に波及するか確認</td>
+                <td>TOPIX / 機械同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>6367-02</td>
+                <td>6367.T</td>
+                <td>地域別空調需要</td>
+                <td>猛暑、住宅投資、商業施設投資</td>
+                <td>気候・設備投資が売上に反映されるか確認</td>
+                <td>TOPIX / 機械同業</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+
+              <tr>
+                <td>6367-03</td>
+                <td>6367.T</td>
+                <td>中国・為替</td>
+                <td>中国需要、欧米需要、ドル円</td>
+                <td>地域需要の弱さと円安効果の綱引きを確認</td>
+                <td>TOPIX / ドル円</td>
+                <td><span class="badge orange">未判定</span></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <a class="button" href="427_candidate_10_event_evidence_summary.csv">概要CSV</a>
+        <a class="button" href="428_candidate_10_event_evidence_input_template.csv">入力CSV</a>
+        <a class="button" href="429_candidate_10_event_rating_rules.csv">判定ルールCSV</a>
+        <a class="button" href="430_candidate_10_event_source_plan.csv">取得計画CSV</a>
+        <a class="button" href="431_candidate_10_event_evidence_operation.csv">運用手順CSV</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>S〜C判定ルール</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 90px;">評価</th>
+              <th>条件</th>
+              <th>使い方</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr>
+                <td><span class="badge green">S</span></td>
+                <td>1日・5日・20日の超過リターンが概ねプラスで、5日または20日が+3%以上。仮説方向とも一致。</td>
+                <td>候補維持を強く支持。ただし財務・割高・市場イベントゲートを別途通す。</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge green">A</span></td>
+                <td>5日または20日の超過リターンが+1%以上で、仮説方向と大きく矛盾しない。</td>
+                <td>候補維持を支持。追加確認を残す。</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge green">B</span></td>
+                <td>反応は中立、または1日だけ強く5日/20日で失速。</td>
+                <td>候補維持は可能だが、時流材料は弱い扱い。</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge red">C</span></td>
+                <td>超過リターンがマイナス、または仮説と逆方向の反応。</td>
+                <td>時流材料を根拠から外す。ほかの定量条件が弱ければ候補から外す。</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge orange">未判定</span></td>
+                <td>イベント日、株価、指数のいずれかが未入力。</td>
+                <td>スコアに入れない。説明資料では未検証として扱う。</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script>
+    const fileInput = document.getElementById('csvFile');
+    const preview = document.getElementById('csvPreview');
+
+    function parseCsv(text) {
+      if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+      const rows = [];
+      let row = [];
+      let cell = '';
+      let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const ch = text[i];
+        const next = text[i + 1];
+        if (quoted) {
+          if (ch === '"' && next === '"') {
+            cell += '"';
+            i += 1;
+          } else if (ch === '"') quoted = false;
+          else cell += ch;
+        } else if (ch === '"') quoted = true;
+        else if (ch === ',') {
+          row.push(cell);
+          cell = '';
+        } else if (ch === '\n') {
+          row.push(cell.replace(/\r$/, ''));
+          rows.push(row);
+          row = [];
+          cell = '';
+        } else cell += ch;
+      }
+      if (cell.length || row.length) rows.push([...row, cell.replace(/\r$/, '')]);
+      return rows.filter((items) => items.some((item) => String(item).trim() !== ''));
+    }
+
+    function escHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      }[ch]));
+    }
+
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      const text = await file.text();
+      const rows = parseCsv(text);
+      const headers = rows[0] || [];
+      const data = rows.slice(1);
+      const headHtml = headers.slice(0, 8).map((h) => `<th>${escHtml(h)}</th>`).join('');
+      const bodyHtml = data.slice(0, 5).map((items) => `<tr>${items.slice(0, 8).map((v) => `<td>${escHtml(v)}</td>`).join('')}</tr>`).join('');
+      preview.innerHTML = `
+        <p><b>${escHtml(file.name)}</b> を読み込みました。データ行: ${data.length}件、列: ${headers.length}列。</p>
+        <div class="table-wrap"><table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table></div>
+      `;
+    });
+  </script>
+</body>
+</html>

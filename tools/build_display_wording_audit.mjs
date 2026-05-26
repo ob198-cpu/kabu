@@ -38,6 +38,7 @@ const targetFiles = [
   'candidate_10_priority_completion_20260526.html',
   'june_test_10_selection_board_20260526.html',
   'candidate_10_completion_workbench_20260526.html',
+  'candidate_10_event_evidence_workbench_20260526.html',
 ];
 
 const phraseRules = [
