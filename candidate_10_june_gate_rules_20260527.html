@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 6月判定ルール 2026年5月27日</title>
+  <style>
+    :root { --ink:#061a33; --muted:#334155; --line:#c9d9ea; --bg:#f4f8fc; --navy:#0d3658; --blue:#0b6fa4; --soft:#eef7ff; --amber:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.72; letter-spacing:0; }
+    header { background:var(--navy); color:#fff; padding:34px clamp(18px,4vw,58px); }
+    h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); letter-spacing:0; }
+    header p { margin:0; color:#fff; font-weight:800; max-width:1120px; }
+    main { width:min(1260px, calc(100% - 32px)); margin:24px auto 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px; margin:18px 0; break-inside:avoid; }
+    h2 { margin:0 0 14px; padding-left:12px; border-left:8px solid var(--blue); font-size:24px; }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .metric { border:1px solid var(--line); border-radius:8px; padding:14px; background:var(--soft); min-height:120px; }
+    .metric span { display:block; color:var(--muted); font-weight:900; }
+    .metric strong { display:block; color:var(--blue); font-size:24px; line-height:1.35; }
+    .notice { border-left:8px solid var(--amber); background:#fff7ed; padding:14px; border-radius:8px; font-weight:900; color:#111827; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .button { display:inline-flex; align-items:center; min-height:38px; padding:8px 12px; border-radius:8px; border:1px solid #9cc8ec; background:#fff; color:var(--navy); text-decoration:none; font-weight:900; font-size:13px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+    table { width:100%; min-width:1120px; border-collapse:collapse; table-layout:fixed; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px; vertical-align:top; text-align:left; overflow-wrap:anywhere; word-break:break-word; color:#061a33; }
+    th { background:#e6f1fb; color:#073b63; font-weight:900; }
+    tr:last-child td { border-bottom:0; }
+    th:last-child,td:last-child { border-right:0; }
+    @media (max-width:900px) { .summary { grid-template-columns:1fr; } main { width:min(100% - 20px,1260px); } section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 6月判定ルール</h1>
+    <p>6月のCPI・日銀・FOMC・決算後20営業日反応を確認した後、残す・下げる・補完待ち・見送りを分けるルールです。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>目的</span>
+          <strong>6月の再判定を機械的に進める</strong>
+          <small>イベント後に感覚で判断せず、残す・下げる・補完待ち・見送りを条件で分ける。</small>
+        </div>
+        <div class="metric">
+          <span>重要方針</span>
+          <strong>質的材料は単独加点しない</strong>
+          <small>時流・イベント仮説は確認条件として使う。</small>
+        </div>
+        <div class="metric">
+          <span>+1%目標</span>
+          <strong>指数超過が弱ければ比率を下げる</strong>
+          <small>S&amp;P500、日経平均、TOPIXを1%以上上回る根拠が薄い場合、個別株比率を抑える。</small>
+        </div>
+      </div>
+      <p class="notice">このルールは再判定のための条件表です。日付前に購入を確定しません。</p>
+      <div class="toolbar">
+        <a class="button" href="545_candidate_10_june_gate_summary.csv">545 要約CSV</a>
+        <a class="button" href="546_candidate_10_june_market_gate_rules.csv">546 市場ゲートCSV</a>
+        <a class="button" href="547_candidate_10_june_stock_gate_rules.csv">547 銘柄ゲートCSV</a>
+        <a class="button" href="548_candidate_10_june_final_decision_rules.csv">548 最終分岐CSV</a>
+        <a class="button" href="candidate_10_june_decision_calendar_20260527.html">6月カレンダーへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>市場ゲート</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>確認対象</th><th>見る数値</th><th>進めやすい条件</th><th>注意条件</th><th>止める条件</th><th>対応</th></tr></thead>
+        <tbody>
+          <tr><td>米CPI</td><td>米5月CPI発表後の米10年金利、NASDAQ、SOX、ドル円</td><td>CPIが市場予想から大きく上振れず、米10年金利の急騰が限定的</td><td>CPIは高いが、株価指数が崩れず、金利上昇も一時的</td><td>CPI再加速と米10年金利急騰が同時に発生</td><td>赤なら個別株比率を下げ、半導体・高PER候補は再確認まで保留</td></tr><tr><td>日銀</td><td>政策金利、声明、国債買入れ、ドル円、銀行株、内需株</td><td>円相場が急変せず、銀行株・内需株が市場に大きく劣後しない</td><td>円高または銀行株の反応がまちまち</td><td>急な円高、銀行株の市場劣後、輸出・海外比率高い銘柄の急落</td><td>赤なら銀行・海外比率高い候補は比率を下げ、追加判断を延期</td></tr><tr><td>FOMC</td><td>政策金利、SEP、ドットプロット、米10年金利、NASDAQ、SOX</td><td>金利見通しが大きく悪化せず、NASDAQ/SOXが崩れない</td><td>金利は高止まりだが、株式市場の下落が限定的</td><td>ドットプロット悪化、米10年金利急騰、NASDAQ/SOXの大幅下落</td><td>赤なら半導体・成長株を保留し、守り寄り候補へ比重を移す</td></tr><tr><td>指数比較</td><td>S&amp;P500、日経平均、TOPIXに対して+1%以上上回れる見込み</td><td>候補群の相対強度が指数を上回り、下落耐性も悪化しない</td><td>候補群の優位性が小さい</td><td>指数連動投資を1%以上上回る根拠が弱い</td><td>赤なら個別株比率を下げ、指数・現金比率を上げる</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>銘柄ゲート</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>確認対象</th><th>残す条件</th><th>注意条件</th><th>下げる条件</th><th>対応</th></tr></thead>
+        <tbody>
+          <tr><td>20営業日反応</td><td>対日経平均の20営業日超過リターンが0%以上。主候補は+3%以上なら強い</td><td>-5%〜0%は理由確認。決算内容と市場全体の影響を分解</td><td>-5%以下、または弱い反応の理由が説明できない</td><td>Failは主候補から外し、比較枠または検算枠へ下げる</td></tr><tr><td>量的データ</td><td>PER、ROE、売上成長、利益成長、信頼度が説明可能</td><td>PER補助値や同業比較不足が残る</td><td>重要指標が未取得、または説明に耐えない</td><td>Failは候補確定に使わず、補完待ちへ戻す</td></tr><tr><td>質的材料</td><td>会社資料・セグメント数値・市場統計で仮説を確認できる</td><td>話題性はあるが数字への接続が弱い</td><td>質的材料だけで、売上・利益・受注・株価反応に接続できない</td><td>質的材料は単独加点せず、Failなら上限評価を下げる</td></tr><tr><td>下落リスク</td><td>決算後・市場イベント後も急落や指数劣後が限定的</td><td>短期過熱、PER高、出来高急増などがある</td><td>イベント後に急落、または高PER調整が継続</td><td>Failは購入候補ではなく観察候補に下げる</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>最終分岐</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>判定</th><th>条件</th><th>対応</th></tr></thead>
+        <tbody>
+          <tr><td>主候補維持</td><td>市場ゲートが赤でなく、量的データが説明可能、20営業日反応が悪化していない</td><td>6月再判定で候補に残す</td></tr><tr><td>比較枠へ下げる</td><td>数字は悪くないが、指数を1%以上上回る根拠が弱い、または反応が鈍い</td><td>購入候補ではなく比較対象として残す</td></tr><tr><td>補完待ち</td><td>PER、同業比較、公式値、決算後反応のどれかが説明に不足</td><td>数値がそろうまで候補確定に使わない</td></tr><tr><td>見送り</td><td>市場ゲート赤、20営業日反応Fail、質的仮説が数字で確認できない</td><td>NISA 1年保有テスト候補から外す</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>

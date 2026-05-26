@@ -63,7 +63,7 @@
 
       <div class="kpi">
         <small>監査対象HTML</small>
-        <b>87件</b>
+        <b>88件</b>
         <span>現行資料・現行補助・公開前チェックページを対象に確認。</span>
       </div>
 
@@ -276,6 +276,15 @@
           </tr>
 
           <tr>
+            <td><a href="candidate_10_june_gate_rules_20260527.html">candidate_10_june_gate_rules_20260527.html</a></td>
+            <td>現行資料または現行補助として台帳に登録</td>
+            <td>5</td>
+            <td>0</td>
+            <td>0</td>
+            <td><span class="badge ok">公開可</span></td>
+          </tr>
+
+          <tr>
             <td><a href="candidate_10_missing_event_reaction_connect_20260526.html">candidate_10_missing_event_reaction_connect_20260526.html</a></td>
             <td>現行資料または現行補助として台帳に登録</td>
             <td>0</td>
@@ -476,7 +485,7 @@
           <tr>
             <td><a href="current_vs_history_materials_20260525.html">current_vs_history_materials_20260525.html</a></td>
             <td>現行資料または現行補助として台帳に登録</td>
-            <td>0</td>
+            <td>1</td>
             <td>0</td>
             <td>0</td>
             <td><span class="badge ok">公開可</span></td>
@@ -593,7 +602,7 @@
           <tr>
             <td><a href="index.html">index.html</a></td>
             <td>現行資料または現行補助として台帳に登録</td>
-            <td>47</td>
+            <td>48</td>
             <td>0</td>
             <td>22</td>
             <td><span class="badge warn">人間確認後に公開可</span></td>
@@ -1094,6 +1103,56 @@
             <td><span class="badge ok">許容</span></td>
             <td>補10社 イベント実績層ワークベンチ 質的データで「なぜ伸びるか」の仮説を作り、株価・指数・出来高の実績反応で検証するための作業台です。仮説は候補発見に使いますが、実績が入るまでは購入候補スコアへ加点しません。</td>
             <td>検証候補 / 確認対象</td>
+          </tr>
+
+          <tr>
+            <td>candidate_10_june_gate_rules_20260527.html</td>
+            <td>36</td>
+            <td>R14</td>
+            <td>見送り</td>
+            <td><span class="badge ok">許容</span></td>
+            <td>候補10社 6月判定ルール 6月のCPI・日銀・FOMC・決算後20営業日反応を確認した後、残す・下げる・補完待ち・見送りを分けるルールです。</td>
+            <td>保留 / 除外 / 待機</td>
+          </tr>
+
+          <tr>
+            <td>candidate_10_june_gate_rules_20260527.html</td>
+            <td>46</td>
+            <td>R14</td>
+            <td>見送り</td>
+            <td><span class="badge ok">許容</span></td>
+            <td>6月の再判定を機械的に進める イベント後に感覚で判断せず、残す・下げる・補完待ち・見送りを条件で分ける。</td>
+            <td>保留 / 除外 / 待機</td>
+          </tr>
+
+          <tr>
+            <td>candidate_10_june_gate_rules_20260527.html</td>
+            <td>89</td>
+            <td>R09</td>
+            <td>購入候補</td>
+            <td><span class="badge ok">許容</span></td>
+            <td>lなら上限評価を下げる 下落リスク 決算後・市場イベント後も急落や指数劣後が限定的 短期過熱、PER高、出来高急増などがある イベント後に急落、または高PER調整が継続 Failは購入候補ではなく観察候補に下げる</td>
+            <td>検証候補 / 確認対象</td>
+          </tr>
+
+          <tr>
+            <td>candidate_10_june_gate_rules_20260527.html</td>
+            <td>102</td>
+            <td>R09</td>
+            <td>購入候補</td>
+            <td><span class="badge ok">許容</span></td>
+            <td>ゲートが赤でなく、量的データが説明可能、20営業日反応が悪化していない 6月再判定で候補に残す 比較枠へ下げる 数字は悪くないが、指数を1%以上上回る根拠が弱い、または反応が鈍い 購入候補ではなく比較対象として残す 補完待ち PER、同業比較、公式値、決算後反応のどれかが説明に不足 数値がそろうまで候補確定に使わない 見送り 市場ゲート赤、20営業日反応Fail、質的仮説が数字で確認できない NISA 1年保有テスト候補から外す</td>
+            <td>検証候補 / 確認対象</td>
+          </tr>
+
+          <tr>
+            <td>candidate_10_june_gate_rules_20260527.html</td>
+            <td>102</td>
+            <td>R14</td>
+            <td>見送り</td>
+            <td><span class="badge ok">許容</span></td>
+            <td>以上上回る根拠が弱い、または反応が鈍い 購入候補ではなく比較対象として残す 補完待ち PER、同業比較、公式値、決算後反応のどれかが説明に不足 数値がそろうまで候補確定に使わない 見送り 市場ゲート赤、20営業日反応Fail、質的仮説が数字で確認できない NISA 1年保有テスト候補から外す</td>
+            <td>保留 / 除外 / 待機</td>
           </tr>
 
           <tr>
@@ -2054,6 +2113,16 @@
             <td><span class="badge ok">許容</span></td>
             <td>、13万円、26万円のどれかに分岐する 5 イベント判定CSV確認 event_decision_record_viewer.html 判定CSVを読み込み、矛盾がないか確認する 買う/見送る理由を記録できる 6 NISA 1年保有 ベンチマーク評価 benchmark_review_dashboard.html 購入後の価格、配当、ベンチマーク値を入力する ベンチマーク+1%ポイントを超えたか判定できる 7 モデル改善・予実差レビュー model_improvement_das</td>
             <td>開始する / 投入する / 検討する</td>
+          </tr>
+
+          <tr>
+            <td>current_vs_history_materials_20260525.html</td>
+            <td>269</td>
+            <td>R14</td>
+            <td>見送り</td>
+            <td><span class="badge ok">許容</span></td>
+            <td>顧客説明に使用可 6月の市場イベントと決算後反応を確認した後、残す・下げる・補完待ち・見送りを分ける条件表。投資実行判断ではない。 candidate_10_june_decision_calendar_20260527.html</td>
+            <td>保留 / 除外 / 待機</td>
           </tr>
 
           <tr>
@@ -8608,7 +8677,17 @@
 
           <tr>
             <td>index.html</td>
-            <td>2040</td>
+            <td>1966</td>
+            <td>R14</td>
+            <td>見送り</td>
+            <td><span class="badge ok">許容</span></td>
+            <td>16-13. 候補10社 6月判定ルール 6月のイベントと決算後反応を確認した後、残す・下げる・補完待ち・見送りを分ける条件表です。</td>
+            <td>保留 / 除外 / 待機</td>
+          </tr>
+
+          <tr>
+            <td>index.html</td>
+            <td>2051</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8618,7 +8697,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>2058</td>
+            <td>2069</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8628,7 +8707,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>2256</td>
+            <td>2267</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8638,7 +8717,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>2514</td>
+            <td>2525</td>
             <td>R12</td>
             <td>売買判断</td>
             <td><span class="badge ok">許容</span></td>
@@ -8648,7 +8727,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>2628</td>
+            <td>2639</td>
             <td>R11</td>
             <td>買う</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8658,7 +8737,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>2762</td>
+            <td>2773</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8668,7 +8747,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3019</td>
+            <td>3030</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8678,7 +8757,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3055</td>
+            <td>3066</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8688,7 +8767,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3286</td>
+            <td>3297</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8698,7 +8777,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3306</td>
+            <td>3317</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8708,7 +8787,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3312</td>
+            <td>3323</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8718,7 +8797,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3323</td>
+            <td>3334</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8728,7 +8807,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3324</td>
+            <td>3335</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8738,7 +8817,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3327</td>
+            <td>3338</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8748,7 +8827,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3328</td>
+            <td>3339</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8758,7 +8837,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3329</td>
+            <td>3340</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8768,7 +8847,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3342</td>
+            <td>3353</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8778,7 +8857,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3350</td>
+            <td>3361</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8788,7 +8867,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3373</td>
+            <td>3384</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8798,7 +8877,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3374</td>
+            <td>3385</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8808,7 +8887,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3377</td>
+            <td>3388</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8818,7 +8897,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3380</td>
+            <td>3391</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8828,7 +8907,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3525</td>
+            <td>3536</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8838,7 +8917,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3540</td>
+            <td>3551</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8848,7 +8927,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3633</td>
+            <td>3644</td>
             <td>R12</td>
             <td>売買判断</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8858,7 +8937,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3803</td>
+            <td>3814</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8868,7 +8947,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3961</td>
+            <td>3972</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8878,7 +8957,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3975</td>
+            <td>3986</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8888,7 +8967,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3982</td>
+            <td>3993</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8898,7 +8977,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3989</td>
+            <td>4000</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8908,7 +8987,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3995</td>
+            <td>4006</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8918,7 +8997,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>3996</td>
+            <td>4007</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8928,7 +9007,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4030</td>
+            <td>4041</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8938,7 +9017,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4034</td>
+            <td>4045</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge ok">許容</span></td>
@@ -8948,7 +9027,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4085</td>
+            <td>4096</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8958,7 +9037,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4122</td>
+            <td>4133</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8968,7 +9047,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4228</td>
+            <td>4239</td>
             <td>R14</td>
             <td>見送り</td>
             <td><span class="badge warn">要確認</span></td>
@@ -8978,7 +9057,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4267</td>
+            <td>4278</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8988,7 +9067,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4335</td>
+            <td>4346</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge ok">許容</span></td>
@@ -8998,7 +9077,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4342</td>
+            <td>4353</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -9008,7 +9087,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4343</td>
+            <td>4354</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -9018,7 +9097,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4395</td>
+            <td>4406</td>
             <td>R11</td>
             <td>買う</td>
             <td><span class="badge ok">許容</span></td>
@@ -9028,7 +9107,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4691</td>
+            <td>4702</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -9038,7 +9117,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4705</td>
+            <td>4716</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -9048,7 +9127,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4712</td>
+            <td>4723</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -9058,7 +9137,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4726</td>
+            <td>4737</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -9068,7 +9147,7 @@
 
           <tr>
             <td>index.html</td>
-            <td>4729</td>
+            <td>4740</td>
             <td>R13</td>
             <td>購入検討</td>
             <td><span class="badge warn">要確認</span></td>
@@ -10176,7 +10255,7 @@
 
       </tbody>
     </table>
-    <p class="note">作成日: 2026/05/27 01:55</p>
+    <p class="note">作成日: 2026/05/27 01:58</p>
   </div>
 </main>
 </body>
