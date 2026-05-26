@@ -1,0 +1,8 @@
+﻿order,title,url,purpose
+1,本日説明用 10社選出根拠,candidate_10_presentation_brief_20260527.html,最初に見せる資料。結論、選定方法、10社の強弱、確認条件を説明する。
+2,本日説明用 Q&A,candidate_10_presentation_qa_20260527.html,突っ込まれやすい質問への回答。購入確定ではないこと、質的加点ではないことを説明する。
+3,本日説明用 トークスクリプト,candidate_10_talk_script_20260527.html,5分程度で説明するための読み上げ文とLINE報告文。
+4,質的テーマ×銘柄 接続表,qualitative_theme_stock_bridge_20260527.html,各銘柄がどの時流テーマに接続しているかを確認する。
+5,質的アイデア地図,qualitative_idea_map_20260527.html,半導体、電力、金利、為替などの質的アイデア全体を見る。
+6,テーマ別候補拡張キュー,theme_expansion_queue_20260527.html,10社の次に100社前後へ広げる作業計画を示す。
+7,量的×質的 統合候補判定,dual_axis_integrated_selection_20260527.html,質的テーマを加点せず、弱い評価を上限にする計算ルールを確認する。
