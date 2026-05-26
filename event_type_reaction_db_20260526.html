@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>イベント種類別 株価反応DB 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #111;
+      --blue: #073a5a;
+      --line: #bed3e5;
+      --bg: #f5f8fb;
+      --card: #fff;
+      --ok: #eaf7ef;
+      --warn: #fff5df;
+      --stop: #fdecec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px 18px 56px; }
+    h1 { margin: 0 0 8px; color: var(--blue); font-size: 30px; }
+    h2 { margin: 30px 0 12px; padding-left: 10px; border-left: 8px solid #0b6f9f; color: var(--blue); }
+    .lead, .card, .kpi {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 9px rgba(0,40,80,.06);
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid #9fc1db;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .kpi small { display: block; color: #38536b; font-weight: 700; }
+    .kpi b { display: block; color: var(--blue); font-size: 24px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      font-size: 13px;
+      color: #111;
+      overflow-wrap: anywhere;
+    }
+    th { background: #e4f1fa; color: var(--blue); }
+    .badge {
+      display: inline-block;
+      min-width: 86px;
+      text-align: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .ok { background: var(--ok); color: #007a3d; }
+    .warn { background: var(--warn); color: #8a5200; }
+    .stop { background: var(--stop); color: #b00020; }
+    .note { color: #333; font-size: 13px; }
+    @media (max-width: 1000px) { .kpis { grid-template-columns: 1fr; } }
+    @media print {
+      body { background: #fff; }
+      .lead, .card, .kpi { break-inside: avoid; page-break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>イベント種類別 株価反応DB</h1>
+  <div class="lead">
+    <p><b>目的:</b> TOB、自社株買い、上方修正、FOMC、日銀、CPIなど、株価に影響しやすいイベントを同じ基準で管理し、実績反応があるものと仮説段階のものを分けます。</p>
+    <p><b>結論:</b> 現時点で株価反応DBとして使えるのは、FOMC・日銀会合を含む金利系イベントです。企業イベントはTDnet分類の母数はあるため、次は株価時系列と結合します。</p>
+    <div class="toolbar">
+      <a class="button" href="343_event_type_reaction_db_summary.csv">343 要約CSV</a>
+      <a class="button" href="344_event_type_reaction_database.csv">344 イベントDB CSV</a>
+      <a class="button" href="345_event_type_reaction_gap_queue.csv">345 未接続キューCSV</a>
+      <a class="button" href="346_event_type_score_policy.csv">346 スコア方針CSV</a>
+      <a class="button" href="347_event_type_reaction_sources.csv">347 取得元CSV</a>
+      <a class="button" href="event_causality_validation_20260525.html">イベント因果チェックへ</a>
+      <a class="button" href="candidate_data_completion_20260526.html">候補10社データ補完へ</a>
+      <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+
+      <div class="kpi">
+        <small>管理イベント種類</small>
+        <b>19種類</b>
+        <span>既知の株価影響イベント16種に、決算短信・月次・株式分割を追加。</span>
+      </div>
+
+      <div class="kpi">
+        <small>株価反応DBあり</small>
+        <b>1種類</b>
+        <span>現時点で30件以上のイベント後リターンを持つイベント種別。</span>
+      </div>
+
+      <div class="kpi">
+        <small>分類DBあり</small>
+        <b>5種類</b>
+        <span>TDnet分類はあるが、株価反応との結合が必要なイベント種別。</span>
+      </div>
+
+      <div class="kpi">
+        <small>イベント後リターン明細</small>
+        <b>130件</b>
+        <span>DB上の明細件数。重複用途を避けるため総合件数は128件として管理。</span>
+      </div>
+
+      <div class="kpi">
+        <small>TDnet分類済み</small>
+        <b>200件</b>
+        <span>企業イベントの分類母数。次工程で株価時系列と結合する。</span>
+      </div>
+
+      <div class="kpi">
+        <small>未接続キュー</small>
+        <b>18件</b>
+        <span>株価反応DBに上げるために追加作業が必要なイベント種別。</span>
+      </div>
+
+  </div>
+
+  <h2>1. イベント種類別DB</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:18%">イベント種類</th><th style="width:9%">強度</th><th style="width:14%">現証拠</th><th style="width:9%">反応件数</th><th style="width:9%">TDnet分類</th><th style="width:9%">5日超過</th><th style="width:9%">20日超過</th><th>現在の使い方</th><th>次作業</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>TOB/MBO/買収</td>
+            <td>S</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>0</td>
+            <td>25</td>
+            <td></td>
+            <td></td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+          </tr>
+
+          <tr>
+            <td>上方修正/下方修正</td>
+            <td>S</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>0</td>
+            <td>10</td>
+            <td></td>
+            <td></td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+          </tr>
+
+          <tr>
+            <td>大型自社株買い/増配</td>
+            <td>A</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>0</td>
+            <td>50</td>
+            <td></td>
+            <td></td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+          </tr>
+
+          <tr>
+            <td>新商品/新サービス</td>
+            <td>S-A</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>大型契約/受注/提携</td>
+            <td>S-A</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>0</td>
+            <td>25</td>
+            <td></td>
+            <td></td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+          </tr>
+
+          <tr>
+            <td>臨床試験/承認/薬価</td>
+            <td>A-S</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>金利/FOMC/日銀</td>
+            <td>A</td>
+            <td><span class="badge ok">A: 株価反応DBあり</span></td>
+            <td>128</td>
+            <td>0</td>
+            <td>-0.41</td>
+            <td>-1.66</td>
+            <td>市場ゲート、セクター感応度、確認優先度に使用可。ただし銘柄固有判断には個別データを併用。</td>
+            <td>候補10社への銘柄別感応度を増やす。FOMC/日銀以外のCPI・為替イベントを追加。</td>
+          </tr>
+
+          <tr>
+            <td>CPI/PPI/雇用統計</td>
+            <td>A</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>マクロゲートとして手動/別系列で確認。銘柄点への直接加点はしない。</td>
+            <td>イベント日カレンダーと対象系列を作成し、株価時系列と結合。</td>
+          </tr>
+
+          <tr>
+            <td>為替急変</td>
+            <td>A</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>マクロゲートとして手動/別系列で確認。銘柄点への直接加点はしない。</td>
+            <td>イベント日カレンダーと対象系列を作成し、株価時系列と結合。</td>
+          </tr>
+
+          <tr>
+            <td>原油/ナフサ/商品価格</td>
+            <td>A</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>マクロゲートとして手動/別系列で確認。銘柄点への直接加点はしない。</td>
+            <td>イベント日カレンダーと対象系列を作成し、株価時系列と結合。</td>
+          </tr>
+
+          <tr>
+            <td>戦争/停戦/地政学</td>
+            <td>A-S</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>大型スポーツイベント/万博/BIGイベント</td>
+            <td>B-A</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>AI/半導体/データセンター投資</td>
+            <td>A-S</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>ビットコイン急落/急騰</td>
+            <td>B-A</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>規制/補助金/国策</td>
+            <td>A-S</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>自然災害/災害対策</td>
+            <td>A</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>決算短信/業績発表</td>
+            <td>S-A</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>0</td>
+            <td>108</td>
+            <td></td>
+            <td></td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+          </tr>
+
+          <tr>
+            <td>月次業績</td>
+            <td>B-A</td>
+            <td><span class="badge stop">C: 少数分類のみ</span></td>
+            <td>0</td>
+            <td>4</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+          <tr>
+            <td>株式分割</td>
+            <td>B</td>
+            <td><span class="badge stop">C: 少数分類のみ</span></td>
+            <td>0</td>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2. 未接続キュー</h2>
+  <div class="card">
+    <p class="note">B以下は、イベント名だけで点数に足しません。株価反応DBへ上げるには、イベント日、対象銘柄、比較指数、1日/5日/20日超過リターンを結合します。</p>
+    <table>
+      <thead><tr><th style="width:20%">イベント種類</th><th style="width:18%">現在の段階</th><th style="width:8%">優先</th><th>足りない作業</th><th>スコア方針</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>TOB/MBO/買収</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>高</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+          </tr>
+
+          <tr>
+            <td>上方修正/下方修正</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>高</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+          </tr>
+
+          <tr>
+            <td>大型自社株買い/増配</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>高</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+          </tr>
+
+          <tr>
+            <td>新商品/新サービス</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>高</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>大型契約/受注/提携</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>高</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+          </tr>
+
+          <tr>
+            <td>臨床試験/承認/薬価</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>中</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>CPI/PPI/雇用統計</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>高</td>
+            <td>イベント日カレンダーと対象系列を作成し、株価時系列と結合。</td>
+            <td>マクロゲートとして手動/別系列で確認。銘柄点への直接加点はしない。</td>
+          </tr>
+
+          <tr>
+            <td>為替急変</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>高</td>
+            <td>イベント日カレンダーと対象系列を作成し、株価時系列と結合。</td>
+            <td>マクロゲートとして手動/別系列で確認。銘柄点への直接加点はしない。</td>
+          </tr>
+
+          <tr>
+            <td>原油/ナフサ/商品価格</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>高</td>
+            <td>イベント日カレンダーと対象系列を作成し、株価時系列と結合。</td>
+            <td>マクロゲートとして手動/別系列で確認。銘柄点への直接加点はしない。</td>
+          </tr>
+
+          <tr>
+            <td>戦争/停戦/地政学</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>中</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>大型スポーツイベント/万博/BIGイベント</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>中</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>AI/半導体/データセンター投資</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>高</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>ビットコイン急落/急騰</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>中</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>規制/補助金/国策</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>高</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>自然災害/災害対策</td>
+            <td><span class="badge stop">D: 仮説/分類のみ</span></td>
+            <td>中</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>決算短信/業績発表</td>
+            <td><span class="badge warn">B: 分類DBあり・株価反応未結合</span></td>
+            <td>高</td>
+            <td>TDnet分類済みイベントを株価時系列と結合し、1日/5日/20日超過リターンを計算。</td>
+            <td>候補発見と確認優先度まで。株価反応を結合するまで本体スコアへ直接加点しない。</td>
+          </tr>
+
+          <tr>
+            <td>月次業績</td>
+            <td><span class="badge stop">C: 少数分類のみ</span></td>
+            <td>中</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td>株式分割</td>
+            <td><span class="badge stop">C: 少数分類のみ</span></td>
+            <td>中</td>
+            <td>公式イベント日、対象銘柄、比較指数を定義してから反応計算へ進める。</td>
+            <td>仮説発見のみ。量的データ、決算、株価反応で検証するまでスコアへ混ぜない。</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. スコア方針と取得元</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th style="width:22%">段階</th><th>使う範囲</th><th>使わない範囲</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td><b>A: 株価反応DBあり</b></td>
+            <td>市場ゲート・セクター感応度・確認優先度に使用可。</td>
+            <td>銘柄固有の購入根拠として単独使用しない。</td>
+          </tr>
+
+          <tr>
+            <td><b>B: 分類DBあり・株価反応未結合</b></td>
+            <td>調査対象の優先順位、確認キュー、資料検索に使う。</td>
+            <td>本体スコアへ直接加点しない。</td>
+          </tr>
+
+          <tr>
+            <td><b>C: 少数分類のみ</b></td>
+            <td>事例候補として保存し、件数を増やす。</td>
+            <td>有利不利の結論にしない。</td>
+          </tr>
+
+          <tr>
+            <td><b>D: 仮説/分類のみ</b></td>
+            <td>テーマ発見と仮説メモまで。</td>
+            <td>購入検討用スコア、+1%期待値、勝率に混ぜない。</td>
+          </tr>
+
+          <tr>
+            <td><b>イベントDBの合格ライン</b></td>
+            <td>同一イベント種別で30件以上、かつ1日/5日/20日超過リターンを確認できる状態。</td>
+            <td>30件未満の平均値を強い統計根拠として扱わない。</td>
+          </tr>
+
+      </tbody>
+    </table>
+    <table style="margin-top:14px">
+      <thead><tr><th style="width:28%">取得元</th><th style="width:10%">件数</th><th>役割</th><th>限界</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>37_event_return_detail.csv</td>
+            <td>130</td>
+            <td>イベント日と株価を結合した明細。FOMC/日銀会合が中心。</td>
+            <td>企業イベントの株価反応はまだ少ない。</td>
+          </tr>
+
+          <tr>
+            <td>307_event_type_backtest_summary.csv</td>
+            <td>3</td>
+            <td>イベント種別ごとの平均超過リターン。</td>
+            <td>FOMC/日銀は統計参考、その他は件数不足。</td>
+          </tr>
+
+          <tr>
+            <td>39_tdnet_action_classification.csv</td>
+            <td>200</td>
+            <td>TDnet直近開示をイベント分類した表。</td>
+            <td>分類済みだが、株価時系列との結合は未完了。</td>
+          </tr>
+
+          <tr>
+            <td>268_known_stock_impact_event_types.csv</td>
+            <td>16</td>
+            <td>株価に影響しやすいイベント種類の分類表。</td>
+            <td>分類は仮説であり、株価反応DBとの接続が必要。</td>
+          </tr>
+
+          <tr>
+            <td>315_candidate_causality_gate.csv</td>
+            <td>10</td>
+            <td>候補10社へのイベント因果ゲート。</td>
+            <td>多くの銘柄はイベント後リターン/複合条件が未接続。</td>
+          </tr>
+
+      </tbody>
+    </table>
+    <p class="note">作成日時: 2026/05/26 11:04</p>
+  </div>
+</main>
+</body>
+</html>

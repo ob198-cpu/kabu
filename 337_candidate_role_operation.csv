@@ -1,4 +1,4 @@
 ﻿updated_at,step,operation,command,output
-2026/05/26 10:24,1,候補表現を検出,node tools/build_candidate_role_wording.mjs,333〜337 CSVとHTMLを生成
-2026/05/26 10:24,2,強い表現を確認,333_candidate_role_rules.csv / 334_candidate_role_findings.csv,購入・保有に見える語と、役割付けが必要な語を分ける
-2026/05/26 10:24,3,公開前チェックへ接続,node tools/build_prepublish_wording_check.mjs,新規ページも文言チェック対象へ入れる
+2026/05/26 11:04,1,候補表現を検出,node tools/build_candidate_role_wording.mjs,333〜337 CSVとHTMLを生成
+2026/05/26 11:04,2,強い表現を確認,333_candidate_role_rules.csv / 334_candidate_role_findings.csv,購入・保有に見える語と、役割付けが必要な語を分ける
+2026/05/26 11:04,3,公開前チェックへ接続,node tools/build_prepublish_wording_check.mjs,新規ページも文言チェック対象へ入れる
