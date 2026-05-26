@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 現時点データ接続状況</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --muted: #4d6178;
+      --line: #c8d9ea;
+      --soft: #eef6ff;
+      --blue: #0b66a0;
+      --green: #087f5b;
+      --amber: #b45309;
+      --red: #b42318;
+      --bg: #f6f9fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #052c50, #0b668d);
+      color: #fff;
+      padding: 34px clamp(18px, 4vw, 58px);
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; color: #eaf5ff; font-weight: 800; max-width: 980px; }
+    main { width: min(1220px, calc(100% - 32px)); margin: 24px auto 56px; }
+    section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin: 18px 0;
+      break-inside: avoid;
+    }
+    h2 {
+      margin: 0 0 14px;
+      padding-left: 12px;
+      border-left: 8px solid var(--blue);
+      font-size: 24px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--soft);
+      min-height: 110px;
+    }
+    .metric strong { display: block; font-size: 26px; color: var(--blue); }
+    .notice {
+      border-left: 8px solid var(--amber);
+      background: #fff7ed;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 900;
+    }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1120px; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px;
+      text-align: left;
+      vertical-align: top;
+      color: var(--ink);
+      word-break: break-word;
+    }
+    th { background: #e6f1fb; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    .ok { color: var(--green); font-weight: 900; }
+    .pending { color: var(--amber); font-weight: 900; }
+    .gap { color: var(--red); font-weight: 900; }
+    @media (max-width: 860px) {
+      .summary { grid-template-columns: 1fr; }
+      main { width: min(100% - 20px, 1220px); }
+      section { padding: 16px; }
+    }
+    @media print {
+      body { background: #fff; }
+      section { break-inside: avoid; }
+      .table-wrap { overflow: visible; }
+      table { min-width: 0; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 現時点データ接続状況</h1>
+    <p>既存CSVに入っている実データを候補10社へ接続し、使える数値と未完了の数値を分けた表です。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+        <div class="metric"><span>対象銘柄</span><strong>10社</strong><small>候補10社すべて</small></div>
+        <div class="metric"><span>量的比較に使用可</span><strong>10社</strong><small>主要項目が高めに接続済み</small></div>
+        <div class="metric"><span>追加補完</span><strong>10社</strong><small>不足項目を明示</small></div>
+        <div class="metric"><span>購入判断</span><strong>0社</strong><small>6月イベント後に別判定</small></div>
+      </div>
+      <p class="notice">ここで「使用可」としているのは、候補比較の材料として使えるという意味です。購入判断、推奨、実行指示ではありません。</p>
+    </section>
+
+    <section>
+      <h2>銘柄別データ接続表</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>順位</th><th>銘柄</th><th>量的評価</th><th>NISA点</th><th>信頼度</th><th>PER</th><th>PBR</th><th>ROE</th><th>売上成長</th><th>利益成長</th><th>1年騰落</th><th>60日最大下落</th><th>決算後反応</th><th>入力率</th><th>残課題</th><th>現時点の扱い</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>1</td>
+              <td>6762.T TDK</td>
+              <td>A</td>
+              <td>60.7</td>
+              <td>100</td>
+              <td class="ok">26.7</td>
+              <td>2.75</td>
+              <td>9.81%</td>
+              <td>13.6%</td>
+              <td>21.5%</td>
+              <td>105.9%</td>
+              <td>-20%</td>
+              <td class="pending">反応スコアのみ接続</td>
+              <td>100%</td>
+              <td>決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>2802.T 味の素</td>
+              <td>B</td>
+              <td>67.8</td>
+              <td>95</td>
+              <td class="ok">43.73</td>
+              <td>6.81</td>
+              <td>17.75%</td>
+              <td>3.5%</td>
+              <td>75%</td>
+              <td>57.1%</td>
+              <td>-15.9%</td>
+              <td class="pending">1日/5日まで接続済み</td>
+              <td>100%</td>
+              <td>業種中央値 / 決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>8766.T 東京海上HD</td>
+              <td>B</td>
+              <td>65.4</td>
+              <td>100</td>
+              <td class="ok">17.61</td>
+              <td>2.7</td>
+              <td>18.68%</td>
+              <td>5.1%</td>
+              <td>-7.6%</td>
+              <td>37.7%</td>
+              <td>-13%</td>
+              <td class="pending">未接続</td>
+              <td>100%</td>
+              <td>決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>8316.T 三井住友FG</td>
+              <td>B</td>
+              <td>65.1</td>
+              <td>95</td>
+              <td class="ok">13.61</td>
+              <td>1.47</td>
+              <td>10.38%</td>
+              <td>6.1%</td>
+              <td>34%</td>
+              <td>69.9%</td>
+              <td>-18.3%</td>
+              <td class="pending">1日/5日まで接続済み</td>
+              <td>100%</td>
+              <td>決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>8306.T 三菱UFJ FG</td>
+              <td>C</td>
+              <td>62.1</td>
+              <td>92</td>
+              <td class="gap">未取得</td>
+              <td>1.56</td>
+              <td>11.34%</td>
+              <td>7.3%</td>
+              <td>27.7%</td>
+              <td>56.8%</td>
+              <td>-14.8%</td>
+              <td class="pending">反応スコアのみ接続</td>
+              <td>86%</td>
+              <td>PER / 決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>6367.T ダイキン工業</td>
+              <td>C</td>
+              <td>52.6</td>
+              <td>100</td>
+              <td class="ok">24.97</td>
+              <td>2.14</td>
+              <td>9.1%</td>
+              <td>5.5%</td>
+              <td>3.3%</td>
+              <td>49.6%</td>
+              <td>-9.3%</td>
+              <td class="pending">未接続</td>
+              <td>100%</td>
+              <td>決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>6503.T 三菱電機</td>
+              <td>C</td>
+              <td>55.6</td>
+              <td>95</td>
+              <td class="ok">26.09</td>
+              <td>2.76</td>
+              <td>9.67%</td>
+              <td>6.8%</td>
+              <td>10.5%</td>
+              <td>108.2%</td>
+              <td>-16.8%</td>
+              <td class="pending">1日/5日まで接続済み</td>
+              <td>100%</td>
+              <td>決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>5020.T ENEOS HD</td>
+              <td>C</td>
+              <td>64.3</td>
+              <td>95</td>
+              <td class="ok">8.36</td>
+              <td>1.03</td>
+              <td>8.00%</td>
+              <td>-4.5%</td>
+              <td>339.8%</td>
+              <td>90.9%</td>
+              <td>-16.8%</td>
+              <td class="pending">1日/5日まで接続済み</td>
+              <td>100%</td>
+              <td>業種中央値 / 決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>6146.T ディスコ</td>
+              <td>C</td>
+              <td>60.9</td>
+              <td>92</td>
+              <td class="gap">未取得</td>
+              <td>12.32</td>
+              <td>25.15%</td>
+              <td>11.1%</td>
+              <td>10.9%</td>
+              <td>97.7%</td>
+              <td>-23.5%</td>
+              <td class="pending">反応スコアのみ接続</td>
+              <td>86%</td>
+              <td>PER / 決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>4385.T メルカリ</td>
+              <td>保留</td>
+              <td>79.8</td>
+              <td>87</td>
+              <td class="gap">未取得</td>
+              <td>5.79</td>
+              <td>30.52%</td>
+              <td>2.8%</td>
+              <td>59.2%</td>
+              <td>70.7%</td>
+              <td>-9.5%</td>
+              <td class="pending">1日/5日まで接続済み</td>
+              <td>86%</td>
+              <td>PER / 業種中央値 / 決算後20営業日反応 / イベント実績層</td>
+              <td>量的比較に使用可・補完継続</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>残課題の件数</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>残課題</th><th>件数</th><th>扱い</th></tr></thead>
+          <tbody>
+
+            <tr>
+              <td>PER未取得</td>
+              <td>3</td>
+              <td>公式資料、J-Quants、EPSと株価から再確認。未取得のまま点数に入れない。</td>
+            </tr>
+            <tr>
+              <td>業種中央値未取得</td>
+              <td>3</td>
+              <td>同業2社以上でPER/PBR/ROEの相対位置を確認。基準が不十分なら説明補助に止める。</td>
+            </tr>
+            <tr>
+              <td>決算後20営業日反応未到達または詳細不足</td>
+              <td>10</td>
+              <td>1日/5日は別枠で記録。20日未到達は未到達として扱い、無理に補完しない。</td>
+            </tr>
+            <tr>
+              <td>イベント実績層未完了</td>
+              <td>10</td>
+              <td>質的仮説を加点せず、イベント日と株価反応の実績が取れたものだけ検証対象にする。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
