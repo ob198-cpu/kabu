@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 銘柄別説明カード</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+    h1 { font-size: clamp(26px, 4vw, 42px); line-height: 1.2; margin: 0 0 10px; letter-spacing: 0; }
+    h2 { font-size: 24px; color: var(--navy); margin: 0 0 10px; letter-spacing: 0; }
+    h3 { margin: 0; font-size: 19px; color: var(--navy); letter-spacing: 0; }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+    .kpi { background: white; color: var(--ink); border: 1px solid #c9def3; border-radius: 12px; padding: 12px; }
+    .kpi b { display: block; color: var(--blue); font-size: 28px; line-height: 1; }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .card-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .rank {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #e8f4ff;
+      color: var(--navy);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+    .card-head p { margin: 3px 0 0; color: var(--muted); font-weight: 700; }
+    dl { margin: 0; display: grid; gap: 8px; }
+    dt { font-weight: 900; color: var(--navy); }
+    dd { margin: -6px 0 0; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table { width: 100%; min-width: 920px; border-collapse: collapse; table-layout: fixed; background: white; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th { background: #e8f4ff; color: #073b63; font-weight: 800; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      table { min-width: 760px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>候補10社 銘柄別説明カード</h1>
+      <p>候補10社について、数値根拠、時流・イベント仮説、未完了項目、明日の確認作業を銘柄別に整理しました。</p>
+      <div class="actions">
+        <a class="button" href="candidate_10_rational_selection_board_20260526.html">選定作業表へ戻る</a>
+        <a class="button" href="471_candidate_10_explanation_cards.csv">説明カードCSV</a>
+        <a class="button" href="472_candidate_10_tomorrow_checklist.csv">明日確認CSV</a>
+        <a class="button" href="473_candidate_10_june_gate_by_ticker.csv">6月判定CSV</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>10</b><span>説明対象</span></div>
+        <div class="kpi"><b>33</b><span>明日確認する作業</span></div>
+        <div class="kpi"><b>未加点</b><span>質的情報</span></div>
+        <div class="kpi"><b>0社</b><span>購入判断</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      このページは、明日候補10社を根拠付きで説明するための作業資料です。購入判断は6月イベント後に再判定します。
+    </div>
+
+    <section class="cards">
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">1</span>
+          <div>
+            <h3>6762.T TDK</h3>
+            <p>最初に確認 / 量的評価 A / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 26.7、PBR 2.75、ROE 9.81%、売上成長 13.6%、利益成長 21.5%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>AIサーバー需要 / 為替・海外売上 / 電池・磁性材料</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>現時点の10社内で量的評価が最も高く、データ信頼度も高いため、最初に確認する候補です。</dd>
+          <dt>未完了項目</dt>
+          <dd>イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">2</span>
+          <div>
+            <h3>2802.T 味の素</h3>
+            <p>補完後に確認 / 量的評価 B / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 43.73、PBR 6.81、ROE 17.75%、売上成長 3.5%、利益成長 75%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>食品値上げ耐性 / ABF・ヘルスケア / 円安・原材料</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>量的条件は候補として確認する価値がありますが、決算後反応、同業比較、イベント因果のいずれかを補ってから判断します。</dd>
+          <dt>未完了項目</dt>
+          <dd>決算後反応未完了または未到達 / 業種別補正未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>同業2社以上のPER/PBR/ROE中央値を確認 / 決算後1日、5日、20日の対ベンチマーク超過リターンを確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">3</span>
+          <div>
+            <h3>8766.T 東京海上HD</h3>
+            <p>補完後に確認 / 量的評価 B / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 17.61、PBR 2.7、ROE 18.68%、売上成長 5.1%、利益成長 -7.6%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>保険料率・金利 / 自然災害・損害率 / 政策保有株売却</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>量的条件は候補として確認する価値がありますが、決算後反応、同業比較、イベント因果のいずれかを補ってから判断します。</dd>
+          <dt>未完了項目</dt>
+          <dd>決算後反応未完了または未到達 / イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>決算後1日、5日、20日の対ベンチマーク超過リターンを確認 / 質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">4</span>
+          <div>
+            <h3>8316.T 三井住友FG</h3>
+            <p>補完後に確認 / 量的評価 B / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 13.61、PBR 1.47、ROE 10.38%、売上成長 6.1%、利益成長 34%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>日銀・金利 / 信用コスト / 海外金利・為替</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>量的条件は候補として確認する価値がありますが、決算後反応、同業比較、イベント因果のいずれかを補ってから判断します。</dd>
+          <dt>未完了項目</dt>
+          <dd>決算後反応未完了または未到達 / イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>決算後1日、5日、20日の対ベンチマーク超過リターンを確認 / 質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">5</span>
+          <div>
+            <h3>8306.T 三菱UFJ FG</h3>
+            <p>補完後に確認 / 量的評価 C / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 未取得、PBR 1.56、ROE 11.34%、売上成長 7.3%、利益成長 27.7%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>日銀・金利 / 海外金利・景気 / 株主還元</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>量的条件は候補として確認する価値がありますが、決算後反応、同業比較、イベント因果のいずれかを補ってから判断します。</dd>
+          <dt>未完了項目</dt>
+          <dd>財務指標未完了 / 業種別補正未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認 / 同業2社以上のPER/PBR/ROE中央値を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">6</span>
+          <div>
+            <h3>6367.T ダイキン工業</h3>
+            <p>補完後に確認 / 量的評価 C / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 24.97、PBR 2.14、ROE 9.1%、売上成長 5.5%、利益成長 3.3%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>データセンター冷却 / 地域別空調需要 / 中国・為替</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>量的条件は候補として確認する価値がありますが、決算後反応、同業比較、イベント因果のいずれかを補ってから判断します。</dd>
+          <dt>未完了項目</dt>
+          <dd>決算後反応未完了または未到達 / イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>決算後1日、5日、20日の対ベンチマーク超過リターンを確認 / 質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">7</span>
+          <div>
+            <h3>6503.T 三菱電機</h3>
+            <p>補完後に確認 / 量的評価 C / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 26.09、PBR 2.76、ROE 9.67%、売上成長 6.8%、利益成長 10.5%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>電力・データセンター / FA・設備投資 / 防衛・宇宙</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>量的条件は候補として確認する価値がありますが、決算後反応、同業比較、イベント因果のいずれかを補ってから判断します。</dd>
+          <dt>未完了項目</dt>
+          <dd>決算後反応未完了または未到達 / イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>決算後1日、5日、20日の対ベンチマーク超過リターンを確認 / 質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">8</span>
+          <div>
+            <h3>5020.T ENEOS HD</h3>
+            <p>補完優先 / 量的評価 C / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 8.36、PBR 1.03、ROE 8.00%、売上成長 -4.5%、利益成長 339.8%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>原油・精製マージン / 中東・海上輸送 / 脱炭素・構造転換</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>時流との関係はありますが、未完了項目が多いため、補完が進んだ場合に候補として扱います。</dd>
+          <dt>未完了項目</dt>
+          <dd>決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>同業2社以上のPER/PBR/ROE中央値を確認 / 決算後1日、5日、20日の対ベンチマーク超過リターンを確認 / 質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">9</span>
+          <div>
+            <h3>6146.T ディスコ</h3>
+            <p>補完優先 / 量的評価 C / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 未取得、PBR 12.32、ROE 25.15%、売上成長 11.1%、利益成長 10.9%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>AI半導体・HBM / 半導体設備投資 / 高PER・過熱</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>時流との関係はありますが、未完了項目が多いため、補完が進んだ場合に候補として扱います。</dd>
+          <dt>未完了項目</dt>
+          <dd>財務指標未完了 / 業種別補正未完了 / イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認 / 同業2社以上のPER/PBR/ROE中央値を確認 / 質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="rank">10</span>
+          <div>
+            <h3>4385.T メルカリ</h3>
+            <p>補欠比較 / 量的評価 保留 / 仮説のみ 3件・未加点</p>
+          </div>
+        </div>
+        <dl>
+          <dt>数値根拠</dt>
+          <dd>PER 未取得、PBR 5.79、ROE 30.52%、売上成長 2.8%、利益成長 59.2%</dd>
+          <dt>時流・イベント仮説</dt>
+          <dd>国内消費 / FinTech・広告 / 規制・競争</dd>
+          <dt>候補として確認する理由</dt>
+          <dd>点数だけでは候補に見える部分がありますが、未完了項目が多いため、現時点では比較対象として残します。</dd>
+          <dt>未完了項目</dt>
+          <dd>財務指標未完了 / 決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了</dd>
+          <dt>明日の確認</dt>
+          <dd>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認 / 同業2社以上のPER/PBR/ROE中央値を確認 / 決算後1日、5日、20日の対ベンチマーク超過リターンを確認 / 質的仮説に対応するイベント日と株価反応を確認</dd>
+          <dt>現在の扱い</dt>
+          <dd>テスト候補の確認対象。購入判断ではない</dd>
+        </dl>
+      </article>
+
+    </section>
+
+    <section class="panel">
+      <h2>明日の確認作業</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>銘柄</th><th>会社</th><th>No.</th><th>確認作業</th><th>成果</th><th>点数への扱い</th></tr></thead>
+        <tbody>
+
+                <tr><td>6762.T</td><td>TDK</td><td>1</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>2802.T</td><td>味の素</td><td>1</td><td>同業2社以上のPER</td><td>同業中央値の成立可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>2802.T</td><td>味の素</td><td>2</td><td>PBR</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>2802.T</td><td>味の素</td><td>3</td><td>ROE中央値を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>2802.T</td><td>味の素</td><td>4</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>イベント後リターン判定</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8766.T</td><td>東京海上HD</td><td>1</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>イベント後リターン判定</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8766.T</td><td>東京海上HD</td><td>2</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8316.T</td><td>三井住友FG</td><td>1</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>イベント後リターン判定</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8316.T</td><td>三井住友FG</td><td>2</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8306.T</td><td>三菱UFJ FG</td><td>1</td><td>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認</td><td>不足財務指標の採用可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8306.T</td><td>三菱UFJ FG</td><td>2</td><td>同業2社以上のPER</td><td>同業中央値の成立可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8306.T</td><td>三菱UFJ FG</td><td>3</td><td>PBR</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>8306.T</td><td>三菱UFJ FG</td><td>4</td><td>ROE中央値を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6367.T</td><td>ダイキン工業</td><td>1</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>イベント後リターン判定</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6367.T</td><td>ダイキン工業</td><td>2</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6503.T</td><td>三菱電機</td><td>1</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>イベント後リターン判定</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6503.T</td><td>三菱電機</td><td>2</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>5020.T</td><td>ENEOS HD</td><td>1</td><td>同業2社以上のPER</td><td>同業中央値の成立可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>5020.T</td><td>ENEOS HD</td><td>2</td><td>PBR</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>5020.T</td><td>ENEOS HD</td><td>3</td><td>ROE中央値を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>5020.T</td><td>ENEOS HD</td><td>4</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>イベント後リターン判定</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>5020.T</td><td>ENEOS HD</td><td>5</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6146.T</td><td>ディスコ</td><td>1</td><td>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認</td><td>不足財務指標の採用可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6146.T</td><td>ディスコ</td><td>2</td><td>同業2社以上のPER</td><td>同業中央値の成立可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6146.T</td><td>ディスコ</td><td>3</td><td>PBR</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6146.T</td><td>ディスコ</td><td>4</td><td>ROE中央値を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>6146.T</td><td>ディスコ</td><td>5</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>1</td><td>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認</td><td>不足財務指標の採用可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>2</td><td>同業2社以上のPER</td><td>同業中央値の成立可否</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>3</td><td>PBR</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>4</td><td>ROE中央値を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>5</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>イベント後リターン判定</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>6</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>質的仮説の実績確認</td><td>確認後に採用可否を判定。未確認のまま加点しない</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+  </main>
+</body>
+</html>

@@ -52,6 +52,7 @@ const currentFiles = new Map([
   ['existing_metric_reuse_scan_20260526.html', ['現行資料', '台帳経由で使用可', '既存CSV全体からPER/PBR/ROE/EPSなどの候補値を横断検索し、採点へ戻せるかを出典確認前後で分ける検査表。', 'missing_per_peer_fetch_queue_20260526.html']],
   ['external_metric_source_feasibility_20260526.html', ['現行資料', '顧客説明に使用可', '既存CSVで埋まらないPER・同業中央値について、J-Quants、EDINET、会社IR、参考APIの現実性と必要条件を整理する接続前チェック。', 'existing_metric_reuse_scan_20260526.html']],
   ['candidate_10_rational_selection_board_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社を根拠付きで説明するため、量的根拠、質的根拠、未完了項目、次の確認作業を分けて整理した選定作業表。', 'external_metric_source_feasibility_20260526.html']],
+  ['candidate_10_explanation_cards_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、数値根拠、時流・イベント仮説、未完了項目、明日の確認作業を銘柄別に整理した説明カード。', 'candidate_10_rational_selection_board_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
   ['supplement_reaction_check.html', ['現行補助', '台帳経由で使用可', '予備候補の決算後反応を確認する補助資料。', 'candidate_june_rulebook.html']],
