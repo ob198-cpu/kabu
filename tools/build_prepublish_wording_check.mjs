@@ -38,6 +38,7 @@ const fallbackTargets = [
   'semiconductor_dry_run_verification_20260526.html',
   'candidate_10_priority_completion_20260526.html',
   'june_test_10_selection_board_20260526.html',
+  'candidate_10_completion_workbench_20260526.html',
   'candidate_june_rulebook.html',
   'prepublish_wording_check_20260526.html',
   'candidate_role_wording_20260526.html',
