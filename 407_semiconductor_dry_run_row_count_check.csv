@@ -1,0 +1,4 @@
+﻿updated_at,file,expected_rows,actual_rows,status,note
+2026/05/26 15:44,402_semiconductor_dry_run_sample_result_log.csv,6,6,OK,入力CSVサンプルは半導体6社分。
+2026/05/26 15:44,403_semiconductor_dry_run_decision_log.csv,6,6,OK,一次判定ログは入力CSVと同じ件数である必要がある。
+2026/05/26 15:44,404_semiconductor_dry_run_prediction_actual_template.csv,6,6,OK,予実差テンプレートも入力CSVと同じ件数である必要がある。

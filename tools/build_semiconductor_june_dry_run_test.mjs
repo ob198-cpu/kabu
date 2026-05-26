@@ -390,6 +390,7 @@ const html = `<!doctype html>
       <a href="index.html">トップ</a>
       <a href="semiconductor_june_result_input_cockpit_20260526.html">6月実績入力</a>
       <a href="semiconductor_forward_log_bridge_20260526.html">判定ログ接続</a>
+      <a href="semiconductor_dry_run_verification_20260526.html">検算結果</a>
       <a href="june_forward_test_record_20260526.html">6月前向きテスト記録</a>
       <a href="current_vs_history_materials_20260525.html">資料一覧</a>
     </div>

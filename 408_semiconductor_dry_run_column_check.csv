@@ -1,0 +1,6 @@
+﻿updated_at,file,required_columns,actual_columns,missing_columns,status
+2026/05/26 15:44,402_semiconductor_dry_run_sample_result_log.csv,19,19,,OK
+2026/05/26 15:44,403_semiconductor_dry_run_decision_log.csv,12,12,,OK
+2026/05/26 15:44,404_semiconductor_dry_run_prediction_actual_template.csv,20,20,,OK
+2026/05/26 15:44,397_semiconductor_forward_decision_log_template.csv,12,12,,OK
+2026/05/26 15:44,398_semiconductor_forward_prediction_actual_template.csv,20,20,,OK
