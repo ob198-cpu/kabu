@@ -1,0 +1,7 @@
+﻿updated_at,source,role,reliability
+2026/05/26 13:53,355_structural_advantage_candidates.csv,半導体構造優位・質的根拠,公式サイト等の構造情報をもとに作成
+2026/05/26 13:53,199_universe100_screening.csv,100社母集団のPER/PBR/ROE・成長率・株価指標,既存取得済みデータ。最新更新時点を明記して使う。
+2026/05/26 13:53,245_nisa_1year_hold_score_top20.csv,既存トップ20のNISA 1年保有スコア,決算後反応まで接続済みの銘柄は優先利用。
+2026/05/26 13:53,360_downside_resilience_by_stock.csv,下落耐性・1年リターン・最大下落率,Yahoo Finance系の株価時系列から計算済み。
+2026/05/26 13:53,366_semiconductor_quant_gate_matrix.csv,構造材料と量的ゲートの前回接続表,前工程の統合結果。未接続箇所の特定に利用。
+2026/05/26 13:53,309_benchmark_plus1_reference.csv,+1%目標の比較対象,S&P500・日経平均の12か月リターン確認用。

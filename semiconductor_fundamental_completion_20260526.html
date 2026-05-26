@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>半導体 決算・割高データ補完</title>
+  <style>
+    :root {
+      --ink: #061d35;
+      --muted: #334155;
+      --blue: #0b5f92;
+      --green: #047857;
+      --amber: #b45309;
+      --red: #b91c1c;
+      --line: #cfe0f3;
+      --soft: #f4f9ff;
+      --panel: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: #f6fbff;
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #07385b, #0b5f92);
+      color: #fff;
+      padding: 34px 26px 30px;
+    }
+    main {
+      width: min(1180px, calc(100% - 28px));
+      margin: 22px auto 60px;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.35; }
+    h1 { font-size: clamp(26px, 4vw, 42px); }
+    h2 {
+      margin-top: 34px;
+      padding-left: 12px;
+      border-left: 7px solid var(--blue);
+      font-size: 24px;
+    }
+    p { margin: 8px 0; color: var(--muted); }
+    a { color: #075985; font-weight: 700; }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .toolbar a, .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #fff;
+      color: #07385b;
+      text-decoration: none;
+      border: 1px solid #b8d4ee;
+      box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    }
+    .notice {
+      margin-top: 16px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.35);
+      padding: 14px 16px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 6px 20px rgba(8, 42, 73, .06);
+      break-inside: avoid;
+    }
+    .kpi {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-top: 4px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-weight: 800;
+      background: #e0f2fe;
+      color: #075985;
+      white-space: nowrap;
+    }
+    .good { color: var(--green); font-weight: 800; }
+    .warn { color: var(--amber); font-weight: 800; }
+    .bad { color: var(--red); font-weight: 800; }
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 14px;
+      box-shadow: 0 6px 20px rgba(8, 42, 73, .06);
+      break-inside: avoid;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: #fff;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #d5e4f4;
+      padding: 10px 10px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: #061d35;
+    }
+    th {
+      background: #e7f2fb;
+      text-align: left;
+      font-weight: 800;
+    }
+    tbody tr:nth-child(even) { background: #fbfdff; }
+    .narrow { width: 88px; }
+    .wide { width: 28%; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .step {
+      position: relative;
+      min-height: 96px;
+      border: 2px solid #b7d7ef;
+      border-radius: 10px;
+      padding: 12px;
+      background: #f8fcff;
+      font-weight: 800;
+    }
+    .step small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -17px;
+      top: 34px;
+      color: var(--blue);
+      font-size: 26px;
+      font-weight: 900;
+      z-index: 2;
+    }
+    details {
+      border: 1px solid #d5e4f4;
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fbfdff;
+      margin-top: 10px;
+    }
+    summary { cursor: pointer; font-weight: 800; color: #07385b; }
+    @media (max-width: 860px) {
+      .flow { grid-template-columns: 1fr; }
+      .step:not(:last-child)::after { display: none; }
+      table { font-size: 14px; }
+    }
+    @media print {
+      body { background: #fff; color: #000; }
+      header { background: #fff; color: #000; border-bottom: 3px solid #000; }
+      .toolbar { display: none; }
+      .section, .card { box-shadow: none; page-break-inside: avoid; }
+      h2 { page-break-after: avoid; }
+      table { page-break-inside: auto; }
+      tr { page-break-inside: avoid; page-break-after: auto; }
+      th, td { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>半導体 決算・割高データ補完</h1>
+    <p style="color:#e6f3ff">構造的に強い半導体銘柄を、購入候補へ直結せず、PER/PBR/ROE・決算伸び・下落耐性へ接続して検査するページです。</p>
+    <div class="notice">結論: 東京エレクトロンとSCREENの未接続データは補完できました。ただし、現時点では購入候補への昇格ではなく、6月イベント後・次決算後の再判定対象です。</div>
+    <div class="toolbar">
+      <a href="index.html">トップ</a>
+      <a href="semiconductor_quant_gate_connection_20260526.html">半導体 量的接続</a>
+      <a href="semiconductor_downside_resilience_20260526.html">下落耐性</a>
+      <a href="ipo_special_watch_corner_20260526.html">IPO特別枠</a>
+      <a href="current_vs_history_materials_20260525.html">資料一覧</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid">
+      
+        <div class="card">
+          <h3>補完対象</h3>
+          <div class="kpi">6社</div>
+          <p>構造優位で拾った半導体関連6社を、既存のNISAスコア表・100社母集団・下落耐性表へ接続した。</p>
+        </div>
+      
+        <div class="card">
+          <h3>新規に穴を埋めた銘柄</h3>
+          <div class="kpi">2社</div>
+          <p>東京エレクトロンとSCREENは、候補スコア表では未接続だったが、100社母集団側のPER/PBR/ROE・成長率を接続できた。</p>
+        </div>
+      
+        <div class="card">
+          <h3>完全接続</h3>
+          <div class="kpi">4/6社</div>
+          <p>PER・PBR・ROE・売上前年比・利益前年比がそろった銘柄数。未取得項目は点数に混ぜず、別途表示した。</p>
+        </div>
+      
+        <div class="card">
+          <h3>即時購入候補</h3>
+          <div class="kpi">0社</div>
+          <p>現段階では0社。構造的に強い企業でも、割高・減益・下落耐性不足が残る場合は購入候補にしない。</p>
+        </div>
+      
+        <div class="card">
+          <h3>次の確認対象</h3>
+          <div class="kpi">4社</div>
+          <p>保留または追加確認対象。6月イベント後と次決算で、成長率・受注・PER/PBR/ROE・指数比較を再判定する。</p>
+        </div>
+      
+        <div class="card">
+          <h3>除外継続</h3>
+          <div class="kpi">2社</div>
+          <p>既存スコア表で落とした銘柄は、構造材料だけでは復活させない。</p>
+        </div>
+      
+    </section>
+
+    <h2>1. 今回の位置づけ</h2>
+    <section class="section">
+      <div class="flow">
+        <div class="step">構造材料<small>世界シェア・技術優位・AI需要との接続を見る</small></div>
+        <div class="step">数値接続<small>PER/PBR/ROE・成長率・株価反応へ接続</small></div>
+        <div class="step">停止条件<small>割高、減益、下落耐性不足を切り分ける</small></div>
+        <div class="step">6月再判定<small>CPI、FOMC、日銀、次決算を確認</small></div>
+        <div class="step">候補判断<small>NISA 1年保有の候補に残すか決める</small></div>
+      </div>
+      <p><strong>今回の作業は2段目です。</strong> 半導体構造材料を直接加点せず、既存の100社母集団・NISAスコア表・下落耐性表に接続しました。</p>
+      <p>+1%目標の主比較線: <strong>日経平均 49.55% + 1%pt = 50.55%</strong></p>
+    </section>
+
+    <h2>2. 補完後の一覧</h2>
+    <section class="section">
+      <table>
+        <thead>
+          <tr>
+            <th class="narrow">銘柄</th>
+            <th>会社</th>
+            <th class="narrow">構造</th>
+            <th class="narrow">接続</th>
+            <th class="narrow">PER</th>
+            <th class="narrow">PBR</th>
+            <th class="narrow">ROE</th>
+            <th>決算伸び</th>
+            <th class="narrow">下落耐性</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td><strong>8035.T</strong></td>
+              <td>東京エレクトロン</td>
+              <td><span class="pill">S</span></td>
+              <td class="warn">一部接続<br>70点</td>
+              <td>未取得</td>
+              <td>10.8倍</td>
+              <td>29.56%</td>
+              <td>利益減<br>売上 0.5% / 利益 -10.4%</td>
+              <td class="bad">37点<br>下落耐性不足</td>
+              <td class="warn">補完完了・保留</td>
+            </tr>
+          
+            <tr>
+              <td><strong>7735.T</strong></td>
+              <td>SCREEN HD</td>
+              <td><span class="pill">A</span></td>
+              <td class="">完全接続<br>85点</td>
+              <td>18.64倍</td>
+              <td>4.21倍</td>
+              <td>20.28%</td>
+              <td>直近減収減益<br>売上 -3.1% / 利益 -9.7%</td>
+              <td class="bad">37点<br>下落耐性不足</td>
+              <td class="warn">補完完了・保留</td>
+            </tr>
+          
+            <tr>
+              <td><strong>6146.T</strong></td>
+              <td>ディスコ</td>
+              <td><span class="pill">A-</span></td>
+              <td class="warn">一部接続<br>85点</td>
+              <td>未取得</td>
+              <td>12.32倍</td>
+              <td>25.15%</td>
+              <td>成長確認<br>売上 11.1% / 利益 10.9%</td>
+              <td class="bad">26点<br>下落耐性不足</td>
+              <td class="warn">補完完了・保留</td>
+            </tr>
+          
+            <tr>
+              <td><strong>6920.T</strong></td>
+              <td>レーザーテック</td>
+              <td><span class="pill">A</span></td>
+              <td class="">完全接続<br>100点</td>
+              <td>47.95倍</td>
+              <td>15.28倍</td>
+              <td>46.88%</td>
+              <td>成長確認<br>売上 17.8% / 利益 51%</td>
+              <td class="bad">52点<br>弱いが観察可</td>
+              <td class="bad">除外継続</td>
+            </tr>
+          
+            <tr>
+              <td><strong>6857.T</strong></td>
+              <td>アドバンテスト</td>
+              <td><span class="pill">B</span></td>
+              <td class="">完全接続<br>100点</td>
+              <td>42倍</td>
+              <td>24.55倍</td>
+              <td>57.65%</td>
+              <td>成長確認<br>売上 44.7% / 利益 118.8%</td>
+              <td class="bad">37点<br>下落耐性不足</td>
+              <td class="bad">除外継続</td>
+            </tr>
+          
+            <tr>
+              <td><strong>6762.T</strong></td>
+              <td>TDK</td>
+              <td><span class="pill">B</span></td>
+              <td class="">完全接続<br>100点</td>
+              <td>26.7倍</td>
+              <td>2.75倍</td>
+              <td>9.81%</td>
+              <td>成長確認<br>売上 13.6% / 利益 21.5%</td>
+              <td class="bad">45点<br>弱いが観察可</td>
+              <td class="warn">追加確認対象</td>
+            </tr>
+          
+        </tbody>
+      </table>
+    </section>
+
+    <h2>3. 重要銘柄の読み方</h2>
+    <section class="grid">
+      
+        <div class="card">
+          <h3>8035.T 東京エレクトロン</h3>
+          <p><strong>結論:</strong> <span class="warn">補完完了・保留</span></p>
+          <p>一部接続（接続点70点） / 割高度: PER未取得・PBR高 / 決算伸び: 利益減 / 下落耐性: 37点 / 日経/S&amp;P500+1比較: 73.2pt</p>
+          <p><strong>次の確認:</strong> PER取得、PBR高の妥当性、受注・利益回復、6月市場イベント後の株価反応を確認。</p>
+        </div>
+      
+        <div class="card">
+          <h3>7735.T SCREEN HD</h3>
+          <p><strong>結論:</strong> <span class="warn">補完完了・保留</span></p>
+          <p>完全接続（接続点85点） / 割高度: 確認可 / 決算伸び: 直近減収減益 / 下落耐性: 37点 / 日経/S&amp;P500+1比較: 58.3pt</p>
+          <p><strong>次の確認:</strong> 次決算で減収減益が改善するか、PER18倍台の妥当性、下落耐性の改善を確認。</p>
+        </div>
+      
+        <div class="card">
+          <h3>6146.T ディスコ</h3>
+          <p><strong>結論:</strong> <span class="warn">補完完了・保留</span></p>
+          <p>一部接続（接続点85点） / 割高度: PER未取得・PBR高 / 決算伸び: 成長確認 / 下落耐性: 26点 / 日経/S&amp;P500+1比較: 48.1pt</p>
+          <p><strong>次の確認:</strong> 6月イベント後に再判定。追加投入ではなく候補維持か除外かを決める。</p>
+        </div>
+      
+        <div class="card">
+          <h3>6762.T TDK</h3>
+          <p><strong>結論:</strong> <span class="warn">追加確認対象</span></p>
+          <p>完全接続（接続点100点） / 割高度: 確認可 / 決算伸び: 成長確認 / 下落耐性: 45点 / 日経/S&amp;P500+1比較: 92.8pt</p>
+          <p><strong>次の確認:</strong> 6月イベント後に再判定。追加投入ではなく候補維持か除外かを決める。</p>
+        </div>
+      
+    </section>
+
+    <h2>4. 残っている穴</h2>
+    <section class="section">
+      
+        <table>
+          <thead>
+            <tr>
+              <th class="narrow">銘柄</th>
+              <th>会社</th>
+              <th>未取得項目</th>
+              <th>扱い</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><strong>8035.T</strong></td>
+                <td>東京エレクトロン</td>
+                <td>PER</td>
+                <td>割高度を過信しないため、次回のYahoo/公式/有報で取得する。</td>
+              </tr>
+            
+              <tr>
+                <td><strong>8035.T</strong></td>
+                <td>東京エレクトロン</td>
+                <td>決算後反応スコア</td>
+                <td>決算が株価に効いたかをまだ判定できない。</td>
+              </tr>
+            
+              <tr>
+                <td><strong>7735.T</strong></td>
+                <td>SCREEN HD</td>
+                <td>決算後反応スコア</td>
+                <td>決算が株価に効いたかをまだ判定できない。</td>
+              </tr>
+            
+              <tr>
+                <td><strong>6146.T</strong></td>
+                <td>ディスコ</td>
+                <td>PER</td>
+                <td>割高度を過信しないため、次回のYahoo/公式/有報で取得する。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+    </section>
+
+    <h2>5. ルール</h2>
+    <section class="section">
+      
+        <details>
+          <summary>構造材料は直接加点しない</summary>
+          <p>世界シェア・技術優位・AI需要との接続は、候補に入れる理由にはなるが、購入候補への直接加点にはしない。</p>
+        </details>
+      
+        <details>
+          <summary>未取得データは点数に混ぜない</summary>
+          <p>PER・PBR・ROE・成長率・決算後反応が未取得の場合は、空欄または未取得として表示し、補完対象に送る。</p>
+        </details>
+      
+        <details>
+          <summary>割高・減益・下落耐性不足は保留</summary>
+          <p>構造優位がS/Aでも、PBR高、利益減、下落耐性不足がある場合は、即時候補ではなく6月イベント後・次決算後の再判定に回す。</p>
+        </details>
+      
+        <details>
+          <summary>+1%目標との接続</summary>
+          <p>日経平均またはS&amp;P500の強い方を1%pt以上上回る見込みを検証する。通過しても、割高・減益・下落耐性不足があれば候補昇格しない。</p>
+        </details>
+      
+        <details>
+          <summary>今回の出力は補完結果</summary>
+          <p>購入リストではなく、半導体構造本命をNISA 1年保有スコアへ接続するための補完表である。</p>
+        </details>
+      
+    </section>
+
+    <h2>6. 出力ファイル</h2>
+    <section class="section">
+      <table>
+        <thead>
+          <tr><th>ファイル</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="377_semiconductor_fundamental_completion_summary.csv">377_semiconductor_fundamental_completion_summary.csv</a></td><td>補完結果の要約</td></tr>
+          <tr><td><a href="378_semiconductor_fundamental_completion_matrix.csv">378_semiconductor_fundamental_completion_matrix.csv</a></td><td>6社の補完後データ一覧</td></tr>
+          <tr><td><a href="379_semiconductor_fundamental_score_bridge.csv">379_semiconductor_fundamental_score_bridge.csv</a></td><td>判定と次アクション</td></tr>
+          <tr><td><a href="380_semiconductor_fundamental_gap_queue.csv">380_semiconductor_fundamental_gap_queue.csv</a></td><td>未取得項目の一覧</td></tr>
+          <tr><td><a href="381_semiconductor_fundamental_rules.csv">381_semiconductor_fundamental_rules.csv</a></td><td>補完・判定ルール</td></tr>
+          <tr><td><a href="382_semiconductor_fundamental_sources.csv">382_semiconductor_fundamental_sources.csv</a></td><td>使用データ元</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

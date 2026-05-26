@@ -29,6 +29,7 @@ const targetFiles = [
   'semiconductor_structural_advantage_gate_20260526.html',
   'semiconductor_downside_resilience_20260526.html',
   'semiconductor_quant_gate_connection_20260526.html',
+  'semiconductor_fundamental_completion_20260526.html',
 ];
 
 const phraseRules = [
@@ -265,9 +266,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '構造本命の未接続データを補完する',
-    reason: '半導体構造優位6社を下落耐性、決算・割高、+1%比較へ接続した結果、東京エレクトロン・SCREENなどの構造本命に決算・割高データの未接続が残ったため。',
-    output: '東京エレクトロン・SCREEN等のPER/PBR/ROE、売上・利益成長、決算後反応、+1%比較の補完表',
+    action: '半導体構造本命を6月再判定チェックリストへ接続する',
+    reason: '東京エレクトロン・SCREENのPER/PBR/ROE・決算伸びは補完できたが、購入候補ではなく保留であるため、6月イベント後と次決算で何を見れば昇格/除外になるかを明文化する必要がある。',
+    output: '東京エレクトロン・SCREEN等の6月イベント後チェック条件、次決算確認項目、除外条件の一覧',
   },
 ];
 
@@ -434,6 +435,7 @@ const html = `<!doctype html>
       <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
       <a class="button" href="semiconductor_structural_advantage_gate_20260526.html">半導体構造優位ゲートへ</a>
       <a class="button" href="semiconductor_downside_resilience_20260526.html">半導体下落耐性検証へ</a>
+      <a class="button" href="semiconductor_fundamental_completion_20260526.html">半導体決算・割高補完へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

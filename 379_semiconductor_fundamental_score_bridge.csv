@@ -1,0 +1,7 @@
+﻿updated_at,rank,ticker,company,structural_rating,source_used,data_connection_score,valuation_gate,earnings_gate,downside_resilience_score,completion_status,next_action
+2026/05/26 13:53,1,8035.T,東京エレクトロン,S,199_universe100_screening.csv,70,PER未取得・PBR高,利益減,37,補完完了・保留,PER取得、PBR高の妥当性、受注・利益回復、6月市場イベント後の株価反応を確認。
+2026/05/26 13:53,2,7735.T,SCREEN HD,A,199_universe100_screening.csv,85,確認可,直近減収減益,37,補完完了・保留,次決算で減収減益が改善するか、PER18倍台の妥当性、下落耐性の改善を確認。
+2026/05/26 13:53,3,6146.T,ディスコ,A-,245_nisa_1year_hold_score_top20.csv,85,PER未取得・PBR高,成長確認,26,補完完了・保留,6月イベント後に再判定。追加投入ではなく候補維持か除外かを決める。
+2026/05/26 13:53,4,6920.T,レーザーテック,A,245_nisa_1year_hold_score_top20.csv,100,割高強め,成長確認,52,除外継続,通常候補へ戻さない。イベント反応DBの観察対象に限定。
+2026/05/26 13:53,5,6857.T,アドバンテスト,B,245_nisa_1year_hold_score_top20.csv,100,割高強め,成長確認,37,除外継続,通常候補へ戻さない。イベント反応DBの観察対象に限定。
+2026/05/26 13:53,6,6762.T,TDK,B,245_nisa_1year_hold_score_top20.csv,100,確認可,成長確認,45,追加確認対象,6月イベント後に再判定。追加投入ではなく候補維持か除外かを決める。
