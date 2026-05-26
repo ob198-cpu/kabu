@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月テスト10社 確定スプリント</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --green: #087a4d;
+      --red: #b42318;
+      --orange: #b65c00;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.2;
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    h2 {
+      font-size: 24px;
+      color: var(--navy);
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .kpi {
+      background: white;
+      color: var(--ink);
+      border: 1px solid #c9def3;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .kpi b { display: block; color: var(--blue); font-size: 28px; line-height: 1; }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table {
+      width: 100%;
+      min-width: 940px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      background: white;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th {
+      background: #e8f4ff;
+      color: #073b63;
+      font-weight: 800;
+    }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      font-weight: 800;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .badge.green { color: var(--green); background: #edf9f3; border-color: #bce7d2; }
+    .badge.red { color: var(--red); background: #fff1f1; border-color: #ffd1d1; }
+    .badge.orange { color: var(--orange); background: #fff3e2; border-color: #ffd7a3; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      table { min-width: 780px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>6月テスト10社 確定スプリント</h1>
+      <p>100社前後の母集団から絞った10社について、6月テスト候補として残せるかを確定するための作業ボードです。購入確定ではなく、データ補完・イベント実績入力・+1%目標への接続を管理します。</p>
+      <div class="actions">
+        <a class="button" href="june_test_10_selection_board_20260526.html">10社選定表</a>
+        <a class="button" href="candidate_10_event_evidence_workbench_20260526.html">イベント実績層</a>
+        <a class="button" href="438_june_10_finalization_task_board.csv">タスクCSV</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>10</b><span>対象候補</span></div>
+        <div class="kpi"><b>40</b><span>管理タスク</span></div>
+        <div class="kpi"><b>8</b><span>2日以内に補完</span></div>
+        <div class="kpi"><b>17</b><span>待つ/6月後入力</span></div>
+        <div class="kpi"><b>0社</b><span>購入判断</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      現時点の目的は、テスト候補10社を根拠付きで確定することです。購入判断は6月のCPI・日銀・FOMC等の実数確認後に別途行います。
+    </div>
+
+    <section class="panel">
+      <h2>銘柄別タスクボード</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 100px;">銘柄</th>
+              <th style="width: 150px;">会社</th>
+              <th style="width: 130px;">区分</th>
+              <th style="width: 120px;">カテゴリ</th>
+              <th style="width: 130px;">状態</th>
+              <th>作業内容</th>
+              <th style="width: 120px;">出力先</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr>
+                <td>6762.T</td>
+                <td>TDK</td>
+                <td>A 先行観察</td>
+                <td>財務指標</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6762.T</td>
+                <td>TDK</td>
+                <td>A 先行観察</td>
+                <td>業種別補正</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6762.T</td>
+                <td>TDK</td>
+                <td>A 先行観察</td>
+                <td>決算後反応</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6762.T</td>
+                <td>TDK</td>
+                <td>A 先行観察</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>2802.T</td>
+                <td>味の素</td>
+                <td>B 補完後候補</td>
+                <td>財務指標</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>2802.T</td>
+                <td>味の素</td>
+                <td>B 補完後候補</td>
+                <td>業種別補正</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>2802.T</td>
+                <td>味の素</td>
+                <td>B 補完後候補</td>
+                <td>決算後反応</td>
+                <td><span class="badge red">待つ</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>2802.T</td>
+                <td>味の素</td>
+                <td>B 補完後候補</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>8766.T</td>
+                <td>東京海上HD</td>
+                <td>B 補完後候補</td>
+                <td>財務指標</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8766.T</td>
+                <td>東京海上HD</td>
+                <td>B 補完後候補</td>
+                <td>業種別補正</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8766.T</td>
+                <td>東京海上HD</td>
+                <td>B 補完後候補</td>
+                <td>決算後反応</td>
+                <td><span class="badge red">待つ</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8766.T</td>
+                <td>東京海上HD</td>
+                <td>B 補完後候補</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>8316.T</td>
+                <td>三井住友FG</td>
+                <td>B 補完後候補</td>
+                <td>財務指標</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8316.T</td>
+                <td>三井住友FG</td>
+                <td>B 補完後候補</td>
+                <td>業種別補正</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8316.T</td>
+                <td>三井住友FG</td>
+                <td>B 補完後候補</td>
+                <td>決算後反応</td>
+                <td><span class="badge red">待つ</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8316.T</td>
+                <td>三井住友FG</td>
+                <td>B 補完後候補</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>8306.T</td>
+                <td>三菱UFJ FG</td>
+                <td>B 補完後候補</td>
+                <td>財務指標</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8306.T</td>
+                <td>三菱UFJ FG</td>
+                <td>B 補完後候補</td>
+                <td>業種別補正</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8306.T</td>
+                <td>三菱UFJ FG</td>
+                <td>B 補完後候補</td>
+                <td>決算後反応</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>8306.T</td>
+                <td>三菱UFJ FG</td>
+                <td>B 補完後候補</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>6367.T</td>
+                <td>ダイキン工業</td>
+                <td>B 補完後候補</td>
+                <td>財務指標</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6367.T</td>
+                <td>ダイキン工業</td>
+                <td>B 補完後候補</td>
+                <td>業種別補正</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6367.T</td>
+                <td>ダイキン工業</td>
+                <td>B 補完後候補</td>
+                <td>決算後反応</td>
+                <td><span class="badge red">待つ</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6367.T</td>
+                <td>ダイキン工業</td>
+                <td>B 補完後候補</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>6503.T</td>
+                <td>三菱電機</td>
+                <td>B 補完後候補</td>
+                <td>財務指標</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6503.T</td>
+                <td>三菱電機</td>
+                <td>B 補完後候補</td>
+                <td>業種別補正</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6503.T</td>
+                <td>三菱電機</td>
+                <td>B 補完後候補</td>
+                <td>決算後反応</td>
+                <td><span class="badge red">待つ</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6503.T</td>
+                <td>三菱電機</td>
+                <td>B 補完後候補</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>5020.T</td>
+                <td>ENEOS HD</td>
+                <td>C 補完優先</td>
+                <td>財務指標</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>5020.T</td>
+                <td>ENEOS HD</td>
+                <td>C 補完優先</td>
+                <td>業種別補正</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>5020.T</td>
+                <td>ENEOS HD</td>
+                <td>C 補完優先</td>
+                <td>決算後反応</td>
+                <td><span class="badge red">待つ</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>5020.T</td>
+                <td>ENEOS HD</td>
+                <td>C 補完優先</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>6146.T</td>
+                <td>ディスコ</td>
+                <td>C 補完優先</td>
+                <td>財務指標</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6146.T</td>
+                <td>ディスコ</td>
+                <td>C 補完優先</td>
+                <td>業種別補正</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6146.T</td>
+                <td>ディスコ</td>
+                <td>C 補完優先</td>
+                <td>決算後反応</td>
+                <td><span class="badge green">確認済み</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>6146.T</td>
+                <td>ディスコ</td>
+                <td>C 補完優先</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+
+              <tr>
+                <td>4385.T</td>
+                <td>メルカリ</td>
+                <td>D 補欠保留</td>
+                <td>財務指標</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>PER/PBR/ROE、売上成長率、利益成長率を公式資料または信頼できるデータで埋める</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>4385.T</td>
+                <td>メルカリ</td>
+                <td>D 補欠保留</td>
+                <td>業種別補正</td>
+                <td><span class="badge orange">2日以内に補完</span></td>
+                <td>同業比較の中央値・レンジを入れ、PER/PBR/ROEの単純比較を避ける</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>4385.T</td>
+                <td>メルカリ</td>
+                <td>D 補欠保留</td>
+                <td>決算後反応</td>
+                <td><span class="badge red">待つ</span></td>
+                <td>決算後1日/5日/20日の対指数超過リターンを記録する。20営業日未到達は待つ</td>
+                <td>10社選定表・補完作業表</td>
+              </tr>
+
+              <tr>
+                <td>4385.T</td>
+                <td>メルカリ</td>
+                <td>D 補欠保留</td>
+                <td>イベント実績層</td>
+                <td><span class="badge red">6月イベント後に入力</span></td>
+                <td>イベント日、公式ソース、株価反応、指数反応を入力しS〜C判定する</td>
+                <td>428/433系CSV</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="panel">
+        <h2>合格条件</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 150px;">ゲート</th>
+                <th>条件</th>
+                <th>未達時</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                  <td>データ信頼度</td>
+                  <td>主要財務・株価・出典がそろい、未取得を点数に混ぜていない</td>
+                  <td>未取得項目を空欄のまま残し、スコアへ入れない</td>
+                </tr>
+
+                <tr>
+                  <td>決算後反応</td>
+                  <td>1日/5日反応は記録、20営業日未到達は未到達として扱う</td>
+                  <td>20営業日を勝手に推測せず、購入判断に使わない</td>
+                </tr>
+
+                <tr>
+                  <td>イベント実績層</td>
+                  <td>イベント日・公式ソース・個別株反応・指数反応が入力済み</td>
+                  <td>仮説だけでは加点しない</td>
+                </tr>
+
+                <tr>
+                  <td>+1%目標</td>
+                  <td>候補全体で日経平均/TOPIX/S&amp;P500等を1%以上上回る見込みを説明できる</td>
+                  <td>個別株比率を下げ、指数・現金比率を上げる</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>2日作業計画</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 90px;">日程</th>
+                <th>作業</th>
+                <th>成果物</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                  <td>Day 1</td>
+                  <td>10社のPER/PBR/ROE、売上成長率、利益成長率、配当・還元の空欄を補完</td>
+                  <td>財務指標補完済みCSV</td>
+                </tr>
+
+                <tr>
+                  <td>Day 1</td>
+                  <td>同業比較グループを設定し、PER/PBR/ROEの業種別補正を入れる</td>
+                  <td>業種別補正表</td>
+                </tr>
+
+                <tr>
+                  <td>Day 2</td>
+                  <td>決算後1日/5日反応、20営業日未到達フラグ、イベント実績層テンプレートを結合</td>
+                  <td>10社再判定表</td>
+                </tr>
+
+                <tr>
+                  <td>Day 2</td>
+                  <td>A/B/C/D区分を更新し、6月イベント後に見る項目を銘柄別に固定</td>
+                  <td>6月テスト候補10社の暫定版</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>主要リスクと制御</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 220px;">リスク</th>
+              <th>影響</th>
+              <th>制御方法</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr>
+                <td>20営業日反応が未到達</td>
+                <td>決算後反応の信頼性が不足</td>
+                <td>未到達として明記し、1日/5日だけで購入判断しない</td>
+              </tr>
+
+              <tr>
+                <td>イベント仮説の過信</td>
+                <td>ニュースの説得力だけで候補が残る</td>
+                <td>実績層が未入力なら加点0</td>
+              </tr>
+
+              <tr>
+                <td>業種をまたいだPER比較</td>
+                <td>銀行・食品・半導体を同じ物差しで誤判定</td>
+                <td>業種別中央値・レンジで補正</td>
+              </tr>
+
+              <tr>
+                <td>6月イベントで市場全体が急変</td>
+                <td>個別株選定より地合いが支配的になる</td>
+                <td>CPI・日銀・FOMC後に個別株比率を再判定</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <a class="button" href="437_june_10_finalization_sprint_summary.csv">概要CSV</a>
+        <a class="button" href="438_june_10_finalization_task_board.csv">タスクCSV</a>
+        <a class="button" href="439_june_10_finalization_acceptance_criteria.csv">合格条件CSV</a>
+        <a class="button" href="440_june_10_finalization_two_day_plan.csv">2日計画CSV</a>
+        <a class="button" href="441_june_10_finalization_risk_register.csv">リスクCSV</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

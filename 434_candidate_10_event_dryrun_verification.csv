@@ -1,0 +1,11 @@
+﻿updated_at,event_id,ticker,company,returns_calculated,rating_calculated,purchase_blocked,evidence_rating,check_result
+2026/05/26 17:03,6762-01,6762.T,TDK,OK,OK,OK,S,通過
+2026/05/26 17:03,6762-02,6762.T,TDK,OK,OK,OK,A,通過
+2026/05/26 17:03,6762-03,6762.T,TDK,OK,OK,OK,C,通過
+2026/05/26 17:03,2802-01,2802.T,味の素,OK,OK,OK,A,通過
+2026/05/26 17:03,2802-02,2802.T,味の素,OK,OK,OK,S,通過
+2026/05/26 17:03,2802-03,2802.T,味の素,OK,OK,OK,C,通過
+2026/05/26 17:03,8766-01,8766.T,東京海上HD,OK,OK,OK,S,通過
+2026/05/26 17:03,8766-02,8766.T,東京海上HD,OK,OK,OK,B,通過
+2026/05/26 17:03,8766-03,8766.T,東京海上HD,OK,OK,OK,S,通過
+2026/05/26 17:03,8316-01,8316.T,三井住友FG,OK,OK,OK,B,通過
