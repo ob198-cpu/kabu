@@ -72,6 +72,7 @@ const currentFiles = new Map([
   ['candidate_10_tomorrow_brief_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社の分類、明日の作業順、短い報告文を整理するページ。実行判断ではない。', 'candidate_10_selection_draft_20260526.html']],
   ['candidate_10_broad_peer_reference_20260526.html', ['現行資料', '顧客説明に使用可', '厳密な同業比較が不足する候補について、近い業種まで広げた説明補助比較が可能かを確認するページ。スコアには混ぜない。', 'sector_adjustment_20260525.html']],
   ['candidate_10_company_memos_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、数字根拠、質的仮説、確認条件、崩れる条件、次の確認条件を1社別に整理するページ。実行判断ではない。', 'candidate_10_tomorrow_brief_20260526.html']],
+  ['candidate_10_next_data_tasks_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社について、次に確認するデータ、優先度、反映先を銘柄別に整理するページ。実行判断ではない。', 'candidate_10_company_memos_20260526.html']],
   ['candidate_10_universe_lineage_20260526.html', ['現行資料', '顧客説明に使用可', '候補10社が固定母集団のどの役割・採用理由から詳細確認へ進んだかを示す選出経路ページ。投資判断ではない。', 'candidate_10_selection_readiness_20260526.html']],
   ['candidate_june_rulebook.html', ['現行資料', '顧客説明に使用可', '6月の市場イベント確認後に使う判定ルール。', '']],
   ['candidate_supplement_10_plan.html', ['現行補助', '台帳経由で使用可', '10社候補を補充するための検証候補資料。購入対象の確定ではない。', 'candidate_june_rulebook.html']],
@@ -170,6 +171,7 @@ const currentCsvPrefixes = [
   '524_', '525_', '526_',
   '527_', '528_',
   '529_', '530_',
+  '531_', '532_',
 ];
 
 function escCsv(value) {
