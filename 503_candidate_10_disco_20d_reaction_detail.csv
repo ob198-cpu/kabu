@@ -1,0 +1,2 @@
+﻿updated_at,ticker,company,base_date,base_close,after_20d_date,after_20d_close,stock_return_20d_pct,nikkei_base_date,nikkei_base_close,nikkei_after20_date,nikkei_after20_close,nikkei_return_20d_pct,excess_1d_pct,excess_5d_pct,excess_20d_pct,reaction_score_with_20d,data_status,score_connection,source
+2026/05/26 20:49,6146.T,ディスコ,2026-04-22,74830,2026-05-26,66910,-10.58,2026-04-22,59585.86,2026-05-26,64996.09,9.08,-3.03,-0.59,-19.66,41.4,20営業日反応取得済み,採点接続候補。検算後に接続可否を判断。,Yahoo Finance chart API 1d

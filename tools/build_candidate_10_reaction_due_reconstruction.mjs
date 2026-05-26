@@ -53,6 +53,11 @@ function readCsv(name) {
   return parseCsv(fs.readFileSync(path.join(ROOT, name), 'utf8'));
 }
 
+function readOptionalCsv(name) {
+  const file = path.join(ROOT, name);
+  return fs.existsSync(file) ? readCsv(name) : [];
+}
+
 function escCsv(value) {
   const text = String(value ?? '');
   if (/[",\n\r]/.test(text)) return `"${text.replaceAll('"', '""')}"`;
@@ -139,6 +144,7 @@ function normalizePct(value) {
 const currentRows = readCsv('491_candidate_10_reaction_maturity_detail.csv');
 const detailRows236 = readCsv('236_top10_earnings_reaction_detail.csv');
 const completedRows273 = readCsv('273_top20_earnings_reaction_completed.csv');
+const overrideRows = readOptionalCsv('503_candidate_10_disco_20d_reaction_detail.csv');
 
 const latest236ByTicker = new Map();
 for (const row of detailRows236) {
@@ -148,9 +154,31 @@ for (const row of detailRows236) {
 }
 
 const completed273ByTicker = new Map(completedRows273.map((row) => [row.ticker, row]));
+const overrideByTicker = new Map(
+  overrideRows
+    .filter((row) => row.data_status === '20営業日反応取得済み')
+    .map((row) => [row.ticker, row]),
+);
 
 function sourceForTicker(current) {
   const source236 = latest236ByTicker.get(current.ticker);
+  const override = overrideByTicker.get(current.ticker);
+  if (override) {
+    return {
+      source_kind: '20営業日反応再取得済み',
+      event_date: source236?.release_date || override.base_date || '',
+      event_type: source236?.period ? `${source236.period} 決算` : current.event_type || '',
+      base_date: override.base_date || source236?.base_date || '',
+      after_1d_date: source236?.after_1d_date || '',
+      excess_1d_pct: normalizePct(override.excess_1d_pct || source236?.excess_1d_pct),
+      after_5d_date: source236?.after_5d_date || '',
+      excess_5d_pct: normalizePct(override.excess_5d_pct || source236?.excess_5d_pct),
+      after_20d_date: override.after_20d_date || '',
+      excess_20d_pct: normalizePct(override.excess_20d_pct),
+      existing_reaction_score: override.reaction_score_with_20d || source236?.score || current.existing_reaction_score || '',
+      source_url: source236?.source_url || current.source_url || '',
+    };
+  }
   if (source236) {
     return {
       source_kind: '既存詳細CSVから復元',
@@ -276,7 +304,11 @@ const queueRows = detailRows.map((row) => {
   let priority = 3;
   let task = '20営業日反応の到達待ち';
   let expected_output = '20営業日到達後に終値、日経平均、超過リターンを再計算する。';
-  if (row.due_status === 'イベント日未接続') {
+  if (row.due_status === '20営業日確定済み') {
+    priority = 2;
+    task = '20営業日反応の検算と採点接続判定';
+    expected_output = '基準日、20営業日終値、日経平均比較、反応点を再確認し、採点へ接続するか判断する。';
+  } else if (row.due_status === 'イベント日未接続') {
     priority = 1;
     task = '公式決算日と基準株価の接続';
     expected_output = '公式発表日、基準終値、1日/5日反応を取得する。';
@@ -333,11 +365,13 @@ const summaryRows = [
   },
   {
     updated_at: generatedAt,
-    item: '採点へ接続した銘柄',
+    item: '採点接続候補',
     value: `${detailRows.filter((row) => row.score_connection === '接続候補').length}社`,
-    interpretation: '現段階では未確定値を点数へ混ぜない。購入判断ではなく、データ補完のための整理である。',
+    interpretation: '20営業日反応までそろった銘柄。検算後に採点へ接続するか判断する段階であり、購入判断ではない。',
   },
 ];
+
+const connectionCandidateCount = detailRows.filter((row) => row.score_connection === '接続候補').length;
 
 const csvHeaders = [
   'updated_at',
@@ -598,7 +632,7 @@ const html = cleanLines(`<!doctype html>
           <div>${esc(row.interpretation)}</div>
         </div>`).join('')}
       </div>
-      <div class="note">このページは、候補10社を絞るためのデータ到達状況です。採点へ接続した銘柄は0社であり、購入判断ではありません。</div>
+      <div class="note">このページは、候補10社を絞るためのデータ到達状況です。採点接続候補は${connectionCandidateCount}社です。接続候補は検算対象であり、購入判断ではありません。</div>
     </section>
 
     <section class="panel" id="detail">

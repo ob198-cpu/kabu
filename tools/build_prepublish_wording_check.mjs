@@ -56,6 +56,7 @@ const fallbackTargets = [
   'candidate_10_per_estimate_bridge_20260526.html',
   'candidate_10_reaction_maturity_bridge_20260526.html',
   'candidate_10_reaction_due_reconstruction_20260526.html',
+  'candidate_10_disco_20d_reaction_update_20260526.html',
   'candidate_10_selection_readiness_20260526.html',
   'candidate_10_universe_lineage_20260526.html',
   'candidate_june_rulebook.html',

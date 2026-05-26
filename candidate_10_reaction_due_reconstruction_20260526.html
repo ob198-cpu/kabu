@@ -212,7 +212,7 @@
         </div>
         <div class="kpi">
           <div class="label">20営業日反応が確定している銘柄</div>
-          <div class="value">0社</div>
+          <div class="value">1社</div>
           <div>現時点で採点接続候補まで進められる銘柄数。検算前のため最終判断ではない。</div>
         </div>
         <div class="kpi">
@@ -226,12 +226,12 @@
           <div>まず公式決算日、基準株価、指数比較を接続する必要がある。</div>
         </div>
         <div class="kpi">
-          <div class="label">採点へ接続した銘柄</div>
-          <div class="value">0社</div>
-          <div>現段階では未確定値を点数へ混ぜない。購入判断ではなく、データ補完のための整理である。</div>
+          <div class="label">採点接続候補</div>
+          <div class="value">1社</div>
+          <div>20営業日反応までそろった銘柄。検算後に採点へ接続するか判断する段階であり、購入判断ではない。</div>
         </div>
       </div>
-      <div class="note">このページは、候補10社を絞るためのデータ到達状況です。採点へ接続した銘柄は0社であり、購入判断ではありません。</div>
+      <div class="note">このページは、候補10社を絞るためのデータ到達状況です。採点接続候補は1社です。接続候補は検算対象であり、購入判断ではありません。</div>
     </section>
 
     <section class="panel" id="detail">
@@ -353,14 +353,14 @@
             <tr>
               <td>9</td>
               <td><strong>6146.T ディスコ</strong><br>半導体装置</td>
-              <td>1日/5日復元済み<br><small>既存詳細CSVから復元</small></td>
+              <td>1日/5日接続済み<br><small>20営業日反応再取得済み</small></td>
               <td>2026-04-22<br><small>2026年3月期 決算</small></td>
               <td>2026-04-23<br><strong>-3.03%</strong></td>
               <td>2026-04-30<br><strong>-0.59%</strong></td>
               <td>2026-05-26</td>
-              <td><span class="badge warn">20営業日到達済み・再取得必要</span></td>
-              <td>未接続</td>
-              <td>20営業日目は概算上到達しているが、終値と指数比較の再取得が必要。再取得まで採点へ接続しない。</td>
+              <td><span class="badge ok">20営業日確定済み</span></td>
+              <td>接続候補</td>
+              <td>1日、5日、20営業日の反応がそろったため、検算後に採点接続を検討できる。</td>
             </tr>
             <tr>
               <td>10</td>
@@ -384,12 +384,6 @@
       <div class="cards">
 
         <div class="card">
-          <h3>優先1 6146.T ディスコ</h3>
-          <p><strong>現状:</strong> 1日/5日復元済み / 20営業日到達済み・再取得必要</p>
-          <p><strong>作業:</strong> 20営業日反応の再取得</p>
-          <p><strong>出力:</strong> 20営業日超過リターンを取得し、採点接続候補にできるか検算する。</p>
-        </div>
-        <div class="card">
           <h3>優先1 6367.T ダイキン工業</h3>
           <p><strong>現状:</strong> 未接続 / イベント日未接続</p>
           <p><strong>作業:</strong> 公式決算日と基準株価の接続</p>
@@ -400,6 +394,12 @@
           <p><strong>現状:</strong> 未接続 / イベント日未接続</p>
           <p><strong>作業:</strong> 公式決算日と基準株価の接続</p>
           <p><strong>出力:</strong> 公式発表日、基準終値、1日/5日反応を取得する。</p>
+        </div>
+        <div class="card">
+          <h3>優先2 6146.T ディスコ</h3>
+          <p><strong>現状:</strong> 1日/5日接続済み / 20営業日確定済み</p>
+          <p><strong>作業:</strong> 20営業日反応の検算と採点接続判定</p>
+          <p><strong>出力:</strong> 基準日、20営業日終値、日経平均比較、反応点を再確認し、採点へ接続するか判断する。</p>
         </div>
         <div class="card">
           <h3>優先2 6762.T TDK</h3>

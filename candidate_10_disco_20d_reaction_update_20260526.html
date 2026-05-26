@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ディスコ 20営業日反応 再取得 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --line: #cbdceb;
+      --soft: #eef6ff;
+      --blue: #0b66a0;
+      --green: #087f5b;
+      --amber: #b45309;
+      --red: #b42318;
+      --bg: #f6f9fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+    }
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #08345f, #0b66a0);
+      color: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .hero p { margin: 0; color: #e8f3ff; }
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 16px 0;
+      box-shadow: 0 10px 22px rgba(6, 26, 51, .06);
+    }
+    h2 {
+      margin: 0 0 14px;
+      border-left: 8px solid var(--blue);
+      padding-left: 12px;
+      font-size: 23px;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .kpi {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .kpi b { display: block; font-size: 25px; color: var(--blue); }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 880px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+      color: #061a33;
+      overflow-wrap: anywhere;
+    }
+    th { background: #e5f1fb; white-space: nowrap; }
+    .ok { color: var(--green); font-weight: 900; }
+    .warn { color: var(--amber); font-weight: 900; }
+    .gap { color: var(--red); font-weight: 900; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .links a {
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 9px 13px;
+      font-weight: 900;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100% - 20px, 1120px); }
+      .hero { padding: 20px; border-radius: 14px; }
+      .kpis { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>ディスコ 20営業日反応 再取得</h1>
+      <p>候補10社のうち、20営業日目が本日到達したディスコについて、Yahoo Finance chart APIの日次データで20営業日超過リターンを検算します。結果は採点接続候補であり、検算前の購入判断ではありません。</p>
+      <div class="links">
+        <a href="index.html">トップへ戻る</a>
+        <a href="candidate_10_reaction_due_reconstruction_20260526.html">反応到達予定へ</a>
+        <a href="502_candidate_10_disco_20d_reaction_summary.csv">要約CSV</a>
+        <a href="503_candidate_10_disco_20d_reaction_detail.csv">詳細CSV</a>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>1. 要約</h2>
+      <div class="kpis">
+
+        <div class="kpi">
+          <span>対象</span>
+          <b>6146.T ディスコ</b>
+          <div>20営業日目が概算上到達したため、最初の再取得対象にした。</div>
+        </div>
+        <div class="kpi">
+          <span>取得状態</span>
+          <b>成功</b>
+          <div>株価と日経平均の必要日付を取得できた。</div>
+        </div>
+        <div class="kpi">
+          <span>採点接続</span>
+          <b>候補</b>
+          <div>検算後に決算後反応スコアへ接続できる候補。購入判断ではない。</div>
+        </div>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>2. 計算結果</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>銘柄</th>
+              <th>基準日/価格</th>
+              <th>20営業日/価格</th>
+              <th>株価20日</th>
+              <th>日経20日</th>
+              <th>超過リターン</th>
+              <th>反応点</th>
+              <th>扱い</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><strong>6146.T ディスコ</strong></td>
+              <td>2026-04-22<br>74830</td>
+              <td>2026-05-26<br>66910</td>
+              <td>-10.58%</td>
+              <td>9.08%</td>
+              <td><strong>-19.66%</strong></td>
+              <td>41.4</td>
+              <td>採点接続候補。検算後に接続可否を判断。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>3. 取得ログ</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>対象</th><th>状態</th><th>件数</th><th>最新日</th><th>メッセージ</th></tr></thead>
+          <tbody>
+
+            <tr>
+              <td>6146.T</td>
+              <td class="ok">成功</td>
+              <td>59</td>
+              <td>2026-05-26</td>
+              <td>Yahoo Finance chart APIから日次データ取得。</td>
+            </tr>
+            <tr>
+              <td>^N225</td>
+              <td class="ok">成功</td>
+              <td>59</td>
+              <td>2026-05-26</td>
+              <td>Yahoo Finance chart APIから日次データ取得。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

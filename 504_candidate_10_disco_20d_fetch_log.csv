@@ -1,0 +1,3 @@
+﻿updated_at,symbol,status,rows,latest_date,message
+2026/05/26 20:49,6146.T,成功,59,2026-05-26,Yahoo Finance chart APIから日次データ取得。
+2026/05/26 20:49,^N225,成功,59,2026-05-26,Yahoo Finance chart APIから日次データ取得。
