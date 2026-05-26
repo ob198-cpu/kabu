@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA 1年保有テスト 記録台帳 2026年5月27日</title>
+  <style>
+    :root { --ink:#061a33; --muted:#334155; --line:#c9d9ea; --bg:#f4f8fc; --navy:#0d3658; --blue:#0b6fa4; --soft:#eef7ff; --amber:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.72; letter-spacing:0; }
+    header { background:var(--navy); color:#fff; padding:34px clamp(18px,4vw,58px); }
+    h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); letter-spacing:0; }
+    header p { margin:0; color:#fff; font-weight:800; max-width:1120px; }
+    main { width:min(1280px, calc(100% - 32px)); margin:24px auto 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:8px; padding:22px; margin:18px 0; break-inside:avoid; }
+    h2 { margin:0 0 14px; padding-left:12px; border-left:8px solid var(--blue); font-size:24px; }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .metric { border:1px solid var(--line); border-radius:8px; padding:14px; background:var(--soft); min-height:120px; }
+    .metric span { display:block; color:var(--muted); font-weight:900; }
+    .metric strong { display:block; color:var(--blue); font-size:22px; line-height:1.35; }
+    .notice { border-left:8px solid var(--amber); background:#fff7ed; padding:14px; border-radius:8px; font-weight:900; color:#111827; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .button { display:inline-flex; align-items:center; min-height:38px; padding:8px 12px; border-radius:8px; border:1px solid #9cc8ec; background:#fff; color:var(--navy); text-decoration:none; font-weight:900; font-size:13px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+    table { width:100%; min-width:1280px; border-collapse:collapse; table-layout:fixed; }
+    .field-table table { min-width:860px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px; vertical-align:top; text-align:left; overflow-wrap:anywhere; word-break:break-word; color:#061a33; }
+    th { background:#e6f1fb; color:#073b63; font-weight:900; }
+    tr:last-child td { border-bottom:0; }
+    th:last-child,td:last-child { border-right:0; }
+    @media (max-width:900px) { .summary { grid-template-columns:1fr; } main { width:min(100% - 20px,1280px); } section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NISA 1年保有テスト 記録台帳</h1>
+    <p>6月以降の判定、投入、保有中の差分、指数比較を記録するための台帳です。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>用途</span>
+          <strong>予想と実績の差を記録</strong>
+          <small>6月以降のテストで、なぜ残したか、結果がどうだったかを後で検証する。</small>
+        </div>
+        <div class="metric">
+          <span>比較軸</span>
+          <strong>指数比 +1%</strong>
+          <small>S&amp;P500、日経平均、TOPIXを1%以上上回れたかを記録する。</small>
+        </div>
+        <div class="metric">
+          <span>更新頻度</span>
+          <strong>再判定時 / 1か月 / 3か月 / 6か月 / 1年</strong>
+          <small>短期のブレと1年保有の結果を分けて見る。</small>
+        </div>
+      </div>
+      <p class="notice">この台帳は検証用です。記録を残すことで、予想と実績の差を後から確認できます。</p>
+      <div class="toolbar">
+        <a class="button" href="556_nisa_test_record_ledger_template.csv">556 台帳CSV</a>
+        <a class="button" href="557_nisa_test_record_field_rules.csv">557 入力ルールCSV</a>
+        <a class="button" href="558_nisa_test_record_ledger_summary.csv">558 要約CSV</a>
+        <a class="button" href="nisa_one_year_test_operation_plan_20260527.html">運用手順へ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>記録台帳テンプレート</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>記録日</th><th>タイミング</th><th>コード</th><th>銘柄</th><th>役割</th><th>判定</th><th>理由</th><th>市場ゲート</th><th>銘柄ゲート</th><th>想定上昇率</th><th>想定下落率</th><th>比較対象</th><th>指数騰落率</th><th>銘柄騰落率</th><th>超過リターン</th><th>対応</th><th>メモ</th></tr></thead>
+        <tbody>
+          <tr><td>2026-06-18</td><td>再判定時</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>S&amp;P500 / 日経平均 / TOPIX</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2026-07-31</td><td>1か月確認</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>S&amp;P500 / 日経平均 / TOPIX</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2026-09-30</td><td>3か月確認</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>S&amp;P500 / 日経平均 / TOPIX</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2026-12-31</td><td>6か月確認</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>S&amp;P500 / 日経平均 / TOPIX</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2027-06-30</td><td>1年確認</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>S&amp;P500 / 日経平均 / TOPIX</td><td></td><td></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+
+    <section class="field-table">
+      <h2>入力ルール</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>項目</th><th>意味</th><th>入力ルール</th></tr></thead>
+        <tbody>
+          <tr><td>decision</td><td>主候補維持、比較枠、補完待ち、見送りなどの判定</td><td>6月判定ルールの結果名とそろえる</td></tr><tr><td>market_gate</td><td>CPI、日銀、FOMC、指数比較の市場ゲート</td><td>緑、黄、赤のいずれかで記録</td></tr><tr><td>stock_gate</td><td>20営業日反応、量的データ、質的確認、下落リスクの銘柄ゲート</td><td>Pass、Caution、Failのいずれかで記録</td></tr><tr><td>excess_return_pct</td><td>銘柄リターンから比較対象リターンを引いた値</td><td>stock_return_pct - benchmark_return_pct</td></tr><tr><td>action</td><td>維持、比率縮小、見送り、候補入れ替えなど</td><td>安全ルールの対応とそろえる</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>

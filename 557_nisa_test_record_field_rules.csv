@@ -1,0 +1,6 @@
+﻿field,meaning,input_rule
+decision,主候補維持、比較枠、補完待ち、見送りなどの判定,6月判定ルールの結果名とそろえる
+market_gate,CPI、日銀、FOMC、指数比較の市場ゲート,緑、黄、赤のいずれかで記録
+stock_gate,20営業日反応、量的データ、質的確認、下落リスクの銘柄ゲート,Pass、Caution、Failのいずれかで記録
+excess_return_pct,銘柄リターンから比較対象リターンを引いた値,stock_return_pct - benchmark_return_pct
+action,維持、比率縮小、見送り、候補入れ替えなど,安全ルールの対応とそろえる
