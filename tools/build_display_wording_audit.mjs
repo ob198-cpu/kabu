@@ -53,6 +53,7 @@ const targetFiles = [
   'candidate_10_official_source_queue_20260526.html',
   'candidate_10_current_data_connection_20260526.html',
   'candidate_10_per_estimate_bridge_20260526.html',
+  'candidate_10_reaction_maturity_bridge_20260526.html',
 ];
 
 const phraseRules = [
