@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 母集団からの選出経路 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --muted: #40536a;
+      --line: #c8d9ea;
+      --soft: #edf6ff;
+      --blue: #0b66a0;
+      --green: #087f5b;
+      --amber: #b45309;
+      --red: #b42318;
+      --bg: #f6f9fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    header {
+      background: linear-gradient(135deg, #062a4a, #0b668d);
+      color: #fff;
+      padding: 34px clamp(18px, 4vw, 58px);
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(26px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; color: #eaf5ff; font-weight: 800; max-width: 1060px; }
+    main { width: min(1220px, calc(100% - 32px)); margin: 24px auto 56px; }
+    section {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin: 18px 0;
+      break-inside: avoid;
+    }
+    h2 {
+      margin: 0 0 14px;
+      padding-left: 12px;
+      border-left: 8px solid var(--blue);
+      font-size: 24px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--soft);
+      min-height: 120px;
+    }
+    .metric span { display: block; color: var(--muted); font-weight: 900; }
+    .metric strong { display: block; font-size: 30px; color: var(--blue); }
+    .notice {
+      border-left: 8px solid var(--amber);
+      background: #fff7ed;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 900;
+      margin-top: 14px;
+    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #9cc8ec;
+      background: #fff;
+      color: #062a4a;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1160px; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px;
+      text-align: left;
+      vertical-align: top;
+      color: var(--ink);
+      word-break: break-word;
+    }
+    th { background: #e6f1fb; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    .ok { color: var(--green); font-weight: 900; }
+    .gap { color: var(--red); font-weight: 900; }
+    @media (max-width: 860px) {
+      .summary { grid-template-columns: 1fr; }
+      main { width: min(100% - 20px, 1220px); }
+      section { padding: 16px; }
+    }
+    @media print {
+      body { background: #fff; }
+      section { break-inside: avoid; }
+      .table-wrap { overflow: visible; }
+      table { min-width: 0; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 母集団からの選出経路</h1>
+    <p>100社前後の固定母集団から、現在の10社がどの役割・採用理由で詳細確認へ進んでいるかを確認します。後から都合よく選んだように見えないための根拠台帳です。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>固定母集団</span>
+          <strong>100社</strong>
+          <small>役割、データ取得状況、採用理由を持つ比較対象群。</small>
+        </div>
+        <div class="metric">
+          <span>現在の10社</span>
+          <strong>10社</strong>
+          <small>6月テスト候補を検討するための詳細確認対象。</small>
+        </div>
+        <div class="metric">
+          <span>母集団照合済み</span>
+          <strong>10社</strong>
+          <small>固定母集団内の役割と採用理由に接続できた銘柄。</small>
+        </div>
+        <div class="metric">
+          <span>照合未確認</span>
+          <strong>0社</strong>
+          <small>母集団との接続確認が必要な銘柄。</small>
+        </div>
+      </div>
+      <p class="notice">扱い: このページは選出経路の説明であり、投資判断ではありません。10社の妥当性は、量的データ、質的仮説、決算後反応、6月市場イベントを合わせて再確認します。</p>
+      <div class="toolbar">
+        <a class="button" href="496_candidate_10_universe_lineage_summary.csv">496 要約CSV</a>
+        <a class="button" href="497_candidate_10_universe_lineage_detail.csv">497 詳細CSV</a>
+        <a class="button" href="498_candidate_10_universe_lineage_rules.csv">498 ルールCSV</a>
+        <a class="button" href="candidate_10_selection_readiness_20260526.html">選出準備状況へ</a>
+        <a class="button" href="index.html">メインページへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>10社の母集団上の位置づけ</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>選定順位</th><th>銘柄</th><th>母集団ID</th><th>役割</th><th>重要度</th><th>採用理由</th><th>参考NISA点</th><th>量的評価</th><th>準備点</th><th>残課題</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>1</td>
+              <td>6762.T TDK<br><small class="ok">採用済み</small></td>
+              <td>30</td>
+              <td>時流テーマ</td>
+              <td>A 詳細確認</td>
+              <td>役割があり、主要データ取得状況を確認できる。</td>
+              <td>60.7</td>
+              <td>A</td>
+              <td>90</td>
+              <td>イベント因果未完了</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>2802.T 味の素<br><small class="ok">採用済み</small></td>
+              <td>71</td>
+              <td>指数比較・大型代表 / NISA 1年保有</td>
+              <td>C データ補完後に判定</td>
+              <td>役割または主要データ取得状況の確認が不足。</td>
+              <td>67.8</td>
+              <td>B</td>
+              <td>90</td>
+              <td>決算後反応未完了または未到達 / 業種別補正未完了 / 業種別補正:接続不可</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>8766.T 東京海上HD<br><small class="ok">採用済み</small></td>
+              <td>6</td>
+              <td>指数比較・大型代表 / NISA 1年保有</td>
+              <td>A 詳細確認</td>
+              <td>役割があり、主要データ取得状況を確認できる。</td>
+              <td>65.4</td>
+              <td>B</td>
+              <td>80</td>
+              <td>決算後反応未完了または未到達 / イベント因果未完了</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>8316.T 三井住友FG<br><small class="ok">採用済み</small></td>
+              <td>4</td>
+              <td>指数比較・大型代表 / NISA 1年保有</td>
+              <td>A 詳細確認</td>
+              <td>役割があり、主要データ取得状況を確認できる。</td>
+              <td>65.1</td>
+              <td>B</td>
+              <td>90</td>
+              <td>決算後反応未完了または未到達 / イベント因果未完了</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>8306.T 三菱UFJ FG<br><small class="ok">採用済み</small></td>
+              <td>3</td>
+              <td>指数比較・大型代表 / NISA 1年保有</td>
+              <td>A 詳細確認</td>
+              <td>役割があり、主要データ取得状況を確認できる。</td>
+              <td>62.1</td>
+              <td>C</td>
+              <td>82</td>
+              <td>財務指標未完了 / 業種別補正未完了 / 財務指標:説明補助まで / 業種別補正:説明補助まで / PER:既存CSV内では未発見</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>6367.T ダイキン工業<br><small class="ok">採用済み</small></td>
+              <td>41</td>
+              <td>時流テーマ</td>
+              <td>B 観察継続</td>
+              <td>役割があり、主要データ取得状況を確認できる。</td>
+              <td>52.6</td>
+              <td>C</td>
+              <td>80</td>
+              <td>決算後反応未完了または未到達 / イベント因果未完了</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>6503.T 三菱電機<br><small class="ok">採用済み</small></td>
+              <td>18</td>
+              <td>時流テーマ</td>
+              <td>B 観察継続</td>
+              <td>役割があり、主要データ取得状況を確認できる。</td>
+              <td>55.6</td>
+              <td>C</td>
+              <td>90</td>
+              <td>決算後反応未完了または未到達 / イベント因果未完了</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>5020.T ENEOS HD<br><small class="ok">採用済み</small></td>
+              <td>57</td>
+              <td>景気・マクロ感応</td>
+              <td>D 低優先・比較のみ</td>
+              <td>役割または主要データ取得状況の確認が不足。</td>
+              <td>64.3</td>
+              <td>C</td>
+              <td>90</td>
+              <td>決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了 / 業種別補正:接続不可</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>6146.T ディスコ<br><small class="ok">採用済み</small></td>
+              <td>25</td>
+              <td>時流テーマ</td>
+              <td>A 詳細確認</td>
+              <td>役割があり、主要データ取得状況を確認できる。</td>
+              <td>60.9</td>
+              <td>C</td>
+              <td>82</td>
+              <td>財務指標未完了 / 業種別補正未完了 / イベント因果未完了 / 財務指標:説明補助まで / 業種別補正:説明補助まで / PER:既存CSV内では未発見</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>4385.T メルカリ<br><small class="ok">採用済み</small></td>
+              <td>85</td>
+              <td>テンバガー探索</td>
+              <td>C データ補完後に判定</td>
+              <td>役割または主要データ取得状況の確認が不足。</td>
+              <td>79.8</td>
+              <td>保留</td>
+              <td>61</td>
+              <td>財務指標未完了 / 決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了 / 財務指標:説明補助まで / 業種別補正:接続不可 / PER:既存CSV内では未発見</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>選出経路ルール</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ルール</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>100社は売買対象ではない</td><td>母集団は、指数代表、時流テーマ、NISA 1年保有、比較用などの役割を持つ検証対象群。</td></tr><tr><td>10社は固定母集団から説明する</td><td>10社の説明では、固定母集団上の役割、定量評価、データ準備状況をセットで示す。</td></tr><tr><td>照合できない銘柄は使わない</td><td>母集団との接続、データ出典、採用理由が確認できない銘柄は、根拠付きの候補説明に入れない。</td></tr><tr><td>数値結果を見て母集団を差し替えない</td><td>6月テスト前に母集団定義を固定し、後から都合よく入れ替えたように見えないように履歴を残す。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
