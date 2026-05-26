@@ -1,0 +1,10 @@
+﻿updated_at,symbol,rows,first_date,latest_date,source,source_url,status
+2026/05/26 13:08,8035.T,244,2025-05-26,2026-05-26,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/8035.T?range=1y&interval=1d,取得済み
+2026/05/26 13:08,7735.T,244,2025-05-26,2026-05-26,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/7735.T?range=1y&interval=1d,取得済み
+2026/05/26 13:08,6146.T,244,2025-05-26,2026-05-26,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/6146.T?range=1y&interval=1d,取得済み
+2026/05/26 13:08,6920.T,244,2025-05-26,2026-05-26,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/6920.T?range=1y&interval=1d,取得済み
+2026/05/26 13:08,6857.T,244,2025-05-26,2026-05-26,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/6857.T?range=1y&interval=1d,取得済み
+2026/05/26 13:08,6762.T,244,2025-05-26,2026-05-26,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/6762.T?range=1y&interval=1d,取得済み
+2026/05/26 13:08,^SOX,251,2025-05-23,2026-05-22,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?range=1y&interval=1d,取得済み
+2026/05/26 13:08,^IXIC,251,2025-05-23,2026-05-22,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=1y&interval=1d,取得済み
+2026/05/26 13:08,^N225,244,2025-05-26,2026-05-26,Yahoo Finance chart API,https://query1.finance.yahoo.com/v8/finance/chart/%5EN225?range=1y&interval=1d,取得済み

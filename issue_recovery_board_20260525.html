@@ -40,7 +40,7 @@
   <div class="lead">
     <p><b>目的:</b> 今日判明した設計上の課題を、感覚的な反省で終わらせず、実装・検証・表示修正の単位に分解して回収するための管理表です。</p>
     <p><strong>現時点の扱い:</strong> 現システムは売買判断補助システムではなく、NISA 1年保有の検証候補を絞るためのプロトタイプです。課題が未回収の項目は、売買判断には使いません。</p>
-    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a> / <a href="current_vs_history_materials_20260525.html">資料区分台帳を見る</a> / <a href="prepublish_wording_check_20260526.html">公開前文言チェックを見る</a> / <a href="candidate_role_wording_20260526.html">候補表現ロール整理を見る</a> / <a href="candidate_data_completion_20260526.html">候補10社データ補完を見る</a> / <a href="event_type_reaction_db_20260526.html">イベント種類別反応DBを見る</a> / <a href="june_forward_test_record_20260526.html">6月前向きテスト記録を見る</a> / <a href="semiconductor_structural_advantage_gate_20260526.html">半導体構造優位ゲートを見る</a></p>
+    <p><a href="issue_resolution_flowchart_20260525.html">解決までのフローチャートを見る</a> / <a href="current_vs_history_materials_20260525.html">資料区分台帳を見る</a> / <a href="prepublish_wording_check_20260526.html">公開前文言チェックを見る</a> / <a href="candidate_role_wording_20260526.html">候補表現ロール整理を見る</a> / <a href="candidate_data_completion_20260526.html">候補10社データ補完を見る</a> / <a href="event_type_reaction_db_20260526.html">イベント種類別反応DBを見る</a> / <a href="june_forward_test_record_20260526.html">6月前向きテスト記録を見る</a> / <a href="semiconductor_structural_advantage_gate_20260526.html">半導体構造優位ゲートを見る</a> / <a href="semiconductor_downside_resilience_20260526.html">半導体下落耐性検証を見る</a></p>
   </div>
 
   <div class="kpis">
@@ -135,7 +135,7 @@
           <td class="status-done">一部回収済み</td>
           <td>現候補10社のイベント集計・月次株価接続を確認。100社母集団の同時点検算と、候補10社の未接続データ補完表を作成。</td>
           <td>backtest_validation_20260525.html / candidate_data_completion_20260526.html / 303_backtest_validation_summary.csv / 305_candidate_backtest_connection.csv</td>
-          <td>6月イベント後の実績入力欄、候補10社への接続、予実差テンプレート、半導体・AI周辺の構造優位ゲートを作成済み。次工程では、半導体構造優位銘柄の下落耐性を検証する。</td>
+          <td>6月イベント後の実績入力欄、候補10社への接続、予実差テンプレート、半導体・AI周辺の構造優位ゲート、半導体下落耐性検証を作成済み。次工程では、下落耐性上位を決算・割高・+1%比較へ接続する。</td>
           <td>候補10社の平均接続率は83点。未接続タスク23件を補完キューで管理する。</td>
         </tr><tr>
           <td class="p-high">高</td>
@@ -153,8 +153,8 @@
           <td class="status-done">一部回収済み</td>
           <td>イベント分類、イベント後の指数超過リターン、業界統計・個別株・市場地合いの複合条件を分離して表示。さらに19種類のイベントをA:株価反応DBあり、B:分類DBあり、C-D:仮説段階に分離。</td>
           <td>event_causality_validation_20260525.html / event_type_reaction_db_20260526.html / 313_event_causality_summary.csv / 343_event_type_reaction_db_summary.csv / 344_event_type_reaction_database.csv</td>
-          <td>6月前向きテスト記録と半導体構造優位ゲートへ接続済み。次工程では、半導体指数・日経平均下落時の相対耐性を確認する。</td>
-          <td>分類DBだけの企業イベント、構造優位だけの仮説は本体スコアへ直接加点しない。未来イベントは未入力・未判定として扱う。</td>
+          <td>6月前向きテスト記録、半導体構造優位ゲート、半導体下落耐性検証へ接続済み。次工程では、耐性上位だけを量的ゲートへ進める。</td>
+          <td>分類DBだけの企業イベント、構造優位だけの仮説、下落耐性だけの結果は本体スコアへ直接加点しない。未来イベントは未入力・未判定として扱う。</td>
         </tr><tr>
           <td class="p-mid">中</td>
           <td><b>表示上の誤解・旧文言の残存</b></td>
@@ -171,9 +171,9 @@
   <h2>次にやる順番</h2>
   <div class="card">
     <ol>
-      <li>半導体構造優位銘柄の下落耐性を検証する。</li>
+      <li>下落耐性上位だけを決算・割高・+1%比較へ接続する。</li>
     </ol>
-    <p class="note">更新日時: 2026/05/26 12:05</p>
+    <p class="note">更新日時: 2026/05/26 12:35</p>
   </div>
 </main>
 </body>

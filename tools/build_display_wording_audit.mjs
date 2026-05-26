@@ -26,6 +26,7 @@ const targetFiles = [
   'event_type_reaction_db_20260526.html',
   'june_forward_test_record_20260526.html',
   'semiconductor_structural_advantage_gate_20260526.html',
+  'semiconductor_downside_resilience_20260526.html',
 ];
 
 const phraseRules = [
@@ -262,9 +263,9 @@ const summaryRows = [
 const nextRows = [
   {
     priority: 1,
-    action: '半導体構造優位銘柄の下落耐性を検証する',
-    reason: '半導体・AI周辺の構造優位ゲートを作成し、質的仮説を本体スコアへ直接混ぜない形にしたため。',
-    output: 'SOX、日経平均、NASDAQ下落局面での1日/5日/20日相対リターン',
+    action: '下落耐性上位だけを決算・割高・+1%比較へ接続する',
+    reason: '半導体構造優位6社について、SOX/NASDAQ/日経平均下落局面の相対耐性を計算したため。',
+    output: '下落耐性スコア上位銘柄のPER/PBR/ROE、決算反応、+1%比較への接続',
   },
 ];
 
@@ -430,6 +431,7 @@ const html = `<!doctype html>
       <a class="button" href="event_type_reaction_db_20260526.html">イベント種類別反応DBへ</a>
       <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
       <a class="button" href="semiconductor_structural_advantage_gate_20260526.html">半導体構造優位ゲートへ</a>
+      <a class="button" href="semiconductor_downside_resilience_20260526.html">半導体下落耐性検証へ</a>
       <a class="button" href="issue_resolution_flowchart_20260525.html">課題解決フローへ</a>
       <a class="button" href="index.html">メインページへ</a>
     </div>

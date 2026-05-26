@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>半導体構造優位 下落耐性検証 2026年5月26日</title>
+  <style>
+    :root {
+      --ink:#071f36;
+      --muted:#49657f;
+      --blue:#0b5d92;
+      --light:#eef6fd;
+      --line:#c9dceb;
+      --ok:#057a55;
+      --warn:#b76b00;
+      --stop:#b42318;
+      --bg:#f7fbff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+    header {
+      background: linear-gradient(135deg, #07375e, #0c6b96);
+      color: #fff;
+      padding: 30px 24px;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: 0; }
+    h2 {
+      margin: 28px 0 12px;
+      padding-left: 12px;
+      border-left: 7px solid var(--blue);
+      font-size: 22px;
+    }
+    p { margin: 8px 0; }
+    .lead, .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 2px 9px rgba(0,40,80,.06);
+    }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    .button {
+      display:inline-block;
+      padding:8px 12px;
+      border:1px solid #9fc1db;
+      border-radius:8px;
+      background:#fff;
+      color:#07375e;
+      text-decoration:none;
+      font-weight:700;
+    }
+    .kpis {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .kpi {
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:14px;
+      min-height: 132px;
+    }
+    .kpi span { display:block; color:var(--muted); font-weight:700; }
+    .kpi b { display:block; font-size:28px; color:#06456f; margin:4px 0; }
+    .kpi small { display:block; color:#17324a; line-height:1.55; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    table { width:100%; border-collapse:collapse; min-width: 1080px; }
+    th, td { border-bottom:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; }
+    th { background:#e6f2fb; color:#06385d; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .badge { display:inline-block; padding:4px 8px; border-radius:999px; font-weight:700; white-space:nowrap; }
+    .badge.ok { background:#e8f7ef; color:var(--ok); }
+    .badge.mid { background:#eef6fd; color:#0b5d92; }
+    .badge.stop { background:#fdecec; color:var(--stop); }
+    .badge.neutral { background:#edf0f3; color:#293847; }
+    .note { color:var(--muted); font-size:13px; }
+    .warn-box {
+      border-left: 7px solid var(--warn);
+      background: #fff9ed;
+      padding: 14px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+    @media (max-width: 760px) {
+      main { padding: 14px; }
+      header { padding: 22px 16px; }
+      h1 { font-size: 24px; }
+      table { min-width: 960px; }
+    }
+    @media print {
+      body { background:#fff; font-size: 13px; }
+      header { background:#07375e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .card, .lead, .kpi { box-shadow:none; }
+      h2, .card, .lead, .kpis, .table-wrap { break-inside: avoid; page-break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>半導体構造優位 下落耐性検証</h1>
+  <p>構造的に強い半導体・AI周辺銘柄が、SOX・NASDAQ・日経平均の下落局面で本当に相対的に耐えたかを検証します。</p>
+</header>
+<main>
+  <section class="lead">
+    <p><b>目的:</b> 「高シェアで技術が強い」という質的仮説を、実際の下落局面の株価データで検証します。</p>
+    <p><b>重要:</b> 下落耐性スコアは購入判断ではありません。構造優位の検証材料であり、決算・割高・+1%比較と合わせて使います。</p>
+    <div class="toolbar">
+      <a class="button" href="359_downside_resilience_summary.csv">359 要約CSV</a>
+      <a class="button" href="360_downside_resilience_by_stock.csv">360 銘柄別CSV</a>
+      <a class="button" href="361_downside_resilience_by_benchmark.csv">361 指数別CSV</a>
+      <a class="button" href="362_downside_resilience_event_detail.csv">362 明細CSV</a>
+      <a class="button" href="363_downside_resilience_method.csv">363 計算式CSV</a>
+      <a class="button" href="364_downside_resilience_sources.csv">364 取得元CSV</a>
+      <a class="button" href="semiconductor_structural_advantage_gate_20260526.html">構造優位ゲートへ</a>
+      <a class="button" href="june_forward_test_record_20260526.html">6月前向きテスト記録へ</a>
+      <a class="button" href="index.html">メインページへ</a>
+    </div>
+  </section>
+
+  <section class="kpis">
+
+      <div class="kpi">
+        <span>取得対象</span>
+        <b>6銘柄 + 3指数</b>
+        <small>構造優位6社とSOX/NASDAQ/日経平均を取得。</small>
+      </div>
+
+      <div class="kpi">
+        <span>下落イベント</span>
+        <b>73件</b>
+        <small>SOX、NASDAQ、日経平均の下落日を合計。各銘柄に対して1/5/20営業日の反応を計算。</small>
+      </div>
+
+      <div class="kpi">
+        <span>下落耐性あり</span>
+        <b>0社</b>
+        <small>1年日次データ上、指数下落日に相対的に強かった銘柄。</small>
+      </div>
+
+      <div class="kpi">
+        <span>本体スコアへの扱い</span>
+        <b>直接加点しない</b>
+        <small>下落耐性は構造仮説の検証材料。決算・割高・+1%比較と合わせて使う。</small>
+      </div>
+
+  </section>
+
+  <h2>銘柄別 下落耐性</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>順位</th><th>銘柄</th><th>構造評価</th><th>耐性点</th><th>判定</th><th>1年騰落</th><th>最大下落</th><th>加重超過 1日/5日/20日</th><th>5日勝率</th><th>扱い</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>1</td>
+            <td><b>6920.T</b><br>レーザーテック<br><span class="note">2026-05-26 / 42630.0</span></td>
+            <td>A</td>
+            <td><b>52</b></td>
+            <td><span class="badge stop">下落耐性弱い</span></td>
+            <td>191.30%</td>
+            <td>-27.07%</td>
+            <td>-2.29% / -0.38% / 7.89%</td>
+            <td>41.3%</td>
+            <td>構造優位の確認材料。購入判断ではなく、6月テスト候補の優先順位と停止条件に使う。</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td><b>6762.T</b><br>TDK<br><span class="note">2026-05-26 / 3644.0</span></td>
+            <td>B</td>
+            <td><b>45</b></td>
+            <td><span class="badge stop">下落耐性弱い</span></td>
+            <td>143.38%</td>
+            <td>-28.21%</td>
+            <td>-1.32% / -0.41% / -1.46%</td>
+            <td>50.1%</td>
+            <td>構造優位の確認材料。購入判断ではなく、6月テスト候補の優先順位と停止条件に使う。</td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td><b>8035.T</b><br>東京エレクトロン<br><span class="note">2026-05-26 / 51260.0</span></td>
+            <td>S</td>
+            <td><b>37</b></td>
+            <td><span class="badge stop">下落耐性弱い</span></td>
+            <td>123.76%</td>
+            <td>-28.82%</td>
+            <td>-2.42% / -1.79% / 0.70%</td>
+            <td>33.0%</td>
+            <td>構造優位の確認材料。購入判断ではなく、6月テスト候補の優先順位と停止条件に使う。</td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td><b>7735.T</b><br>SCREEN HD<br><span class="note">2026-05-26 / 10785.0</span></td>
+            <td>A</td>
+            <td><b>37</b></td>
+            <td><span class="badge stop">下落耐性弱い</span></td>
+            <td>108.88%</td>
+            <td>-23.85%</td>
+            <td>-2.16% / -1.95% / -0.26%</td>
+            <td>36.0%</td>
+            <td>構造優位の確認材料。購入判断ではなく、6月テスト候補の優先順位と停止条件に使う。</td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td><b>6857.T</b><br>アドバンテスト<br><span class="note">2026-05-26 / 26010.0</span></td>
+            <td>B</td>
+            <td><b>37</b></td>
+            <td><span class="badge stop">下落耐性弱い</span></td>
+            <td>267.52%</td>
+            <td>-28.86%</td>
+            <td>-2.95% / -1.98% / 1.79%</td>
+            <td>33.1%</td>
+            <td>構造優位の確認材料。購入判断ではなく、6月テスト候補の優先順位と停止条件に使う。</td>
+          </tr>
+
+          <tr>
+            <td>6</td>
+            <td><b>6146.T</b><br>ディスコ<br><span class="note">2026-05-26 / 67510.0</span></td>
+            <td>A-</td>
+            <td><b>26</b></td>
+            <td><span class="badge stop">下落耐性弱い</span></td>
+            <td>98.66%</td>
+            <td>-24.72%</td>
+            <td>-3.09% / -3.06% / -2.93%</td>
+            <td>26.4%</td>
+            <td>構造優位の確認材料。購入判断ではなく、6月テスト候補の優先順位と停止条件に使う。</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>計算式</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>項目</th><th>式</th><th>説明</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td><b>対象期間</b></td>
+            <td>Yahoo Finance chart APIの1年日次終値</td>
+            <td>構造優位6社、SOX指数、NASDAQ総合、日経平均を取得。</td>
+          </tr>
+
+          <tr>
+            <td><b>下落日定義</b></td>
+            <td>SOX &lt;= -2.0%、NASDAQ &lt;= -1.5%、日経平均 &lt;= -1.5%</td>
+            <td>半導体、AI/グロース、日本株全体の3種類の悪い地合いを分ける。</td>
+          </tr>
+
+          <tr>
+            <td><b>超過リターン</b></td>
+            <td>銘柄リターン - 比較指数リターン</td>
+            <td>イベント当日から1営業日後、5営業日後、20営業日後を計算。</td>
+          </tr>
+
+          <tr>
+            <td><b>耐性スコア</b></td>
+            <td>50 + 1日超過×1.5 + 5日超過×2.5 + 20日超過×1.2 + (5日勝率-50)×0.35 - 1年最大下落ペナルティ</td>
+            <td>構造優位だけではなく、実際に下落局面で耐えたかを評価。</td>
+          </tr>
+
+          <tr>
+            <td><b>注意</b></td>
+            <td>日米市場の日付差は簡易一致</td>
+            <td>厳密運用では市場カレンダーと翌営業日対応を精緻化する。</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>指数別の反応</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>銘柄</th><th>比較指数</th><th>下落日数</th><th>平均超過1日</th><th>平均超過5日</th><th>平均超過20日</th><th>5日勝率</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td><b>8035.T</b><br>東京エレクトロン</td>
+            <td>SOX指数</td>
+            <td>33</td>
+            <td>-4.06%</td>
+            <td>-3.56%</td>
+            <td>-2.13%</td>
+            <td>24.2%</td>
+          </tr>
+
+          <tr>
+            <td><b>8035.T</b><br>東京エレクトロン</td>
+            <td>NASDAQ総合</td>
+            <td>19</td>
+            <td>-2.09%</td>
+            <td>-0.80%</td>
+            <td>1.94%</td>
+            <td>42.1%</td>
+          </tr>
+
+          <tr>
+            <td><b>8035.T</b><br>東京エレクトロン</td>
+            <td>日経平均</td>
+            <td>21</td>
+            <td>0.12%</td>
+            <td>0.21%</td>
+            <td>4.31%</td>
+            <td>38.1%</td>
+          </tr>
+
+          <tr>
+            <td><b>7735.T</b><br>SCREEN HD</td>
+            <td>SOX指数</td>
+            <td>33</td>
+            <td>-3.32%</td>
+            <td>-2.89%</td>
+            <td>-3.83%</td>
+            <td>27.3%</td>
+          </tr>
+
+          <tr>
+            <td><b>7735.T</b><br>SCREEN HD</td>
+            <td>NASDAQ総合</td>
+            <td>19</td>
+            <td>-2.10%</td>
+            <td>-1.60%</td>
+            <td>1.40%</td>
+            <td>47.4%</td>
+          </tr>
+
+          <tr>
+            <td><b>7735.T</b><br>SCREEN HD</td>
+            <td>日経平均</td>
+            <td>21</td>
+            <td>-0.16%</td>
+            <td>-0.68%</td>
+            <td>4.18%</td>
+            <td>38.1%</td>
+          </tr>
+
+          <tr>
+            <td><b>6146.T</b><br>ディスコ</td>
+            <td>SOX指数</td>
+            <td>33</td>
+            <td>-4.20%</td>
+            <td>-4.83%</td>
+            <td>-5.30%</td>
+            <td>18.2%</td>
+          </tr>
+
+          <tr>
+            <td><b>6146.T</b><br>ディスコ</td>
+            <td>NASDAQ総合</td>
+            <td>19</td>
+            <td>-3.47%</td>
+            <td>-1.96%</td>
+            <td>-2.35%</td>
+            <td>36.8%</td>
+          </tr>
+
+          <tr>
+            <td><b>6146.T</b><br>ディスコ</td>
+            <td>日経平均</td>
+            <td>21</td>
+            <td>-0.63%</td>
+            <td>-1.21%</td>
+            <td>0.65%</td>
+            <td>28.6%</td>
+          </tr>
+
+          <tr>
+            <td><b>6920.T</b><br>レーザーテック</td>
+            <td>SOX指数</td>
+            <td>33</td>
+            <td>-3.99%</td>
+            <td>-3.00%</td>
+            <td>7.40%</td>
+            <td>36.4%</td>
+          </tr>
+
+          <tr>
+            <td><b>6920.T</b><br>レーザーテック</td>
+            <td>NASDAQ総合</td>
+            <td>19</td>
+            <td>-1.99%</td>
+            <td>0.36%</td>
+            <td>8.98%</td>
+            <td>31.6%</td>
+          </tr>
+
+          <tr>
+            <td><b>6920.T</b><br>レーザーテック</td>
+            <td>日経平均</td>
+            <td>21</td>
+            <td>0.43%</td>
+            <td>3.46%</td>
+            <td>7.46%</td>
+            <td>61.9%</td>
+          </tr>
+
+          <tr>
+            <td><b>6857.T</b><br>アドバンテスト</td>
+            <td>SOX指数</td>
+            <td>33</td>
+            <td>-4.29%</td>
+            <td>-3.27%</td>
+            <td>0.01%</td>
+            <td>24.2%</td>
+          </tr>
+
+          <tr>
+            <td><b>6857.T</b><br>アドバンテスト</td>
+            <td>NASDAQ総合</td>
+            <td>19</td>
+            <td>-3.96%</td>
+            <td>-2.08%</td>
+            <td>0.67%</td>
+            <td>26.3%</td>
+          </tr>
+
+          <tr>
+            <td><b>6857.T</b><br>アドバンテスト</td>
+            <td>日経平均</td>
+            <td>21</td>
+            <td>0.66%</td>
+            <td>0.48%</td>
+            <td>6.34%</td>
+            <td>57.1%</td>
+          </tr>
+
+          <tr>
+            <td><b>6762.T</b><br>TDK</td>
+            <td>SOX指数</td>
+            <td>33</td>
+            <td>-1.80%</td>
+            <td>-0.78%</td>
+            <td>-4.58%</td>
+            <td>51.5%</td>
+          </tr>
+
+          <tr>
+            <td><b>6762.T</b><br>TDK</td>
+            <td>NASDAQ総合</td>
+            <td>19</td>
+            <td>-1.98%</td>
+            <td>-0.99%</td>
+            <td>-0.57%</td>
+            <td>42.1%</td>
+          </tr>
+
+          <tr>
+            <td><b>6762.T</b><br>TDK</td>
+            <td>日経平均</td>
+            <td>21</td>
+            <td>0.35%</td>
+            <td>0.95%</td>
+            <td>3.08%</td>
+            <td>57.1%</td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>解釈</h2>
+  <section class="card">
+    <p>この検証は、構造的に強い企業が「下落しない」と言うためのものではありません。半導体・AIの地合いが悪い日に、比較指数より相対的に強いかを確認するものです。</p>
+    <div class="warn-box">
+      <b>次の扱い:</b> 下落耐性が弱い銘柄は、構造優位があっても小口、押し目待ち、候補維持に戻します。下落耐性が高い銘柄だけを、決算・割高・+1%比較へ進めます。
+    </div>
+  </section>
+
+  <h2>取得元</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>シンボル</th><th>件数</th><th>期間</th><th>取得元</th><th>状態</th></tr></thead>
+      <tbody>
+
+          <tr>
+            <td>8035.T</td>
+            <td>244</td>
+            <td>2025-05-26 - 2026-05-26</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/8035.T?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>7735.T</td>
+            <td>244</td>
+            <td>2025-05-26 - 2026-05-26</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/7735.T?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>6146.T</td>
+            <td>244</td>
+            <td>2025-05-26 - 2026-05-26</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/6146.T?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>6920.T</td>
+            <td>244</td>
+            <td>2025-05-26 - 2026-05-26</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/6920.T?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>6857.T</td>
+            <td>244</td>
+            <td>2025-05-26 - 2026-05-26</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/6857.T?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>6762.T</td>
+            <td>244</td>
+            <td>2025-05-26 - 2026-05-26</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/6762.T?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>^SOX</td>
+            <td>251</td>
+            <td>2025-05-23 - 2026-05-22</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>^IXIC</td>
+            <td>251</td>
+            <td>2025-05-23 - 2026-05-22</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+          <tr>
+            <td>^N225</td>
+            <td>244</td>
+            <td>2025-05-26 - 2026-05-26</td>
+            <td><a href="https://query1.finance.yahoo.com/v8/finance/chart/%5EN225?range=1y&amp;interval=1d">Yahoo Finance chart API</a></td>
+            <td><span class="badge mid">取得済み</span></td>
+          </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note">更新日時: 2026/05/26 13:08</p>
+</main>
+</body>
+</html>
