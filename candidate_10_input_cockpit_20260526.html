@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 明日入力コックピット</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #cfdced;
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --navy: #113a5c;
+      --blue: #176da3;
+      --yellow: #fff7d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    .hero {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+    h1 { font-size: clamp(26px, 4vw, 42px); line-height: 1.2; margin: 0 0 10px; letter-spacing: 0; }
+    h2 { font-size: 24px; color: var(--navy); margin: 0 0 10px; letter-spacing: 0; }
+    p { margin: 0 0 12px; }
+    .hero p { color: #e8f4ff; }
+    .notice {
+      border: 2px solid #f0c36c;
+      background: var(--yellow);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      color: #5f3900;
+      margin-bottom: 16px;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+    .kpi { background: white; color: var(--ink); border: 1px solid #c9def3; border-radius: 12px; padding: 12px; }
+    .kpi b { display: block; color: var(--blue); font-size: 28px; line-height: 1; }
+    .kpi span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #9dc7e8;
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 8px 20px rgba(20, 57, 91, .06);
+    }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table { width: 100%; min-width: 980px; border-collapse: collapse; table-layout: fixed; background: white; }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    th { background: #e8f4ff; color: #073b63; font-weight: 800; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      table { min-width: 760px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>候補10社 明日入力コックピット</h1>
+      <p>明日、候補10社の根拠を固めるために入力・確認する項目を、銘柄別、作業別、必要項目別に整理しました。</p>
+      <div class="actions">
+        <a class="button" href="candidate_10_explanation_cards_20260526.html">説明カードへ戻る</a>
+        <a class="button" href="475_candidate_10_input_queue.csv">入力キューCSV</a>
+        <a class="button" href="476_candidate_10_input_by_ticker.csv">銘柄別CSV</a>
+        <a class="button" href="477_candidate_10_input_decision_rules.csv">判定ルールCSV</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>33</b><span>入力・確認項目</span></div>
+        <div class="kpi"><b>10</b><span>対象銘柄</span></div>
+        <div class="kpi"><b>未入力</b><span>初期状態</span></div>
+        <div class="kpi"><b>0社</b><span>購入判断</span></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      入力値は、出典・基準日・予想/実績区分がそろうまで採点へ接続しません。
+    </div>
+
+    <section class="panel">
+      <h2>銘柄別の入力件数</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>銘柄</th><th>会社</th><th>合計</th><th>財務</th><th>同業</th><th>反応</th><th>イベント</th><th>現在の扱い</th></tr></thead>
+        <tbody>
+
+                <tr><td>6762.T</td><td>TDK</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>2802.T</td><td>味の素</td><td>4</td><td>0</td><td>1</td><td>1</td><td>0</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>8766.T</td><td>東京海上HD</td><td>2</td><td>0</td><td>0</td><td>1</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>8316.T</td><td>三井住友FG</td><td>2</td><td>0</td><td>0</td><td>1</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>8306.T</td><td>三菱UFJ FG</td><td>4</td><td>1</td><td>1</td><td>0</td><td>0</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>6367.T</td><td>ダイキン工業</td><td>2</td><td>0</td><td>0</td><td>1</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>6503.T</td><td>三菱電機</td><td>2</td><td>0</td><td>0</td><td>1</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>5020.T</td><td>ENEOS HD</td><td>5</td><td>0</td><td>1</td><td>1</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>6146.T</td><td>ディスコ</td><td>5</td><td>1</td><td>1</td><td>0</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+                <tr><td>4385.T</td><td>メルカリ</td><td>6</td><td>1</td><td>1</td><td>1</td><td>1</td><td>テスト候補の確認対象。購入判断ではない</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>入力キュー</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>銘柄</th><th>会社</th><th>分類</th><th>作業</th><th>必要項目</th><th>取得元候補</th><th>状態</th></tr></thead>
+        <tbody>
+
+                <tr><td>IN-01</td><td>6762.T</td><td>TDK</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+                <tr><td>IN-02</td><td>2802.T</td><td>味の素</td><td>peer</td><td>同業2社以上のPER</td><td>peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median</td><td>同業会社IR、J-Quants、既存CSV</td><td>未入力</td></tr>
+
+                <tr><td>IN-03</td><td>2802.T</td><td>味の素</td><td>market</td><td>PBR</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-04</td><td>2802.T</td><td>味の素</td><td>market</td><td>ROE中央値を確認</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-05</td><td>2802.T</td><td>味の素</td><td>reaction</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating</td><td>株価OHLCV、日経平均/TOPIX、イベント日</td><td>未入力</td></tr>
+
+                <tr><td>IN-06</td><td>8766.T</td><td>東京海上HD</td><td>reaction</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating</td><td>株価OHLCV、日経平均/TOPIX、イベント日</td><td>未入力</td></tr>
+
+                <tr><td>IN-07</td><td>8766.T</td><td>東京海上HD</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+                <tr><td>IN-08</td><td>8316.T</td><td>三井住友FG</td><td>reaction</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating</td><td>株価OHLCV、日経平均/TOPIX、イベント日</td><td>未入力</td></tr>
+
+                <tr><td>IN-09</td><td>8316.T</td><td>三井住友FG</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+                <tr><td>IN-10</td><td>8306.T</td><td>三菱UFJ FG</td><td>financial</td><td>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認</td><td>source_url / source_date / forecast_per / actual_per / eps_basis</td><td>会社IR、決算短信、EDINET、J-Quants</td><td>未入力</td></tr>
+
+                <tr><td>IN-11</td><td>8306.T</td><td>三菱UFJ FG</td><td>peer</td><td>同業2社以上のPER</td><td>peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median</td><td>同業会社IR、J-Quants、既存CSV</td><td>未入力</td></tr>
+
+                <tr><td>IN-12</td><td>8306.T</td><td>三菱UFJ FG</td><td>market</td><td>PBR</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-13</td><td>8306.T</td><td>三菱UFJ FG</td><td>market</td><td>ROE中央値を確認</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-14</td><td>6367.T</td><td>ダイキン工業</td><td>reaction</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating</td><td>株価OHLCV、日経平均/TOPIX、イベント日</td><td>未入力</td></tr>
+
+                <tr><td>IN-15</td><td>6367.T</td><td>ダイキン工業</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+                <tr><td>IN-16</td><td>6503.T</td><td>三菱電機</td><td>reaction</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating</td><td>株価OHLCV、日経平均/TOPIX、イベント日</td><td>未入力</td></tr>
+
+                <tr><td>IN-17</td><td>6503.T</td><td>三菱電機</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+                <tr><td>IN-18</td><td>5020.T</td><td>ENEOS HD</td><td>peer</td><td>同業2社以上のPER</td><td>peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median</td><td>同業会社IR、J-Quants、既存CSV</td><td>未入力</td></tr>
+
+                <tr><td>IN-19</td><td>5020.T</td><td>ENEOS HD</td><td>market</td><td>PBR</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-20</td><td>5020.T</td><td>ENEOS HD</td><td>market</td><td>ROE中央値を確認</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-21</td><td>5020.T</td><td>ENEOS HD</td><td>reaction</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating</td><td>株価OHLCV、日経平均/TOPIX、イベント日</td><td>未入力</td></tr>
+
+                <tr><td>IN-22</td><td>5020.T</td><td>ENEOS HD</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+                <tr><td>IN-23</td><td>6146.T</td><td>ディスコ</td><td>financial</td><td>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認</td><td>source_url / source_date / forecast_per / actual_per / eps_basis</td><td>会社IR、決算短信、EDINET、J-Quants</td><td>未入力</td></tr>
+
+                <tr><td>IN-24</td><td>6146.T</td><td>ディスコ</td><td>peer</td><td>同業2社以上のPER</td><td>peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median</td><td>同業会社IR、J-Quants、既存CSV</td><td>未入力</td></tr>
+
+                <tr><td>IN-25</td><td>6146.T</td><td>ディスコ</td><td>market</td><td>PBR</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-26</td><td>6146.T</td><td>ディスコ</td><td>market</td><td>ROE中央値を確認</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-27</td><td>6146.T</td><td>ディスコ</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+                <tr><td>IN-28</td><td>4385.T</td><td>メルカリ</td><td>financial</td><td>PERなど不足する財務指標を公式IR、EDINET、J-Quants等で確認</td><td>source_url / source_date / forecast_per / actual_per / eps_basis</td><td>会社IR、決算短信、EDINET、J-Quants</td><td>未入力</td></tr>
+
+                <tr><td>IN-29</td><td>4385.T</td><td>メルカリ</td><td>peer</td><td>同業2社以上のPER</td><td>peer_ticker_1 / peer_ticker_2 / peer_per_median / peer_pbr_median / peer_roe_median</td><td>同業会社IR、J-Quants、既存CSV</td><td>未入力</td></tr>
+
+                <tr><td>IN-30</td><td>4385.T</td><td>メルカリ</td><td>market</td><td>PBR</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-31</td><td>4385.T</td><td>メルカリ</td><td>market</td><td>ROE中央値を確認</td><td>cpi_result / fomc_result / boj_result / nikkei_status</td><td>FRED、日銀、統計局、指数データ</td><td>未入力</td></tr>
+
+                <tr><td>IN-32</td><td>4385.T</td><td>メルカリ</td><td>reaction</td><td>決算後1日、5日、20日の対ベンチマーク超過リターンを確認</td><td>event_date / ret_1d_excess / ret_5d_excess / ret_20d_excess / reaction_rating</td><td>株価OHLCV、日経平均/TOPIX、イベント日</td><td>未入力</td></tr>
+
+                <tr><td>IN-33</td><td>4385.T</td><td>メルカリ</td><td>event</td><td>質的仮説に対応するイベント日と株価反応を確認</td><td>event_name / event_date / hypothesis / price_reaction / evidence_rating</td><td>企業IR、TDnet、公式発表、株価OHLCV</td><td>未入力</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+
+    <section class="panel">
+      <h2>判定ルール</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>区分</th><th>条件</th><th>扱い</th></tr></thead>
+        <tbody>
+
+                <tr><td>入力済み</td><td>出典URL、基準日、入力値、予想/実績区分がそろう</td><td>採用候補として検算へ進める</td></tr>
+
+                <tr><td>一部不足</td><td>数値はあるが出典や基準日が不足</td><td>説明補助に止め、点数へ入れない</td></tr>
+
+                <tr><td>未取得</td><td>値がない、または取得元が不安定</td><td>未接続として残し、候補順位を保守的に扱う</td></tr>
+
+                <tr><td>質的情報</td><td>イベント仮説のみで実績反応がない</td><td>調査理由として記録し、加点しない</td></tr>
+
+                <tr><td>購入判断</td><td>6月イベント実数が未入力</td><td>購入判断は出さない</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    </section>
+  </main>
+</body>
+</html>
