@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 選定ドラフト 2026年5月26日</title>
+  <style>
+    :root {
+      --ink: #061a33;
+      --muted: #3f5168;
+      --line: #c9d9ea;
+      --bg: #f4f8fc;
+      --navy: #0d3658;
+      --blue: #0b6fa4;
+      --soft: #eef7ff;
+      --amber: #b45309;
+      --green: #087f5b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.72;
+      letter-spacing: 0;
+    }
+    header { background: var(--navy); color: #fff; padding: 34px clamp(18px, 4vw, 58px); }
+    h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; color: #e7f3ff; font-weight: 800; max-width: 1120px; }
+    main { width: min(1240px, calc(100% - 32px)); margin: 24px auto 56px; }
+    section { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 22px; margin: 18px 0; break-inside: avoid; }
+    h2 { margin: 0 0 14px; padding-left: 12px; border-left: 8px solid var(--blue); font-size: 24px; }
+    .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .metric { border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: var(--soft); min-height: 122px; }
+    .metric span { display: block; color: var(--muted); font-weight: 900; }
+    .metric strong { display: block; color: var(--blue); font-size: 30px; line-height: 1.2; }
+    .notice { border-left: 8px solid var(--amber); background: #fff7ed; padding: 14px; border-radius: 8px; font-weight: 900; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button { display: inline-flex; align-items: center; min-height: 38px; padding: 8px 12px; border-radius: 8px; border: 1px solid #9cc8ec; background: #fff; color: var(--navy); text-decoration: none; font-weight: 900; font-size: 13px; }
+    .rule-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .rule { border: 1px solid var(--line); border-radius: 8px; padding: 13px; background: #fff; }
+    .rule b { color: var(--green); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; min-width: 1420px; border-collapse: collapse; table-layout: fixed; }
+    th, td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 9px; vertical-align: top; text-align: left; overflow-wrap: anywhere; word-break: break-word; }
+    th { background: #e6f1fb; color: #073b63; font-weight: 900; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1240px); }
+      .summary, .rule-grid { grid-template-columns: 1fr; }
+      section { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>候補10社 選定ドラフト</h1>
+    <p>明日、根拠付きで10社を説明するための作業順位です。質的仮説は補助扱いにし、量的データと実績反応を主軸にしています。</p>
+  </header>
+  <main>
+    <section>
+      <h2>概要</h2>
+      <div class="summary">
+
+        <div class="metric">
+          <span>説明優先</span>
+          <strong>3社</strong>
+          <small>現時点の数値で優先して根拠整理する対象。実行判断ではない。</small>
+        </div>
+        <div class="metric">
+          <span>比較維持</span>
+          <strong>3社</strong>
+          <small>10社内で比較を続ける対象。上位との差や弱点を説明する。</small>
+        </div>
+        <div class="metric">
+          <span>反応更新待ち</span>
+          <strong>1社</strong>
+          <small>決算後5日または20営業日の到達後に再分類する対象。</small>
+        </div>
+        <div class="metric">
+          <span>検算・補完</span>
+          <strong>3社</strong>
+          <small>弱い実績反応または不足値により、説明前に注意書きが必要な対象。</small>
+        </div>
+      </div>
+      <p class="notice">この順位はテスト対象を説明するための作業順位です。投資実行判断ではありません。</p>
+      <div class="toolbar">
+        <a class="button" href="518_candidate_10_selection_draft_summary.csv">518 要約CSV</a>
+        <a class="button" href="519_candidate_10_selection_draft_detail.csv">519 詳細CSV</a>
+        <a class="button" href="520_candidate_10_selection_draft_rules.csv">520 ルールCSV</a>
+        <a class="button" href="candidate_10_evidence_pack_20260526.html">根拠パックへ</a>
+        <a class="button" href="candidate_10_completion_closure_20260526.html">完了状況へ</a>
+        <a class="button" href="index.html">メインページへ</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>判定ルール</h2>
+      <div class="rule-grid">
+
+        <div class="rule"><b>質的仮説は単独加点しない</b><br>時流やイベントは説明補助として残すが、実績反応や量的データが弱い場合は順位を上げない。</div>
+        <div class="rule"><b>未到達反応は接続しない</b><br>決算後20営業日が到達していない銘柄は、反応層を暫定扱いにする。</div>
+        <div class="rule"><b>同業比較不足は点数へ混ぜない</b><br>同業3社以上かつ候補側2項目以上の条件を満たさない場合、同業比較は未接続にする。</div>
+        <div class="rule"><b>実績反応が弱い銘柄は検算へ回す</b><br>構造仮説が強く見えても、決算後反応が弱い場合は検算優先にする。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>10社ドラフト順位</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>会社</th><th>状態</th><th>評価</th><th>作業点</th><th>量的評価</th><th>信頼度</th><th>NISA参照</th><th>反応層</th><th>同業比較</th><th>質的情報</th><th>根拠</th><th>残課題</th><th>扱い</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>6762.T</td><td>TDK</td><td>説明優先</td><td>S</td><td>80.9</td><td>A</td><td>100</td><td>60.7</td><td>暫定A</td><td>補正参考可</td><td>補助仮説</td><td>量的評価A、信頼度100、PER 26.7、ROE 9.81%、売上成長13.6%、利益成長21.5%、決算後反応 5日 対日経 5.5%、20営業日待ち、同業比較は使用可</td><td>不足: イベント因果未完了</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>2</td><td>8316.T</td><td>三井住友FG</td><td>説明優先</td><td>S</td><td>80.9</td><td>B</td><td>95</td><td>65.1</td><td>暫定A</td><td>補正参考可</td><td>補助仮説</td><td>量的評価B、信頼度95、PER 13.61、ROE 10.38%、売上成長6.1%、利益成長34%、決算後反応 5日 対日経 5.99%、20営業日待ち、同業比較は使用可</td><td>不足: 決算後反応未完了または未到達 / イベント因果未完了</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>3</td><td>2802.T</td><td>味の素</td><td>説明優先</td><td>A</td><td>76.0</td><td>B</td><td>95</td><td>67.8</td><td>暫定A</td><td>未反映</td><td>補助仮説</td><td>量的評価B、信頼度95、PER 43.73、ROE 17.75%、売上成長3.5%、利益成長75%、決算後反応 5日 対日経 12.07%、20営業日待ち、同業比較は未接続</td><td>不足: 決算後反応未完了または未到達 / 業種別補正未完了 / 業種別補正:接続不可 同業比較は未接続: 同業2社、PER 0件、PBR 0件、ROE 0件で基準未満。</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>4</td><td>5020.T</td><td>ENEOS HD</td><td>比較維持</td><td>B</td><td>72.2</td><td>C</td><td>95</td><td>64.3</td><td>暫定B</td><td>未反映</td><td>補助仮説</td><td>量的評価C、信頼度95、PER 8.36、ROE 8.00%、売上成長-4.5%、利益成長339.8%、決算後反応 5日 対日経 0.94%、20営業日待ち、同業比較は未接続</td><td>不足: 決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了 / 業種別補正:接続不可 同業比較は未接続: 同業3社、PER 0件、PBR 0件、ROE 0件で基準未満。</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>5</td><td>6367.T</td><td>ダイキン工業</td><td>比較維持</td><td>B</td><td>70.3</td><td>C</td><td>100</td><td>52.6</td><td>暫定B</td><td>未反映</td><td>補助仮説</td><td>量的評価C、信頼度100、PER 24.97、ROE 9.1%、売上成長5.5%、利益成長3.3%、決算後反応 5日 対日経 1.92%、20営業日待ち、同業比較は未接続</td><td>不足: 決算後反応未完了または未到達 / イベント因果未完了 同業比較は未接続: 同業1社、PER 1件、PBR 1件、ROE 1件で基準未満。</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>6</td><td>6503.T</td><td>三菱電機</td><td>比較維持</td><td>B</td><td>70.0</td><td>C</td><td>95</td><td>55.6</td><td>暫定B</td><td>未反映</td><td>補助仮説</td><td>量的評価C、信頼度95、PER 26.09、ROE 9.67%、売上成長6.8%、利益成長10.5%、決算後反応 5日 対日経 1.9%、20営業日待ち、同業比較は未接続</td><td>不足: 決算後反応未完了または未到達 / イベント因果未完了 同業比較は未接続: 同業2社、PER 2件、PBR 2件、ROE 2件で基準未満。</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>7</td><td>8766.T</td><td>東京海上HD</td><td>反応更新待ち</td><td>B</td><td>66.9</td><td>B</td><td>100</td><td>65.4</td><td>1日暫定</td><td>補正参考可</td><td>補助仮説</td><td>量的評価B、信頼度100、PER 17.61、ROE 18.68%、売上成長5.1%、利益成長-7.6%、決算後反応 1日 対日経 -4.68%、5日/20営業日待ち、同業比較は使用可</td><td>1日反応のみのため、5営業日と20営業日を待つ。 不足: 決算後反応未完了または未到達 / イベント因果未完了</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>8</td><td>4385.T</td><td>メルカリ</td><td>補完後に再判定</td><td>B</td><td>65.1</td><td>保留</td><td>87</td><td>79.8</td><td>暫定A</td><td>未反映</td><td>補助仮説</td><td>量的評価保留、信頼度87、PER 34.53（公式3Q累計EPS + 既存株価CSV）、ROE 30.52%、売上成長2.8%、利益成長59.2%、決算後反応 5日 対日経 7.3%、20営業日待ち、同業比較は未接続</td><td>PERまたは財務指標の不足を解消するまで順位を固定しない。 不足: 財務指標未完了 / 決算後反応未完了または未到達 / 業種別補正未完了 / イベント因果未完了 / 財務指標:説明補助まで / 業種別補正:接続不可 / PER:既存CSV内では未発見 同業比較は未接続: 同業2社、PER 1件、PBR 0件、ROE 0件で基準未満。</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>9</td><td>8306.T</td><td>三菱UFJ FG</td><td>補完後に再判定</td><td>B</td><td>65.0</td><td>C</td><td>92</td><td>62.1</td><td>暫定B</td><td>補正参考可</td><td>補助仮説</td><td>量的評価C、信頼度92、PER 17（公式EPS + 既存株価CSV）、ROE 11.34%、売上成長7.3%、利益成長27.7%、決算後反応 5日 対日経 2.39%、20営業日待ち、同業比較は使用可</td><td>PERまたは財務指標の不足を解消するまで順位を固定しない。 不足: 財務指標未完了 / 業種別補正未完了 / 財務指標:説明補助まで / 業種別補正:説明補助まで / PER:既存CSV内では未発見</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr><tr><td>10</td><td>6146.T</td><td>ディスコ</td><td>検算優先</td><td>C</td><td>49.0</td><td>C</td><td>92</td><td>60.9</td><td>D 実績弱い</td><td>補正参考可</td><td>補助仮説</td><td>量的評価C、信頼度92、PER 61.44（公式EPS + 既存株価CSV）、ROE 25.15%、売上成長11.1%、利益成長10.9%、決算後反応 20営業日 対日経 -19.66%、同業比較は使用可</td><td>実績反応が弱いため、構造仮説をそのまま採用しない。 不足: 財務指標未完了 / 業種別補正未完了 / イベント因果未完了 / 財務指標:説明補助まで / 業種別補正:説明補助まで / PER:既存CSV内では未発見</td><td>テスト対象選定の作業順位。投資実行判断ではない。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+  </main>
+</body>
+</html>
