@@ -1,11 +1,11 @@
 generated_at,ticker,company,chart_status,chart_error,fundamental_status,fundamental_error,quote_url,performance_url,disclosure_url
-2026/05/27 11:35,2802.T,味の素,取得,,取得,,https://finance.yahoo.co.jp/quote/2802.T,https://finance.yahoo.co.jp/quote/2802.T/performance,https://finance.yahoo.co.jp/quote/2802.T/disclosure
-2026/05/27 11:35,6762.T,TDK,取得,,取得,,https://finance.yahoo.co.jp/quote/6762.T,https://finance.yahoo.co.jp/quote/6762.T/performance,https://finance.yahoo.co.jp/quote/6762.T/disclosure
-2026/05/27 11:35,6146.T,ディスコ,取得,,取得,,https://finance.yahoo.co.jp/quote/6146.T,https://finance.yahoo.co.jp/quote/6146.T/performance,https://finance.yahoo.co.jp/quote/6146.T/disclosure
-2026/05/27 11:35,7011.T,三菱重工業,取得,,取得,,https://finance.yahoo.co.jp/quote/7011.T,https://finance.yahoo.co.jp/quote/7011.T/performance,https://finance.yahoo.co.jp/quote/7011.T/disclosure
-2026/05/27 11:35,8053.T,住友商事,取得,,取得,,https://finance.yahoo.co.jp/quote/8053.T,https://finance.yahoo.co.jp/quote/8053.T/performance,https://finance.yahoo.co.jp/quote/8053.T/disclosure
-2026/05/27 11:35,9984.T,ソフトバンクG,取得,,取得,,https://finance.yahoo.co.jp/quote/9984.T,https://finance.yahoo.co.jp/quote/9984.T/performance,https://finance.yahoo.co.jp/quote/9984.T/disclosure
-2026/05/27 11:35,8316.T,三井住友FG,取得,,取得,,https://finance.yahoo.co.jp/quote/8316.T,https://finance.yahoo.co.jp/quote/8316.T/performance,https://finance.yahoo.co.jp/quote/8316.T/disclosure
-2026/05/27 11:35,8306.T,三菱UFJ FG,取得,,取得,,https://finance.yahoo.co.jp/quote/8306.T,https://finance.yahoo.co.jp/quote/8306.T/performance,https://finance.yahoo.co.jp/quote/8306.T/disclosure
-2026/05/27 11:35,7735.T,SCREEN HD,取得,,取得,,https://finance.yahoo.co.jp/quote/7735.T,https://finance.yahoo.co.jp/quote/7735.T/performance,https://finance.yahoo.co.jp/quote/7735.T/disclosure
-2026/05/27 11:35,7173.T,東京きらぼしFG,取得,,取得,,https://finance.yahoo.co.jp/quote/7173.T,https://finance.yahoo.co.jp/quote/7173.T/performance,https://finance.yahoo.co.jp/quote/7173.T/disclosure
+2026/05/27 11:44,2802.T,味の素,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/2802.T,https://finance.yahoo.co.jp/quote/2802.T/performance,https://finance.yahoo.co.jp/quote/2802.T/disclosure
+2026/05/27 11:44,6762.T,TDK,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/6762.T,https://finance.yahoo.co.jp/quote/6762.T/performance,https://finance.yahoo.co.jp/quote/6762.T/disclosure
+2026/05/27 11:44,6146.T,ディスコ,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/6146.T,https://finance.yahoo.co.jp/quote/6146.T/performance,https://finance.yahoo.co.jp/quote/6146.T/disclosure
+2026/05/27 11:44,7011.T,三菱重工業,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/7011.T,https://finance.yahoo.co.jp/quote/7011.T/performance,https://finance.yahoo.co.jp/quote/7011.T/disclosure
+2026/05/27 11:44,8053.T,住友商事,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/8053.T,https://finance.yahoo.co.jp/quote/8053.T/performance,https://finance.yahoo.co.jp/quote/8053.T/disclosure
+2026/05/27 11:44,9984.T,ソフトバンクG,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/9984.T,https://finance.yahoo.co.jp/quote/9984.T/performance,https://finance.yahoo.co.jp/quote/9984.T/disclosure
+2026/05/27 11:44,8316.T,三井住友FG,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/8316.T,https://finance.yahoo.co.jp/quote/8316.T/performance,https://finance.yahoo.co.jp/quote/8316.T/disclosure
+2026/05/27 11:44,8306.T,三菱UFJ FG,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/8306.T,https://finance.yahoo.co.jp/quote/8306.T/performance,https://finance.yahoo.co.jp/quote/8306.T/disclosure
+2026/05/27 11:44,7735.T,SCREEN HD,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/7735.T,https://finance.yahoo.co.jp/quote/7735.T/performance,https://finance.yahoo.co.jp/quote/7735.T/disclosure
+2026/05/27 11:44,7173.T,東京きらぼしFG,取得,,取得失敗・同日取得値使用,HTTP 500,https://finance.yahoo.co.jp/quote/7173.T,https://finance.yahoo.co.jp/quote/7173.T/performance,https://finance.yahoo.co.jp/quote/7173.T/disclosure

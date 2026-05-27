@@ -16,9 +16,78 @@ const manualEventFallback = {
   "2802.T": { event_date: "2026-05-07", event_title: "2026年3月期決算", source_url: "https://news.ajinomoto.co.jp/2026/05/2026_05_07_03.pdf" },
   "6762.T": { event_date: "2026-04-28", event_title: "2026年3月期決算", source_url: "https://www.tdk.com/ja/ir/ir_events/conference/2026/4q_1.html" },
   "6146.T": { event_date: "2026-04-24", event_title: "2026年3月期決算", source_url: "https://www.disco.co.jp/jp/ir/" },
+  "7011.T": { event_date: "2026-05-12", event_title: "2026年3月期決算", source_url: "https://finance.yahoo.co.jp/quote/7011.T/disclosure" },
+  "8053.T": { event_date: "2026-05-01", event_title: "2026年3月期決算", source_url: "https://finance.yahoo.co.jp/quote/8053.T/disclosure" },
   "9984.T": { event_date: "2026-05-11", event_title: "2026年3月期決算", source_url: "https://group.softbank/ir" },
   "8316.T": { event_date: "2026-05-13", event_title: "2026年3月期決算", source_url: "https://www.smfg.co.jp/investor/" },
   "8306.T": { event_date: "2026-05-15", event_title: "2026年3月期決算", source_url: "https://www.mufg.jp/ir/" },
+  "7735.T": { event_date: "2026-05-13", event_title: "2026年3月期決算", source_url: "https://finance.yahoo.co.jp/quote/7735.T/disclosure" },
+  "7173.T": { event_date: "2026-05-08", event_title: "2026年3月期決算", source_url: "https://finance.yahoo.co.jp/quote/7173.T/disclosure" },
+};
+
+const fundamentalFallback = {
+  // 2026/05/27の同日取得済み値。Yahoo側の一時的なfetch失敗で空欄上書きしないための保護。
+  "2802.T": {
+    per: "42.38",
+    pbr: "6.60",
+    roe_pct: "17.75",
+    dividend_yield_pct: "0.94",
+    market_cap: "5,194,709",
+    latest_period: "2026年3月期",
+    previous_period: "2025年3月期",
+    sales_million_yen: "1,583,719",
+    sales_yoy_pct: "3.5",
+    profit_metric: "営業利益",
+    profit_million_yen: "199,412",
+    profit_yoy_pct: "75",
+    performance_updated_date: "2026/5/7",
+  },
+  "6762.T": {
+    per: "31.22", pbr: "3.21", roe_pct: "9.81", dividend_yield_pct: "1.08",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_million_yen: "2,504,820", sales_yoy_pct: "13.6", profit_metric: "営業利益",
+    profit_million_yen: "272,415", profit_yoy_pct: "21.5", performance_updated_date: "2026/4/28",
+  },
+  "6146.T": {
+    per: "", pbr: "12.74", roe_pct: "25.15", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "11.1", profit_metric: "営業利益", profit_yoy_pct: "10.9",
+  },
+  "7011.T": {
+    per: "34.29", pbr: "4.22", roe_pct: "12.22", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "-1.1", profit_metric: "営業利益", profit_yoy_pct: "26.7",
+  },
+  "8053.T": {
+    per: "13.73", pbr: "1.87", roe_pct: "12.94", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "0.6", profit_metric: "利益", profit_yoy_pct: "0.9",
+  },
+  "9984.T": {
+    per: "", pbr: "2.45", roe_pct: "34.28", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "7.7", profit_metric: "利益", profit_yoy_pct: "259.9",
+  },
+  "8316.T": {
+    per: "13.40", pbr: "1.44", roe_pct: "10.38", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "6.1", profit_metric: "利益", profit_yoy_pct: "34",
+  },
+  "8306.T": {
+    per: "", pbr: "1.54", roe_pct: "11.34", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "7.3", profit_metric: "利益", profit_yoy_pct: "27.7",
+  },
+  "7735.T": {
+    per: "19.65", pbr: "4.44", roe_pct: "20.28", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "-3.1", profit_metric: "営業利益", profit_yoy_pct: "-9.7",
+  },
+  "7173.T": {
+    per: "8.83", pbr: "0.96", roe_pct: "10.66", dividend_yield_pct: "",
+    latest_period: "2026年3月期", previous_period: "2025年3月期",
+    sales_yoy_pct: "23.9", profit_metric: "利益", profit_yoy_pct: "45.2",
+  },
 };
 
 function read(file) {
@@ -220,17 +289,23 @@ function parsePerformance(html) {
 }
 
 function parseDisclosure(html, ticker) {
-  const itemRe = /\{\"headline\":\"([\s\S]*?)\",\"link\":\"([\s\S]*?)\"[\s\S]*?\"createdDateTime\":\"([^"]+)\"/g;
+  const normalized = html
+    .replace(/\\"/g, '"')
+    .replace(/\\u0026/g, "&")
+    .replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+  const itemRe = /\{"headline":"([\s\S]*?)","link":"([\s\S]*?)"[\s\S]*?"createdDateTime":"([^"]+)"/g;
   const items = [];
-  for (const m of html.matchAll(itemRe)) {
-    const headline = m[1].replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16))).replace(/\\"/g, '"');
-    const link = m[2].replace(/\\u0026/g, "&");
+  for (const m of normalized.matchAll(itemRe)) {
+    const headline = m[1].replace(/\\"/g, '"');
+    const link = m[2];
     const created = m[3];
-    if (/決算短信|Financial Results|決算説明資料/.test(headline)) {
+    const isFinancialResult = /決算短信|決算説明資料|Financial Results|Financial Report/.test(headline);
+    const isNoise = /訂正|Correction|Occurrence of Losses|Gain on Sale|Non-Consolidated Financial Results due|Dividends of Surplus|Presentation Materials/.test(headline);
+    if (isFinancialResult && !isNoise) {
       items.push({ headline, link, created });
     }
   }
-  const preferred = items.find((item) => /決算短信|Financial Results/.test(item.headline)) ?? items[0];
+  const preferred = items.find((item) => /決算短信|Consolidated Financial Results|Consolidated Financial Report/.test(item.headline)) ?? items[0];
   if (preferred) {
     return {
       event_date: preferred.created.slice(0, 10),
@@ -474,12 +549,15 @@ for (const row of focus) {
     fundamental = await fetchFundamental(row.ticker);
     fundamentalStatus = fundamental.fundamental_status;
   } catch (error) {
+    const fallback = fundamentalFallback[row.ticker];
     fundamental = {
+      ...(fallback ?? {}),
       event_date: manualEventFallback[row.ticker]?.event_date ?? "",
       event_title: manualEventFallback[row.ticker]?.event_title ?? "",
       source_url: manualEventFallback[row.ticker]?.source_url ?? "",
-      source_type: manualEventFallback[row.ticker] ? "手動フォールバック" : "未取得",
+      source_type: fallback ? "同日取得済み値フォールバック" : (manualEventFallback[row.ticker] ? "手動フォールバック" : "未取得"),
     };
+    fundamentalStatus = fallback ? "取得失敗・同日取得値使用" : "未取得";
     fundamentalError = error.message;
   }
   const price = chartMetrics(chart);
@@ -596,7 +674,7 @@ function table(rows) {
 const summaryCards = [
   ["対象", `${focus.length}社`, "プロ参照反映後の優先確認10社"],
   ["価格取得", `${fetchRows.filter((r) => r.chart_status === "取得").length}社`, "1年日次・出来高・下落率を自動計算"],
-  ["PER等取得", `${fundamentalRows.filter((r) => r.per || r.pbr || r.roe_pct).length}社`, "Yahoo!ファイナンスHTMLから取得できた範囲"],
+  ["PER等取得", `${fundamentalRows.filter((r) => r.per || r.pbr || r.roe_pct).length}社`, "直接取得または同日取得済み値で補完"],
   ["決算反応", `${reactionRows.filter((r) => r.reaction_score).length}社`, "日経平均比の1/5/20営業日反応"],
 ];
 
