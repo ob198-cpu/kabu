@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的×量的 銘柄選出・売買ルール運用システム 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; --green:#0c7a43; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1320px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1040px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:14px 0; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 8px 20px rgba(20,60,90,.08); }
+    .card small { display:block; color:#334155; font-weight:700; }
+    .card b { display:block; font-size:24px; margin-top:4px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:900px; }
+    .wide table { min-width:1900px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    @media (max-width:900px) { .cards { grid-template-columns:1fr; } main { padding:12px 10px 36px; } header,section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>質的×量的 銘柄選出・売買ルール運用システム</h1>
+      <p class="lead">時流・ニュース・イベントを監視し、仮説を作り、数字で検証し、テスト銘柄・売買ルール・運用プランへ接続するための実装版です。</p>
+    </header>
+    <div class="cards">
+      <div class="card"><small>対象銘柄</small><b>10社</b></div>
+      <div class="card"><small>テスト中心候補</small><b>1社</b></div>
+      <div class="card"><small>条件付き候補</small><b>3社</b></div>
+      <div class="card"><small>売買ルール</small><b>6件</b></div>
+    </div>
+    <section>
+      <h2>1. 概要</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody><tr><td>実装内容</td><td>質的監視、仮説、量的検証、銘柄選出、売買ルール、運用記録までを1つの流れに接続。</td></tr><tr><td>基本方針</td><td>質的データは直接加点しない。量的データを主軸に、確認条件・警戒条件として反映する。</td></tr><tr><td>購入判断</td><td>本資料は購入確定資料ではない。6月イベント後、最新決算と証券会社画面を確認して再判定する。</td></tr><tr><td>実装済み出力</td><td>ワークフロー表、銘柄別システムスコア、売買ルール、運用プランを出力。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="note">質的データは直接加点しません。確認条件・警戒条件として使い、量的データで検証できたものだけ候補に残します。</div>
+    </section>
+    <section>
+      <h2>2. システムの流れ</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>段階</th><th>入力</th><th>処理</th><th>出力</th><th>判定</th></tr></thead>
+        <tbody><tr><td>1. 監視</td><td>AI半導体、金利、原油、TOB、バフェット売買、FRB/日銀、決算、新商品など</td><td>出来事を登録し、対象業種・候補銘柄・確認数字・否定条件に分解する。</td><td>質的監視イベント</td><td>この段階では買い判断に使わない</td></tr><tr><td>2. 仮説</td><td>監視イベント</td><td>需要連鎖を作る。例: AI投資増 -&gt; HBM需要 -&gt; 電子部品/検査/材料需要。</td><td>銘柄別の追い風・逆風仮説</td><td>仮説は点数へ直接足さない</td></tr><tr><td>3. 検証</td><td>売上、受注、利益率、PER/PBR/ROE、決算後反応、指数比較</td><td>イベントスタディに近い形で、日経平均/TOPIXを引いた超過反応を確認する。</td><td>通過、保留、除外</td><td>数字に出ない仮説は落とす</td></tr><tr><td>4. 銘柄選出</td><td>量的評価、質的確認、警戒条件、データ信頼度</td><td>量的評価を主、質的評価を補助として統合する。未取得データは点数に混ぜない。</td><td>テスト候補、比較候補、補完対象</td><td>10社候補へ分類</td></tr><tr><td>5. 売買ルール</td><td>分類結果、6月イベント結果、最新決算</td><td>買う条件、待つ条件、下げる条件、撤退条件を銘柄別に作る。</td><td>売買ルール</td><td>購入可否は6月イベント後に再判定</td></tr><tr><td>6. 運用記録</td><td>予測、実績、下落理由、イベント結果</td><td>予測と実績の差を記録し、モデルの重みと除外条件を修正する。</td><td>改善ログ</td><td>次回候補選定へ反映</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>3. 銘柄別 選出・売買ルール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>会社名</th><th>量的点</th><th>統合評価</th><th>質的テーマ</th><th>テーマ点</th><th>信頼度</th><th>バフェット項目</th><th>システム点</th><th>分類</th><th>買い条件</th><th>下げる・売る条件</th><th>運用プラン</th></tr></thead>
+        <tbody><tr><td>1</td><td>6762.T</td><td>TDK</td><td>80.9</td><td>A</td><td>HBM・先端パッケージ / AI半導体投資 / 円安</td><td>70</td><td>82</td><td>対象外</td><td>80</td><td>テスト中心候補</td><td>6月イベント後に市場条件が悪化せず、公式決算・PER/PBR/ROE・決算後反応が確認できた場合だけ少額テストを検討。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 SOX指数や主要顧客投資計画が悪化した場合は半導体テーマの上限を下げる。</td><td>6月イベント後に少額・分割・記録前提で再判定。購入前に証券会社画面と最新決算を確認。</td></tr><tr><td>2</td><td>8316.T</td><td>三井住友FG</td><td>80.9</td><td>B</td><td>金利上昇 / 自社株買い・増配・資本効率</td><td>65</td><td>74</td><td>警戒条件</td><td>70.8</td><td>条件付きテスト候補</td><td>不足データ補完後、指数比較と同業比較で劣後しない場合だけ候補に残す。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 バークシャー関連・同業関連で大幅売却や信用不安が出た場合は追加確認まで新規買いを止める。</td><td>6月イベント後に少額・分割・記録前提で再判定。購入前に証券会社画面と最新決算を確認。</td></tr><tr><td>3</td><td>2802.T</td><td>味の素</td><td>76.0</td><td>B</td><td>食品値上げ耐性 / 円高 / 原油・ナフサ下落</td><td>60</td><td>78</td><td>対象外</td><td>73</td><td>条件付きテスト候補</td><td>不足データ補完後、指数比較と同業比較で劣後しない場合だけ候補に残す。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>6月イベント後に少額・分割・記録前提で再判定。購入前に証券会社画面と最新決算を確認。</td></tr><tr><td>4</td><td>5020.T</td><td>ENEOS HD</td><td>72.2</td><td>C</td><td>原油・中東リスク / 原油・ナフサ下落</td><td>60</td><td>51</td><td>警戒条件</td><td>59.6</td><td>補完後に再判定</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 バークシャー関連・同業関連で大幅売却や信用不安が出た場合は追加確認まで新規買いを止める。</td><td>購入候補ではなく、比較・補完・警戒条件の確認に使う。</td></tr><tr><td>5</td><td>6367.T</td><td>ダイキン工業</td><td>70.3</td><td>C</td><td>データセンター冷却 / 円安</td><td>70</td><td>55</td><td>対象外</td><td>65.7</td><td>比較・観察候補</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>購入候補ではなく、比較・補完・警戒条件の確認に使う。</td></tr><tr><td>6</td><td>6503.T</td><td>三菱電機</td><td>70.0</td><td>C</td><td>データセンター電力不足 / データセンター冷却 / 防衛・安全保障 / 人手不足・省人化</td><td>80</td><td>55</td><td>対象外</td><td>67</td><td>比較・観察候補</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>購入候補ではなく、比較・補完・警戒条件の確認に使う。</td></tr><tr><td>7</td><td>8766.T</td><td>東京海上HD</td><td>66.9</td><td>B</td><td>金利上昇 / 自社株買い・増配・資本効率</td><td>65</td><td>82</td><td>確認条件</td><td>72.3</td><td>条件付きテスト候補</td><td>不足データ補完後、指数比較と同業比較で劣後しない場合だけ候補に残す。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>6月イベント後に少額・分割・記録前提で再判定。購入前に証券会社画面と最新決算を確認。</td></tr><tr><td>8</td><td>4385.T</td><td>メルカリ</td><td>65.1</td><td>保留</td><td>人手不足・省人化 / 国内消費・プラットフォーム</td><td>60</td><td>55</td><td>対象外</td><td>59.8</td><td>補完後に再判定</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>購入候補ではなく、比較・補完・警戒条件の確認に使う。</td></tr><tr><td>9</td><td>8306.T</td><td>三菱UFJ FG</td><td>65.0</td><td>C</td><td>金利上昇 / 自社株買い・増配・資本効率</td><td>65</td><td>51</td><td>警戒条件</td><td>56.4</td><td>補完後に再判定</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 バークシャー関連・同業関連で大幅売却や信用不安が出た場合は追加確認まで新規買いを止める。</td><td>購入候補ではなく、比較・補完・警戒条件の確認に使う。</td></tr><tr><td>10</td><td>6146.T</td><td>ディスコ</td><td>49.0</td><td>C</td><td>AI半導体投資 / 半導体工程の寡占・高シェア / HBM・先端パッケージ</td><td>70</td><td>40</td><td>対象外</td><td>51.7</td><td>補完後に再判定</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 SOX指数や主要顧客投資計画が悪化した場合は半導体テーマの上限を下げる。</td><td>購入候補ではなく、比較・補完・警戒条件の確認に使う。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>4. 共通売買ルール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>種類</th><th>条件</th><th>アクション</th></tr></thead>
+        <tbody><tr><td>買う前の必須条件</td><td>6月の米CPI、日銀、FOMC後に、日経平均/TOPIXが大きく崩れていないことを確認する。</td><td>条件未達なら購入検討を延期。</td></tr><tr><td>買う前の必須条件</td><td>候補銘柄の公式決算、PER/PBR/ROE、決算後反応、同業比較を確認する。</td><td>未取得データが重要項目に残る銘柄は購入候補にしない。</td></tr><tr><td>5%下落時</td><td>購入後に-5%となった場合、指数連動、業種連動、個別悪材料のどれかを分類する。</td><td>指数連動なら保留、個別悪材料なら縮小候補。</td></tr><tr><td>10%下落時</td><td>購入後に-10%となり、個別悪材料または決算悪化が確認された場合。</td><td>縮小または撤退を検討。NISA枠のため安易な回転売買は避け、理由を記録する。</td></tr><tr><td>上方確認</td><td>決算後20営業日で指数を上回り、かつ売上・利益・受注がテーマ仮説に沿っている場合。</td><td>候補順位を上げる。ただし過熱・PER上限を確認する。</td></tr><tr><td>質的警戒</td><td>TOB不成立、バフェット関連の大幅売却、主要顧客投資延期、原油急落、金利急変などが発生。</td><td>新規買い停止。量的データ再確認まで候補を保留する。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>5. 学術的・実務的な運用統制</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>観点</th><th>方法</th><th>実装</th><th>理由</th></tr></thead>
+        <tbody><tr><td>学術的な扱い</td><td>イベントスタディ</td><td>イベント前後の株価を、日経平均/TOPIXなどの市場リターンと比較し、超過リターンを見る。</td><td>単純な株価上昇ではなく、市場全体の上昇を差し引いてイベントの影響を確認するため。</td></tr><tr><td>学術的な扱い</td><td>反証条件の明文化</td><td>売上・受注・利益率・決算後反応に出ない場合、質的仮説を落とす。</td><td>後付け説明や雰囲気による銘柄選定を避けるため。</td></tr><tr><td>証券会社的な扱い</td><td>投資テーマと銘柄評価の分離</td><td>AI、金利、原油、バフェット売買などは投資テーマとして管理し、銘柄評価は決算・株価・バリュエーションで確認する。</td><td>テーマだけで推奨に見えることを避け、説明責任を残すため。</td></tr><tr><td>証券会社的な扱い</td><td>適合性・リスク管理</td><td>NISA 1年保有前提、分割、損失時の確認、イベント後再判定を明示する。</td><td>購入候補と実行判断を分け、リスクを事前に説明するため。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="actions">
+        <a href="607_qual_quant_operation_system_summary.csv">概要CSV</a>
+        <a href="608_qual_quant_operation_workflow.csv">流れCSV</a>
+        <a href="609_candidate_selection_operation_rules.csv">銘柄別ルールCSV</a>
+        <a href="610_trading_rule_master.csv">売買ルールCSV</a>
+        <a href="611_academic_practical_governance.csv">運用統制CSV</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
