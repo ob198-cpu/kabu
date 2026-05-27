@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>20営業日反応 確認カレンダー</title>
+  <style>
+    :root {
+      --ink:#071d33;
+      --navy:#082f53;
+      --blue:#0b5e94;
+      --line:#c7dceb;
+      --bg:#f5f8fb;
+      --soft:#eef7ff;
+      --orange:#b45f06;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",Arial,sans-serif; line-height:1.75; }
+    header { background:linear-gradient(135deg,#082f53,#0b5e94); color:#fff; padding:34px; }
+    header h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); line-height:1.2; letter-spacing:0; }
+    header p { margin:0; color:#fff; font-weight:800; max-width:1040px; }
+    main { max-width:1220px; margin:0 auto; padding:22px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px; margin:0 0 18px; box-shadow:0 8px 20px rgba(20,60,90,.08); break-inside:avoid; page-break-inside:avoid; }
+    h2 { margin:0 0 12px; border-left:8px solid var(--blue); padding-left:12px; font-size:23px; line-height:1.35; }
+    p { color:#111; }
+    .lead { font-size:17px; font-weight:900; margin:0; }
+    .calendar { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .date-card { border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:14px; break-inside:avoid; }
+    .date { display:inline-block; background:#082f53; color:#fff; font-weight:900; padding:5px 10px; border-radius:8px; margin-bottom:10px; }
+    .ticker-row { border-top:1px solid var(--line); padding:9px 0 0; margin-top:9px; }
+    .ticker-row:first-of-type { border-top:0; margin-top:0; }
+    .ticker-row strong { color:#06395b; }
+    .ticker-row span { float:right; font-weight:900; color:#0b5e94; }
+    .ticker-row p { clear:both; margin:4px 0 0; font-size:13px; }
+    .note { background:#fff8ec; border:1px solid #efc98e; border-radius:10px; padding:12px 14px; color:#111; font-weight:800; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; min-width:1080px; font-size:13px; background:#fff; }
+    th, td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:8px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; color:#111; }
+    th { background:#e7f1fa; color:#06395b; text-align:left; font-weight:900; }
+    .links a { display:inline-block; margin:4px 8px 4px 0; padding:9px 12px; border:1px solid #8bb9d6; border-radius:8px; color:#064f79; text-decoration:none; background:#fff; font-weight:900; }
+    @media (max-width:920px){ header{padding:24px 18px;} main{padding:12px;} .calendar{grid-template-columns:1fr;} table{font-size:12px;} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>20営業日反応 確認カレンダー</h1>
+    <p>作成: 2026/05/27 14:51 / 決算後反応を1日・5日だけで判断しないため、20営業日の確認日を日本市場休場日込みで整理しました。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 目的</h2>
+      <p class="lead">決算直後の一時的な反応ではなく、約1か月後も指数を上回っているかを確認し、6月の再判定に接続します。</p>
+      <div class="note" style="margin-top:12px">前の目安は土日だけを除外していました。今回は2026年4月29日、5月4日、5月5日、5月6日などの日本市場休場日を反映しています。</div>
+    </section>
+    <section>
+      <h2>2. 確認カレンダー</h2>
+      <div class="calendar"><article class="date-card">
+  <div class="date">2026-05-28</div>
+  <div class="ticker-row"><strong>6146.T ディスコ</strong><span>55.6点</span><p>最初の20営業日確認。株価と日経平均/TOPIXを接続して反応を更新する。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-01</div>
+  <div class="ticker-row"><strong>6762.T TDK</strong><span>63.8点</span><p>20営業日反応を確認。SOX/NASDAQの同時悪化がないかも見る。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-03</div>
+  <div class="ticker-row"><strong>8053.T 住友商事</strong><span>59.6点</span><p>商社・資源テーマの持続性と、株主還元評価が続くか確認する。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-04</div>
+  <div class="ticker-row"><strong>2802.T 味の素</strong><span>65.8点</span><p>5日反応が強いため、20営業日でも日経平均/TOPIXを上回るか確認する。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-05</div>
+  <div class="ticker-row"><strong>7173.T 東京きらぼしFG</strong><span>34.5点</span><p>反応悪化の回復有無を確認。改善がなければ監視継続または外す候補。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-08</div>
+  <div class="ticker-row"><strong>9984.T ソフトバンクG</strong><span>52.9点</span><p>AI関連株と投資先評価の変動を確認。PERではなくNAV型の扱いを継続する。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-09</div>
+  <div class="ticker-row"><strong>7011.T 三菱重工業</strong><span>50.6点</span><p>防衛・重工テーマより、直近下落と200日線の回復を優先確認する。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-10</div>
+  <div class="ticker-row"><strong>8316.T 三井住友FG</strong><span>55.5点</span><p>CPI直後の金利反応と、銀行株全体の崩れがないかを確認する。</p></div><div class="ticker-row"><strong>7735.T SCREEN HD</strong><span>57.3点</span><p>1日反応後に失速しているため、20営業日で持ち直すか確認する。</p></div>
+</article><article class="date-card">
+  <div class="date">2026-06-12</div>
+  <div class="ticker-row"><strong>8306.T 三菱UFJ FG</strong><span>55.4点</span><p>日銀前の銀行株反応を確認。三井住友FGとの比較に接続する。</p></div>
+</article></div>
+    </section>
+    <section>
+      <h2>3. 詳細表</h2>
+      <div class="table-wrap "><table><thead><tr><th>順番</th><th>確認日</th><th>銘柄</th><th>決算日</th><th>1日超過</th><th>5日超過</th><th>現反応点</th><th>作業</th></tr></thead><tbody><tr><td>1</td><td>2026-05-28</td><td>6146.T ディスコ</td><td>2026-04-24</td><td>4.66%</td><td>1.60%</td><td>55.6点</td><td>最初の20営業日確認。株価と日経平均/TOPIXを接続して反応を更新する。</td></tr><tr><td>2</td><td>2026-06-01</td><td>6762.T TDK</td><td>2026-04-28</td><td>9.03%</td><td>5.50%</td><td>63.8点</td><td>20営業日反応を確認。SOX/NASDAQの同時悪化がないかも見る。</td></tr><tr><td>3</td><td>2026-06-03</td><td>8053.T 住友商事</td><td>2026-05-01</td><td>2.61%</td><td>6.24%</td><td>59.6点</td><td>商社・資源テーマの持続性と、株主還元評価が続くか確認する。</td></tr><tr><td>4</td><td>2026-06-04</td><td>2802.T 味の素</td><td>2026-05-07</td><td>1.64%</td><td>12.07%</td><td>65.8点</td><td>5日反応が強いため、20営業日でも日経平均/TOPIXを上回るか確認する。</td></tr><tr><td>5</td><td>2026-06-05</td><td>7173.T 東京きらぼしFG</td><td>2026-05-08</td><td>-10.58%</td><td>-5.84%</td><td>34.5点</td><td>反応悪化の回復有無を確認。改善がなければ監視継続または外す候補。</td></tr><tr><td>6</td><td>2026-06-08</td><td>9984.T ソフトバンクG</td><td>2026-05-11</td><td>3.73%</td><td>-0.05%</td><td>52.9点</td><td>AI関連株と投資先評価の変動を確認。PERではなくNAV型の扱いを継続する。</td></tr><tr><td>7</td><td>2026-06-09</td><td>7011.T 三菱重工業</td><td>2026-05-12</td><td>1.62%</td><td>-0.55%</td><td>50.6点</td><td>防衛・重工テーマより、直近下落と200日線の回復を優先確認する。</td></tr><tr><td>8</td><td>2026-06-10</td><td>8316.T 三井住友FG</td><td>2026-05-13</td><td>-2.05%</td><td>5.99%</td><td>55.5点</td><td>CPI直後の金利反応と、銀行株全体の崩れがないかを確認する。</td></tr><tr><td>9</td><td>2026-06-10</td><td>7735.T SCREEN HD</td><td>2026-05-13</td><td>9.80%</td><td>-0.49%</td><td>57.3点</td><td>1日反応後に失速しているため、20営業日で持ち直すか確認する。</td></tr><tr><td>10</td><td>2026-06-12</td><td>8306.T 三菱UFJ FG</td><td>2026-05-15</td><td>3.22%</td><td>2.39%</td><td>55.4点</td><td>日銀前の銀行株反応を確認。三井住友FGとの比較に接続する。</td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>4. 計算ルール</h2>
+      <div class="table-wrap "><table><thead><tr><th>ルール</th><th>理由</th></tr></thead><tbody><tr><td>20営業日反応 = 個別株20営業日リターン - 指数20営業日リターン</td><td>市場全体が上がっただけか、個別が強かったかを分けるため。</td></tr><tr><td>20営業日未到達の銘柄は、反応点を暫定扱いにする</td><td>1日/5日反応だけで1年保有候補を強く評価しすぎないため。</td></tr><tr><td>1日が強く5日が弱い銘柄は警戒を付ける</td><td>決算直後の期待だけで、その後に売られている可能性があるため。</td></tr><tr><td>20営業日でも指数超過がプラスなら、決算後反応を候補維持の根拠にできる</td><td>決算後に市場平均を上回る持続性が確認できるため。</td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>5. 関連CSV</h2>
+      <div class="links">
+        <a href="695_reaction_20d_calendar_summary.csv">概要CSV</a>
+        <a href="696_reaction_20d_calendar_detail.csv">詳細CSV</a>
+        <a href="697_reaction_20d_calendar_rules.csv">ルールCSV</a>
+        <a href="next_execution_board_20260527.html">明日以降 実行ボード</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

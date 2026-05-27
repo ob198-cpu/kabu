@@ -12,6 +12,25 @@ const generatedAt = new Intl.DateTimeFormat("ja-JP", {
 }).format(new Date());
 
 const currentDate = "2026-05-27";
+const jpMarketHolidays2026 = new Set([
+  "2026-01-01",
+  "2026-01-12",
+  "2026-02-11",
+  "2026-02-23",
+  "2026-03-20",
+  "2026-04-29",
+  "2026-05-04",
+  "2026-05-05",
+  "2026-05-06",
+  "2026-07-20",
+  "2026-08-11",
+  "2026-09-21",
+  "2026-09-22",
+  "2026-09-23",
+  "2026-10-12",
+  "2026-11-03",
+  "2026-11-23",
+]);
 
 function write(file, text) {
   fs.writeFileSync(path.join(root, file), text, "utf8");
@@ -43,7 +62,11 @@ function addBusinessDays(dateText, businessDays) {
   while (added < businessDays) {
     d.setDate(d.getDate() + 1);
     const day = d.getDay();
-    if (day !== 0 && day !== 6) added += 1;
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const date = String(d.getDate()).padStart(2, "0");
+    const key = `${y}-${m}-${date}`;
+    if (day !== 0 && day !== 6 && !jpMarketHolidays2026.has(key)) added += 1;
   }
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -510,7 +533,7 @@ const html = `<!doctype html>
 
     <section>
       <h2>6. 20営業日反応の確認日</h2>
-      <div class="note">20営業日は土日を除いた目安です。祝日を含む正確な取引日は、実計算時に取引日カレンダーで確認します。</div>
+      <div class="note">20営業日は日本市場の主な休場日を除いて計算しています。臨時休場や銘柄ごとの取引停止がある場合は、実計算時に取引日カレンダーで再確認します。</div>
       <div class="mini-grid" style="margin-top:12px">${reactionCards}</div>
       <div style="margin-top:12px">${table(reactionDueRows)}</div>
     </section>
