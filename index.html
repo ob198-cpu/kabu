@@ -134,6 +134,50 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+    .link-tabs {
+      width: 100%;
+      margin-top: 8px;
+      border: 1px solid rgba(156, 200, 236, .65);
+      border-radius: 14px;
+      background: rgba(255,255,255,.08);
+      padding: 12px;
+    }
+    .link-tab-buttons {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+    }
+    .link-tab {
+      border: 1px solid rgba(156, 200, 236, .8);
+      background: rgba(255,255,255,.12);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .link-tab.is-active {
+      background: #ffffff;
+      color: var(--navy);
+      border-color: #ffffff;
+    }
+    .link-tab-panel {
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding-top: 8px;
+    }
+    .link-tab-panel.is-active { display: grid; }
+    .link-tab-note {
+      grid-column: 1 / -1;
+      margin: 0 0 2px;
+      color: #dbeafe;
+      font-size: 12px;
+    }
     .button {
       display: inline-flex;
       align-items: center;
@@ -1440,6 +1484,7 @@
       .hero p { word-break: break-all; }
       .hero { padding: 22px 18px; border-radius: 16px; overflow: hidden; }
       .hero-actions { display: grid; grid-template-columns: 1fr; }
+      .link-tab-panel { grid-template-columns: 1fr; }
       .button { width: 100%; }
       .hero-card { padding: 12px; }
       .hero-metric { grid-template-columns: 72px 1fr; }
@@ -5232,6 +5277,121 @@
       await loadCalculatedCandidates();
     });
     document.getElementById("apply-calculated-candidates")?.addEventListener("click", loadCalculatedCandidates);
+
+    function compactHeroLinksIntoTabs() {
+      const heroActions = document.querySelector(".hero .hero-actions");
+      if (!heroActions || heroActions.dataset.tabbed === "true") return;
+      const links = Array.from(heroActions.querySelectorAll("a.button"));
+      if (links.length < 24) return;
+
+      const contains = (link, words) => {
+        const haystack = `${link.getAttribute("href") || ""} ${link.textContent || ""}`.toLowerCase();
+        return words.some((word) => haystack.includes(word));
+      };
+
+      const groups = [
+        {
+          id: "send",
+          label: "説明・送付",
+          note: "相手へ見せる資料、台本、要約、PDFをまとめています。",
+          words: ["client_send_pack", "handoff", "delivery", "presentation", "talk_script", "qa", "explanation", "brief", "report", "onepage", "oral_briefing", "final_report", "interim"]
+        },
+        {
+          id: "candidates",
+          label: "候補10社",
+          note: "100社前後から10社へ絞る工程、根拠、データ補完、候補別メモです。",
+          words: ["candidate_10", "focus10", "top20", "supplement", "winner_portfolio", "professional", "universe", "tenbagger"]
+        },
+        {
+          id: "june",
+          label: "6月判定",
+          note: "6月のCPI、日銀、FOMC後に再判定する入力画面と運用ルールです。",
+          words: ["june", "nisa", "capital", "benchmark", "operation", "plus1", "#flow", "#rules"]
+        },
+        {
+          id: "qual",
+          label: "質的・イベント",
+          note: "時流、テーマ、バフェット、IPO、半導体、TDnetなどの質的材料です。",
+          words: ["qual", "qualitative", "theme", "trend", "buffett", "event", "ipo", "semiconductor", "tdnet", "official_event"]
+        },
+        {
+          id: "data",
+          label: "データ・検証",
+          note: "データ取得、PDF抽出、業界統計、検算、モデル監査、未取得データ管理です。",
+          words: ["data", "edinet", "pdf", "industry", "composite", "mvp", "model", "backtest", "missing", "sector", "academic", "issue", "wording", "current_vs_history"]
+        },
+        {
+          id: "history",
+          label: "履歴・その他",
+          note: "過去資料や分類しきれないリンクを残しています。",
+          words: []
+        }
+      ].map((group) => ({ ...group, items: [] }));
+
+      links.forEach((link) => {
+        const group = groups.find((entry) => entry.words.length && contains(link, entry.words)) || groups[groups.length - 1];
+        group.items.push(link);
+      });
+
+      const visibleGroups = groups.filter((group) => group.items.length);
+      const wrapper = document.createElement("div");
+      wrapper.className = "link-tabs";
+      wrapper.setAttribute("aria-label", "主要資料リンク");
+
+      const tabRow = document.createElement("div");
+      tabRow.className = "link-tab-buttons";
+      tabRow.setAttribute("role", "tablist");
+
+      const panelRoot = document.createElement("div");
+      panelRoot.className = "link-tab-panels";
+
+      const activate = (targetId) => {
+        tabRow.querySelectorAll(".link-tab").forEach((tab) => {
+          const active = tab.dataset.target === targetId;
+          tab.classList.toggle("is-active", active);
+          tab.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        panelRoot.querySelectorAll(".link-tab-panel").forEach((panel) => {
+          panel.classList.toggle("is-active", panel.id === targetId);
+          panel.hidden = panel.id !== targetId;
+        });
+      };
+
+      visibleGroups.forEach((group, index) => {
+        const panelId = `hero-link-tab-${group.id}`;
+        const tab = document.createElement("button");
+        tab.type = "button";
+        tab.className = `link-tab${index === 0 ? " is-active" : ""}`;
+        tab.textContent = `${group.label} (${group.items.length})`;
+        tab.dataset.target = panelId;
+        tab.setAttribute("role", "tab");
+        tab.setAttribute("aria-controls", panelId);
+        tab.setAttribute("aria-selected", index === 0 ? "true" : "false");
+        tab.addEventListener("click", () => activate(panelId));
+        tabRow.appendChild(tab);
+
+        const panel = document.createElement("div");
+        panel.id = panelId;
+        panel.className = `link-tab-panel${index === 0 ? " is-active" : ""}`;
+        panel.setAttribute("role", "tabpanel");
+        panel.hidden = index !== 0;
+
+        const note = document.createElement("p");
+        note.className = "link-tab-note";
+        note.textContent = group.note;
+        panel.appendChild(note);
+
+        group.items.forEach((link) => panel.appendChild(link));
+        panelRoot.appendChild(panel);
+      });
+
+      wrapper.appendChild(tabRow);
+      wrapper.appendChild(panelRoot);
+      heroActions.replaceChildren(wrapper);
+      heroActions.dataset.tabbed = "true";
+    }
+
+    compactHeroLinksIntoTabs();
 
     const eventData = {
       "cpi-may": {
