@@ -184,11 +184,31 @@ writeCsv('721_client_send_pack_qa.csv', qaRows, ['質問', '回答']);
 writeCsv('722_client_explanation_script.csv', scriptRows, ['順番', '見出し', '台本']);
 
 const links = [
-  ['システム全体トップ', 'https://ob198-cpu.github.io/kabu/index.html?v=41fe1b8'],
-  ['6月最終再判定 入力コックピット', 'https://ob198-cpu.github.io/kabu/june_final_decision_cockpit_20260527.html?v=41fe1b8'],
-  ['6月シナリオ別 候補10社シミュレーション', 'https://ob198-cpu.github.io/kabu/june_scenario_simulation_20260527.html?v=41fe1b8'],
-  ['同業比較反映後 候補10社レビュー', 'https://ob198-cpu.github.io/kabu/peer_reflected_candidate_review_20260527.html?v=58551c0'],
-  ['6月再判定 アクションプラン', 'https://ob198-cpu.github.io/kabu/june_action_plan_peer_reflected_20260527.html?v=a474c89']
+  {
+    label: 'システム全体トップ',
+    url: 'https://ob198-cpu.github.io/kabu/index.html?v=4e4c4d8-2',
+    desc: '今回作成した資料、候補10社、6月判定、データ検証への入口です。'
+  },
+  {
+    label: '6月最終再判定 入力コックピット',
+    url: 'https://ob198-cpu.github.io/kabu/june_final_decision_cockpit_20260527.html?v=41fe1b8',
+    desc: '6月のCPI、日銀、FOMC、20営業日反応、同業比較、質的根拠を入力し、各銘柄を「残す・保留・外す」に再判定する操作画面です。'
+  },
+  {
+    label: '6月シナリオ別 候補10社シミュレーション',
+    url: 'https://ob198-cpu.github.io/kabu/june_scenario_simulation_20260527.html?v=41fe1b8',
+    desc: '6月イベントが良好・中立・悪化した場合に、候補10社がどう残るかを事前に見るための資料です。'
+  },
+  {
+    label: '同業比較反映後 候補10社レビュー',
+    url: 'https://ob198-cpu.github.io/kabu/peer_reflected_candidate_review_20260527.html?v=58551c0',
+    desc: 'PER、PBR、ROEなどを同業比較に照らし、割高警戒・説明条件・監視条件を整理した資料です。'
+  },
+  {
+    label: '6月再判定 アクションプラン',
+    url: 'https://ob198-cpu.github.io/kabu/june_action_plan_peer_reflected_20260527.html?v=a474c89',
+    desc: '6月にいつ何を確認し、条件を満たした場合・悪化した場合にどのように扱うかを整理した行動計画です。'
+  }
 ];
 
 const scenarioSummary = scenarioRows.map(row => ({
@@ -237,7 +257,10 @@ const html = `<!doctype html>
     .ok { border-left:8px solid var(--green); }
     .script { background:#fff; border:1px solid var(--line); border-radius:8px; padding:14px; margin:10px 0; break-inside:avoid; }
     .script b { color:var(--blue); }
-    .links a { display:inline-block; margin:4px 8px 4px 0; padding:8px 10px; border-radius:7px; background:#0b5f96; color:#fff; text-decoration:none; font-weight:800; }
+    .link-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .link-card { border:1px solid var(--line); border-radius:8px; background:#fff; padding:12px; }
+    .link-card a { display:inline-block; margin-bottom:6px; padding:8px 10px; border-radius:7px; background:#0b5f96; color:#fff; text-decoration:none; font-weight:800; }
+    .link-card p { margin:0; font-size:13px; color:#243245; }
     .small { font-size:12px; }
     @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } h1 { font-size:24px; } }
     @media print {
@@ -320,9 +343,10 @@ const html = `<!doctype html>
   <h2>8. 説明台本</h2>
   ${scriptRows.map(row => `<div class="script"><b>${esc(row['順番'])}. ${esc(row['見出し'])}</b><br>${esc(row['台本'])}</div>`).join('')}
 
-  <h2>9. 確認URL</h2>
-  <div class="box links">
-    ${links.map(([label, url]) => `<a href="${esc(url)}">${esc(label)}</a>`).join('')}
+  <h2>9. 補足資料リンク（根拠確認用）</h2>
+  <p class="small">下記は送付資料の本文を補足する確認先です。候補10社を決める資料ではなく、計算根拠、6月の再判定条件、同業比較、シナリオ確認を開くためのリンクです。</p>
+  <div class="link-grid">
+    ${links.map((item) => `<div class="link-card"><a href="${esc(item.url)}">${esc(item.label)}</a><p>${esc(item.desc)}</p></div>`).join('')}
   </div>
 
   <p class="small">注: 本資料は判断補助の説明資料です。最終判断は6月イベント後の実データ入力と候補再判定を経て行います。</p>
