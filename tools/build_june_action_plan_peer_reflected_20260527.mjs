@@ -1,0 +1,252 @@
+import fs from 'fs';
+
+const generatedAt = new Intl.DateTimeFormat('ja-JP', {
+  timeZone: 'Asia/Tokyo',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit'
+}).format(new Date());
+
+const rows = [
+  {
+    ticker: '8316.T',
+    company: '三井住友FG',
+    status: '中心確認',
+    theme: '銀行・金利上昇',
+    watch: '日銀後の銀行株反応、利ざや期待、信用コスト、TOPIX銀行指数',
+    keep: '日銀後に銀行株全体が崩れず、決算後20営業日反応が指数比で悪化しない',
+    hold: '銀行株は強いが、信用コストや金利期待に不透明さが残る',
+    remove: '日銀後に銀行株全体が急落、または信用コスト悪化が確認される',
+    operation: '銀行枠の中心候補。三菱UFJと重複する場合は優位な方を残す。'
+  },
+  {
+    ticker: '6762.T',
+    company: 'TDK',
+    status: '中心確認',
+    theme: '電子部品・AIサーバー周辺',
+    watch: 'SOX、NASDAQ、AIサーバー需要、HDD/電源周辺部材、決算後20営業日反応',
+    keep: 'SOX/NASDAQが大崩れせず、電子部品同業比で過熱が限定的',
+    hold: 'AIテーマは維持だが、米金利上昇や半導体指数の下落が残る',
+    remove: 'SOX急落、AIテーマ失速、決算後反応の指数劣後が続く',
+    operation: '半導体そのものより周辺部材として確認。過熱時は追わず、6月後の反応で判断。'
+  },
+  {
+    ticker: '8053.T',
+    company: '住友商事',
+    status: '中心確認',
+    theme: '商社・資源・株主還元',
+    watch: '資源価格、為替、商社株全体、還元姿勢、決算後反応',
+    keep: '商社内で割高感が強くなく、株主還元と決算後反応が維持される',
+    hold: '商社全体は維持だが、資源価格・為替が不安定',
+    remove: '資源価格急落、還元姿勢の後退、商社株全体の指数劣後',
+    operation: '成長率は弱いため、還元・安定性・相対割安の説明が成立する場合のみ残す。'
+  },
+  {
+    ticker: '2802.T',
+    company: '味の素',
+    status: '条件付き中心',
+    theme: '食品・ABF・ヘルスケア',
+    watch: '同業PER/PBR差、ABF・ヘルスケア成長、原材料、為替、決算後反応',
+    keep: '高PERを利益成長、ABF/ヘルスケア、決算後反応で説明できる',
+    hold: '決算後反応は悪くないが、食品同業比の割高さが説明しきれない',
+    remove: '利益成長鈍化、原材料悪化、同業比割高の説明不足、指数劣後',
+    operation: '食品安定枠ではなく高PER成長枠として扱う。説明条件を満たさなければ保留。'
+  },
+  {
+    ticker: '8306.T',
+    company: '三菱UFJ FG',
+    status: '補欠比較',
+    theme: '銀行・金利上昇',
+    watch: '三井住友FGとの比較、同業PER、日銀後の銀行株反応、信用コスト',
+    keep: '三井住友FGより明確な優位があり、銀行枠を複数持つ理由がある',
+    hold: '銀行テーマは有効だが、三井住友FGとの差が説明しきれない',
+    remove: '銀行株全体が悪化、または三井住友FGの方が明確に優位',
+    operation: '銀行枠の重複回避。候補数を絞る局面では補欠扱い。'
+  },
+  {
+    ticker: '7173.T',
+    company: '東京きらぼしFG',
+    status: '監視',
+    theme: '地銀・金利上昇',
+    watch: '地銀株反応、出来高、決算後20営業日反応、信用コスト',
+    keep: '割安さに加え、決算後反応と出来高が改善する',
+    hold: '割安だが、株価反応が弱いまま',
+    remove: '地銀株全体の反応悪化、出来高不足、決算後反応の弱さ継続',
+    operation: 'PER/PBRだけで候補化しない。反応改善が確認できるまで監視。'
+  },
+  {
+    ticker: '9984.T',
+    company: 'ソフトバンクG',
+    status: '別評価監視',
+    theme: 'AI投資・保有資産',
+    watch: 'NAV、Arm、AI関連株、米金利、1年上昇率の過熱、保有資産の下落耐性',
+    keep: 'NAV型評価で割高説明ができ、AI関連株の下落が限定的',
+    hold: 'AIテーマは強いが、過熱と米金利リスクが残る',
+    remove: 'AI関連株急落、米金利急騰、保有資産評価の悪化',
+    operation: 'PER比較に混ぜない。別枠で監視し、初回候補には慎重に扱う。'
+  },
+  {
+    ticker: '7735.T',
+    company: 'SCREEN HD',
+    status: '監視',
+    theme: '半導体製造装置',
+    watch: 'SOX、受注、利益成長、東京エレクトロン比較、決算後20営業日反応',
+    keep: '低PERの理由が業績悪化ではなく、次期見通しや受注で改善が見える',
+    hold: '半導体テーマはあるが、利益成長マイナスが残る',
+    remove: '利益成長の悪化継続、SOX下落、決算後反応の指数劣後',
+    operation: '低PERだけで候補化しない。利益成長と20営業日反応を確認。'
+  },
+  {
+    ticker: '6146.T',
+    company: 'ディスコ',
+    status: '反応検算',
+    theme: '半導体工程・高シェア技術',
+    watch: 'PER/PBR高、受注、利益率、SOX、決算後20営業日反応',
+    keep: '高PER/PBRを受注・利益率・反応で説明できる',
+    hold: '構造テーマは強いが、価格反応や過熱警戒が残る',
+    remove: '高PERを説明できず、20営業日反応も弱い',
+    operation: '質的優位だけで中心候補にしない。反応検算を通過してから再評価。'
+  },
+  {
+    ticker: '7011.T',
+    company: '三菱重工業',
+    status: '反応検算',
+    theme: '防衛・重工・発電',
+    watch: '防衛受注、発電需要、重工同業比較、200日線、60日最大下落',
+    keep: '直近下落が改善し、200日線と出来高が回復する',
+    hold: 'テーマは残るが、下落率と同業比PERの高さが残る',
+    remove: '下落継続、200日線割れ、重工同業比の割高さが説明できない',
+    operation: 'テーマ性は強いが、価格面の確認が先。初回候補には慎重。'
+  }
+];
+
+const marketRules = [
+  ['作成', 'イベント', '確認項目', '良好条件', '悪化条件', '対応'],
+  [generatedAt, '米CPI', 'CPI前年比/前月比、米10年金利、NASDAQ/SOX', '金利急騰なし、NASDAQ/SOX大崩れなし', 'インフレ再加速、金利急騰、SOX急落', '半導体・高PER候補は保留へ寄せる'],
+  [generatedAt, '日銀会合', '政策変更、円高/円安、銀行株、日経平均/TOPIX', '急な円高ショックなし、銀行株が過度に崩れない', '日本株全体急落、銀行株急落、急な円高', '候補全体の初回比率を下げる'],
+  [generatedAt, 'FOMC', '米長期金利、NASDAQ、SOX、ドル円', '金利上昇が限定的、リスク許容度が維持', '金利急騰、半導体/グロース急落', '高PER・半導体・AI関連を保留'],
+  [generatedAt, '決算後20営業日反応', '候補株と日経平均/TOPIXの相対リターン', '指数比で劣後しない', '指数比で大きく劣後', '候補区分を1段階下げる'],
+  [generatedAt, 'S&P500/日経平均/TOPIX比較', '1年で既存無難運用を1%以上上回る根拠', '候補の期待根拠がベンチマークより明確', '個別株で上回る根拠が弱い', '個別株比率を下げ、現金または指数投信比較に戻す']
+];
+
+function csvEscape(value) {
+  const text = String(value ?? '');
+  return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function writeCsv(file, rowsToWrite) {
+  fs.writeFileSync(file, rowsToWrite.map(row => row.map(csvEscape).join(',')).join('\n') + '\n', 'utf8');
+}
+
+const summary = [
+  ['作成', '項目', '内容', '状態'],
+  [generatedAt, '中心確認', '三井住友FG、TDK、住友商事を中心確認。6月イベント後に維持可否を再判定する。', '作成済み'],
+  [generatedAt, '条件付き中心', '味の素は高PER成長枠。食品同業比の割高さを説明できるかを条件化した。', '作成済み'],
+  [generatedAt, '監視・検算', '残り6社は監視、補欠、別評価、反応検算に分けた。', '作成済み'],
+  [generatedAt, '運用目標', 'S&P500投信・日経平均/TOPIXを保有するだけの場合より、1年で+1%上回る根拠を説明できる候補に絞る。', '継続確認'],
+  [generatedAt, '比率を下げる意味', '候補の根拠が弱い場合は、個別株候補へ入れる金額を減らし、現金待機または指数投信比較へ戻す。', '明文化']
+];
+
+const detail = [
+  ['作成', '銘柄', '現在の扱い', '質的テーマ', '確認項目', '残す条件', '保留条件', '外す条件', '運用メモ']
+];
+for (const row of rows) {
+  detail.push([generatedAt, `${row.ticker} ${row.company}`, row.status, row.theme, row.watch, row.keep, row.hold, row.remove, row.operation]);
+}
+
+writeCsv('710_june_action_plan_peer_summary.csv', summary);
+writeCsv('711_june_action_plan_peer_detail.csv', detail);
+writeCsv('712_june_action_plan_market_rules.csv', marketRules);
+
+const html = `<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月再判定 アクションプラン 同業反映版</title>
+  <style>
+    :root { --ink:#071f3a; --muted:#4c6178; --line:#d7e4f2; --blue:#0b5f96; --green:#087f5b; --amber:#ad5a00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    .hero { background:#123d63; color:white; border-radius:8px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:8px solid var(--blue); font-size:23px; }
+    .note { color:#e8f4ff; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card { background:white; border:1px solid var(--line); border-radius:8px; padding:16px; }
+    .label { color:var(--muted); font-size:13px; }
+    .value { font-size:24px; font-weight:800; margin-top:4px; }
+    .ok { color:var(--green); }
+    .warn { color:var(--amber); }
+    table { width:100%; border-collapse:collapse; background:white; border:1px solid var(--line); table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:10px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; font-size:13px; }
+    th { background:#e6f1fb; text-align:left; }
+    .detail th:nth-child(1), .detail td:nth-child(1) { width:9%; }
+    .detail th:nth-child(2), .detail td:nth-child(2) { width:12%; }
+    .detail th:nth-child(3), .detail td:nth-child(3) { width:10%; }
+    .detail th:nth-child(6), .detail td:nth-child(6),
+    .detail th:nth-child(7), .detail td:nth-child(7),
+    .detail th:nth-child(8), .detail td:nth-child(8) { width:14%; }
+    .footer { margin-top:24px; color:var(--muted); font-size:13px; }
+    a { color:#064f88; font-weight:700; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } table { table-layout:auto; } h1 { font-size:24px; } }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>6月再判定 アクションプラン 同業反映版</h1>
+    <div class="note">作成: ${generatedAt} / 目的: 候補10社について、6月イベント後に残す・保留・外すを判断する条件を明確化する。</div>
+  </section>
+
+  <section class="grid">
+    <div class="card"><div class="label">中心確認</div><div class="value ok">3社</div><div>三井住友FG、TDK、住友商事</div></div>
+    <div class="card"><div class="label">条件付き中心</div><div class="value warn">1社</div><div>味の素</div></div>
+    <div class="card"><div class="label">監視・検算</div><div class="value">6社</div><div>追加条件で再判定</div></div>
+    <div class="card"><div class="label">目標</div><div class="value">+1%</div><div>既存無難運用を1年で上回る根拠</div></div>
+  </section>
+
+  <h2>1. 全体ルール</h2>
+  <table>
+    <thead><tr><th>項目</th><th>内容</th><th>状態</th></tr></thead>
+    <tbody>
+      ${summary.slice(1).map(row => `<tr><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td></tr>`).join('')}
+    </tbody>
+  </table>
+
+  <h2>2. 銘柄別アクションプラン</h2>
+  <table class="detail">
+    <thead><tr>${detail[0].map(h => `<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>
+      ${detail.slice(1).map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
+    </tbody>
+  </table>
+
+  <h2>3. 市場イベント別ルール</h2>
+  <table>
+    <thead><tr>${marketRules[0].map(h => `<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>
+      ${marketRules.slice(1).map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
+    </tbody>
+  </table>
+
+  <div class="footer">
+    CSV: <a href="710_june_action_plan_peer_summary.csv">要約</a> /
+    <a href="711_june_action_plan_peer_detail.csv">銘柄別</a> /
+    <a href="712_june_action_plan_market_rules.csv">市場ルール</a>
+  </div>
+</main>
+</body>
+</html>
+`;
+
+fs.writeFileSync('june_action_plan_peer_reflected_20260527.html', html, 'utf8');
+
+console.log(JSON.stringify({
+  generatedAt,
+  output: 'june_action_plan_peer_reflected_20260527.html',
+  rows: rows.length
+}, null, 2));
