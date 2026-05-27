@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的イベント監視・登録台帳 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1320px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1040px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:900px; }
+    .wide table { min-width:1900px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    @media (max-width:900px) { main { padding:12px 10px 36px; } header,section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>質的イベント監視・登録台帳</h1>
+      <p class="lead">通年で株価に影響し得るニュース・イベントを、事実、仮説、確認数字、対象銘柄、通知条件に分けて記録する台帳です。</p>
+    </header>
+    <section>
+      <h2>1. 概要</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody><tr><td>目的</td><td>通年で株価に影響し得るニュース・イベントを、質的項目、対象銘柄、確認数字、通知条件に分けて記録する。</td></tr><tr><td>使い方</td><td>ニュースを見たら、事実、仮説、確認数字、影響銘柄、反証条件を入力する。直接買い判断には使わない。</td></tr><tr><td>出力</td><td>通知対象、確認待ち、保留、除外候補に分け、銘柄別の売買ルールへ接続する。</td></tr><tr><td>重要ルール</td><td>事実と仮説を分ける。出典がない情報、数字で確認できない情報はスコアに混ぜない。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="note">事実と仮説を分けて記録します。出典と確認数字がない情報は、スコアへ混ぜません。</div>
+    </section>
+    <section>
+      <h2>2. イベント入力テンプレート</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>ID</th><th>発見日</th><th>出典種別</th><th>出典名</th><th>URL/ファイル</th><th>質的項目</th><th>確認事実</th><th>仮説</th><th>対象銘柄</th><th>確認数字</th><th>通知区分</th><th>使い道</th></tr></thead>
+        <tbody><tr><td>EVT-YYYYMMDD-001</td><td></td><td>公式資料/決算/統計/報道/13F/その他</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>通知/確認待ち/保留/除外候補</td><td>候補抽出/確認条件/警戒条件/除外条件</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>3. 通知・分類ルール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>分類</th><th>条件</th><th>アクション</th></tr></thead>
+        <tbody><tr><td>通知</td><td>TOB、M&amp;A、大型提携、下方修正、大幅売却、全売却、主要顧客の投資延期など、銘柄固有に大きく影響する事実が出た場合</td><td>当日中に対象銘柄、確認数字、売買ルールへの影響を記録する。</td></tr><tr><td>確認待ち</td><td>AI、金利、原油、食品値上げ、データセンターなどテーマ性はあるが、銘柄の売上・利益・受注に接続していない場合</td><td>候補抽出に留め、決算資料や株価反応で確認する。</td></tr><tr><td>保留</td><td>出典が報道のみ、数字未確認、または影響が業界全体に薄く広い場合</td><td>スコアには入れず、次回確認リストへ回す。</td></tr><tr><td>除外候補</td><td>下方修正、利益率悪化、決算後指数劣後、主要テーマの反証が出た場合</td><td>新規買いを止め、候補順位を下げる。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>4. 質的テーマ監視スケジュール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>ID</th><th>テーマ</th><th>仮説層</th><th>実績層</th><th>確認数字</th><th>反証条件</th><th>頻度</th></tr></thead>
+        <tbody><tr><td>THEME-01</td><td>AI半導体投資</td><td>S</td><td>未接続</td><td>対象セグメント売上、受注高、受注残、営業利益率、会社コメント、SOX/NASDAQ/日経半導体株指数との相対株価</td><td>主要顧客の投資延期、在庫調整、輸出規制、利益率悪化、決算後20営業日で指数劣後</td><td>週次確認</td></tr><tr><td>THEME-02</td><td>半導体工程の寡占・高シェア</td><td>S</td><td>未接続</td><td>工程別売上、WFE投資、受注残、顧客集中度、粗利率、PERが成長率で説明可能か</td><td>シェア根拠が確認できない、工程需要が数字に出ない、PER調整に耐えない</td><td>週次確認</td></tr><tr><td>THEME-03</td><td>HBM・先端パッケージ</td><td>A</td><td>未接続</td><td>該当事業の売上成長、受注、利益率、顧客需要コメント、メモリ市況指標</td><td>メモリ投資鈍化、顧客在庫増、需要コメント悪化</td><td>週次確認</td></tr><tr><td>THEME-04</td><td>データセンター電力不足</td><td>A</td><td>未接続</td><td>電力インフラ関連売上、受注残、データセンター向け比率、設備投資計画、電力需要統計</td><td>需要が一般設備投資に埋もれる、利益率が伸びない、受注残が増えない</td><td>週次確認</td></tr><tr><td>THEME-05</td><td>データセンター冷却</td><td>A</td><td>未接続</td><td>データセンター向け売上、地域別利益、中国/欧米需要、会社コメント</td><td>データセンター寄与が小さい、空調全体の需要鈍化、中国需要悪化</td><td>週次確認</td></tr><tr><td>THEME-06</td><td>円安</td><td>B</td><td>一部接続可</td><td>海外売上比率、為替感応度、ドル円変化率、営業利益見通し、ヘッジ状況</td><td>円安でもコスト増が上回る、為替感応度が小さい、円高反転</td><td>月次確認</td></tr><tr><td>THEME-07</td><td>円高</td><td>B</td><td>一部接続可</td><td>輸入原価比率、為替感応度、原材料価格、価格転嫁状況</td><td>需要数量が落ちる、価格競争で利益に残らない、海外利益減が大きい</td><td>月次確認</td></tr><tr><td>THEME-08</td><td>金利上昇</td><td>A</td><td>一部接続可</td><td>資金利益、信用コスト、保険引受利益、政策保有株売却、日銀後の株価反応</td><td>信用コスト増、景気悪化扱い、長期金利急低下、金融株が指数劣後</td><td>週次確認</td></tr><tr><td>THEME-09</td><td>原油・ナフサ下落</td><td>B</td><td>未接続</td><td>ナフサ価格、原材料費率、売価維持率、在庫影響、営業利益率</td><td>売価下落が先行、需要減、在庫評価損、原材料データが取得できない</td><td>月次確認</td></tr><tr><td>THEME-10</td><td>原油・中東リスク</td><td>B</td><td>一部接続可</td><td>油価、精製マージン、在庫影響、海運市況、会社の感応度</td><td>停戦、油価急落、精製マージン悪化、在庫評価損</td><td>月次確認</td></tr><tr><td>THEME-11</td><td>食品値上げ耐性</td><td>B</td><td>一部接続可</td><td>価格要因/数量要因、原材料費、営業利益率、国内外セグメント成長</td><td>値上げ後の数量減、原材料再上昇、PERが成長率を上回りすぎる</td><td>月次確認</td></tr><tr><td>THEME-12</td><td>防衛・安全保障</td><td>A</td><td>未接続</td><td>防衛関連受注、受注残、売上比率、利益率、政府予算</td><td>受注が利益に結びつかない、採算悪化、政策変更</td><td>週次確認</td></tr><tr><td>THEME-13</td><td>災害・インフラ強靭化</td><td>B</td><td>未接続</td><td>公共投資、受注、災害復旧関連売上、利益率、短期株価反応</td><td>一過性で利益貢献が小さい、資材高で利益率が悪化</td><td>月次確認</td></tr><tr><td>THEME-14</td><td>新商品・ゲーム機サイクル</td><td>A</td><td>未接続</td><td>販売計画、初動販売、ソフト装着率、利益率、在庫、会社予想</td><td>供給不足、販売計画未達、期待先行で決算反応が弱い</td><td>週次確認</td></tr><tr><td>THEME-15</td><td>TOB・M&amp;A・大型提携</td><td>A</td><td>未接続</td><td>TOB価格、プレミアム、買収資金、EPS影響、同業比較、発表後リターン</td><td>買収条件不成立、希薄化、買収負担、材料出尽くし</td><td>週次確認</td></tr><tr><td>THEME-16</td><td>自社株買い・増配・資本効率</td><td>A</td><td>一部接続可</td><td>自社株買い規模、発行株比率、配当性向、ROE、PBR、FCF</td><td>一時的還元、業績悪化、FCF不足、還元後もROE改善しない</td><td>週次確認</td></tr><tr><td>THEME-17</td><td>インバウンド・観光</td><td>B</td><td>一部接続可</td><td>訪日客数、客単価、稼働率、既存店売上、営業利益率</td><td>円高、旅行需要鈍化、コスト増、人手不足で利益が伸びない</td><td>月次確認</td></tr><tr><td>THEME-18</td><td>人手不足・省人化</td><td>A</td><td>未接続</td><td>受注、設備投資統計、営業利益率、地域別需要、在庫循環</td><td>設備投資減速、中国需要鈍化、在庫調整、PER調整</td><td>週次確認</td></tr><tr><td>THEME-19</td><td>医薬品承認・パイプライン</td><td>B</td><td>未接続</td><td>薬剤別売上、承認地域、ピークセールス、薬価、特許期限、研究開発費</td><td>臨床失敗、承認遅延、薬価改定、主力薬依存</td><td>月次確認</td></tr><tr><td>THEME-20</td><td>サイバーセキュリティ</td><td>B</td><td>未接続</td><td>セキュリティ売上、ARR、受注、利益率、顧客数</td><td>テーマは強いが企業別売上比率が小さい、競争激化、利益率低下</td><td>月次確認</td></tr><tr><td>THEME-21</td><td>IPO・未上場メガイベント</td><td>B</td><td>未接続</td><td>上場有無、NISA対象可否、出資比率、取引関係、関連企業の売上寄与</td><td>未上場のまま、NISA対象外、関連企業の寄与が小さい、思惑だけで株価反応が続かない</td><td>月次確認</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>5. 銘柄別イベント監視</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>銘柄</th><th>会社名</th><th>分類</th><th>質的テーマ</th><th>買い条件</th><th>下げる・売る条件</th><th>イベント時の対応</th></tr></thead>
+        <tbody><tr><td>6762.T</td><td>TDK</td><td>テスト中心候補</td><td>HBM・先端パッケージ / AI半導体投資 / 円安</td><td>6月イベント後に市場条件が悪化せず、公式決算・PER/PBR/ROE・決算後反応が確認できた場合だけ少額テストを検討。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 SOX指数や主要顧客投資計画が悪化した場合は半導体テーマの上限を下げる。</td><td>関連イベント発生時は当日確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>条件付きテスト候補</td><td>金利上昇 / 自社株買い・増配・資本効率</td><td>不足データ補完後、指数比較と同業比較で劣後しない場合だけ候補に残す。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 バークシャー関連・同業関連で大幅売却や信用不安が出た場合は追加確認まで新規買いを止める。</td><td>関連イベント発生時は当日確認</td></tr><tr><td>2802.T</td><td>味の素</td><td>条件付きテスト候補</td><td>食品値上げ耐性 / 円高 / 原油・ナフサ下落</td><td>不足データ補完後、指数比較と同業比較で劣後しない場合だけ候補に残す。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>関連イベント発生時は当日確認</td></tr><tr><td>5020.T</td><td>ENEOS HD</td><td>補完後に再判定</td><td>原油・中東リスク / 原油・ナフサ下落</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 バークシャー関連・同業関連で大幅売却や信用不安が出た場合は追加確認まで新規買いを止める。</td><td>週次または補完時に確認</td></tr><tr><td>6367.T</td><td>ダイキン工業</td><td>比較・観察候補</td><td>データセンター冷却 / 円安</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>週次または補完時に確認</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>比較・観察候補</td><td>データセンター電力不足 / データセンター冷却 / 防衛・安全保障 / 人手不足・省人化</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>週次または補完時に確認</td></tr><tr><td>8766.T</td><td>東京海上HD</td><td>条件付きテスト候補</td><td>金利上昇 / 自社株買い・増配・資本効率</td><td>不足データ補完後、指数比較と同業比較で劣後しない場合だけ候補に残す。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>関連イベント発生時は当日確認</td></tr><tr><td>4385.T</td><td>メルカリ</td><td>補完後に再判定</td><td>人手不足・省人化 / 国内消費・プラットフォーム</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。</td><td>週次または補完時に確認</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>補完後に再判定</td><td>金利上昇 / 自社株買い・増配・資本効率</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 バークシャー関連・同業関連で大幅売却や信用不安が出た場合は追加確認まで新規買いを止める。</td><td>週次または補完時に確認</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>補完後に再判定</td><td>AI半導体投資 / 半導体工程の寡占・高シェア / HBM・先端パッケージ</td><td>購入検討には使わず、比較・観察または補完対象として扱う。</td><td>決算後20営業日で日経平均/TOPIXに明確に劣後した場合は優先度を下げる。 下方修正、利益率悪化、テーマ接続の否定が出た場合は中心候補から外す。 購入後に-5%下落した場合は理由を確認し、指数連動か個別悪材料かを分類する。 購入後に-10%下落し、かつ個別悪材料が確認された場合は縮小または撤退を検討する。 SOX指数や主要顧客投資計画が悪化した場合は半導体テーマの上限を下げる。</td><td>週次または補完時に確認</td></tr></tbody>
+      </table>
+    </div>
+      <div class="actions">
+        <a href="612_qual_event_monitor_summary.csv">概要CSV</a>
+        <a href="613_qual_event_input_template.csv">入力テンプレートCSV</a>
+        <a href="614_qual_event_alert_rules.csv">通知ルールCSV</a>
+        <a href="615_theme_monitor_schedule.csv">テーマ監視CSV</a>
+        <a href="616_candidate_event_monitor_map.csv">銘柄監視CSV</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

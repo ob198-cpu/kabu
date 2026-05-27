@@ -1,0 +1,2 @@
+﻿event_id,found_date,source_type,source_name,source_url_or_file,qualitative_theme,event_fact,hypothesis,affected_sector,affected_ticker,expected_direction,required_numbers,reject_condition,alert_level,score_use,next_action,owner_note
+EVT-YYYYMMDD-001,,公式資料/決算/統計/報道/13F/その他,,,,,,,,追い風/逆風/中立/不明,,,通知/確認待ち/保留/除外候補,候補抽出/確認条件/警戒条件/除外条件,,
