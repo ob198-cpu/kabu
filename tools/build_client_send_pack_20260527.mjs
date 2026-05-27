@@ -150,44 +150,44 @@ const scriptRows = [
   {
     順番: '1',
     見出し: '最初に伝えること',
-    台本: '本資料は購入銘柄を確定する資料ではなく、NISA 1年保有テストに向けて、どの候補をどの根拠で残すかを説明する資料です。目的は、S&P500投信や日経平均/TOPIX連動投信を保有するだけの場合より、1年で+1%以上上回る根拠がある候補だけを残すことです。'
+    説明文: '本資料は購入銘柄を確定する資料ではなく、NISA 1年保有テストに向けて、どの候補をどの根拠で残すかを説明する資料です。目的は、S&P500投信や日経平均/TOPIX連動投信を保有するだけの場合より、1年で+1%以上上回る根拠がある候補だけを残すことです。'
   },
   {
     順番: '2',
     見出し: 'システムの仕組み',
-    台本: '仕組みは大きく5段階です。まず100社前後の候補群から検証対象を作り、次にPER、PBR、ROE、利益成長、株価反応などの量的データを確認します。そのうえで、AI、金利、商社、食品、半導体、防衛などの質的テーマを確認します。ただし質的テーマは単純に点数へ足さず、説明条件、警戒条件、除外条件として使います。'
+    説明文: '仕組みは大きく5段階です。まず100社前後の候補群から検証対象を作り、次にPER、PBR、ROE、利益成長、株価反応などの量的データを確認します。そのうえで、AI、金利、商社、食品、半導体、防衛などの質的テーマを確認します。ただし質的テーマは単純に点数へ足さず、説明条件、警戒条件、除外条件として使います。'
   },
   {
     順番: '3',
     見出し: 'なぜ10社か',
-    台本: '10社にした理由は、数を増やしすぎると公式決算、同業比較、20営業日反応、6月イベント後の再判定まで確認しきれないためです。逆に少なすぎると、金利、AI、食品、商社、半導体、防衛などの比較ができません。今回は説明可能性と検証可能性のバランスを取って10社にしています。'
+    説明文: '10社にした理由は、数を増やしすぎると公式決算、同業比較、20営業日反応、6月イベント後の再判定まで確認しきれないためです。逆に少なすぎると、金利、AI、食品、商社、半導体、防衛などの比較ができません。今回は説明可能性と検証可能性のバランスを取って10社にしています。'
   },
   {
     順番: '4',
     見出し: '10社の説明',
-    台本: '中心確認は三井住友FG、TDK、住友商事です。味の素は食品安定枠ではなく、高PER成長枠として条件付きで見ます。三菱UFJ、東京きらぼし、ソフトバンクG、SCREEN、ディスコ、三菱重工業は、補欠、監視、別評価、反応検算に分けています。'
+    説明文: '中心確認は三井住友FG、TDK、住友商事です。味の素は食品安定枠ではなく、高PER成長枠として条件付きで見ます。三菱UFJ、東京きらぼし、ソフトバンクG、SCREEN、ディスコ、三菱重工業は、補欠、監視、別評価、反応検算に分けています。'
   },
   {
     順番: '5',
     見出し: 'インデックス比較',
-    台本: 'この仕組みは、個別株が常にインデックスより有利だと言うものではありません。インデックスを上回る根拠があるときだけ個別株候補を残し、根拠が弱い場合は個別株比率を下げるための判断補助です。'
+    説明文: 'この仕組みは、個別株が常にインデックスより有利だと言うものではありません。インデックスを上回る根拠があるときだけ個別株候補を残し、根拠が弱い場合は個別株比率を下げるための判断補助です。'
   },
   {
     順番: '6',
     見出し: '6月に行うこと',
-    台本: '6月のCPI、日銀、FOMC、各銘柄の20営業日反応を入力し、残す、保留、外すを再判定します。現時点では一部が入力待ちなので、最終判断ではなく、6月に実データで再判定する前提です。'
+    説明文: '6月のCPI、日銀、FOMC、各銘柄の20営業日反応を入力し、残す、保留、外すを再判定します。現時点では一部が入力待ちなので、最終判断ではなく、6月に実データで再判定する前提です。'
   },
   {
     順番: '7',
     見出し: '最後のまとめ',
-    台本: '本日の到達点は、候補10社を根拠付きで説明できる形にし、6月の実データ入力後に同じ条件で判定できるところまで整えたことです。今後は実データを入れて、インデックスを+1%以上上回る説明が成立する候補だけを残します。'
+    説明文: '現在の到達点は、候補10社を根拠付きで説明できる形にし、6月の実データ入力後に同じ条件で判定できるところまで整えたことです。今後は実データを入れて、インデックスを+1%以上上回る説明が成立する候補だけを残します。'
   }
 ];
 
 writeCsv('719_client_send_pack_summary.csv', summaryRows, ['項目', '内容']);
 writeCsv('720_client_send_pack_10_candidates.csv', candidateTable, ['順位', '銘柄', '現在の扱い', '主な数値根拠', '同業比較', '選定理由', '6月確認', '1年チャート']);
 writeCsv('721_client_send_pack_qa.csv', qaRows, ['質問', '回答']);
-writeCsv('722_client_explanation_script.csv', scriptRows, ['順番', '見出し', '台本']);
+writeCsv('722_client_explanation_script.csv', scriptRows, ['順番', '見出し', '説明文']);
 
 const links = [
   {
@@ -248,15 +248,17 @@ const html = `<!doctype html>
     .label { font-size:13px; font-weight:800; }
     .value { font-size:25px; font-weight:900; margin-top:4px; color:var(--blue); }
     table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); table-layout:fixed; }
-    th, td { border:1px solid var(--line); padding:9px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; font-size:13px; color:#050b14; }
+    th, td { border:1px solid var(--line); padding:9px; vertical-align:top; overflow-wrap:break-word; word-break:normal; font-size:13px; color:#050b14; }
     th { background:#e6f1fb; text-align:left; font-weight:900; }
     .candidate th:nth-child(1), .candidate td:nth-child(1) { width:5%; text-align:center; }
-    .candidate th:nth-child(2), .candidate td:nth-child(2) { width:13%; }
-    .candidate th:nth-child(3), .candidate td:nth-child(3) { width:10%; }
-    .candidate th:nth-child(4), .candidate td:nth-child(4) { width:20%; }
-    .candidate th:nth-child(5), .candidate td:nth-child(5) { width:12%; }
-    .candidate th:nth-child(6), .candidate td:nth-child(6) { width:20%; }
-    .candidate th:nth-child(7), .candidate td:nth-child(7) { width:20%; }
+    .candidate th:nth-child(2), .candidate td:nth-child(2) { width:14%; }
+    .candidate th:nth-child(3), .candidate td:nth-child(3) { width:13%; overflow-wrap:normal; word-break:keep-all; }
+    .candidate th:nth-child(4), .candidate td:nth-child(4) { width:18%; }
+    .candidate th:nth-child(5), .candidate td:nth-child(5) { width:11%; }
+    .candidate th:nth-child(6), .candidate td:nth-child(6) { width:17%; }
+    .candidate th:nth-child(7), .candidate td:nth-child(7) { width:15%; }
+    .candidate th:nth-child(8), .candidate td:nth-child(8) { width:7%; text-align:center; overflow-wrap:normal; word-break:keep-all; white-space:nowrap; }
+    .candidate a { display:inline-block; white-space:nowrap; word-break:keep-all; }
     .box { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; margin:12px 0; }
     .accent { border-left:8px solid var(--blue); }
     .warn { border-left:8px solid var(--amber); }
@@ -347,11 +349,11 @@ const html = `<!doctype html>
     </tbody>
   </table>
 
-  <h2>8. 説明台本</h2>
-  ${scriptRows.map(row => `<div class="script"><b>${esc(row['順番'])}. ${esc(row['見出し'])}</b><br>${esc(row['台本'])}</div>`).join('')}
+  <h2>8. 説明文</h2>
+  ${scriptRows.map(row => `<div class="script"><b>${esc(row['順番'])}. ${esc(row['見出し'])}</b><br>${esc(row['説明文'])}</div>`).join('')}
 
   <h2>9. 補足資料リンク（根拠確認用）</h2>
-  <p class="small">下記は送付資料の本文を補足する確認先です。候補10社を決める資料ではなく、計算根拠、6月の再判定条件、同業比較、シナリオ確認を開くためのリンクです。</p>
+  <p class="small">下記は本資料の内容を補足する確認先です。候補10社を決める資料ではなく、計算根拠、6月の再判定条件、同業比較、シナリオ確認を開くためのリンクです。</p>
   <div class="link-grid">
     ${links.map((item) => `<div class="link-card"><a href="${esc(item.url)}">${esc(item.label)}</a><p>${esc(item.desc)}</p></div>`).join('')}
   </div>

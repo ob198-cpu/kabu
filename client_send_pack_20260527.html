@@ -20,15 +20,17 @@
     .label { font-size:13px; font-weight:800; }
     .value { font-size:25px; font-weight:900; margin-top:4px; color:var(--blue); }
     table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); table-layout:fixed; }
-    th, td { border:1px solid var(--line); padding:9px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; font-size:13px; color:#050b14; }
+    th, td { border:1px solid var(--line); padding:9px; vertical-align:top; overflow-wrap:break-word; word-break:normal; font-size:13px; color:#050b14; }
     th { background:#e6f1fb; text-align:left; font-weight:900; }
     .candidate th:nth-child(1), .candidate td:nth-child(1) { width:5%; text-align:center; }
-    .candidate th:nth-child(2), .candidate td:nth-child(2) { width:13%; }
-    .candidate th:nth-child(3), .candidate td:nth-child(3) { width:10%; }
-    .candidate th:nth-child(4), .candidate td:nth-child(4) { width:20%; }
-    .candidate th:nth-child(5), .candidate td:nth-child(5) { width:12%; }
-    .candidate th:nth-child(6), .candidate td:nth-child(6) { width:20%; }
-    .candidate th:nth-child(7), .candidate td:nth-child(7) { width:20%; }
+    .candidate th:nth-child(2), .candidate td:nth-child(2) { width:14%; }
+    .candidate th:nth-child(3), .candidate td:nth-child(3) { width:13%; overflow-wrap:normal; word-break:keep-all; }
+    .candidate th:nth-child(4), .candidate td:nth-child(4) { width:18%; }
+    .candidate th:nth-child(5), .candidate td:nth-child(5) { width:11%; }
+    .candidate th:nth-child(6), .candidate td:nth-child(6) { width:17%; }
+    .candidate th:nth-child(7), .candidate td:nth-child(7) { width:15%; }
+    .candidate th:nth-child(8), .candidate td:nth-child(8) { width:7%; text-align:center; overflow-wrap:normal; word-break:keep-all; white-space:nowrap; }
+    .candidate a { display:inline-block; white-space:nowrap; word-break:keep-all; }
     .box { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; margin:12px 0; }
     .accent { border-left:8px solid var(--blue); }
     .warn { border-left:8px solid var(--amber); }
@@ -54,7 +56,7 @@
 <main>
   <header>
     <h1>NISA 1年保有テスト候補 選定システム 説明資料</h1>
-    <p class="lead">作成: 2026/05/27 16:21 / 目的: 候補10社の選定理由、システムの仕組み、インデックス比較、6月再判定の流れを説明する。</p>
+    <p class="lead">作成: 2026/05/27 18:05 / 目的: 候補10社の選定理由、システムの仕組み、インデックス比較、6月再判定の流れを説明する。</p>
   </header>
 
   <section class="grid">
@@ -119,11 +121,11 @@
     </tbody>
   </table>
 
-  <h2>8. 説明台本</h2>
-  <div class="script"><b>1. 最初に伝えること</b><br>本資料は購入銘柄を確定する資料ではなく、NISA 1年保有テストに向けて、どの候補をどの根拠で残すかを説明する資料です。目的は、S&amp;P500投信や日経平均/TOPIX連動投信を保有するだけの場合より、1年で+1%以上上回る根拠がある候補だけを残すことです。</div><div class="script"><b>2. システムの仕組み</b><br>仕組みは大きく5段階です。まず100社前後の候補群から検証対象を作り、次にPER、PBR、ROE、利益成長、株価反応などの量的データを確認します。そのうえで、AI、金利、商社、食品、半導体、防衛などの質的テーマを確認します。ただし質的テーマは単純に点数へ足さず、説明条件、警戒条件、除外条件として使います。</div><div class="script"><b>3. なぜ10社か</b><br>10社にした理由は、数を増やしすぎると公式決算、同業比較、20営業日反応、6月イベント後の再判定まで確認しきれないためです。逆に少なすぎると、金利、AI、食品、商社、半導体、防衛などの比較ができません。今回は説明可能性と検証可能性のバランスを取って10社にしています。</div><div class="script"><b>4. 10社の説明</b><br>中心確認は三井住友FG、TDK、住友商事です。味の素は食品安定枠ではなく、高PER成長枠として条件付きで見ます。三菱UFJ、東京きらぼし、ソフトバンクG、SCREEN、ディスコ、三菱重工業は、補欠、監視、別評価、反応検算に分けています。</div><div class="script"><b>5. インデックス比較</b><br>この仕組みは、個別株が常にインデックスより有利だと言うものではありません。インデックスを上回る根拠があるときだけ個別株候補を残し、根拠が弱い場合は個別株比率を下げるための判断補助です。</div><div class="script"><b>6. 6月に行うこと</b><br>6月のCPI、日銀、FOMC、各銘柄の20営業日反応を入力し、残す、保留、外すを再判定します。現時点では一部が入力待ちなので、最終判断ではなく、6月に実データで再判定する前提です。</div><div class="script"><b>7. 最後のまとめ</b><br>本日の到達点は、候補10社を根拠付きで説明できる形にし、6月の実データ入力後に同じ条件で判定できるところまで整えたことです。今後は実データを入れて、インデックスを+1%以上上回る説明が成立する候補だけを残します。</div>
+  <h2>8. 説明文</h2>
+  <div class="script"><b>1. 最初に伝えること</b><br>本資料は購入銘柄を確定する資料ではなく、NISA 1年保有テストに向けて、どの候補をどの根拠で残すかを説明する資料です。目的は、S&amp;P500投信や日経平均/TOPIX連動投信を保有するだけの場合より、1年で+1%以上上回る根拠がある候補だけを残すことです。</div><div class="script"><b>2. システムの仕組み</b><br>仕組みは大きく5段階です。まず100社前後の候補群から検証対象を作り、次にPER、PBR、ROE、利益成長、株価反応などの量的データを確認します。そのうえで、AI、金利、商社、食品、半導体、防衛などの質的テーマを確認します。ただし質的テーマは単純に点数へ足さず、説明条件、警戒条件、除外条件として使います。</div><div class="script"><b>3. なぜ10社か</b><br>10社にした理由は、数を増やしすぎると公式決算、同業比較、20営業日反応、6月イベント後の再判定まで確認しきれないためです。逆に少なすぎると、金利、AI、食品、商社、半導体、防衛などの比較ができません。今回は説明可能性と検証可能性のバランスを取って10社にしています。</div><div class="script"><b>4. 10社の説明</b><br>中心確認は三井住友FG、TDK、住友商事です。味の素は食品安定枠ではなく、高PER成長枠として条件付きで見ます。三菱UFJ、東京きらぼし、ソフトバンクG、SCREEN、ディスコ、三菱重工業は、補欠、監視、別評価、反応検算に分けています。</div><div class="script"><b>5. インデックス比較</b><br>この仕組みは、個別株が常にインデックスより有利だと言うものではありません。インデックスを上回る根拠があるときだけ個別株候補を残し、根拠が弱い場合は個別株比率を下げるための判断補助です。</div><div class="script"><b>6. 6月に行うこと</b><br>6月のCPI、日銀、FOMC、各銘柄の20営業日反応を入力し、残す、保留、外すを再判定します。現時点では一部が入力待ちなので、最終判断ではなく、6月に実データで再判定する前提です。</div><div class="script"><b>7. 最後のまとめ</b><br>現在の到達点は、候補10社を根拠付きで説明できる形にし、6月の実データ入力後に同じ条件で判定できるところまで整えたことです。今後は実データを入れて、インデックスを+1%以上上回る説明が成立する候補だけを残します。</div>
 
   <h2>9. 補足資料リンク（根拠確認用）</h2>
-  <p class="small">下記は送付資料の本文を補足する確認先です。候補10社を決める資料ではなく、計算根拠、6月の再判定条件、同業比較、シナリオ確認を開くためのリンクです。</p>
+  <p class="small">下記は本資料の内容を補足する確認先です。候補10社を決める資料ではなく、計算根拠、6月の再判定条件、同業比較、シナリオ確認を開くためのリンクです。</p>
   <div class="link-grid">
     <div class="link-card"><a href="https://ob198-cpu.github.io/kabu/index.html?v=4e4c4d8-2">システム全体トップ</a><p>今回作成した資料、候補10社、6月判定、データ検証への入口です。</p></div><div class="link-card"><a href="https://ob198-cpu.github.io/kabu/june_final_decision_cockpit_20260527.html?v=41fe1b8">6月最終再判定 入力コックピット</a><p>6月のCPI、日銀、FOMC、20営業日反応、同業比較、質的根拠を入力し、各銘柄を「残す・保留・外す」に再判定する操作画面です。</p></div><div class="link-card"><a href="https://ob198-cpu.github.io/kabu/june_scenario_simulation_20260527.html?v=41fe1b8">6月シナリオ別 候補10社シミュレーション</a><p>6月イベントが良好・中立・悪化した場合に、候補10社がどう残るかを事前に見るための資料です。</p></div><div class="link-card"><a href="https://ob198-cpu.github.io/kabu/peer_reflected_candidate_review_20260527.html?v=58551c0">同業比較反映後 候補10社レビュー</a><p>PER、PBR、ROEなどを同業比較に照らし、割高警戒・説明条件・監視条件を整理した資料です。</p></div><div class="link-card"><a href="https://ob198-cpu.github.io/kabu/june_action_plan_peer_reflected_20260527.html?v=a474c89">6月再判定 アクションプラン</a><p>6月にいつ何を確認し、条件を満たした場合・悪化した場合にどのように扱うかを整理した行動計画です。</p></div>
   </div>

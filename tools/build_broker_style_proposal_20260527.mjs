@@ -138,17 +138,24 @@ const html = `<!doctype html>
     .step { background:var(--pale); border:1px solid #bcd5ea; border-radius:8px; padding:12px; position:relative; }
     .step b { color:var(--navy); }
     table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:12px; }
-    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; overflow-wrap:anywhere; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; overflow-wrap:break-word; word-break:normal; }
     th { background:#e5f0f8; color:var(--navy); text-align:left; }
     tr:nth-child(even) td { background:#fafcff; }
-    .status { display:inline-block; border-radius:999px; padding:3px 8px; font-weight:800; font-size:11px; color:#fff; background:var(--blue); }
+    .proposal-candidates th:nth-child(1), .proposal-candidates td:nth-child(1) { width:5%; text-align:center; }
+    .proposal-candidates th:nth-child(2), .proposal-candidates td:nth-child(2) { width:16%; }
+    .proposal-candidates th:nth-child(3), .proposal-candidates td:nth-child(3) { width:13%; text-align:center; overflow-wrap:normal; word-break:keep-all; }
+    .proposal-candidates th:nth-child(4), .proposal-candidates td:nth-child(4) { width:23%; }
+    .proposal-candidates th:nth-child(5), .proposal-candidates td:nth-child(5) { width:14%; }
+    .proposal-candidates th:nth-child(6), .proposal-candidates td:nth-child(6) { width:22%; }
+    .proposal-candidates th:nth-child(7), .proposal-candidates td:nth-child(7) { width:7%; text-align:center; overflow-wrap:normal; word-break:keep-all; white-space:nowrap; }
+    .status { display:inline-flex; align-items:center; justify-content:center; min-width:76px; border-radius:8px; padding:4px 8px; font-weight:800; font-size:11px; line-height:1.25; color:#fff; background:var(--blue); white-space:nowrap; }
     .status.watch { background:var(--amber); }
     .status.stop { background:var(--red); }
     .note { font-size:12px; color:var(--muted); }
     .strong { color:var(--navy); font-weight:900; }
     .risk-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
     .risk { border-left:6px solid var(--amber); background:#fff8ed; padding:12px; border-radius:8px; border-top:1px solid #efd4ad; border-right:1px solid #efd4ad; border-bottom:1px solid #efd4ad; }
-    .link { color:#075e91; font-weight:800; text-decoration:none; }
+    .link { display:inline-block; color:#075e91; font-weight:800; text-decoration:none; white-space:nowrap; word-break:keep-all; }
     .qa td:first-child { width:26%; font-weight:800; color:var(--navy); }
     .footer-note { font-size:11px; color:#48596d; border-top:1px solid var(--line); padding-top:10px; margin-top:16px; }
     @media (max-width:850px) {
@@ -219,7 +226,7 @@ const html = `<!doctype html>
 
   <section>
     <h2>4. 候補10社の概要</h2>
-    <table>
+    <table class="proposal-candidates">
       <thead>
         <tr><th style="width:5%">No.</th><th style="width:15%">銘柄</th><th style="width:10%">位置づけ</th><th style="width:24%">主な数値根拠</th><th style="width:15%">同業比較</th><th>確認ポイント</th><th style="width:9%">1年</th></tr>
       </thead>
