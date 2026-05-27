@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>勝者ポートフォリオ参照システム 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; --green:#126b45; --red:#a82424; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1400px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1100px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; break-inside:avoid; page-break-inside:avoid; }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:10px; padding:14px; background:#f8fbfe; }
+    .card b { display:block; font-size:28px; color:var(--blue); }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:980px; }
+    .wide table { min-width:2200px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    @media (max-width:900px) { main { padding:12px 10px 36px; } header,section { padding:16px; } .cards { grid-template-columns:1fr; } }
+    @media print {
+      body { background:#fff; }
+      main { max-width:none; padding:10mm; }
+      section { box-shadow:none; }
+      .table-wrap { overflow:visible; }
+      table { min-width:0; font-size:10px; }
+      .wide table { min-width:0; }
+      th,td { padding:5px 6px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>勝者ポートフォリオ参照システム</h1>
+      <p class="lead">添付CSVの数値部分を抽出し、既存のNISA候補選定へ接続する資料です。勝者ポートフォリオを正解として扱うのではなく、勝ち筋・寄与集中・テーマ構造を確認する参照データとして使います。</p>
+    </header>
+
+    <section>
+      <h2>1. 読み取り結果</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody><tr><td>読み取り結果</td><td>添付CSVから銘柄コード付きの保有行42件を抽出した。日本語見出しと一部銘柄名は元データ側で文字化けしているため、数値と銘柄コードを主に使用する。</td></tr><tr><td>活用方法</td><td>勝者ポートフォリオを、銘柄選定の正解としてではなく、勝ち筋・寄与集中・テーマ構造を確認する参照データとして使う。</td></tr><tr><td>既存システムへの改善</td><td>候補銘柄に対して、直接一致、テーマ近似、未接続を判定し、NISA 1年保有テストの説明力を高める。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="note">添付CSVは日本語見出しと一部銘柄名が文字化けしています。銘柄コード、比率、騰落率、価格、評価額系数値を中心に利用します。</div>
+    </section>
+
+    <section>
+      <h2>2. 数値サマリー</h2>
+      <div class="cards">
+        <div class="card"><b>42</b><span>抽出保有行</span></div>
+        <div class="card"><b>7</b><span>テーマ分類</span></div>
+        <div class="card"><b>7011</b><span>最大寄与銘柄</span></div>
+        <div class="card"><b>6</b><span>候補との接続件数</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 既存システムへの改善点</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>改善項目</th><th>現状の弱点</th><th>改善内容</th><th>使い方</th></tr></thead>
+        <tbody><tr><td>勝者ポートフォリオ参照ゲート</td><td>候補の良し悪しを単独スコアで見ており、実際に勝った構成との比較が弱い。</td><td>過去の高寄与銘柄、テーマ、役割を参照し、候補が同じ勝ち筋に乗っているかを確認する。</td><td>直接一致は強い参照、テーマ近似は補助、未接続は量的スコアを優先。</td></tr><tr><td>集中寄与リスクの確認</td><td>ポートフォリオ全体の成績が一部銘柄に偏っている可能性を見落とす。</td><td>評価額・含み益・寄与額の上位を抽出し、どのテーマが利益を作ったかを見る。</td><td>高寄与テーマは候補選定の仮説に使うが、PER・決算反応・下落耐性で再確認する。</td></tr><tr><td>ETF/指数との比較</td><td>個別株を選ぶ意味が、指数との比較に接続しきれていない。</td><td>1306、1321など指数系を基準枠として扱い、個別候補が指数+1%目標に必要かを確認する。</td><td>個別株候補が明確に上回る見込みを示せない場合、個別株比率を下げる判断材料にする。</td></tr><tr><td>銘柄名欠損への対応</td><td>添付CSVは日本語見出し・一部銘柄名が文字化けしている。</td><td>銘柄コードと数値を主キーにし、銘柄名は既知コード表または外部公式データで補完する。</td><td>名称が壊れていても、銘柄コード・比率・騰落率・評価額系数値は計算に使える。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>4. テーマ別の勝ち筋</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>テーマ</th><th>件数</th><th>資料上比率合計</th><th>平均騰落率</th><th>推定寄与合計</th><th>銘柄</th><th>システムでの使い方</th></tr></thead>
+        <tbody><tr><td>金利・金融</td><td>4</td><td>16</td><td>201.4</td><td>6240.6</td><td>8729 ソニーFG / 7173 東京きらぼしFG / 8316 三井住友FG / 8306 三菱UFJ FG</td><td>候補銘柄の質的テーマが実際の勝ち筋と近いか確認する参照枠として使う。</td></tr><tr><td>資本財・重工・景気循環</td><td>5</td><td>24</td><td>160.9</td><td>6005.6</td><td>7203 トヨタ自動車 / 7011 三菱重工業 / 5401 日本製鉄 / 5411 JFE HD / 8053 住友商事</td><td>候補銘柄の質的テーマが実際の勝ち筋と近いか確認する参照枠として使う。</td></tr><tr><td>半導体・AI・大型成長</td><td>6</td><td>15</td><td>149.6</td><td>2348.3</td><td>6594 ニデック / 8035 東京エレクトロン / 7735 SCREEN HD / 9983 ファーストリテイリング / 9984 ソフトバンクG / 6516 山洋電気</td><td>候補銘柄の質的テーマが実際の勝ち筋と近いか確認する参照枠として使う。</td></tr><tr><td>指数・ETF</td><td>4</td><td>22</td><td>81.9</td><td>1789.1</td><td>1306 TOPIX連動型ETF / 1321 日経225連動型ETF / 2080 PBR1倍割れ改善ETF / 2516 東証グロース250 ETF</td><td>個別株が指数+1%を超える必要があるか確認する基準枠として使う。</td></tr><tr><td>リオープン・交通</td><td>4</td><td>5</td><td>29.6</td><td>276.8</td><td>9022 JR東海 / 9024 西武HD / 9201 日本航空 / 9202 ANA HD</td><td>候補銘柄の質的テーマが実際の勝ち筋と近いか確認する参照枠として使う。</td></tr><tr><td>個別テーマ</td><td>16</td><td>11</td><td>5.6</td><td>224.7</td><td>4689 LINEヤフー / 6758 ソニーG / 7956 ピジョン / 8919 カチタス / 9843 ニトリHD / 3612 ワールド / 4726 SB?????? / 2427 ???????? / 6069 ?????? / 9104 ???? / 9603 ??? / 4061 ??? / 5214 ?????? / 9517 ?????? / 7453 ???? / 7172 ???</td><td>候補銘柄の質的テーマが実際の勝ち筋と近いか確認する参照枠として使う。</td></tr><tr><td>中小型・成長</td><td>3</td><td>7</td><td>23</td><td>167.1</td><td>6058 ベクトル / 3962 チェンジHD / 4373 シンプレクスHD</td><td>候補銘柄の質的テーマが実際の勝ち筋と近いか確認する参照枠として使う。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>5. 現候補との接続</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>候補銘柄</th><th>会社名</th><th>現在分類</th><th>量的</th><th>質的</th><th>接続</th><th>参照銘柄</th><th>参照テーマ</th><th>参照騰落率</th><th>参照役割</th><th>反映方法</th><th>注意</th></tr></thead>
+        <tbody><tr><td>2802.T</td><td>味の素</td><td>第1候補群</td><td>67.8</td><td>71.9</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>勝者ポートフォリオとの接続は弱い。既存の量的スコアと6月再判定を優先する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>6762.T</td><td>TDK</td><td>第2候補群</td><td>60.7</td><td>72.6</td><td>テーマ近似</td><td>6516 山洋電気</td><td>半導体・AI・大型成長</td><td>+292.8%</td><td>上昇寄与枠</td><td>同じテーマの勝者例として参照。ただし現在候補は別銘柄なので、決算・PER・反応で別途確認する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>第2候補群</td><td>60.9</td><td>72.6</td><td>テーマ近似</td><td>6516 山洋電気</td><td>半導体・AI・大型成長</td><td>+292.8%</td><td>上昇寄与枠</td><td>同じテーマの勝者例として参照。ただし現在候補は別銘柄なので、決算・PER・反応で別途確認する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>4385.T</td><td>メルカリ</td><td>補欠候補</td><td>79.8</td><td>50</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>勝者ポートフォリオとの接続は弱い。既存の量的スコアと6月再判定を優先する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>9984.T</td><td>ソフトバンクG</td><td>補欠候補</td><td>66.9</td><td>50</td><td>直接一致</td><td>9984 ソフトバンクG</td><td>半導体・AI・大型成長</td><td>+155.0%</td><td>上昇寄与枠</td><td>勝者ポートフォリオ内での役割と、現在候補としての量的/質的根拠を照合する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>7012.T</td><td>川崎重工業</td><td>監視のみ</td><td>59.9</td><td>50</td><td>テーマ近似</td><td>8053 住友商事</td><td>資本財・重工・景気循環</td><td>+214.1%</td><td>収益けん引枠</td><td>同じテーマの勝者例として参照。ただし現在候補は別銘柄なので、決算・PER・反応で別途確認する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>監視のみ</td><td>65.1</td><td>62</td><td>直接一致</td><td>8316 三井住友FG</td><td>金利・金融</td><td>+279.4%</td><td>収益けん引枠</td><td>勝者ポートフォリオ内での役割と、現在候補としての量的/質的根拠を照合する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>5020.T</td><td>ENEOS HD</td><td>監視のみ</td><td>64.3</td><td>62</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>勝者ポートフォリオとの接続は弱い。既存の量的スコアと6月再判定を優先する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>監視のみ</td><td>55.6</td><td>69.6</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>勝者ポートフォリオとの接続は弱い。既存の量的スコアと6月再判定を優先する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>監視のみ</td><td>62.1</td><td>62</td><td>直接一致</td><td>8306 三菱UFJ FG</td><td>金利・金融</td><td>+160.2%</td><td>収益けん引枠</td><td>勝者ポートフォリオ内での役割と、現在候補としての量的/質的根拠を照合する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>監視のみ</td><td>59.3</td><td>50</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>勝者ポートフォリオとの接続は弱い。既存の量的スコアと6月再判定を優先する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr><tr><td>8002.T</td><td>丸紅</td><td>監視のみ</td><td>53</td><td>50</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>勝者ポートフォリオとの接続は弱い。既存の量的スコアと6月再判定を優先する。</td><td>参照ポートフォリオは将来リターンの保証ではない。勝ち筋の構造確認と候補比較の補助に限定する。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>6. 抽出保有行</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>銘柄</th><th>会社名補完</th><th>テーマ</th><th>役割</th><th>資料上比率</th><th>資料上騰落率</th><th>価格から再計算</th><th>現在値系</th><th>基準値系</th><th>推定口数</th><th>推定取得額</th><th>推定評価額</th><th>推定損益</th><th>推定総寄与</th></tr></thead>
+        <tbody><tr><td>4689</td><td>LINEヤフー</td><td>個別テーマ</td><td>検証・見直し枠</td><td>1%</td><td>-10.2%</td><td>-10.2</td><td>409.2</td><td>455.5</td><td>2145</td><td>98</td><td>87.8</td><td>-9.9</td><td>-53.8</td></tr><tr><td>6058</td><td>ベクトル</td><td>中小型・成長</td><td>分散補助枠</td><td>2%</td><td>+7.2%</td><td>7.2</td><td>1292</td><td>1205</td><td>1690</td><td>204</td><td>218.3</td><td>+14.7</td><td>+30.0</td></tr><tr><td>6594</td><td>ニデック</td><td>半導体・AI・大型成長</td><td>検証・見直し枠</td><td>4%</td><td>-17.9%</td><td>-17.9</td><td>2715</td><td>3306</td><td>1712</td><td>566</td><td>464.8</td><td>-101.2</td><td>-124.2</td></tr><tr><td>6758</td><td>ソニーG</td><td>個別テーマ</td><td>分散補助枠</td><td>3%</td><td>+66.2%</td><td>66.2</td><td>3525</td><td>2120.7</td><td>1120</td><td>238</td><td>394.8</td><td>+157.3</td><td>+133.3</td></tr><tr><td>8729</td><td>ソニーFG</td><td>金利・金融</td><td>検証・見直し枠</td><td></td><td>-74.2%</td><td>-74.2</td><td>142.5</td><td>552.2</td><td>1120</td><td>62</td><td>16.0</td><td>-45.9</td><td></td></tr><tr><td>7956</td><td>ピジョン</td><td>個別テーマ</td><td>分散補助枠</td><td>2%</td><td>+3.4%</td><td>3.4</td><td>1860</td><td>1798</td><td>1390</td><td>250</td><td>258.5</td><td>+8.6</td><td>+22.1</td></tr><tr><td>8035</td><td>東京エレクトロン</td><td>半導体・AI・大型成長</td><td>分散補助枠</td><td>3%</td><td>+89.4%</td><td>89.4</td><td>49830</td><td>26310</td><td>183</td><td>481</td><td>911.9</td><td>+430.4</td><td>+447.4</td></tr><tr><td>7735</td><td>SCREEN HD</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>3%</td><td>+109.0%</td><td>109</td><td>10765</td><td>5150</td><td>936</td><td>482</td><td>1007.6</td><td>+525.6</td><td>+565.4</td></tr><tr><td>8919</td><td>カチタス</td><td>個別テーマ</td><td>検証・見直し枠</td><td>2%</td><td>-14.3%</td><td>-14.3</td><td>3500</td><td>4085</td><td>490</td><td>200</td><td>171.5</td><td>-28.7</td><td>-16.1</td></tr><tr><td>9843</td><td>ニトリHD</td><td>個別テーマ</td><td>検証・見直し枠</td><td>1%</td><td>-12.1%</td><td>-12.1</td><td>2568</td><td>2920</td><td>342</td><td>100</td><td>87.9</td><td>-12.1</td><td>-20.3</td></tr><tr><td>9983</td><td>ファーストリテイリング</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>1%</td><td>+269.3%</td><td>269.3</td><td>75510</td><td>20447</td><td>49</td><td>100</td><td>369.3</td><td>+269.3</td><td>+297.6</td></tr><tr><td>9984</td><td>ソフトバンクG</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>2%</td><td>+155.0%</td><td>155</td><td>6757</td><td>2650</td><td>1260</td><td>334</td><td>851.4</td><td>+517.5</td><td>+519.3</td></tr><tr><td>6516</td><td>山洋電気</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>2%</td><td>+292.8%</td><td>292.8</td><td>7090</td><td>1805</td><td>1107</td><td>200</td><td>784.9</td><td>+585.0</td><td>+642.8</td></tr><tr><td>7203</td><td>トヨタ自動車</td><td>資本財・重工・景気循環</td><td>分散補助枠</td><td>6%</td><td>+35.6%</td><td>35.6</td><td>2987</td><td>2202</td><td>2974</td><td>655</td><td>888.3</td><td>+233.5</td><td>+341.8</td></tr><tr><td>7011</td><td>三菱重工業</td><td>資本財・重工・景気循環</td><td>収益けん引枠</td><td>5%</td><td>+553.9%</td><td>553.9</td><td>3969</td><td>607</td><td>10765</td><td>653</td><td>4272.6</td><td>+3619.2</td><td>+3972.4</td></tr><tr><td>5401</td><td>日本製鉄</td><td>資本財・重工・景気循環</td><td>検証・見直し枠</td><td>4%</td><td>-0.8%</td><td>-0.8</td><td>553.5</td><td>558</td><td>7500</td><td>419</td><td>415.1</td><td>-3.4</td><td>+95.0</td></tr><tr><td>5411</td><td>JFE HD</td><td>資本財・重工・景気循環</td><td>分散補助枠</td><td>4%</td><td>+1.6%</td><td>1.6</td><td>1635</td><td>1609</td><td>2600</td><td>418</td><td>425.1</td><td>+6.8</td><td>+128.3</td></tr><tr><td>8053</td><td>住友商事</td><td>資本財・重工・景気循環</td><td>収益けん引枠</td><td>5%</td><td>+214.1%</td><td>214.1</td><td>7131</td><td>2270</td><td>2620</td><td>595</td><td>1868.3</td><td>+1273.6</td><td>+1468.1</td></tr><tr><td>3612</td><td>ワールド</td><td>個別テーマ</td><td>上昇寄与枠</td><td>2%</td><td>+114.7%</td><td>114.7</td><td>1504</td><td>700.5</td><td>2854</td><td>200</td><td>429.2</td><td>+229.3</td><td>+273.3</td></tr><tr><td>9022</td><td>JR東海</td><td>リオープン・交通</td><td>分散補助枠</td><td>1%</td><td>+8.5%</td><td>8.5</td><td>3553</td><td>3276</td><td>305</td><td>100</td><td>108.5</td><td>+8.5</td><td>+33.8</td></tr><tr><td>9024</td><td>西武HD</td><td>リオープン・交通</td><td>分散補助枠</td><td>2%</td><td>+94.0%</td><td>94</td><td>2978.5</td><td>1535</td><td>1304</td><td>200</td><td>388.4</td><td>+188.2</td><td>+191.7</td></tr><tr><td>9201</td><td>日本航空</td><td>リオープン・交通</td><td>分散補助枠</td><td>1%</td><td>+8.0%</td><td>8</td><td>2580</td><td>2388</td><td>419</td><td>100</td><td>108.1</td><td>+8.0</td><td>+24.2</td></tr><tr><td>9202</td><td>ANA HD</td><td>リオープン・交通</td><td>分散補助枠</td><td>1%</td><td>+7.9%</td><td>7.9</td><td>2784</td><td>2580</td><td>388</td><td>100</td><td>108.0</td><td>+7.9</td><td>+27.1</td></tr><tr><td>7173</td><td>東京きらぼしFG</td><td>金利・金融</td><td>収益けん引枠</td><td>6%</td><td>+440.3%</td><td>440.3</td><td>11050</td><td>2045</td><td>3270</td><td>669</td><td>3613.4</td><td>+2944.6</td><td>+3209.9</td></tr><tr><td>8316</td><td>三井住友FG</td><td>金利・金融</td><td>収益けん引枠</td><td>5%</td><td>+279.4%</td><td>279.4</td><td>6006</td><td>1583</td><td>3639</td><td>576</td><td>2185.6</td><td>+1609.5</td><td>+1910.0</td></tr><tr><td>8306</td><td>三菱UFJ FG</td><td>金利・金融</td><td>収益けん引枠</td><td>5%</td><td>+160.2%</td><td>160.2</td><td>3091</td><td>1188</td><td>5356</td><td>636</td><td>1655.5</td><td>+1019.2</td><td>+1120.7</td></tr><tr><td>3962</td><td>チェンジHD</td><td>中小型・成長</td><td>検証・見直し枠</td><td>3%</td><td>-30.9%</td><td>-30.9</td><td>981</td><td>1420</td><td>2980</td><td>423</td><td>292.3</td><td>-130.8</td><td>-138.0</td></tr><tr><td>4373</td><td>シンプレクスHD</td><td>中小型・成長</td><td>分散補助枠</td><td>2%</td><td>+92.8%</td><td>92.8</td><td>1037</td><td>538</td><td>4920</td><td>265</td><td>510.2</td><td>+245.5</td><td>+275.1</td></tr><tr><td>1306</td><td>TOPIX連動型ETF</td><td>指数・ETF</td><td>市場ベータの土台</td><td>5%</td><td>+99.8%</td><td>99.8</td><td>412.4</td><td>206.4</td><td>24225</td><td>500</td><td>999.0</td><td>+499.0</td><td>+533.4</td></tr><tr><td>1321</td><td>日経225連動型ETF</td><td>指数・ETF</td><td>市場ベータの土台</td><td>5%</td><td>+123.3%</td><td>123.3</td><td>66210</td><td>29645.87</td><td>169</td><td>500</td><td>1117.3</td><td>+617.0</td><td>+603.8</td></tr><tr><td>2080</td><td>PBR1倍割れ改善ETF</td><td>指数・ETF</td><td>市場ベータの土台</td><td>4%</td><td>+81.9%</td><td>81.9</td><td>1892</td><td>1040</td><td>5000</td><td>520</td><td>946.0</td><td>+426.0</td><td>+481.8</td></tr><tr><td>2516</td><td>東証グロース250 ETF</td><td>指数・ETF</td><td>市場ベータの土台</td><td>8%</td><td>+22.5%</td><td>22.5</td><td>655.5</td><td>535.2</td><td>17750</td><td>950</td><td>1163.5</td><td>+213.5</td><td>+170.1</td></tr><tr><td>4726</td><td>SB??????</td><td>個別テーマ</td><td>分散補助枠</td><td>0%</td><td>+15.2%</td><td>15.2</td><td>2950</td><td>2560</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>+8.0</td></tr><tr><td>2427</td><td>????????</td><td>個別テーマ</td><td>分散補助枠</td><td>0%</td><td>+25.8%</td><td>25.8</td><td>1755</td><td>1395</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>+26.0</td></tr><tr><td>6069</td><td>??????</td><td>個別テーマ</td><td>分散補助枠</td><td>0%</td><td>+16.5%</td><td>16.5</td><td>1050</td><td>901</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>-4.3</td></tr><tr><td>9104</td><td>????</td><td>個別テーマ</td><td>分散補助枠</td><td>0%</td><td>+31.6%</td><td>31.6</td><td>3425</td><td>2602</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>+129.4</td></tr><tr><td>9603</td><td>???</td><td>個別テーマ</td><td>検証・見直し枠</td><td>0%</td><td>-21.9%</td><td>-21.9</td><td>1746</td><td>2235</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>-73.0</td></tr><tr><td>4061</td><td>???</td><td>個別テーマ</td><td>検証・見直し枠</td><td>0%</td><td>-25.9%</td><td>-25.9</td><td>2710</td><td>3655</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>-26.1</td></tr><tr><td>5214</td><td>??????</td><td>個別テーマ</td><td>検証・見直し枠</td><td>0%</td><td>-6.6%</td><td>-6.6</td><td>2520</td><td>2698</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>-6.2</td></tr><tr><td>9517</td><td>??????</td><td>個別テーマ</td><td>検証・見直し枠</td><td>0%</td><td>-34.6%</td><td>-34.6</td><td>1401</td><td>2143</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>-66.3</td></tr><tr><td>7453</td><td>????</td><td>個別テーマ</td><td>検証・見直し枠</td><td>0%</td><td>-42.8%</td><td>-42.8</td><td>1180</td><td>2064</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>-86.3</td></tr><tr><td>7172</td><td>???</td><td>個別テーマ</td><td>検証・見直し枠</td><td>0%</td><td>-15.0%</td><td>-15</td><td>1149</td><td>1352</td><td>0</td><td>0</td><td>0.0</td><td>+0.0</td><td>-15.0</td></tr></tbody>
+      </table>
+    </div>
+      <div class="actions">
+        <a href="635_winner_portfolio_summary.csv">要約CSV</a>
+        <a href="636_winner_portfolio_holdings_extracted.csv">抽出CSV</a>
+        <a href="637_winner_portfolio_theme_summary.csv">テーマCSV</a>
+        <a href="638_winner_portfolio_candidate_bridge.csv">候補接続CSV</a>
+        <a href="639_winner_portfolio_system_improvements.csv">改善CSV</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
