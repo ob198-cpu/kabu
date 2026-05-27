@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>プロ作成ポートフォリオ 深掘り分析 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; --green:#126b45; --red:#a82424; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1400px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1120px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; break-inside:avoid; page-break-inside:avoid; }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:10px; padding:14px; background:#f8fbfe; }
+    .card b { display:block; font-size:28px; color:var(--blue); }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:980px; }
+    .wide table { min-width:2200px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    @media (max-width:900px) { main { padding:12px 10px 36px; } header,section { padding:16px; } .cards { grid-template-columns:1fr; } }
+    @media print {
+      body { background:#fff; }
+      main { max-width:none; padding:10mm; }
+      section { box-shadow:none; }
+      .table-wrap { overflow:visible; }
+      table { min-width:0; font-size:10px; }
+      .wide table { min-width:0; }
+      th,td { padding:5px 6px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>プロ作成ポートフォリオ 深掘り分析</h1>
+      <p class="lead">成果が出ているポートフォリオを、購入銘柄リストとしてではなく、勝ち筋・寄与集中・テーマ構造・既存候補との整合性を確認する参照レイヤーとして分析します。</p>
+    </header>
+
+    <section>
+      <h2>1. 結論</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody><tr><td>結論</td><td>この資料は参考になる。特に、プロが成果を出した銘柄名そのものより、金利・金融、資本財・重工、半導体・AI、指数ETFという勝ち筋の構造が有用。</td></tr><tr><td>使い方</td><td>直接買う根拠ではなく、候補銘柄が勝者ポートフォリオの構造と一致しているかを確認する参照レイヤーとして使う。</td></tr><tr><td>重要な発見</td><td>上位5銘柄で推定寄与の約68.5%、上位10銘柄で約85.3%を占める。NISAテストでも全候補を同じ重みにせず、主力候補と監視候補を分ける必要がある。</td></tr><tr><td>追加すべき工程</td><td>高寄与なのに現在候補外の銘柄を、プロ参照追加キューとしてPER、PBR、ROE、決算反応、下落耐性で再評価する。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="note">参考になります。ただし、買付時点と現在価格が違うため、そのまま買う判断には使いません。勝ち筋の構造確認に使います。</div>
+    </section>
+
+    <section>
+      <h2>2. 寄与集中</h2>
+      <div class="cards">
+        <div class="card"><b>53.3%</b><span>上位3銘柄の寄与比率</span></div>
+        <div class="card"><b>68.5%</b><span>上位5銘柄の寄与比率</span></div>
+        <div class="card"><b>85.3%</b><span>上位10銘柄の寄与比率</span></div>
+        <div class="card"><b>7011</b><span>最大寄与銘柄</span></div>
+      </div>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>区分</th><th>推定寄与</th><th>寄与比率</th><th>読み取り</th></tr></thead>
+        <tbody><tr><td>上位3銘柄</td><td>9092.3</td><td>53.3%</td><td>成果のかなり大きい部分が少数の主力銘柄に集中。銘柄選定では主力候補の根拠確認が重要。</td></tr><tr><td>上位5銘柄</td><td>11681.1</td><td>68.5%</td><td>成果のかなり大きい部分が少数の主力銘柄に集中。銘柄選定では主力候補の根拠確認が重要。</td></tr><tr><td>上位10銘柄</td><td>14545.8</td><td>85.3%</td><td>上位群でほとんどの利益を作っている。候補10社でも全銘柄同じ重みではなく、根拠の強弱を分ける必要がある。</td></tr><tr><td>上位15銘柄</td><td>16389.5</td><td>96.1%</td><td>上位群でほとんどの利益を作っている。候補10社でも全銘柄同じ重みではなく、根拠の強弱を分ける必要がある。</td></tr><tr><td>全体</td><td>17052.2</td><td>100%</td><td>この資料は勝ち筋の構造分析には使えるが、買付時点・現在株価・最新決算が不明なため、直接の購入判断には使わない。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>3. テーマ別の読み取り</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>テーマ</th><th>件数</th><th>比率合計</th><th>平均騰落率</th><th>推定寄与</th><th>参照度</th><th>システムへの意味</th></tr></thead>
+        <tbody><tr><td>金利・金融</td><td>4</td><td>16</td><td>201.4</td><td>6240.6</td><td>高</td><td>最も寄与が大きいテーマの一つ。日銀・金利・信用コスト・バフェット売買監視とセットで再評価する価値がある。</td></tr><tr><td>資本財・重工・景気循環</td><td>5</td><td>24</td><td>160.9</td><td>6005.6</td><td>高</td><td>高寄与テーマ。防衛、インフラ、資本財、商社のうち、今から追える銘柄があるか再スクリーニングする価値がある。</td></tr><tr><td>半導体・AI・大型成長</td><td>6</td><td>15</td><td>149.6</td><td>2348.3</td><td>高</td><td>寄与は大きいが上昇済み銘柄も多い。TDK、ディスコなどはテーマ近似として残し、PER・SOX・決算反応で確認する。</td></tr><tr><td>指数・ETF</td><td>4</td><td>22</td><td>81.9</td><td>1789.1</td><td>高</td><td>市場ベータの土台。個別株が指数+1%を狙う意味を確認する比較基準として使う。</td></tr><tr><td>リオープン・交通</td><td>4</td><td>5</td><td>29.6</td><td>276.8</td><td>補助</td><td>参考テーマ。既存候補との接続があれば確認材料にする。</td></tr><tr><td>個別テーマ</td><td>16</td><td>11</td><td>5.6</td><td>224.7</td><td>補助</td><td>参考テーマ。既存候補との接続があれば確認材料にする。</td></tr><tr><td>中小型・成長</td><td>3</td><td>7</td><td>23</td><td>167.1</td><td>補助</td><td>参考テーマ。既存候補との接続があれば確認材料にする。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>4. 既存候補への反映</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>候補銘柄</th><th>会社名</th><th>現在分類</th><th>接続</th><th>参照銘柄</th><th>参照テーマ</th><th>参照騰落率</th><th>参照役割</th><th>参照点</th><th>参照判定</th><th>後追いリスク</th><th>反映方法</th></tr></thead>
+        <tbody><tr><td>2802.T</td><td>味の素</td><td>第1候補群</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>45</td><td>参照弱い</td><td>なし。参照ポートフォリオからは補強できない。</td><td>勝者ポートフォリオからの補強は弱い。食品・値上げ耐性の独立仮説として、決算・PER・数量減を重視する。</td></tr><tr><td>6762.T</td><td>TDK</td><td>第2候補群</td><td>テーマ近似</td><td>6516 山洋電気</td><td>半導体・AI・大型成長</td><td>+292.8%</td><td>上昇寄与枠</td><td>64</td><td>テーマ参照</td><td>高い。すでに大きく上昇した勝者を後追いする危険がある。</td><td>同じテーマの勝者例として有用。現在候補が同じ利益構造に乗っているか、売上・受注・利益率で確認する。</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>第2候補群</td><td>テーマ近似</td><td>6516 山洋電気</td><td>半導体・AI・大型成長</td><td>+292.8%</td><td>上昇寄与枠</td><td>64</td><td>テーマ参照</td><td>高い。すでに大きく上昇した勝者を後追いする危険がある。</td><td>同じテーマの勝者例として有用。現在候補が同じ利益構造に乗っているか、売上・受注・利益率で確認する。</td></tr><tr><td>4385.T</td><td>メルカリ</td><td>補欠候補</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>45</td><td>参照弱い</td><td>なし。参照ポートフォリオからは補強できない。</td><td>参照データだけでは補強できない。既存の量的スコアと6月再判定を優先する。</td></tr><tr><td>9984.T</td><td>ソフトバンクG</td><td>補欠候補</td><td>直接一致</td><td>9984 ソフトバンクG</td><td>半導体・AI・大型成長</td><td>+155.0%</td><td>上昇寄与枠</td><td>76</td><td>強い参照。ただし追随リスクあり</td><td>中。勝ち筋は参考になるが、現在価格と決算反応の再確認が必要。</td><td>直接一致するため説明材料になる。ただし過去上昇の後追いにならないよう、最新PER・決算後反応を必ず確認する。</td></tr><tr><td>7012.T</td><td>川崎重工業</td><td>監視のみ</td><td>テーマ近似</td><td>8053 住友商事</td><td>資本財・重工・景気循環</td><td>+214.1%</td><td>収益けん引枠</td><td>64</td><td>テーマ参照</td><td>高い。すでに大きく上昇した勝者を後追いする危険がある。</td><td>同じテーマの勝者例として有用。現在候補が同じ利益構造に乗っているか、売上・受注・利益率で確認する。</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>監視のみ</td><td>直接一致</td><td>8316 三井住友FG</td><td>金利・金融</td><td>+279.4%</td><td>収益けん引枠</td><td>76</td><td>強い参照。ただし追随リスクあり</td><td>高い。すでに大きく上昇した勝者を後追いする危険がある。</td><td>過去の勝ち筋には一致。ただし現在は監視分類なので、金利・決算反応・警戒材料が改善した時だけ再浮上させる。</td></tr><tr><td>5020.T</td><td>ENEOS HD</td><td>監視のみ</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>45</td><td>参照弱い</td><td>なし。参照ポートフォリオからは補強できない。</td><td>参照データだけでは補強できない。既存の量的スコアと6月再判定を優先する。</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>監視のみ</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>45</td><td>参照弱い</td><td>なし。参照ポートフォリオからは補強できない。</td><td>参照データだけでは補強できない。既存の量的スコアと6月再判定を優先する。</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>監視のみ</td><td>直接一致</td><td>8306 三菱UFJ FG</td><td>金利・金融</td><td>+160.2%</td><td>収益けん引枠</td><td>76</td><td>強い参照。ただし追随リスクあり</td><td>中。勝ち筋は参考になるが、現在価格と決算反応の再確認が必要。</td><td>過去の勝ち筋には一致。ただし現在は監視分類なので、金利・決算反応・警戒材料が改善した時だけ再浮上させる。</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>監視のみ</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>45</td><td>参照弱い</td><td>なし。参照ポートフォリオからは補強できない。</td><td>参照データだけでは補強できない。既存の量的スコアと6月再判定を優先する。</td></tr><tr><td>8002.T</td><td>丸紅</td><td>監視のみ</td><td>未接続</td><td></td><td>未接続</td><td></td><td></td><td>45</td><td>参照弱い</td><td>なし。参照ポートフォリオからは補強できない。</td><td>参照データだけでは補強できない。既存の量的スコアと6月再判定を優先する。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>5. 追加スクリーニング候補</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>優先</th><th>銘柄</th><th>会社名</th><th>テーマ</th><th>役割</th><th>資料上騰落率</th><th>推定寄与</th><th>既存候補</th><th>確認理由</th><th>注意</th></tr></thead>
+        <tbody><tr><td>A</td><td>7011.T</td><td>三菱重工業</td><td>資本財・重工・景気循環</td><td>収益けん引枠</td><td>+553.9%</td><td>+3972.4</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>A</td><td>7173.T</td><td>東京きらぼしFG</td><td>金利・金融</td><td>収益けん引枠</td><td>+440.3%</td><td>+3209.9</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>既存候補</td><td>8316.T</td><td>三井住友FG</td><td>金利・金融</td><td>収益けん引枠</td><td>+279.4%</td><td>+1910.0</td><td>あり</td><td>既存候補内で、プロ参照データとの整合性を再確認する。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>A</td><td>8053.T</td><td>住友商事</td><td>資本財・重工・景気循環</td><td>収益けん引枠</td><td>+214.1%</td><td>+1468.1</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>既存候補</td><td>8306.T</td><td>三菱UFJ FG</td><td>金利・金融</td><td>収益けん引枠</td><td>+160.2%</td><td>+1120.7</td><td>あり</td><td>既存候補内で、プロ参照データとの整合性を再確認する。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>B</td><td>6516.T</td><td>山洋電気</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>+292.8%</td><td>+642.8</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>B</td><td>1321.T</td><td>日経225連動型ETF</td><td>指数・ETF</td><td>市場ベータの土台</td><td>+123.3%</td><td>+603.8</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr><tr><td>B</td><td>7735.T</td><td>SCREEN HD</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>+109.0%</td><td>+565.4</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr><tr><td>B</td><td>1306.T</td><td>TOPIX連動型ETF</td><td>指数・ETF</td><td>市場ベータの土台</td><td>+99.8%</td><td>+533.4</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr><tr><td>既存候補</td><td>9984.T</td><td>ソフトバンクG</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>+155.0%</td><td>+519.3</td><td>あり</td><td>既存候補内で、プロ参照データとの整合性を再確認する。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>B</td><td>2080.T</td><td>PBR1倍割れ改善ETF</td><td>指数・ETF</td><td>市場ベータの土台</td><td>+81.9%</td><td>+481.8</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr><tr><td>B</td><td>8035.T</td><td>東京エレクトロン</td><td>半導体・AI・大型成長</td><td>分散補助枠</td><td>+89.4%</td><td>+447.4</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr><tr><td>B</td><td>7203.T</td><td>トヨタ自動車</td><td>資本財・重工・景気循環</td><td>分散補助枠</td><td>+35.6%</td><td>+341.8</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr><tr><td>B</td><td>9983.T</td><td>ファーストリテイリング</td><td>半導体・AI・大型成長</td><td>上昇寄与枠</td><td>+269.3%</td><td>+297.6</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>過去上昇が大きいため、後追い買いにならないかを最優先確認。</td></tr><tr><td>B</td><td>4373.T</td><td>シンプレクスHD</td><td>中小型・成長</td><td>分散補助枠</td><td>+92.8%</td><td>+275.1</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr><tr><td>B</td><td>3612.T</td><td>ワールド</td><td>個別テーマ</td><td>上昇寄与枠</td><td>+114.7%</td><td>+273.3</td><td>なし</td><td>勝者ポートフォリオの高寄与銘柄。現在のPER、PBR、ROE、決算反応、下落耐性を取得して再スクリーニングする価値がある。</td><td>現在の地合い・最新決算を確認する。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>6. 運用ルール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>ルール</th><th>内容</th></tr></thead>
+        <tbody><tr><td>参照ポートフォリオは直接加点しない</td><td>成果が出た事実は参考になるが、買付時点と現在価格が違うため、候補を自動昇格させない。</td></tr><tr><td>直接一致は再確認価値を上げる</td><td>既存候補と参照ポートフォリオが直接一致する場合、最新PER・決算反応・警戒材料を確認して再判定する。</td></tr><tr><td>テーマ近似は仮説強化に使う</td><td>TDKやディスコのようにテーマが近い場合、売上・受注・利益率が同じ方向に動くかを確認する。</td></tr><tr><td>高上昇銘柄は追随リスクを同時に見る</td><td>+150%以上の上昇銘柄は勝ち筋としては参考になるが、今から買う場合は割高・過熱を強く確認する。</td></tr><tr><td>高寄与なのに候補外の銘柄を追加キューへ入れる</td><td>三菱重工、東京きらぼしFG、住友商事、山洋電気、SCREENなどは、現在候補外でも再スクリーニング対象にする。</td></tr><tr><td>指数・ETFは基準枠として使う</td><td>TOPIX・日経平均連動ETFは、個別株選定が本当に+1%を狙う意味を持つかの比較基準にする。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="actions">
+        <a href="640_professional_portfolio_deep_summary.csv">要約CSV</a>
+        <a href="641_professional_portfolio_concentration.csv">寄与集中CSV</a>
+        <a href="642_professional_portfolio_theme_insights.csv">テーマ分析CSV</a>
+        <a href="643_professional_portfolio_candidate_reference.csv">候補反映CSV</a>
+        <a href="644_professional_portfolio_import_queue.csv">追加候補CSV</a>
+        <a href="645_professional_reference_rules.csv">運用ルールCSV</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
