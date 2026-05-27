@@ -76,6 +76,11 @@ const finalByTicker = new Map(finalRows.map(row => {
   return [match?.[1] || row['銘柄'], row];
 }));
 
+function chartUrlForTicker(ticker) {
+  const symbol = ticker.includes('.') ? ticker : `${ticker}.T`;
+  return `https://finance.yahoo.com/chart/${encodeURIComponent(symbol)}?range=1y`;
+}
+
 const candidateTable = candidateRows.map(row => {
   const ticker = row['銘柄'].split(' ')[0];
   const final = finalByTicker.get(ticker) || {};
@@ -86,7 +91,8 @@ const candidateTable = candidateRows.map(row => {
     主な数値根拠: final['主な根拠'] || '',
     同業比較: `${row['同業シグナル']} / PER倍率 ${row['PER倍率']}`,
     選定理由: row['確認内容'],
-    '6月確認': row['次アクション']
+    '6月確認': row['次アクション'],
+    '1年チャート': chartUrlForTicker(ticker)
   };
 });
 
@@ -179,7 +185,7 @@ const scriptRows = [
 ];
 
 writeCsv('719_client_send_pack_summary.csv', summaryRows, ['項目', '内容']);
-writeCsv('720_client_send_pack_10_candidates.csv', candidateTable, ['順位', '銘柄', '現在の扱い', '主な数値根拠', '同業比較', '選定理由', '6月確認']);
+writeCsv('720_client_send_pack_10_candidates.csv', candidateTable, ['順位', '銘柄', '現在の扱い', '主な数値根拠', '同業比較', '選定理由', '6月確認', '1年チャート']);
 writeCsv('721_client_send_pack_qa.csv', qaRows, ['質問', '回答']);
 writeCsv('722_client_explanation_script.csv', scriptRows, ['順番', '見出し', '台本']);
 
@@ -311,10 +317,11 @@ const html = `<!doctype html>
   </div>
 
   <h2>4. 候補10社と選定理由</h2>
+  <p class="small">各銘柄のチャートリンクは、外部サイトで過去1年の値動きを確認するためのものです。候補の説明では、点数だけでなく、直近1年の上昇・下落・過熱感も合わせて確認します。</p>
   <table class="candidate">
-    <thead><tr><th>順位</th><th>銘柄</th><th>扱い</th><th>主な数値根拠</th><th>同業比較</th><th>選定理由</th><th>6月確認</th></tr></thead>
+    <thead><tr><th>順位</th><th>銘柄</th><th>扱い</th><th>主な数値根拠</th><th>同業比較</th><th>選定理由</th><th>6月確認</th><th>1年チャート</th></tr></thead>
     <tbody>
-      ${candidateTable.map(row => `<tr><td>${esc(row['順位'])}</td><td>${esc(row['銘柄'])}</td><td>${esc(row['現在の扱い'])}</td><td>${esc(row['主な数値根拠'])}</td><td>${esc(row['同業比較'])}</td><td>${esc(row['選定理由'])}</td><td>${esc(row['6月確認'])}</td></tr>`).join('')}
+      ${candidateTable.map(row => `<tr><td>${esc(row['順位'])}</td><td>${esc(row['銘柄'])}</td><td>${esc(row['現在の扱い'])}</td><td>${esc(row['主な数値根拠'])}</td><td>${esc(row['同業比較'])}</td><td>${esc(row['選定理由'])}</td><td>${esc(row['6月確認'])}</td><td><a href="${esc(row['1年チャート'])}">1年チャート</a></td></tr>`).join('')}
     </tbody>
   </table>
 
