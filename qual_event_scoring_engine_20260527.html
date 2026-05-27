@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的イベント判定エンジン 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1320px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1040px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:900px; }
+    .wide table { min-width:2050px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    @media (max-width:900px) { main { padding:12px 10px 36px; } header,section { padding:16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>質的イベント判定エンジン</h1>
+      <p class="lead">ニュース・イベントを、事実性、銘柄関連性、反応確認、反証リスクに分けて点数化し、通知・確認待ち・保留・除外候補へ分類します。</p>
+    </header>
+    <section>
+      <h2>1. 概要</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody><tr><td>目的</td><td>質的イベントを、客観的な分類とアクションに変換する。</td></tr><tr><td>対象</td><td>サンプルイベント6件を判定。</td></tr><tr><td>出力</td><td>通知・重点確認、通知・警戒、確認待ち、保留、除外候補に分類。</td></tr><tr><td>注意</td><td>サンプル判定であり、実際のイベント発生や売買判断を意味しない。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="note">これは質的イベントを整理する判定表です。実際の売買判断は、6月イベント後の最新決算・株価・証券会社画面で再確認します。</div>
+    </section>
+    <section>
+      <h2>2. 判定式</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>項目</th><th>式・ルール</th><th>意味</th></tr></thead>
+        <tbody><tr><td>イベント総合点</td><td>事実スコア30% + 関連性スコア30% + 実績反応確認25% + 反証リスク控除15%</td><td>公式性、銘柄への接続、株価反応、反証リスクを分けて扱う。</td></tr><tr><td>事実スコア</td><td>公式資料・統計・決算・SECを高く、報道のみを中、噂を低く扱う</td><td>出典の強さを先に確認する。</td></tr><tr><td>関連性スコア</td><td>対象銘柄の売上・受注・利益率に直接接続するほど高い</td><td>連想だけのテーマを上げすぎない。</td></tr><tr><td>実績反応確認</td><td>通知対象は当日確認、確認待ちは決算・株価反応待ち</td><td>株価への影響を指数比較で見る。</td></tr><tr><td>反証リスク</td><td>指数劣後、PER過熱、全売却、原油急落などを控除要因にする</td><td>都合のよい材料だけで候補を上げない。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+    <section>
+      <h2>3. サンプルイベント判定結果</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>ID</th><th>質的テーマ</th><th>対象銘柄</th><th>方向</th><th>事実</th><th>関連性</th><th>反応確認</th><th>反証リスク</th><th>総合点</th><th>分類</th><th>アクション</th><th>確認数字</th><th>反証条件</th></tr></thead>
+        <tbody><tr><td>SAMPLE-AI-HBM-001</td><td>AI半導体投資 / HBM・先端パッケージ</td><td>6762.T TDK / 6146.T ディスコ</td><td>追い風</td><td>85</td><td>88</td><td>60</td><td>62</td><td>72.6</td><td>確認待ち</td><td>候補抽出に留め、決算資料または株価反応で確認する。</td><td>AI/HBM関連売上、受注、利益率、SOX/日経半導体指数との相対反応、PER妥当性</td><td>受注や利益率に出ない、決算後20営業日で指数劣後、PER調整に耐えない</td></tr><tr><td>SAMPLE-RATE-BOJ-001</td><td>金利上昇 / 自社株買い・増配・資本効率</td><td>8316.T 三井住友FG / 8766.T 東京海上HD / 8306.T 三菱UFJ FG</td><td>追い風</td><td>85</td><td>80</td><td>75</td><td>50</td><td>75.8</td><td>確認待ち</td><td>候補抽出に留め、決算資料または株価反応で確認する。</td><td>資金利益、信用コスト、保険引受利益、ROE/PBR、日銀後1日/5日/20営業日反応</td><td>信用コスト悪化、自然災害損害率悪化、金利上昇でも指数劣後</td></tr><tr><td>SAMPLE-BUFFETT-SELL-001</td><td>バフェット・バークシャー売買監視</td><td>8766.T 東京海上HD / 8316.T 三井住友FG / 8306.T 三菱UFJ FG / 5020.T ENEOS HD</td><td>逆風/警戒</td><td>85</td><td>82</td><td>75</td><td>53</td><td>75.9</td><td>通知・警戒</td><td>新規買い停止。対象銘柄の量的データ、指数反応、関連ニュースを再確認する。</td><td>売却率、売却対象業界、同業株反応、対象候補の決算・株価反応</td><td>売却理由を断定できない、13Fの開示遅れを補正できない</td></tr><tr><td>SAMPLE-FOOD-COST-001</td><td>食品値上げ耐性 / 円高 / 原油・ナフサ下落</td><td>2802.T 味の素</td><td>追い風</td><td>85</td><td>78</td><td>60</td><td>47</td><td>71.9</td><td>確認待ち</td><td>候補抽出に留め、決算資料または株価反応で確認する。</td><td>数量、単価、原材料費、営業利益率、ABF/ヘルスケア成長、PER妥当性</td><td>数量減、原材料再上昇、PERが成長率に対して高すぎる</td></tr><tr><td>SAMPLE-DC-POWER-001</td><td>データセンター電力不足 / データセンター冷却</td><td>6503.T 三菱電機 / 6367.T ダイキン工業</td><td>追い風</td><td>85</td><td>72</td><td>60</td><td>50</td><td>69.6</td><td>確認待ち</td><td>候補抽出に留め、決算資料または株価反応で確認する。</td><td>データセンター向け売上、受注残、利益率、地域別需要、設備投資計画</td><td>寄与が小さい、利益率が伸びない、中国需要悪化、指数劣後</td></tr><tr><td>SAMPLE-OIL-MIDDLEEAST-001</td><td>原油・中東リスク</td><td>5020.T ENEOS HD</td><td>追い風/逆風混在</td><td>85</td><td>70</td><td>45</td><td>64</td><td>63.2</td><td>保留</td><td>スコアへ混ぜず、週次確認リストに残す。</td><td>原油価格、精製マージン、在庫影響、セグメント利益、株価の指数比較</td><td>原油急落、精製マージン悪化、在庫評価損、決算後指数劣後</td></tr></tbody>
+      </table>
+    </div>
+      <div class="actions">
+        <a href="620_qual_event_scoring_engine_summary.csv">概要CSV</a>
+        <a href="621_qual_event_scoring_formula.csv">判定式CSV</a>
+        <a href="622_qual_event_scored_cases.csv">判定結果CSV</a>
+        <a href="qual_event_sample_cases_20260527.html">サンプルへ</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
