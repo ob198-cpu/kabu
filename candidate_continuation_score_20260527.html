@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 継続期待スコア</title>
+  <style>
+    :root { --ink:#050b14; --muted:#45566a; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --soft:#f4f8fc; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1180px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:#123d63; color:#fff; border-radius:10px; padding:30px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; line-height:1.25; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); font-size:22px; }
+    p { margin:0 0 10px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .card b { display:block; color:var(--navy); }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; background:#fff; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; word-break:normal; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .score th:nth-child(1), .score td:nth-child(1) { width:5%; text-align:center; }
+    .score th:nth-child(2), .score td:nth-child(2) { width:15%; font-weight:800; }
+    .score th:nth-child(3), .score td:nth-child(3) { width:10%; text-align:center; }
+    .score th:nth-child(4), .score td:nth-child(4) { width:10%; text-align:right; }
+    .score th:nth-child(5), .score td:nth-child(5) { width:11%; text-align:center; }
+    .score th:nth-child(6), .score td:nth-child(6) { width:17%; }
+    .score th:nth-child(7), .score td:nth-child(7) { width:12%; }
+    .badge { display:inline-block; border-radius:8px; padding:4px 8px; color:#fff; font-weight:900; white-space:nowrap; }
+    .ok { background:var(--green); }
+    .watch { background:var(--amber); }
+    .stop { background:var(--red); }
+    .formula { background:#f8fbff; border:1px solid var(--line); border-radius:8px; padding:14px; font-family:Consolas,"Noto Sans JP",monospace; font-size:13px; }
+    .note { color:var(--muted); font-size:12px; }
+    header .note { color:#dbeeff; }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>候補10社 継続期待スコア</h1>
+    <p>過去1年で大きく上がった銘柄について、その上昇が次の1年も続く根拠を、利益成長・売上成長・ROE・決算後反応・PER/PBR過熱で分解して確認します。</p>
+    <p class="note">作成: 2026/05/27 19:15 / 本表は購入確定ではなく、6月イベント後に再判定するための確認表です。</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>過去1年平均</b><div class="value">+104.3%</div><p>候補10社の単純平均</p></div>
+    <div class="card"><b>継続期待スコア平均</b><div class="value">49.4点</div><p>過熱・マクロ減点後</p></div>
+    <div class="card"><b>継続/条件付き</b><div class="value">1社</div><p>60点以上</p></div>
+    <div class="card"><b>中心候補</b><div class="value">0社</div><p>70点以上かつ信頼度条件</p></div>
+  </div>
+
+  <section>
+    <h2>計算式</h2>
+    <div class="formula">継続期待スコア = 0.30×利益成長 + 0.20×売上成長 + 0.15×ROE + 0.15×決算後反応 + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ - マクロリスク</div>
+    <p class="note">過去1年上昇率は直接加点しません。上がりすぎている場合は過熱ペナルティとして扱い、利益成長や決算後反応で説明できるかを確認します。</p>
+  </section>
+
+  <section>
+    <h2>候補10社の継続期待スコア</h2>
+    <table class="score">
+      <thead><tr><th>順位</th><th>銘柄</th><th>スコア</th><th>判定</th><th>信頼度</th><th>期待年利の見方</th><th>確認事項</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>8316.T 三井住友FG</td><td>57点</td><td><span class="badge watch">条件付き継続</span></td><td>88%</td><td>+7〜11%目安。+11%には追加根拠が必要</td><td>未取得: 売上成長</td></tr><tr><td>2</td><td>8306.T 三菱UFJ FG</td><td>54.5点</td><td><span class="badge stop">再確認</span></td><td>75%</td><td>+11%目標には追加データと条件改善が必要</td><td>未取得: 売上成長・PER</td></tr><tr><td>3</td><td>2802.T 味の素</td><td>53点</td><td><span class="badge stop">再確認</span></td><td>88%</td><td>+11%目標には追加データと条件改善が必要</td><td>同業PER比で割高説明が必要。未取得: 売上成長</td></tr><tr><td>4</td><td>7173.T 東京きらぼしFG</td><td>52.7点</td><td><span class="badge stop">再確認</span></td><td>88%</td><td>+11%目標には追加データと条件改善が必要</td><td>過去1年上昇が大きく、反落リスク確認。未取得: 売上成長</td></tr><tr><td>5</td><td>7011.T 三菱重工業</td><td>50.3点</td><td><span class="badge stop">再確認</span></td><td>88%</td><td>+11%目標には追加データと条件改善が必要</td><td>同業PER比で割高説明が必要。未取得: 売上成長</td></tr><tr><td>6</td><td>8053.T 住友商事</td><td>49.5点</td><td><span class="badge stop">再確認</span></td><td>100%</td><td>+11%目標には追加データと条件改善が必要</td><td>利益成長が弱く、来期見通し確認</td></tr><tr><td>7</td><td>6762.T TDK</td><td>47.6点</td><td><span class="badge stop">再確認</span></td><td>88%</td><td>+11%目標には追加データと条件改善が必要</td><td>過去1年上昇が大きく、反落リスク確認。未取得: 売上成長</td></tr><tr><td>8</td><td>9984.T ソフトバンクG</td><td>45.4点</td><td><span class="badge stop">再確認</span></td><td>63%</td><td>+11%目標には追加データと条件改善が必要</td><td>過去1年上昇が大きく、反落リスク確認。未取得: 売上成長・PER</td></tr><tr><td>9</td><td>7735.T SCREEN HD</td><td>44.7点</td><td><span class="badge stop">見送り</span></td><td>100%</td><td>+11%目標には不足</td><td>過去1年上昇が大きく、反落リスク確認。利益成長が弱く、来期見通し確認</td></tr><tr><td>10</td><td>6146.T ディスコ</td><td>38.8点</td><td><span class="badge stop">見送り</span></td><td>75%</td><td>+11%目標には不足</td><td>過去1年上昇が大きく、反落リスク確認。同業PER比で割高説明が必要。未取得: 売上成長・PER</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>代入値と減点</h2>
+    <table>
+      <thead><tr><th>銘柄</th><th>量的スコア</th><th>質的補助</th><th>減点</th><th>式</th></tr></thead>
+      <tbody>
+        <tr><td>8316.T 三井住友FG</td><td>利益77.2 / 売上50 / ROE57.1 / 反応55.5</td><td>業界追い風66 / 還元65</td><td>過熱1.2 / マクロ5</td><td>0.30×77.2 + 0.20×50 + 0.15×57.1 + 0.15×55.5 + 0.10×66 + 0.10×65 - 過熱1.2 - マクロ5 = 57</td></tr><tr><td>8306.T 三菱UFJ FG</td><td>利益72.2 / 売上50 / ROE60 / 反応55.4</td><td>業界追い風66 / 還元65</td><td>過熱2.6 / マクロ5</td><td>0.30×72.2 + 0.20×50 + 0.15×60 + 0.15×55.4 + 0.10×66 + 0.10×65 - 過熱2.6 - マクロ5 = 54.5</td></tr><tr><td>2802.T 味の素</td><td>利益100 / 売上50 / ROE79.3 / 反応65.8</td><td>業界追い風63 / 還元58</td><td>過熱15.9 / マクロ5</td><td>0.30×100 + 0.20×50 + 0.15×79.3 + 0.15×65.8 + 0.10×63 + 0.10×58 - 過熱15.9 - マクロ5 = 53</td></tr><tr><td>7173.T 東京きらぼしFG</td><td>利益86.2 / 売上50 / ROE58 / 反応34.5</td><td>業界追い風66 / 還元65</td><td>過熱5.1 / マクロ5</td><td>0.30×86.2 + 0.20×50 + 0.15×58 + 0.15×34.5 + 0.10×66 + 0.10×65 - 過熱5.1 - マクロ5 = 52.7</td></tr><tr><td>7011.T 三菱重工業</td><td>利益71.4 / 売上50 / ROE62.7 / 反応50.6</td><td>業界追い風61 / 還元55</td><td>過熱4.7 / マクロ5</td><td>0.30×71.4 + 0.20×50 + 0.15×62.7 + 0.15×50.6 + 0.10×61 + 0.10×55 - 過熱4.7 - マクロ5 = 50.3</td></tr><tr><td>8053.T 住友商事</td><td>利益50.7 / 売上50.7 / ROE64.8 / 反応59.6</td><td>業界追い風64 / 還元70</td><td>過熱3.9 / マクロ4</td><td>0.30×50.7 + 0.20×50.7 + 0.15×64.8 + 0.15×59.6 + 0.10×64 + 0.10×70 - 過熱3.9 - マクロ4 = 49.5</td></tr><tr><td>6762.T TDK</td><td>利益67.2 / 売上50 / ROE55.4 / 反応63.8</td><td>業界追い風70 / 還元55</td><td>過熱6.9 / マクロ6</td><td>0.30×67.2 + 0.20×50 + 0.15×55.4 + 0.15×63.8 + 0.10×70 + 0.10×55 - 過熱6.9 - マクロ6 = 47.6</td></tr><tr><td>9984.T ソフトバンクG</td><td>利益100 / 売上50 / ROE100 / 反応52.9</td><td>業界追い風70 / 還元55</td><td>過熱22 / マクロ8</td><td>0.30×100 + 0.20×50 + 0.15×100 + 0.15×52.9 + 0.10×70 + 0.10×55 - 過熱22 - マクロ8 = 45.4</td></tr><tr><td>7735.T SCREEN HD</td><td>利益42.2 / 売上46.6 / ROE86.8 / 反応57.3</td><td>業界追い風70 / 還元55</td><td>過熱5.4 / マクロ6</td><td>0.30×42.2 + 0.20×46.6 + 0.15×86.8 + 0.15×57.3 + 0.10×70 + 0.10×55 - 過熱5.4 - マクロ6 = 44.7</td></tr><tr><td>6146.T ディスコ</td><td>利益58.7 / 売上50 / ROE100 / 反応55.6</td><td>業界追い風70 / 還元55</td><td>過熱18.7 / マクロ6</td><td>0.30×58.7 + 0.20×50 + 0.15×100 + 0.15×55.6 + 0.10×70 + 0.10×55 - 過熱18.7 - マクロ6 = 38.8</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>出力CSV</h2>
+    <p><a href="723_candidate_continuation_score.csv">継続期待スコアCSV</a> / <a href="724_candidate_continuation_formula.csv">計算式CSV</a></p>
+  </section>
+</main>
+</body>
+</html>

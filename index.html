@@ -1619,6 +1619,7 @@
         <a href="today_onepage_summary_20260527.html">1枚要約</a>
         <a href="client_send_pack_20260527.html">候補10社 説明資料</a>
         <a href="broker_style_proposal_20260527.html">NISA日本株 提案資料</a>
+        <a href="candidate_continuation_score_20260527.html">候補10社 継続期待スコア</a>
         <a href="candidate_10_final_checklist_20260527.html">候補10社 最終確認表</a>
         <a href="candidate_10_data_completion_board_20260527.html">候補10社 データ補完表</a>
         <a href="top4_evidence_workbench_20260527.html">前面4社 根拠補完</a>
@@ -1754,6 +1755,7 @@
             <a class="button secondary" href="today_onepage_summary_20260527.html">1枚要約</a>
             <a class="button secondary" href="client_send_pack_20260527.html">候補10社 説明資料</a>
             <a class="button secondary" href="broker_style_proposal_20260527.html">NISA日本株 提案資料</a>
+            <a class="button secondary" href="candidate_continuation_score_20260527.html">候補10社 継続期待スコア</a>
             <a class="button secondary" href="candidate_10_final_checklist_20260527.html">候補10社 最終確認表</a>
             <a class="button secondary" href="candidate_10_data_completion_board_20260527.html">候補10社 データ補完表</a>
             <a class="button secondary" href="top4_evidence_workbench_20260527.html">前面4社 根拠補完</a>
@@ -2466,6 +2468,15 @@
             </div>
           </div>
           <div class="panel">
+            <h3>16-17B38. 候補10社 継続期待スコア</h3>
+            <p>過去1年の上昇をそのまま期待値にせず、利益成長、売上成長、ROE、決算後反応、PER/PBR過熱で分解し、次の1年も続く根拠があるかを確認する表です。</p>
+            <div class="hero-actions">
+              <a class="button" href="candidate_continuation_score_20260527.html">HTMLを開く</a>
+              <a class="button" href="723_candidate_continuation_score.csv">スコアCSV</a>
+              <a class="button" href="724_candidate_continuation_formula.csv">計算式CSV</a>
+            </div>
+          </div>
+          <div class="panel">
             <h3>16-17C. 質的テーマ×銘柄 接続表</h3>
             <p>質的アイデア地図を10社へ接続し、銘柄別にテーマ、確認数字、否定条件、質的ゲートを整理する資料です。</p>
             <div class="hero-actions">
@@ -2676,6 +2687,9 @@
               </div>
               <div class="selection-mechanism" id="selection-mechanism">
                 <div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>
+              </div>
+              <div class="score-ranking-summary" id="continuation-score">
+                <div class="candidate-hypothesis-empty">計算結果を読み込むと、過去1年の上昇が次の1年も続く根拠を、利益成長・売上成長・ROE・決算後反応・PER/PBR過熱で分解して表示します。</div>
               </div>
               <div class="candidate-hypothesis" id="candidate-hypothesis">
                 <div class="candidate-hypothesis-empty">「計算結果で検証候補更新」を押すと、なぜその銘柄が候補に残ったのかを成長率・決算後反応・割安/割高・下落リスクの数字で表示します。</div>
@@ -3621,6 +3635,12 @@
       target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、候補が選ばれた数式、代入値、残す/保留/落とすの分岐理由を表示します。</div>`;
     };
 
+    const renderContinuationScoreHint = () => {
+      const target = document.getElementById("continuation-score");
+      if (!target) return;
+      target.innerHTML = `<div class="candidate-hypothesis-empty">計算結果を読み込むと、過去1年の上昇が次の1年も続く根拠を、利益成長・売上成長・ROE・決算後反応・PER/PBR過熱で分解して表示します。</div>`;
+    };
+
     const renderScoreRankingSummaryHint = () => {
       const target = document.getElementById("score-ranking-summary");
       if (!target) return;
@@ -3726,6 +3746,55 @@
         adjustedCalc,
       };
     });
+
+    const continuationBadge = (text) => {
+      if (text === "継続候補") return readinessBadge("ok", text);
+      if (text === "条件付き継続" || text === "再確認") return readinessBadge("watch", text);
+      return readinessBadge("stop", text || "-");
+    };
+
+    const renderContinuationScore = (rows) => {
+      const target = document.getElementById("continuation-score");
+      if (!target) return;
+      if (!rows.length) {
+        renderContinuationScoreHint();
+        return;
+      }
+      const avg = rows.reduce((sum, row) => sum + (numericValue(row["継続期待スコア"]) ?? 0), 0) / rows.length;
+      const conditionalCount = rows.filter((row) => ["継続候補", "条件付き継続"].includes(row["判定"])).length;
+      const topRows = [...rows]
+        .sort((a, b) => (numericValue(b["継続期待スコア"]) ?? -999) - (numericValue(a["継続期待スコア"]) ?? -999))
+        .slice(0, 10);
+      target.innerHTML = `
+        <section class="mechanism-card">
+          <h4>過去1年上昇の継続期待スコア</h4>
+          <p>過去1年の上昇率は直接加点せず、利益成長・売上成長・ROE・決算後反応で説明できるかを確認します。PER/PBRや同業PER倍率、過去1年上昇が大きい場合は過熱として減点します。</p>
+          <div class="candidate-conclusion">
+            <div><b>平均スコア</b><br>${pointLabel(avg)}</div>
+            <div><b>条件付き以上</b><br>${conditionalCount}社</div>
+            <div><b>目標</b><br>S&P500平均10% + 1%を説明できる候補に絞る</div>
+          </div>
+          <div class="formula-box">
+            継続期待スコア = 0.30×利益成長 + 0.20×売上成長 + 0.15×ROE + 0.15×決算後反応 + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ - マクロリスク
+          </div>
+          <table class="mechanism-table">
+            <thead><tr><th>順位</th><th>銘柄</th><th>過去1年</th><th>継続期待</th><th>判定</th><th>減点</th><th>確認事項</th></tr></thead>
+            <tbody>${topRows.map((row) => `
+              <tr>
+                <td>${escapeHtml(row["順位"])}</td>
+                <td>${escapeHtml(row["銘柄"])}</td>
+                <td>${escapeHtml(row["過去1年上昇率"])}</td>
+                <td>${escapeHtml(row["継続期待スコア"])}点<br><span class="table-caption">${escapeHtml(row["期待年利の見方"])}</span></td>
+                <td>${continuationBadge(row["判定"])}</td>
+                <td>${escapeHtml(row["減点"])}</td>
+                <td>${escapeHtml(row["確認事項"])}</td>
+              </tr>
+            `).join("")}</tbody>
+          </table>
+          <p class="table-caption"><a href="candidate_continuation_score_20260527.html">継続期待スコア詳細</a> / <a href="723_candidate_continuation_score.csv">CSV</a></p>
+        </section>
+      `;
+    };
 
     const sortByAdjustedScore = (rows) => [...rows].sort((a, b) => {
       const rankA = numericValue(a.nisa_rank);
@@ -5137,6 +5206,7 @@
           earningsUniverseRulesRows,
           benchmarkRows,
           benchmarkScheduleRows,
+          continuationRows,
         ] = await Promise.all([
           fetchCsvRowsOptional("280_nisa_test_10_candidate_plan_reaction_updated.csv"),
           fetchCsvRows("245_nisa_1year_hold_score_top20.csv"),
@@ -5153,6 +5223,7 @@
           fetchCsvRowsOptional("212_earnings_momentum_universe_rules.csv"),
           fetchCsvRowsOptional("113_benchmark_tracking_template.csv"),
           fetchCsvRowsOptional("121_benchmark_review_schedule.csv"),
+          fetchCsvRowsOptional("723_candidate_continuation_score.csv"),
         ]);
         const candidateRows = tenCandidateRows.length ? tenCandidateRows : triageRows;
         const usingTenCandidatePlan = tenCandidateRows.length > 0;
@@ -5191,6 +5262,7 @@
         renderBacktestReadiness(allRankedRows, eventDetailRows, eventSummaryRows, stockMonthlyRows, marketMonthlyRows);
         renderBenchmarkComparison(marketMonthlyRows, benchmarkRows, benchmarkScheduleRows);
         renderUniversePolicy(universeRows, universePolicyRows, universeSummaryRows, universeReplenishmentRows, earningsUniverseRulesRows);
+        renderContinuationScore(continuationRows);
         renderCandidateReadiness(allRankedRows);
         renderFinalDecisionGate(allRankedRows);
         renderDecisionSimulator(allRankedRows);
@@ -5213,6 +5285,7 @@
         renderBacktestReadinessHint();
         renderBenchmarkComparisonHint();
         renderUniversePolicyHint();
+        renderContinuationScoreHint();
         renderCandidateReadinessHint();
         renderFinalDecisionGateHint();
         renderDecisionSimulatorHint();
