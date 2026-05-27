@@ -264,6 +264,7 @@ const html = `<!doctype html>
         <button id="exportBtn" type="button">判定CSVを出力</button>
         <a class="linkbtn" href="666_june_recheck_template.csv">入力テンプレートCSV</a>
         <a class="linkbtn" href="667_june_recheck_scoring_rules.csv">ルールCSV</a>
+        <a class="linkbtn" href="june_recheck_input_criteria_20260527.html">入力基準表</a>
       </div>
       <div class="wide">
         <table id="recheckTable"></table>
