@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>外部同業比較 追加キュー</title>
+  <style>
+    :root {
+      --ink:#071d33;
+      --navy:#082f53;
+      --blue:#0b5e94;
+      --line:#c7dceb;
+      --bg:#f5f8fb;
+      --soft:#eef7ff;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",Arial,sans-serif; line-height:1.75; }
+    header { background:linear-gradient(135deg,#082f53,#0b5e94); color:#fff; padding:34px; }
+    header h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); line-height:1.2; letter-spacing:0; }
+    header p { margin:0; color:#fff; font-weight:800; max-width:1040px; }
+    main { max-width:1240px; margin:0 auto; padding:22px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px; margin:0 0 18px; box-shadow:0 8px 20px rgba(20,60,90,.08); break-inside:avoid; page-break-inside:avoid; }
+    h2 { margin:0 0 12px; border-left:8px solid var(--blue); padding-left:12px; font-size:23px; line-height:1.35; }
+    h3 { margin:0 0 8px; color:#06395b; line-height:1.4; }
+    p { color:#111; }
+    .lead { font-size:17px; font-weight:900; margin:0; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .summary-card { border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:14px; }
+    dl { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:10px 0; }
+    dt { font-size:11px; color:#3c5268; font-weight:900; }
+    dd { margin:0; font-size:18px; font-weight:900; color:#082f53; }
+    .summary-card p { margin:0; font-size:13px; }
+    .note { background:#fff8ec; border:1px solid #efc98e; border-radius:10px; padding:12px 14px; color:#111; font-weight:800; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; min-width:1180px; font-size:13px; background:#fff; }
+    th, td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:8px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; color:#111; }
+    th { background:#e7f1fa; color:#06395b; text-align:left; font-weight:900; }
+    .narrow table { min-width:880px; }
+    .links a { display:inline-block; margin:4px 8px 4px 0; padding:9px 12px; border:1px solid #8bb9d6; border-radius:8px; color:#064f79; text-decoration:none; background:#fff; font-weight:900; }
+    @media (max-width:920px){ header{padding:24px 18px;} main{padding:12px;} .grid{grid-template-columns:1fr;} dl{grid-template-columns:1fr;} table{font-size:12px;} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>外部同業比較 追加キュー</h1>
+    <p>作成: 2026/05/27 15:04 / 候補10社だけでは比較が弱い業種について、追加する同業と取得すべき数値を整理しました。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 目的</h2>
+      <p class="lead">候補10社内だけの比較から、同業ベンチマーク比較へ広げ、PER/PBR/ROEの説明力を上げます。</p>
+      <div class="note" style="margin-top:12px">既存100社データで使える数値は暫定比較に使います。公式値が未取得の同業は、採点に混ぜず追加取得キューとして扱います。</div>
+    </section>
+    <section>
+      <h2>2. 対象候補ごとの追加状況</h2>
+      <div class="grid"><article class="summary-card">
+  <h3>8316.T 三井住友FG</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>3社</dd></div>
+    <div><dt>既存データ</dt><dd>3社</dd></div>
+    <div><dt>追加取得</dt><dd>0社</dd></div>
+  </dl>
+  <p>既存データで暫定比較を作成できる。</p>
+</article><article class="summary-card">
+  <h3>6762.T TDK</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>2社</dd></div>
+    <div><dt>既存データ</dt><dd>2社</dd></div>
+    <div><dt>追加取得</dt><dd>0社</dd></div>
+  </dl>
+  <p>既存データで暫定比較を作成できる。</p>
+</article><article class="summary-card">
+  <h3>6146.T ディスコ</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>2社</dd></div>
+    <div><dt>既存データ</dt><dd>2社</dd></div>
+    <div><dt>追加取得</dt><dd>0社</dd></div>
+  </dl>
+  <p>既存データで暫定比較を作成できる。</p>
+</article><article class="summary-card">
+  <h3>7735.T SCREEN HD</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>1社</dd></div>
+    <div><dt>既存データ</dt><dd>0社</dd></div>
+    <div><dt>追加取得</dt><dd>1社</dd></div>
+  </dl>
+  <p>公式値または証券会社画面で不足値を補完する。</p>
+</article><article class="summary-card">
+  <h3>2802.T 味の素</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>3社</dd></div>
+    <div><dt>既存データ</dt><dd>0社</dd></div>
+    <div><dt>追加取得</dt><dd>3社</dd></div>
+  </dl>
+  <p>公式値または証券会社画面で不足値を補完する。</p>
+</article><article class="summary-card">
+  <h3>8053.T 住友商事</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>4社</dd></div>
+    <div><dt>既存データ</dt><dd>4社</dd></div>
+    <div><dt>追加取得</dt><dd>0社</dd></div>
+  </dl>
+  <p>既存データで暫定比較を作成できる。</p>
+</article><article class="summary-card">
+  <h3>7011.T 三菱重工業</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>2社</dd></div>
+    <div><dt>既存データ</dt><dd>2社</dd></div>
+    <div><dt>追加取得</dt><dd>0社</dd></div>
+  </dl>
+  <p>既存データで暫定比較を作成できる。</p>
+</article><article class="summary-card">
+  <h3>9984.T ソフトバンクG</h3>
+  <dl>
+    <div><dt>同業候補</dt><dd>2社</dd></div>
+    <div><dt>既存データ</dt><dd>1社</dd></div>
+    <div><dt>追加取得</dt><dd>1社</dd></div>
+  </dl>
+  <p>公式値または証券会社画面で不足値を補完する。</p>
+</article></div>
+    </section>
+    <section>
+      <h2>3. 外部同業キュー</h2>
+      <div class="table-wrap "><table><thead><tr><th>target</th><th>group</th><th>peer</th><th>role</th><th>per</th><th>pbr</th><th>roe</th><th>status</th><th>use</th></tr></thead><tbody><tr><td>8316.T 三井住友FG</td><td>銀行</td><td>8306.T 三菱UFJ FG</td><td>大手銀行比較</td><td>補助値17.00倍</td><td>1.54倍</td><td>11.34%</td><td>補助値あり</td><td>三井住友FGの割安/割高度、銀行株内の順位を見る。</td></tr><tr><td>8316.T 三井住友FG</td><td>銀行</td><td>8411.T みずほFG</td><td>大手銀行比較</td><td>13.79倍</td><td>1.58倍</td><td>11.48%</td><td>既存100社データあり</td><td>銀行3メガ比較の基準にする。</td></tr><tr><td>8316.T 三井住友FG</td><td>銀行</td><td>7173.T 東京きらぼしFG</td><td>地銀比較</td><td>8.83倍</td><td>0.96倍</td><td>10.66%</td><td>既存候補データあり</td><td>地銀の割安さと決算後反応の弱さを分けて見る。</td></tr><tr><td>6762.T TDK</td><td>半導体・電子部品</td><td>6981.T 村田製作所</td><td>電子部品比較</td><td>41.64倍</td><td>4.49倍</td><td>8.83%</td><td>既存100社データあり</td><td>TDKのPER/PBRが電子部品内で高いか低いかを見る。</td></tr><tr><td>6762.T TDK</td><td>半導体・電子部品</td><td>6971.T 京セラ</td><td>電子部品比較</td><td>27.62倍</td><td>1.17倍</td><td>4.30%</td><td>既存100社データあり</td><td>利益率と評価倍率の比較に使う。</td></tr><tr><td>6146.T ディスコ</td><td>半導体製造装置</td><td>6857.T アドバンテスト</td><td>AI半導体検査</td><td>42.00倍</td><td>24.55倍</td><td>57.65%</td><td>既存100社データあり</td><td>高成長・高バリュエーション銘柄との比較に使う。</td></tr><tr><td>6146.T ディスコ</td><td>半導体製造装置</td><td>6920.T レーザーテック</td><td>EUV検査</td><td>47.95倍</td><td>15.28倍</td><td>46.88%</td><td>既存100社データあり</td><td>過熱・高PER・高PBRの警戒基準に使う。</td></tr><tr><td>7735.T SCREEN HD</td><td>半導体製造装置</td><td>8035.T 東京エレクトロン</td><td>半導体製造装置大手</td><td>未取得</td><td>10.80倍</td><td>29.56%</td><td>PER未取得</td><td>同業最大手とのPBR/ROE比較。PERは追加取得が必要。</td></tr><tr><td>2802.T 味の素</td><td>食品・ヘルスケア</td><td>2801.T キッコーマン</td><td>食品・海外比率比較</td><td>未取得</td><td>未取得</td><td>未取得</td><td>公式値追加取得</td><td>高PERを食品内で説明できるかを見る。</td></tr><tr><td>2802.T 味の素</td><td>食品・ヘルスケア</td><td>2503.T キリンHD</td><td>食品・飲料比較</td><td>未取得</td><td>未取得</td><td>未取得</td><td>公式値追加取得</td><td>生活必需品寄りの安定性比較に使う。</td></tr><tr><td>2802.T 味の素</td><td>食品・ヘルスケア</td><td>2502.T アサヒGHD</td><td>食品・飲料比較</td><td>未取得</td><td>未取得</td><td>未取得</td><td>公式値追加取得</td><td>食品/飲料大型株との評価差を見る。</td></tr><tr><td>8053.T 住友商事</td><td>商社</td><td>8058.T 三菱商事</td><td>総合商社比較</td><td>18.06倍</td><td>2.10倍</td><td>8.51%</td><td>既存100社データあり</td><td>総合商社内での割安/還元/資源感応度を見る。</td></tr><tr><td>8053.T 住友商事</td><td>商社</td><td>8031.T 三井物産</td><td>総合商社比較</td><td>17.54倍</td><td>1.84倍</td><td>10.22%</td><td>既存100社データあり</td><td>商社内の収益性比較に使う。</td></tr><tr><td>8053.T 住友商事</td><td>商社</td><td>8001.T 伊藤忠商事</td><td>総合商社比較</td><td>14.35倍</td><td>2.07倍</td><td>14.59%</td><td>既存100社データあり</td><td>非資源寄り・高ROE商社との比較に使う。</td></tr><tr><td>8053.T 住友商事</td><td>商社</td><td>8002.T 丸紅</td><td>総合商社比較</td><td>15.01倍</td><td>1.99倍</td><td>13.61%</td><td>既存20社データあり</td><td>候補から落ちた商社との比較に使う。</td></tr><tr><td>7011.T 三菱重工業</td><td>重工・防衛</td><td>7012.T 川崎重工業</td><td>重工・防衛比較</td><td>21.60倍</td><td>2.71倍</td><td>13.68%</td><td>既存100社データあり</td><td>防衛/水素テーマ内での評価差を見る。</td></tr><tr><td>7011.T 三菱重工業</td><td>重工・防衛</td><td>7013.T IHI</td><td>重工・防衛比較</td><td>16.88倍</td><td>4.27倍</td><td>28.39%</td><td>既存100社データあり</td><td>重工内でのROE・PBR・下落率比較に使う。</td></tr><tr><td>9984.T ソフトバンクG</td><td>投資会社・AI関連</td><td>9434.T ソフトバンク</td><td>通信子会社比較</td><td>19.25倍</td><td>4.09倍</td><td>19.32%</td><td>既存100社データあり</td><td>投資会社本体ではなく、事業会社部分の比較参考にする。</td></tr><tr><td>9984.T ソフトバンクG</td><td>投資会社・AI関連</td><td>4755.T 楽天グループ</td><td>投資/通信/EC比較</td><td>未取得</td><td>未取得</td><td>未取得</td><td>公式値追加取得</td><td>PERではなく、財務リスクと投資先評価の比較対象にする。</td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>4. 優先作業</h2>
+      <div class="table-wrap narrow"><table><thead><tr><th>優先</th><th>作業</th><th>対象</th><th>理由</th></tr></thead><tbody><tr><td>1</td><td>食品同業の公式値取得</td><td>2801 キッコーマン / 2503 キリンHD / 2502 アサヒGHD</td><td>味の素の高PER・高PBRを食品内で説明できるかが重要。</td></tr><tr><td>2</td><td>東京エレクトロンのPER補完</td><td>8035 東京エレクトロン</td><td>半導体製造装置の最大手比較がないと、ディスコ・SCREENの説明が弱い。</td></tr><tr><td>3</td><td>ソフトバンクGのNAV型評価</td><td>9984 ソフトバンクG</td><td>PERではなく保有資産価値、Arm、AI関連株の下落耐性を確認する必要がある。</td></tr><tr><td>4</td><td>商社比較の正式化</td><td>8058 / 8031 / 8001 / 8002</td><td>住友商事が本当に商社内で見劣りしないかを確認する。</td></tr></tbody></table></div>
+    </section>
+    <section>
+      <h2>5. 関連CSV</h2>
+      <div class="links">
+        <a href="701_external_peer_expansion_summary.csv">概要CSV</a>
+        <a href="702_external_peer_expansion_detail.csv">同業キューCSV</a>
+        <a href="703_external_peer_expansion_priority.csv">優先作業CSV</a>
+        <a href="sector_peer_comparison_20260527.html">業種別比較</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
