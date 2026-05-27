@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA 1年保有テスト 14:30暫定報告</title>
+  <style>
+    :root {
+      --ink:#061d33;
+      --muted:#22384f;
+      --blue:#0b5e94;
+      --navy:#082f53;
+      --line:#c8dbea;
+      --bg:#f5f8fb;
+      --green:#087a55;
+      --orange:#b45f06;
+      --red:#b42318;
+      --soft:#eef7ff;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",Arial,sans-serif; line-height:1.7; }
+    header { background:linear-gradient(135deg,#082f53,#114d76); color:#fff; padding:30px 34px; }
+    header h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    header p { margin:0; color:#fff; font-weight:700; }
+    main { max-width:1320px; margin:0 auto; padding:22px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px; margin:0 0 18px; box-shadow:0 8px 20px rgba(20,60,90,.08); }
+    h2 { margin:0 0 12px; border-left:8px solid var(--blue); padding-left:12px; font-size:22px; }
+    h3 { margin:6px 0 10px; font-size:18px; }
+    h3 span { font-size:13px; color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .kpi { border:1px solid var(--line); border-radius:10px; padding:14px; background:#fbfdff; }
+    .kpi .num { font-size:30px; font-weight:900; color:#064f79; line-height:1.1; }
+    .kpi b { display:block; margin-top:4px; }
+    .note { background:#fff8ec; border:1px solid #efc98e; border-radius:10px; padding:12px 14px; color:#111; font-weight:700; }
+    .candidates { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .candidate { border:1px solid var(--line); border-radius:10px; padding:14px; background:#fff; position:relative; overflow:hidden; }
+    .candidate:before { content:""; position:absolute; left:0; top:0; bottom:0; width:7px; background:var(--blue); }
+    .candidate.rankA:before { background:var(--green); }
+    .candidate.rankAm:before { background:#0b6fa4; }
+    .candidate.rankB:before { background:var(--orange); }
+    .candidate.rankC:before { background:#64748b; }
+    .tag { display:inline-block; padding:3px 8px; border-radius:999px; border:1px solid var(--line); background:#f1f7fc; font-weight:800; color:#06395b; font-size:12px; }
+    .candidate p { margin:8px 0 0; color:#111; }
+    .score { display:flex; align-items:center; gap:10px; }
+    .score b { min-width:58px; font-size:18px; color:#061d33; }
+    .bar { height:10px; flex:1; border-radius:999px; background:#e5eef6; overflow:hidden; }
+    .bar span { display:block; height:100%; background:#0b6fa4; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:13px; min-width:1120px; background:#fff; }
+    th, td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:8px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; color:#111; }
+    th { background:#e7f1fa; color:#06395b; text-align:left; font-weight:900; }
+    .narrow table { min-width:880px; }
+    .links a { display:inline-block; margin:4px 8px 4px 0; padding:9px 12px; border:1px solid #8bb9d6; border-radius:8px; color:#064f79; text-decoration:none; background:#fff; font-weight:800; }
+    .flow { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+    .step { border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:14px; }
+    .step b { display:block; color:#06395b; margin-bottom:4px; }
+    @media (max-width:860px) {
+      header { padding:24px 18px; }
+      main { padding:12px; }
+      .grid, .candidates, .flow { grid-template-columns:1fr; }
+      table { font-size:12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NISA 1年保有テスト 14:30暫定報告</h1>
+    <p>作成: 2026/05/27 13:17 / 6月再判定に向けた候補10社の見せる版</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 結論</h2>
+      <div class="grid">
+        <div class="kpi"><div class="num">10社</div><b>検証対象</b><div>購入確定ではなく、6月再判定へ進める対象</div></div>
+        <div class="kpi"><div class="num">4社</div><b>中心確認</b><div>A/A-として優先的に確認</div></div>
+        <div class="kpi"><div class="num">1社</div><b>条件付き</b><div>不足補完後に中心候補へ戻せるか確認</div></div>
+        <div class="kpi"><div class="num">5社</div><b>監視</b><div>条件改善まで購入候補にしない</div></div>
+      </div>
+      <div class="note" style="margin-top:12px">現時点では「6月イベント後に再判定できるところまで整った」という段階です。購入対象の確定ではありません。</div>
+    </section>
+
+    <section>
+      <h2>2. 今日までに実施した作業</h2>
+      <div class="table-wrap narrow"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>現在の到達点</td><td>100社前後の母集団から、実データを入れた10社の比較表と6月再判定用の候補案まで作成済み。</td></tr><tr><td>候補抽出</td><td>10社すべてに株価・出来高・業績・決算後反応を接続し、中心確認、追加確認付き中心、条件付き確認、監視に分けた。</td></tr><tr><td>評価方法</td><td>量的評価を主軸にし、質的テーマは直接加点ではなく確認条件・警戒条件として扱う。</td></tr><tr><td>6月の扱い</td><td>CPI、日銀、FOMC、市場反応を確認してから、残す・保留・外すを再判定する。</td></tr><tr><td>目標</td><td>S&amp;P500投信・日経平均/TOPIXを保有するだけの場合より、1年で+1%上回る根拠を説明できる候補に絞る。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>3. 暫定候補10社</h2>
+      <div class="candidates"><article class="candidate rankA">
+    <div class="tag">中心確認</div>
+    <h3>1. 三井住友FG <span>8316.T</span></h3>
+    <div class="score"><b>64.1点</b><div class="bar"><span style="width:64.1%"></span></div></div>
+    <p><b>量的根拠</b><br>補正64.1点 / PER13.40倍 / PBR1.44倍 / ROE10.38% / 利益34% / 1年65% / 反応55.5点</p>
+    <p><b>質的テーマ</b><br>銀行・金利上昇テーマ</p>
+    <p><b>注意点</b><br>大きな警戒なし</p>
+  </article><article class="candidate rankAm">
+    <div class="tag">追加確認付き中心</div>
+    <h3>2. 味の素 <span>2802.T</span></h3>
+    <div class="score"><b>66.4点</b><div class="bar"><span style="width:66.4%"></span></div></div>
+    <p><b>量的根拠</b><br>補正66.4点 / PER42.38倍 / PBR6.60倍 / ROE17.75% / 利益75% / 1年51.6% / 反応65.8点</p>
+    <p><b>質的テーマ</b><br>食品・生活防衛 / ABF・ヘルスケア確認</p>
+    <p><b>注意点</b><br>PER42.38倍で割高確認 / PBR6.6倍で割高確認</p>
+  </article><article class="candidate rankAm">
+    <div class="tag">追加確認付き中心</div>
+    <h3>3. TDK <span>6762.T</span></h3>
+    <div class="score"><b>63.2点</b><div class="bar"><span style="width:63.2%"></span></div></div>
+    <p><b>量的根拠</b><br>補正63.2点 / PER31.22倍 / PBR3.21倍 / ROE9.81% / 利益21.5% / 1年135.7% / 反応63.8点</p>
+    <p><b>質的テーマ</b><br>電子部品・AI/半導体周辺</p>
+    <p><b>注意点</b><br>PER31.22倍でやや高め</p>
+  </article><article class="candidate rankAm">
+    <div class="tag">追加確認付き中心</div>
+    <h3>4. 住友商事 <span>8053.T</span></h3>
+    <div class="score"><b>60.8点</b><div class="bar"><span style="width:60.8%"></span></div></div>
+    <p><b>量的根拠</b><br>補正60.8点 / PER13.73倍 / PBR1.87倍 / ROE12.94% / 利益0.9% / 1年98.2% / 反応59.6点</p>
+    <p><b>質的テーマ</b><br>商社・資源/株主還元/バフェット関連</p>
+    <p><b>注意点</b><br>成長確認: 売上0.6% / 利益0.9%</p>
+  </article><article class="candidate rankB">
+    <div class="tag">条件付き確認</div>
+    <h3>5. 三菱UFJ FG <span>8306.T</span></h3>
+    <div class="score"><b>54.4点</b><div class="bar"><span style="width:54.4%"></span></div></div>
+    <p><b>量的根拠</b><br>補正54.4点 / PER未取得 / PBR1.54倍 / ROE11.34% / 利益27.7% / 1年53.6% / 反応55.4点</p>
+    <p><b>質的テーマ</b><br>銀行・金利上昇テーマの補欠</p>
+    <p><b>注意点</b><br>未取得: PER</p>
+  </article><article class="candidate rankC">
+    <div class="tag">監視</div>
+    <h3>6. 東京きらぼしFG <span>7173.T</span></h3>
+    <div class="score"><b>66.4点</b><div class="bar"><span style="width:66.4%"></span></div></div>
+    <p><b>量的根拠</b><br>補正66.4点 / PER8.83倍 / PBR0.96倍 / ROE10.66% / 利益45.2% / 1年114.1% / 反応34.5点</p>
+    <p><b>質的テーマ</b><br>地銀・金利上昇テーマの高反応確認</p>
+    <p><b>注意点</b><br>決算後反応34.5点</p>
+  </article><article class="candidate rankC">
+    <div class="tag">監視</div>
+    <h3>7. ソフトバンクG <span>9984.T</span></h3>
+    <div class="score"><b>61.8点</b><div class="bar"><span style="width:61.8%"></span></div></div>
+    <p><b>量的根拠</b><br>補正61.8点 / PER未取得 / PBR2.45倍 / ROE34.28% / 利益259.9% / 1年285.2% / 反応52.9点</p>
+    <p><b>質的テーマ</b><br>AI投資・大型成長株の監視</p>
+    <p><b>注意点</b><br>未取得: PER / 1年上昇285.2%</p>
+  </article><article class="candidate rankC">
+    <div class="tag">監視</div>
+    <h3>8. SCREEN HD <span>7735.T</span></h3>
+    <div class="score"><b>49.1点</b><div class="bar"><span style="width:49.1%"></span></div></div>
+    <p><b>量的根拠</b><br>補正49.1点 / PER19.65倍 / PBR4.44倍 / ROE20.28% / 利益-9.7% / 1年117.5% / 反応57.3点</p>
+    <p><b>質的テーマ</b><br>半導体製造装置の監視</p>
+    <p><b>注意点</b><br>利益成長マイナス: -9.7% / 成長確認: 売上-3.1% / 利益-9.7%</p>
+  </article><article class="candidate rankC">
+    <div class="tag">監視</div>
+    <h3>9. ディスコ <span>6146.T</span></h3>
+    <div class="score"><b>46.2点</b><div class="bar"><span style="width:46.2%"></span></div></div>
+    <p><b>量的根拠</b><br>補正46.2点 / PER未取得 / PBR12.74倍 / ROE25.15% / 利益10.9% / 1年103.5% / 反応55.6点</p>
+    <p><b>質的テーマ</b><br>半導体製造装置の高収益監視</p>
+    <p><b>注意点</b><br>未取得: PER / PBR12.74倍</p>
+  </article><article class="candidate rankC">
+    <div class="tag">監視</div>
+    <h3>10. 三菱重工業 <span>7011.T</span></h3>
+    <div class="score"><b>35.9点</b><div class="bar"><span style="width:35.9%"></span></div></div>
+    <p><b>量的根拠</b><br>補正35.9点 / PER34.29倍 / PBR4.22倍 / ROE12.22% / 利益26.7% / 1年18.2% / 反応50.6点</p>
+    <p><b>質的テーマ</b><br>防衛・重工テーマの監視</p>
+    <p><b>注意点</b><br>60日最大下落-25.3% / PER34.29倍でやや高め</p>
+  </article></div>
+    </section>
+
+    <section>
+      <h2>4. 詳細表</h2>
+      <div class="table-wrap "><table><thead><tr><th>順位</th><th>銘柄</th><th>暫定区分</th><th>補正後点</th><th>データ充足</th><th>量的根拠</th><th>質的テーマ</th><th>注意点</th><th>6月に残す条件</th><th>外す条件</th><th>直近扱い</th><th>60日下落率</th></tr></thead><tbody><tr><td>1</td><td>8316.T 三井住友FG</td><td>中心確認</td><td>64.1</td><td>10/10</td><td>補正64.1点 / PER13.40倍 / PBR1.44倍 / ROE10.38% / 利益34% / 1年65% / 反応55.5点</td><td>銀行・金利上昇テーマ</td><td>大きな警戒なし</td><td>日銀後に銀行株全体が崩れず、金利上昇メリットと信用コスト悪化が同時に出ない。</td><td>日銀後の銀行株下落、信用コスト悪化、金利上昇メリットの後退。</td><td>6月再判定で優先確認</td><td>-16.5%</td></tr><tr><td>2</td><td>2802.T 味の素</td><td>追加確認付き中心</td><td>66.4</td><td>10/10</td><td>補正66.4点 / PER42.38倍 / PBR6.60倍 / ROE17.75% / 利益75% / 1年51.6% / 反応65.8点</td><td>食品・生活防衛 / ABF・ヘルスケア確認</td><td>PER42.38倍で割高確認 / PBR6.6倍で割高確認</td><td>高PERを利益成長と決算後反応で説明でき、6月イベント後に大きく指数劣後しない。</td><td>高PERのまま利益成長鈍化、または決算後反応が日経平均比で悪化。</td><td>6月再判定で優先確認</td><td>-15.9%</td></tr><tr><td>3</td><td>6762.T TDK</td><td>追加確認付き中心</td><td>63.2</td><td>10/10</td><td>補正63.2点 / PER31.22倍 / PBR3.21倍 / ROE9.81% / 利益21.5% / 1年135.7% / 反応63.8点</td><td>電子部品・AI/半導体周辺</td><td>PER31.22倍でやや高め</td><td>AI/電子部品テーマがSOXや半導体指数に連動しつつ、過熱下落が限定的。</td><td>SOX下落、AI/半導体テーマの失速、決算後反応の指数劣後。</td><td>6月再判定で優先確認</td><td>-20%</td></tr><tr><td>4</td><td>8053.T 住友商事</td><td>追加確認付き中心</td><td>60.8</td><td>10/10</td><td>補正60.8点 / PER13.73倍 / PBR1.87倍 / ROE12.94% / 利益0.9% / 1年98.2% / 反応59.6点</td><td>商社・資源/株主還元/バフェット関連</td><td>成長確認: 売上0.6% / 利益0.9%</td><td>商社・資源・還元テーマが維持され、決算後反応と株価維持が続く。</td><td>資源価格・為替・還元姿勢が悪化し、商社株全体が指数劣後。</td><td>6月再判定で優先確認</td><td>-17.9%</td></tr><tr><td>5</td><td>8306.T 三菱UFJ FG</td><td>条件付き確認</td><td>54.4</td><td>9/10</td><td>補正54.4点 / PER未取得 / PBR1.54倍 / ROE11.34% / 利益27.7% / 1年53.6% / 反応55.4点</td><td>銀行・金利上昇テーマの補欠</td><td>未取得: PER</td><td>PER相当の確認または代替指標で割高感を説明し、銀行枠の重複を整理できる。</td><td>日銀後の銀行株下落、信用コスト悪化、金利上昇メリットの後退。</td><td>6月再判定で優先確認</td><td>-13.6%</td></tr><tr><td>6</td><td>7173.T 東京きらぼしFG</td><td>監視</td><td>66.4</td><td>10/10</td><td>補正66.4点 / PER8.83倍 / PBR0.96倍 / ROE10.66% / 利益45.2% / 1年114.1% / 反応34.5点</td><td>地銀・金利上昇テーマの高反応確認</td><td>決算後反応34.5点</td><td>決算後反応の弱さが一時的と確認でき、出来高・銀行株指数・再反応が改善する。</td><td>日銀後の銀行株下落、信用コスト悪化、金利上昇メリットの後退。</td><td>監視継続</td><td>-19.2%</td></tr><tr><td>7</td><td>9984.T ソフトバンクG</td><td>監視</td><td>61.8</td><td>9/10</td><td>補正61.8点 / PER未取得 / PBR2.45倍 / ROE34.28% / 利益259.9% / 1年285.2% / 反応52.9点</td><td>AI投資・大型成長株の監視</td><td>未取得: PER / 1年上昇285.2%</td><td>1年上昇の過熱が落ち着き、決算後20営業日反応と6月イベント後の価格維持を確認できる。</td><td>過熱の反動、米金利上昇、AI関連株下落で大きく指数劣後。</td><td>監視継続</td><td>-21.6%</td></tr><tr><td>8</td><td>7735.T SCREEN HD</td><td>監視</td><td>49.1</td><td>10/10</td><td>補正49.1点 / PER19.65倍 / PBR4.44倍 / ROE20.28% / 利益-9.7% / 1年117.5% / 反応57.3点</td><td>半導体製造装置の監視</td><td>利益成長マイナス: -9.7% / 成長確認: 売上-3.1% / 利益-9.7%</td><td>利益成長マイナスを次期見通しや受注で補える。SOX下落時の耐性も確認する。</td><td>SOX下落、AI/半導体テーマの失速、決算後反応の指数劣後。</td><td>監視継続</td><td>-24.5%</td></tr><tr><td>9</td><td>6146.T ディスコ</td><td>監視</td><td>46.2</td><td>9/10</td><td>補正46.2点 / PER未取得 / PBR12.74倍 / ROE25.15% / 利益10.9% / 1年103.5% / 反応55.6点</td><td>半導体製造装置の高収益監視</td><td>未取得: PER / PBR12.74倍</td><td>PERを補完し、PBR高を利益成長・受注・決算後反応で説明できる。</td><td>SOX下落、AI/半導体テーマの失速、決算後反応の指数劣後。</td><td>監視継続</td><td>-22.5%</td></tr><tr><td>10</td><td>7011.T 三菱重工業</td><td>監視</td><td>35.9</td><td>10/10</td><td>補正35.9点 / PER34.29倍 / PBR4.22倍 / ROE12.22% / 利益26.7% / 1年18.2% / 反応50.6点</td><td>防衛・重工テーマの監視</td><td>60日最大下落-25.3% / PER34.29倍でやや高め</td><td>60日最大下落が改善し、200日線・出来高・防衛/重工テーマの再評価が確認できる。</td><td>直近下落が続き、200日線を明確に下回る。</td><td>監視継続</td><td>-25.3%</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>5. 再判定の入力基準</h2>
+      <div class="note">質的テーマは「候補を探す理由」と「確認条件」に使います。定量・マクロ・市場条件が悪い銘柄を、質的テーマだけで残す設計にはしません。</div>
+      <div class="table-wrap narrow"><table><thead><tr><th>category</th><th>input_value</th><th>numeric_rule</th><th>judgement_use</th></tr></thead><tbody><tr><td>定量</td><td>良好</td><td>データ10/10、売上前年比+5%以上、利益前年比+10%以上、ROE10%以上、決算後反応スコア60点以上、60日最大下落率-15%以内のうち大半を満たす</td><td>企業数字と株価反応が同じ方向にそろっている場合だけ良好にする。</td></tr><tr><td>定量</td><td>中立</td><td>データ9/10以上、利益成長はプラスだが弱い、決算後反応50-59点、60日最大下落率-15%から-25%程度</td><td>悪くはないが、追加確認なしに中心候補へ上げない。</td></tr><tr><td>定量</td><td>不十分</td><td>重要指標未取得、利益成長マイナス、決算後反応50点未満、60日最大下落率-25%以下、PER/PBRの割高を利益成長で説明できない</td><td>再判定では原則として外す。質的イベントだけでは上書きしない。</td></tr><tr><td>マクロ</td><td>良好</td><td>米CPIが市場予想以下、FOMC後の米10年金利上昇が+10bp以内、日銀後に急激な円高・金利急騰がない</td><td>市場全体がリスクを取りやすい状態として扱う。</td></tr><tr><td>マクロ</td><td>中立</td><td>米CPIが市場予想比+0.1から+0.2pt程度、米10年金利上昇が+10から+25bp程度、為替変動が通常範囲</td><td>候補は残せるが、投入判断は市場確認とセットにする。</td></tr><tr><td>マクロ</td><td>悪化</td><td>米CPIが市場予想比+0.3pt以上、米10年金利が+25bp超上昇、日銀後に円高ショックまたは日本金利急騰</td><td>高PER株・半導体・輸出株は特に慎重に扱う。</td></tr><tr><td>市場</td><td>良好</td><td>日経平均/TOPIXが75日線上、イベント後5営業日で-2%以内、VIX20以下、売買代金が極端に縮小していない</td><td>候補スコアをそのまま使いやすい状態。</td></tr><tr><td>市場</td><td>中立</td><td>75日線近辺、イベント後5営業日で-2%から-5%、VIX20から25</td><td>候補を絞るが、全体停止ではない。</td></tr><tr><td>市場</td><td>悪化</td><td>日経平均/TOPIXが75日線を明確に下回る、イベント後5営業日で-5%超、VIX25超</td><td>個別株候補は原則保留または外す。</td></tr><tr><td>個別</td><td>良好</td><td>下方修正なし、決算後20営業日でTOPIXを+3%以上上回る、出来高を伴って75日線上を維持</td><td>中心候補へ残す根拠にする。</td></tr><tr><td>個別</td><td>中立</td><td>決算後反応はTOPIX比±3%以内、悪材料なし、価格位置は横ばい</td><td>追加確認が必要な候補として扱う。</td></tr><tr><td>個別</td><td>悪化</td><td>下方修正、決算後20営業日でTOPIXを-3%以上下回る、75日線を明確に下回る、急落時の出来高増</td><td>原則として保留または外す。</td></tr><tr><td>質的イベント</td><td>追い風</td><td>新製品、TOB、政策、提携、供給不足、価格改定などがあり、対象企業の売上・利益・シェアへつながる経路を説明できる</td><td>+3点まで。定量・マクロ・市場の悪化を単独で打ち消さない。</td></tr><tr><td>質的イベント</td><td>中立</td><td>イベントはあるが、売上・利益への経路や時期が未確認</td><td>点数に影響させず、メモとして残す。</td></tr><tr><td>質的イベント</td><td>逆風</td><td>規制、事故、供給過多、価格下落、競争激化、地政学リスクなどがあり、業績悪化の経路を説明できる</td><td>-8点。重大停止に該当する場合は別途カウントする。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>6. 重大停止条件</h2>
+      <div class="table-wrap narrow"><table><thead><tr><th>item</th><th>trigger</th><th>action</th></tr></thead><tbody><tr><td>下方修正・減益見通し</td><td>会社予想の下方修正、または次期利益見通しが市場期待を明確に下回る</td><td>重大停止1件。購入候補から原則外す方向で再評価。</td></tr><tr><td>市場全体の崩れ</td><td>日経平均/TOPIXが75日線を明確に下回り、5営業日で-5%超</td><td>個別株選定を一時停止し、指数・現金比率の再確認へ移す。</td></tr><tr><td>金利急騰</td><td>FOMC後またはCPI後に米10年金利が+25bp超上昇</td><td>高PER、半導体、AI関連を一段下げる。</td></tr><tr><td>円高ショック</td><td>日銀後にドル円が短期で2%以上円高方向に動く</td><td>輸出・海外売上比率の高い銘柄は保留へ下げる。</td></tr><tr><td>決算後の指数劣後</td><td>決算後20営業日でTOPIX比-3%以上。出来高増を伴う場合はより重く扱う</td><td>個別確認を悪化にし、必要なら重大停止1件。</td></tr><tr><td>過熱の反動</td><td>1年上昇率100%超かつ決算後反応が50点台以下、または60日最大下落率-25%以下</td><td>中心候補にしない。監視または保留。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>7. 業種別に見る確認ポイント</h2>
+      <div class="table-wrap "><table><thead><tr><th>sector</th><th>watch_data</th><th>positive_condition</th><th>negative_condition</th></tr></thead><tbody><tr><td>銀行</td><td>日銀方針、日本10年金利、銀行株指数、信用コスト、PBR、ROE</td><td>金利上昇メリットがあり、銀行株指数がTOPIXを上回り、信用コスト悪化が見えない</td><td>日銀後に銀行株が崩れる、信用コスト懸念、金利上昇メリットの後退</td></tr><tr><td>半導体・電子部品</td><td>SOX指数、NASDAQ、米金利、受注、設備投資、PER/PBR、決算後反応</td><td>SOXがTOPIX比で強く、受注・利益成長で高PER/PBRを説明できる</td><td>米金利上昇、SOX急落、決算後反応の指数劣後、利益成長鈍化</td></tr><tr><td>商社・資源</td><td>資源価格、為替、株主還元、自社株買い、PBR、海外投資家動向</td><td>還元姿勢が維持され、資源・為替が大きく逆風でなく、商社株全体が崩れていない</td><td>資源価格下落、円高、還元期待の後退、商社株全体の指数劣後</td></tr><tr><td>食品・生活防衛</td><td>原材料価格、為替、値上げ浸透、営業利益率、PER、決算後反応</td><td>値上げ・原価管理・高付加価値事業で高PERを説明できる</td><td>原価上昇、値上げ限界、利益成長鈍化、高PERの調整</td></tr><tr><td>防衛・重工</td><td>防衛予算、受注、工事進捗、PER、下落率、出来高</td><td>政策テーマと受注が維持され、直近下落が止まり、出来高を伴って反転する</td><td>直近下落継続、200日線割れ、政策期待だけで利益成長が追いつかない</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>8. ここから16:00まで</h2>
+      <div class="flow">
+        <div class="step"><b>14:30まで</b><div>見せる版の確認、候補区分と根拠の読み合わせ</div><div><b>成果</b>顧客向け暫定ページ</div></div><div class="step"><b>15:30まで</b><div>説明文と残タスクを整理し、質問に答えやすい形へ補強</div><div><b>成果</b>説明用要約、想定質問、残確認リスト</div></div><div class="step"><b>6月イベント後</b><div>CPI、日銀、FOMC、市場反応、個別材料を入力して再判定</div><div><b>成果</b>残す/保留/外すの最終確認表</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>9. 関連リンク</h2>
+      <div class="links">
+        <a href="671_interim_candidate_result_1430.csv">候補10社CSV</a>
+        <a href="june_event_recheck_sheet_20260527.html">6月イベント後 再判定シート</a>
+        <a href="june_recheck_input_criteria_20260527.html">入力基準表</a>
+        <a href="june_test_candidate_plan_20260527.html">6月テスト候補案</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
