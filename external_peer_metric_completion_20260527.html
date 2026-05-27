@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>外部同業 数値補完結果 2026年5月27日</title>
+  <style>
+    :root { --ink:#071f3a; --muted:#4c6178; --line:#d7e4f2; --soft:#f5f9fd; --blue:#0b5f96; --green:#087f5b; --red:#b42318; --amber:#ad5a00; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1180px; margin:0 auto; padding:28px 18px 56px; }
+    .hero { background:#123d63; color:white; border-radius:8px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:8px solid var(--blue); font-size:23px; }
+    .note { color:#e8f4ff; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card { background:white; border:1px solid var(--line); border-radius:8px; padding:16px; }
+    .label { color:var(--muted); font-size:13px; }
+    .value { font-size:24px; font-weight:800; margin-top:4px; }
+    .ok { color:var(--green); font-weight:800; }
+    .warn { color:var(--amber); font-weight:800; }
+    .bad { color:var(--red); font-weight:800; }
+    table { width:100%; border-collapse:collapse; background:white; border:1px solid var(--line); table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:10px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; font-size:13px; }
+    th { background:#e6f1fb; text-align:left; }
+    .wide th:nth-child(1), .wide td:nth-child(1) { width:15%; }
+    .wide th:nth-child(2), .wide td:nth-child(2) { width:12%; }
+    .wide th:nth-child(10), .wide td:nth-child(10) { width:11%; }
+    .formula { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; }
+    .formula code { display:block; background:#f4f7fb; border:1px solid var(--line); border-radius:6px; padding:10px; white-space:normal; overflow-wrap:anywhere; color:#111; }
+    .footer { margin-top:24px; color:var(--muted); font-size:13px; }
+    a { color:#064f88; font-weight:700; }
+    @media (max-width:800px) { .grid { grid-template-columns:1fr; } h1 { font-size:24px; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>外部同業 数値補完結果</h1>
+    <div class="note">作成: 2026/05/27 15:15 / 目的: 候補10社だけでは弱い同業比較を補い、割高・割安の説明力を上げる。</div>
+  </section>
+
+  <section class="grid">
+    <div class="card"><div class="label">食品同業で計算できた銘柄</div><div class="value">2/3</div><div>キッコーマン、キリンHD</div></div>
+    <div class="card"><div class="label">アサヒGHD</div><div class="value warn">除外</div><div>通期決算の正式発表待ち</div></div>
+    <div class="card"><div class="label">東京エレクトロンPER</div><div class="value ok">42.17倍</div><div>公式EPSと株価で補助計算</div></div>
+    <div class="card"><div class="label">スコア反映</div><div class="value warn">直接加点なし</div><div>説明補助・警戒条件に使用</div></div>
+  </section>
+
+  <h2>1. 結論</h2>
+  <table>
+    <thead><tr><th>項目</th><th>結果</th><th>判断への意味</th></tr></thead>
+    <tbody>
+      <tr><td>食品同業比較</td><td>味の素PER 42.38倍 / キッコーマン補助PER 20.89倍 / キリン補助PER 14.13倍</td><td>味の素は選定候補の中で成長性はあるが、食品同業比較ではPERが高い。ABF・ヘルスケア・利益成長で説明できるかを確認条件にする。</td></tr><tr><td>食品同業PBR</td><td>味の素PBR 6.6倍 / キッコーマン補助PBR 2.28倍 / キリンPBR 未接続</td><td>味の素のPBRも高いため、単なる生活必需品枠としては扱わない。成長枠として別評価する。</td></tr><tr><td>アサヒGHD</td><td>同条件比較から除外</td><td>2025年通期決算の正式発表待ち。現時点で無理にPER/PBR/ROEを作らない。</td></tr><tr><td>東京エレクトロンPER補完</td><td>株価 52910円 / EPS 1254.57円 / 補助PER 42.17倍</td><td>ディスコ、SCREENを半導体製造装置内で比較するための最大手基準を追加。</td></tr><tr><td>次に反映すること</td><td>候補スコアへ直接加点しない</td><td>同業比較はまず説明補助、割高警戒、除外条件に使う。購入候補スコアへ混ぜるのは、同一基準のデータがそろってから。</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. 補完した数値</h2>
+  <table class="wide">
+    <thead><tr><th>作成</th><th>銘柄</th><th>グループ</th><th>株価</th><th>EPS</th><th>BPS</th><th>ROE</th><th>補助PER</th><th>補助PBR</th><th>状態</th><th>根拠資料</th><th>算出式/扱い</th><th>注記</th></tr></thead>
+    <tbody>
+      <tr><td>2026/05/27 15:15</td><td>2801.T キッコーマン</td><td>食品同業</td><td>1378.50円</td><td>65.99円</td><td>605.40円</td><td>11.50%</td><td>20.89倍</td><td>2.28倍</td><td>補助値計算可</td><td>https://www.kikkoman.com/jp/ir/assets/tan202603.pdf</td><td>PER=株価÷EPS。PBR=株価÷BPS。2026年3月期 実績EPS / 2026年3月期 1株当たり親会社所有者帰属持分</td><td>味の素の高PER・高PBRを食品同業内で見るための比較対象。</td></tr><tr><td>2026/05/27 15:15</td><td>2503.T キリンHD</td><td>食品・飲料同業</td><td>2726.50円</td><td>193円</td><td>BPS未取得</td><td>12%</td><td>14.13倍</td><td>未算出</td><td>PER補助値のみ計算可</td><td>https://www.kirinholdings.com/en/investors/files/pdf/factbook_2026.pdf</td><td>PER=株価÷EPS。PBR=株価÷BPS。2026年予想EPS / BPS未取得</td><td>EPSとROEは確認できるがBPSが未接続のため、PBRは正式比較に入れない。</td></tr><tr><td>2026/05/27 15:15</td><td>2502.T アサヒGHD</td><td>食品・飲料同業</td><td>1514.50円</td><td>未取得</td><td>2025年通期決算の正式発表待ち</td><td>未取得</td><td>未算出</td><td>未算出</td><td>同条件比較から除外</td><td>https://www.asahigroup-holdings.com/en/newsroom/detail/20260226-0109.html</td><td>同条件の公式EPS/BPSが未接続のため算出しない。</td><td>システム障害により2025年通期決算発表が遅延。比較に使うと土台がずれるため、現時点では食品同業の正式中央値に入れない。</td></tr><tr><td>2026/05/27 15:15</td><td>8035.T 東京エレクトロン</td><td>半導体製造装置同業</td><td>52910円</td><td>1254.57円</td><td>4498.85円</td><td>29.60%</td><td>42.17倍</td><td>11.76倍</td><td>補助値計算可</td><td>https://www.tel.com/ir/irta3a00000006g5-att/fy26q4tanshin-e.pdf</td><td>PER=株価÷EPS。PBR=株価÷BPS。2026年3月期 実績EPS / 2026年3月期 純資産1株当たり</td><td>ディスコ、SCREENの半導体製造装置比較で最大手基準として使う。</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. 算出式と運用ルール</h2>
+  <div class="formula">
+    <code>補助PER = 株価 ÷ 1株当たり利益(EPS)</code>
+    <code>補助PBR = 株価 ÷ 1株当たり純資産(BPS)</code>
+    <code>同業比較は購入候補スコアへ直接加点しない。割高警戒、説明補助、除外条件、追加確認条件として使う。</code>
+  </div>
+
+  <h2>4. 次の反映</h2>
+  <table>
+    <thead><tr><th>対象</th><th>反映内容</th><th>次アクション</th></tr></thead>
+    <tbody>
+      <tr><td>味の素</td><td>食品同業よりPER/PBRが高いことを明示。食品安定枠ではなく、高PER成長枠として扱う。</td><td>ABF、ヘルスケア、利益成長、決算後反応で説明できるか確認。</td></tr>
+      <tr><td>ディスコ / SCREEN</td><td>東京エレクトロンの補助PERを最大手基準として追加。</td><td>半導体製造装置内での相対割高と決算後反応を再確認。</td></tr>
+      <tr><td>アサヒGHD</td><td>同条件比較に入れない。</td><td>正式な通期決算が出た後に再取得。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    CSV: <a href="704_external_peer_metric_completion_summary.csv">要約</a> /
+    <a href="705_external_peer_metric_completion_detail.csv">明細</a> /
+    <a href="706_external_peer_metric_completion_rules.csv">ルール</a>
+  </div>
+</main>
+</body>
+</html>
