@@ -53,7 +53,8 @@ writeCsv('715_june_final_decision_cockpit_formula.csv', [
   [generatedAt, '質的根拠', '確認+8、要確認0、否定-20。'],
   [generatedAt, 'ベンチマーク根拠', '確認+8、要確認0、弱い-15。'],
   [generatedAt, '重大停止', 'ありの場合は外す。'],
-  [generatedAt, '判定', '78点以上は残す、55点以上は保留、55点未満は外す。重大停止ありは点数に関わらず外す。']
+  [generatedAt, '入力待ち', 'CPI、日銀、FOMC、20営業日反応が未入力または未到来の場合は、最終判定ではなく入力待ちにする。'],
+  [generatedAt, '判定', '必要入力がそろった後、78点以上は残す、55点以上は保留、55点未満は外す。重大停止ありは点数に関わらず外す。']
 ]);
 
 const options = {
@@ -80,13 +81,14 @@ const html = `<!doctype html>
     h1 { margin:0 0 8px; font-size:30px; }
     h2 { margin:24px 0 12px; padding-left:12px; border-left:8px solid var(--blue); font-size:23px; }
     .note { color:#e8f4ff; }
-    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin:16px 0; }
     .card { background:white; border:1px solid var(--line); border-radius:8px; padding:16px; }
     .label { color:var(--muted); font-size:13px; }
     .value { font-size:26px; font-weight:900; margin-top:4px; }
     .ok { color:var(--green); }
     .hold { color:var(--amber); }
     .out { color:var(--red); }
+    .wait { color:var(--muted); }
     .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 18px; }
     button, .linkbtn { border:0; border-radius:8px; background:#0b5f96; color:#fff; padding:10px 14px; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
     button.secondary { background:#eef6ff; color:#0b3b62; border:1px solid var(--line); }
@@ -124,6 +126,7 @@ const html = `<!doctype html>
     <div class="card"><div class="label">残す</div><div id="keepCount" class="value ok">0</div><div>6月テスト候補に残す</div></div>
     <div class="card"><div class="label">保留</div><div id="holdCount" class="value hold">0</div><div>追加確認または市場待ち</div></div>
     <div class="card"><div class="label">外す</div><div id="removeCount" class="value out">0</div><div>初回候補から外す</div></div>
+    <div class="card"><div class="label">入力待ち</div><div id="waitCount" class="value wait">0</div><div>イベント後に再入力</div></div>
     <div class="card"><div class="label">判定基準</div><div class="value">+1%</div><div>S&P500投信・日経平均/TOPIXを1年で上回る根拠</div></div>
   </section>
 
@@ -153,7 +156,8 @@ const html = `<!doctype html>
     <code>同業・割高説明: 説明可能+8 / 要確認0 / 説明不足-12</code>
     <code>質的根拠: 確認+8 / 要確認0 / 否定-20</code>
     <code>ベンチマーク根拠: 確認+8 / 要確認0 / 弱い-15</code>
-    <code>78点以上: 残す / 55点以上: 保留 / 55点未満: 外す / 重大停止あり: 外す</code>
+    <code>CPI、日銀、FOMC、20営業日反応が未入力または未到来の場合: 入力待ち</code>
+    <code>必要入力がそろった後、78点以上: 残す / 55点以上: 保留 / 55点未満: 外す / 重大停止あり: 外す</code>
   </div>
 
   <h2>3. 使い方</h2>
@@ -229,7 +233,9 @@ function evaluateRow(tr) {
   const benchmark = tr.querySelector('.benchmark').value;
   const stop = tr.querySelector('.stop').value;
   let score = c.base + eventScore(cpi) + eventScore(boj) + eventScore(fomc) + reactionScore(reaction) + peerScore(peer) + qualitativeScore(qualitative) + benchmarkScore(benchmark);
+  const pending = cpi === '未入力' || boj === '未入力' || fomc === '未入力' || reaction === '未到来';
   let decision = score >= 78 ? '残す' : score >= 55 ? '保留' : '外す';
+  if (pending) decision = '入力待ち';
   if (stop === 'あり') decision = '外す';
   if (qualitative === '否定') decision = '外す';
   if (peer === '説明不足' && score < 78) decision = '保留';
@@ -238,19 +244,20 @@ function evaluateRow(tr) {
 }
 
 function recalc() {
-  let counts = { '残す': 0, '保留': 0, '外す': 0 };
+  let counts = { '残す': 0, '保留': 0, '外す': 0, '入力待ち': 0 };
   document.querySelectorAll('#decisionTable tbody tr').forEach(tr => {
     const result = evaluateRow(tr);
     const scoreCell = tr.querySelector('.score');
     const decisionCell = tr.querySelector('.decision');
     scoreCell.textContent = result.score + '点';
     decisionCell.textContent = result.decision;
-    decisionCell.className = 'decision ' + (result.decision === '残す' ? 'keep' : result.decision === '保留' ? 'hold' : 'remove');
+    decisionCell.className = 'decision ' + (result.decision === '残す' ? 'keep' : result.decision === '保留' ? 'hold' : result.decision === '入力待ち' ? 'wait' : 'remove');
     counts[result.decision] += 1;
   });
   document.getElementById('keepCount').textContent = counts['残す'];
   document.getElementById('holdCount').textContent = counts['保留'];
   document.getElementById('removeCount').textContent = counts['外す'];
+  document.getElementById('waitCount').textContent = counts['入力待ち'];
 }
 
 function setAllDefault() {

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月シナリオ別 候補10社シミュレーション</title>
+  <style>
+    :root { --ink:#071f3a; --muted:#4c6178; --line:#d7e4f2; --blue:#0b5f96; --green:#087f5b; --amber:#ad5a00; --red:#b42318; --soft:#f6f9fc; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif; color:var(--ink); background:#eef4fa; line-height:1.7; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    .hero { background:#123d63; color:white; border-radius:8px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:8px solid var(--blue); font-size:23px; }
+    .note { color:#e8f4ff; }
+    table { width:100%; border-collapse:collapse; background:white; border:1px solid var(--line); table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:10px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; font-size:13px; }
+    th { background:#e6f1fb; text-align:left; }
+    .summary th:nth-child(1), .summary td:nth-child(1) { width:14%; }
+    .summary th:nth-child(2), .summary td:nth-child(2),
+    .summary th:nth-child(3), .summary td:nth-child(3),
+    .summary th:nth-child(4), .summary td:nth-child(4),
+    .summary th:nth-child(5), .summary td:nth-child(5) { width:8%; text-align:center; }
+    .detail th:nth-child(1), .detail td:nth-child(1) { width:12%; }
+    .detail th:nth-child(2), .detail td:nth-child(2) { width:8%; }
+    .detail th:nth-child(3), .detail td:nth-child(3) { width:9%; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-weight:900; border:1px solid var(--line); background:#f5f9fd; }
+    .keep { color:var(--green); }
+    .hold { color:var(--amber); }
+    .remove { color:var(--red); }
+    .wait { color:var(--muted); }
+    .box { background:white; border:1px solid var(--line); border-radius:8px; padding:16px; margin:14px 0; }
+    .footer { margin-top:24px; color:var(--muted); font-size:13px; }
+    a { color:#064f88; font-weight:700; }
+    @media (max-width:900px) { table { table-layout:auto; } h1 { font-size:24px; } }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>6月シナリオ別 候補10社シミュレーション</h1>
+    <div class="note">作成: 2026/05/27 15:40 / 目的: 6月イベント後に、どの条件で候補が残るか・保留になるかを事前に確認する。</div>
+  </section>
+
+  <h2>1. シナリオ別の全体像</h2>
+  <table class="summary">
+    <thead><tr><th>シナリオ</th><th>残す</th><th>保留</th><th>外す</th><th>入力待ち</th><th>意味</th></tr></thead>
+    <tbody>
+      <tr><td>現在未入力</td><td class="keep">0</td><td class="hold">0</td><td class="remove">0</td><td class="wait">10</td><td>6月イベントや20営業日反応がまだ入力されていない状態。最終判断ではなく入力待ちとして扱う。</td></tr><tr><td>標準通過</td><td class="keep">0</td><td class="hold">5</td><td class="remove">5</td><td class="wait">0</td><td>CPI・日銀・FOMCは大きく悪化せず、20営業日反応は中立。追加説明はまだ十分ではない状態。</td></tr><tr><td>良好確認</td><td class="keep">10</td><td class="hold">0</td><td class="remove">0</td><td class="wait">0</td><td>市場イベント、決算後反応、同業説明、質的根拠、ベンチマーク根拠がすべて確認できた上限ケース。</td></tr><tr><td>金利・半導体逆風</td><td class="keep">0</td><td class="hold">2</td><td class="remove">8</td><td class="wait">0</td><td>FOMC後の金利上昇やSOX下落で半導体・AI関連に逆風が出るケース。銀行は相対的に保留へ残りやすいかを確認する。</td></tr><tr><td>悪化ケース</td><td class="keep">0</td><td class="hold">0</td><td class="remove">10</td><td class="wait">0</td><td>インフレ、金利、指数、同業説明、質的根拠がそろって悪化する下限ケース。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <strong>読み方:</strong> 現在未入力は最終判断ではありません。標準通過で多くが保留に残る場合は、6月イベントが悪くないだけでは不十分で、同業説明・質的根拠・ベンチマーク根拠の確認が必要という意味です。
+  </div>
+
+  <h2>2. 銘柄別の結果</h2>
+  <table class="detail">
+    <thead><tr><th>シナリオ</th><th>銘柄</th><th>会社名</th><th>初期区分</th><th>点数</th><th>判定</th><th>CPI</th><th>日銀</th><th>FOMC</th><th>20営業日反応</th><th>同業説明</th><th>質的根拠</th><th>ベンチ根拠</th></tr></thead>
+    <tbody>
+      <tr><td>現在未入力</td><td>8316.T</td><td>三井住友FG</td><td>中心確認</td><td>48点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>6762.T</td><td>TDK</td><td>中心確認</td><td>48点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>8053.T</td><td>住友商事</td><td>中心確認</td><td>48点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>2802.T</td><td>味の素</td><td>条件付き中心</td><td>43点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>8306.T</td><td>三菱UFJ FG</td><td>補欠比較</td><td>36点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>7173.T</td><td>東京きらぼしFG</td><td>監視</td><td>33点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>9984.T</td><td>ソフトバンクG</td><td>別評価監視</td><td>31点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>7735.T</td><td>SCREEN HD</td><td>監視</td><td>33点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>6146.T</td><td>ディスコ</td><td>反応検算</td><td>31点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>現在未入力</td><td>7011.T</td><td>三菱重工業</td><td>反応検算</td><td>31点</td><td><span class="pill wait">入力待ち</span></td><td>未入力</td><td>未入力</td><td>未入力</td><td>未到来</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>8316.T</td><td>三井住友FG</td><td>中心確認</td><td>68点</td><td><span class="pill hold">保留</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>6762.T</td><td>TDK</td><td>中心確認</td><td>68点</td><td><span class="pill hold">保留</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>8053.T</td><td>住友商事</td><td>中心確認</td><td>68点</td><td><span class="pill hold">保留</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>2802.T</td><td>味の素</td><td>条件付き中心</td><td>63点</td><td><span class="pill hold">保留</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>8306.T</td><td>三菱UFJ FG</td><td>補欠比較</td><td>56点</td><td><span class="pill hold">保留</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>7173.T</td><td>東京きらぼしFG</td><td>監視</td><td>53点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>9984.T</td><td>ソフトバンクG</td><td>別評価監視</td><td>51点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>7735.T</td><td>SCREEN HD</td><td>監視</td><td>53点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>6146.T</td><td>ディスコ</td><td>反応検算</td><td>51点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>標準通過</td><td>7011.T</td><td>三菱重工業</td><td>反応検算</td><td>51点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>良好確認</td><td>8316.T</td><td>三井住友FG</td><td>中心確認</td><td>109点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>6762.T</td><td>TDK</td><td>中心確認</td><td>109点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>8053.T</td><td>住友商事</td><td>中心確認</td><td>109点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>2802.T</td><td>味の素</td><td>条件付き中心</td><td>104点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>8306.T</td><td>三菱UFJ FG</td><td>補欠比較</td><td>97点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>7173.T</td><td>東京きらぼしFG</td><td>監視</td><td>94点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>9984.T</td><td>ソフトバンクG</td><td>別評価監視</td><td>92点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>7735.T</td><td>SCREEN HD</td><td>監視</td><td>94点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>6146.T</td><td>ディスコ</td><td>反応検算</td><td>92点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>良好確認</td><td>7011.T</td><td>三菱重工業</td><td>反応検算</td><td>92点</td><td><span class="pill keep">残す</span></td><td>良好</td><td>良好</td><td>良好</td><td>良好</td><td>説明可能</td><td>確認</td><td>確認</td></tr><tr><td>金利・半導体逆風</td><td>8316.T</td><td>三井住友FG</td><td>中心確認</td><td>68点</td><td><span class="pill hold">保留</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>金利・半導体逆風</td><td>6762.T</td><td>TDK</td><td>中心確認</td><td>10点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>注意</td><td>悪化</td><td>悪化</td><td>要確認</td><td>要確認</td><td>弱い</td></tr><tr><td>金利・半導体逆風</td><td>8053.T</td><td>住友商事</td><td>中心確認</td><td>43点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>注意</td><td>悪化</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>金利・半導体逆風</td><td>2802.T</td><td>味の素</td><td>条件付き中心</td><td>38点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>注意</td><td>悪化</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>金利・半導体逆風</td><td>8306.T</td><td>三菱UFJ FG</td><td>補欠比較</td><td>56点</td><td><span class="pill hold">保留</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>金利・半導体逆風</td><td>7173.T</td><td>東京きらぼしFG</td><td>監視</td><td>53点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>良好</td><td>注意</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>金利・半導体逆風</td><td>9984.T</td><td>ソフトバンクG</td><td>別評価監視</td><td>-7点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>注意</td><td>悪化</td><td>悪化</td><td>要確認</td><td>要確認</td><td>弱い</td></tr><tr><td>金利・半導体逆風</td><td>7735.T</td><td>SCREEN HD</td><td>監視</td><td>-5点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>注意</td><td>悪化</td><td>悪化</td><td>要確認</td><td>要確認</td><td>弱い</td></tr><tr><td>金利・半導体逆風</td><td>6146.T</td><td>ディスコ</td><td>反応検算</td><td>-7点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>注意</td><td>悪化</td><td>悪化</td><td>要確認</td><td>要確認</td><td>弱い</td></tr><tr><td>金利・半導体逆風</td><td>7011.T</td><td>三菱重工業</td><td>反応検算</td><td>26点</td><td><span class="pill remove">外す</span></td><td>注意</td><td>注意</td><td>悪化</td><td>中立</td><td>要確認</td><td>要確認</td><td>要確認</td></tr><tr><td>悪化ケース</td><td>8316.T</td><td>三井住友FG</td><td>中心確認</td><td>-62点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>6762.T</td><td>TDK</td><td>中心確認</td><td>-62点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>8053.T</td><td>住友商事</td><td>中心確認</td><td>-62点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>2802.T</td><td>味の素</td><td>条件付き中心</td><td>-67点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>8306.T</td><td>三菱UFJ FG</td><td>補欠比較</td><td>-74点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>7173.T</td><td>東京きらぼしFG</td><td>監視</td><td>-77点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>9984.T</td><td>ソフトバンクG</td><td>別評価監視</td><td>-79点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>7735.T</td><td>SCREEN HD</td><td>監視</td><td>-77点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>6146.T</td><td>ディスコ</td><td>反応検算</td><td>-79点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr><tr><td>悪化ケース</td><td>7011.T</td><td>三菱重工業</td><td>反応検算</td><td>-79点</td><td><span class="pill remove">外す</span></td><td>悪化</td><td>悪化</td><td>悪化</td><td>悪化</td><td>説明不足</td><td>否定</td><td>弱い</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. 次の使い方</h2>
+  <table>
+    <thead><tr><th>使う場面</th><th>確認すること</th><th>反映先</th></tr></thead>
+    <tbody>
+      <tr><td>6月イベント前</td><td>標準通過で保留に残る銘柄を確認し、追加説明が必要な項目を先に埋める。</td><td>候補10社の根拠整理</td></tr>
+      <tr><td>6月イベント後</td><td>CPI、日銀、FOMC、20営業日反応を実数で入力し、コックピットで再判定する。</td><td>6月最終再判定 入力コックピット</td></tr>
+      <tr><td>悪化時</td><td>S&P500投信・日経平均/TOPIXを1年で+1%以上上回る根拠が弱い場合は、個別株比率を下げる。</td><td>資金配分・保留判断</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    CSV: <a href="716_june_scenario_simulation_summary.csv">要約</a> /
+    <a href="717_june_scenario_simulation_detail.csv">明細</a> /
+    <a href="718_june_scenario_simulation_rules.csv">ルール</a>
+  </div>
+</main>
+</body>
+</html>
