@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA 1年保有テスト候補 提案資料</title>
+  <style>
+    :root {
+      --ink:#050b14;
+      --muted:#435469;
+      --line:#cfd9e6;
+      --navy:#0f3154;
+      --blue:#0b5f96;
+      --soft:#f4f8fc;
+      --pale:#eaf4fb;
+      --green:#0d7b57;
+      --amber:#a85b00;
+      --red:#a92721;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+      color:var(--ink);
+      background:#eef3f8;
+      line-height:1.7;
+      letter-spacing:0;
+    }
+    main { max-width:1160px; margin:0 auto; padding:28px 18px 58px; }
+    .cover {
+      background:linear-gradient(135deg,#0f3154,#174a75);
+      color:#fff;
+      border-radius:10px;
+      padding:34px 34px 28px;
+      margin-bottom:18px;
+      page-break-after:avoid;
+    }
+    .eyebrow { margin:0 0 8px; font-size:13px; font-weight:800; color:#bfe3ff; }
+    h1 { margin:0; font-size:34px; line-height:1.22; }
+    .lead { max-width:900px; margin:14px 0 0; color:#eaf6ff; font-size:15px; }
+    .meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+    .meta span { border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:6px 10px; font-size:12px; }
+    section {
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:22px;
+      margin:14px 0;
+      break-inside:avoid;
+      box-shadow:0 8px 24px rgba(20,48,84,.06);
+    }
+    h2 { margin:0 0 12px; color:var(--navy); font-size:22px; line-height:1.28; border-left:7px solid var(--blue); padding-left:10px; }
+    h3 { margin:0 0 8px; color:var(--navy); font-size:16px; }
+    p { margin:0 0 10px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .box { border:1px solid var(--line); background:var(--soft); border-radius:8px; padding:14px; }
+    .box b { display:block; color:var(--navy); margin-bottom:5px; }
+    .large { font-size:25px; font-weight:900; color:var(--blue); }
+    .flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; align-items:stretch; }
+    .step { background:var(--pale); border:1px solid #bcd5ea; border-radius:8px; padding:12px; position:relative; }
+    .step b { color:var(--navy); }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:12px; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; overflow-wrap:anywhere; }
+    th { background:#e5f0f8; color:var(--navy); text-align:left; }
+    tr:nth-child(even) td { background:#fafcff; }
+    .status { display:inline-block; border-radius:999px; padding:3px 8px; font-weight:800; font-size:11px; color:#fff; background:var(--blue); }
+    .status.watch { background:var(--amber); }
+    .status.stop { background:var(--red); }
+    .note { font-size:12px; color:var(--muted); }
+    .strong { color:var(--navy); font-weight:900; }
+    .risk-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .risk { border-left:6px solid var(--amber); background:#fff8ed; padding:12px; border-radius:8px; border-top:1px solid #efd4ad; border-right:1px solid #efd4ad; border-bottom:1px solid #efd4ad; }
+    .link { color:#075e91; font-weight:800; text-decoration:none; }
+    .qa td:first-child { width:26%; font-weight:800; color:var(--navy); }
+    .footer-note { font-size:11px; color:#48596d; border-top:1px solid var(--line); padding-top:10px; margin-top:16px; }
+    @media (max-width:850px) {
+      main { padding:16px 10px; }
+      .cover { padding:24px 18px; }
+      h1 { font-size:26px; }
+      .grid,.grid-2,.flow,.risk-list { grid-template-columns:1fr; }
+      table { table-layout:auto; }
+    }
+    @media print {
+      body { background:#fff; }
+      main { max-width:none; padding:0; }
+      section, .cover { box-shadow:none; }
+      a { color:#000; text-decoration:none; }
+      .cover { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <div class="cover">
+    <p class="eyebrow">NISA 1年保有テスト / 候補選定提案資料</p>
+    <h1>インデックス比較を前提にした<br>NISA日本株 候補10社提案</h1>
+    <p class="lead">本資料は、S&P500投信・日経平均/TOPIX連動投信を保有するだけの場合より、1年で+1%以上上回る説明が成立するかを検証するための候補資料です。現時点の10社は購入確定ではなく、6月の市場イベントと各社データを入力して再判定する対象です。</p>
+    <div class="meta">
+      <span>作成日時: 2026/5/27 17:46:54</span>
+      <span>対象: 日本株10社</span>
+      <span>運用前提: NISA / 1年保有テスト</span>
+      <span>判定: 残す・保留・外す</span>
+    </div>
+  </div>
+
+  <section>
+    <h2>1. 提案の要旨</h2>
+    <div class="grid">
+      <div class="box"><b>目的</b><span>S&P500投信・日経平均/TOPIXを単純保有する場合と比較し、個別株を選ぶ合理性を検証する。</span></div>
+      <div class="box"><b>選定対象</b><span>100社前後の候補群から、説明可能性と検証可能性を満たす10社を抽出する。</span></div>
+      <div class="box"><b>現時点の結論</b><span>購入確定ではなく、6月イベント後に実データで再判定する候補リストとして扱う。</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. なぜ10社に絞るのか</h2>
+    <div class="grid-2">
+      <div class="box">
+        <b>多すぎる場合の問題</b>
+        <p>100社前後をすべて深掘りすると、公式決算、PER/PBR/ROE、同業比較、決算後反応、6月イベント条件を1社ずつ確認しきれません。</p>
+      </div>
+      <div class="box">
+        <b>少なすぎる場合の問題</b>
+        <p>数社だけでは、金利、AI、商社、食品、半導体、防衛などのテーマ比較ができず、偶然の銘柄選択に見えやすくなります。</p>
+      </div>
+    </div>
+    <p class="strong">そのため、説明可能性、検証可能性、分散性のバランスを取り、今回は10社をテスト対象とします。</p>
+  </section>
+
+  <section>
+    <h2>3. システムの仕組み</h2>
+    <div class="flow">
+      <div class="step"><b>1. 母集団</b><br>業績、テーマ、流動性から100社前後を作る。</div>
+      <div class="step"><b>2. 量的評価</b><br>PER/PBR/ROE、利益成長、株価反応、下落率を見る。</div>
+      <div class="step"><b>3. 質的評価</b><br>AI、金利、防衛、食品、商社などの時流を確認する。</div>
+      <div class="step"><b>4. 同業比較</b><br>高PERや低PERが妥当か、同じ業種内で確認する。</div>
+      <div class="step"><b>5. 6月再判定</b><br>CPI、日銀、FOMC、20営業日反応で残す・保留・外すを決める。</div>
+    </div>
+    <p class="note">質的材料は単純加点しません。数字で裏付ける条件、警戒条件、除外条件として扱います。</p>
+  </section>
+
+  <section>
+    <h2>4. 候補10社の概要</h2>
+    <table>
+      <thead>
+        <tr><th style="width:5%">No.</th><th style="width:15%">銘柄</th><th style="width:10%">位置づけ</th><th style="width:24%">主な数値根拠</th><th style="width:15%">同業比較</th><th>確認ポイント</th><th style="width:9%">1年</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><b>8316.T 三井住友FG</b></td><td><span class="status">中心候補</span></td><td>補正64.1点 / PER13.40倍 / PBR1.44倍 / ROE10.38% / 利益34% / 1年65% / 反応55.5点</td><td>中間 / PER倍率 0.97倍</td><td>日銀後の銀行株全体、利ざや、信用コストを確認。銀行枠の中心候補として維持。</td><td><a class="link" href="https://finance.yahoo.com/chart/8316.T?range=1y">チャート</a></td></tr><tr><td>2</td><td><b>2802.T 味の素</b></td><td><span class="status">条件付き中心候補</span></td><td>補正66.4点 / PER42.38倍 / PBR6.60倍 / ROE17.75% / 利益75% / 1年51.6% / 反応65.8点</td><td>割高警戒 / PER倍率 2.42倍</td><td>ABF、ヘルスケア、利益成長、決算後反応で高PERを説明できる場合のみ維持。説明できなければ保留へ下げる。</td><td><a class="link" href="https://finance.yahoo.com/chart/2802.T?range=1y">チャート</a></td></tr><tr><td>3</td><td><b>6762.T TDK</b></td><td><span class="status">中心候補</span></td><td>補正63.2点 / PER31.22倍 / PBR3.21倍 / ROE9.81% / 利益21.5% / 1年135.7% / 反応63.8点</td><td>中間 / PER倍率 0.90倍</td><td>AIサーバー・電源・HDD周辺需要の質的仮説を、売上成長と6月の半導体指数反応で確認する。</td><td><a class="link" href="https://finance.yahoo.com/chart/6762.T?range=1y">チャート</a></td></tr><tr><td>4</td><td><b>8053.T 住友商事</b></td><td><span class="status">中心候補</span></td><td>補正60.8点 / PER13.73倍 / PBR1.87倍 / ROE12.94% / 利益0.9% / 1年98.2% / 反応59.6点</td><td>中間 / PER倍率 0.91倍</td><td>株主還元、資源価格、為替、商社株全体の反応を確認。成長率の弱さを還元と安定性で補えるかを見る。</td><td><a class="link" href="https://finance.yahoo.com/chart/8053.T?range=1y">チャート</a></td></tr><tr><td>5</td><td><b>8306.T 三菱UFJ FG</b></td><td><span class="status watch">比較候補</span></td><td>補正54.4点 / PER未取得 / PBR1.54倍 / ROE11.34% / 利益27.7% / 1年53.6% / 反応55.4点</td><td>中間 / PER倍率 1.23倍</td><td>銀行枠を複数持つ理由があるか確認。三井住友FGと比較して優位が出なければ補欠扱い。</td><td><a class="link" href="https://finance.yahoo.com/chart/8306.T?range=1y">チャート</a></td></tr><tr><td>6</td><td><b>7173.T 東京きらぼしFG</b></td><td><span class="status watch">監視候補</span></td><td>補正66.4点 / PER8.83倍 / PBR0.96倍 / ROE10.66% / 利益45.2% / 1年114.1% / 反応34.5点</td><td>相対割安 / PER倍率 0.64倍</td><td>日銀後の地銀株反応、出来高、決算後20営業日反応の改善を確認してから再評価。</td><td><a class="link" href="https://finance.yahoo.com/chart/7173.T?range=1y">チャート</a></td></tr><tr><td>7</td><td><b>9984.T ソフトバンクG</b></td><td><span class="status watch">別評価候補</span></td><td>補正61.8点 / PER未取得 / PBR2.45倍 / ROE34.28% / 利益259.9% / 1年285.2% / 反応52.9点</td><td>別評価 / PER倍率 別評価</td><td>NAV、保有株の下落耐性、米金利、AI株全体の反応を確認。通常のPER/PBR同業比較には混ぜない。</td><td><a class="link" href="https://finance.yahoo.com/chart/9984.T?range=1y">チャート</a></td></tr><tr><td>8</td><td><b>7735.T SCREEN HD</b></td><td><span class="status watch">監視候補</span></td><td>補正49.1点 / PER19.65倍 / PBR4.44倍 / ROE20.28% / 利益-9.7% / 1年117.5% / 反応57.3点</td><td>相対割安 / PER倍率 0.47倍</td><td>受注、次期見通し、20営業日反応、SOX耐性を確認。利益成長改善が見えれば再評価。</td><td><a class="link" href="https://finance.yahoo.com/chart/7735.T?range=1y">チャート</a></td></tr><tr><td>9</td><td><b>6146.T ディスコ</b></td><td><span class="status watch">反応検算候補</span></td><td>補正46.2点 / PER未取得 / PBR12.74倍 / ROE25.15% / 利益10.9% / 1年103.5% / 反応55.6点</td><td>割高警戒 / PER倍率 1.46倍</td><td>20営業日反応、受注、利益率、SOX耐性がそろうまで中心候補へ戻さない。</td><td><a class="link" href="https://finance.yahoo.com/chart/6146.T?range=1y">チャート</a></td></tr><tr><td>10</td><td><b>7011.T 三菱重工業</b></td><td><span class="status watch">反応検算候補</span></td><td>補正35.9点 / PER34.29倍 / PBR4.22倍 / ROE12.22% / 利益26.7% / 1年18.2% / 反応50.6点</td><td>割高警戒 / PER倍率 1.59倍</td><td>防衛・発電テーマの継続、200日線回復、下落率改善を確認。改善がなければ監視継続。</td><td><a class="link" href="https://finance.yahoo.com/chart/7011.T?range=1y">チャート</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>5. 現時点の候補分類</h2>
+    <div class="grid-2">
+      <div class="box">
+        <h3>中心・条件付き中心</h3>
+        <ul>
+          <li><b>8316.T 三井住友FG</b>: 中心候補。中間 / PER倍率 0.97倍</li><li><b>2802.T 味の素</b>: 条件付き中心候補。割高警戒 / PER倍率 2.42倍</li><li><b>6762.T TDK</b>: 中心候補。中間 / PER倍率 0.90倍</li><li><b>8053.T 住友商事</b>: 中心候補。中間 / PER倍率 0.91倍</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>比較・監視・反応検算</h3>
+        <ul>
+          <li><b>8306.T 三菱UFJ FG</b>: 比較候補。6月に条件確認。</li><li><b>7173.T 東京きらぼしFG</b>: 監視候補。6月に条件確認。</li><li><b>9984.T ソフトバンクG</b>: 別評価候補。6月に条件確認。</li><li><b>7735.T SCREEN HD</b>: 監視候補。6月に条件確認。</li><li><b>6146.T ディスコ</b>: 反応検算候補。6月に条件確認。</li><li><b>7011.T 三菱重工業</b>: 反応検算候補。6月に条件確認。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. インデックス比較の考え方</h2>
+    <div class="grid-2">
+      <div class="box">
+        <b>目標</b>
+        <p class="large">+1%以上</p>
+        <p>S&P500投信・日経平均/TOPIX連動投信を保有するだけの場合より、1年で+1%以上上回る根拠がある候補だけを残します。</p>
+      </div>
+      <div class="box">
+        <b>根拠が弱い場合</b>
+        <p>個別株比率を下げ、現金待機または指数投信比較へ戻します。個別株を選ぶ意味が説明できない場合は、無理に個別株へ寄せません。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. 6月の判定フロー</h2>
+    <table>
+      <thead><tr><th>確認項目</th><th>見る数字・材料</th><th>良い場合</th><th>悪い場合</th></tr></thead>
+      <tbody>
+        <tr><td>米CPI</td><td>前年比、前月比、米10年金利</td><td>候補維持または追加検討</td><td>金利敏感株・高PER株を保留</td></tr>
+        <tr><td>日銀</td><td>円高/円安、銀行株反応、日経平均</td><td>銀行・内需候補を再評価</td><td>急な円高や指数下落時は保留</td></tr>
+        <tr><td>FOMC</td><td>米10年金利、NASDAQ、SOX</td><td>AI・半導体候補の維持判断</td><td>半導体・高PER候補を縮小</td></tr>
+        <tr><td>決算後反応</td><td>1日/5日/20営業日の対指数反応</td><td>反応が強い候補を残す</td><td>反応が弱い候補は監視へ下げる</td></tr>
+        <tr><td>同業比較</td><td>PER/PBR/ROE、利益成長、受注・見通し</td><td>割高を説明できる候補のみ残す</td><td>説明できない高PERは外す</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>8. 主なリスクと対応</h2>
+    <div class="risk-list">
+      <div class="risk"><b>高PER・過熱リスク</b><br>味の素、ディスコ、三菱重工業などは、テーマ性だけでなく利益成長・受注・同業比較で説明できるかを見る。</div>
+      <div class="risk"><b>金利上昇リスク</b><br>FOMC後に米10年金利が急騰する場合、AI・半導体・高PER候補は保留または縮小する。</div>
+      <div class="risk"><b>テーマ先行リスク</b><br>半導体、防衛、AI関連は材料だけで判断せず、決算後反応と実績数字で裏付ける。</div>
+      <div class="risk"><b>指数劣後リスク</b><br>個別株候補が指数を上回る説明を持てない場合、個別株比率を下げる。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>9. 想定される質問への回答</h2>
+    <table class="qa">
+      <tbody>
+        <tr><td>この10社は購入確定ですか</td><td>いいえ。6月のCPI、日銀、FOMC、決算後反応を入力して再判定する候補です。</td></tr>
+        <tr><td>なぜ指数投信だけではないのですか</td><td>指数投信を基準にし、それを+1%以上上回る説明が成立するかを検証するためです。成立しなければ個別株比率を下げます。</td></tr>
+        <tr><td>質的材料はどう使いますか</td><td>単純加点ではなく、確認条件、警戒条件、除外条件として使います。数字で裏付けられない材料だけでは候補にしません。</td></tr>
+        <tr><td>どこまで根拠がありますか</td><td>PER/PBR/ROE、利益成長、株価反応、同業比較、1年チャート、6月の判定条件を同じ表で確認できる段階です。</td></tr>
+      </tbody>
+    </table>
+    <p class="footer-note">本資料はNISA 1年保有テストに向けた判断補助資料です。最終判断は6月イベント後の実データ入力と候補再判定を経て行います。</p>
+  </section>
+</main>
+</body>
+</html>
