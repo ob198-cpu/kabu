@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補銘柄 運用ルール接続表 2026年5月27日</title>
+  <style>
+    :root { --ink:#061e38; --line:#cbdff0; --blue:#0b5e94; --bg:#f4f8fb; --orange:#b45309; --green:#126b45; --red:#a82424; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; line-height:1.65; }
+    main { max-width:1360px; margin:0 auto; padding:24px 18px 48px; }
+    header { background:#082f53; color:#fff; border-radius:14px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:clamp(26px,4vw,40px); line-height:1.2; }
+    h2 { margin:0 0 10px; font-size:22px; border-left:7px solid var(--blue); padding-left:12px; }
+    .lead { margin:0; max-width:1060px; color:#edf7ff; font-weight:700; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 20px rgba(20,60,90,.08); padding:18px; margin-top:14px; break-inside:avoid; page-break-inside:avoid; }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:10px; padding:14px; background:#f8fbfe; }
+    .card b { display:block; font-size:26px; color:var(--blue); }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; background:#fff; min-width:980px; }
+    .wide table { min-width:2300px; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 11px; vertical-align:top; color:#031f3b; }
+    th { background:#e7f2fb; text-align:left; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .note { border:1px solid #f5c77a; border-left:8px solid var(--orange); background:#fff8eb; border-radius:10px; padding:12px 14px; font-weight:700; margin-top:12px; }
+    .ok { color:var(--green); font-weight:800; }
+    .warn { color:var(--orange); font-weight:800; }
+    .bad { color:var(--red); font-weight:800; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .actions a { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:9px 14px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; font-weight:700; }
+    @media (max-width:900px) { main { padding:12px 10px 36px; } header,section { padding:16px; } .cards { grid-template-columns:1fr; } }
+    @media print {
+      body { background:#fff; }
+      main { max-width:none; padding:10mm; }
+      section { box-shadow:none; }
+      .table-wrap { overflow:visible; }
+      table { min-width:0; font-size:10px; }
+      .wide table { min-width:0; }
+      th,td { padding:5px 6px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>候補銘柄 運用ルール接続表</h1>
+      <p class="lead">質的イベント判定を、テスト候補・購入検討・保留・警戒の運用ルールへ接続した表です。質的材料は直接加点せず、確認条件と警戒条件として扱います。</p>
+    </header>
+
+    <section>
+      <h2>1. 位置づけ</h2>
+
+    <div class="table-wrap ">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody><tr><td>目的</td><td>質的イベント監視を、候補銘柄ごとの購入検討・保留・警戒・比較継続ルールへ接続した。</td></tr><tr><td>対象</td><td>NISA 1年保有スコア上位候補12件を対象に、質的イベント判定結果を接続した。</td></tr><tr><td>現時点の扱い</td><td>本表は購入対象の確定ではない。6月イベント後の再判定に使う検証用の運用表。</td></tr></tbody>
+      </table>
+    </div>
+      <div class="note">本表は投資実行判断ではありません。6月の市場イベントと各銘柄の追加数値を入れて、候補を再判定するための運用表です。</div>
+    </section>
+
+    <section>
+      <h2>2. 判定区分</h2>
+      <div class="cards">
+        <div class="card"><b>4件</b><span>保留</span><p>現時点では監視のみ</p></div><div class="card"><b>1件</b><span>6月再判定候補</span><p>購入可否の最終確認へ進める候補</p></div><div class="card"><b>3件</b><span>警戒</span><p>質的イベントまたは逆風を優先確認</p></div><div class="card"><b>2件</b><span>比較継続</span><p>候補には残すが追加確認が必要</p></div><div class="card"><b>2件</b><span>反応再確認</span><p>決算後反応が弱く、追加確認が必要</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. ルール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>項目</th><th>ルール</th><th>理由</th></tr></thead>
+        <tbody><tr><td>基本設計</td><td>量的スコアを主軸にし、質的イベントは直接加点せず、確認条件・警戒条件・保留条件として扱う。</td><td>イベントの話だけで銘柄を上げると誤判定になりやすいため。</td></tr><tr><td>購入検討へ進む条件</td><td>NISA1年保有スコア65点以上、データ信頼度70点以上、質的イベントが警戒ではない、決算後反応または20営業日確認が悪化していない。</td><td>数字・データ信頼度・イベント確認を同時に満たす銘柄だけを残すため。</td></tr><tr><td>質的イベントの扱い</td><td>S/A相当の質的材料でも、会社売上・受注・利益率・株価反応に接続できるまで購入候補へ直接昇格させない。</td><td>仮説データ層と実績データ層を混ぜないため。</td></tr><tr><td>除外・警戒条件</td><td>バフェット大幅売却、指数劣後、会社側否定、PER過熱、決算後反応悪化、日経75日線割れは警戒または保留にする。</td><td>上昇仮説より損失回避を優先するため。</td></tr><tr><td>6月再判定</td><td>CPI、日銀、FOMC、米10年金利、為替、日経平均75日線、対象銘柄の決算後20営業日反応を確認して再判定する。</td><td>NISA 1年保有テスト前に市場環境の急変を確認するため。</td></tr></tbody>
+      </table>
+    </div>
+    </section>
+
+    <section>
+      <h2>4. 候補別の運用ルール</h2>
+
+    <div class="table-wrap wide">
+      <table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>会社名</th><th>業種</th><th>量的スコア</th><th>信頼度</th><th>PER</th><th>PBR</th><th>ROE</th><th>未確認/警戒</th><th>質的判定</th><th>質的点</th><th>接続テーマ</th><th>運用区分</th><th>購入検討へ進む条件</th><th>停止/撤退ルール</th><th>崩れる条件</th><th>次に入れる数値</th></tr></thead>
+        <tbody><tr><td>1</td><td>4385.T</td><td>メルカリ</td><td>ネット</td><td>79.8</td><td>87</td><td>未取得</td><td>5.79</td><td>30.52</td><td>決算後20営業日未到達</td><td>質的材料未接続</td><td>50</td><td>未接続</td><td>保留</td><td>監視のみ。点数や質的材料だけで購入候補へ上げない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>質的な追い風・逆風を未反映</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>2</td><td>2802.T</td><td>味の素</td><td>食品</td><td>67.8</td><td>95</td><td>43.73</td><td>6.81</td><td>17.75</td><td>決算後20営業日未到達</td><td>質的確認待ち</td><td>71.9</td><td>食品値上げ耐性 / 円高 / 原油・ナフサ下落</td><td>6月再判定候補</td><td>6月CPI・日銀・FOMC確認後、日経平均75日線、米10年金利、為替、決算後20営業日反応が悪化していない場合だけ購入検討に進む。</td><td>テスト後は買値から-5%で理由確認、-8%で追加停止、-12%で撤退候補。日経平均75日線割れでは全候補を再判定。</td><td>数量減、原材料再上昇、PERが成長率に対して高すぎる</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>3</td><td>8316.T</td><td>三井住友FG</td><td>銀行</td><td>65.1</td><td>95</td><td>13.61</td><td>1.47</td><td>10.38</td><td>決算後20営業日未到達</td><td>警戒条件あり</td><td>62</td><td>金利上昇 / 自社株買い・増配・資本効率 / バフェット・バークシャー売買監視</td><td>警戒</td><td>警戒イベントの理由が確認できるまで新規購入候補にしない。</td><td>対象イベントで指数劣後、会社側否定、主要指標悪化が出た場合は候補から外す。</td><td>信用コスト悪化、自然災害損害率悪化、金利上昇でも指数劣後 / 売却理由を断定できない、13Fの開示遅れを補正できない</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>4</td><td>5020.T</td><td>ENEOS HD</td><td>エネルギー</td><td>64.3</td><td>95</td><td>8.36</td><td>1.03</td><td>8.00</td><td>決算後20営業日未到達</td><td>警戒条件あり</td><td>62</td><td>バフェット・バークシャー売買監視 / 原油・中東リスク</td><td>警戒</td><td>警戒イベントの理由が確認できるまで新規購入候補にしない。</td><td>対象イベントで指数劣後、会社側否定、主要指標悪化が出た場合は候補から外す。</td><td>売却理由を断定できない、13Fの開示遅れを補正できない / 原油急落、精製マージン悪化、在庫評価損、決算後指数劣後</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>5</td><td>8306.T</td><td>三菱UFJ FG</td><td>銀行</td><td>62.1</td><td>92</td><td>未取得</td><td>1.56</td><td>11.34</td><td>なし</td><td>警戒条件あり</td><td>62</td><td>金利上昇 / 自社株買い・増配・資本効率 / バフェット・バークシャー売買監視</td><td>警戒</td><td>警戒イベントの理由が確認できるまで新規購入候補にしない。</td><td>対象イベントで指数劣後、会社側否定、主要指標悪化が出た場合は候補から外す。</td><td>信用コスト悪化、自然災害損害率悪化、金利上昇でも指数劣後 / 売却理由を断定できない、13Fの開示遅れを補正できない</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>6</td><td>6146.T</td><td>ディスコ</td><td>半導体装置</td><td>60.9</td><td>92</td><td>未取得</td><td>12.32</td><td>25.15</td><td>なし</td><td>質的確認待ち</td><td>72.6</td><td>AI半導体投資 / HBM・先端パッケージ</td><td>比較継続</td><td>候補には残すが、同業比較と決算後反応を追加確認するまで購入検討に進めない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>受注や利益率に出ない、決算後20営業日で指数劣後、PER調整に耐えない</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>7</td><td>6762.T</td><td>TDK</td><td>電子部品</td><td>60.7</td><td>100</td><td>26.7</td><td>2.75</td><td>9.81</td><td>なし</td><td>質的確認待ち</td><td>72.6</td><td>AI半導体投資 / HBM・先端パッケージ</td><td>比較継続</td><td>候補には残すが、同業比較と決算後反応を追加確認するまで購入検討に進めない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>受注や利益率に出ない、決算後20営業日で指数劣後、PER調整に耐えない</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>8</td><td>6503.T</td><td>三菱電機</td><td>総合電機</td><td>55.6</td><td>95</td><td>26.09</td><td>2.76</td><td>9.67</td><td>決算後20営業日未到達</td><td>保留</td><td>69.6</td><td>データセンター電力不足 / データセンター冷却</td><td>保留</td><td>監視のみ。点数や質的材料だけで購入候補へ上げない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>寄与が小さい、利益率が伸びない、中国需要悪化、指数劣後</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>9</td><td>9984.T</td><td>ソフトバンクG</td><td>投資/AI</td><td>66.9</td><td>92</td><td>未取得</td><td>1.98</td><td>34.28</td><td>決算後反応15.2点</td><td>質的材料未接続</td><td>50</td><td>未接続</td><td>反応再確認</td><td>決算後反応の弱さが解消するまで購入検討に進めない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>質的な追い風・逆風を未反映</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>10</td><td>7012.T</td><td>川崎重工業</td><td>重工/防衛</td><td>59.9</td><td>100</td><td>21.6</td><td>2.71</td><td>13.68</td><td>決算後反応34.8点</td><td>質的材料未接続</td><td>50</td><td>未接続</td><td>反応再確認</td><td>決算後反応の弱さが解消するまで購入検討に進めない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>質的な追い風・逆風を未反映</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>11</td><td>6501.T</td><td>日立製作所</td><td>総合電機</td><td>59.3</td><td>95</td><td>26.81</td><td>3.47</td><td>12.93</td><td>決算後20営業日未到達 / 決算後反応32.5点</td><td>質的材料未接続</td><td>50</td><td>未接続</td><td>保留</td><td>監視のみ。点数や質的材料だけで購入候補へ上げない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>質的な追い風・逆風を未反映</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr><tr><td>12</td><td>8002.T</td><td>丸紅</td><td>商社</td><td>53</td><td>95</td><td>15.01</td><td>1.99</td><td>13.61</td><td>決算後20営業日未到達 / 決算後反応34点</td><td>質的材料未接続</td><td>50</td><td>未接続</td><td>保留</td><td>監視のみ。点数や質的材料だけで購入候補へ上げない。</td><td>購入前段階のため損切り設定ではなく、候補維持条件の確認に限定する。</td><td>質的な追い風・逆風を未反映</td><td>公式決算値、PER/PBR/ROE、決算後1日/5日/20営業日対指数反応、6月イベント後の市場指標</td></tr></tbody>
+      </table>
+    </div>
+      <div class="actions">
+        <a href="623_candidate_operation_rule_summary.csv">概要CSV</a>
+        <a href="624_candidate_operation_rule_formula.csv">ルールCSV</a>
+        <a href="625_candidate_operation_rules.csv">候補別CSV</a>
+        <a href="qual_event_scoring_engine_20260527.html">質的イベント判定へ</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
