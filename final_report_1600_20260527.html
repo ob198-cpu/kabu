@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本日報告 16:00版</title>
+  <style>
+    :root {
+      --ink:#061d33;
+      --muted:#2a4157;
+      --blue:#0b5e94;
+      --navy:#082f53;
+      --line:#c8dbea;
+      --bg:#f5f8fb;
+      --soft:#eef7ff;
+      --green:#087a55;
+      --orange:#b45f06;
+      --red:#b42318;
+      --slate:#64748b;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Yu Gothic","Meiryo",Arial,sans-serif; line-height:1.7; }
+    header { background:linear-gradient(135deg,#082f53,#124d77); color:#fff; padding:32px 36px; }
+    header h1 { margin:0 0 8px; font-size:clamp(28px,4vw,42px); line-height:1.2; }
+    header p { margin:0; color:#fff; font-weight:700; }
+    main { max-width:1320px; margin:0 auto; padding:22px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px; margin:0 0 18px; box-shadow:0 8px 20px rgba(20,60,90,.08); break-inside:avoid; }
+    h2 { margin:0 0 12px; border-left:8px solid var(--blue); padding-left:12px; font-size:22px; }
+    h3 { margin:8px 0; font-size:18px; }
+    .lead { font-size:18px; font-weight:900; color:#111; margin:0 0 12px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .kpi { border:1px solid var(--line); border-radius:10px; padding:14px; background:#fbfdff; min-height:112px; }
+    .kpi .num { font-size:32px; font-weight:900; color:#064f79; line-height:1.1; }
+    .kpi b { display:block; margin:4px 0; color:#061d33; }
+    .note { background:#fff8ec; border:1px solid #efc98e; border-radius:10px; padding:12px 14px; color:#111; font-weight:700; }
+    .candidates { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .candidate { border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:14px; }
+    .candidate p { margin:8px 0 0; color:#111; }
+    .candidate b { display:inline-block; min-width:48px; color:#06395b; }
+    .score { font-size:18px; font-weight:900; }
+    .score span { font-size:13px; color:#334155; margin-left:8px; }
+    .badge { display:inline-block; border-radius:999px; padding:3px 9px; font-size:12px; font-weight:900; border:1px solid var(--line); }
+    .badge.good { background:#eaf8f1; color:#087a55; border-color:#a8d8c1; }
+    .badge.blue { background:#e7f1fa; color:#064f79; border-color:#aacce2; }
+    .badge.warn { background:#fff6e8; color:#9a4b00; border-color:#efc98e; }
+    .badge.muted { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:13px; min-width:1120px; background:#fff; }
+    th, td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:8px; vertical-align:top; overflow-wrap:anywhere; word-break:break-word; color:#111; }
+    th { background:#e7f1fa; color:#06395b; text-align:left; font-weight:900; }
+    .narrow table { min-width:860px; }
+    .links a { display:inline-block; margin:4px 8px 4px 0; padding:9px 12px; border:1px solid #8bb9d6; border-radius:8px; color:#064f79; text-decoration:none; background:#fff; font-weight:800; }
+    .print-note { color:#334155; font-size:12px; }
+    @media print {
+      body { background:#fff; }
+      header { background:#082f53 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+      section { box-shadow:none; }
+      .links { display:none; }
+    }
+    @media (max-width:860px) {
+      header { padding:24px 18px; }
+      main { padding:12px; }
+      .grid, .candidates { grid-template-columns:1fr; }
+      table { font-size:12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>本日報告 16:00版</h1>
+    <p>作成: 2026/05/27 13:30 / NISA 1年保有テスト 候補10社の整理と6月再判定計画</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 本日の結論</h2>
+      <p class="lead">候補10社を実データで整理し、6月イベント後に「残す・保留・外す」を再判定できる状態まで進みました。現時点では購入確定ではありません。</p>
+      <div class="grid">
+        <div class="kpi"><div class="num">10</div><b>検証対象</b><div>実データ接続済み</div></div>
+        <div class="kpi"><div class="num">4</div><b>中心確認</b><div>三井住友FG、味の素、TDK、住友商事</div></div>
+        <div class="kpi"><div class="num">1</div><b>条件付き確認</b><div>三菱UFJ FG</div></div>
+        <div class="kpi"><div class="num">5</div><b>監視</b><div>条件改善まで中心候補にしない</div></div>
+      </div>
+      <div class="note" style="margin-top:12px">目標は、S&P500投信・日経平均/TOPIXを保有するだけの場合より、1年で+1%上回る根拠を説明できる候補に絞ることです。</div>
+    </section>
+
+    <section>
+      <h2>2. 本日の成果</h2>
+      <div class="table-wrap narrow"><table><thead><tr><th>区分</th><th>内容</th><th>状態</th></tr></thead><tbody><tr><td>本日の成果</td><td>100社前後の候補群から、実データを接続した10社の検証対象を整理し、6月再判定用の候補表、入力基準表、説明補強資料まで作成した。</td><td>完了</td></tr><tr><td>候補分類</td><td>中心確認4社、条件付き確認1社、監視5社に分けた。</td><td>完了</td></tr><tr><td>評価方法</td><td>量的評価を主軸にし、質的テーマは直接加点せず、確認条件・警戒条件・除外条件として扱う方針に統一した。</td><td>完了</td></tr><tr><td>6月判断</td><td>CPI、日銀、FOMC、米金利、為替、日経平均/TOPIX、決算後20営業日反応を入力して、残す・保留・外すを再判定する。</td><td>次工程</td></tr><tr><td>運用目標</td><td>S&amp;P500投信・日経平均/TOPIXを保有するだけの場合より、1年で+1%上回る根拠を説明できる候補に絞る。</td><td>継続確認</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>3. 候補10社</h2>
+      <div class="candidates"><article class="candidate">
+  <div class="badge good">中心確認</div>
+  <h3>1. 8316.T 三井住友FG</h3>
+  <div class="score">64.1点 <span>10/10</span></div>
+  <p><b>根拠</b>補正64.1点 / PER13.40倍 / PBR1.44倍 / ROE10.38% / 利益34% / 1年65% / 反応55.5点</p>
+  <p><b>テーマ</b>銀行・金利上昇テーマ</p>
+  <p><b>注意</b>大きな警戒なし</p>
+</article><article class="candidate">
+  <div class="badge blue">追加確認付き中心</div>
+  <h3>2. 2802.T 味の素</h3>
+  <div class="score">66.4点 <span>10/10</span></div>
+  <p><b>根拠</b>補正66.4点 / PER42.38倍 / PBR6.60倍 / ROE17.75% / 利益75% / 1年51.6% / 反応65.8点</p>
+  <p><b>テーマ</b>食品・生活防衛 / ABF・ヘルスケア確認</p>
+  <p><b>注意</b>PER42.38倍で割高確認 / PBR6.6倍で割高確認</p>
+</article><article class="candidate">
+  <div class="badge blue">追加確認付き中心</div>
+  <h3>3. 6762.T TDK</h3>
+  <div class="score">63.2点 <span>10/10</span></div>
+  <p><b>根拠</b>補正63.2点 / PER31.22倍 / PBR3.21倍 / ROE9.81% / 利益21.5% / 1年135.7% / 反応63.8点</p>
+  <p><b>テーマ</b>電子部品・AI/半導体周辺</p>
+  <p><b>注意</b>PER31.22倍でやや高め</p>
+</article><article class="candidate">
+  <div class="badge blue">追加確認付き中心</div>
+  <h3>4. 8053.T 住友商事</h3>
+  <div class="score">60.8点 <span>10/10</span></div>
+  <p><b>根拠</b>補正60.8点 / PER13.73倍 / PBR1.87倍 / ROE12.94% / 利益0.9% / 1年98.2% / 反応59.6点</p>
+  <p><b>テーマ</b>商社・資源/株主還元/バフェット関連</p>
+  <p><b>注意</b>成長確認: 売上0.6% / 利益0.9%</p>
+</article><article class="candidate">
+  <div class="badge warn">条件付き確認</div>
+  <h3>5. 8306.T 三菱UFJ FG</h3>
+  <div class="score">54.4点 <span>9/10</span></div>
+  <p><b>根拠</b>補正54.4点 / PER未取得 / PBR1.54倍 / ROE11.34% / 利益27.7% / 1年53.6% / 反応55.4点</p>
+  <p><b>テーマ</b>銀行・金利上昇テーマの補欠</p>
+  <p><b>注意</b>未取得: PER</p>
+</article><article class="candidate">
+  <div class="badge muted">監視</div>
+  <h3>6. 7173.T 東京きらぼしFG</h3>
+  <div class="score">66.4点 <span>10/10</span></div>
+  <p><b>根拠</b>補正66.4点 / PER8.83倍 / PBR0.96倍 / ROE10.66% / 利益45.2% / 1年114.1% / 反応34.5点</p>
+  <p><b>テーマ</b>地銀・金利上昇テーマの高反応確認</p>
+  <p><b>注意</b>決算後反応34.5点</p>
+</article><article class="candidate">
+  <div class="badge muted">監視</div>
+  <h3>7. 9984.T ソフトバンクG</h3>
+  <div class="score">61.8点 <span>9/10</span></div>
+  <p><b>根拠</b>補正61.8点 / PER未取得 / PBR2.45倍 / ROE34.28% / 利益259.9% / 1年285.2% / 反応52.9点</p>
+  <p><b>テーマ</b>AI投資・大型成長株の監視</p>
+  <p><b>注意</b>未取得: PER / 1年上昇285.2%</p>
+</article><article class="candidate">
+  <div class="badge muted">監視</div>
+  <h3>8. 7735.T SCREEN HD</h3>
+  <div class="score">49.1点 <span>10/10</span></div>
+  <p><b>根拠</b>補正49.1点 / PER19.65倍 / PBR4.44倍 / ROE20.28% / 利益-9.7% / 1年117.5% / 反応57.3点</p>
+  <p><b>テーマ</b>半導体製造装置の監視</p>
+  <p><b>注意</b>利益成長マイナス: -9.7% / 成長確認: 売上-3.1% / 利益-9.7%</p>
+</article><article class="candidate">
+  <div class="badge muted">監視</div>
+  <h3>9. 6146.T ディスコ</h3>
+  <div class="score">46.2点 <span>9/10</span></div>
+  <p><b>根拠</b>補正46.2点 / PER未取得 / PBR12.74倍 / ROE25.15% / 利益10.9% / 1年103.5% / 反応55.6点</p>
+  <p><b>テーマ</b>半導体製造装置の高収益監視</p>
+  <p><b>注意</b>未取得: PER / PBR12.74倍</p>
+</article><article class="candidate">
+  <div class="badge muted">監視</div>
+  <h3>10. 7011.T 三菱重工業</h3>
+  <div class="score">35.9点 <span>10/10</span></div>
+  <p><b>根拠</b>補正35.9点 / PER34.29倍 / PBR4.22倍 / ROE12.22% / 利益26.7% / 1年18.2% / 反応50.6点</p>
+  <p><b>テーマ</b>防衛・重工テーマの監視</p>
+  <p><b>注意</b>60日最大下落-25.3% / PER34.29倍でやや高め</p>
+</article></div>
+    </section>
+
+    <section>
+      <h2>4. 候補一覧 詳細</h2>
+      <div class="table-wrap "><table><thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>補正後点</th><th>データ充足</th><th>主な根拠</th><th>質的テーマ</th><th>注意点</th><th>6月に確認する条件</th><th>外す条件</th></tr></thead><tbody><tr><td>1</td><td>8316.T 三井住友FG</td><td>中心確認</td><td>64.1</td><td>10/10</td><td>補正64.1点 / PER13.40倍 / PBR1.44倍 / ROE10.38% / 利益34% / 1年65% / 反応55.5点</td><td>銀行・金利上昇テーマ</td><td>大きな警戒なし</td><td>日銀後に銀行株全体が崩れず、金利上昇メリットと信用コスト悪化が同時に出ない。</td><td>日銀後の銀行株下落、信用コスト悪化、金利上昇メリットの後退。</td></tr><tr><td>2</td><td>2802.T 味の素</td><td>追加確認付き中心</td><td>66.4</td><td>10/10</td><td>補正66.4点 / PER42.38倍 / PBR6.60倍 / ROE17.75% / 利益75% / 1年51.6% / 反応65.8点</td><td>食品・生活防衛 / ABF・ヘルスケア確認</td><td>PER42.38倍で割高確認 / PBR6.6倍で割高確認</td><td>高PERを利益成長と決算後反応で説明でき、6月イベント後に大きく指数劣後しない。</td><td>高PERのまま利益成長鈍化、または決算後反応が日経平均比で悪化。</td></tr><tr><td>3</td><td>6762.T TDK</td><td>追加確認付き中心</td><td>63.2</td><td>10/10</td><td>補正63.2点 / PER31.22倍 / PBR3.21倍 / ROE9.81% / 利益21.5% / 1年135.7% / 反応63.8点</td><td>電子部品・AI/半導体周辺</td><td>PER31.22倍でやや高め</td><td>AI/電子部品テーマがSOXや半導体指数に連動しつつ、過熱下落が限定的。</td><td>SOX下落、AI/半導体テーマの失速、決算後反応の指数劣後。</td></tr><tr><td>4</td><td>8053.T 住友商事</td><td>追加確認付き中心</td><td>60.8</td><td>10/10</td><td>補正60.8点 / PER13.73倍 / PBR1.87倍 / ROE12.94% / 利益0.9% / 1年98.2% / 反応59.6点</td><td>商社・資源/株主還元/バフェット関連</td><td>成長確認: 売上0.6% / 利益0.9%</td><td>商社・資源・還元テーマが維持され、決算後反応と株価維持が続く。</td><td>資源価格・為替・還元姿勢が悪化し、商社株全体が指数劣後。</td></tr><tr><td>5</td><td>8306.T 三菱UFJ FG</td><td>条件付き確認</td><td>54.4</td><td>9/10</td><td>補正54.4点 / PER未取得 / PBR1.54倍 / ROE11.34% / 利益27.7% / 1年53.6% / 反応55.4点</td><td>銀行・金利上昇テーマの補欠</td><td>未取得: PER</td><td>PER相当の確認または代替指標で割高感を説明し、銀行枠の重複を整理できる。</td><td>日銀後の銀行株下落、信用コスト悪化、金利上昇メリットの後退。</td></tr><tr><td>6</td><td>7173.T 東京きらぼしFG</td><td>監視</td><td>66.4</td><td>10/10</td><td>補正66.4点 / PER8.83倍 / PBR0.96倍 / ROE10.66% / 利益45.2% / 1年114.1% / 反応34.5点</td><td>地銀・金利上昇テーマの高反応確認</td><td>決算後反応34.5点</td><td>決算後反応の弱さが一時的と確認でき、出来高・銀行株指数・再反応が改善する。</td><td>日銀後の銀行株下落、信用コスト悪化、金利上昇メリットの後退。</td></tr><tr><td>7</td><td>9984.T ソフトバンクG</td><td>監視</td><td>61.8</td><td>9/10</td><td>補正61.8点 / PER未取得 / PBR2.45倍 / ROE34.28% / 利益259.9% / 1年285.2% / 反応52.9点</td><td>AI投資・大型成長株の監視</td><td>未取得: PER / 1年上昇285.2%</td><td>1年上昇の過熱が落ち着き、決算後20営業日反応と6月イベント後の価格維持を確認できる。</td><td>過熱の反動、米金利上昇、AI関連株下落で大きく指数劣後。</td></tr><tr><td>8</td><td>7735.T SCREEN HD</td><td>監視</td><td>49.1</td><td>10/10</td><td>補正49.1点 / PER19.65倍 / PBR4.44倍 / ROE20.28% / 利益-9.7% / 1年117.5% / 反応57.3点</td><td>半導体製造装置の監視</td><td>利益成長マイナス: -9.7% / 成長確認: 売上-3.1% / 利益-9.7%</td><td>利益成長マイナスを次期見通しや受注で補える。SOX下落時の耐性も確認する。</td><td>SOX下落、AI/半導体テーマの失速、決算後反応の指数劣後。</td></tr><tr><td>9</td><td>6146.T ディスコ</td><td>監視</td><td>46.2</td><td>9/10</td><td>補正46.2点 / PER未取得 / PBR12.74倍 / ROE25.15% / 利益10.9% / 1年103.5% / 反応55.6点</td><td>半導体製造装置の高収益監視</td><td>未取得: PER / PBR12.74倍</td><td>PERを補完し、PBR高を利益成長・受注・決算後反応で説明できる。</td><td>SOX下落、AI/半導体テーマの失速、決算後反応の指数劣後。</td></tr><tr><td>10</td><td>7011.T 三菱重工業</td><td>監視</td><td>35.9</td><td>10/10</td><td>補正35.9点 / PER34.29倍 / PBR4.22倍 / ROE12.22% / 利益26.7% / 1年18.2% / 反応50.6点</td><td>防衛・重工テーマの監視</td><td>60日最大下落-25.3% / PER34.29倍でやや高め</td><td>60日最大下落が改善し、200日線・出来高・防衛/重工テーマの再評価が確認できる。</td><td>直近下落が続き、200日線を明確に下回る。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>5. 説明時の想定質問</h2>
+      <div class="table-wrap "><table><thead><tr><th>作成</th><th>質問</th><th>回答</th></tr></thead><tbody><tr><td>2026/05/27 13:22</td><td>これは何をするシステムか</td><td>NISA 1年保有テストの候補を、実データと確認条件で絞り込む判断補助システムです。購入対象を自動確定するものではなく、候補の根拠、注意点、6月に確認する条件を整理します。</td></tr><tr><td>2026/05/27 13:22</td><td>なぜ今すぐ購入確定ではないのか</td><td>6月にCPI、日銀、FOMCがあり、金利、為替、日本株全体の方向が変わる可能性があります。現時点では候補を作り、イベント後の数値で再判定する方針です。</td></tr><tr><td>2026/05/27 13:22</td><td>10社はどのように選んだのか</td><td>株価、業績、PER/PBR/ROE、決算後反応、下落率、データ充足、時流テーマとの接続を確認し、同じ基準で比較できる銘柄を10社に整理しました。</td></tr><tr><td>2026/05/27 13:22</td><td>質的テーマは点数に足しているのか</td><td>直接加点していません。AI、半導体、金利、商社、食品などのテーマは、確認すべき数字と警戒条件を決めるために使います。定量条件が悪い銘柄をテーマだけで残す扱いにはしません。</td></tr><tr><td>2026/05/27 13:22</td><td>S&amp;P500投信や日経平均/TOPIXを持つだけの場合と何が違うのか</td><td>目標は、ただ指数や投信を保有する場合より1年で+1%上回る根拠を説明できる候補だけを残すことです。根拠が弱ければ、個別株比率を下げる判断につなげます。</td></tr><tr><td>2026/05/27 13:22</td><td>中心確認と監視の違いは何か</td><td>中心確認は、現時点の実データと注意点を見て6月再判定に優先して残す候補です。監視は、過熱、反応不足、PER未取得、下落率などの理由で、条件改善まで購入候補にしない銘柄です。</td></tr><tr><td>2026/05/27 13:22</td><td>現時点で最も説明しやすい候補はどれか</td><td>現時点では三井住友FG、味の素、TDK、住友商事を中心確認として整理しています。ただし、各社とも6月の市場条件と個別条件を通してから扱いを決めます。</td></tr><tr><td>2026/05/27 13:22</td><td>データ不足は残っているか</td><td>残っています。三菱UFJ FG、ディスコ、ソフトバンクGなどはPER未取得があり、一部銘柄は20営業日反応が未到達です。未取得値は点数に混ぜず、条件付きまたは監視として扱います。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>6. 6月までの確認事項</h2>
+      <div class="table-wrap "><table><thead><tr><th>作成</th><th>区分</th><th>確認項目</th><th>判定基準</th><th>反映</th></tr></thead><tbody><tr><td>2026/05/27 13:22</td><td>マクロ</td><td>米CPI</td><td>市場予想以下なら良好。市場予想比+0.3pt以上なら悪化。</td><td>高PER、半導体、AI関連の扱いに反映。</td></tr><tr><td>2026/05/27 13:22</td><td>マクロ</td><td>FOMC後の米10年金利</td><td>+10bp以内なら良好。+25bp超なら悪化。</td><td>金利上昇に弱い銘柄を保留または監視へ下げる。</td></tr><tr><td>2026/05/27 13:22</td><td>日本市場</td><td>日銀後の為替と銀行株</td><td>急な円高や銀行株下落がなければ確認継続。円高2%以上や銀行株指数劣後なら悪化。</td><td>銀行、輸出、商社、半導体の扱いに反映。</td></tr><tr><td>2026/05/27 13:22</td><td>市場全体</td><td>日経平均/TOPIXと75日線</td><td>75日線上なら確認継続。明確に下回り5営業日で-5%超なら停止条件。</td><td>個別株選定を一時停止し、現金比率または指数比較へ戻す。</td></tr><tr><td>2026/05/27 13:22</td><td>個別</td><td>決算後20営業日反応</td><td>TOPIX比+3%以上なら良好。-3%以上劣後なら悪化。</td><td>残す、保留、外すの直接条件にする。</td></tr><tr><td>2026/05/27 13:22</td><td>個別</td><td>PER/PBR/ROEと利益成長</td><td>高PER/PBRを利益成長、ROE、決算後反応で説明できるか確認。</td><td>説明できなければ中心候補から下げる。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>7. 重大停止条件</h2>
+      <div class="table-wrap narrow"><table><thead><tr><th>item</th><th>trigger</th><th>action</th></tr></thead><tbody><tr><td>下方修正・減益見通し</td><td>会社予想の下方修正、または次期利益見通しが市場期待を明確に下回る</td><td>重大停止1件。購入候補から原則外す方向で再評価。</td></tr><tr><td>市場全体の崩れ</td><td>日経平均/TOPIXが75日線を明確に下回り、5営業日で-5%超</td><td>個別株選定を一時停止し、指数・現金比率の再確認へ移す。</td></tr><tr><td>金利急騰</td><td>FOMC後またはCPI後に米10年金利が+25bp超上昇</td><td>高PER、半導体、AI関連を一段下げる。</td></tr><tr><td>円高ショック</td><td>日銀後にドル円が短期で2%以上円高方向に動く</td><td>輸出・海外売上比率の高い銘柄は保留へ下げる。</td></tr><tr><td>決算後の指数劣後</td><td>決算後20営業日でTOPIX比-3%以上。出来高増を伴う場合はより重く扱う</td><td>個別確認を悪化にし、必要なら重大停止1件。</td></tr><tr><td>過熱の反動</td><td>1年上昇率100%超かつ決算後反応が50点台以下、または60日最大下落率-25%以下</td><td>中心候補にしない。監視または保留。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>8. 次の作業</h2>
+      <div class="table-wrap narrow"><table><thead><tr><th>時期</th><th>作業</th><th>成果物</th></tr></thead><tbody><tr><td>本日16:00時点</td><td>候補10社、評価ロジック、残確認項目、想定質問を報告できる状態にする。</td><td>本ページ、14:30暫定報告、15:30説明補強パック</td></tr><tr><td>5/28</td><td>PER未取得、20営業日未到達、業種別比較、決算後反応の不足を追加確認する。</td><td>不足データ補完表、候補の上げ下げ履歴</td></tr><tr><td>6月上旬</td><td>CPI前後の市場反応、米金利、VIX、日経平均/TOPIXの75日線を記録する。</td><td>市場ゲート入力表</td></tr><tr><td>6月中旬</td><td>日銀、FOMC後に10社を再判定し、残す・保留・外すを更新する。</td><td>6月再判定結果表</td></tr><tr><td>購入検討前</td><td>証券会社画面、最新決算、適時開示、各社IRで最終確認する。</td><td>購入可否確認リスト</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>9. 共有用文章</h2>
+      <div class="table-wrap narrow"><table><thead><tr><th>用途</th><th>文章</th></tr></thead><tbody><tr><td>LINE共有</td><td>本日は、NISA 1年保有テストに向けて候補10社を実データで整理し、中心確認・条件付き確認・監視に分類しました。株価、業績、PER/PBR/ROE、決算後反応、下落率を確認し、質的テーマは直接加点せず確認条件として扱う形にしています。</td></tr><tr><td>LINE共有</td><td>現時点では購入確定ではなく、6月のCPI・日銀・FOMC後に、米金利、為替、日経平均/TOPIX、各銘柄の決算後反応を入れて再判定します。目標は、指数や投信を保有するだけの場合より1年で+1%上回る根拠を説明できる候補に絞ることです。</td></tr><tr><td>LINE共有</td><td>現在の中心確認は三井住友FG、味の素、TDK、住友商事です。三菱UFJ FGは条件付き確認、その他は監視として、6月までに不足データと市場条件を確認します。</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>10. 関連リンク</h2>
+      <div class="links">
+        <a href="678_final_report_1600_summary.csv">本日成果CSV</a>
+        <a href="679_final_report_1600_candidates.csv">候補10社CSV</a>
+        <a href="680_final_report_1600_next_tasks.csv">次作業CSV</a>
+        <a href="681_final_report_1600_line_text.csv">共有文CSV</a>
+        <a href="final_report_1600_20260527.pdf">PDF版</a>
+        <a href="interim_candidate_result_1430_20260527.html">14:30暫定報告</a>
+        <a href="explanation_pack_1530_20260527.html">15:30説明補強パック</a>
+        <a href="june_event_recheck_sheet_20260527.html">6月再判定シート</a>
+      </div>
+      <div class="print-note">PDF版はHTML版と同じ内容を固定資料として保存したものです。</div>
+    </section>
+  </main>
+</body>
+</html>
