@@ -115,11 +115,11 @@ const candidates = [
     bucket: "条件付き確認",
     score: 54.4,
     data: "9/10",
-    per: "未取得",
+    per: "補助値17.00倍",
     pbr: "1.54倍",
     roe: "11.34%",
     sector: "銀行",
-    next: "PERを補完し、三井住友FGとの比較で割高・割安を確認する。",
+    next: "実績EPSベースのPER補助値は作成済み。予想PER/実績PERの種別をそろえ、三井住友FGとの比較で割高・割安を確認する。",
   },
   {
     rank: 6,
@@ -145,7 +145,7 @@ const candidates = [
     pbr: "2.45倍",
     roe: "34.28%",
     sector: "投資会社・AI関連",
-    next: "PERまたは代替評価、AI関連株の下落耐性、過熱感を確認する。",
+    next: "PERよりもNAV、保有株価値、Arm評価、AI関連株の下落耐性、過熱感を確認する。",
   },
   {
     rank: 8,
@@ -167,11 +167,11 @@ const candidates = [
     bucket: "監視",
     score: 46.2,
     data: "9/10",
-    per: "未取得",
+    per: "補助値61.44倍",
     pbr: "12.74倍",
     roe: "25.15%",
     sector: "半導体製造装置",
-    next: "PERを補完し、高PBRを受注・利益率・決算後反応で説明できるかを確認する。",
+    next: "実績EPSベースのPER補助値は作成済み。予想PER/実績PERの種別をそろえ、高PBRを受注・利益率・決算後反応で説明できるかを確認する。",
   },
   {
     rank: 10,
@@ -210,13 +210,14 @@ const reactionRows = [
   };
 });
 
+const perFollowUp = candidates.filter((row) => row.per === "未取得" || row.per.includes("補助値"));
 const missingPer = candidates.filter((row) => row.per === "未取得");
 
 const summaryRows = [
   {
     項目: "明日最優先",
-    件数: `${missingPer.length}社`,
-    内容: "PER未取得の補完。割高判定と保留/外す条件に直接関係する。",
+    件数: `${perFollowUp.length}社`,
+    内容: "PER未取得または未接続の確認。2社は実績EPSベースの補助値あり、1社は別評価が必要。",
   },
   {
     項目: "20営業日反応",
@@ -238,12 +239,12 @@ const summaryRows = [
 const taskRows = [
   {
     優先: 1,
-    作業: "PER未取得の補完",
-    対象: missingPer.map((row) => `${row.ticker} ${row.name}`).join(" / "),
+    作業: "PER未取得・未接続の補完",
+    対象: perFollowUp.map((row) => `${row.ticker} ${row.name}`).join(" / "),
     取得先: "証券会社画面、J-Quants、会社IRのEPSと株価による確認",
     使い道: "割高判定、業種別比較、保留/外す条件",
     目安: "5/28午前",
-    完了条件: "未取得のまま点数に混ぜず、取得値または代替評価の根拠を記録する。",
+    完了条件: "未取得または未接続のまま点数に混ぜず、取得値、補助値、代替評価の根拠を分けて記録する。",
   },
   {
     優先: 2,
@@ -283,11 +284,11 @@ const taskRows = [
   },
 ];
 
-const missingRows = missingPer.map((row) => ({
+const missingRows = perFollowUp.map((row) => ({
   銘柄: `${row.ticker} ${row.name}`,
-  不足項目: "PER",
-  現在の扱い: "未取得として扱い、購入候補スコアには直接混ぜない。",
-  補完方法: "EPS実績/予想と株価、または証券会社画面のPERを確認する。",
+  不足項目: row.per === "未取得" ? "PER" : "比較PERへの接続",
+  現在の扱い: row.per === "未取得" ? "未取得として扱い、購入候補スコアには直接混ぜない。" : `${row.per}は説明補助値として扱い、購入候補スコアには直接混ぜない。`,
+  補完方法: row.per === "未取得" ? "EPS実績/予想と株価、または証券会社画面のPERを確認する。" : "予想PER/実績PERの種別を確認し、同業比較に接続する。",
   影響: "割高判定と業種別比較の精度に影響する。",
 }));
 
@@ -484,7 +485,7 @@ const html = `<!doctype html>
     <section>
       <h2>2. 作業の流れ</h2>
       <div class="flow">
-        <div class="step"><b>1. 不足値を埋める</b><p>PER未取得3社を先に補完し、未取得のまま点数に混ぜない。</p></div>
+      <div class="step"><b>1. 不足値を埋める</b><p>PER未取得・未接続3社を先に確認し、未接続のまま点数に混ぜない。</p></div>
         <div class="step"><b>2. 反応を計算する</b><p>決算後1日、5日、20営業日の指数超過リターンを同じ式で見る。</p></div>
         <div class="step"><b>3. 業種内で比べる</b><p>PER/PBR/ROEを全業種一律ではなく、同業比較に直す。</p></div>
         <div class="step"><b>4. 6月市場ゲート</b><p>CPI、日銀、FOMC、金利、為替、指数を入力する。</p></div>
@@ -503,7 +504,7 @@ const html = `<!doctype html>
     </section>
 
     <section>
-      <h2>5. PER未取得の補完対象</h2>
+      <h2>5. PER未取得・未接続の補完対象</h2>
       ${table(missingRows, "narrow")}
     </section>
 
@@ -532,6 +533,7 @@ const html = `<!doctype html>
         <a href="oral_briefing_1600_20260527.html">16:00説明用スクリプト</a>
         <a href="june_event_recheck_sheet_20260527.html">6月イベント後 再判定シート</a>
         <a href="june_recheck_input_criteria_20260527.html">6月再判定 入力基準表</a>
+        <a href="per_completion_update_20260527.html">PER補完進捗</a>
         <a href="686_next_execution_summary.csv">概要CSV</a>
         <a href="687_next_execution_task_board.csv">作業CSV</a>
         <a href="688_missing_data_by_ticker.csv">不足CSV</a>
@@ -550,6 +552,6 @@ console.log(JSON.stringify({
   output: "next_execution_board_20260527.html",
   tasks: taskRows.length,
   candidates: candidates.length,
-  missingPer: missingRows.length,
+  perFollowUp: missingRows.length,
   reactionDue: reactionDueRows.length,
 }, null, 2));
