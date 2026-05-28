@@ -210,7 +210,7 @@ html = f"""<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>候補10社 変更理由・年率試算 報告書</title>
+  <title>5月28日 作業報告</title>
   <style>
     @page {{ size: A4 landscape; margin: 10mm; }}
     * {{ box-sizing: border-box; }}
@@ -233,15 +233,14 @@ html = f"""<!doctype html>
 </head>
 <body>
 <section>
-  <h1>候補10社 変更理由・年率試算 報告書</h1>
-  <p class="note">入れ替え理由を、感覚ではなく数値で説明するための確認資料です。今回の10社は、継続期待スコアと保守補正後の年率試算を採用して再順位化しました。</p>
+  <h1>5月28日 作業報告</h1>
   <div class="cards">
     <div class="card"><b>候補数</b><span class="value">10社</span><p>現金10%を別枠</p></div>
     <div class="card"><b>過去実績基準</b><span class="value">{pct(weighted_base)}</span><p>参考上限</p></div>
     <div class="card"><b>実用年率試算</b><span class="value">{pct(weighted_practical)}</span><p>中心確認値</p></div>
     <div class="card"><b>200万円概算</b><span class="value">{yen(profit)}</span><p>標準試算</p></div>
   </div>
-  <h2>1. 入れ替え理由を端的に整理</h2>
+  <h2>1. 継続期待スコア採用による選定銘柄の更新</h2>
   {html_table(["項目", "説明"], compact_reasons)}
   <h2>2. 何が残り、何を下げたか</h2>
   {html_table(["区分", "銘柄", "数値上の理由"], [{"区分": r[0], "銘柄": r[1], "数値上の理由": r[2]} for r in kept_added])}
@@ -299,9 +298,8 @@ def pdf_table(headers, rows, widths):
 
 
 story = [
-    p("候補10社 変更理由・年率試算 報告書", title),
-    p("入れ替え理由を、感覚ではなく数値で説明するための確認資料です。今回の10社は、継続期待スコアと保守補正後の年率試算を採用して再順位化しました。", note),
-    p("1. 入れ替え理由を端的に整理", h),
+    p("5月28日 作業報告", title),
+    p("1. 継続期待スコア採用による選定銘柄の更新", h),
     pdf_table(["項目", "説明"], compact_reasons, [48 * mm, 224 * mm]),
     p("2. 何が残り、何を下げたか", h),
     pdf_table(["区分", "銘柄", "数値上の理由"], [{"区分": r[0], "銘柄": r[1], "数値上の理由": r[2]} for r in kept_added], [28 * mm, 112 * mm, 132 * mm]),
