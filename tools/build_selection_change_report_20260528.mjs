@@ -95,6 +95,84 @@ const currentRows = readCsv('764_morning_recalc_top10.csv').map((row) => ({
   判断理由: row.判断理由
 }));
 
+const longTermRows = [
+  ...readCsv('728_universe100_long_term_stability_score.csv'),
+  ...readCsv('725_long_term_stability_score.csv')
+];
+const longTermByTicker = new Map(longTermRows.map((row) => [row.コード, row]));
+
+function num(value) {
+  const text = String(value ?? '').replaceAll(',', '').trim();
+  if (text === '') return null;
+  const n = Number(text);
+  return Number.isFinite(n) ? n : null;
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function fmt(value, digits = 1) {
+  if (value === null || value === undefined || Number.isNaN(value)) return '未取得';
+  return Number(value).toFixed(digits).replace(/\.0$/, '');
+}
+
+const continuationRows = currentRows.map((row) => {
+  const long = longTermByTicker.get(row.ticker);
+  const longScore = num(long?.長期安定性スコア);
+  const monthlyWin = num(long?.月次勝率);
+  const updateScore = num(row.朝更新スコア);
+  const priceScore = num(row.価格確認点);
+  const maxDrawdown = num(long?.['5年最大下落率']);
+  const overheatPenalty = row.過熱判定.includes('過熱') ? 15 : 0;
+  const drawdownPenalty = maxDrawdown !== null && maxDrawdown <= -45 ? 7 : 0;
+  const raw = (longScore ?? 50) * 0.4 + (updateScore ?? 50) * 0.25 + (priceScore ?? 50) * 0.2 + (monthlyWin ?? 50) * 0.15 - overheatPenalty - drawdownPenalty;
+  const score = clamp(raw, 0, 100);
+  const cagr5 = num(long?.['5年CAGR']);
+  const cagr10 = num(long?.['10年CAGR']);
+  const spDiff = num(long?.['5年S&P差']);
+  const annualRateCheck = cagr5 !== null && cagr10 !== null
+    ? `5年CAGR ${fmt(cagr5)}% / 10年CAGR ${fmt(cagr10)}%`
+    : '長期CAGR未取得';
+  const grade = score >= 75 ? 'A: 継続期待が比較的高い'
+    : score >= 65 ? 'B: 条件付きで継続確認'
+    : score >= 55 ? 'C: 追加確認が必要'
+    : 'D: 過熱または下落耐性を優先確認';
+  return {
+    順位: row.現順位,
+    銘柄: row.銘柄,
+    '5年CAGR': cagr5 === null ? '未取得' : `${fmt(cagr5)}%`,
+    '10年CAGR': cagr10 === null ? '未取得' : `${fmt(cagr10)}%`,
+    '5年S&P差': spDiff === null ? '未取得' : `${fmt(spDiff)}%`,
+    '5年最大下落': maxDrawdown === null ? '未取得' : `${fmt(maxDrawdown)}%`,
+    月次勝率: monthlyWin === null ? '未取得' : `${fmt(monthlyWin)}%`,
+    継続期待スコア: fmt(score),
+    判定: grade,
+    確かめ算: `${annualRateCheck}。最大下落 ${maxDrawdown === null ? '未取得' : `${fmt(maxDrawdown)}%`}、過熱減点 ${overheatPenalty}点、下落耐性減点 ${drawdownPenalty}点。`
+  };
+});
+
+const continuationFormulaRows = [
+  {
+    項目: '継続期待スコア',
+    式: '長期安定性40% + 朝更新スコア25% + 価格確認点20% + 月次勝率15% - 過熱減点 - 下落耐性減点',
+    目的: '直近の強さだけでなく、5年・10年の継続性と下落耐性で確かめる。'
+  },
+  {
+    項目: '過去実績の確かめ算',
+    式: '5年CAGR、10年CAGR、5年S&P差、5年最大下落率、月次勝率を確認',
+    目的: '去年だけ上がった銘柄を過大評価しない。'
+  },
+  {
+    項目: '減点',
+    式: '過熱判定は-15点、5年最大下落率-45%以下は-7点',
+    目的: '急騰銘柄や過去に大きく崩れた銘柄を、実用候補として慎重に扱う。'
+  }
+];
+
+const continuationRowsA = continuationRows.slice(0, 5);
+const continuationRowsB = continuationRows.slice(5);
+
 const yesterdaySet = new Set(yesterdayRows.map((row) => row.ticker));
 const currentSet = new Set(currentRows.map((row) => row.ticker));
 
@@ -190,6 +268,9 @@ const html = `<!doctype html>
     body { margin: 0; font-family: "Noto Sans JP", "Meiryo", "Yu Gothic", Arial, sans-serif; color:#050b14; background:#fff; line-height:1.55; font-size:11px; }
     .page { page-break-after: always; }
     .page:last-child { page-break-after: auto; }
+    .page, section, table, thead, tbody, tr, .table-wrap, .card, .note, .danger { break-inside: avoid; page-break-inside: avoid; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    thead { display: table-header-group; }
     .cover { min-height:180mm; background:#123d63; color:#fff; padding:22mm; }
     h1 { margin:0 0 12px; font-size:30px; letter-spacing:0; }
     h2 { margin:0 0 10px; padding-left:8px; border-left:6px solid #0b5f96; color:#123d63; font-size:18px; }
@@ -251,9 +332,21 @@ const html = `<!doctype html>
   </section>
 
   <section class="page">
-    <h2>7. 本日の作業</h2>
+    <h2>7. 過去データからの実績予測</h2>
+    <p class="note">ここは将来リターンの断定ではなく、過去5年・10年の実績で現在候補を確かめるための章です。去年だけ上がった銘柄をそのまま採用しないため、CAGR、S&P差、最大下落率、月次勝率を組み合わせます。</p>
+    ${table(['項目', '式', '目的'], continuationFormulaRows)}
+    ${table(['順位', '銘柄', '5年CAGR', '10年CAGR', '5年S&P差', '5年最大下落', '月次勝率', '継続期待スコア', '判定', '確かめ算'], continuationRowsA)}
+  </section>
+
+  <section class="page">
+    <h2>8. 過去データからの実績予測 続き</h2>
+    ${table(['順位', '銘柄', '5年CAGR', '10年CAGR', '5年S&P差', '5年最大下落', '月次勝率', '継続期待スコア', '判定', '確かめ算'], continuationRowsB)}
+  </section>
+
+  <section class="page">
+    <h2>9. 本日の作業</h2>
     ${table(['作業', '内容'], todayWorkRows)}
-    <h2>8. 残る確認</h2>
+    <h2>10. 残る確認</h2>
     <div class="two">
       <div class="card"><b>データ補完</b><p>PER/PBR/ROE、売上成長率、利益成長率、決算後1日/5日/20日反応、同業中央値比較を補完する。</p></div>
       <div class="card"><b>6月再判定</b><p>6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後に、市場反応と候補10社の価格反応を入れて再判定する。</p></div>
