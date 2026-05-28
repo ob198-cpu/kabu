@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社候補 判定コントロール表</title>
+  <style>
+    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; --amber:#a85b00; --green:#087f5b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.75; }
+    main { max-width:1320px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:9px; background:#f8fbff; padding:14px; }
+    .value { font-size:30px; font-weight:900; color:var(--blue); }
+    .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    a { color:#075e91; font-weight:800; }
+    .links { display:flex; flex-wrap:wrap; gap:10px; }
+    .links a { border:1px solid var(--blue); color:#fff; background:var(--blue); border-radius:8px; padding:9px 12px; text-decoration:none; }
+    @media (max-width:980px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>10社候補 判定コントロール表</h1>
+    <p>10社候補について、量的データの不足、質的仮説、確認すべき数字、停止条件を一つの表にまとめました。ここから実データを入れて再計算します。</p>
+    <p>作成: 2026/05/28 14:18</p>
+  </header>
+
+  <section>
+    <div class="grid">
+      <div class="card"><b>候補</b><div class="value">10</div><p>事前候補を全件管理</p></div>
+      <div class="card"><b>A段階</b><div class="value">2</div><p>公式照合後に候補化可能</p></div>
+      <div class="card"><b>B段階</b><div class="value">7</div><p>量的補完後に再判定</p></div>
+      <div class="card"><b>C段階</b><div class="value">1</div><p>仮説検算後に比較</p></div>
+    </div>
+    <p class="note">現時点では検証中です。候補の最終化には、量的主要項目の入力と6月イベント後の再判定が必要です。</p>
+  </section>
+
+  <section>
+    <h2>要約</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>目的</td><td>100社前後の母集団から抽出した10社について、量的データと質的仮説を同じ表で管理し、6月の再判定に備える。</td></tr><tr><td>現在の到達点</td><td>10社の候補、量的不足項目、質的テーマ、確認数字、停止条件を接続した。</td></tr><tr><td>まだ不足していること</td><td>PER/PBR/ROE、売上・利益成長率、決算後1日/5日/20日反応、同業中央値の補完が残る。</td></tr><tr><td>判定ルール</td><td>質的情報だけでは候補確定にしない。量的主要項目が入り、停止条件に抵触しない場合だけ再計算する。</td></tr><tr><td>6月の確認</td><td>CPI、日銀、FOMC後に指数、金利、為替、候補銘柄の反応を入れて再判定する。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>10社コントロール表</h2>
+    <div class="table-wrap"><table><thead><tr><th>事前順位</th><th>ticker</th><th>銘柄</th><th>判定段階</th><th>事前スコア</th><th>データ準備度</th><th>量的に未完了</th><th>質的テーマ</th><th>質的仮説</th><th>確認する数字</th><th>株価検証</th><th>停止条件</th><th>次アクション</th><th>現時点の扱い</th></tr></thead><tbody><tr><td>1</td><td>8316.T</td><td>三井住友FG</td><td>A: 公式値照合後に候補化可能</td><td>82.9</td><td>92</td><td>公式値照合 / 同業中央値比較</td><td>金利・金融政策</td><td>国内金利上昇が貸出利ざやと資本効率の改善につながる。</td><td>日銀政策金利、10年国債利回り、決算資料の利ざや、ROE、与信費用</td><td>金利上昇局面の対TOPIX超過リターン、決算後1日/5日/20日反応</td><td>与信費用増加が利ざや改善を上回る、または日銀後に銀行株全体が対TOPIXで大幅劣後</td><td>公式決算値、同業中央値、6月市場イベント後の反応を確認する。</td><td>候補検証中</td></tr><tr><td>2</td><td>8766.T</td><td>東京海上HD</td><td>A: 公式値照合後に候補化可能</td><td>78.3</td><td>92</td><td>公式値照合 / 同業中央値比較</td><td>金利・保険料率</td><td>運用利回りと保険料率改善が1年保有の利益安定性を支える。</td><td>正味収入保険料、コンバインドレシオ、運用利回り、自然災害損害、ROE</td><td>金利上昇局面と決算後反応の対TOPIX超過リターン</td><td>大規模災害損失、海外保険の採算悪化、保険セクター全体の反応悪化</td><td>公式決算値、同業中央値、6月市場イベント後の反応を確認する。</td><td>候補検証中</td></tr><tr><td>3</td><td>8306.T</td><td>三菱UFJ FG</td><td>B: 量的補完後に再判定</td><td>64.6</td><td>26</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td><td>金利・金融政策</td><td>銀行セクター全体の金利上昇メリットを取り込める。</td><td>国内外利ざや、与信費用、PBR、ROE、株主還元、海外金利感応度</td><td>三井住友FG、みずほFGとの対TOPIX反応差</td><td>同業比較で劣後、または海外信用コスト増加</td><td>未入力のPER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較を補完し、質的仮説は「国内外利ざや、与信費用、PBR、ROE、株主還元、海外金利感応度」で確認する。</td><td>候補検証中</td></tr><tr><td>4</td><td>7011.T</td><td>三菱重工</td><td>B: 量的補完後に再判定</td><td>62.6</td><td>26</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td><td>防衛・安全保障 / エネルギー</td><td>防衛、宇宙、原子力、エネルギー投資の長期需要が受注残と利益率に反映される。</td><td>受注残、防衛関連売上、営業利益率、研究開発費、セグメント別利益</td><td>防衛予算・大型受注・決算発表後の対TOPIX超過リターン</td><td>受注は増えても利益率が低下、または過熱指標が強い</td><td>未入力のPER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較を補完し、質的仮説は「受注残、防衛関連売上、営業利益率、研究開発費、セグメント別利益」で確認する。</td><td>候補検証中</td></tr><tr><td>5</td><td>8058.T</td><td>三菱商事</td><td>B: 量的補完後に再判定</td><td>62.4</td><td>26</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td><td>資源・商品価格 / 資本政策</td><td>資源価格と株主還元が下支えになるが、商品市況依存を確認する必要がある。</td><td>資源利益、非資源利益、ROE、配当、自社株買い、原油・金属価格前提</td><td>商品価格変化と商社株の相関、決算後反応</td><td>資源価格下落で利益計画が崩れる、または還元縮小</td><td>未入力のPER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較を補完し、質的仮説は「資源利益、非資源利益、ROE、配当、自社株買い、原油・金属価格前提」で確認する。</td><td>候補検証中</td></tr><tr><td>6</td><td>6501.T</td><td>日立製作所</td><td>B: 量的補完後に再判定</td><td>59.6</td><td>26</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td><td>AIデータセンター投資 / 電力・インフラ</td><td>データセンター、送配電、産業DX需要が部門売上と受注に表れる。</td><td>Lumada売上、エネルギー部門受注、営業利益率、海外比率、受注残</td><td>データセンター関連ニュース、決算、同業の反応比較</td><td>テーマは強いが対象部門の寄与が小さい、または利益率悪化</td><td>未入力のPER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較を補完し、質的仮説は「Lumada売上、エネルギー部門受注、営業利益率、海外比率、受注残」で確認する。</td><td>候補検証中</td></tr><tr><td>7</td><td>8031.T</td><td>三井物産</td><td>B: 量的補完後に再判定</td><td>60.1</td><td>26</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td><td>資源・商品価格 / 非資源成長</td><td>資源、エネルギー、インフラ投資と非資源利益の組み合わせで商社内比較に残る可能性がある。</td><td>資源利益、非資源利益、ROE、還元方針、原油・鉄鉱石・LNG前提</td><td>三菱商事、伊藤忠商事、住友商事との対TOPIX反応差</td><td>商品市況依存が強く、非資源や還元で説明できない</td><td>未入力のPER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較を補完し、質的仮説は「資源利益、非資源利益、ROE、還元方針、原油・鉄鉱石・LNG前提」で確認する。</td><td>候補検証中</td></tr><tr><td>8</td><td>5802.T</td><td>住友電工</td><td>B: 量的補完後に再判定</td><td>58.3</td><td>26</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td><td>電力・光通信 / データセンター</td><td>電線、光通信、車載の複合需要がAIインフラ投資に接続する。</td><td>情報通信売上、環境エネルギー売上、受注、銅価格影響、営業利益率</td><td>電線・光通信同業、銅価格、決算後反応の比較</td><td>銅価格や原価上昇で利益率が悪化、または同業比較で劣後</td><td>未入力のPER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較を補完し、質的仮説は「情報通信売上、環境エネルギー売上、受注、銅価格影響、営業利益率」で確認する。</td><td>候補検証中</td></tr><tr><td>9</td><td>5801.T</td><td>古河電工</td><td>C: 仮説検算後に比較</td><td>58</td><td>80</td><td>過熱・最大下落確認 / 同業中央値比較</td><td>電力・光通信 / データセンター</td><td>電線・光通信需要に接続するが、急騰後の過熱確認が必須。</td><td>情報通信売上、電力インフラ売上、営業利益率、最大下落率、出来高急増</td><td>住友電工、フジクラとの同業比較、過熱調整後の反応</td><td>1年上昇率に対して利益成長が追いつかない、または最大下落リスクが大きい</td><td>テーマ接続は残しつつ、過熱、最大下落、同業比較で過信を除く。</td><td>候補検証中</td></tr><tr><td>10</td><td>8001.T</td><td>伊藤忠商事</td><td>B: 量的補完後に再判定</td><td>58.5</td><td>26</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td><td>非資源・資本政策</td><td>非資源比率と還元方針が商社内の安定候補として機能する可能性がある。</td><td>非資源利益、ROE、株主還元、純利益進捗、セグメント別利益</td><td>三菱商事、三井物産との相対反応、決算後反応</td><td>利益成長が弱い、還元縮小、商社内比較で劣後</td><td>未入力のPER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較を補完し、質的仮説は「非資源利益、ROE、株主還元、純利益進捗、セグメント別利益」で確認する。</td><td>候補検証中</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <div class="links">
+      <a href="759_top10_decision_control_board.csv">判定コントロールCSV</a>
+      <a href="760_top10_decision_control_summary.csv">要約CSV</a>
+      <a href="top10_score_input_calculator_20260528.html">10社スコア入力・再計算</a>
+      <a href="qualitative_reflection_matrix_20260528.html">質的情報 10社反映マトリクス</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
