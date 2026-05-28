@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社 株価時系列 取得結果</title>
+  <style>
+    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; --amber:#a85b00; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.75; }
+    main { max-width:1280px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:9px; background:#f8fbff; padding:14px; }
+    .value { font-size:30px; font-weight:900; color:var(--blue); }
+    .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    a { color:#075e91; font-weight:800; }
+    .links { display:flex; flex-wrap:wrap; gap:10px; }
+    .links a { border:1px solid var(--blue); color:#fff; background:var(--blue); border-radius:8px; padding:9px 12px; text-decoration:none; }
+    @media (max-width:980px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>10社 株価時系列 取得結果</h1>
+    <p>10社候補と主要指数の1年日次終値を取得し、価格面の確認指標を計算しました。これは候補検証の一部であり、財務・業績・決算後反応と合わせて再判定します。</p>
+    <p>作成: 2026/05/28 15:31</p>
+  </header>
+
+  <section>
+    <div class="grid">
+      <div class="card"><b>取得銘柄</b><div class="value">10</div><p>候補10社</p></div>
+      <div class="card"><b>指数</b><div class="value">2</div><p>日経平均、S&P500</p></div>
+      <div class="card"><b>日経平均1年</b><div class="value">71.5%</div><p>Yahoo Finance取得値</p></div>
+      <div class="card"><b>S&P500 1年</b><div class="value">27.7%</div><p>為替未調整</p></div>
+    </div>
+    <p class="note">価格が強い銘柄をそのまま採用するのではなく、過熱、最大下落、財務、業績、イベント後反応を合わせて確認します。</p>
+  </section>
+
+  <section>
+    <h2>要約</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>取得できたデータ</td><td>Yahoo Finance chart APIから10社、日経平均、S&amp;P500の1年日次終値を取得。</td></tr><tr><td>計算した内容</td><td>20日、60日、120日、1年騰落率、1年最大下落、年率変動、日経平均差、S&amp;P500差、過熱判定、価格確認点。</td></tr><tr><td>使い方</td><td>価格確認点は候補の絞り込み補助。財務、業績、決算後反応、質的検証を入れる前の最終判断には使わない。</td></tr><tr><td>過熱判定</td><td>1年騰落率が+150%超、または年率変動が55%超の場合は、価格点を上限55点に抑え、過熱確認を優先する。</td></tr><tr><td>注意</td><td>S&amp;P500差は為替未調整。NISA候補の最終比較では円換算、税制、売買可能性、6月イベント後の再判定が必要。</td></tr><tr><td>TOPIXの扱い</td><td>Yahoo FinanceのTOPIX系データは分割・単位調整で異常値が出たため、このページでは採用しない。TOPIX比較は別取得元で再確認する。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>10社価格確認</h2>
+    <div class="table-wrap"><table><thead><tr><th>symbol</th><th>名称</th><th>開始日</th><th>最終日</th><th>データ件数</th><th>開始値</th><th>最新値</th><th>20日騰落率%</th><th>60日騰落率%</th><th>120日騰落率%</th><th>1年騰落率%</th><th>1年最大下落%</th><th>年率変動%</th><th>取得元</th><th>日経平均との差%</th><th>S&amp;P500差%</th><th>過熱判定</th><th>価格確認点</th><th>価格面の扱い</th></tr></thead><tbody><tr><td>8031.T</td><td>三井物産</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>2975</td><td>5323</td><td>-7.97</td><td>-6.74</td><td>28.79</td><td>78.92</td><td>-20.06</td><td>32.3</td><td>https://query1.finance.yahoo.com/v8/finance/chart/8031.T?range=1y&amp;interval=1d</td><td>7.41</td><td>51.21</td><td>通常範囲</td><td>75.6</td><td>価格面は強い</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>2913</td><td>5034</td><td>1.7</td><td>-2.46</td><td>36.64</td><td>72.81</td><td>-17.63</td><td>31.92</td><td>https://query1.finance.yahoo.com/v8/finance/chart/8058.T?range=1y&amp;interval=1d</td><td>1.3</td><td>45.1</td><td>通常範囲</td><td>74.6</td><td>価格面は強い</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>3626</td><td>5876</td><td>9.89</td><td>-0.24</td><td>27.08</td><td>62.05</td><td>-19.31</td><td>32.17</td><td>https://query1.finance.yahoo.com/v8/finance/chart/8316.T?range=1y&amp;interval=1d</td><td>-9.46</td><td>34.34</td><td>通常範囲</td><td>71.2</td><td>価格面は強い</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>1963</td><td>2983</td><td>8.26</td><td>1.98</td><td>21.9</td><td>51.96</td><td>-16.87</td><td>30.87</td><td>https://query1.finance.yahoo.com/v8/finance/chart/8306.T?range=1y&amp;interval=1d</td><td>-19.55</td><td>24.25</td><td>通常範囲</td><td>69.2</td><td>価格面は中立</td></tr><tr><td>8001.T</td><td>伊藤忠商事</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>1504</td><td>1928</td><td>-0.62</td><td>-13.27</td><td>3.79</td><td>28.19</td><td>-15.64</td><td>26</td><td>https://query1.finance.yahoo.com/v8/finance/chart/8001.T?range=1y&amp;interval=1d</td><td>-43.32</td><td>0.48</td><td>通常範囲</td><td>64</td><td>価格面は中立</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>3969</td><td>5173</td><td>-1.07</td><td>0.49</td><td>6.59</td><td>30.34</td><td>-23.27</td><td>40.47</td><td>https://query1.finance.yahoo.com/v8/finance/chart/6501.T?range=1y&amp;interval=1d</td><td>-41.17</td><td>2.63</td><td>通常範囲</td><td>59.8</td><td>価格面は中立</td></tr><tr><td>8766.T</td><td>東京海上HD</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>5969</td><td>7193</td><td>0.24</td><td>10.99</td><td>29.51</td><td>20.51</td><td>-19.45</td><td>34.43</td><td>https://query1.finance.yahoo.com/v8/finance/chart/8766.T?range=1y&amp;interval=1d</td><td>-51</td><td>-7.2</td><td>通常範囲</td><td>59.2</td><td>価格面は中立</td></tr><tr><td>5802.T</td><td>住友電工</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>2889.5</td><td>11985</td><td>19.67</td><td>17.04</td><td>98.07</td><td>314.78</td><td>-22.87</td><td>59.25</td><td>https://query1.finance.yahoo.com/v8/finance/chart/5802.T?range=1y&amp;interval=1d</td><td>243.27</td><td>287.07</td><td>過熱・データ確認</td><td>55</td><td>過熱確認を優先</td></tr><tr><td>5801.T</td><td>古河電工</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>6673</td><td>52050</td><td>21.19</td><td>85.86</td><td>464.84</td><td>680.01</td><td>-19.48</td><td>77.32</td><td>https://query1.finance.yahoo.com/v8/finance/chart/5801.T?range=1y&amp;interval=1d</td><td>608.5</td><td>652.3</td><td>過熱・データ確認</td><td>55</td><td>過熱確認を優先</td></tr><tr><td>7011.T</td><td>三菱重工</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>3266</td><td>3806</td><td>-19.67</td><td>-22.34</td><td>-3.18</td><td>16.53</td><td>-26.74</td><td>42.14</td><td>https://query1.finance.yahoo.com/v8/finance/chart/7011.T?range=1y&amp;interval=1d</td><td>-54.98</td><td>-11.18</td><td>通常範囲</td><td>54.8</td><td>価格面は要注意</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>指数</h2>
+    <div class="table-wrap"><table><thead><tr><th>symbol</th><th>名称</th><th>開始日</th><th>最終日</th><th>データ件数</th><th>開始値</th><th>最新値</th><th>20日騰落率%</th><th>60日騰落率%</th><th>120日騰落率%</th><th>1年騰落率%</th><th>1年最大下落%</th><th>年率変動%</th><th>取得元</th></tr></thead><tbody><tr><td>^N225</td><td>日経平均</td><td>2025-05-28</td><td>2026-05-28</td><td>244</td><td>37722.4</td><td>64697.4</td><td>8.34</td><td>10.12</td><td>30.55</td><td>71.51</td><td>-13.23</td><td>24.38</td><td>https://query1.finance.yahoo.com/v8/finance/chart/%5EN225?range=1y&amp;interval=1d</td></tr><tr><td>^GSPC</td><td>S&amp;P500</td><td>2025-05-28</td><td>2026-05-27</td><td>251</td><td>5888.55</td><td>7520.36</td><td>5.34</td><td>9.28</td><td>10.12</td><td>27.71</td><td>-9.1</td><td>11.88</td><td>https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=1y&amp;interval=1d</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <div class="links">
+      <a href="761_top10_yahoo_price_metrics.csv">10社価格指標CSV</a>
+      <a href="762_benchmark_yahoo_price_metrics.csv">指数価格指標CSV</a>
+      <a href="763_top10_price_metrics_summary.csv">要約CSV</a>
+      <a href="top10_decision_control_board_20260528.html">10社判定コントロール表</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
