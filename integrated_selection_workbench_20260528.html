@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>100社統合選定ワークベンチ</title>
+  <style>
+    :root { --ink:#050b14; --muted:#45566a; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:#123d63; color:#fff; border-radius:10px; padding:30px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; line-height:1.25; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); font-size:22px; }
+    p { margin:0 0 10px; }
+    .grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .card b { display:block; color:var(--navy); }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; background:#fff; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .main th:nth-child(1), .main td:nth-child(1) { width:5%; text-align:center; }
+    .main th:nth-child(2), .main td:nth-child(2) { width:8%; }
+    .main th:nth-child(3), .main td:nth-child(3) { width:14%; }
+    .main th:nth-child(4), .main td:nth-child(4) { width:13%; }
+    .main th:nth-child(5), .main td:nth-child(5) { width:9%; }
+    .main th:nth-child(7), .main td:nth-child(7) { width:12%; }
+    .badge { display:inline-block; border-radius:8px; padding:4px 8px; color:#fff; font-weight:900; }
+    .ok { background:var(--green); }
+    .watch { background:var(--amber); }
+    .mid { background:var(--blue); }
+    .stop { background:var(--red); }
+    .notice { border-left:6px solid var(--amber); background:#fff8ec; padding:12px; border-radius:8px; }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>100社統合選定ワークベンチ</h1>
+    <p>100社前後の母集団を、長期安定性、既存の量的評価、質的情報の構造化接続で分けて確認します。質的情報は直接加点せず、深掘り優先度と確認条件として扱います。</p>
+    <p>作成: 2026/05/28 11:00 / 本表は購入確定表ではなく、次に検証すべき候補を整理するための作業表です。</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>対象母集団</b><div class="value">100</div><p>100社前後の候補群を対象</p></div><div class="card"><b>長期安定性計算済み</b><div class="value">100</div><p>5年・10年の株価系列で確認</p></div><div class="card"><b>量的詳細あり</b><div class="value">10</div><p>PER/PBR/ROE・成長率等の既存入力がある銘柄</p></div><div class="card"><b>質的接続あり</b><div class="value">23</div><p>テーマIDと企業接続が登録済みの銘柄</p></div><div class="card"><b>優先深掘り</b><div class="value">2</div><p>量的・長期・質的がそろう銘柄</p></div><div class="card"><b>長期浮上・量的補完</b><div class="value">16</div><p>長期で浮上し、財務・反応データを追加すべき銘柄</p></div>
+  </div>
+
+  <section>
+    <h2>判定ルール</h2>
+    <p class="notice">長期安定性だけ、質的テーマだけ、短期量的スコアだけでは候補を確定しません。長期で浮上した銘柄は、PER/PBR/ROE、成長率、決算後反応、同業比較を補完してから候補化します。質的接続が強くても、実績データと株価反応で確認できるまで購入候補スコアには直接入れません。</p>
+  </section>
+
+  <section>
+    <h2>統合確認 上位20件</h2>
+    <div class="table-wrap">
+      <table class="main">
+        <thead><tr><th>順位</th><th>コード</th><th>銘柄</th><th>長期安定性</th><th>量的点</th><th>質的接続</th><th>現在の扱い</th><th>判断理由・補完項目</th></tr></thead>
+        <tbody><tr>
+    <td>1</td>
+    <td><b>8316.T</b></td>
+    <td><b>三井住友FG</b><br><small>銀行</small></td>
+    <td>83.6点<br><small>5年 39.9% / S&P差 27.5%</small></td>
+    <td>69点</td>
+    <td>金利・銀行/保険(82)</td>
+    <td><span class="badge ok">優先深掘り</span></td>
+    <td>長期安定性、既存の量的評価、質的接続が同時に確認できる。<br><small>補完: 追加確認へ</small></td>
+  </tr><tr>
+    <td>2</td>
+    <td><b>8766.T</b></td>
+    <td><b>東京海上HD</b><br><small>保険</small></td>
+    <td>76.2点<br><small>5年 37.8% / S&P差 25.4%</small></td>
+    <td>74点</td>
+    <td>金利・銀行/保険(78)</td>
+    <td><span class="badge ok">優先深掘り</span></td>
+    <td>長期安定性、既存の量的評価、質的接続が同時に確認できる。<br><small>補完: 追加確認へ</small></td>
+  </tr><tr>
+    <td>3</td>
+    <td><b>8411.T</b></td>
+    <td><b>みずほFG</b><br><small>銀行</small></td>
+    <td>79.5点<br><small>5年 38.3% / S&P差 26%</small></td>
+    <td>66点</td>
+    <td>未接続</td>
+    <td><span class="badge watch">量的優先確認</span></td>
+    <td>長期安定性と既存の量的評価は強い。質的接続の根拠を追加確認する。<br><small>補完: 質的接続</small></td>
+  </tr><tr>
+    <td>4</td>
+    <td><b>8306.T</b></td>
+    <td><b>三菱UFJ FG</b><br><small>銀行</small></td>
+    <td>81.6点<br><small>5年 41.3% / S&P差 29%</small></td>
+    <td>未補完</td>
+    <td>金利・銀行/保険(82)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>5</td>
+    <td><b>8053.T</b></td>
+    <td><b>住友商事</b><br><small>商社</small></td>
+    <td>81.5点<br><small>5年 41.2% / S&P差 28.9%</small></td>
+    <td>未補完</td>
+    <td>未接続</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応 / 質的接続</small></td>
+  </tr><tr>
+    <td>6</td>
+    <td><b>8002.T</b></td>
+    <td><b>丸紅</b><br><small>商社</small></td>
+    <td>79.1点<br><small>5年 45.2% / S&P差 32.8%</small></td>
+    <td>未補完</td>
+    <td>未接続</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応 / 質的接続</small></td>
+  </tr><tr>
+    <td>7</td>
+    <td><b>8725.T</b></td>
+    <td><b>MS&amp;AD</b><br><small>保険</small></td>
+    <td>78.5点<br><small>5年 36.3% / S&P差 23.9%</small></td>
+    <td>未補完</td>
+    <td>未接続</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応 / 質的接続</small></td>
+  </tr><tr>
+    <td>8</td>
+    <td><b>8058.T</b></td>
+    <td><b>三菱商事</b><br><small>商社</small></td>
+    <td>78.2点<br><small>5年 42.5% / S&P差 30.2%</small></td>
+    <td>未補完</td>
+    <td>円安・資源・商社(82)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>9</td>
+    <td><b>7011.T</b></td>
+    <td><b>三菱重工</b><br><small>重工・防衛</small></td>
+    <td>78.1点<br><small>5年 65.9% / S&P差 53.5%</small></td>
+    <td>未補完</td>
+    <td>防衛・政策(84)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>10</td>
+    <td><b>1605.T</b></td>
+    <td><b>INPEX</b><br><small>エネルギー</small></td>
+    <td>75.8点<br><small>5年 43.3% / S&P差 30.9%</small></td>
+    <td>未補完</td>
+    <td>未接続</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応 / 質的接続</small></td>
+  </tr><tr>
+    <td>11</td>
+    <td><b>8031.T</b></td>
+    <td><b>三井物産</b><br><small>商社</small></td>
+    <td>75.6点<br><small>5年 38.5% / S&P差 26.2%</small></td>
+    <td>未補完</td>
+    <td>円安・資源・商社(77)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>12</td>
+    <td><b>1812.T</b></td>
+    <td><b>鹿島</b><br><small>建設</small></td>
+    <td>75.1点<br><small>5年 35.4% / S&P差 23%</small></td>
+    <td>未補完</td>
+    <td>未接続</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応 / 質的接続</small></td>
+  </tr><tr>
+    <td>13</td>
+    <td><b>6501.T</b></td>
+    <td><b>日立製作所</b><br><small>総合電機・IT</small></td>
+    <td>73.8点<br><small>5年 36.5% / S&P差 24.1%</small></td>
+    <td>未補完</td>
+    <td>AI・データセンター(82) / 防衛・政策(72)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>14</td>
+    <td><b>8001.T</b></td>
+    <td><b>伊藤忠商事</b><br><small>商社</small></td>
+    <td>72.7点<br><small>5年 27.2% / S&P差 14.8%</small></td>
+    <td>未補完</td>
+    <td>円安・資源・商社(79)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>15</td>
+    <td><b>1802.T</b></td>
+    <td><b>大林組</b><br><small>建設</small></td>
+    <td>72.4点<br><small>5年 34.3% / S&P差 21.9%</small></td>
+    <td>未補完</td>
+    <td>防災・インフラ更新(70)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>16</td>
+    <td><b>6701.T</b></td>
+    <td><b>NEC</b><br><small>IT・防衛周辺</small></td>
+    <td>71.6点<br><small>5年 34% / S&P差 21.6%</small></td>
+    <td>未補完</td>
+    <td>未接続</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応 / 質的接続</small></td>
+  </tr><tr>
+    <td>17</td>
+    <td><b>5802.T</b></td>
+    <td><b>住友電工</b><br><small>電線・通信</small></td>
+    <td>71.4点<br><small>5年 52.3% / S&P差 40%</small></td>
+    <td>未補完</td>
+    <td>AI・データセンター(84)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>18</td>
+    <td><b>2802.T</b></td>
+    <td><b>味の素</b><br><small>食品</small></td>
+    <td>71.2点<br><small>5年 34.3% / S&P差 22%</small></td>
+    <td>未補完</td>
+    <td>価格転嫁・消費(76)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>19</td>
+    <td><b>6503.T</b></td>
+    <td><b>三菱電機</b><br><small>総合電機・FA</small></td>
+    <td>70.3点<br><small>5年 33.3% / S&P差 20.9%</small></td>
+    <td>未補完</td>
+    <td>AI・データセンター(80)</td>
+    <td><span class="badge watch">長期浮上・量的補完</span></td>
+    <td>100社の長期計算で浮上。PER/PBR/ROE、成長率、決算後反応を補完して評価する。<br><small>補完: PER/PBR/ROE・成長率・決算後反応</small></td>
+  </tr><tr>
+    <td>20</td>
+    <td><b>5801.T</b></td>
+    <td><b>古河電工</b><br><small>電線・通信</small></td>
+    <td>64.7点<br><small>5年 82.7% / S&P差 70.4%</small></td>
+    <td>68点</td>
+    <td>AI・データセンター(86)</td>
+    <td><span class="badge watch">テーマ接続確認</span></td>
+    <td>長期安定性は条件付き。質的接続が強いため、受注・売上・株価反応で検証する。<br><small>補完: 追加確認へ</small></td>
+  </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>質的情報の構造</h2>
+    <p>テーマ名は単なるカテゴリではなく、「出来事から資金・需要がどこへ流れるか」を検証するための仮説IDです。各仮説は、確認すべき数値やイベント後リターンで検証します。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>仮説ID</th><th>名称</th><th>考え方</th><th>確認する数値</th></tr></thead>
+        <tbody><tr>
+  <td>AI_DATA_CENTER</td>
+  <td><b>AI・データセンター</b></td>
+  <td>AI需要の増加が、半導体、電力、冷却、通信、電線、制御機器の実需へ波及するかを確認する。</td>
+  <td>受注、設備投資、売上成長、利益率、SOXや電力・資本財指標との連動</td>
+</tr><tr>
+  <td>RATE_BANK</td>
+  <td><b>金利・銀行/保険</b></td>
+  <td>金利上昇が利ざやや運用収益を押し上げる一方、信用コスト悪化がないかを分けて確認する。</td>
+  <td>日銀・FRB、長短金利、銀行株指数、信用コスト、自己資本、還元</td>
+</tr><tr>
+  <td>YEN_RESOURCE</td>
+  <td><b>円安・資源・商社</b></td>
+  <td>円安、資源価格、海外利益の円換算、還元姿勢が業績と株価に残るかを確認する。</td>
+  <td>為替、原油/資源価格、セグメント利益、自社株買い、PER/PBR</td>
+</tr><tr>
+  <td>NAPHTHA_CHEM</td>
+  <td><b>ナフサ・化学</b></td>
+  <td>原材料高が売上増ではなく利益率改善につながる企業だけを残す。</td>
+  <td>ナフサ/原油、製品市況、価格転嫁率、営業利益率</td>
+</tr><tr>
+  <td>PRICE_PASS</td>
+  <td><b>価格転嫁・消費</b></td>
+  <td>値上げ、数量、ブランド力、海外比率が利益率に反映されているかを確認する。</td>
+  <td>売上成長、数量、営業利益率、CPI、PER説明力</td>
+</tr><tr>
+  <td>DEFENSE_POLICY</td>
+  <td><b>防衛・政策</b></td>
+  <td>政策予算や受注残が単なる材料ではなく、売上・利益へ変換されるかを確認する。</td>
+  <td>防衛予算、受注残、セグメント利益、採算、納期</td>
+</tr><tr>
+  <td>DISASTER_INFRA</td>
+  <td><b>防災・インフラ更新</b></td>
+  <td>災害や老朽化対策が、建設、通信、電力、重工の受注へつながるかを確認する。</td>
+  <td>公共投資、受注、補正予算、資本財指標</td>
+</tr><tr>
+  <td>HEALTHCARE_POLICY</td>
+  <td><b>医薬・ヘルスケア政策</b></td>
+  <td>新薬、薬価、承認、海外販売が利益成長として持続するかを確認する。</td>
+  <td>承認、薬価、パイプライン、地域別売上、PER</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <p><a href="736_integrated_selection_workbench.csv">全100社 統合ワークベンチCSV</a> / <a href="737_integrated_selection_top20.csv">上位20件CSV</a> / <a href="738_integrated_selection_summary.csv">要約CSV</a></p>
+  </section>
+</main>
+</body>
+</html>
