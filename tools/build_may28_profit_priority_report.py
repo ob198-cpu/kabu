@@ -36,8 +36,6 @@ NAMES = {
     "6501.T": ("日立製作所", "総合電機・IT"),
 }
 
-# S&P500+5%の年率15%を超えるかを確認する利益目標ゲート版。
-# 直近価格の弱い銘柄は大きく扱わず、長期実績と保守補正後年率で再配分する。
 WEIGHTS = {
     "5803.T": 45,
     "8002.T": 14,
@@ -96,20 +94,15 @@ def metric(ticker):
     sp_diff = num(row[8])
     vol5 = num(row[10])
     max_dd = num(row[11])
-    monthly = num(row[12])
-    base = cagr5 * 0.6 + cagr10 * 0.4
-    multiplier = 0.35
-    corrections = ["過去実績65%割引"]
+    checks = []
     if max_dd is not None and max_dd <= -45:
-        multiplier *= 0.75
-        corrections.append("大幅下落歴補正")
+        checks.append("大幅下落歴あり")
     if vol5 is not None and vol5 >= 40:
-        multiplier *= 0.80
-        corrections.append("高ボラ補正")
+        checks.append("高ボラ")
     if cagr5 is not None and cagr5 >= 70:
-        multiplier *= 0.85
-        corrections.append("急騰補正")
-    practical = min(base * multiplier, 18)
+        checks.append("急騰履歴あり")
+    if not checks:
+        checks.append("通常確認")
     return {
         "score": score,
         "cagr5": cagr5,
@@ -117,103 +110,58 @@ def metric(ticker):
         "sp_diff": sp_diff,
         "vol5": vol5,
         "max_dd": max_dd,
-        "monthly": monthly,
-        "base": base,
-        "practical": practical,
-        "corrections": " / ".join(corrections),
+        "checks": " / ".join(checks),
     }
 
 
-portfolio_rate = sum(metric(ticker)["practical"] * weight / 100 for ticker, weight in WEIGHTS.items())
-profit_1y = CAPITAL * portfolio_rate / 100
-sp_profit_1y = CAPITAL * SP_RATE / 100
+portfolio_5y_rate = sum(metric(ticker)["cagr5"] * weight / 100 for ticker, weight in WEIGHTS.items())
+portfolio_10y_rate = sum(metric(ticker)["cagr10"] * weight / 100 for ticker, weight in WEIGHTS.items())
 target_profit_1y = CAPITAL * TARGET_RATE / 100
 
 work_rows = [
     {
-        "項目": "本日の作業",
-        "内容": "候補10社の選定に、直近価格、下落リスク、S&P500比較、保守補正後年率の指標を追加した。",
+        "項目": "本日の重要修正",
+        "内容": "未検証の固定係数を使った年率試算を撤回した。検証前の係数で利回りを確定表示する扱いはしない。",
     },
     {
-        "項目": "追加した指標",
-        "内容": "過去実績をそのまま使わず、65%割引、大幅下落歴補正、高ボラ補正、急騰補正、S&P500+5%目標との比較を入れた。",
+        "項目": "使う数値",
+        "内容": "現時点で根拠として使えるのは、過去5年CAGR、過去10年CAGR、S&P500との差、最大下落率、ボラティリティなど実データで確認できる指標。",
     },
     {
-        "項目": "選定への影響",
-        "内容": "新指標を入れた結果、長期実績だけで上位に見えていた銘柄をそのまま採用せず、候補10社と比率を再計算した。",
+        "項目": "使わない数値",
+        "内容": "任意の割引率や固定係数で作った将来利回りは、正式な根拠として使わない。正式化するには過去ローリング検証が必要。",
     },
     {
-        "項目": "確認した結果",
-        "内容": f"修正後の年率試算は{pct(portfolio_rate)}。S&P500+5%の年率15%ラインは上回るが、高成長銘柄への集中リスクも残る。",
+        "項目": "本日の結果",
+        "内容": f"修正後10社は、過去5年ペースで{pct(portfolio_5y_rate)}、過去10年ペースで{pct(portfolio_10y_rate)}。これは予測ではなく、過去実績の確認値として扱う。",
     },
 ]
 
 indicator_rows = [
     {
-        "追加指標": "保守補正後年率",
-        "追加した理由": "過去の上昇率をそのまま将来期待に使うと、急騰銘柄を過大評価しやすいため。",
-        "結果": f"過去実績を割り引いても、修正後10社の年率試算は{pct(portfolio_rate)}となり、S&P500+5%の15%ラインを上回った。",
+        "指標": "過去5年CAGR",
+        "足した理由": "直近テーマや時流がどの程度株価に反映されていたかを確認するため。",
+        "結果": f"修正後10社の加重平均は{pct(portfolio_5y_rate)}。S&P+5%の15%ラインは過去実績では上回っている。",
     },
     {
-        "追加指標": "大幅下落歴補正",
-        "追加した理由": "NISAの1年保有では、過去に大きく下落した銘柄ほど途中損失が大きくなりやすいため。",
-        "結果": "最大下落率が大きい銘柄は、実用年率に補正を入れた。高成長でも無条件に大きく採用しない形にした。",
+        "指標": "過去10年CAGR",
+        "足した理由": "一時的なブームだけでなく、長めの期間で伸びているかを確認するため。",
+        "結果": f"修正後10社の加重平均は{pct(portfolio_10y_rate)}。過去10年でも15%ラインを上回っている。",
     },
     {
-        "追加指標": "高ボラ・急騰補正",
-        "追加した理由": "直近または過去に急騰した銘柄は、同じ伸びが続くとは限らず、反落リスクを抱えるため。",
-        "結果": "高成長銘柄は残しつつ、補正欄にリスクを明記し、配分の集中リスクを確認事項として残した。",
+        "指標": "最大下落率",
+        "足した理由": "NISAの1年保有では、途中の大きな下落に耐えられるかが重要なため。",
+        "結果": "大幅下落歴のある銘柄は、補正欄に明示し、同じ上昇率でもリスク確認対象として扱う。",
     },
     {
-        "追加指標": "S&P500+5%比較",
-        "追加した理由": "S&P500や一般的な投信を上回れないなら、個別株を選ぶ意味が薄いため。",
-        "結果": f"200万円・1年では、S&P500+5%ラインの{yen(target_profit_1y)}に対し、修正後10社は約{yen(profit_1y)}となった。",
+        "指標": "S&P500との差",
+        "足した理由": "S&P500を上回れないなら個別株を選ぶ意味が薄いため。",
+        "結果": "各銘柄の過去S&P差を確認し、ポートフォリオ全体でもS&P+5%ラインと比較した。",
     },
     {
-        "追加指標": "直近価格確認",
-        "追加した理由": "長期実績だけでは、今年弱くなっている銘柄を見落とす可能性があるため。",
-        "結果": "長期実績で強い銘柄でも、直近価格が弱い場合は大きく扱わない方針にした。",
-    },
-]
-
-summary_rows = [
-    {
-        "項目": "変更の要点",
-        "説明": "新しいリスク補正指標を追加したことで、単純な長期上昇率順ではなく、保守補正後の実用年率で選定し直した。",
-    },
-    {
-        "項目": "新しく加えた指標",
-        "説明": "大幅下落歴、高ボラティリティ、急騰後の過熱、S&P500+5%目標との差を確認する指標を追加した。",
-    },
-    {
-        "項目": "再計算後の年率試算",
-        "説明": f"修正後10社を新比率で持った場合、保守補正後の年率試算は{pct(portfolio_rate)}。200万円では1年利益が約{yen(profit_1y)}。",
-    },
-    {
-        "項目": "S&P+5%との比較",
-        "説明": f"S&P500+5%の年率15%ラインは1年利益{yen(target_profit_1y)}。修正後10社は約{yen(profit_1y - target_profit_1y)}上回る試算。",
-    },
-    {
-        "項目": "注意点",
-        "説明": "S&P+5%を超える試算にするには高成長銘柄の比率が高くなる。目標は維持できるが、銘柄集中リスクも確認事項として残る。",
-    },
-]
-
-change_rows = [
-    {
-        "区分": "再計算",
-        "銘柄": "候補10社の配分",
-        "理由": "S&P500+5%の年率15%を超えるかを、保守補正後の実用年率で確認した。",
-    },
-    {
-        "区分": "反映",
-        "銘柄": "直近価格の弱さ",
-        "理由": "長期実績が強くても、直近価格が弱い銘柄は大きく扱わないように配分へ反映した。",
-    },
-    {
-        "区分": "確認",
-        "銘柄": "1年後〜10年後の比較表",
-        "理由": "200万円を前提に、修正後10社、S&P500年率10%、S&P500+5%年率15%を複利で比較した。",
+        "指標": "係数の扱い",
+        "足した理由": "未検証係数を使うと、検証されていない利回りを作れてしまうため。",
+        "結果": "固定割引率による将来年率は使わない。次工程で過去ローリング検証により係数を作る。",
     },
 ]
 
@@ -221,35 +169,31 @@ selection_rows = []
 for rank, (ticker, weight) in enumerate(WEIGHTS.items(), start=1):
     company, industry = NAMES[ticker]
     m = metric(ticker)
-    note = m["corrections"]
-    if ticker == "5803.T":
-        note = "集中リスク確認 / " + note
     selection_rows.append({
         "順位": str(rank),
         "銘柄": f"{ticker} {company}",
         "業種": industry,
         "比率": f"{weight}%",
         "継続期待": pct(m["score"]),
-        "実用年率": pct(m["practical"]),
         "5年CAGR": pct(m["cagr5"]),
         "10年CAGR": pct(m["cagr10"]),
         "S&P差": pct(m["sp_diff"]),
         "最大下落": pct(m["max_dd"]),
-        "補正": note,
+        "確認事項": m["checks"],
     })
 
 projection_rows = []
 for year in range(1, 11):
-    portfolio_value = CAPITAL * ((1 + portfolio_rate / 100) ** year)
+    past10_value = CAPITAL * ((1 + portfolio_10y_rate / 100) ** year)
     sp_value = CAPITAL * ((1 + SP_RATE / 100) ** year)
     target_value = CAPITAL * ((1 + TARGET_RATE / 100) ** year)
     projection_rows.append({
         "年数": f"{year}年後",
-        "修正後10社": yen(portfolio_value),
+        "過去10年ペース": yen(past10_value),
         "S&P500 10%": yen(sp_value),
-        "S&Pとの差": yen(portfolio_value - sp_value),
+        "S&Pとの差": yen(past10_value - sp_value),
         "S&P+5% 15%": yen(target_value),
-        "+5%目標との差": yen(portfolio_value - target_value),
+        "+5%ラインとの差": yen(past10_value - target_value),
     })
 
 
@@ -288,23 +232,21 @@ html = f"""<!doctype html>
 <section>
   <h1>5月28日 作業報告</h1>
   <div class="cards">
-    <div class="card"><b>対象</b><span class="value">10社</span><p>候補配分の再計算</p></div>
-    <div class="card"><b>修正後年率</b><span class="value">{pct(portfolio_rate)}</span><p>保守補正後</p></div>
-    <div class="card"><b>S&P+5%目標</b><span class="value">15%</span><p>比較ライン</p></div>
-    <div class="card"><b>目標との差</b><span class="value">{yen(profit_1y - target_profit_1y)}</span><p>200万円・1年</p></div>
+    <div class="card"><b>係数扱い</b><span class="value">撤回</span><p>未検証係数は使用しない</p></div>
+    <div class="card"><b>過去5年</b><span class="value">{pct(portfolio_5y_rate)}</span><p>加重平均CAGR</p></div>
+    <div class="card"><b>過去10年</b><span class="value">{pct(portfolio_10y_rate)}</span><p>加重平均CAGR</p></div>
+    <div class="card"><b>S&P+5%</b><span class="value">15%</span><p>比較ライン</p></div>
   </div>
-  <p class="note">本資料は、新しいリスク補正指標を追加した結果、候補10社の選定と配分がどう変わったかを整理した作業報告です。単純な過去上昇率順ではなく、保守補正後の実用年率とS&P500比較で再計算しています。</p>
+  <p class="note">本資料は、未検証の固定係数を使った年率試算を撤回し、確認できる実データだけで候補10社を見直した作業報告です。過去5年・10年の実績は将来予測ではなく、候補比較のための確認値として扱います。</p>
   <h2>1. 本日の作業内容</h2>
   {html_table(["項目", "内容"], work_rows)}
-  <h2>2. 新指標追加による選定変更</h2>
-  {html_table(["追加指標", "追加した理由", "結果"], indicator_rows)}
-  <h2>3. 修正後の配分変更</h2>
-  {html_table(["区分", "銘柄", "理由"], change_rows)}
-  <h2>4. 修正後10社の数値</h2>
-  {html_table(["順位", "銘柄", "業種", "比率", "継続期待", "実用年率", "5年CAGR", "10年CAGR", "S&P差", "最大下落", "補正"], selection_rows)}
-  <h2>5. 1年後〜10年後のS&P500比較試算</h2>
-  <p class="note">前提は、修正後10社を上記比率で持った場合の年率試算{pct(portfolio_rate)}、S&P500を年率10%、目標ラインをS&P500+5%の年率15%とした複利計算です。</p>
-  {html_table(["年数", "修正後10社", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%目標との差"], projection_rows)}
+  <h2>2. 追加指標の理由と結果</h2>
+  {html_table(["指標", "足した理由", "結果"], indicator_rows)}
+  <h2>3. 修正後10社の数値</h2>
+  {html_table(["順位", "銘柄", "業種", "比率", "継続期待", "5年CAGR", "10年CAGR", "S&P差", "最大下落", "確認事項"], selection_rows)}
+  <h2>4. 1年後〜10年後のS&P500比較表</h2>
+  <p class="note">下表は、過去10年CAGRの加重平均が続いた場合の参考比較です。将来予測ではありません。正式な期待利回りは、次工程のローリング検証後に算出します。</p>
+  {html_table(["年数", "過去10年ペース", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%ラインとの差"], projection_rows)}
 </section>
 </body>
 </html>"""
@@ -342,22 +284,18 @@ def pdf_table(headers, rows, widths):
 
 story = [
     p("5月28日 作業報告", title),
-    p("本資料は、新しいリスク補正指標を追加した結果、候補10社の選定と配分がどう変わったかを整理した作業報告です。単純な過去上昇率順ではなく、保守補正後の実用年率とS&P500比較で再計算しています。", note),
+    p("本資料は、未検証の固定係数を使った年率試算を撤回し、確認できる実データだけで候補10社を見直した作業報告です。過去5年・10年の実績は将来予測ではなく、候補比較のための確認値として扱います。", note),
     p("1. 本日の作業内容", h),
     pdf_table(["項目", "内容"], work_rows, [48 * mm, 224 * mm]),
-    p("2. 新指標追加による選定変更", h),
-    pdf_table(["追加指標", "追加した理由", "結果"], indicator_rows, [42 * mm, 116 * mm, 114 * mm]),
-    p("3. 修正後の配分変更", h),
-    pdf_table(["区分", "銘柄", "理由"], change_rows, [25 * mm, 105 * mm, 142 * mm]),
+    p("2. 追加指標の理由と結果", h),
+    pdf_table(["指標", "足した理由", "結果"], indicator_rows, [42 * mm, 116 * mm, 114 * mm]),
     PageBreak(),
-    p("4. 修正後10社の数値", h),
-    pdf_table(["順位", "銘柄", "業種", "比率", "継続期待", "実用年率", "5年CAGR", "10年CAGR", "S&P差", "最大下落", "補正"], selection_rows, [12 * mm, 34 * mm, 24 * mm, 15 * mm, 22 * mm, 22 * mm, 22 * mm, 22 * mm, 19 * mm, 20 * mm, 60 * mm]),
+    p("3. 修正後10社の数値", h),
+    pdf_table(["順位", "銘柄", "業種", "比率", "継続期待", "5年CAGR", "10年CAGR", "S&P差", "最大下落", "確認事項"], selection_rows, [12 * mm, 36 * mm, 27 * mm, 15 * mm, 23 * mm, 24 * mm, 24 * mm, 22 * mm, 22 * mm, 67 * mm]),
     PageBreak(),
-    p("5. 1年後〜10年後のS&P500比較試算", h),
-    p(f"前提は、修正後10社を上記比率で持った場合の年率試算{pct(portfolio_rate)}、S&P500を年率10%、目標ラインをS&P500+5%の年率15%とした複利計算です。", note),
-    pdf_table(["年数", "修正後10社", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%目標との差"], projection_rows, [22 * mm, 45 * mm, 45 * mm, 40 * mm, 45 * mm, 45 * mm]),
-    p("扱い", h),
-    p("修正後もS&P+5%は上回る試算ですが、高成長銘柄への比率が高いため、6月の市場イベント後に再判定します。", note),
+    p("4. 1年後〜10年後のS&P500比較表", h),
+    p("下表は、過去10年CAGRの加重平均が続いた場合の参考比較です。将来予測ではありません。正式な期待利回りは、次工程のローリング検証後に算出します。", note),
+    pdf_table(["年数", "過去10年ペース", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%ラインとの差"], projection_rows, [25 * mm, 45 * mm, 45 * mm, 40 * mm, 45 * mm, 45 * mm]),
 ]
 
 doc = SimpleDocTemplate(str(PDF), pagesize=landscape(A4), rightMargin=10 * mm, leftMargin=10 * mm, topMargin=10 * mm, bottomMargin=10 * mm)
