@@ -6,71 +6,49 @@
   <style>
     @page { size: A4 landscape; margin: 10mm; }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: "Noto Sans JP", "Meiryo", "Yu Gothic", Arial, sans-serif; color:#050b14; background:#fff; line-height:1.58; font-size:11px; }
-    .page { page-break-after: always; }
-    .page:last-child { page-break-after: auto; }
-    .page, section, .card, .note, table, thead, tbody, tr, td, th { break-inside: avoid; page-break-inside: avoid; }
-    thead { display: table-header-group; }
-    h1 { margin:0 0 12px; font-size:30px; letter-spacing:0; }
-    h2 { margin:0 0 10px; padding-left:8px; border-left:6px solid #0b5f96; color:#123d63; font-size:18px; }
-    .cover { min-height:180mm; padding:20mm; background:#123d63; color:#fff; }
-    .cover h2 { color:#fff; border-color:#8fd3ff; }
-    .lead { font-size:15px; max-width:920px; }
-    .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
-    .card { border:1px solid #cbd8e6; background:#f8fbff; border-radius:8px; padding:10px; }
-    .cover .card { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff; }
-    .value { display:block; font-size:24px; font-weight:900; color:#0b5f96; }
-    .cover .value { color:#fff; }
-    .note { border-left:6px solid #a85b00; background:#fff8ec; padding:8px; margin:8px 0 12px; }
-    .caution { border-left:6px solid #b42318; background:#fff4f2; padding:8px; margin:8px 0 12px; }
-    table { width:100%; border-collapse:collapse; table-layout:fixed; margin:6px 0 12px; }
-    th,td { border:1px solid #cbd8e6; padding:5px; vertical-align:top; overflow-wrap:break-word; }
+    body { margin:0; font-family:"Noto Sans JP","Meiryo","Yu Gothic",Arial,sans-serif; color:#050b14; line-height:1.58; font-size:14px; }
+    section { max-width:1180px; margin:0 auto; padding:28px; }
+    h1 { color:#123d63; font-size:30px; margin:0 0 10px; }
+    h2 { color:#123d63; border-left:7px solid #0b5f96; padding-left:10px; margin:24px 0 10px; }
+    .note { border-left:6px solid #a85b00; background:#fff8ec; padding:12px; margin:12px 0; }
+    .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:16px 0; }
+    .card { border:1px solid #cbd8e6; background:#f8fbff; border-radius:8px; padding:12px; }
+    .value { display:block; color:#0b5f96; font-size:26px; font-weight:900; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; margin:10px 0 18px; }
+    th,td { border:1px solid #cbd8e6; padding:8px; vertical-align:top; overflow-wrap:break-word; }
     th { background:#e6f1fb; color:#123d63; text-align:left; }
-    .narrow th:nth-child(1), .narrow td:nth-child(1) { width:16%; }
-    .small { color:#34465b; font-size:10px; }
+    @media print {
+      section, table, tr, td, th, .card, .note { break-inside: avoid; page-break-inside: avoid; }
+      thead { display: table-header-group; }
+    }
   </style>
 </head>
 <body>
-  <section class="page cover">
-    <h1>候補10社 変更理由・年率試算 報告書</h1>
-    <h2>2026年5月28日</h2>
-    <p class="lead">現在の候補10社について、過去5年・10年の実績から「この10社なら年利でどの程度になりそうか」を確認するための試算を追加しました。単純な過去実績ではなく、過熱・最大下落・ボラティリティを差し引いた保守的な確かめ算として整理しています。</p>
-    <div class="cards">
-      <div class="card"><b>候補数</b><span class="value">10社</span><p>現金待機10%を別枠で保持</p></div>
-      <div class="card"><b>過去実績基準</b><span class="value">31.8%</span><p>そのまま採用しない参考値</p></div>
-      <div class="card"><b>実用年率試算</b><span class="value">10.4%</span><p>今回の中心確認値</p></div>
-      <div class="card"><b>200万円概算</b><span class="value">208,788円</span><p>標準シナリオの年利益</p></div>
-    </div>
-    <p class="caution">この試算は購入可否を確定するものではありません。6月のCPI、日銀会合、FOMC後に市場環境を再確認し、個別銘柄の決算・割高感・下落リスクを再判定します。</p>
-  </section>
-
-  <section class="page">
-    <h2>1. 今回の確かめ算の結論</h2>
-    <div class="table-wrap"><table><thead><tr><th>項目</th><th>数値</th><th>見方</th></tr></thead><tbody><tr><td>過去実績をそのまま使った年率</td><td>31.8%</td><td>5年CAGRを60%、10年CAGRを40%で合成。これは楽観的に見えすぎるため、採用値ではなく上限確認として扱う。</td></tr><tr><td>実用年率試算</td><td>10.4%</td><td>過去実績を65%割引し、過熱・最大下落・ボラティリティで追加補正した現在10社の確かめ算。</td></tr><tr><td>200万円の場合の年利益試算</td><td>208,788円</td><td>現金10%を残した比率で計算。税金はNISA前提のためここでは控除しない。</td></tr><tr><td>S&amp;P500長期平均10%に+1%を足した目標</td><td>11% / 220,000円</td><td>現時点の実用試算では目標に11,212円不足する。</td></tr></tbody></table></div>
-    <p class="note">結論として、現在10社の実用年率試算は約10.4%です。S&P500長期平均を10%前後と置き、最低+1%上回る目標を11%前後とすると、現時点ではほぼ目標近辺です。ただし余裕は大きくないため、6月イベント後に金利・為替・指数の状態が悪ければ、個別株比率を下げる判断が必要です。</p>
-    <h2>2. 計算式</h2>
-    <div class="table-wrap"><table><thead><tr><th>項目</th><th>数式</th><th>目的</th></tr></thead><tbody><tr><td>実績基準年率</td><td>5年CAGR × 60% + 10年CAGR × 40%</td><td>直近5年の勢いを重視しつつ、10年の継続性も入れる。</td></tr><tr><td>実用年率試算</td><td>実績基準年率 × 35% × 過熱補正 × 下落補正 × ボラ補正</td><td>過去の上昇をそのまま未来に置かず、かなり保守的に割り引く。</td></tr><tr><td>ポートフォリオ年率</td><td>Σ（各銘柄の実用年率試算 × 投入比率） + 現金0%</td><td>現在の10社を実際の比率で持った場合の全体年率を出す。</td></tr><tr><td>+1%目標との比較</td><td>実用年率試算 - 11%</td><td>S&amp;P500長期平均10%前後に対して、最低+1%上回る説明が成立するかを見る。</td></tr></tbody></table></div>
-  </section>
-
-  <section class="page">
-    <h2>3. 銘柄別の年率試算 前半5社</h2>
-    <div class="table-wrap"><table><thead><tr><th>銘柄</th><th>業種</th><th>比率</th><th>5年CAGR</th><th>10年CAGR</th><th>実績基準年率</th><th>実用年率試算</th><th>5年S&amp;P差</th><th>最大下落</th><th>月次勝率</th><th>補正</th></tr></thead><tbody><tr><td>8316.T 三井住友FG</td><td>銀行</td><td>20%</td><td>39.9%</td><td>22.7%</td><td>33%</td><td>11.6%</td><td>27.5%</td><td>-29.4%</td><td>71.7%</td><td>過去実績を65%割引</td></tr><tr><td>8766.T 東京海上HD</td><td>保険</td><td>14%</td><td>37.8%</td><td>23.4%</td><td>32%</td><td>11.2%</td><td>25.4%</td><td>-38.7%</td><td>61.7%</td><td>過去実績を65%割引</td></tr><tr><td>8058.T 三菱商事</td><td>商社</td><td>11%</td><td>42.5%</td><td>27.5%</td><td>36.5%</td><td>12.8%</td><td>30.2%</td><td>-33.7%</td><td>61.7%</td><td>過去実績を65%割引</td></tr><tr><td>8306.T 三菱UFJ FG</td><td>銀行</td><td>11%</td><td>41.3%</td><td>23%</td><td>34%</td><td>11.9%</td><td>29%</td><td>-31.8%</td><td>66.7%</td><td>過去実績を65%割引</td></tr><tr><td>8031.T 三井物産</td><td>商社</td><td>9%</td><td>38.5%</td><td>27.8%</td><td>34.2%</td><td>12%</td><td>26.2%</td><td>-41.7%</td><td>61.7%</td><td>過去実績を65%割引</td></tr></tbody></table></div>
-  </section>
-
-  <section class="page">
-    <h2>4. 銘柄別の年率試算 後半5社</h2>
-    <div class="table-wrap"><table><thead><tr><th>銘柄</th><th>業種</th><th>比率</th><th>5年CAGR</th><th>10年CAGR</th><th>実績基準年率</th><th>実用年率試算</th><th>5年S&amp;P差</th><th>最大下落</th><th>月次勝率</th><th>補正</th></tr></thead><tbody><tr><td>8001.T 伊藤忠商事</td><td>商社</td><td>7%</td><td>27.2%</td><td>25.4%</td><td>26.5%</td><td>9.3%</td><td>14.8%</td><td>-27.9%</td><td>61.7%</td><td>過去実績を65%割引</td></tr><tr><td>6501.T 日立製作所</td><td>総合電機・IT</td><td>7%</td><td>36.5%</td><td>28.5%</td><td>33.3%</td><td>11.7%</td><td>24.1%</td><td>-38.7%</td><td>63.3%</td><td>過去実績を65%割引</td></tr><tr><td>7011.T 三菱重工</td><td>重工・防衛</td><td>5%</td><td>65.9%</td><td>27.4%</td><td>50.5%</td><td>17.7%</td><td>53.5%</td><td>-35.8%</td><td>66.7%</td><td>過去実績を65%割引</td></tr><tr><td>5802.T 住友電工</td><td>電線・通信</td><td>3%</td><td>52.3%</td><td>26.2%</td><td>41.9%</td><td>6.4%</td><td>40%</td><td>-41.4%</td><td>65%</td><td>過去実績を65%割引 / 過熱補正 / 高ボラ補正</td></tr><tr><td>5801.T 古河電工</td><td>電線・通信</td><td>3%</td><td>82.7%</td><td>38.2%</td><td>64.9%</td><td>7.5%</td><td>70.4%</td><td>-52.1%</td><td>65%</td><td>過去実績を65%割引 / 過熱補正 / 大幅下落歴補正 / 高ボラ補正</td></tr></tbody></table></div>
-  </section>
-
-  <section class="page">
-    <h2>5. シナリオ別の見方</h2>
-    <div class="table-wrap"><table><thead><tr><th>シナリオ</th><th>年率</th><th>200万円の概算</th><th>前提</th></tr></thead><tbody><tr><td>強め</td><td>19.1%</td><td>382,015円</td><td>過去実績の継続性が比較的残り、6月イベント後も市場が崩れない場合。</td></tr><tr><td>標準</td><td>10.4%</td><td>208,788円</td><td>過去実績を大きく割り引き、過熱銘柄を抑えて見る場合。今回の中心試算。</td></tr><tr><td>弱め</td><td>-1.6%</td><td>-31,212円</td><td>CPI・金利・日銀・FOMC後に市場が悪化し、個別株比率を下げる必要がある場合。</td></tr></tbody></table></div>
-    <h2>6. 現時点の扱い</h2>
-    <div class="card">
-      <p>現在の10社は、過去実績だけで自動確定したものではありません。量的データを主軸に、6月イベント後の市場環境、決算後反応、同業比較、割高感を再確認する前提の候補です。</p>
-      <p>今回の確かめ算で分かることは、「現時点の候補10社を現在比率で持つなら、保守補正後でも年率約10.4%程度を狙う説明は一応成立する」という点です。一方で、目標11%に対する余裕は薄いため、弱い市場環境では個別株比率を下げ、インデックスまたは現金比率を高める運用分岐が必要です。</p>
-    </div>
-    <p class="small">作成日時: 2026/05/28 18:17</p>
-  </section>
+<section>
+  <h1>候補10社 変更理由・年率試算 報告書</h1>
+  <p class="note">入れ替え理由を、感覚ではなく数値で説明するための確認資料です。今回の10社は、継続期待スコアと保守補正後の年率試算を採用して再順位化しました。</p>
+  <div class="cards">
+    <div class="card"><b>候補数</b><span class="value">10社</span><p>現金10%を別枠</p></div>
+    <div class="card"><b>過去実績基準</b><span class="value">31.8%</span><p>参考上限</p></div>
+    <div class="card"><b>実用年率試算</b><span class="value">10.4%</span><p>中心確認値</p></div>
+    <div class="card"><b>200万円概算</b><span class="value">208,788円</span><p>標準試算</p></div>
+  </div>
+  <h2>1. 入れ替え理由を端的に整理</h2>
+  <table><thead><tr><th>項目</th><th>説明</th></tr></thead><tbody><tr><td>入れ替えの理由</td><td>前回候補を、1年保有テスト用に再計算したため。短期の話題性ではなく、継続期待スコアと保守補正後の年率試算を重視した。</td></tr><tr><td>採用した数値軸</td><td>継続期待スコア、5年CAGR、10年CAGR、S&amp;P500との差、最大下落率、月次勝率、過熱補正、投入比率。</td></tr><tr><td>上げた銘柄</td><td>長期上昇の継続性、S&amp;P500超過、下落耐性、業種分散が確認しやすい金融・保険・商社・インフラ関連を上げた。</td></tr><tr><td>下げた銘柄</td><td>高PER、過熱、大幅下落歴、同業重複、決算後反応の未確認が残る銘柄は、10社枠では優先度を下げた。</td></tr><tr><td>結論</td><td>感覚的な入れ替えではなく、現在10社の実用年率試算は10.4%、200万円では約208,788円。+1%目標の11%に対して差額は-11,212円。</td></tr></tbody></table>
+  <h2>2. 何が残り、何を下げたか</h2>
+  <table><thead><tr><th>区分</th><th>銘柄</th><th>数値上の理由</th></tr></thead><tbody><tr><td>継続</td><td>8316 三井住友FG / 8058 三菱商事 / 8306 三菱UFJ FG</td><td>前回候補の中でも、長期スコア・価格確認点・実用年率のバランスが残った。</td></tr><tr><td>追加</td><td>8766 東京海上HD / 8031 三井物産 / 8001 伊藤忠 / 6501 日立 / 7011 三菱重工 / 5802 住友電工 / 5801 古河電工</td><td>継続期待スコア、S&amp;P超過、業種分散、6月以降の時流確認に使いやすい銘柄を追加。過熱銘柄は小比率に抑制。</td></tr><tr><td>見送り</td><td>2802 味の素 / 6762 TDK / 8053 住友商事 / 7173 東京きらぼしFG / 9984 ソフトバンクG / 7735 SCREEN / 6146 ディスコ</td><td>不採用ではなく、今回の10社枠では優先度を下げた。高PER、半導体高ボラ、同業重複、NAV型、確認不足を理由に再確認枠へ回した。</td></tr></tbody></table>
+  <h2>3. 現在10社の数値</h2>
+  <table><thead><tr><th>順位</th><th>銘柄</th><th>業種</th><th>比率</th><th>継続期待</th><th>実用年率</th><th>5年CAGR</th><th>10年CAGR</th><th>S&amp;P差</th><th>最大下落</th><th>月次勝率</th></tr></thead><tbody><tr><td>1</td><td>8316.T 三井住友FG</td><td>銀行</td><td>20%</td><td>83.6%</td><td>11.6%</td><td>39.9%</td><td>22.7%</td><td>27.5%</td><td>-29.4%</td><td>71.7%</td></tr><tr><td>2</td><td>8766.T 東京海上HD</td><td>保険</td><td>14%</td><td>76.2%</td><td>11.2%</td><td>37.8%</td><td>23.4%</td><td>25.4%</td><td>-38.7%</td><td>61.7%</td></tr><tr><td>3</td><td>8058.T 三菱商事</td><td>商社</td><td>11%</td><td>78.2%</td><td>12.8%</td><td>42.5%</td><td>27.5%</td><td>30.2%</td><td>-33.7%</td><td>61.7%</td></tr><tr><td>4</td><td>8306.T 三菱UFJ FG</td><td>銀行</td><td>11%</td><td>81.6%</td><td>11.9%</td><td>41.3%</td><td>23%</td><td>29%</td><td>-31.8%</td><td>66.7%</td></tr><tr><td>5</td><td>8031.T 三井物産</td><td>商社</td><td>9%</td><td>75.6%</td><td>12%</td><td>38.5%</td><td>27.8%</td><td>26.2%</td><td>-41.7%</td><td>61.7%</td></tr><tr><td>6</td><td>8001.T 伊藤忠商事</td><td>商社</td><td>7%</td><td>72.7%</td><td>9.3%</td><td>27.2%</td><td>25.4%</td><td>14.8%</td><td>-27.9%</td><td>61.7%</td></tr><tr><td>7</td><td>6501.T 日立製作所</td><td>総合電機・IT</td><td>7%</td><td>73.8%</td><td>11.7%</td><td>36.5%</td><td>28.5%</td><td>24.1%</td><td>-38.7%</td><td>63.3%</td></tr><tr><td>8</td><td>7011.T 三菱重工</td><td>重工・防衛</td><td>5%</td><td>78.1%</td><td>17.7%</td><td>65.9%</td><td>27.4%</td><td>53.5%</td><td>-35.8%</td><td>66.7%</td></tr><tr><td>9</td><td>5802.T 住友電工</td><td>電線・通信</td><td>3%</td><td>71.4%</td><td>6.4%</td><td>52.3%</td><td>26.2%</td><td>40%</td><td>-41.4%</td><td>65%</td></tr><tr><td>10</td><td>5801.T 古河電工</td><td>電線・通信</td><td>3%</td><td>64.7%</td><td>7.5%</td><td>82.7%</td><td>38.2%</td><td>70.4%</td><td>-52.1%</td><td>65%</td></tr></tbody></table>
+  <h2>4. 前回候補から優先度を下げた銘柄</h2>
+  <table><thead><tr><th>銘柄</th><th>継続期待</th><th>5年CAGR</th><th>最大下落</th><th>扱い</th></tr></thead><tbody><tr><td>2802.T 味の素</td><td>71.2%</td><td>34.3%</td><td>-25.6%</td><td>高PERの説明に次決算確認が必要。今回は1年保有の安定性を優先。</td></tr><tr><td>6762.T TDK</td><td>59.7%</td><td>34.9%</td><td>-46.3%</td><td>電子部品テーマは残るが、継続期待スコアは今回10社の上位より低い。</td></tr><tr><td>8053.T 住友商事</td><td>81.5%</td><td>41.2%</td><td>-35.8%</td><td>長期スコアは高いが、商社枠は三菱商事・三井物産・伊藤忠へ集約。</td></tr><tr><td>7173.T 東京きらぼしFG</td><td>未取得</td><td>未取得</td><td>未取得</td><td>銀行枠はメガバンク中心に整理。流動性・比較可能性を優先。</td></tr><tr><td>9984.T ソフトバンクG</td><td>46.1%</td><td>28.1%</td><td>-50.8%</td><td>投資会社型で評価軸が別。ボラティリティとNAV確認が必要。</td></tr><tr><td>7735.T SCREEN HD</td><td>53.5%</td><td>37.1%</td><td>-59.1%</td><td>半導体装置は高ボラ・大幅下落歴を確認するまで優先度を下げる。</td></tr><tr><td>6146.T ディスコ</td><td>60.9%</td><td>45.1%</td><td>-65.2%</td><td>高成長だが半導体高ボラと大幅下落歴が大きく、今回は確認枠。</td></tr></tbody></table>
+  <h2>5. 判断式</h2>
+  <table>
+    <tr><th>指標</th><th>内容</th></tr>
+    <tr><td>継続期待スコア</td><td>5年CAGR、10年CAGR、S&P500との差、最大下落率、月次勝率を統合した長期安定性の確認値。</td></tr>
+    <tr><td>実用年率試算</td><td>（5年CAGR×60% + 10年CAGR×40%）×35%×過熱補正×下落補正×ボラ補正。</td></tr>
+    <tr><td>ポートフォリオ年率</td><td>Σ（各銘柄の実用年率試算×投入比率）+ 現金0%。現在10社では10.4%。</td></tr>
+    <tr><td>+1%目標</td><td>S&P500長期平均10%前後に対し、目標は11%前後。現在試算との差額は-11,212円。</td></tr>
+  </table>
+</section>
 </body>
 </html>
