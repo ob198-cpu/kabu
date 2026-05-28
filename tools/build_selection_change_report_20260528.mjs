@@ -261,7 +261,7 @@ const html = `<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>候補10社変更理由・本日作業報告 2026年5月28日</title>
+  <title>5月28日 作業報告</title>
   <style>
     @page { size: A4 landscape; margin: 10mm; }
     * { box-sizing: border-box; }
@@ -294,7 +294,7 @@ const html = `<!doctype html>
 </head>
 <body>
   <section class="page cover">
-    <h1>候補10社変更理由・本日作業報告</h1>
+    <h1>5月28日 作業報告</h1>
     <h2>2026年5月28日</h2>
     <p class="lead">昨日の候補10社と今日の候補10社が変わった理由を、計算方法、追加データ、過熱補正、実用画面整理の観点から整理しました。</p>
     <div class="cards">

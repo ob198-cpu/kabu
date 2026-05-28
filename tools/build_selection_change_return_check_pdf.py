@@ -178,7 +178,7 @@ def make_table(header, data, widths=None):
 
 
 story = []
-story.append(p("候補10社 変更理由・年率試算 報告書", title_style))
+story.append(p("5月28日 作業報告", title_style))
 story.append(p("2026年5月28日", h_style))
 story.append(p(
     "現在の候補10社について、過去5年・10年の実績から「この10社なら年利でどの程度になりそうか」を確認するための試算を追加しました。"

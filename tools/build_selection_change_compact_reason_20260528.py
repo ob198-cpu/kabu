@@ -328,5 +328,11 @@ doc = SimpleDocTemplate(
     topMargin=10 * mm,
     bottomMargin=10 * mm,
 )
-doc.build(story)
+
+
+def set_pdf_title(canvas, _doc):
+    canvas.setTitle("5月28日 作業報告")
+
+
+doc.build(story, onFirstPage=set_pdf_title, onLaterPages=set_pdf_title)
 print(PDF)

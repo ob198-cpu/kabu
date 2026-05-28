@@ -233,7 +233,7 @@ const html = `<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>候補10社 変更理由・年率試算 報告書</title>
+  <title>5月28日 作業報告</title>
   <style>
     @page { size: A4 landscape; margin: 10mm; }
     * { box-sizing: border-box; }
@@ -263,7 +263,7 @@ const html = `<!doctype html>
 </head>
 <body>
   <section class="page cover">
-    <h1>候補10社 変更理由・年率試算 報告書</h1>
+    <h1>5月28日 作業報告</h1>
     <h2>2026年5月28日</h2>
     <p class="lead">現在の候補10社について、過去5年・10年の実績から「この10社なら年利でどの程度になりそうか」を確認するための試算を追加しました。単純な過去実績ではなく、過熱・最大下落・ボラティリティを差し引いた保守的な確かめ算として整理しています。</p>
     <div class="cards">
