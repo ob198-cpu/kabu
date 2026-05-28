@@ -123,6 +123,107 @@ const deploymentPlan = [
   }
 ];
 
+const datedSchedule = [
+  {
+    日付: '2026-06-10（水）',
+    種別: '米CPI確認',
+    実施内容: '米CPI発表後に、米10年金利、ドル円、S&P500、NASDAQ、日経先物の反応を記録する。',
+    売買予定: '売買しない',
+    判断基準: 'CPI再加速または米金利急騰なら、6月18日の初回投入を縮小または延期候補にする。'
+  },
+  {
+    日付: '2026-06-11（木）',
+    種別: 'CPI翌日確認',
+    実施内容: '日本市場で銀行、保険、商社、重工、電線候補の反応を確認する。',
+    売買予定: '売買しない',
+    判断基準: '候補10社が日経平均に大きく劣後する場合は、投入候補順位を下げる。'
+  },
+  {
+    日付: '2026-06-15（月）',
+    種別: '日銀会合1日目',
+    実施内容: 'ドル円、銀行株、保険株、日経平均の事前反応を確認する。',
+    売買予定: '売買しない',
+    判断基準: '円高警戒、銀行株の材料出尽くし、指数下落が強い場合は初回投入を抑制。'
+  },
+  {
+    日付: '2026-06-16（火）',
+    種別: '日銀結果確認 / FOMC 1日目',
+    実施内容: '日銀の政策結果、声明、ドル円、銀行・保険セクター反応を記録する。',
+    売買予定: '原則売買しない',
+    判断基準: '日銀後に円高ショックや指数急落がなければ、銀行・保険の中心候補を維持。'
+  },
+  {
+    日付: '2026-06-17（水）',
+    種別: 'FOMC結果確認',
+    実施内容: 'FOMC声明、SEP、米10年金利、米株、ドル円の反応を確認する。',
+    売買予定: '原則売買しない',
+    判断基準: '米金利急騰や米株急落があれば、6月18日の投入を見送る。'
+  },
+  {
+    日付: '2026-06-18（木）',
+    種別: '初回投入判定日',
+    実施内容: 'CPI、日銀、FOMC後の市場反応を総合し、候補10社を再計算する。',
+    売買予定: '条件良好なら30%のうち半分から開始、悪化なら見送り',
+    判断基準: '日経平均75日線維持、金利急騰なし、ドル円急変なし、候補の停止条件なし。'
+  },
+  {
+    日付: '2026-06-19（金）',
+    種別: '初回投入実行候補日',
+    実施内容: '6月18日の判定が良好なら初回30%を実行候補とする。',
+    売買予定: '最大30% / 600,000円',
+    判断基準: '前日判定が良好、かつ当日寄付き後に候補が急騰していないこと。'
+  },
+  {
+    日付: '2026-06-24（水）',
+    種別: '第2投入判定日',
+    実施内容: '初回投入後の損益、日経平均差、S&P500差、銘柄別停止条件を確認する。',
+    売買予定: '条件良好なら追加候補',
+    判断基準: '初回投入銘柄が指数に大きく劣後せず、個別悪材料がないこと。'
+  },
+  {
+    日付: '2026-06-26（金）',
+    種別: '第2投入実行候補日',
+    実施内容: '6月24日の判定が良好なら第2投入を実行候補とする。',
+    売買予定: '最大25% / 500,000円',
+    判断基準: '候補の価格が急騰していないこと。過熱枠は追加しない。'
+  },
+  {
+    日付: '2026-07-03（金）',
+    種別: '第3投入判定・実行候補日',
+    実施内容: '6月末値、月次反応、75日線、候補別下落率、ベンチマーク差を確認する。',
+    売買予定: '最大20% / 400,000円',
+    判断基準: '市場安定、候補の停止条件なし、初回・第2投入分が想定内の値動き。'
+  },
+  {
+    日付: '2026-07-17（金）',
+    種別: '中間点検',
+    実施内容: '1か月弱の反応を確認し、日経平均・S&P500双方に劣後していないかを見る。',
+    売買予定: '原則追加しない',
+    判断基準: '双方に大きく劣後する銘柄は追加停止、仮説確認へ回す。'
+  },
+  {
+    日付: '2026-07-31（金）',
+    種別: '月末点検',
+    実施内容: '月末時点の損益、指数差、銘柄別上値・下値ルールへの抵触を確認する。',
+    売買予定: '原則追加しない',
+    判断基準: '+20%到達銘柄は一部利確検討、-10%銘柄は保有再判定。'
+  },
+  {
+    日付: '2026-08-14（金）',
+    種別: '決算後追加判定',
+    実施内容: '4〜6月期決算、会社予想、決算後1日/5日反応を確認する。',
+    売買予定: '最大15% / 300,000円',
+    判断基準: '業績成長、上方修正、増配、決算後反応が確認できる銘柄だけ追加候補。'
+  },
+  {
+    日付: '2026-08-28（金）',
+    種別: '20営業日反応確認',
+    実施内容: '決算後20営業日前後の株価反応を確認し、1年保有候補を再整理する。',
+    売買予定: '入替・減額の検討',
+    判断基準: '決算内容が良くても20営業日で市場評価が弱い銘柄は追加停止。'
+  }
+];
+
 const targetWeights = [
   ['8316.T', '三井住友FG', '銀行', 20, '前面候補。金利・ROE・与信費用を確認しながら中心に置く。'],
   ['8766.T', '東京海上HD', '保険', 14, '比較候補。運用利回りと災害損害の確認が必要。'],
@@ -312,6 +413,7 @@ writeCsv('774_provisional_earnings_rules.csv', earningsRules, Object.keys(earnin
 writeCsv('775_provisional_benchmark_rules.csv', benchmarkRules, Object.keys(benchmarkRules[0]));
 writeCsv('776_provisional_june_branch_rules.csv', branchRules, Object.keys(branchRules[0]));
 writeCsv('777_provisional_source_notes.csv', sourceRows, Object.keys(sourceRows[0]));
+writeCsv('778_provisional_dated_schedule.csv', datedSchedule, Object.keys(datedSchedule[0]));
 
 function table(headers, rows) {
   return `<div class="table-wrap"><table><thead><tr>${headers.map((header) => `<th>${esc(header)}</th>`).join('')}</tr></thead><tbody>${rows.map((row) => `<tr>${headers.map((header) => `<td>${esc(row[header])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
@@ -363,6 +465,11 @@ const html = `<!doctype html>
       <div class="card"><b>初回</b><div class="value">6/18</div><p>イベント確認後</p></div>
     </div>
     <p class="danger">暫定ルールです。売買を確定する資料ではありません。最新決算、証券口座の取扱、当日の価格、6月イベント後の市場反応を確認してから再判定します。</p>
+  </section>
+
+  <section>
+    <h2>具体日付入り予定表</h2>
+    ${table(Object.keys(datedSchedule[0]), datedSchedule)}
   </section>
 
   <section>
@@ -421,6 +528,7 @@ const html = `<!doctype html>
       <a href="774_provisional_earnings_rules.csv">決算ルールCSV</a>
       <a href="775_provisional_benchmark_rules.csv">ベンチマークCSV</a>
       <a href="776_provisional_june_branch_rules.csv">6月分岐CSV</a>
+      <a href="778_provisional_dated_schedule.csv">具体日付予定CSV</a>
     </div>
   </section>
 </main>
@@ -432,5 +540,6 @@ fs.writeFileSync(path.join(ROOT, 'provisional_trade_execution_plan_20260528.html
 console.log(JSON.stringify({
   generatedAt,
   output: 'provisional_trade_execution_plan_20260528.html',
-  targetWeights: targetWeights.length
+  targetWeights: targetWeights.length,
+  datedSchedule: datedSchedule.length
 }, null, 2));
