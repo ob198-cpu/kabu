@@ -152,7 +152,11 @@ gap = profit - target_profit
 compact_reasons = [
     {
         "項目": "入れ替えの理由",
-        "説明": "前回候補を、1年保有テスト用に再計算したため。短期の話題性ではなく、継続期待スコアと保守補正後の年率試算を重視した。",
+        "説明": "前回候補を、1年保有テスト用に再計算したため。短期の話題性だけで並べず、継続期待スコアと保守補正後の年率試算で確認した。",
+    },
+    {
+        "項目": "今の10社を現在の比率で持った場合の年率試算",
+        "説明": f"現在の投入比率で計算すると、保守補正後の年率試算は{pct(weighted_practical)}。200万円の場合は約{yen(profit)}。S&P500長期平均10%に+1%を足した11%目標との差額は{yen(gap)}。",
     },
     {
         "項目": "採用した数値軸",
@@ -168,7 +172,7 @@ compact_reasons = [
     },
     {
         "項目": "結論",
-        "説明": f"感覚的な入れ替えではなく、現在10社の実用年率試算は{pct(weighted_practical)}、200万円では約{yen(profit)}。+1%目標の11%に対して差額は{yen(gap)}。",
+        "説明": f"感覚的な入れ替えではなく、今の10社を現在の比率で持った場合の年率試算は{pct(weighted_practical)}。この数字を6月イベント後に再確認する。",
     },
 ]
 
@@ -237,7 +241,7 @@ html = f"""<!doctype html>
   <div class="cards">
     <div class="card"><b>候補数</b><span class="value">10社</span><p>現金10%を別枠</p></div>
     <div class="card"><b>過去実績基準</b><span class="value">{pct(weighted_base)}</span><p>参考上限</p></div>
-    <div class="card"><b>実用年率試算</b><span class="value">{pct(weighted_practical)}</span><p>中心確認値</p></div>
+    <div class="card"><b>現在比率の年率試算</b><span class="value">{pct(weighted_practical)}</span><p>10社合計の確認値</p></div>
     <div class="card"><b>200万円概算</b><span class="value">{yen(profit)}</span><p>標準試算</p></div>
   </div>
   <h2>1. 継続期待スコア採用による選定銘柄の更新</h2>
