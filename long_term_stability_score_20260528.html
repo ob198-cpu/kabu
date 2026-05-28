@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 長期安定性スコア</title>
+  <style>
+    :root { --ink:#050b14; --muted:#45566a; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --soft:#f4f8fc; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1200px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:#123d63; color:#fff; border-radius:10px; padding:30px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; line-height:1.25; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); font-size:22px; }
+    p { margin:0 0 10px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .card b { display:block; color:var(--navy); }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; background:#fff; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .main-table th:nth-child(1), .main-table td:nth-child(1) { width:5%; text-align:center; }
+    .main-table th:nth-child(2), .main-table td:nth-child(2) { width:10%; }
+    .main-table th:nth-child(3), .main-table td:nth-child(3) { width:13%; font-weight:800; }
+    .main-table th:nth-child(4), .main-table td:nth-child(4) { width:9%; text-align:right; font-weight:900; }
+    .badge { display:inline-block; border-radius:8px; padding:4px 8px; color:#fff; font-weight:900; white-space:nowrap; }
+    .ok { background:var(--green); }
+    .watch { background:var(--amber); }
+    .stop { background:var(--red); }
+    .formula { background:#f8fbff; border:1px solid var(--line); border-radius:8px; padding:14px; font-family:Consolas,"Noto Sans JP",monospace; font-size:13px; }
+    .note { color:var(--muted); font-size:12px; }
+    header .note { color:#dbeeff; }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>候補10社 長期安定性スコア</h1>
+    <p>過去1年だけの上昇ではなく、5年・10年で継続して上がっているか、S&P500や日経/TOPIXとの差、値動きの大きさ、最大下落率を分けて確認します。</p>
+    <p class="note">作成: 2026/05/28 09:50 / 取得元: Yahoo Finance chart API / 本表は購入確定ではなく、長期の安定性を確認するための補助表です。</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>平均スコア</b><div class="value">69.8点</div><p>候補10社平均</p></div>
+    <div class="card"><b>条件付き以上</b><div class="value">8社</div><p>58点以上</p></div>
+    <div class="card"><b>S&P500 5年CAGR</b><div class="value">12.4%</div><p>比較基準</p></div>
+    <div class="card"><b>日経平均 5年CAGR</b><div class="value">17.2%</div><p>日本株比較</p></div>
+  </div>
+
+  <section>
+    <h2>計算式</h2>
+    <div class="formula">長期安定性スコア = 0.40×リターン点 + 0.35×安定性点 + 0.25×継続性点</div>
+    <p class="note">リターン点は5年CAGRとS&P500/日経平均との差、安定性点は年率ボラ・最大下落率・月次勝率、継続性点は5年と10年の差を見ます。去年だけ強い銘柄はここで過大評価されにくくなります。TOPIXは今回の取得経路では長期比較に適した指数データを確認できなかったため、正式計算から外しています。</p>
+  </section>
+
+  <section>
+    <h2>長期安定性ランキング</h2>
+    <table class="main-table">
+      <thead><tr><th>順位</th><th>コード</th><th>銘柄</th><th>スコア</th><th>判定</th><th>5年CAGR</th><th>10年CAGR</th><th>S&P差</th><th>年率ボラ</th><th>最大下落</th><th>月次勝率</th><th>確認事項</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>8316.T</td><td>三井住友FG</td><td>83.6点</td><td><span class="badge ok">長期安定候補</span></td><td>39.8%</td><td>22.7%</td><td>27.5%</td><td>22.2%</td><td>-29.4%</td><td>71.7%</td><td>長期推移を継続確認</td></tr><tr><td>2</td><td>7173.T</td><td>東京きらぼしFG</td><td>82点</td><td><span class="badge ok">長期安定候補</span></td><td>58.5%</td><td>19.2%</td><td>46.1%</td><td>27.3%</td><td>-28.9%</td><td>68.3%</td><td>長期推移を継続確認</td></tr><tr><td>3</td><td>8306.T</td><td>三菱UFJ FG</td><td>81.6点</td><td><span class="badge ok">長期安定候補</span></td><td>41.3%</td><td>23%</td><td>29%</td><td>23.8%</td><td>-31.8%</td><td>66.7%</td><td>長期推移を継続確認</td></tr><tr><td>4</td><td>8053.T</td><td>住友商事</td><td>81.5点</td><td><span class="badge ok">長期安定候補</span></td><td>41.2%</td><td>25.5%</td><td>28.8%</td><td>23.1%</td><td>-35.8%</td><td>66.7%</td><td>長期推移を継続確認</td></tr><tr><td>5</td><td>7011.T</td><td>三菱重工業</td><td>78.1点</td><td><span class="badge ok">長期安定候補</span></td><td>65.9%</td><td>27.4%</td><td>53.5%</td><td>36.5%</td><td>-35.8%</td><td>66.7%</td><td>値動きが大きい</td></tr><tr><td>6</td><td>2802.T</td><td>味の素</td><td>71.2点</td><td><span class="badge ok">長期安定候補</span></td><td>34.3%</td><td>16.2%</td><td>21.9%</td><td>31.8%</td><td>-25.6%</td><td>65%</td><td>長期推移を継続確認</td></tr><tr><td>7</td><td>6146.T</td><td>ディスコ</td><td>60.9点</td><td><span class="badge watch">条件付き安定</span></td><td>45%</td><td>36.9%</td><td>32.7%</td><td>48%</td><td>-65.2%</td><td>61.7%</td><td>大きな下落経験あり / 値動きが大きい</td></tr><tr><td>8</td><td>6762.T</td><td>TDK</td><td>59.6点</td><td><span class="badge watch">条件付き安定</span></td><td>34.7%</td><td>26.4%</td><td>22.4%</td><td>40.9%</td><td>-46.3%</td><td>53.3%</td><td>大きな下落経験あり / 値動きが大きい</td></tr><tr><td>9</td><td>7735.T</td><td>SCREEN HD</td><td>53.3点</td><td><span class="badge stop">要確認</span></td><td>36.9%</td><td>25.7%</td><td>24.6%</td><td>48.7%</td><td>-59.1%</td><td>55%</td><td>大きな下落経験あり / 値動きが大きい</td></tr><tr><td>10</td><td>9984.T</td><td>ソフトバンクG</td><td>45.9点</td><td><span class="badge stop">要確認</span></td><td>27.9%</td><td>25.4%</td><td>15.5%</td><td>55.2%</td><td>-50.8%</td><td>48.3%</td><td>大きな下落経験あり / 値動きが大きい / 上昇月の比率が低い</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>ベンチマーク</h2>
+    <table>
+      <thead><tr><th>名称</th><th>コード</th><th>5年CAGR</th><th>5年年率ボラ</th><th>5年最大下落率</th></tr></thead>
+      <tbody><tr><td>S&amp;P500</td><td>^GSPC</td><td>12.4%</td><td>15.8%</td><td>-25.4%</td></tr><tr><td>日経平均</td><td>^N225</td><td>17.2%</td><td>19.1%</td><td>-26.3%</td></tr><tr><td>TOPIX</td><td>未採用</td><td></td><td></td><td>YahooのTOPIX連動ETFは分割等の影響で今回の長期比較には未使用%</td></tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>出力CSV</h2>
+    <p><a href="725_long_term_stability_score.csv">長期安定性スコアCSV</a> / <a href="727_long_term_benchmark_summary.csv">ベンチマークCSV</a> / <a href="726_long_term_stability_fetch_log.csv">取得ログCSV</a></p>
+  </section>
+</main>
+</body>
+</html>
