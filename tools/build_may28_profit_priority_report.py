@@ -8,7 +8,7 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
+from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Table, TableStyle
 
 ROOT = Path.cwd()
 HTML = ROOT / "selection_change_report_20260528.html"
@@ -293,8 +293,10 @@ story = [
     pdf_table(["項目", "説明"], summary_rows, [48 * mm, 224 * mm]),
     p("2. 選定銘柄の入れ替え", h),
     pdf_table(["区分", "銘柄", "理由"], change_rows, [25 * mm, 120 * mm, 127 * mm]),
+    PageBreak(),
     p("3. 新10社の数値", h),
     pdf_table(["順位", "銘柄", "業種", "比率", "継続期待", "実用年率", "5年CAGR", "10年CAGR", "S&P差", "最大下落", "補正"], selection_rows, [12 * mm, 34 * mm, 24 * mm, 15 * mm, 22 * mm, 22 * mm, 22 * mm, 22 * mm, 19 * mm, 20 * mm, 60 * mm]),
+    PageBreak(),
     p("4. 1年後〜10年後のS&P500比較試算", h),
     p(f"前提は、新10社を上記比率で持った場合の年率試算{pct(portfolio_rate)}、S&P500を年率10%、目標ラインをS&P500+5%の年率15%とした複利計算です。", note),
     pdf_table(["年数", "新10社", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%目標との差"], projection_rows, [22 * mm, 45 * mm, 45 * mm, 40 * mm, 45 * mm, 45 * mm]),
