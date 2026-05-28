@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>統合選定 補完優先キュー</title>
+  <style>
+    :root { --ink:#050b14; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:22px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    .grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .card b { color:var(--navy); }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    .notice { border-left:6px solid var(--amber); background:#fff8ec; padding:12px; border-radius:8px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    th:nth-child(1), td:nth-child(1) { width:5%; text-align:center; }
+    th:nth-child(2), td:nth-child(2) { width:13%; }
+    th:nth-child(4), td:nth-child(4) { width:13%; }
+    th:nth-child(5), td:nth-child(5) { width:10%; }
+    .badge { display:inline-block; border-radius:8px; color:#fff; padding:4px 8px; font-weight:900; }
+    .ok { background:var(--green); }
+    .warn { background:var(--amber); }
+    .mid { background:var(--blue); }
+    .risk { background:var(--red); }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>統合選定 補完優先キュー</h1>
+    <p>100社統合選定ワークベンチで浮上した銘柄について、10社選定に進めるための不足データと確認順序を整理します。これは投資スコアではなく、作業優先度です。</p>
+    <p>作成: 2026/05/28 11:06</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>対象</b><div class="value">20</div><p>統合ワークベンチ上位20件を作業対象に変換</p></div><div class="card"><b>確証強化</b><div class="value">2</div><p>既に量的・長期・質的がそろう銘柄の原資料照合</p></div><div class="card"><b>量的補完</b><div class="value">16</div><p>長期で浮上した銘柄にPER/PBR/ROE等を追加</p></div><div class="card"><b>質的接続追加</b><div class="value">1</div><p>量的には強いが構造仮説が未接続の銘柄</p></div><div class="card"><b>仮説検算</b><div class="value">1</div><p>テーマは強いが過熱・下落耐性の検証が必要な銘柄</p></div>
+  </div>
+
+  <section>
+    <h2>運用ルール</h2>
+    <p class="notice">未補完データは投資判断の点数に混ぜません。まず作業優先度として並べ、PER/PBR/ROE、成長率、決算後反応、同業中央値、質的接続の不足を埋めた後に、10社候補へ再計算します。</p>
+  </section>
+
+  <section>
+    <h2>補完優先キュー</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順</th><th>銘柄</th><th>業種</th><th>作業分類</th><th>作業優先度</th><th>質的接続</th><th>補完する項目</th><th>10社選定への条件</th></tr></thead>
+        <tbody><tr>
+  <td>1</td>
+  <td><b>8316.T</b><br>三井住友FG</td>
+  <td>銀行</td>
+  <td><span class="badge ok">確証強化</span><br><small>優先深掘り</small></td>
+  <td><b>82.6</b><br><small>長期 83.6 / 量的 69</small></td>
+  <td>金利・銀行/保険(82)</td>
+  <td>公式値照合 / 同業中央値比較</td>
+  <td>公式値照合後に6月イベントで再判定</td>
+</tr><tr>
+  <td>2</td>
+  <td><b>8766.T</b><br>東京海上HD</td>
+  <td>保険</td>
+  <td><span class="badge ok">確証強化</span><br><small>優先深掘り</small></td>
+  <td><b>79.4</b><br><small>長期 76.2 / 量的 74</small></td>
+  <td>金利・銀行/保険(78)</td>
+  <td>公式値照合 / 同業中央値比較</td>
+  <td>公式値照合後に6月イベントで再判定</td>
+</tr><tr>
+  <td>3</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td>銀行</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>70.9</b><br><small>長期 81.6 / 量的 未補完</small></td>
+  <td>金利・銀行/保険(82)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>4</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td>重工・防衛</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>69.7</b><br><small>長期 78.1 / 量的 未補完</small></td>
+  <td>防衛・政策(84)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>5</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td>商社</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>69.3</b><br><small>長期 78.2 / 量的 未補完</small></td>
+  <td>円安・資源・商社(82)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>6</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td>総合電機・IT</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>67.4</b><br><small>長期 73.8 / 量的 未補完</small></td>
+  <td>AI・データセンター(82) / 防衛・政策(72)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>7</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td>商社</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>67.2</b><br><small>長期 75.6 / 量的 未補完</small></td>
+  <td>円安・資源・商社(77)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>8</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td>電線・通信</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>66.7</b><br><small>長期 71.4 / 量的 未補完</small></td>
+  <td>AI・データセンター(84)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>9</td>
+  <td><b>5801.T</b><br>古河電工</td>
+  <td>電線・通信</td>
+  <td><span class="badge risk">仮説検算</span><br><small>テーマ接続確認</small></td>
+  <td><b>66.7</b><br><small>長期 64.7 / 量的 68</small></td>
+  <td>AI・データセンター(86)</td>
+  <td>過熱・最大下落確認 / 同業中央値比較</td>
+  <td>仮説と過熱確認後に比較枠へ</td>
+</tr><tr>
+  <td>10</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td>商社</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>66.3</b><br><small>長期 72.7 / 量的 未補完</small></td>
+  <td>円安・資源・商社(79)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>11</td>
+  <td><b>6503.T</b><br>三菱電機</td>
+  <td>総合電機・FA</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>65.4</b><br><small>長期 70.3 / 量的 未補完</small></td>
+  <td>AI・データセンター(80)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>12</td>
+  <td><b>2802.T</b><br>味の素</td>
+  <td>食品</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>65</b><br><small>長期 71.2 / 量的 未補完</small></td>
+  <td>価格転嫁・消費(76)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>13</td>
+  <td><b>1802.T</b><br>大林組</td>
+  <td>建設</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>64.3</b><br><small>長期 72.4 / 量的 未補完</small></td>
+  <td>防災・インフラ更新(70)</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>14</td>
+  <td><b>8411.T</b><br>みずほFG</td>
+  <td>銀行</td>
+  <td><span class="badge mid">質的接続追加</span><br><small>量的優先確認</small></td>
+  <td><b>55.7</b><br><small>長期 79.5 / 量的 66</small></td>
+  <td>未接続</td>
+  <td>質的接続仮説 / 同業中央値比較</td>
+  <td>追加確認後に順位再計算</td>
+</tr><tr>
+  <td>15</td>
+  <td><b>8053.T</b><br>住友商事</td>
+  <td>商社</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>54.4</b><br><small>長期 81.5 / 量的 未補完</small></td>
+  <td>未接続</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 質的接続仮説 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>16</td>
+  <td><b>8002.T</b><br>丸紅</td>
+  <td>商社</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>53.3</b><br><small>長期 79.1 / 量的 未補完</small></td>
+  <td>未接続</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 質的接続仮説 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>17</td>
+  <td><b>8725.T</b><br>MS&amp;AD</td>
+  <td>保険</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>53.1</b><br><small>長期 78.5 / 量的 未補完</small></td>
+  <td>未接続</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 質的接続仮説 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>18</td>
+  <td><b>1605.T</b><br>INPEX</td>
+  <td>エネルギー</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>51.9</b><br><small>長期 75.8 / 量的 未補完</small></td>
+  <td>未接続</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 質的接続仮説 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>19</td>
+  <td><b>1812.T</b><br>鹿島</td>
+  <td>建設</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>51.5</b><br><small>長期 75.1 / 量的 未補完</small></td>
+  <td>未接続</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 質的接続仮説 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr><tr>
+  <td>20</td>
+  <td><b>6701.T</b><br>NEC</td>
+  <td>IT・防衛周辺</td>
+  <td><span class="badge warn">量的補完</span><br><small>長期浮上・量的補完</small></td>
+  <td><b>50</b><br><small>長期 71.6 / 量的 未補完</small></td>
+  <td>未接続</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 質的接続仮説 / 同業中央値比較</td>
+  <td>購入候補化前に補完必須</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <p><a href="739_integrated_completion_queue.csv">補完優先キューCSV</a> / <a href="740_integrated_completion_summary.csv">要約CSV</a></p>
+  </section>
+</main>
+</body>
+</html>
