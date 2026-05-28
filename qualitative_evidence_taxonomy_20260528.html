@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的情報レイヤー設計</title>
+  <style>
+    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; --green:#087f5b; --amber:#a85b00; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.75; }
+    main { max-width:1240px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin:14px 0; }
+    .step { border:1px solid var(--line); background:#f8fbff; border-radius:9px; padding:12px; min-height:130px; }
+    .step b { color:var(--navy); }
+    .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    a { color:#075e91; font-weight:800; }
+    .links { display:flex; flex-wrap:wrap; gap:10px; }
+    .links a { border:1px solid var(--blue); color:#fff; background:var(--blue); border-radius:8px; padding:9px 12px; text-decoration:none; }
+    @media (max-width:980px) { .flow { grid-template-columns:1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>質的情報レイヤー設計</h1>
+    <p>時流、ニュース、政策、商品発売などを銘柄選定に使うための構造を整理しました。質的情報は単純加点せず、企業数字と過去反応に接続できる場合だけ評価へ進めます。</p>
+    <p>作成: 2026/05/28 14:10</p>
+  </header>
+
+  <section>
+    <h2>基本方針</h2>
+    <p class="note">「AI」「半導体」「金利」のような言葉だけでは判断材料にしません。観測情報、伝播経路、企業接続、実績検証、運用反映に分け、検証できない情報は候補順位を上げる根拠にしません。</p>
+    <div class="flow">
+      <div class="step"><b>1 観測情報</b><p>ニュース、公式発表、政策、決算説明、商品発売、M&amp;A、著名投資家の売買などを事実として記録する。</p><small>この段階では銘柄の点数にしない。情報の存在確認にとどめる。</small></div><div class="step"><b>2 伝播経路</b><p>その出来事が需要、供給、価格、投資額、金利、為替、規制、資金流入のどこへ効くかを分解する。</p><small>「AIだから半導体」ではなく、設備投資、受注、稼働率、価格、利益率まで経路を書く。</small></div><div class="step"><b>3 企業接続</b><p>対象企業の売上構成、シェア、受注残、価格決定力、顧客集中、固定費構造と接続する。</p><small>事業に接続できないテーマは候補選定の根拠にしない。</small></div><div class="step"><b>4 実績検証</b><p>過去の類似イベント時の株価反応、決算数値、同業比較、指数比較で検証する。</p><small>実績検証が弱い場合は、点数ではなく確認待ち項目として扱う。</small></div><div class="step"><b>5 運用反映</b><p>量的スコアを主軸に、質的情報は候補の深掘り優先度、確認項目、除外条件に反映する。</p><small>単純加点は禁止。S/A/B/Cは確度であり、利益予測ではない。</small></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>情報分類と検証条件</h2>
+    <div class="table-wrap"><table><thead><tr><th>情報分類</th><th>観測例</th><th>伝播経路</th><th>企業接続条件</th><th>実績検証</th><th>初期扱い</th></tr></thead><tbody><tr><td>金利・金融政策</td><td>日銀政策変更、FRB金利見通し、長期金利上昇</td><td>利ざや、運用利回り、信用コスト、株式バリュエーション</td><td>銀行、保険、リースなどで金利感応度と信用コストを確認できる</td><td>金利変化日から1日、5日、20日の対TOPIX超過リターンを確認</td><td>A: 公式金利データと株価反応を取りやすい</td></tr><tr><td>半導体設備投資</td><td>生成AI投資、先端半導体増産、製造装置需要</td><td>設備投資、受注残、稼働率、消耗部材、保守需要</td><td>対象企業の対象工程シェア、顧客分散、受注残、利益率を確認できる</td><td>SOX指数、装置株、対象企業の決算後反応を比較</td><td>B: 強い仮説だが、過熱と顧客集中の検証が必要</td></tr><tr><td>AIデータセンター投資</td><td>クラウド投資拡大、サーバー増設、冷却・電源需要</td><td>電源、冷却、光通信、電線、変圧器、建設、保守</td><td>売上内訳にデータセンター関連が確認できる</td><td>受注増、部門売上、関連指数、同業株との連動を確認</td><td>B: 連想は強いが、企業別の売上接続が必須</td></tr><tr><td>防衛・安全保障</td><td>防衛予算、宇宙、防衛装備、地政学リスク</td><td>政府予算、受注、長期契約、研究開発費</td><td>防衛関連売上、受注残、採算性、輸出規制を確認できる</td><td>予算発表、受注発表、決算説明後の株価反応を確認</td><td>B: 国策性はあるが、利益寄与の確認が必要</td></tr><tr><td>資源・商品価格</td><td>原油、天然ガス、銅、鉄鉱石、ナフサ価格変動</td><td>販売価格、在庫評価、原価、商社利益、素材企業利益率</td><td>資源価格感応度、上流権益、調達構造、価格転嫁力を確認できる</td><td>商品価格と対象株の相関、決算説明の価格前提を確認</td><td>B: データは取れるが、企業別感応度が必要</td></tr><tr><td>円安・為替</td><td>ドル円変動、輸出採算、海外利益換算</td><td>売上換算、原価増、輸出利益、海外子会社利益</td><td>海外売上比率、為替感応度、ヘッジ方針を確認できる</td><td>為替変化と株価反応、決算資料の感応度表を確認</td><td>A: 為替データは取りやすいが、企業感応度は資料確認</td></tr><tr><td>M&amp;A・TOB・資本政策</td><td>TOB、合併、自社株買い、増配、政策保有株売却</td><td>1株利益、資本効率、支配権プレミアム、再編期待</td><td>発行株数、買付価格、取得規模、還元方針を確認できる</td><td>発表日リターン、過去同種案件、EPS影響を確認</td><td>A: 公式発表があれば検証しやすい</td></tr><tr><td>新商品・大型発売</td><td>ゲーム機、医薬品承認、大型サービス開始</td><td>販売数量、単価、利益率、関連ソフト・消耗品、継続収益</td><td>対象商品の売上寄与、粗利率、供給制約を確認できる</td><td>過去発売サイクル、発売後決算、株価反応を確認</td><td>B: 期待先行になりやすく、実売確認が必要</td></tr><tr><td>上場・IPO・未上場大型企業</td><td>大型IPO観測、関連会社上場、出資先評価</td><td>持分評価、関連需要、取引先拡大、テーマ資金流入</td><td>直接投資、取引関係、上場時の持分価値を確認できる</td><td>保有比率、簿価、類似IPO時の反応を確認</td><td>C: 観測段階では根拠が弱く、別枠管理</td></tr><tr><td>著名投資家・大口保有</td><td>バフェット関連、5%ルール、大量保有変更報告</td><td>需給、信用、資本政策期待、業種評価の変化</td><td>取得・売却主体、保有比率、取得理由、継続性を確認できる</td><td>報告日後リターン、同業波及、保有変更の継続確認</td><td>B: 補助材料。単独採用はしない</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>候補銘柄への接続例</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>接続テーマ</th><th>仮説</th><th>確認すべき数字</th><th>反映条件</th><th>初期確度</th></tr></thead><tbody><tr><td>8316.T</td><td>三井住友FG</td><td>金利・金融政策</td><td>国内金利上昇が利ざや改善に効く可能性がある。</td><td>国内貸出利ざや、与信費用、自己資本比率、PBR、ROE</td><td>金利上昇時の対TOPIX超過リターンと決算資料の利ざや改善が両方確認できる場合に質的検証点へ反映</td><td>A</td></tr><tr><td>8766.T</td><td>東京海上HD</td><td>金利・金融政策 / 保険料率</td><td>運用利回りと保険料率改善が中期利益に効く可能性がある。</td><td>正味収入保険料、コンバインドレシオ、運用利回り、自然災害損害</td><td>金利と保険収益の改善が同時に確認でき、災害損失で打ち消されていない場合に反映</td><td>A</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>金利・金融政策</td><td>銀行セクター全体の金利感応度を取り込める候補。</td><td>国内外利ざや、与信費用、PBR、ROE、株主還元</td><td>同業比較で三井住友FGを上回る説明ができる場合に候補順位を上げる</td><td>B</td></tr><tr><td>7011.T</td><td>三菱重工</td><td>防衛・安全保障 / エネルギー</td><td>防衛、宇宙、原子力、エネルギー投資の長期需要に接続する。</td><td>受注残、防衛関連売上、営業利益率、増産能力、研究開発費</td><td>受注残と利益率改善が確認でき、過熱リスクを許容できる場合に反映</td><td>B</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>資源・商品価格 / 資本政策</td><td>資源価格と株主還元で中期の下支えが期待される。</td><td>資源利益、非資源利益、還元方針、原油・金属価格前提</td><td>商品価格依存だけでなく非資源利益と還元で説明できる場合に反映</td><td>B</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>AIデータセンター投資 / 電力・インフラ</td><td>デジタル、送配電、産業インフラの複合需要に接続する。</td><td>Lumada売上、エネルギー部門受注、営業利益率、海外比率</td><td>AI投資と電力インフラ需要が部門売上や受注に見える場合に反映</td><td>B</td></tr><tr><td>5802.T</td><td>住友電工</td><td>AIデータセンター投資 / 電力・光通信</td><td>電線、光通信、車載関連がデータセンターと電力投資に接続する。</td><td>情報通信売上、環境エネルギー売上、受注、銅価格影響</td><td>部門別売上と利益率が改善し、銅価格の悪影響を説明できる場合に反映</td><td>B</td></tr><tr><td>5801.T</td><td>古河電工</td><td>AIデータセンター投資 / 電力・光通信</td><td>電線・光通信テーマに接続するが、株価過熱と下落耐性の検証が必要。</td><td>情報通信売上、電力インフラ売上、営業利益率、最大下落率</td><td>過熱を除いても同業比較で優位なら候補比較に残す</td><td>C</td></tr><tr><td>8001.T</td><td>伊藤忠商事</td><td>資源・非資源 / 資本政策</td><td>非資源比率と還元方針で商社内の安定候補になり得る。</td><td>非資源利益、ROE、還元方針、純利益進捗</td><td>三菱商事・三井物産との比較で安定性の優位が説明できる場合に反映</td><td>B</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>運用ルール</h2>
+    <div class="table-wrap"><table><thead><tr><th>ルール</th><th>内容</th></tr></thead><tbody><tr><td>質的情報は直接加点しない</td><td>出来事の存在だけで点数を足さない。伝播経路と企業数字への接続が確認できてから質的検証点へ反映する。</td></tr><tr><td>量的スコアを主軸にする</td><td>NISA 1年保有テストでは、長期安定性、財務・割安、業績成長、決算後反応を主軸にし、質的情報は確認優先度と例外判断に使う。</td></tr><tr><td>S/A/B/Cは利益予測ではない</td><td>S/A/B/Cは情報の確度と検証しやすさを示す。期待リターンや購入判断とは分ける。</td></tr><tr><td>仮説と実績を分ける</td><td>構造的にあり得る仮説と、過去データで確認済みの実績を同じ欄で混ぜない。</td></tr><tr><td>反証条件を持つ</td><td>売上接続なし、利益率悪化、株価反応なし、過熱、下方修正が出た場合は、テーマが強くても候補順位を下げる。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <div class="links">
+      <a href="753_qualitative_evidence_layers.csv">レイヤーCSV</a>
+      <a href="754_qualitative_evidence_taxonomy.csv">情報分類CSV</a>
+      <a href="755_qualitative_candidate_connection.csv">銘柄接続CSV</a>
+      <a href="756_qualitative_use_rules.csv">運用ルールCSV</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
