@@ -3768,14 +3768,14 @@
       target.innerHTML = `
         <section class="mechanism-card">
           <h4>過去1年上昇の継続期待スコア</h4>
-          <p>過去1年の上昇率は直接加点せず、利益成長・売上成長・ROE・決算後反応で説明できるかを確認します。PER/PBRや同業PER倍率、過去1年上昇が大きい場合は過熱として減点します。</p>
+          <p>過去1年の上昇率は直接加点せず、利益成長・売上成長・ROE・決算後反応で説明できるかを確認します。PER/PBRや同業PER倍率、過去1年上昇が大きい場合は過熱として見ますが、説明できる分は減点を緩和します。</p>
           <div class="candidate-conclusion">
             <div><b>平均スコア</b><br>${pointLabel(avg)}</div>
             <div><b>条件付き以上</b><br>${conditionalCount}社</div>
             <div><b>目標</b><br>S&P500平均10% + 1%を説明できる候補に絞る</div>
           </div>
           <div class="formula-box">
-            継続期待スコア = 0.30×利益成長 + 0.20×売上成長 + 0.15×ROE + 0.15×決算後反応 + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ - マクロリスク
+            継続期待スコア = 0.30×利益成長 + 0.20×売上成長 + 0.15×ROE + 0.15×決算後反応 + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ + 説明可能性緩和 - マクロリスク
           </div>
           <table class="mechanism-table">
             <thead><tr><th>順位</th><th>銘柄</th><th>過去1年</th><th>継続期待</th><th>判定</th><th>減点</th><th>確認事項</th></tr></thead>

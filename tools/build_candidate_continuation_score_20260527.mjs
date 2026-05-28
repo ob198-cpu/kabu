@@ -134,12 +134,39 @@ function macroRiskPenalty(themeText, ticker) {
   return 4;
 }
 
-function overheatingPenalty({ per, pbr, oneYear, peerMultiple }) {
+function rawOverheatingPenalty({ per, pbr, oneYear, peerMultiple }) {
   const oneYearPenalty = oneYear === null ? 2 : clamp((oneYear - 50) * 0.08, 0, 18);
   const peerPenalty = peerMultiple === null ? 2 : clamp((peerMultiple - 1.2) * 12, 0, 12);
   const perPenalty = per === null ? 2 : clamp((per - 35) * 0.25, 0, 12);
   const pbrPenalty = pbr === null ? 1 : clamp((pbr - 5) * 1.2, 0, 10);
   return round(oneYearPenalty + peerPenalty + perPenalty + pbrPenalty, 1);
+}
+
+function explainabilityRelief({ profit, sales, roe, reaction, tailwind, returnScore, peerMultiple, oneYear }) {
+  const profitRelief = profit === null ? 0 : clamp((profit - 15) * 0.12, 0, 8);
+  const salesRelief = sales === null ? 0 : clamp((sales - 5) * 0.18, 0, 5);
+  const roeRelief = roe === null ? 0 : clamp((roe - 12) * 0.30, 0, 5);
+  const reactionRelief = reaction === null ? 0 : clamp((reaction - 55) * 0.25, 0, 6);
+  const tailwindRelief = tailwind >= 68 ? 3 : tailwind >= 64 ? 2 : 0;
+  const returnRelief = returnScore >= 65 ? 1.5 : returnScore >= 60 ? 1 : 0;
+  const grossRelief = profitRelief + salesRelief + roeRelief + reactionRelief + tailwindRelief + returnRelief;
+
+  // 極端な過熱は、いくら説明材料があっても全額は消さない。
+  const cap = (oneYear !== null && oneYear >= 200) || (peerMultiple !== null && peerMultiple >= 2)
+    ? 10
+    : 14;
+  return {
+    value: round(Math.min(grossRelief, cap), 1),
+    label: `利益${round(profitRelief)} / 売上${round(salesRelief)} / ROE${round(roeRelief)} / 反応${round(reactionRelief)} / 業界${round(tailwindRelief)} / 還元${round(returnRelief)}`
+  };
+}
+
+function overheatingPenalty({ per, pbr, oneYear, peerMultiple, profit, sales, roe, reaction, tailwind, returnScore }) {
+  const raw = rawOverheatingPenalty({ per, pbr, oneYear, peerMultiple });
+  const relief = explainabilityRelief({ profit, sales, roe, reaction, tailwind, returnScore, peerMultiple, oneYear });
+  const floor = (oneYear !== null && oneYear >= 100) || (peerMultiple !== null && peerMultiple >= 1.4) ? 3 : 0;
+  const net = round(Math.max(floor, raw - relief.value), 1);
+  return { raw, relief: relief.value, reliefLabel: relief.label, net };
 }
 
 function judgement(score, confidence, penalty) {
@@ -187,7 +214,19 @@ const detailRows = candidateRows.map((row) => {
     reactionScore * 0.15 +
     tailwind * 0.10 +
     returnScore * 0.10;
-  const overheat = overheatingPenalty({ per, pbr, oneYear, peerMultiple });
+  const overheatInfo = overheatingPenalty({
+    per,
+    pbr,
+    oneYear,
+    peerMultiple,
+    profit,
+    sales,
+    roe,
+    reaction,
+    tailwind,
+    returnScore
+  });
+  const overheat = overheatInfo.net;
   const macro = macroRiskPenalty(final['質的テーマ'], ticker);
   const score = clamp(rawScore - overheat - macro);
   const present = [per, pbr, roe, profit, oneYear, reaction, sales, peerMultiple]
@@ -203,11 +242,12 @@ const detailRows = candidateRows.map((row) => {
   if (oneYear !== null && oneYear >= 100) caution.push('過去1年上昇が大きく、反落リスク確認');
   if (peerMultiple !== null && peerMultiple >= 1.4) caution.push('同業PER比で割高説明が必要');
   if (profit !== null && profit < 5) caution.push('利益成長が弱く、来期見通し確認');
+  if (overheatInfo.relief > 0) caution.push(`過熱減点を説明材料で${overheatInfo.relief}点緩和`);
   if (missing.length) caution.push(`未取得: ${missing.join('・')}`);
   const formula =
     `0.30×${round(profitScore)} + 0.20×${round(salesScore)} + 0.15×${round(roeScore)} + ` +
     `0.15×${round(reactionScore)} + 0.10×${round(tailwind)} + 0.10×${round(returnScore)} ` +
-    `- 過熱${overheat} - マクロ${macro} = ${round(score)}`;
+    `- 過熱${overheatInfo.raw} + 説明緩和${overheatInfo.relief} - マクロ${macro} = ${round(score)}`;
   return {
     '順位': '',
     '銘柄': row['銘柄'],
@@ -223,7 +263,8 @@ const detailRows = candidateRows.map((row) => {
     '期待年利の見方': expectedBand(score),
     '量的スコア内訳': `利益${round(profitScore)} / 売上${round(salesScore)} / ROE${round(roeScore)} / 反応${round(reactionScore)}`,
     '質的補助内訳': `業界追い風${tailwind} / 還元${returnScore}`,
-    '減点': `過熱${overheat} / マクロ${macro}`,
+    '過熱説明緩和': overheatInfo.reliefLabel,
+    '減点': `過熱${overheatInfo.raw} - 説明緩和${overheatInfo.relief} = ${overheat} / マクロ${macro}`,
     'データ信頼度': `${confidence}%`,
     '式': formula,
     '確認事項': caution.join('。') || '6月イベント後の価格維持と決算後20営業日反応を確認'
@@ -244,15 +285,15 @@ const summary = {
 const formulaRows = [
   {
     '項目': '基本思想',
-    '内容': '過去1年上昇率はそのまま期待値にしない。利益成長、売上成長、ROE、決算後反応で説明できる部分だけを評価し、PER/PBR/過去上昇の過熱は減点する。'
+    '内容': '過去1年上昇率はそのまま期待値にしない。ただし、利益成長、売上成長、ROE、決算後反応、業界追い風で説明できる過熱は一部緩和する。'
   },
   {
     '項目': '継続期待スコア',
-    '内容': '0.30×利益成長スコア + 0.20×売上成長スコア + 0.15×ROEスコア + 0.15×決算後反応スコア + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ - マクロリスク'
+    '内容': '0.30×利益成長スコア + 0.20×売上成長スコア + 0.15×ROEスコア + 0.15×決算後反応スコア + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ + 説明可能性緩和 - マクロリスク'
   },
   {
-    '項目': '過熱ペナルティ',
-    '内容': '過去1年上昇率、同業PER倍率、PER、PBRが高いほど減点。過去に上がった銘柄ほど、利益成長で説明できるかを厳しく見る。'
+    '項目': '説明可能性緩和',
+    '内容': '利益成長、売上成長、ROE、決算後反応、業界追い風、還元で過熱を説明できる場合は減点を緩和する。ただし極端な上昇や割高は最低限の減点を残す。'
   },
   {
     '項目': '合格目安',
@@ -275,6 +316,7 @@ writeCsv('723_candidate_continuation_score.csv', detailRows, [
   '期待年利の見方',
   '量的スコア内訳',
   '質的補助内訳',
+  '過熱説明緩和',
   '減点',
   'データ信頼度',
   '式',
@@ -332,15 +374,15 @@ const html = `<!doctype html>
 
   <div class="grid">
     <div class="card"><b>過去1年平均</b><div class="value">+${esc(summary.averageOneYear)}%</div><p>候補10社の単純平均</p></div>
-    <div class="card"><b>継続期待スコア平均</b><div class="value">${esc(summary.averageScore)}点</div><p>過熱・マクロ減点後</p></div>
-    <div class="card"><b>継続/条件付き</b><div class="value">${esc(summary.passCount)}社</div><p>60点以上</p></div>
-    <div class="card"><b>中心候補</b><div class="value">${esc(summary.strictCount)}社</div><p>70点以上かつ信頼度条件</p></div>
+    <div class="card"><b>継続期待スコア平均</b><div class="value">${esc(summary.averageScore)}点</div><p>説明可能性で過熱を緩和後</p></div>
+    <div class="card"><b>継続/条件付き</b><div class="value">${esc(summary.passCount)}社</div><p>55点以上</p></div>
+    <div class="card"><b>中心候補</b><div class="value">${esc(summary.strictCount)}社</div><p>65点以上かつ信頼度条件</p></div>
   </div>
 
   <section>
     <h2>計算式</h2>
-    <div class="formula">継続期待スコア = 0.30×利益成長 + 0.20×売上成長 + 0.15×ROE + 0.15×決算後反応 + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ - マクロリスク</div>
-    <p class="note">過去1年上昇率は直接加点しません。上がりすぎている場合は過熱ペナルティとして扱い、利益成長や決算後反応で説明できるかを確認します。</p>
+    <div class="formula">継続期待スコア = 0.30×利益成長 + 0.20×売上成長 + 0.15×ROE + 0.15×決算後反応 + 0.10×業界追い風 + 0.10×還元 - 過熱ペナルティ + 説明可能性緩和 - マクロリスク</div>
+    <p class="note">過去1年上昇率は直接加点しません。上がりすぎている場合は過熱ペナルティとして扱います。ただし、利益成長、売上成長、ROE、決算後反応、業界構造で説明できる分は減点を緩和します。</p>
   </section>
 
   <section>
@@ -360,9 +402,9 @@ const html = `<!doctype html>
   <section>
     <h2>代入値と減点</h2>
     <table>
-      <thead><tr><th>銘柄</th><th>量的スコア</th><th>質的補助</th><th>減点</th><th>式</th></tr></thead>
+      <thead><tr><th>銘柄</th><th>量的スコア</th><th>質的補助</th><th>過熱説明緩和</th><th>減点</th><th>式</th></tr></thead>
       <tbody>
-        ${detailRows.map((row) => `<tr><td>${esc(row['銘柄'])}</td><td>${esc(row['量的スコア内訳'])}</td><td>${esc(row['質的補助内訳'])}</td><td>${esc(row['減点'])}</td><td>${esc(row['式'])}</td></tr>`).join('')}
+        ${detailRows.map((row) => `<tr><td>${esc(row['銘柄'])}</td><td>${esc(row['量的スコア内訳'])}</td><td>${esc(row['質的補助内訳'])}</td><td>${esc(row['過熱説明緩和'])}</td><td>${esc(row['減点'])}</td><td>${esc(row['式'])}</td></tr>`).join('')}
       </tbody>
     </table>
   </section>
