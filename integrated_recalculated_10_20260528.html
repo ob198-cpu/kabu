@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>統合再計算 10社候補 2026年5月28日</title>
+  <style>
+    body{margin:0;background:#f4f7fb;color:#071624;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+    main{max-width:1240px;margin:0 auto;padding:28px}
+    h1{margin:0;color:#123d63;font-size:32px}
+    h2{margin:24px 0 10px;color:#123d63;border-left:8px solid #0b5f96;padding-left:12px}
+    .lead{background:#123d63;color:#fff;border-radius:14px;padding:20px;margin-bottom:16px}
+    .lead p{margin:8px 0 0;color:#e7f1fb}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+    .card{background:#fff;border:1px solid #d5e2ee;border-radius:12px;padding:14px}
+    .card b{display:block;color:#456}
+    .card span{display:block;font-size:28px;font-weight:900;color:#0b5f96}
+    .note{background:#fff8eb;border-left:7px solid #c06b00;padding:12px;margin:12px 0}
+    .table-wrap{overflow-x:auto;background:#fff;border:1px solid #d5e2ee;border-radius:12px}
+    table{width:100%;border-collapse:collapse;min-width:1060px}
+    th,td{border:1px solid #d5e2ee;padding:8px;vertical-align:top;font-size:13px}
+    th{background:#e6f1fb;color:#123d63;text-align:left}
+    tr.watch td{background:#fffaf1}
+    tr.drop td{background:#fff5f5;color:#6c1f1f}
+    .links{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .button{display:inline-block;background:#0b5f96;color:#fff;text-decoration:none;border-radius:9px;padding:9px 12px;font-weight:800}
+    code{background:#edf3f8;border:1px solid #d5e2ee;border-radius:6px;padding:2px 5px}
+  </style>
+</head>
+<body>
+<main>
+  <section class="lead">
+    <h1>統合再計算 10社候補</h1>
+    <p>昨日までの既存選定スコアを土台に残し、今朝追加した長期安定性・S&P比較・下落耐性を補助指標として統合しました。今朝の指標だけで選び直したものではありません。</p>
+  </section>
+  <div class="cards">
+    <div class="card"><b>対象母集団</b><span>100</span><p>既存スコアと追加指標が突合できた銘柄数</p></div>
+    <div class="card"><b>計算方法</b><span>合計</span><p>任意の重み付けは使わない</p></div>
+    <div class="card"><b>評価項目</b><span>4</span><p>既存、長期、S&P、下落耐性</p></div>
+    <div class="card"><b>統合候補</b><span>10</span><p>除外・監視を外した上位</p></div>
+  </div>
+  <p class="note">計算式: <code>総合スコア = 既存選定スコア + 長期安定性 + S&P比較 + 下落耐性</code>。表では4項目合計と、比較しやすい100点換算値を併記しています。S&P比較と下落耐性は100社内順位点に変換して使用しています。</p>
+  <div class="links">
+    <a class="button" href="784_integrated_recalculation_scores_20260528.csv">全件CSV</a>
+    <a class="button" href="785_integrated_recalculated_10_20260528.csv">統合10社CSV</a>
+    <a class="button" href="universe100_reselected_10_candidates_20260528.html">今朝の再選定結果</a>
+  </div>
+  <h2>1. 統合後の10社</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>順位</th><th>銘柄</th><th>4項目合計</th><th>100点換算</th><th>既存</th><th>長期</th><th>S&P</th><th>下落耐性</th><th>区分</th><th>理由</th></tr></thead>
+    <tbody>
+  <tr>
+    <td>1</td>
+    <td>8316.T 三井住友FG</td>
+    <td>307.7点</td>
+    <td>76.9点</td>
+    <td>69点</td>
+    <td>83.6点</td>
+    <td>78.3点</td>
+    <td>76.8点</td>
+    <td>旧候補</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>8306.T 三菱UFJ FG</td>
+    <td>299.6点</td>
+    <td>74.9点</td>
+    <td>64点</td>
+    <td>81.6点</td>
+    <td>76.3点</td>
+    <td>77.8点</td>
+    <td>旧候補</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>8725.T MS&amp;AD</td>
+    <td>291.5点</td>
+    <td>72.9点</td>
+    <td>60点</td>
+    <td>78.5点</td>
+    <td>67.2点</td>
+    <td>85.9点</td>
+    <td>新規浮上</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr>
+    <td>4</td>
+    <td>8411.T みずほFG</td>
+    <td>284.9点</td>
+    <td>71.2点</td>
+    <td>66点</td>
+    <td>79.5点</td>
+    <td>80.8点</td>
+    <td>58.6点</td>
+    <td>新規浮上</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr>
+    <td>5</td>
+    <td>6503.T 三菱電機</td>
+    <td>283.4点</td>
+    <td>70.8点</td>
+    <td>58点</td>
+    <td>70.3点</td>
+    <td>81.3点</td>
+    <td>73.7点</td>
+    <td>新規浮上</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr>
+    <td>6</td>
+    <td>8750.T 第一生命HD</td>
+    <td>279.7点</td>
+    <td>69.9点</td>
+    <td>63点</td>
+    <td>67.7点</td>
+    <td>64.6点</td>
+    <td>84.3点</td>
+    <td>新規浮上</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr>
+    <td>7</td>
+    <td>8058.T 三菱商事</td>
+    <td>277.8点</td>
+    <td>69.4点</td>
+    <td>43点</td>
+    <td>78.2点</td>
+    <td>82.3点</td>
+    <td>74.2点</td>
+    <td>旧候補</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr>
+    <td>8</td>
+    <td>9983.T ファーストリテイリング</td>
+    <td>262.6点</td>
+    <td>65.7点</td>
+    <td>61点</td>
+    <td>59.2点</td>
+    <td>66.7点</td>
+    <td>75.8点</td>
+    <td>新規浮上</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr>
+    <td>9</td>
+    <td>7012.T 川崎重工業</td>
+    <td>261.9点</td>
+    <td>65.5点</td>
+    <td>69点</td>
+    <td>63.6点</td>
+    <td>80.8点</td>
+    <td>48.5点</td>
+    <td>新規浮上</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr>
+    <td>10</td>
+    <td>6971.T 京セラ</td>
+    <td>260.5点</td>
+    <td>65.1点</td>
+    <td>55点</td>
+    <td>57.5点</td>
+    <td>69.7点</td>
+    <td>78.3点</td>
+    <td>新規浮上</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+</tbody>
+  </table></div>
+  <h2>2. 上位30社の比較</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>統合順位</th><th>銘柄</th><th>扱い</th><th>4項目合計</th><th>100点換算</th><th>既存</th><th>長期</th><th>S&P</th><th>下落耐性</th><th>5年CAGR</th><th>10年CAGR</th><th>直近1年</th><th>60日</th><th>5年S&P差</th><th>1年S&P差</th><th>5年最大下落</th><th>1年最大下落</th><th>理由</th></tr></thead>
+    <tbody>
+  <tr class="">
+    <td>1</td>
+    <td>8316.T 三井住友FG</td>
+    <td>候補</td>
+    <td>307.7点</td>
+    <td>76.9点</td>
+    <td>69点</td>
+    <td>83.6点</td>
+    <td>78.3点</td>
+    <td>76.8点</td>
+    <td>39.9%</td>
+    <td>22.7%</td>
+    <td>66.8%</td>
+    <td>0.8%</td>
+    <td>27.5%</td>
+    <td>39.3%</td>
+    <td>-29.4%</td>
+    <td>-19.3%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="">
+    <td>2</td>
+    <td>8306.T 三菱UFJ FG</td>
+    <td>候補</td>
+    <td>299.6点</td>
+    <td>74.9点</td>
+    <td>64点</td>
+    <td>81.6点</td>
+    <td>76.3点</td>
+    <td>77.8点</td>
+    <td>41.3%</td>
+    <td>23%</td>
+    <td>57.1%</td>
+    <td>3.9%</td>
+    <td>29%</td>
+    <td>29.6%</td>
+    <td>-31.8%</td>
+    <td>-16.9%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="">
+    <td>3</td>
+    <td>8725.T MS&amp;AD</td>
+    <td>候補</td>
+    <td>291.5点</td>
+    <td>72.9点</td>
+    <td>60点</td>
+    <td>78.5点</td>
+    <td>67.2点</td>
+    <td>85.9点</td>
+    <td>36.3%</td>
+    <td>20.1%</td>
+    <td>34.7%</td>
+    <td>1%</td>
+    <td>23.9%</td>
+    <td>7.2%</td>
+    <td>-32.6%</td>
+    <td>-12%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="watch">
+    <td>4</td>
+    <td>5802.T 住友電工</td>
+    <td>監視</td>
+    <td>285.4点</td>
+    <td>71.4点</td>
+    <td>64点</td>
+    <td>71.4点</td>
+    <td>97点</td>
+    <td>53点</td>
+    <td>52.3%</td>
+    <td>26.2%</td>
+    <td>323.3%</td>
+    <td>18%</td>
+    <td>40%</td>
+    <td>295.8%</td>
+    <td>-41.4%</td>
+    <td>-22%</td>
+    <td>総合点は高いが、急騰後反動または下落幅の確認が必要。</td>
+  </tr>
+
+  <tr class="">
+    <td>5</td>
+    <td>8411.T みずほFG</td>
+    <td>候補</td>
+    <td>284.9点</td>
+    <td>71.2点</td>
+    <td>66点</td>
+    <td>79.5点</td>
+    <td>80.8点</td>
+    <td>58.6点</td>
+    <td>38.3%</td>
+    <td>20.1%</td>
+    <td>82.1%</td>
+    <td>2.3%</td>
+    <td>26%</td>
+    <td>54.6%</td>
+    <td>-33.4%</td>
+    <td>-24.6%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="">
+    <td>6</td>
+    <td>6503.T 三菱電機</td>
+    <td>候補</td>
+    <td>283.4点</td>
+    <td>70.8点</td>
+    <td>58点</td>
+    <td>70.3点</td>
+    <td>81.3点</td>
+    <td>73.7点</td>
+    <td>33.3%</td>
+    <td>20%</td>
+    <td>128.8%</td>
+    <td>12.3%</td>
+    <td>20.9%</td>
+    <td>101.3%</td>
+    <td>-34%</td>
+    <td>-16.3%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="drop">
+    <td>7</td>
+    <td>8766.T 東京海上HD</td>
+    <td>除外</td>
+    <td>281.5点</td>
+    <td>70.4点</td>
+    <td>74点</td>
+    <td>76.2点</td>
+    <td>65.7点</td>
+    <td>65.7点</td>
+    <td>37.8%</td>
+    <td>23.4%</td>
+    <td>24.4%</td>
+    <td>12.6%</td>
+    <td>25.4%</td>
+    <td>-3.2%</td>
+    <td>-38.7%</td>
+    <td>-18.1%</td>
+    <td>除外条件: 直近1年でS&amp;P500に劣後</td>
+  </tr>
+
+  <tr class="">
+    <td>8</td>
+    <td>8750.T 第一生命HD</td>
+    <td>候補</td>
+    <td>279.7点</td>
+    <td>69.9点</td>
+    <td>63点</td>
+    <td>67.7点</td>
+    <td>64.6点</td>
+    <td>84.3点</td>
+    <td>27.4%</td>
+    <td>20.4%</td>
+    <td>55.7%</td>
+    <td>5.1%</td>
+    <td>15.1%</td>
+    <td>28.1%</td>
+    <td>-29.1%</td>
+    <td>-15.7%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="watch">
+    <td>9</td>
+    <td>5801.T 古河電工</td>
+    <td>監視</td>
+    <td>279.7点</td>
+    <td>69.9点</td>
+    <td>68点</td>
+    <td>64.7点</td>
+    <td>99.5点</td>
+    <td>47.5点</td>
+    <td>82.7%</td>
+    <td>38.2%</td>
+    <td>684.6%</td>
+    <td>87%</td>
+    <td>70.4%</td>
+    <td>657.1%</td>
+    <td>-52.1%</td>
+    <td>-19.5%</td>
+    <td>総合点は高いが、急騰後反動または下落幅の確認が必要。</td>
+  </tr>
+
+  <tr class="">
+    <td>10</td>
+    <td>8058.T 三菱商事</td>
+    <td>候補</td>
+    <td>277.8点</td>
+    <td>69.4点</td>
+    <td>43点</td>
+    <td>78.2点</td>
+    <td>82.3点</td>
+    <td>74.2点</td>
+    <td>42.5%</td>
+    <td>27.5%</td>
+    <td>77.3%</td>
+    <td>-1.4%</td>
+    <td>30.2%</td>
+    <td>49.8%</td>
+    <td>-33.7%</td>
+    <td>-16.8%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="">
+    <td>11</td>
+    <td>9983.T ファーストリテイリング</td>
+    <td>候補</td>
+    <td>262.6点</td>
+    <td>65.7点</td>
+    <td>61点</td>
+    <td>59.2点</td>
+    <td>66.7点</td>
+    <td>75.8点</td>
+    <td>22.4%</td>
+    <td>24.3%</td>
+    <td>67.4%</td>
+    <td>15.4%</td>
+    <td>10%</td>
+    <td>39.9%</td>
+    <td>-37.9%</td>
+    <td>-12.2%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="">
+    <td>12</td>
+    <td>7012.T 川崎重工業</td>
+    <td>候補</td>
+    <td>261.9点</td>
+    <td>65.5点</td>
+    <td>69点</td>
+    <td>63.6点</td>
+    <td>80.8点</td>
+    <td>48.5点</td>
+    <td>45.3%</td>
+    <td>18.7%</td>
+    <td>59.2%</td>
+    <td>-11.6%</td>
+    <td>32.9%</td>
+    <td>31.7%</td>
+    <td>-42.6%</td>
+    <td>-23.1%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="">
+    <td>13</td>
+    <td>6971.T 京セラ</td>
+    <td>候補</td>
+    <td>260.5点</td>
+    <td>65.1点</td>
+    <td>55点</td>
+    <td>57.5点</td>
+    <td>69.7点</td>
+    <td>78.3点</td>
+    <td>16.4%</td>
+    <td>11.4%</td>
+    <td>92.3%</td>
+    <td>20.3%</td>
+    <td>4%</td>
+    <td>64.8%</td>
+    <td>-32.9%</td>
+    <td>-16%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="">
+    <td>14</td>
+    <td>8001.T 伊藤忠商事</td>
+    <td>候補</td>
+    <td>259.7点</td>
+    <td>64.9点</td>
+    <td>40点</td>
+    <td>72.7点</td>
+    <td>59.1点</td>
+    <td>87.9点</td>
+    <td>27.2%</td>
+    <td>25.4%</td>
+    <td>31.2%</td>
+    <td>-12.2%</td>
+    <td>14.8%</td>
+    <td>3.7%</td>
+    <td>-27.9%</td>
+    <td>-14.7%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="drop">
+    <td>15</td>
+    <td>9434.T ソフトバンク</td>
+    <td>除外</td>
+    <td>257.4点</td>
+    <td>64.3点</td>
+    <td>55点</td>
+    <td>65.5点</td>
+    <td>39.9点</td>
+    <td>97点</td>
+    <td>14.3%</td>
+    <td>未取得</td>
+    <td>1.5%</td>
+    <td>5.4%</td>
+    <td>1.9%</td>
+    <td>-26%</td>
+    <td>-14.5%</td>
+    <td>-14.1%</td>
+    <td>除外条件: 直近1年でS&amp;P500に劣後</td>
+  </tr>
+
+  <tr class="">
+    <td>16</td>
+    <td>8031.T 三井物産</td>
+    <td>候補</td>
+    <td>256.5点</td>
+    <td>64.1点</td>
+    <td>42点</td>
+    <td>75.6点</td>
+    <td>82.3点</td>
+    <td>56.6点</td>
+    <td>38.5%</td>
+    <td>27.8%</td>
+    <td>83.4%</td>
+    <td>-5.8%</td>
+    <td>26.2%</td>
+    <td>55.8%</td>
+    <td>-41.7%</td>
+    <td>-19.3%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="">
+    <td>17</td>
+    <td>8053.T 住友商事</td>
+    <td>候補</td>
+    <td>250点</td>
+    <td>62.5点</td>
+    <td>15点</td>
+    <td>81.5点</td>
+    <td>86.9点</td>
+    <td>66.7点</td>
+    <td>41.2%</td>
+    <td>25.6%</td>
+    <td>99.8%</td>
+    <td>11.9%</td>
+    <td>28.9%</td>
+    <td>72.3%</td>
+    <td>-35.8%</td>
+    <td>-18.8%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="">
+    <td>18</td>
+    <td>6501.T 日立製作所</td>
+    <td>候補</td>
+    <td>249.5点</td>
+    <td>62.4点</td>
+    <td>53点</td>
+    <td>73.8点</td>
+    <td>67.2点</td>
+    <td>55.6点</td>
+    <td>36.5%</td>
+    <td>28.5%</td>
+    <td>31.9%</td>
+    <td>1.1%</td>
+    <td>24.1%</td>
+    <td>4.4%</td>
+    <td>-38.7%</td>
+    <td>-22.8%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="drop">
+    <td>19</td>
+    <td>5803.T フジクラ</td>
+    <td>除外</td>
+    <td>248.7点</td>
+    <td>62.2点</td>
+    <td>68点</td>
+    <td>65点</td>
+    <td>99.5点</td>
+    <td>16.2点</td>
+    <td>135%</td>
+    <td>51.5%</td>
+    <td>367.4%</td>
+    <td>10.1%</td>
+    <td>122.6%</td>
+    <td>339.9%</td>
+    <td>-50.7%</td>
+    <td>-45.3%</td>
+    <td>除外条件: 直近1年の下落率が大きい / 急騰後の反動確認が必要 / 直近1年の最大下落率が大きい</td>
+  </tr>
+
+  <tr class="drop">
+    <td>20</td>
+    <td>7011.T 三菱重工</td>
+    <td>除外</td>
+    <td>248.3点</td>
+    <td>62.1点</td>
+    <td>50点</td>
+    <td>78.1点</td>
+    <td>70.2点</td>
+    <td>50点</td>
+    <td>65.9%</td>
+    <td>27.4%</td>
+    <td>17.2%</td>
+    <td>-22.2%</td>
+    <td>53.5%</td>
+    <td>-10.4%</td>
+    <td>-35.8%</td>
+    <td>-26.6%</td>
+    <td>除外条件: 直近1年でS&amp;P500に劣後 / 直近60日が弱い / 直近60日が弱い</td>
+  </tr>
+
+  <tr class="watch">
+    <td>21</td>
+    <td>6857.T アドバンテスト</td>
+    <td>監視</td>
+    <td>246.7点</td>
+    <td>61.7点</td>
+    <td>60点</td>
+    <td>65点</td>
+    <td>96点</td>
+    <td>25.8点</td>
+    <td>63.2%</td>
+    <td>58.5%</td>
+    <td>264.3%</td>
+    <td>-6.2%</td>
+    <td>50.8%</td>
+    <td>236.8%</td>
+    <td>-51.4%</td>
+    <td>-28.9%</td>
+    <td>総合点は高いが、急騰後反動または下落幅の確認が必要。</td>
+  </tr>
+
+  <tr class="">
+    <td>22</td>
+    <td>8002.T 丸紅</td>
+    <td>候補</td>
+    <td>245.6点</td>
+    <td>61.4点</td>
+    <td>12点</td>
+    <td>79.1点</td>
+    <td>87.4点</td>
+    <td>67.2点</td>
+    <td>45.2%</td>
+    <td>31%</td>
+    <td>87.2%</td>
+    <td>-11.5%</td>
+    <td>32.8%</td>
+    <td>59.7%</td>
+    <td>-37.3%</td>
+    <td>-18.3%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="drop">
+    <td>23</td>
+    <td>9433.T KDDI</td>
+    <td>除外</td>
+    <td>244点</td>
+    <td>61点</td>
+    <td>46点</td>
+    <td>59.6点</td>
+    <td>40.4点</td>
+    <td>98点</td>
+    <td>10.9%</td>
+    <td>8.9%</td>
+    <td>11.8%</td>
+    <td>3%</td>
+    <td>-1.5%</td>
+    <td>-15.8%</td>
+    <td>-16.8%</td>
+    <td>-12.1%</td>
+    <td>除外条件: 直近1年でS&amp;P500に劣後 / 5年でS&amp;P500に劣後</td>
+  </tr>
+
+  <tr class="watch">
+    <td>24</td>
+    <td>6762.T TDK</td>
+    <td>監視</td>
+    <td>242.9点</td>
+    <td>60.7点</td>
+    <td>66点</td>
+    <td>59.7点</td>
+    <td>84.8点</td>
+    <td>32.3点</td>
+    <td>34.9%</td>
+    <td>26.5%</td>
+    <td>146.4%</td>
+    <td>57.7%</td>
+    <td>22.6%</td>
+    <td>118.9%</td>
+    <td>-46.3%</td>
+    <td>-28.2%</td>
+    <td>総合点は高いが、急騰後反動または下落幅の確認が必要。</td>
+  </tr>
+
+  <tr class="watch">
+    <td>25</td>
+    <td>6981.T 村田製作所</td>
+    <td>監視</td>
+    <td>240.8点</td>
+    <td>60.2点</td>
+    <td>58点</td>
+    <td>49点</td>
+    <td>80.8点</td>
+    <td>53点</td>
+    <td>26.9%</td>
+    <td>21.8%</td>
+    <td>313.2%</td>
+    <td>110.8%</td>
+    <td>14.6%</td>
+    <td>285.6%</td>
+    <td>-49.8%</td>
+    <td>-18.5%</td>
+    <td>総合点は高いが、急騰後反動または下落幅の確認が必要。</td>
+  </tr>
+
+  <tr class="watch">
+    <td>26</td>
+    <td>7735.T SCREEN HD</td>
+    <td>監視</td>
+    <td>238.7点</td>
+    <td>59.7点</td>
+    <td>66点</td>
+    <td>53.5点</td>
+    <td>85.4点</td>
+    <td>33.8点</td>
+    <td>37.1%</td>
+    <td>25.7%</td>
+    <td>113.5%</td>
+    <td>-6%</td>
+    <td>24.8%</td>
+    <td>86%</td>
+    <td>-59.1%</td>
+    <td>-23.8%</td>
+    <td>総合点は高いが、急騰後反動または下落幅の確認が必要。</td>
+  </tr>
+
+  <tr class="drop">
+    <td>27</td>
+    <td>6146.T ディスコ</td>
+    <td>除外</td>
+    <td>238.6点</td>
+    <td>59.6点</td>
+    <td>60点</td>
+    <td>60.9点</td>
+    <td>88.4点</td>
+    <td>29.3点</td>
+    <td>45.1%</td>
+    <td>37%</td>
+    <td>99.5%</td>
+    <td>-15.6%</td>
+    <td>32.7%</td>
+    <td>72%</td>
+    <td>-65.2%</td>
+    <td>-24.7%</td>
+    <td>除外条件: 直近60日が弱い / 5年最大下落率が大きい / 直近60日が弱い / 過去5年の最大下落率が大きい</td>
+  </tr>
+
+  <tr class="">
+    <td>28</td>
+    <td>1605.T INPEX</td>
+    <td>候補</td>
+    <td>237.8点</td>
+    <td>59.4点</td>
+    <td>15点</td>
+    <td>75.8点</td>
+    <td>88.9点</td>
+    <td>58.1点</td>
+    <td>43.3%</td>
+    <td>19.1%</td>
+    <td>100.9%</td>
+    <td>0.2%</td>
+    <td>30.9%</td>
+    <td>73.4%</td>
+    <td>-32.9%</td>
+    <td>-25.3%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+
+  <tr class="">
+    <td>29</td>
+    <td>5020.T ENEOS HD</td>
+    <td>候補</td>
+    <td>237.4点</td>
+    <td>59.3点</td>
+    <td>12点</td>
+    <td>68.3点</td>
+    <td>76.3点</td>
+    <td>80.8点</td>
+    <td>27.9%</td>
+    <td>15.9%</td>
+    <td>96.7%</td>
+    <td>-9.7%</td>
+    <td>15.6%</td>
+    <td>69.2%</td>
+    <td>-29.9%</td>
+    <td>-16.2%</td>
+    <td>旧候補外だが、既存スコアと追加指標の合算で候補圏に浮上。</td>
+  </tr>
+
+  <tr class="">
+    <td>30</td>
+    <td>2802.T 味の素</td>
+    <td>候補</td>
+    <td>225.6点</td>
+    <td>56.4点</td>
+    <td>19点</td>
+    <td>71.2点</td>
+    <td>67.2点</td>
+    <td>68.2点</td>
+    <td>34.3%</td>
+    <td>16.2%</td>
+    <td>45.9%</td>
+    <td>6.1%</td>
+    <td>22%</td>
+    <td>18.4%</td>
+    <td>-25.6%</td>
+    <td>-25.6%</td>
+    <td>旧候補にも残り、追加指標でも候補圏を維持。</td>
+  </tr>
+</tbody>
+  </table></div>
+</main>
+</body>
+</html>
