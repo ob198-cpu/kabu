@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社データ取得 実行計画</title>
+  <style>
+    :root { --ink:#050b14; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --green:#087f5b; --amber:#a85b00; --red:#b42318; --purple:#5b3aa4; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1240px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:22px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    .grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    .notice { border-left:6px solid var(--amber); background:#fff8ec; padding:12px; border-radius:8px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    th:nth-child(1), td:nth-child(1) { width:5%; text-align:center; }
+    th:nth-child(2), td:nth-child(2) { width:12%; }
+    th:nth-child(3), td:nth-child(3) { width:12%; }
+    th:nth-child(6), td:nth-child(6) { width:17%; }
+    .badge { display:inline-block; border-radius:8px; color:#fff; padding:4px 8px; font-weight:900; }
+    .ok { background:var(--green); }
+    .warn { background:var(--amber); }
+    .mid { background:var(--blue); }
+    .peer { background:var(--purple); }
+    .risk { background:var(--red); }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>10社データ取得 実行計画</h1>
+    <p>10社事前候補について、次に取得・照合するデータを実行順に整理しました。取得元、反映条件、未取得時の扱いを分け、未確認値を点数に混ぜない運用にします。</p>
+    <p>作成: 2026/05/28 11:18</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>実行項目数</b><div class="value">34</div><p>10社事前候補に対して次に埋める作業数</p></div><div class="card"><b>先行確認</b><div class="value">4</div><p>A判定銘柄の原資料照合</p></div><div class="card"><b>財務補完</b><div class="value">14</div><p>PER/PBR/ROE、成長率など</p></div><div class="card"><b>株価反応計算</b><div class="value">7</div><p>決算後1日/5日/20日反応</p></div><div class="card"><b>同業比較</b><div class="value">8</div><p>同業中央値で業種差を補正</p></div><div class="card"><b>リスク検算</b><div class="value">1</div><p>過熱・下落耐性の確認</p></div>
+  </div>
+
+  <section>
+    <h2>反映ルール</h2>
+    <p class="notice">数値は、取得元、対象期、単位、計算式を記録できた場合のみ反映します。未取得の値は推定で埋めず、候補化を保留するか比較枠へ下げます。</p>
+  </section>
+
+  <section>
+    <h2>実行リスト</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順</th><th>銘柄</th><th>作業段階</th><th>入力項目</th><th>取得方法</th><th>公式URL候補</th><th>反映条件</th><th>未取得時の扱い</th></tr></thead>
+        <tbody><tr>
+  <td>1</td>
+  <td><b>8316.T</b><br>三井住友FG</td>
+  <td><span class="badge ok">先行確認</span><br><small>A 確認後に候補化可能</small></td>
+  <td>公式値照合</td>
+  <td><b>公式資料</b><br>決算短信、決算説明資料、IR資料</td>
+  <td><a href="https://www.smfg.co.jp/investor/">www.smfg.co.jp/investor/</a><br><a href="https://www.smfg.co.jp/investor/financial/latest_statement.html">www.smfg.co.jp/investor/financial/latest_statement.html</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>候補化を保留</td>
+</tr><tr>
+  <td>2</td>
+  <td><b>8766.T</b><br>東京海上HD</td>
+  <td><span class="badge ok">先行確認</span><br><small>A 確認後に候補化可能</small></td>
+  <td>公式値照合</td>
+  <td><b>公式資料</b><br>決算短信、決算説明資料、IR資料</td>
+  <td><a href="https://www.tokiomarinehd.com/ir/">www.tokiomarinehd.com/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>候補化を保留</td>
+</tr><tr>
+  <td>3</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>PER/PBR/ROE</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://sumitomoelectric.com/jp/ir">sumitomoelectric.com/jp/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>4</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>PER/PBR/ROE</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.hitachi.co.jp/IR/">www.hitachi.co.jp/IR/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>5</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>PER/PBR/ROE</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mhi.com/jp/finance/ir">www.mhi.com/jp/finance/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>6</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>PER/PBR/ROE</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.itochu.co.jp/ja/ir/">www.itochu.co.jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>7</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>PER/PBR/ROE</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mitsui.com/jp/ja/ir/">www.mitsui.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>8</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>PER/PBR/ROE</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mitsubishicorp.com/jp/ja/ir/">www.mitsubishicorp.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>9</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>PER/PBR/ROE</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mufg.jp/ir/index.html">www.mufg.jp/ir/index.html</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>10</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>売上成長率・利益成長率</td>
+  <td><b>公式決算</b><br>決算短信、決算説明資料、通期予想</td>
+  <td><a href="https://sumitomoelectric.com/jp/ir">sumitomoelectric.com/jp/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>11</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>売上成長率・利益成長率</td>
+  <td><b>公式決算</b><br>決算短信、決算説明資料、通期予想</td>
+  <td><a href="https://www.hitachi.co.jp/IR/">www.hitachi.co.jp/IR/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>12</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>売上成長率・利益成長率</td>
+  <td><b>公式決算</b><br>決算短信、決算説明資料、通期予想</td>
+  <td><a href="https://www.mhi.com/jp/finance/ir">www.mhi.com/jp/finance/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>13</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>売上成長率・利益成長率</td>
+  <td><b>公式決算</b><br>決算短信、決算説明資料、通期予想</td>
+  <td><a href="https://www.itochu.co.jp/ja/ir/">www.itochu.co.jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>14</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>売上成長率・利益成長率</td>
+  <td><b>公式決算</b><br>決算短信、決算説明資料、通期予想</td>
+  <td><a href="https://www.mitsui.com/jp/ja/ir/">www.mitsui.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>15</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>売上成長率・利益成長率</td>
+  <td><b>公式決算</b><br>決算短信、決算説明資料、通期予想</td>
+  <td><a href="https://www.mitsubishicorp.com/jp/ja/ir/">www.mitsubishicorp.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>16</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td><span class="badge warn">財務補完</span><br><small>B 量的補完後に再計算</small></td>
+  <td>売上成長率・利益成長率</td>
+  <td><b>公式決算</b><br>決算短信、決算説明資料、通期予想</td>
+  <td><a href="https://www.mufg.jp/ir/index.html">www.mufg.jp/ir/index.html</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>17</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td><span class="badge mid">株価反応計算</span><br><small>B 量的補完後に再計算</small></td>
+  <td>決算後1日/5日/20日反応</td>
+  <td><b>株価時系列</b><br>Yahoo Finance chart API、日経平均またはTOPIX</td>
+  <td><a href="https://sumitomoelectric.com/jp/ir">sumitomoelectric.com/jp/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>18</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td><span class="badge mid">株価反応計算</span><br><small>B 量的補完後に再計算</small></td>
+  <td>決算後1日/5日/20日反応</td>
+  <td><b>株価時系列</b><br>Yahoo Finance chart API、日経平均またはTOPIX</td>
+  <td><a href="https://www.hitachi.co.jp/IR/">www.hitachi.co.jp/IR/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>19</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td><span class="badge mid">株価反応計算</span><br><small>B 量的補完後に再計算</small></td>
+  <td>決算後1日/5日/20日反応</td>
+  <td><b>株価時系列</b><br>Yahoo Finance chart API、日経平均またはTOPIX</td>
+  <td><a href="https://www.mhi.com/jp/finance/ir">www.mhi.com/jp/finance/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>20</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td><span class="badge mid">株価反応計算</span><br><small>B 量的補完後に再計算</small></td>
+  <td>決算後1日/5日/20日反応</td>
+  <td><b>株価時系列</b><br>Yahoo Finance chart API、日経平均またはTOPIX</td>
+  <td><a href="https://www.itochu.co.jp/ja/ir/">www.itochu.co.jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>21</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td><span class="badge mid">株価反応計算</span><br><small>B 量的補完後に再計算</small></td>
+  <td>決算後1日/5日/20日反応</td>
+  <td><b>株価時系列</b><br>Yahoo Finance chart API、日経平均またはTOPIX</td>
+  <td><a href="https://www.mitsui.com/jp/ja/ir/">www.mitsui.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>22</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td><span class="badge mid">株価反応計算</span><br><small>B 量的補完後に再計算</small></td>
+  <td>決算後1日/5日/20日反応</td>
+  <td><b>株価時系列</b><br>Yahoo Finance chart API、日経平均またはTOPIX</td>
+  <td><a href="https://www.mitsubishicorp.com/jp/ja/ir/">www.mitsubishicorp.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>23</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td><span class="badge mid">株価反応計算</span><br><small>B 量的補完後に再計算</small></td>
+  <td>決算後1日/5日/20日反応</td>
+  <td><b>株価時系列</b><br>Yahoo Finance chart API、日経平均またはTOPIX</td>
+  <td><a href="https://www.mufg.jp/ir/index.html">www.mufg.jp/ir/index.html</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>24</td>
+  <td><b>5801.T</b><br>古河電工</td>
+  <td><span class="badge peer">同業比較</span><br><small>C 仮説検算後に比較</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.furukawa.co.jp/ir/">www.furukawa.co.jp/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>25</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td><span class="badge peer">同業比較</span><br><small>B 量的補完後に再計算</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://sumitomoelectric.com/jp/ir">sumitomoelectric.com/jp/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>26</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td><span class="badge peer">同業比較</span><br><small>B 量的補完後に再計算</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.hitachi.co.jp/IR/">www.hitachi.co.jp/IR/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>27</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td><span class="badge peer">同業比較</span><br><small>B 量的補完後に再計算</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mhi.com/jp/finance/ir">www.mhi.com/jp/finance/ir</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>28</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td><span class="badge peer">同業比較</span><br><small>B 量的補完後に再計算</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.itochu.co.jp/ja/ir/">www.itochu.co.jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>29</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td><span class="badge peer">同業比較</span><br><small>B 量的補完後に再計算</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mitsui.com/jp/ja/ir/">www.mitsui.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>30</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td><span class="badge peer">同業比較</span><br><small>B 量的補完後に再計算</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mitsubishicorp.com/jp/ja/ir/">www.mitsubishicorp.com/jp/ja/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>31</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td><span class="badge peer">同業比較</span><br><small>B 量的補完後に再計算</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.mufg.jp/ir/index.html">www.mufg.jp/ir/index.html</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr><tr>
+  <td>32</td>
+  <td><b>8316.T</b><br>三井住友FG</td>
+  <td><span class="badge ok">先行確認</span><br><small>A 確認後に候補化可能</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.smfg.co.jp/investor/">www.smfg.co.jp/investor/</a><br><a href="https://www.smfg.co.jp/investor/financial/latest_statement.html">www.smfg.co.jp/investor/financial/latest_statement.html</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>候補化を保留</td>
+</tr><tr>
+  <td>33</td>
+  <td><b>8766.T</b><br>東京海上HD</td>
+  <td><span class="badge ok">先行確認</span><br><small>A 確認後に候補化可能</small></td>
+  <td>同業中央値比較</td>
+  <td><b>参考値 + 公式照合</b><br>Yahoo等の参考指標で入口確認し、IR/決算短信/有報で照合</td>
+  <td><a href="https://www.tokiomarinehd.com/ir/">www.tokiomarinehd.com/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>候補化を保留</td>
+</tr><tr>
+  <td>34</td>
+  <td><b>5801.T</b><br>古河電工</td>
+  <td><span class="badge risk">リスク検算</span><br><small>C 仮説検算後に比較</small></td>
+  <td>過熱・最大下落確認</td>
+  <td><b>株価時系列 + 指標</b><br>5年最大下落率、1年上昇率、出来高、PER</td>
+  <td><a href="https://www.furukawa.co.jp/ir/">www.furukawa.co.jp/ir/</a></td>
+  <td>取得元、対象期、単位、計算式を記録できた場合のみ反映</td>
+  <td>再計算対象から除外または比較枠へ下げる</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <p><a href="744_top10_data_execution_plan.csv">実行計画CSV</a> / <a href="745_top10_data_execution_summary.csv">要約CSV</a></p>
+  </section>
+</main>
+</body>
+</html>
