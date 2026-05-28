@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>候補10社変更理由・本日作業報告 2026年5月28日</title>
+  <style>
+    @page { size: A4 landscape; margin: 10mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Noto Sans JP", "Meiryo", "Yu Gothic", Arial, sans-serif; color:#050b14; background:#fff; line-height:1.55; font-size:11px; }
+    .page { page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+    .cover { min-height:180mm; background:#123d63; color:#fff; padding:22mm; }
+    h1 { margin:0 0 12px; font-size:30px; letter-spacing:0; }
+    h2 { margin:0 0 10px; padding-left:8px; border-left:6px solid #0b5f96; color:#123d63; font-size:18px; }
+    .cover h2 { color:#fff; border-color:#8fd3ff; }
+    .lead { font-size:15px; max-width:900px; }
+    .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
+    .card { border:1px solid #cbd8e6; background:#f8fbff; border-radius:8px; padding:10px; }
+    .cover .card { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff; }
+    .value { display:block; font-size:24px; font-weight:900; color:#0b5f96; }
+    .cover .value { color:#fff; }
+    section { padding:0; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; margin:6px 0 12px; }
+    th,td { border:1px solid #cbd8e6; padding:5px; vertical-align:top; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:#123d63; text-align:left; }
+    .note { border-left:6px solid #a85b00; background:#fff8ec; padding:8px; margin:8px 0 12px; }
+    .danger { border-left:6px solid #b42318; background:#fff4f2; padding:8px; margin:8px 0 12px; }
+    .small { font-size:10px; color:#34465b; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    a { color:#075e91; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <h1>候補10社変更理由・本日作業報告</h1>
+    <h2>2026年5月28日</h2>
+    <p class="lead">昨日の候補10社と今日の候補10社が変わった理由を、計算方法、追加データ、過熱補正、実用画面整理の観点から整理しました。</p>
+    <div class="cards">
+      <div class="card"><b>昨日候補</b><span class="value">10社</span><p>5/27 13:30時点</p></div>
+      <div class="card"><b>今日候補</b><span class="value">10社</span><p>5/28 朝更新後</p></div>
+      <div class="card"><b>共通銘柄</b><span class="value">3社</span><p>継続して残った銘柄</p></div>
+      <div class="card"><b>入替</b><span class="value">7社</span><p>今日新たに入った銘柄</p></div>
+    </div>
+    <p class="danger">本資料は判断補助の整理です。売買を確定するものではありません。6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後に再判定します。</p>
+  </section>
+
+  <section class="page">
+    <h2>1. 結論</h2>
+    <p class="note">候補が変わった主因は、昨日の「決算・PER等の補完済み候補中心」から、今日の「100社母集団、長期安定性、質的接続、株価時系列、過熱補正を入れた実用10社」へ評価軸を整理したためです。</p>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>式</th><th>意味</th></tr></thead><tbody><tr><td>朝更新スコア</td><td>事前スコア × 70% + 価格確認点 × 30%</td><td>既存の選定根拠を主軸にしつつ、直近の株価時系列を反映する。</td></tr><tr><td>価格確認点</td><td>1年騰落率、60日騰落率、日経平均との差、S&amp;P500差、最大下落率、過熱判定を総合</td><td>上がっているだけでなく、下落耐性と指数比較を確認する。</td></tr><tr><td>過熱補正</td><td>1年騰落率が極端に大きい場合、価格点を上限処理</td><td>急騰銘柄をそのまま高評価しない。</td></tr><tr><td>候補扱い</td><td>前面候補、比較候補、補完後に再確認、保留寄り、過熱確認を優先</td><td>順位と購入判断を分ける。順位上位でも追加確認が残る。</td></tr></tbody></table></div>
+    <h2>2. 今日の選出方法</h2>
+    <div class="table-wrap"><table><thead><tr><th>工程</th><th>内容</th><th>反映</th></tr></thead><tbody><tr><td>1. 母集団整理</td><td>100社前後の候補群から、長期安定性、量的点、質的接続、データ補完状況を確認した。</td><td>特定テーマだけでなく、銀行・保険・商社・インフラ・電線を比較対象に入れた。</td></tr><tr><td>2. 未取得データの扱い</td><td>未取得のPER/PBR/ROE、成長率、決算後反応は点数に混ぜず、確認項目として残した。</td><td>計算済みのように見せず、候補化前の不足項目を明記した。</td></tr><tr><td>3. 株価時系列の追加</td><td>10社の1年騰落率、60日騰落率、日経平均との差、S&amp;P500差、最大下落率を取得した。</td><td>価格確認点を作り、事前スコア70% + 価格確認点30%で朝更新スコアを算出した。</td></tr><tr><td>4. 過熱補正</td><td>1年騰落率が極端に大きい銘柄は価格点を上限処理した。</td><td>住友電工、古河電工はテーマが強くても「過熱確認を優先」とした。</td></tr><tr><td>5. 実用画面整理</td><td>資料を読む画面と、日付・ルール・銘柄・分岐を見る画面を分離した。</td><td>普段は実用パートで確認し、根拠確認時のみ資料パートを見る導線にした。</td></tr></tbody></table></div>
+  </section>
+
+  <section class="page">
+    <h2>3. 昨日から継続した銘柄</h2>
+    <div class="table-wrap"><table><thead><tr><th>銘柄</th><th>昨日順位</th><th>今日順位</th><th>変化理由</th></tr></thead><tbody><tr><td>8316.T 三井住友FG</td><td>1</td><td>1</td><td>今日の価格確認点、長期安定性、100社母集団の再整理後も候補に残った。</td></tr><tr><td>8306.T 三菱UFJ FG</td><td>5</td><td>4</td><td>今日の価格確認点、長期安定性、100社母集団の再整理後も候補に残った。</td></tr><tr><td>7011.T 三菱重工</td><td>10</td><td>6</td><td>今日の価格確認点、長期安定性、100社母集団の再整理後も候補に残った。</td></tr></tbody></table></div>
+    <h2>4. 今日新たに入った銘柄</h2>
+    <div class="table-wrap"><table><thead><tr><th>銘柄</th><th>今日順位</th><th>採用理由</th><th>注意</th></tr></thead><tbody><tr><td>8766.T 東京海上HD</td><td>2</td><td>事前スコア78.3点に、今朝の価格確認点59.2点を反映。金利・保険料率は、正味収入保険料、コンバインドレシオ、運用利回り、自然災害損害、ROEで確認する。</td><td>公式値照合 / 同業中央値比較</td></tr><tr><td>8058.T 三菱商事</td><td>3</td><td>事前スコア62.4点に、今朝の価格確認点74.6点を反映。資源・商品価格 / 資本政策は、資源利益、非資源利益、ROE、配当、自社株買い、原油・金属価格前提で確認する。</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>8031.T 三井物産</td><td>5</td><td>事前スコア60.1点に、今朝の価格確認点75.6点を反映。資源・商品価格 / 非資源成長は、資源利益、非資源利益、ROE、還元方針、原油・鉄鉱石・LNG前提で確認する。</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>8001.T 伊藤忠商事</td><td>7</td><td>事前スコア58.5点に、今朝の価格確認点64点を反映。非資源・資本政策は、非資源利益、ROE、株主還元、純利益進捗、セグメント別利益で確認する。</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>6501.T 日立製作所</td><td>8</td><td>事前スコア59.6点に、今朝の価格確認点59.8点を反映。AIデータセンター投資 / 電力・インフラは、Lumada売上、エネルギー部門受注、営業利益率、海外比率、受注残で確認する。</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>5802.T 住友電工</td><td>9</td><td>1年騰落率が314.78%と極端に大きいため、価格点を上限処理。情報通信売上、環境エネルギー売上、受注、銅価格影響、営業利益率で利益成長が追いつくか確認。</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>5801.T 古河電工</td><td>10</td><td>1年騰落率が680.01%と極端に大きいため、価格点を上限処理。情報通信売上、電力インフラ売上、営業利益率、最大下落率、出来高急増で利益成長が追いつくか確認。</td><td>過熱・最大下落確認 / 同業中央値比較</td></tr></tbody></table></div>
+  </section>
+
+  <section class="page">
+    <h2>5. 今日の10社から外れた銘柄</h2>
+    <div class="table-wrap"><table><thead><tr><th>銘柄</th><th>昨日順位</th><th>昨日時点の分類</th><th>今日外れた理由</th></tr></thead><tbody><tr><td>2802.T 味の素</td><td>2</td><td>追加確認付き中心</td><td>高PER・高PBRの説明力を再確認する必要があり、今日の10社では長期安定性・金利/商社/インフラ系の候補を優先した。</td></tr><tr><td>6762.T TDK</td><td>3</td><td>追加確認付き中心</td><td>電子部品テーマは残るが、今日の再計算では銀行・保険・商社・インフラ系の長期安定性と価格確認を優先した。</td></tr><tr><td>8053.T 住友商事</td><td>4</td><td>追加確認付き中心</td><td>商社枠は三菱商事、三井物産、伊藤忠商事へ整理し、住友商事は今回の10社から外した。</td></tr><tr><td>7173.T 東京きらぼしFG</td><td>6</td><td>監視</td><td>地銀枠は反応確認対象として残せるが、NISA 1年保有テストの中心候補ではメガバンクを優先した。</td></tr><tr><td>9984.T ソフトバンクG</td><td>7</td><td>監視</td><td>AI投資テーマは強いが、1年上昇率の過熱とPER未取得のため、今日の実用10社から外した。</td></tr><tr><td>7735.T SCREEN HD</td><td>8</td><td>監視</td><td>半導体装置テーマは残るが、利益成長マイナスと半導体市況感応度を確認するまで外した。</td></tr><tr><td>6146.T ディスコ</td><td>9</td><td>監視</td><td>高収益企業だが、PER未取得・PBR高・半導体市況感応度を確認する必要があり、今日の実用10社では外した。</td></tr></tbody></table></div>
+  </section>
+
+  <section class="page">
+    <h2>6. 今日の10社一覧</h2>
+    <div class="table-wrap"><table><thead><tr><th>現順位</th><th>銘柄</th><th>業種</th><th>事前スコア</th><th>価格確認点</th><th>1年騰落率%</th><th>過熱判定</th><th>朝更新スコア</th><th>扱い</th><th>確認</th></tr></thead><tbody><tr><td>1</td><td>8316.T 三井住友FG</td><td>銀行</td><td>82.9</td><td>71.2</td><td>62.05</td><td>通常範囲</td><td>79.4</td><td>前面候補</td><td>公式値照合 / 同業中央値比較</td></tr><tr><td>2</td><td>8766.T 東京海上HD</td><td>保険</td><td>78.3</td><td>59.2</td><td>20.51</td><td>通常範囲</td><td>72.6</td><td>比較候補</td><td>公式値照合 / 同業中央値比較</td></tr><tr><td>3</td><td>8058.T 三菱商事</td><td>商社</td><td>62.4</td><td>74.6</td><td>72.81</td><td>通常範囲</td><td>66.1</td><td>補完後に再確認</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>4</td><td>8306.T 三菱UFJ FG</td><td>銀行</td><td>64.6</td><td>69.2</td><td>51.96</td><td>通常範囲</td><td>66</td><td>補完後に再確認</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>5</td><td>8031.T 三井物産</td><td>商社</td><td>60.1</td><td>75.6</td><td>78.92</td><td>通常範囲</td><td>64.8</td><td>補完後に再確認</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>6</td><td>7011.T 三菱重工</td><td>重工・防衛</td><td>62.6</td><td>54.8</td><td>16.53</td><td>通常範囲</td><td>60.3</td><td>保留寄り</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>7</td><td>8001.T 伊藤忠商事</td><td>商社</td><td>58.5</td><td>64</td><td>28.19</td><td>通常範囲</td><td>60.1</td><td>補完後に再確認</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>8</td><td>6501.T 日立製作所</td><td>総合電機・IT</td><td>59.6</td><td>59.8</td><td>30.34</td><td>通常範囲</td><td>59.7</td><td>補完後に再確認</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>9</td><td>5802.T 住友電工</td><td>電線・通信</td><td>58.3</td><td>55</td><td>314.78</td><td>過熱・データ確認</td><td>57.3</td><td>過熱確認を優先</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>10</td><td>5801.T 古河電工</td><td>電線・通信</td><td>58</td><td>55</td><td>680.01</td><td>過熱・データ確認</td><td>57.1</td><td>過熱確認を優先</td><td>過熱・最大下落確認 / 同業中央値比較</td></tr></tbody></table></div>
+  </section>
+
+  <section class="page">
+    <h2>7. 本日の作業</h2>
+    <div class="table-wrap"><table><thead><tr><th>作業</th><th>内容</th></tr></thead><tbody><tr><td>現在10社の再計算画面を修正</td><td>長文の判断理由を一覧表から外し、下段カードへ分離。表の縦伸びを抑制した。</td></tr><tr><td>実用パートと資料パートの分離</td><td>トップページのリンクを、実用パートと資料パートの2タブに整理。実用パートを基本表示にした。</td></tr><tr><td>売買ルールの整理</td><td>共通ルールと銘柄別補正を分け、下値・上値・決算前後・指数劣後時の分岐を確認できるようにした。</td></tr><tr><td>6月予定表の整理</td><td>6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC、6月18日再判定、6月19日初回投入候補の流れを整理した。</td></tr></tbody></table></div>
+    <h2>8. 残る確認</h2>
+    <div class="two">
+      <div class="card"><b>データ補完</b><p>PER/PBR/ROE、売上成長率、利益成長率、決算後1日/5日/20日反応、同業中央値比較を補完する。</p></div>
+      <div class="card"><b>6月再判定</b><p>6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後に、市場反応と候補10社の価格反応を入れて再判定する。</p></div>
+    </div>
+    <p class="small">作成: 2026/05/28 17:56</p>
+  </section>
+</body>
+</html>
