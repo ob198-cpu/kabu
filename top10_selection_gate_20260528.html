@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社選定ゲート 事前候補</title>
+  <style>
+    :root { --ink:#050b14; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:22px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    .grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    .notice { border-left:6px solid var(--amber); background:#fff8ec; padding:12px; border-radius:8px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    th:nth-child(1), td:nth-child(1) { width:5%; text-align:center; }
+    th:nth-child(2), td:nth-child(2) { width:13%; }
+    .badge { display:inline-block; border-radius:8px; color:#fff; padding:4px 8px; font-weight:900; }
+    .ok { background:var(--green); }
+    .warn { background:var(--amber); }
+    .risk { background:var(--red); }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>10社選定ゲート 事前候補</h1>
+    <p>補完優先キューから10社を抽出し、どの段階で候補化できるかを分けました。未補完の値は購入候補スコアに混ぜず、入力欄として管理します。</p>
+    <p>作成: 2026/05/28 11:13</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>事前選定数</b><div class="value">10</div><p>補完キュー上位から10社を抽出</p></div><div class="card"><b>確認後に候補化可能</b><div class="value">2</div><p>既存データが比較的そろう銘柄</p></div><div class="card"><b>量的補完後に再計算</b><div class="value">7</div><p>財務・決算後反応の追加が必要な銘柄</p></div><div class="card"><b>仮説検算後に比較</b><div class="value">1</div><p>テーマ先行・過熱確認が必要な銘柄</p></div><div class="card"><b>入力欄数</b><div class="value">34</div><p>銘柄別に次に埋める値の数</p></div>
+  </div>
+
+  <section>
+    <h2>扱い</h2>
+    <p class="notice">この10社は最終購入候補ではありません。現時点では、公式値照合、財務補完、決算後反応、同業中央値、過熱確認を行うための事前候補です。補完後に再計算し、6月の市場イベント後に残す銘柄を再判定します。</p>
+  </section>
+
+  <section>
+    <h2>事前候補10社</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順</th><th>銘柄</th><th>業種</th><th>事前スコア</th><th>質的接続</th><th>判定段階</th><th>理由</th><th>次に入れるデータ</th></tr></thead>
+        <tbody><tr>
+  <td>1</td>
+  <td><b>8316.T</b><br>三井住友FG</td>
+  <td>銀行</td>
+  <td><b>82.9</b><br><small>長期 83.6 / 量的 69</small></td>
+  <td>金利・銀行/保険(82)</td>
+  <td><span class="badge ok">A 確認後に候補化可能</span></td>
+  <td>既存の量的評価・長期安定性・質的接続がそろう。原資料照合と6月イベント確認で候補化できる。</td>
+  <td>公式値照合 / 同業中央値比較</td>
+</tr><tr>
+  <td>2</td>
+  <td><b>8766.T</b><br>東京海上HD</td>
+  <td>保険</td>
+  <td><b>78.3</b><br><small>長期 76.2 / 量的 74</small></td>
+  <td>金利・銀行/保険(78)</td>
+  <td><span class="badge ok">A 確認後に候補化可能</span></td>
+  <td>既存の量的評価・長期安定性・質的接続がそろう。原資料照合と6月イベント確認で候補化できる。</td>
+  <td>公式値照合 / 同業中央値比較</td>
+</tr><tr>
+  <td>3</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td>銀行</td>
+  <td><b>64.6</b><br><small>長期 81.6 / 量的 未補完</small></td>
+  <td>金利・銀行/保険(82)</td>
+  <td><span class="badge warn">B 量的補完後に再計算</span></td>
+  <td>長期では浮上しているが、PER/PBR/ROE、成長率、決算後反応を埋めるまで候補確定にしない。</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+</tr><tr>
+  <td>4</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td>重工・防衛</td>
+  <td><b>62.6</b><br><small>長期 78.1 / 量的 未補完</small></td>
+  <td>防衛・政策(84)</td>
+  <td><span class="badge warn">B 量的補完後に再計算</span></td>
+  <td>長期では浮上しているが、PER/PBR/ROE、成長率、決算後反応を埋めるまで候補確定にしない。</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+</tr><tr>
+  <td>5</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td>商社</td>
+  <td><b>62.4</b><br><small>長期 78.2 / 量的 未補完</small></td>
+  <td>円安・資源・商社(82)</td>
+  <td><span class="badge warn">B 量的補完後に再計算</span></td>
+  <td>長期では浮上しているが、PER/PBR/ROE、成長率、決算後反応を埋めるまで候補確定にしない。</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+</tr><tr>
+  <td>6</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td>総合電機・IT</td>
+  <td><b>59.6</b><br><small>長期 73.8 / 量的 未補完</small></td>
+  <td>AI・データセンター(82) / 防衛・政策(72)</td>
+  <td><span class="badge warn">B 量的補完後に再計算</span></td>
+  <td>長期では浮上しているが、PER/PBR/ROE、成長率、決算後反応を埋めるまで候補確定にしない。</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+</tr><tr>
+  <td>7</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td>商社</td>
+  <td><b>60.1</b><br><small>長期 75.6 / 量的 未補完</small></td>
+  <td>円安・資源・商社(77)</td>
+  <td><span class="badge warn">B 量的補完後に再計算</span></td>
+  <td>長期では浮上しているが、PER/PBR/ROE、成長率、決算後反応を埋めるまで候補確定にしない。</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+</tr><tr>
+  <td>8</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td>電線・通信</td>
+  <td><b>58.3</b><br><small>長期 71.4 / 量的 未補完</small></td>
+  <td>AI・データセンター(84)</td>
+  <td><span class="badge warn">B 量的補完後に再計算</span></td>
+  <td>長期では浮上しているが、PER/PBR/ROE、成長率、決算後反応を埋めるまで候補確定にしない。</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+</tr><tr>
+  <td>9</td>
+  <td><b>5801.T</b><br>古河電工</td>
+  <td>電線・通信</td>
+  <td><b>58</b><br><small>長期 64.7 / 量的 68</small></td>
+  <td>AI・データセンター(86)</td>
+  <td><span class="badge risk">C 仮説検算後に比較</span></td>
+  <td>テーマ接続は強いが、過熱や最大下落率の確認を先に行う。</td>
+  <td>過熱・最大下落確認 / 同業中央値比較</td>
+</tr><tr>
+  <td>10</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td>商社</td>
+  <td><b>58.5</b><br><small>長期 72.7 / 量的 未補完</small></td>
+  <td>円安・資源・商社(79)</td>
+  <td><span class="badge warn">B 量的補完後に再計算</span></td>
+  <td>長期では浮上しているが、PER/PBR/ROE、成長率、決算後反応を埋めるまで候補確定にしない。</td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>入力欄</h2>
+    <p>次に埋める値を、銘柄別・項目別に展開しています。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順</th><th>銘柄</th><th>入力項目</th><th>推奨取得先</th><th>判定への使い方</th></tr></thead>
+        <tbody><tr>
+  <td>1</td>
+  <td><b>8316.T</b><br>三井住友FG</td>
+  <td>公式値照合</td>
+  <td>原資料、決算短信、IR資料</td>
+  <td>既存入力値が原資料と一致するか確認</td>
+</tr><tr>
+  <td>2</td>
+  <td><b>8316.T</b><br>三井住友FG</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>3</td>
+  <td><b>8766.T</b><br>東京海上HD</td>
+  <td>公式値照合</td>
+  <td>原資料、決算短信、IR資料</td>
+  <td>既存入力値が原資料と一致するか確認</td>
+</tr><tr>
+  <td>4</td>
+  <td><b>8766.T</b><br>東京海上HD</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>5</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td>PER/PBR/ROE</td>
+  <td>決算短信、IR、EDINET、J-Quants等</td>
+  <td>同業中央値と比較し、割高・割安・資本効率を確認</td>
+</tr><tr>
+  <td>6</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td>売上成長率・利益成長率</td>
+  <td>直近決算、過去決算、通期予想</td>
+  <td>長期株価上昇が業績成長で説明できるか確認</td>
+</tr><tr>
+  <td>7</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td>決算後1日/5日/20日反応</td>
+  <td>株価時系列、日経平均またはTOPIX</td>
+  <td>決算後に市場平均を上回ったか確認</td>
+</tr><tr>
+  <td>8</td>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>9</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td>PER/PBR/ROE</td>
+  <td>決算短信、IR、EDINET、J-Quants等</td>
+  <td>同業中央値と比較し、割高・割安・資本効率を確認</td>
+</tr><tr>
+  <td>10</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td>売上成長率・利益成長率</td>
+  <td>直近決算、過去決算、通期予想</td>
+  <td>長期株価上昇が業績成長で説明できるか確認</td>
+</tr><tr>
+  <td>11</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td>決算後1日/5日/20日反応</td>
+  <td>株価時系列、日経平均またはTOPIX</td>
+  <td>決算後に市場平均を上回ったか確認</td>
+</tr><tr>
+  <td>12</td>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>13</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td>PER/PBR/ROE</td>
+  <td>決算短信、IR、EDINET、J-Quants等</td>
+  <td>同業中央値と比較し、割高・割安・資本効率を確認</td>
+</tr><tr>
+  <td>14</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td>売上成長率・利益成長率</td>
+  <td>直近決算、過去決算、通期予想</td>
+  <td>長期株価上昇が業績成長で説明できるか確認</td>
+</tr><tr>
+  <td>15</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td>決算後1日/5日/20日反応</td>
+  <td>株価時系列、日経平均またはTOPIX</td>
+  <td>決算後に市場平均を上回ったか確認</td>
+</tr><tr>
+  <td>16</td>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>17</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td>PER/PBR/ROE</td>
+  <td>決算短信、IR、EDINET、J-Quants等</td>
+  <td>同業中央値と比較し、割高・割安・資本効率を確認</td>
+</tr><tr>
+  <td>18</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td>売上成長率・利益成長率</td>
+  <td>直近決算、過去決算、通期予想</td>
+  <td>長期株価上昇が業績成長で説明できるか確認</td>
+</tr><tr>
+  <td>19</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td>決算後1日/5日/20日反応</td>
+  <td>株価時系列、日経平均またはTOPIX</td>
+  <td>決算後に市場平均を上回ったか確認</td>
+</tr><tr>
+  <td>20</td>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>21</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td>PER/PBR/ROE</td>
+  <td>決算短信、IR、EDINET、J-Quants等</td>
+  <td>同業中央値と比較し、割高・割安・資本効率を確認</td>
+</tr><tr>
+  <td>22</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td>売上成長率・利益成長率</td>
+  <td>直近決算、過去決算、通期予想</td>
+  <td>長期株価上昇が業績成長で説明できるか確認</td>
+</tr><tr>
+  <td>23</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td>決算後1日/5日/20日反応</td>
+  <td>株価時系列、日経平均またはTOPIX</td>
+  <td>決算後に市場平均を上回ったか確認</td>
+</tr><tr>
+  <td>24</td>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>25</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td>PER/PBR/ROE</td>
+  <td>決算短信、IR、EDINET、J-Quants等</td>
+  <td>同業中央値と比較し、割高・割安・資本効率を確認</td>
+</tr><tr>
+  <td>26</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td>売上成長率・利益成長率</td>
+  <td>直近決算、過去決算、通期予想</td>
+  <td>長期株価上昇が業績成長で説明できるか確認</td>
+</tr><tr>
+  <td>27</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td>決算後1日/5日/20日反応</td>
+  <td>株価時系列、日経平均またはTOPIX</td>
+  <td>決算後に市場平均を上回ったか確認</td>
+</tr><tr>
+  <td>28</td>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>29</td>
+  <td><b>5801.T</b><br>古河電工</td>
+  <td>過熱・最大下落確認</td>
+  <td>5年最大下落率、1年上昇率、出来高、PER</td>
+  <td>テーマ先行で買われすぎていないか確認</td>
+</tr><tr>
+  <td>30</td>
+  <td><b>5801.T</b><br>古河電工</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr><tr>
+  <td>31</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td>PER/PBR/ROE</td>
+  <td>決算短信、IR、EDINET、J-Quants等</td>
+  <td>同業中央値と比較し、割高・割安・資本効率を確認</td>
+</tr><tr>
+  <td>32</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td>売上成長率・利益成長率</td>
+  <td>直近決算、過去決算、通期予想</td>
+  <td>長期株価上昇が業績成長で説明できるか確認</td>
+</tr><tr>
+  <td>33</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td>決算後1日/5日/20日反応</td>
+  <td>株価時系列、日経平均またはTOPIX</td>
+  <td>決算後に市場平均を上回ったか確認</td>
+</tr><tr>
+  <td>34</td>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td>同業中央値比較</td>
+  <td>同業3〜5社のPER/PBR/ROE</td>
+  <td>業種ごとの差を補正して比較</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <p><a href="741_top10_selection_gate.csv">10社選定ゲートCSV</a> / <a href="742_top10_required_input_template.csv">入力テンプレートCSV</a> / <a href="743_top10_selection_gate_summary.csv">要約CSV</a></p>
+  </section>
+</main>
+</body>
+</html>
