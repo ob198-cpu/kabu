@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>実用パート 操作ダッシュボード</title>
+  <style>
+    :root {
+      --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6;
+      --bg:#eef4fa; --green:#087f5b; --amber:#a85b00; --red:#b42318;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.7; }
+    main { max-width:1320px; margin:0 auto; padding:24px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:26px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:8px; background:#f8fbff; padding:14px; }
+    .card strong { display:block; font-size:14px; color:var(--navy); }
+    .value { font-size:28px; font-weight:900; color:var(--blue); margin:2px 0; }
+    .ok { color:var(--green); font-weight:800; }
+    .warn { color:var(--amber); font-weight:800; }
+    .stop { color:var(--red); font-weight:800; }
+    .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; margin:10px 0; }
+    .danger { border-left:6px solid var(--red); background:#fff4f2; border-radius:8px; padding:12px; margin:10px 0; }
+    .actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .button { display:block; text-align:center; text-decoration:none; border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:11px 12px; font-weight:800; }
+    .button.secondary { background:#fff; color:var(--blue); }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; align-items:stretch; }
+    .step { border:1px solid var(--line); border-radius:8px; padding:10px; background:#f8fbff; position:relative; }
+    .step:not(:last-child)::after { content:"→"; position:absolute; right:-10px; top:38%; color:var(--blue); font-weight:900; }
+    @media (max-width:980px) {
+      .grid,.actions,.flow { grid-template-columns:1fr; }
+      .step::after { display:none; }
+      table { table-layout:auto; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>実用パート 操作ダッシュボード</h1>
+    <p>「いつ何を確認し、どの条件なら何をするか」を見るための入口です。資料を読む画面ではなく、6月のNISA 1年保有テストに向けたアクション確認用です。</p>
+  </header>
+
+  <section>
+    <h2>最初に見る結論</h2>
+    <div class="grid">
+      <div class="card"><strong>現在の位置</strong><div class="value">購入前</div><p>候補とルールの確認段階</p></div>
+      <div class="card"><strong>次の重要確認</strong><div class="value">6/10</div><p>米CPI後の金利・為替・指数反応</p></div>
+      <div class="card"><strong>初回実行候補</strong><div class="value">6/19</div><p>6/18再判定が良好な場合</p></div>
+      <div class="card"><strong>資金上限</strong><div class="value">90%</div><p>200万円中180万円まで、10%は現金</p></div>
+    </div>
+    <p class="danger">現時点では売買確定ではありません。6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後に再判定します。</p>
+  </section>
+
+  <section>
+    <h2>実用リンク</h2>
+    <div class="actions">
+      <a class="button" href="morning_recalc_top10_20260528.html">現在の10社を見る</a>
+      <a class="button" href="provisional_trade_execution_plan_20260528.html">日付入り実行予定を見る</a>
+      <a class="button" href="trade_rules_common_stock_20260528.html">売買ルールを見る</a>
+      <a class="button secondary" href="top10_decision_control_board_20260528.html">10社判定コントロール表</a>
+      <a class="button secondary" href="top10_score_input_calculator_20260528.html">10社スコア入力・再計算</a>
+      <a class="button secondary" href="top10_price_metrics_refresh_20260528.html">株価時系列 取得結果</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>6月の実行フロー</h2>
+    <div class="flow">
+      <div class="step"><b>6/10</b><br>米CPIを確認<br><span class="warn">売買しない</span></div>
+      <div class="step"><b>6/15〜6/16</b><br>日銀結果を確認<br><span class="warn">原則売買しない</span></div>
+      <div class="step"><b>6/16〜6/17</b><br>FOMC結果を確認<br><span class="warn">原則売買しない</span></div>
+      <div class="step"><b>6/18</b><br>候補10社を再判定<br><span class="ok">条件良好なら実行準備</span></div>
+      <div class="step"><b>6/19</b><br>初回投入候補<br><span class="ok">最大30%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>現在の10社</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順位</th><th>銘柄</th><th>スコア</th><th>現時点の扱い</th><th>確認すること</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>8316.T 三井住友FG</td><td>79.4</td><td class="ok">前面候補</td><td>公式値照合、同業中央値、利ざや、与信費用</td></tr>
+          <tr><td>2</td><td>8766.T 東京海上HD</td><td>72.6</td><td class="warn">比較候補</td><td>保険料率、災害損害、運用利回り、ROE</td></tr>
+          <tr><td>3</td><td>8058.T 三菱商事</td><td>66.1</td><td class="warn">補完後に再確認</td><td>PER/PBR/ROE、利益成長、還元、資源価格</td></tr>
+          <tr><td>4</td><td>8306.T 三菱UFJ FG</td><td>66.0</td><td class="warn">補完後に再確認</td><td>国内外利ざや、信用コスト、PBR、ROE</td></tr>
+          <tr><td>5</td><td>8031.T 三井物産</td><td>64.8</td><td class="warn">補完後に再確認</td><td>資源・非資源利益、還元、商品価格前提</td></tr>
+          <tr><td>6</td><td>7011.T 三菱重工</td><td>60.3</td><td class="warn">保留寄り</td><td>受注残、防衛関連売上、利益率</td></tr>
+          <tr><td>7</td><td>8001.T 伊藤忠商事</td><td>60.1</td><td class="warn">補完後に再確認</td><td>非資源利益、還元、商社内比較</td></tr>
+          <tr><td>8</td><td>6501.T 日立製作所</td><td>59.7</td><td class="warn">補完後に再確認</td><td>Lumada、エネルギー受注、利益率</td></tr>
+          <tr><td>9</td><td>5802.T 住友電工</td><td>57.3</td><td class="stop">過熱確認を優先</td><td>1年上昇率、利益成長、同業比較</td></tr>
+          <tr><td>10</td><td>5801.T 古河電工</td><td>57.1</td><td class="stop">過熱確認を優先</td><td>上昇率、最大下落、利益成長、同業比較</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>資金配分の現在案</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>区分</th><th>日付候補</th><th>比率</th><th>金額</th><th>条件</th></tr></thead>
+        <tbody>
+          <tr><td>初回</td><td>2026-06-19</td><td>30%</td><td>600,000円</td><td>CPI、日銀、FOMC後に市場が崩れていない</td></tr>
+          <tr><td>第2回</td><td>2026-06-26</td><td>25%</td><td>500,000円</td><td>初回後に候補が指数へ大きく劣後しない</td></tr>
+          <tr><td>第3回</td><td>2026-07-03</td><td>20%</td><td>400,000円</td><td>月末月初の需給と75日線を確認</td></tr>
+          <tr><td>決算後</td><td>2026-08-14</td><td>15%</td><td>300,000円</td><td>4〜6月期決算と決算後反応を確認</td></tr>
+          <tr><td>現金</td><td>常時</td><td>10%</td><td>200,000円</td><td>急落、入替、イベント悪化への待機</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>分岐ルール</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>状況</th><th>行動</th><th>理由</th></tr></thead>
+        <tbody>
+          <tr><td>米CPI悪化、米10年金利急騰、米株急落</td><td class="stop">初回投入を延期または半分以下へ縮小</td><td>高PER・景気敏感株の下落リスクを避ける</td></tr>
+          <tr><td>日銀後に円高ショック、日経平均75日線割れ</td><td class="stop">新規投入停止</td><td>個別要因より市場全体の地合い悪化が強いため</td></tr>
+          <tr><td>条件良好、候補に停止条件なし</td><td class="ok">6/19に最大30%を候補</td><td>イベント通過後の反応を確認できるため</td></tr>
+          <tr><td>購入後-5%</td><td class="warn">追加購入せず原因確認</td><td>押し目か仮説崩れかを分ける</td></tr>
+          <tr><td>購入後-10%</td><td class="stop">保有再判定、悪材料なら減額</td><td>NISAでも前提崩れは放置しない</td></tr>
+          <tr><td>購入後+20%</td><td class="warn">一部利確を検討</td><td>利益固定と1年保有余地を両立する</td></tr>
+          <tr><td>3か月で比較対象に劣後</td><td class="warn">個別株比率を下げる候補</td><td>目標は無難な代替運用を+1%以上上回ること</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>資料パートへ</h2>
+    <p>説明資料、根拠資料、進捗PDF、開発・履歴資料は別画面に分けました。</p>
+    <div class="actions">
+      <a class="button secondary" href="materials_library_20260528.html">資料パートを見る</a>
+      <a class="button secondary" href="index.html">トップへ戻る</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>

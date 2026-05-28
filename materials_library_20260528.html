@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>資料パート ライブラリ</title>
+  <style>
+    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.7; }
+    main { max-width:1240px; margin:0 auto; padding:24px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:26px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:8px; background:#f8fbff; padding:14px; min-height:130px; }
+    .card h3 { margin:0 0 8px; color:var(--navy); }
+    .card p { margin:0 0 10px; }
+    .button { display:inline-block; text-decoration:none; border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:9px 12px; font-weight:800; margin:3px 6px 3px 0; }
+    .button.secondary { background:#fff; color:var(--blue); }
+    .note { border-left:6px solid #a85b00; background:#fff8ec; border-radius:8px; padding:12px; margin:10px 0; }
+    @media (max-width:980px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>資料パート ライブラリ</h1>
+    <p>説明・根拠・進捗・開発履歴を見るための入口です。実際の判断や次アクションは実用パートに分けました。</p>
+  </header>
+
+  <section>
+    <h2>まず読む資料</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>本日の進捗資料</h3>
+        <p>2026年5月28日の作業内容、再計算、ルール、残タスクのまとめ。</p>
+        <a class="button" href="daily_progress_report_20260528.pdf">PDF</a>
+        <a class="button secondary" href="daily_progress_report_20260528.html">HTML</a>
+      </div>
+      <div class="card">
+        <h3>候補10社の説明資料</h3>
+        <p>候補10社、選定ロジック、インデックス比較、6月判定フローの説明。</p>
+        <a class="button" href="candidate_10_presentation_brief_20260527.html">10社選出根拠</a>
+        <a class="button secondary" href="final_report_1600_20260527.html">候補10社 報告資料</a>
+      </div>
+      <div class="card">
+        <h3>提案・要約資料</h3>
+        <p>提案の全体像と1枚要約を確認する資料。</p>
+        <a class="button" href="broker_style_proposal_20260527.html">NISA日本株 提案資料</a>
+        <a class="button secondary" href="today_onepage_summary_20260527.html">1枚要約</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>根拠・検算資料</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>100社母集団</h3>
+        <p>都合よく候補を選ばないための母集団定義と統合選定表。</p>
+        <a class="button" href="universe_definition_20260525.html">母集団定義</a>
+        <a class="button secondary" href="integrated_selection_workbench_20260528.html">統合選定</a>
+      </div>
+      <div class="card">
+        <h3>量的データ</h3>
+        <p>株価時系列、長期安定性、スコア入力、再計算の確認。</p>
+        <a class="button" href="top10_price_metrics_refresh_20260528.html">株価時系列</a>
+        <a class="button secondary" href="long_term_stability_score_20260528.html">長期安定性</a>
+      </div>
+      <div class="card">
+        <h3>質的データ</h3>
+        <p>時流・イベント・構造優位を、仮説と検証に分ける資料。</p>
+        <a class="button" href="qualitative_evidence_taxonomy_20260528.html">レイヤー設計</a>
+        <a class="button secondary" href="qualitative_reflection_matrix_20260528.html">10社反映</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>開発・管理資料</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>データ取得</h3>
+        <p>取得できたデータ、取得候補、未取得データの確認。</p>
+        <a class="button" href="data_sources_view.html">データ取得結果</a>
+        <a class="button secondary" href="top10_data_execution_plan_20260528.html">10社データ取得計画</a>
+      </div>
+      <div class="card">
+        <h3>モデル監査</h3>
+        <p>未取得データの非加点、因果確認、過去検証などの監査資料。</p>
+        <a class="button" href="model_integrity_audit.html">モデル監査</a>
+        <a class="button secondary" href="event_causality_validation_20260525.html">イベント因果チェック</a>
+      </div>
+      <div class="card">
+        <h3>履歴資料</h3>
+        <p>旧計画や初期MVPなど、現在の判断画面ではなく履歴として見る資料。</p>
+        <a class="button" href="development_plan.html">旧開発計画</a>
+        <a class="button secondary" href="system_spec_schedule.pdf">旧仕様・工期PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>実用パートへ</h2>
+    <p class="note">今日の候補、6月の日付、売買分岐、配分を見る場合は実用パートを使います。</p>
+    <a class="button" href="practical_action_dashboard_20260528.html">実用パートを見る</a>
+    <a class="button secondary" href="index.html">トップへ戻る</a>
+  </section>
+</main>
+</body>
+</html>

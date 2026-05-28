@@ -134,6 +134,39 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+    .part-gateway {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 14px;
+    }
+    .part-card {
+      display: block;
+      text-decoration: none;
+      color: #ffffff;
+      border: 1px solid rgba(156, 200, 236, .9);
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(255,255,255,.1);
+    }
+    .part-card b {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 8px;
+      letter-spacing: 0;
+    }
+    .part-card span {
+      display: block;
+      color: #dbeafe;
+      font-size: 13px;
+      white-space: normal;
+    }
+    .part-card.primary {
+      background: #ffffff;
+      color: var(--navy);
+      border-color: #ffffff;
+    }
+    .part-card.primary span { color: #36506a; }
     .link-tabs {
       width: 100%;
       margin-top: 8px;
@@ -1477,6 +1510,7 @@
       .mobile-only { display: block; }
       .hero p { word-break: break-all; }
       .hero { padding: 22px 18px; border-radius: 16px; overflow: hidden; }
+      .part-gateway { grid-template-columns: 1fr; }
       .hero-actions { display: grid; grid-template-columns: 1fr; }
       .link-tab-panel { grid-template-columns: 1fr; }
       .button { width: 100%; }
@@ -1511,6 +1545,8 @@
         <p class="brand-sub">100万円 / 3か月 / 条件分岐型</p>
       </div>
       <nav class="nav" aria-label="ページ内ナビゲーション">
+        <a href="practical_action_dashboard_20260528.html">実用パート</a>
+        <a href="materials_library_20260528.html">資料パート</a>
         <a href="#summary">結論</a>
         <a href="#live-data">最新データ</a>
         <a href="#dollar-risk">ドル監視</a>
@@ -1671,7 +1707,19 @@
         <div>
           <h1>NISAで日経平均を<br class="mobile-only">超えるための<br>日本株モデル</h1>
           <p>この提案では、半導体AI、金利、株主還元、医薬成長、ゲーム周期を組み合わせ、3か月で比較対象を<b>+1%ポイント以上</b>上回ることを明確な目標にします。</p>
+          <div class="part-gateway" aria-label="システム入口">
+            <a class="part-card primary" href="practical_action_dashboard_20260528.html">
+              <b>実用パート</b>
+              <span>現在の10社、次の確認日、投入比率、売買分岐、上値・下値ルールを見る画面。</span>
+            </a>
+            <a class="part-card" href="materials_library_20260528.html">
+              <b>資料パート</b>
+              <span>説明資料、根拠資料、進捗PDF、開発履歴を読む画面。</span>
+            </a>
+          </div>
           <div class="hero-actions">
+            <a class="button" href="practical_action_dashboard_20260528.html">実用パートを開く</a>
+            <a class="button secondary" href="materials_library_20260528.html">資料パートを開く</a>
             <a class="button secondary" href="operation_cockpit.html">運用コックピット</a>
             <a class="button secondary" href="delivery_check_report.html">資料確認</a>
             <a class="button secondary" href="client_handoff_guide.html">資料ガイド</a>
