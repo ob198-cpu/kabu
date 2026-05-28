@@ -1,4 +1,5 @@
 import csv
+import shutil
 from pathlib import Path
 
 from reportlab.lib import colors
@@ -13,6 +14,7 @@ from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Table, T
 ROOT = Path.cwd()
 HTML = ROOT / "selection_change_report_20260528.html"
 PDF = ROOT / "selection_change_report_20260528.pdf"
+SAFE_PDF = ROOT / "selection_change_report_20260528_sp5_pagesafe.pdf"
 
 pdfmetrics.registerFont(UnicodeCIDFont("HeiseiKakuGo-W5"))
 FONT = "HeiseiKakuGo-W5"
@@ -34,19 +36,19 @@ NAMES = {
     "5802.T": ("住友電工", "電線・通信"),
 }
 
-# S&P500+5%（年率15%）を超えるための利益目標ゲート版。
-# 高成長銘柄の比率が上がるため、通常版より値動きリスクも上がる。
+# 三菱重工は直近20日・60日の価格悪化を反映し、中心25%から条件付き5%へ下げる。
+# S&P500+5%の年率15%を保つには、フジクラへの集中が必要になるため、集中リスクも明記する。
 WEIGHTS = {
-    "5803.T": 25,
-    "7011.T": 25,
-    "8002.T": 10,
-    "6857.T": 8,
-    "8058.T": 7,
+    "5803.T": 43,
+    "7011.T": 5,
+    "8002.T": 14,
+    "6857.T": 10,
+    "8058.T": 8,
     "8053.T": 6,
-    "8031.T": 5,
-    "8306.T": 5,
-    "1605.T": 4,
-    "5802.T": 5,
+    "8031.T": 4,
+    "8306.T": 4,
+    "1605.T": 3,
+    "5802.T": 3,
 }
 
 
@@ -122,49 +124,78 @@ def metric(ticker):
     }
 
 
+price_7011 = {
+    "20日騰落率": "-19.67%",
+    "60日騰落率": "-22.34%",
+    "1年騰落率": "+16.53%",
+    "日経平均との差": "-54.98%",
+    "S&P500差": "-11.18%",
+    "価格確認点": "54.8点",
+    "価格面の扱い": "要注意",
+}
+
 portfolio_rate = sum(metric(ticker)["practical"] * weight / 100 for ticker, weight in WEIGHTS.items())
 profit_1y = CAPITAL * portfolio_rate / 100
 sp_profit_1y = CAPITAL * SP_RATE / 100
 target_profit_1y = CAPITAL * TARGET_RATE / 100
 
+work_rows = [
+    {
+        "項目": "本日の確認対象",
+        "内容": "前回の候補10社について、長期実績だけでなく直近株価の弱さも反映できているかを確認した。",
+    },
+    {
+        "項目": "確認した問題",
+        "内容": "三菱重工は長期実績では高評価だった一方、今年の値動きが弱く、中心比率のままでは説明が不十分だった。",
+    },
+    {
+        "項目": "本日の修正",
+        "内容": "三菱重工を中心25%から条件付き5%へ下げ、修正後の10社配分とS&P500比較を再計算した。",
+    },
+    {
+        "項目": "確認した結論",
+        "内容": f"修正後の年率試算は{pct(portfolio_rate)}。S&P500+5%の年率15%ラインは上回るが、フジクラ比率が高くなるため集中リスクも明記した。",
+    },
+]
+
 summary_rows = [
     {
         "項目": "修正理由",
-        "説明": "継続安定版では年率10.4%で、S&P500+5%の年率15%目標に届かなかったため、利益目標ゲートで再選定した。",
+        "説明": "三菱重工は、長期実績だけを見ると強いが、直近20日・60日の下落が大きいため、中心25%から条件付き5%へ下げた。",
     },
     {
-        "項目": "新しい条件",
-        "説明": "100社母集団から、保守補正後の実用年率が高い銘柄を優先。S&P500+5%を超える組み合わせになるように比率を再設計した。",
+        "項目": "三菱重工の直近価格",
+        "説明": "20日-19.67%、60日-22.34%、日経平均との差-54.98%、S&P500差-11.18%、価格確認点54.8点。短期価格面は要注意。",
     },
     {
-        "項目": "新10社の年率試算",
-        "説明": f"今の10社を新しい比率で持った場合、保守補正後の年率試算は{pct(portfolio_rate)}。200万円では1年利益が約{yen(profit_1y)}。",
+        "項目": "修正後の年率試算",
+        "説明": f"修正後10社を新比率で持った場合、保守補正後の年率試算は{pct(portfolio_rate)}。200万円では1年利益が約{yen(profit_1y)}。",
     },
     {
-        "項目": "S&P500との比較",
-        "説明": f"S&P500年率10%なら1年利益は{yen(sp_profit_1y)}。S&P500+5%の年率15%なら{yen(target_profit_1y)}。新10社は15%目標を約{yen(profit_1y - target_profit_1y)}上回る試算。",
+        "項目": "S&P+5%との比較",
+        "説明": f"S&P500+5%の年率15%ラインは1年利益{yen(target_profit_1y)}。修正後10社は約{yen(profit_1y - target_profit_1y)}上回る試算。",
     },
     {
         "項目": "注意点",
-        "説明": "S&P+5%を超えるには、フジクラ・三菱重工など高成長銘柄の比率が高くなる。期待値は上がる一方、下落時の振れ幅も大きくなるため、6月イベント後の再確認を必須条件にする。",
+        "説明": "三菱重工を下げてもS&P+5%を超えるには、フジクラの比率が43%まで上がる。目標は維持できるが、銘柄集中リスクは上がる。",
     },
 ]
 
 change_rows = [
     {
-        "区分": "上げる",
-        "銘柄": "5803 フジクラ / 7011 三菱重工 / 6857 アドバンテスト",
-        "理由": "保守補正後でも実用年率が高く、S&P+5%の目標を超えるための主要寄与銘柄。",
-    },
-    {
-        "区分": "残す",
-        "銘柄": "8002 丸紅 / 8058 三菱商事 / 8053 住友商事 / 8031 三井物産 / 8306 三菱UFJ FG / 1605 INPEX / 5802 住友電工",
-        "理由": "利益寄与、業種分散、S&P超過実績を補助する枠として残す。",
-    },
-    {
         "区分": "下げる",
-        "銘柄": "8316 三井住友FG / 8766 東京海上HD / 8001 伊藤忠 / 6501 日立 / 5801 古河電工",
-        "理由": "安定性はあるが、S&P+5%目標の利益寄与では相対的に弱いため、今回の利益目標ゲート版では外す。",
+        "銘柄": "7011 三菱重工 25% → 5%",
+        "理由": "長期CAGRは強いが、直近20日-19.67%、60日-22.34%。今年の弱さを反映し、中心候補から条件付き候補へ変更。",
+    },
+    {
+        "区分": "上げる",
+        "銘柄": "5803 フジクラ 25% → 43%",
+        "理由": "保守補正後の実用年率18.0%。S&P+5%目標を維持するための主要寄与銘柄。ただし集中リスクを明記。",
+    },
+    {
+        "区分": "調整",
+        "銘柄": "丸紅14%、アドバンテスト10%、三菱商事8%、住友商事6%",
+        "理由": "利益寄与と業種分散を補助。三菱重工の減額分を、長期実績と実用年率の高い銘柄へ再配分。",
     },
 ]
 
@@ -172,6 +203,11 @@ selection_rows = []
 for rank, (ticker, weight) in enumerate(WEIGHTS.items(), start=1):
     company, industry = NAMES[ticker]
     m = metric(ticker)
+    note = m["corrections"]
+    if ticker == "7011.T":
+        note = "直近価格悪化により条件付き5% / " + note
+    if ticker == "5803.T":
+        note = "集中リスク確認 / " + note
     selection_rows.append({
         "順位": str(rank),
         "銘柄": f"{ticker} {company}",
@@ -183,7 +219,7 @@ for rank, (ticker, weight) in enumerate(WEIGHTS.items(), start=1):
         "10年CAGR": pct(m["cagr10"]),
         "S&P差": pct(m["sp_diff"]),
         "最大下落": pct(m["max_dd"]),
-        "補正": m["corrections"],
+        "補正": note,
     })
 
 projection_rows = []
@@ -193,7 +229,7 @@ for year in range(1, 11):
     target_value = CAPITAL * ((1 + TARGET_RATE / 100) ** year)
     projection_rows.append({
         "年数": f"{year}年後",
-        "新10社": yen(portfolio_value),
+        "修正後10社": yen(portfolio_value),
         "S&P500 10%": yen(sp_value),
         "S&Pとの差": yen(portfolio_value - sp_value),
         "S&P+5% 15%": yen(target_value),
@@ -236,22 +272,23 @@ html = f"""<!doctype html>
 <section>
   <h1>5月28日 作業報告</h1>
   <div class="cards">
-    <div class="card"><b>再選定後</b><span class="value">{pct(portfolio_rate)}</span><p>新10社の年率試算</p></div>
-    <div class="card"><b>S&P+5%目標</b><span class="value">15%</span><p>今回の目標ライン</p></div>
-    <div class="card"><b>200万円利益</b><span class="value">{yen(profit_1y)}</span><p>1年試算</p></div>
-    <div class="card"><b>目標との差</b><span class="value">{yen(profit_1y - target_profit_1y)}</span><p>S&P+5%比</p></div>
+    <div class="card"><b>三菱重工</b><span class="value">5%</span><p>25%から修正</p></div>
+    <div class="card"><b>修正後年率</b><span class="value">{pct(portfolio_rate)}</span><p>保守補正後</p></div>
+    <div class="card"><b>S&P+5%目標</b><span class="value">15%</span><p>比較ライン</p></div>
+    <div class="card"><b>目標との差</b><span class="value">{yen(profit_1y - target_profit_1y)}</span><p>200万円・1年</p></div>
   </div>
-  <h2>1. 保守補正後でもS&P+5%を超える組み合わせ</h2>
+  <p class="note">本資料は、候補10社のうち三菱重工の直近不調を反映し、配分とS&P500比較を再計算した作業報告です。単に高リターン順で並べるのではなく、直近の弱さを比率に反映しています。</p>
+  <h2>1. 本日の作業内容</h2>
+  {html_table(["項目", "内容"], work_rows)}
+  <h2>2. 三菱重工の修正</h2>
   {html_table(["項目", "説明"], summary_rows)}
-  <h2>2. 選定銘柄の入れ替え</h2>
+  <h2>3. 修正後の配分変更</h2>
   {html_table(["区分", "銘柄", "理由"], change_rows)}
-  <h2>3. 新10社の数値</h2>
+  <h2>4. 修正後10社の数値</h2>
   {html_table(["順位", "銘柄", "業種", "比率", "継続期待", "実用年率", "5年CAGR", "10年CAGR", "S&P差", "最大下落", "補正"], selection_rows)}
-  <h2>4. 1年後〜10年後のS&P500比較試算</h2>
-  <p class="note">前提は、新10社を上記比率で持った場合の年率試算{pct(portfolio_rate)}、S&P500を年率10%、目標ラインをS&P500+5%の年率15%とした複利計算です。</p>
-  {html_table(["年数", "新10社", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%目標との差"], projection_rows)}
-  <h2>5. 現時点の扱い</h2>
-  <p class="note">再選定後は、S&P500 10%だけでなく、S&P500+5%の15%目標も上回る試算になりました。ただし、これは過去データを使った確認値です。高成長銘柄への比率が上がるため、6月のCPI、日銀、FOMC後に市場環境を入れて再判定します。</p>
+  <h2>5. 1年後〜10年後のS&P500比較試算</h2>
+  <p class="note">前提は、修正後10社を上記比率で持った場合の年率試算{pct(portfolio_rate)}、S&P500を年率10%、目標ラインをS&P500+5%の年率15%とした複利計算です。</p>
+  {html_table(["年数", "修正後10社", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%目標との差"], projection_rows)}
 </section>
 </body>
 </html>"""
@@ -259,7 +296,7 @@ html = f"""<!doctype html>
 HTML.write_text(html, encoding="utf-8")
 
 styles = getSampleStyleSheet()
-base = ParagraphStyle("jp", parent=styles["Normal"], fontName=FONT, fontSize=8.6, leading=12.0, alignment=TA_LEFT)
+base = ParagraphStyle("jp", parent=styles["Normal"], fontName=FONT, fontSize=8.2, leading=11.2, alignment=TA_LEFT)
 title = ParagraphStyle("title", parent=base, fontSize=20, leading=25, textColor=colors.HexColor("#123d63"), spaceAfter=8)
 h = ParagraphStyle("h", parent=base, fontSize=13, leading=17, textColor=colors.HexColor("#123d63"), spaceBefore=8, spaceAfter=5)
 note = ParagraphStyle("note", parent=base, backColor=colors.HexColor("#fff8ec"), borderColor=colors.HexColor("#a85b00"), borderWidth=0.8, borderPadding=6, spaceAfter=7)
@@ -289,19 +326,22 @@ def pdf_table(headers, rows, widths):
 
 story = [
     p("5月28日 作業報告", title),
-    p("1. 保守補正後でもS&P+5%を超える組み合わせ", h),
+    p("本資料は、候補10社のうち三菱重工の直近不調を反映し、配分とS&P500比較を再計算した作業報告です。単に高リターン順で並べるのではなく、直近の弱さを比率に反映しています。", note),
+    p("1. 本日の作業内容", h),
+    pdf_table(["項目", "内容"], work_rows, [48 * mm, 224 * mm]),
+    p("2. 三菱重工の修正", h),
     pdf_table(["項目", "説明"], summary_rows, [48 * mm, 224 * mm]),
-    p("2. 選定銘柄の入れ替え", h),
-    pdf_table(["区分", "銘柄", "理由"], change_rows, [25 * mm, 120 * mm, 127 * mm]),
+    p("3. 修正後の配分変更", h),
+    pdf_table(["区分", "銘柄", "理由"], change_rows, [25 * mm, 105 * mm, 142 * mm]),
     PageBreak(),
-    p("3. 新10社の数値", h),
+    p("4. 修正後10社の数値", h),
     pdf_table(["順位", "銘柄", "業種", "比率", "継続期待", "実用年率", "5年CAGR", "10年CAGR", "S&P差", "最大下落", "補正"], selection_rows, [12 * mm, 34 * mm, 24 * mm, 15 * mm, 22 * mm, 22 * mm, 22 * mm, 22 * mm, 19 * mm, 20 * mm, 60 * mm]),
     PageBreak(),
-    p("4. 1年後〜10年後のS&P500比較試算", h),
-    p(f"前提は、新10社を上記比率で持った場合の年率試算{pct(portfolio_rate)}、S&P500を年率10%、目標ラインをS&P500+5%の年率15%とした複利計算です。", note),
-    pdf_table(["年数", "新10社", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%目標との差"], projection_rows, [22 * mm, 45 * mm, 45 * mm, 40 * mm, 45 * mm, 45 * mm]),
-    p("5. 現時点の扱い", h),
-    p("再選定後は、S&P500 10%だけでなく、S&P500+5%の15%目標も上回る試算になりました。ただし、これは過去データを使った確認値です。高成長銘柄への比率が上がるため、6月のCPI、日銀、FOMC後に市場環境を入れて再判定します。", note),
+    p("5. 1年後〜10年後のS&P500比較試算", h),
+    p(f"前提は、修正後10社を上記比率で持った場合の年率試算{pct(portfolio_rate)}、S&P500を年率10%、目標ラインをS&P500+5%の年率15%とした複利計算です。", note),
+    pdf_table(["年数", "修正後10社", "S&P500 10%", "S&Pとの差", "S&P+5% 15%", "+5%目標との差"], projection_rows, [22 * mm, 45 * mm, 45 * mm, 40 * mm, 45 * mm, 45 * mm]),
+    p("扱い", h),
+    p("三菱重工は長期実績では残るが、直近価格悪化により中心候補ではなく条件付き候補とする。修正後もS&P+5%は上回るが、フジクラ集中が強くなるため、6月の市場イベント後に再判定する。", note),
 ]
 
 doc = SimpleDocTemplate(str(PDF), pagesize=landscape(A4), rightMargin=10 * mm, leftMargin=10 * mm, topMargin=10 * mm, bottomMargin=10 * mm)
@@ -312,4 +352,6 @@ def set_pdf_title(canvas, _doc):
 
 
 doc.build(story, onFirstPage=set_pdf_title, onLaterPages=set_pdf_title)
+shutil.copyfile(PDF, SAFE_PDF)
 print(PDF)
+print(SAFE_PDF)
