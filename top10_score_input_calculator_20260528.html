@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社スコア入力・再計算</title>
+  <style>
+    :root { --ink:#050b14; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --green:#087f5b; --amber:#a85b00; --red:#b42318; --muted:#45566a; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:22px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    .notice { border-left:6px solid var(--amber); background:#fff8ec; padding:12px; border-radius:8px; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; align-items:center; }
+    button, .button { border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:10px 14px; font-weight:900; cursor:pointer; text-decoration:none; display:inline-block; }
+    input[type=file] { border:1px solid var(--line); padding:9px; border-radius:8px; background:#fff; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .badge { display:inline-block; border-radius:8px; color:#fff; padding:4px 8px; font-weight:900; }
+    .ok { background:var(--green); }
+    .warn { background:var(--amber); }
+    .stop { background:var(--red); }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>10社スコア入力・再計算</h1>
+    <p>取得した数値を入力して、反映条件を満たした銘柄だけ再計算します。未入力値は0点にせず、入力済み重みと不足項目を表示します。</p>
+    <p>作成: 2026/05/28 14:04</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>対象</b><div class="value">10</div><p>事前候補10社</p></div>
+    <div class="card"><b>重み区分</b><div class="value">5</div><p>長期・財務・成長・反応・質的検証</p></div>
+    <div class="card"><b>判定条件</b><div class="value">80%</div><p>入力済み重みが80%以上で判定</p></div>
+    <div class="card"><b>現状</b><div class="value">保留</div><p>未入力が多いため最終スコアは出さない</p></div>
+  </div>
+
+  <section>
+    <h2>使い方</h2>
+    <p class="notice">CSVテンプレートに数値を入れ、下の読み込み欄から選択すると再計算します。財務・割安、業績成長、決算後反応が未入力の場合は、入力済み重みが高くても判定保留にします。</p>
+    <div class="actions">
+      <a class="button" href="750_top10_score_input_template.csv">入力テンプレートCSV</a>
+      <a class="button" href="751_top10_score_calculation_rules.csv">計算ルールCSV</a>
+      <input id="csvFile" type="file" accept=".csv,text/csv">
+      <button id="loadSample" type="button">空テンプレートで確認</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>計算ルール</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>区分</th><th>重み</th><th>反映条件</th></tr></thead>
+        <tbody id="ruleBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>再計算結果</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>銘柄</th><th>入力済み重み</th><th>参考スコア</th><th>判定</th><th>不足項目</th><th>ハードゲート</th></tr></thead>
+        <tbody id="resultBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <p><a href="750_top10_score_input_template.csv">入力テンプレートCSV</a> / <a href="751_top10_score_calculation_rules.csv">計算ルールCSV</a> / <a href="752_top10_score_current_dryrun.csv">現状ドライランCSV</a></p>
+  </section>
+</main>
+
+<script>
+const templateRows = [{"ticker":"8316.T","銘柄":"三井住友FG","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"公式値照合 / 同業中央値比較"},{"ticker":"8766.T","銘柄":"東京海上HD","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"公式値照合 / 同業中央値比較"},{"ticker":"8306.T","銘柄":"三菱UFJ FG","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較"},{"ticker":"7011.T","銘柄":"三菱重工","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較"},{"ticker":"8058.T","銘柄":"三菱商事","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較"},{"ticker":"6501.T","銘柄":"日立製作所","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較"},{"ticker":"8031.T","銘柄":"三井物産","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較"},{"ticker":"5802.T","銘柄":"住友電工","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較"},{"ticker":"5801.T","銘柄":"古河電工","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"過熱・最大下落確認 / 同業中央値比較"},{"ticker":"8001.T","銘柄":"伊藤忠商事","長期安定性点":"","財務割安点":"","業績成長点":"","決算後反応点":"","質的検証点":"","取得元メモ":"","対象期メモ":"","単位メモ":"","ハードゲート":"","備考":"PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較"}];
+const rules = [{"section":"長期安定性","weight":30,"fields":"長期安定性点、5年CAGR、S&P500差、最大下落率","condition":"既に100社母集団で計算済み。データ年数が不足する場合は信頼度を下げる。"},{"section":"財務・割安","weight":25,"fields":"PER、PBR、ROE、同業中央値比","condition":"取得元、対象期、単位を記録できた場合のみ反映。銀行・保険・商社は業種別中央値で評価。"},{"section":"業績成長","weight":20,"fields":"売上成長率、利益成長率、会社予想、増配・自社株買い","condition":"直近決算と過去決算、または通期予想を照合できた場合のみ反映。"},{"section":"決算後反応","weight":15,"fields":"決算後1日/5日/20日の対指数超過リターン","condition":"決算日と株価時系列、比較指数を結合できた場合のみ反映。20営業日未到達は未成熟扱い。"},{"section":"質的仮説の検証","weight":10,"fields":"金利、AIデータセンター、防衛、資源などの仮説IDと実績データ","condition":"テーマと企業売上・受注・利益・株価反応の接続が確認できた場合のみ反映。"}];
+const weights = {
+  長期安定性点: 30,
+  財務割安点: 25,
+  業績成長点: 20,
+  決算後反応点: 15,
+  質的検証点: 10
+};
+
+function escHtml(value) {
+  return String(value ?? '').replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+}
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [], cell = '', quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i], next = text[i + 1];
+    if (quoted) {
+      if (ch === '"' && next === '"') { cell += '"'; i++; }
+      else if (ch === '"') quoted = false;
+      else cell += ch;
+    } else if (ch === '"') quoted = true;
+    else if (ch === ',') { row.push(cell); cell = ''; }
+    else if (ch === '\n') { row.push(cell.replace(/\r$/, '')); rows.push(row); row = []; cell = ''; }
+    else cell += ch;
+  }
+  if (cell.length || row.length) row.push(cell.replace(/\r$/, ''));
+  const headers = rows.shift() || [];
+  return rows.filter(r => r.some(v => String(v).trim())).map(r => Object.fromEntries(headers.map((h, i) => [h, r[i] || ''])));
+}
+
+function toNum(value) {
+  if (value === null || value === undefined || String(value).trim() === '') return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function calc(row) {
+  let weighted = 0;
+  let present = 0;
+  const missing = [];
+  for (const [field, weight] of Object.entries(weights)) {
+    const value = toNum(row[field]);
+    if (value === null) missing.push(field);
+    else {
+      present += weight;
+      weighted += Math.max(0, Math.min(100, value)) * weight;
+    }
+  }
+  const normalized = present ? weighted / present : null;
+  const hasCore = ['財務割安点', '業績成長点', '決算後反応点'].every(field => toNum(row[field]) !== null);
+  const hardGate = String(row.ハードゲート || '').trim();
+  let status = '判定保留';
+  if (hardGate) status = '停止';
+  else if (present >= 80 && hasCore) status = '判定可能';
+  return { present, normalized, missing, status, hardGate };
+}
+
+function renderRules() {
+  document.getElementById('ruleBody').innerHTML = rules.map(rule => '<tr><td>' + escHtml(rule.section) + '</td><td>' + escHtml(rule.weight) + '%</td><td>' + escHtml(rule.condition) + '</td></tr>').join('');
+}
+
+function renderRows(rows) {
+  document.getElementById('resultBody').innerHTML = rows.map(row => {
+    const result = calc(row);
+    const badge = result.status === '判定可能' ? 'ok' : result.status === '停止' ? 'stop' : 'warn';
+    return '<tr><td><b>' + escHtml(row.ticker) + '</b><br>' + escHtml(row.銘柄) + '</td><td><b>' + result.present + '%</b></td><td>' + (result.normalized === null ? '未計算' : result.normalized.toFixed(1)) + '</td><td><span class="badge ' + badge + '">' + escHtml(result.status) + '</span></td><td>' + escHtml(result.missing.join(' / ') || 'なし') + '</td><td>' + escHtml(result.hardGate || 'なし') + '</td></tr>';
+  }).join('');
+}
+
+document.getElementById('loadSample').addEventListener('click', () => renderRows(templateRows));
+document.getElementById('csvFile').addEventListener('change', async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const text = await file.text();
+  renderRows(parseCsv(text));
+});
+renderRules();
+renderRows(templateRows);
+</script>
+</body>
+</html>
