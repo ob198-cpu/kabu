@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的情報 構造化評価システム</title>
+  <style>
+    :root { --ink:#050b14; --muted:#45566a; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --soft:#f4f8fc; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:#123d63; color:#fff; border-radius:10px; padding:30px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; line-height:1.25; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); font-size:22px; }
+    p { margin:0 0 10px; }
+    .grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .card b { display:block; color:var(--navy); }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; background:#fff; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+    .step { border:1px solid var(--line); border-radius:8px; padding:12px; background:#f8fbff; }
+    .step b { color:var(--navy); }
+    .notice { border-left:6px solid var(--amber); background:#fff8ec; padding:12px; border-radius:8px; }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid,.flow { grid-template-columns:1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>質的情報 構造化評価システム</h1>
+    <p>テーマ、イベント、企業接続、実績検証、情報信頼度を分けて扱います。AIや半導体などの産業テーマと、決算・TOB・政策などのイベントを同じ階層に並べない設計です。</p>
+    <p>作成: 2026/05/28 10:38 / 質的情報は候補発見と説明補助に使い、実績検証前は購入候補スコアへ直接加点しません。</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>テーマ数</b><div class="value">6</div><p>産業・資金流入テーマ。イベントとは別階層。</p></div><div class="card"><b>イベント種別</b><div class="value">5</div><p>決算、受注、政策、新製品、TOB等。</p></div><div class="card"><b>実績検証項目</b><div class="value">6</div><p>既取得と未取得を分ける。</p></div><div class="card"><b>企業接続件数</b><div class="value">24</div><p>テーマから企業へ接続した候補。</p></div><div class="card"><b>直接加点禁止</b><div class="value">採用</div><p>仮説のみの質的情報はスコアに直接混ぜない。</p></div>
+  </div>
+
+  <section>
+    <h2>評価の階層</h2>
+    <div class="flow">
+      <div class="step"><b>1. テーマを登録</b><br>AI、金利、資源、防衛などの産業・資金流入テーマ<br><small>テーマ名だけでは加点しない</small></div><div class="step"><b>2. イベントを登録</b><br>決算、受注、政策、金利、TOB、新製品など<br><small>テーマとイベントを同じ階層に置かない</small></div><div class="step"><b>3. 企業へ接続</b><br>売上構成、受注、原価、シェア、顧客、同業指数<br><small>会社の業績に効く経路が説明できない場合は参考止まり</small></div><div class="step"><b>4. 実績で検証</b><br>イベント日、1日/5日/20日超過リターン、同業反応<br><small>実績がない仮説は購入候補スコアへ直接入れない</small></div><div class="step"><b>5. 候補選定に反映</b><br>量的スコア、長期安定性、実績検証済み質的情報<br><small>質的情報は補助・ゲート・警戒条件として扱う</small></div>
+    </div>
+    <p class="notice">「AIが強い」「半導体が強い」という表現だけでは銘柄選定に使いません。ニュースやIRを、どの企業の売上・利益・受注・原価・シェアへ接続するのかを明示し、過去反応または実データで検証します。</p>
+  </section>
+
+  <section>
+    <h2>テーママスター</h2>
+    <table>
+      <thead><tr><th>テーマID</th><th>テーマ</th><th>因果連鎖</th><th>確認条件</th><th>除外条件</th></tr></thead>
+      <tbody><tr><td>TREND-AI-POWER</td><td>AIデータセンター電力・冷却不足</td><td>AI需要増 → データセンター増 → 電力容量/冷却/受変電/電線需要 → 設備投資・受注 → 業績反映</td><td>SOX/半導体ETFが強いだけでなく、電力設備・資本財・銅など二次需要の指標も強い</td><td>高PERだけが先行し、受注・売上・利益率の確認が取れない</td></tr><tr><td>TREND-RATE-BANK</td><td>金利上昇・銀行/保険</td><td>CPI/PPI再加速 → 利下げ後退/日銀正常化 → 長短金利上昇 → 利ざや改善期待 → 銀行/保険株反応</td><td>金利上昇が銀行株指数の相対優位につながり、信用コスト悪化が目立たない</td><td>景気悪化を伴う金利上昇、長期金利急騰による市場全体のリスクオフ</td></tr><tr><td>TREND-YEN-RESOURCE</td><td>円安・資源・商社</td><td>ドル高/円安 → 海外利益の円換算増・資源価格影響 → 商社/外需の利益押し上げ → 還元・資本効率評価</td><td>円安・資源指標が追い風でも、利益率・株主還元・在庫評価を確認する</td><td>資源価格下落、円高反転、商品市況依存が強すぎる</td></tr><tr><td>TREND-NAPHTHA-CHEM</td><td>ナフサ・原油・化学品価格</td><td>原油/ナフサ高 → 原材料費増 → 価格転嫁できる企業とできない企業に差 → 利益率格差</td><td>原料高で売上が増えるだけでなく、価格転嫁率や営業利益率が維持される</td><td>原材料高で粗利率が悪化している企業。単純な化学株買いは危険</td></tr><tr><td>TREND-PRICE-PASS</td><td>物価高・価格転嫁力</td><td>CPI/PPI上昇 → 原価上昇 → 値上げできる会社だけ利益維持 → ブランド/シェア/海外展開が効く</td><td>売上だけでなく、数量・粗利率・営業利益率・値上げ後の需要減を確認する</td><td>PERが高く、利益成長が鈍化している。値上げで数量が落ちている</td></tr><tr><td>TREND-DISASTER-INFRA</td><td>災害・防災・インフラ更新</td><td>災害/老朽化 → 復旧・補強・通信・電力・建設需要 → 予算/受注 → 売上・利益</td><td>短期材料ではなく、補正予算・受注・通信/電力復旧の実需に接続する</td><td>思惑だけで上がる小型材料株、倫理面の説明が難しい銘柄</td></tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>イベントマスター</h2>
+    <table>
+      <thead><tr><th>イベント種別</th><th>階層</th><th>意味</th><th>例</th><th>必要ソース</th><th>採点ルール</th></tr></thead>
+      <tbody><tr><td>決算・上方修正・下方修正</td><td>イベント・ニュース</td><td>会社の実績値または会社予想が変わる出来事。</td><td>決算短信、業績予想修正、増配、自社株買い</td><td>TDnet、企業IR、決算短信</td><td>株価反応、業績数値、会社予想の変化が確認できるまで採点に入れない。</td></tr><tr><td>受注・大型契約・設備投資</td><td>イベント・ニュース</td><td>売上や受注残へ接続しやすい出来事。</td><td>データセンター投資、重電受注、防衛契約、半導体設備投資</td><td>企業IR、官公庁、業界統計、主要顧客の開示</td><td>対象企業の売上構成・受注・利益率へ接続できる場合だけ評価する。</td></tr><tr><td>政策・規制・金利・為替</td><td>外部環境イベント</td><td>会社単体ではなく、業界全体の収益条件を変える出来事。</td><td>日銀、FOMC、CPI、補助金、防衛予算、円高円安</td><td>日銀、FRB、政府資料、FRED、統計局、官公庁</td><td>対象業界指数または同業群の反応と合わせて見る。個別株へ直接加点しない。</td></tr><tr><td>新製品・技術転換</td><td>イベント・ニュース</td><td>競争環境や需要構造を変える可能性がある出来事。</td><td>Switch 2、新型半導体装置、AI/量子関連発表、医薬品承認</td><td>公式発表、承認資料、決算説明資料、販売実績</td><td>発売・承認だけでなく、販売数、採用、利益率、競合優位を確認する。</td></tr><tr><td>TOB・M&amp;A・資本政策</td><td>企業固有イベント</td><td>株価へ直接影響しやすい特殊イベント。</td><td>TOB、MBO、合併、大株主変動、政策保有株売却</td><td>TDnet、EDINET、大量保有報告書、企業IR</td><td>通常の1年保有スコアとは別枠。イベント価格・成立条件・流動性を個別に扱う。</td></tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>実績検証層</h2>
+    <table>
+      <thead><tr><th>テーマID</th><th>検証すること</th><th>取得済み</th><th>未取得・手動</th><th>取得候補</th><th>注意点</th></tr></thead>
+      <tbody><tr><td>TREND-AI-POWER</td><td>電力・設備需要の実需</td><td>SOX、半導体ETF、米テクETF、銅価格、米資本財ETF</td><td>国内電力需要、変圧器/受変電受注、データセンター投資、企業別受注残</td><td>FRED/Yahoo、OCCTO、経産省、企業IR</td><td>AI銘柄の高PER熱狂と設備実需を分ける</td></tr><tr><td>TREND-RATE-BANK</td><td>金利と銀行株の相対優位</td><td>CPI/PPI、米10年金利、日本短期金利、TOPIX銀行業ETF</td><td>日本10年金利、銀行別利ざや、信用コスト、自己資本規制</td><td>FRED、日銀、各社IR</td><td>景気悪化を伴う金利上昇は銀行にも逆風</td></tr><tr><td>TREND-YEN-RESOURCE</td><td>円安・資源価格と利益への接続</td><td>ドル円、WTI、ブレント、素材ETF、資本財ETF</td><td>企業別海外売上比率、会社想定為替、資源別利益感応度</td><td>FRED/Yahoo、企業IR、有価証券報告書</td><td>すでに織り込み済み、円高反転、資源下落に注意</td></tr><tr><td>TREND-NAPHTHA-CHEM</td><td>原料高と価格転嫁</td><td>WTI、ブレント、PPI、素材ETF</td><td>ナフサ価格、化学品スプレッド、企業別原材料費率、価格転嫁率</td><td>経産省、貿易統計、商品市況、企業IR</td><td>売上増だけで良い銘柄と判断しない</td></tr><tr><td>TREND-PRICE-PASS</td><td>値上げ後の利益維持</td><td>CPI/PPI、小売売上、個別決算の一部</td><td>数量、粗利率、値上げ実績、商品別売上、地域別売上</td><td>企業IR、決算説明資料、統計局/e-Stat</td><td>値上げで数量が落ちると株価には逆風</td></tr><tr><td>TREND-DISASTER-INFRA</td><td>予算・受注・復旧需要</td><td>資本財ETF、銅、VIX、イベント記録の器</td><td>国内建設受注、災害日、補正予算、電力/通信復旧関連IR</td><td>国交省、内閣府、各社IR、TDnet</td><td>思惑買い・一過性・倫理面の説明に注意</td></tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>企業接続層</h2>
+    <table>
+      <thead><tr><th>テーマID</th><th>銘柄</th><th>会社</th><th>業種</th><th>接続理由</th><th>資金流入ロジック</th><th>必要数値</th><th>扱い</th></tr></thead>
+      <tbody><tr><td>AI_DATA_CENTER</td><td>5801.T</td><td>古河電工</td><td>電線/光通信</td><td>光ファイバー・電力線需要の連想対象</td><td>データセンター増→通信線・電力線需要</td><td>PER/PBR/ROE・受注・1年過熱確認</td><td>探索優先</td></tr><tr><td>AI_DATA_CENTER</td><td>5802.T</td><td>住友電工</td><td>電線/光通信</td><td>光通信・電力インフラ需要の連想対象</td><td>データセンター増→光ファイバー・電力網</td><td>PER/PBR/ROE・受注・利益率</td><td>探索候補</td></tr><tr><td>AI_DATA_CENTER</td><td>6501.T</td><td>日立製作所</td><td>重電/IT</td><td>電力・社会インフラ・デジタル基盤の連想対象</td><td>電力網投資→重電・制御・IT</td><td>受注・セグメント利益・PER</td><td>探索候補</td></tr><tr><td>AI_DATA_CENTER</td><td>6503.T</td><td>三菱電機</td><td>重電/FA</td><td>受変電・FA・データセンター設備の連想対象</td><td>電力設備需要→重電機器</td><td>受注・営業利益率・株価反応</td><td>探索候補</td></tr><tr><td>AI_DATA_CENTER</td><td>6146.T</td><td>ディスコ</td><td>半導体装置</td><td>AI半導体製造投資の連想対象</td><td>AI需要→半導体製造装置</td><td>決算後反応・PER・下落耐性</td><td>探索候補</td></tr><tr><td>AI_DATA_CENTER</td><td>8035.T</td><td>東京エレクトロン</td><td>半導体装置</td><td>半導体設備投資の中核候補</td><td>AI需要→装置投資</td><td>受注・PER・SOX連動</td><td>探索候補</td></tr><tr><td>RATE_BANK</td><td>8306.T</td><td>三菱UFJ FG</td><td>銀行</td><td>金利上昇時の代表候補</td><td>金利上昇→利ざや改善期待</td><td>信用コスト・自己資本・日銀イベント</td><td>探索候補</td></tr><tr><td>RATE_BANK</td><td>8316.T</td><td>三井住友FG</td><td>銀行</td><td>金利上昇時の代表候補</td><td>金利上昇→利ざや改善期待</td><td>信用コスト・自己資本・配当</td><td>探索候補</td></tr><tr><td>RATE_BANK</td><td>8766.T</td><td>東京海上HD</td><td>保険</td><td>金利と保険料・海外事業の連想対象</td><td>金利上昇→運用収益期待</td><td>自然災害損失・PER・ROE</td><td>探索候補</td></tr><tr><td>YEN_RESOURCE</td><td>8058.T</td><td>三菱商事</td><td>商社</td><td>円安・資源・還元の代表候補</td><td>資源価格・円安→利益と還元期待</td><td>資源価格感応度・自社株買い・PER</td><td>探索候補</td></tr><tr><td>YEN_RESOURCE</td><td>8001.T</td><td>伊藤忠商事</td><td>商社</td><td>非資源と消費にも強い商社候補</td><td>円安・非資源利益→還元期待</td><td>セグメント利益・配当・PER</td><td>探索候補</td></tr><tr><td>YEN_RESOURCE</td><td>8031.T</td><td>三井物産</td><td>商社</td><td>資源価格の感応度確認対象</td><td>資源価格→利益変動</td><td>資源依存度・原油金属価格・PER</td><td>探索候補</td></tr><tr><td>NAPHTHA_CHEM</td><td>4063.T</td><td>信越化学工業</td><td>化学</td><td>半導体材料・塩ビ・価格転嫁の確認対象</td><td>素材市況→利益率格差</td><td>製品市況・営業利益率・PER</td><td>探索候補</td></tr><tr><td>NAPHTHA_CHEM</td><td>4188.T</td><td>三菱ケミカルG</td><td>化学</td><td>原料高と価格転嫁の確認対象</td><td>ナフサ・原油→化学品採算</td><td>粗利率・構造改革・財務</td><td>参考</td></tr><tr><td>NAPHTHA_CHEM</td><td>5020.T</td><td>ENEOS</td><td>石油</td><td>原油・精製マージンの確認対象</td><td>原油価格→在庫評価・精製利益</td><td>在庫影響・原油価格・還元</td><td>参考</td></tr><tr><td>PRICE_PASS</td><td>2802.T</td><td>味の素</td><td>食品</td><td>価格転嫁とABF/ヘルスケアの確認対象</td><td>値上げ・高付加価値→利益率維持</td><td>数量・利益率・PER高止まり</td><td>探索候補</td></tr><tr><td>PRICE_PASS</td><td>2801.T</td><td>キッコーマン</td><td>食品</td><td>海外食品・価格転嫁の確認対象</td><td>海外販売→円安・値上げ</td><td>海外売上・数量・PER</td><td>参考</td></tr><tr><td>PRICE_PASS</td><td>4452.T</td><td>花王</td><td>日用品</td><td>原材料高とブランド価格転嫁の確認対象</td><td>値上げ→利益率回復</td><td>営業利益率・数量・原材料費</td><td>参考</td></tr><tr><td>DEFENSE_POLICY</td><td>7011.T</td><td>三菱重工業</td><td>重工/防衛</td><td>防衛・宇宙・エネルギー投資の代表候補</td><td>防衛予算→受注残増加</td><td>受注残・採算・PER過熱</td><td>探索候補</td></tr><tr><td>DEFENSE_POLICY</td><td>7012.T</td><td>川崎重工業</td><td>重工/防衛</td><td>防衛・航空・水素の確認対象</td><td>安全保障→防衛受注</td><td>受注残・利益率・決算反応</td><td>探索候補</td></tr><tr><td>DEFENSE_POLICY</td><td>6501.T</td><td>日立製作所</td><td>重電/IT</td><td>社会インフラ・防衛周辺の確認対象</td><td>国策投資→社会インフラ需要</td><td>受注・セグメント利益</td><td>参考</td></tr><tr><td>DISASTER_INFRA</td><td>9433.T</td><td>KDDI</td><td>通信</td><td>災害時通信・安定配当の守り候補</td><td>通信強靭化→安定需要</td><td>配当・通信料金・成長鈍化</td><td>参考</td></tr><tr><td>DISASTER_INFRA</td><td>1802.T</td><td>大林組</td><td>建設</td><td>インフラ復旧・公共投資の確認対象</td><td>復旧需要→建設受注</td><td>受注残・資材費・利益率</td><td>参考</td></tr><tr><td>HEALTHCARE_POLICY</td><td>4519.T</td><td>中外製薬</td><td>医薬品</td><td>新薬・海外販売・薬価の確認対象</td><td>新薬承認→利益成長期待</td><td>薬価・パイプライン・PER</td><td>探索候補</td></tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>出力CSV</h2>
+    <p><a href="731_qualitative_theme_master.csv">テーママスター</a> / <a href="732_qualitative_event_master.csv">イベントマスター</a> / <a href="733_qualitative_evidence_layer.csv">実績検証層</a> / <a href="734_qualitative_candidate_bridge.csv">企業接続層</a> / <a href="735_qualitative_operation_rules.csv">運用ルール</a></p>
+  </section>
+</main>
+</body>
+</html>
