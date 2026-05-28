@@ -158,6 +158,35 @@ function table(headers, tableRows) {
   return `<div class="table-wrap"><table><thead><tr>${headers.map((header) => `<th>${esc(header)}</th>`).join('')}</tr></thead><tbody>${tableRows.map((row) => `<tr>${headers.map((header) => `<td>${esc(row[header])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 
+const rankingHeaders = [
+  '朝更新順位',
+  '旧順位',
+  'ticker',
+  '銘柄',
+  '業種',
+  '事前スコア',
+  '価格確認点',
+  '1年騰落率%',
+  '60日騰落率%',
+  '日経平均との差%',
+  'S&P500差%',
+  '1年最大下落%',
+  '過熱判定',
+  '朝更新スコア',
+  '現時点の扱い'
+];
+
+const reasonCards = rows.map((row) => `
+  <article class="reason-card">
+    <div class="reason-head">
+      <b>${esc(row.朝更新順位)}. ${esc(row.ticker)} ${esc(row.銘柄)}</b>
+      <span>${esc(row.現時点の扱い)} / ${esc(row.朝更新スコア)}点</span>
+    </div>
+    <p><strong>判断理由:</strong> ${esc(row.判断理由)}</p>
+    <p><strong>まだ必要な確認:</strong> ${esc(row.まだ必要な確認)}</p>
+  </article>
+`).join('');
+
 const html = `<!doctype html>
 <html lang="ja">
 <head>
@@ -181,10 +210,21 @@ const html = `<!doctype html>
     table { width:100%; border-collapse:collapse; table-layout:fixed; }
     th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
     th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .rank-table th:nth-child(1), .rank-table td:nth-child(1),
+    .rank-table th:nth-child(2), .rank-table td:nth-child(2) { width:72px; }
+    .rank-table th:nth-child(3), .rank-table td:nth-child(3) { width:86px; }
+    .rank-table th:nth-child(4), .rank-table td:nth-child(4) { width:130px; }
+    .rank-table th:nth-child(15), .rank-table td:nth-child(15) { width:120px; }
+    .reason-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .reason-card { border:1px solid var(--line); border-radius:9px; background:#f8fbff; padding:12px; }
+    .reason-head { display:flex; justify-content:space-between; gap:10px; align-items:start; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:8px; }
+    .reason-head b { color:var(--navy); font-size:15px; }
+    .reason-head span { color:#36506a; font-size:12px; font-weight:800; white-space:nowrap; }
+    .reason-card p { margin:6px 0; font-size:13px; }
     a { color:#075e91; font-weight:800; }
     .links { display:flex; flex-wrap:wrap; gap:10px; }
     .links a { border:1px solid var(--blue); color:#fff; background:var(--blue); border-radius:8px; padding:9px 12px; text-decoration:none; }
-    @media (max-width:980px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+    @media (max-width:980px) { .grid,.reason-grid { grid-template-columns:1fr; } table { table-layout:auto; } }
   </style>
 </head>
 <body>
@@ -212,7 +252,17 @@ const html = `<!doctype html>
 
   <section>
     <h2>暫定再計算ランキング</h2>
-    ${table(Object.keys(rows[0]), rows)}
+    <p class="note">一覧表は数字と扱いだけに絞り、長文の判断理由は下のカードに分けました。</p>
+    <div class="rank-table">
+      ${table(rankingHeaders, rows)}
+    </div>
+  </section>
+
+  <section>
+    <h2>判断理由・まだ必要な確認</h2>
+    <div class="reason-grid">
+      ${reasonCards}
+    </div>
   </section>
 
   <section>
