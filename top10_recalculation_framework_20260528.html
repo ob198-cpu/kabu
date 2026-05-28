@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10社再計算フレーム</title>
+  <style>
+    :root { --ink:#050b14; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:#eef4fa; line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:28px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
+    h1 { margin:0 0 10px; font-size:30px; }
+    h2 { margin:22px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .card, section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .value { font-size:28px; font-weight:900; color:var(--blue); }
+    .notice { border-left:6px solid var(--amber); background:#fff8ec; padding:12px; border-radius:8px; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .badge { display:inline-block; border-radius:8px; color:#fff; padding:4px 8px; font-weight:900; }
+    .ok { background:var(--green); }
+    .warn { background:var(--amber); }
+    .risk { background:var(--red); }
+    a { color:#075e91; font-weight:800; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>10社再計算フレーム</h1>
+    <p>取得したデータをどの式に入れ、どの条件で候補化を止めるかを固定します。質的情報は直接加点せず、実績データで確認できた場合だけ補助評価に接続します。</p>
+    <p>作成: 2026/05/28 13:55</p>
+  </header>
+
+  <div class="grid">
+    <div class="card"><b>対象銘柄</b><div class="value">10</div><p>10社選定ゲートの事前候補</p></div><div class="card"><b>式の区分</b><div class="value">5</div><p>長期、財務、成長、反応、質的検証に分離</p></div><div class="card"><b>除外・保留条件</b><div class="value">5</div><p>未取得や過熱を候補化前に止める条件</p></div><div class="card"><b>平均データ準備度</b><div class="value">45</div><p>現時点の入力準備状況。高いほど再計算に近い。</p></div>
+  </div>
+
+  <section>
+    <h2>再計算ルール</h2>
+    <p class="notice">未取得値は推定で埋めません。スコアは、長期安定性30%、財務・割安25%、業績成長20%、決算後反応15%、質的仮説の検証10%に分け、反映条件を満たした項目だけで再計算します。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>区分</th><th>重み</th><th>使用項目</th><th>役割</th><th>反映条件</th></tr></thead>
+        <tbody><tr>
+  <td>長期安定性</td>
+  <td>30%</td>
+  <td>長期安定性点、5年CAGR、S&amp;P500差、最大下落率</td>
+  <td>1年保有で極端な短期過熱だけを拾わないための基礎点</td>
+  <td>既に100社母集団で計算済み。データ年数が不足する場合は信頼度を下げる。</td>
+</tr><tr>
+  <td>財務・割安</td>
+  <td>25%</td>
+  <td>PER、PBR、ROE、同業中央値比</td>
+  <td>業績に対して価格が説明できるかを確認</td>
+  <td>取得元、対象期、単位を記録できた場合のみ反映。銀行・保険・商社は業種別中央値で評価。</td>
+</tr><tr>
+  <td>業績成長</td>
+  <td>20%</td>
+  <td>売上成長率、利益成長率、会社予想、増配・自社株買い</td>
+  <td>長期株価上昇が利益成長で説明できるかを確認</td>
+  <td>直近決算と過去決算、または通期予想を照合できた場合のみ反映。</td>
+</tr><tr>
+  <td>決算後反応</td>
+  <td>15%</td>
+  <td>決算後1日/5日/20日の対指数超過リターン</td>
+  <td>決算を市場が評価したか、短期反応だけでなく20営業日で確認</td>
+  <td>決算日と株価時系列、比較指数を結合できた場合のみ反映。20営業日未到達は未成熟扱い。</td>
+</tr><tr>
+  <td>質的仮説の検証</td>
+  <td>10%</td>
+  <td>金利、AIデータセンター、防衛、資源などの仮説IDと実績データ</td>
+  <td>時流テーマを直接加点せず、数値で裏付けられる場合だけ補助点にする</td>
+  <td>テーマと企業売上・受注・利益・株価反応の接続が確認できた場合のみ反映。</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>除外・保留条件</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>条件</th><th>扱い</th><th>理由</th></tr></thead>
+        <tbody><tr>
+  <td>必須データが2項目以上未取得</td>
+  <td>候補化しない</td>
+  <td>根拠が不足したまま順位を出すことを避けるため</td>
+</tr><tr>
+  <td>PER/PBR/ROEまたは同業比較が未取得</td>
+  <td>財務・割安点を未反映にし、B判定以下</td>
+  <td>割高・割安を説明できないため</td>
+</tr><tr>
+  <td>決算後20営業日反応が未到達</td>
+  <td>決算後反応点は未成熟</td>
+  <td>1日反応だけで過大評価しないため</td>
+</tr><tr>
+  <td>1年上昇が大きく、5年最大下落率も大きい</td>
+  <td>過熱確認または比較枠</td>
+  <td>過去上昇だけを買い理由にしないため</td>
+</tr><tr>
+  <td>6月のCPI・日銀・FOMC後に市場条件が悪化</td>
+  <td>全体投入を延期または縮小</td>
+  <td>個別銘柄以前に市場リスクが高まるため</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>銘柄別の再計算準備</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>銘柄</th><th>現在段階</th><th>事前スコア</th><th>データ準備度</th><th>未反映項目</th><th>再計算後の扱い</th><th>注意</th></tr></thead>
+        <tbody><tr>
+  <td><b>8316.T</b><br>三井住友FG</td>
+  <td><span class="badge ok">確認後候補化可能</span></td>
+  <td><b>82.9</b></td>
+  <td><b>92%</b></td>
+  <td>公式値照合 / 同業中央値比較</td>
+  <td>公式値照合後にA候補として再確認</td>
+  <td>追加確認へ</td>
+</tr><tr>
+  <td><b>8766.T</b><br>東京海上HD</td>
+  <td><span class="badge ok">確認後候補化可能</span></td>
+  <td><b>78.3</b></td>
+  <td><b>92%</b></td>
+  <td>公式値照合 / 同業中央値比較</td>
+  <td>公式値照合後にA候補として再確認</td>
+  <td>追加確認へ</td>
+</tr><tr>
+  <td><b>8306.T</b><br>三菱UFJ FG</td>
+  <td><span class="badge warn">補完後再計算</span></td>
+  <td><b>64.6</b></td>
+  <td><b>26%</b></td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>重要項目の補完が先</td>
+</tr><tr>
+  <td><b>7011.T</b><br>三菱重工</td>
+  <td><span class="badge warn">補完後再計算</span></td>
+  <td><b>62.6</b></td>
+  <td><b>26%</b></td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>重要項目の補完が先</td>
+</tr><tr>
+  <td><b>8058.T</b><br>三菱商事</td>
+  <td><span class="badge warn">補完後再計算</span></td>
+  <td><b>62.4</b></td>
+  <td><b>26%</b></td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>重要項目の補完が先</td>
+</tr><tr>
+  <td><b>6501.T</b><br>日立製作所</td>
+  <td><span class="badge warn">補完後再計算</span></td>
+  <td><b>59.6</b></td>
+  <td><b>26%</b></td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>重要項目の補完が先</td>
+</tr><tr>
+  <td><b>8031.T</b><br>三井物産</td>
+  <td><span class="badge warn">補完後再計算</span></td>
+  <td><b>60.1</b></td>
+  <td><b>26%</b></td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>重要項目の補完が先</td>
+</tr><tr>
+  <td><b>5802.T</b><br>住友電工</td>
+  <td><span class="badge warn">補完後再計算</span></td>
+  <td><b>58.3</b></td>
+  <td><b>26%</b></td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>重要項目の補完が先</td>
+</tr><tr>
+  <td><b>5801.T</b><br>古河電工</td>
+  <td><span class="badge risk">仮説検算後比較</span></td>
+  <td><b>58</b></td>
+  <td><b>80%</b></td>
+  <td>過熱・最大下落確認 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>追加確認へ</td>
+</tr><tr>
+  <td><b>8001.T</b><br>伊藤忠商事</td>
+  <td><span class="badge warn">補完後再計算</span></td>
+  <td><b>58.5</b></td>
+  <td><b>26%</b></td>
+  <td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td>
+  <td>不足項目入力後にスコアを再計算</td>
+  <td>重要項目の補完が先</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>CSV</h2>
+    <p><a href="746_top10_recalculation_formula.csv">式CSV</a> / <a href="747_top10_recalculation_gate_rules.csv">ゲートCSV</a> / <a href="748_top10_recalculation_framework.csv">銘柄別CSV</a></p>
+  </section>
+</main>
+</body>
+</html>
