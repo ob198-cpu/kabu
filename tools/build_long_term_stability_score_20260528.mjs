@@ -2,6 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = process.cwd();
+const SOURCE_FILE = process.env.LONG_TERM_SOURCE || '720_client_send_pack_10_candidates.csv';
+const SCORE_FILE = process.env.LONG_TERM_SCORE_FILE || '725_long_term_stability_score.csv';
+const FETCH_LOG_FILE = process.env.LONG_TERM_FETCH_LOG_FILE || '726_long_term_stability_fetch_log.csv';
+const BENCHMARK_FILE = process.env.LONG_TERM_BENCHMARK_FILE || '727_long_term_benchmark_summary.csv';
+const HTML_FILE = process.env.LONG_TERM_HTML_FILE || 'long_term_stability_score_20260528.html';
+const REPORT_TITLE = process.env.LONG_TERM_TITLE || '候補10社 長期安定性スコア';
 const GENERATED_AT = new Intl.DateTimeFormat('ja-JP', {
   timeZone: 'Asia/Tokyo',
   year: 'numeric',
@@ -79,6 +85,12 @@ function tickerOf(text) {
 
 function nameOf(text) {
   return String(text || '').replace(/^\S+\s*/, '').trim();
+}
+
+function targetFromRow(row) {
+  const ticker = row.ticker || tickerOf(row['銘柄']);
+  const name = row.company || nameOf(row['銘柄']);
+  return { ticker, name };
 }
 
 function round(value, digits = 1) {
@@ -239,11 +251,8 @@ function noteFor(row) {
 }
 
 async function main() {
-  const candidateRows = parseCsv(fs.readFileSync(path.join(ROOT, '720_client_send_pack_10_candidates.csv'), 'utf8'));
-  const targets = candidateRows.map((row) => ({
-    ticker: tickerOf(row['銘柄']),
-    name: nameOf(row['銘柄'])
-  }));
+  const candidateRows = parseCsv(fs.readFileSync(path.join(ROOT, SOURCE_FILE), 'utf8'));
+  const targets = candidateRows.map(targetFromRow).filter((row) => row.ticker);
 
   const allTargets = [...targets, ...BENCHMARKS];
   const series = new Map();
@@ -339,9 +348,9 @@ async function main() {
     '5年年率ボラ', '5年最大下落率', '月次勝率', 'S&P相関', 'S&Pベータ',
     'リターン点', '安定性点', '継続性点', '確認事項'
   ];
-  writeCsv('725_long_term_stability_score.csv', rows, headers);
-  writeCsv('726_long_term_stability_fetch_log.csv', fetchLog, ['種別', 'コード', '名称', '状態', '件数', '開始日', '終了日', '取得元']);
-  writeCsv('727_long_term_benchmark_summary.csv', benchmarkRows, ['名称', 'コード', '5年CAGR', '5年年率ボラ', '5年最大下落率']);
+  writeCsv(SCORE_FILE, rows, headers);
+  writeCsv(FETCH_LOG_FILE, fetchLog, ['種別', 'コード', '名称', '状態', '件数', '開始日', '終了日', '取得元']);
+  writeCsv(BENCHMARK_FILE, benchmarkRows, ['名称', 'コード', '5年CAGR', '5年年率ボラ', '5年最大下落率']);
 
   const avgScore = round(mean(rows.map((row) => Number(row.長期安定性スコア))));
   const stableCount = rows.filter((row) => ['長期安定候補', '条件付き安定'].includes(row.判定)).length;
@@ -350,7 +359,7 @@ async function main() {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>候補10社 長期安定性スコア</title>
+  <title>${esc(REPORT_TITLE)}</title>
   <style>
     :root { --ink:#050b14; --muted:#45566a; --line:#cbd8e6; --navy:#123d63; --blue:#0b5f96; --soft:#f4f8fc; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
     * { box-sizing:border-box; }
@@ -385,13 +394,13 @@ async function main() {
 <body>
 <main>
   <header>
-    <h1>候補10社 長期安定性スコア</h1>
+    <h1>${esc(REPORT_TITLE)}</h1>
     <p>過去1年だけの上昇ではなく、5年・10年で継続して上がっているか、S&P500や日経/TOPIXとの差、値動きの大きさ、最大下落率を分けて確認します。</p>
-    <p class="note">作成: ${esc(GENERATED_AT)} / 取得元: Yahoo Finance chart API / 本表は購入確定ではなく、長期の安定性を確認するための補助表です。</p>
+    <p class="note">作成: ${esc(GENERATED_AT)} / 入力: ${esc(SOURCE_FILE)} / 取得元: Yahoo Finance chart API / 本表は購入確定ではなく、長期の安定性を確認するための補助表です。</p>
   </header>
 
   <div class="grid">
-    <div class="card"><b>平均スコア</b><div class="value">${esc(avgScore)}点</div><p>候補10社平均</p></div>
+    <div class="card"><b>平均スコア</b><div class="value">${esc(avgScore)}点</div><p>対象${esc(rows.length)}社平均</p></div>
     <div class="card"><b>条件付き以上</b><div class="value">${esc(stableCount)}社</div><p>58点以上</p></div>
     <div class="card"><b>S&P500 5年CAGR</b><div class="value">${esc(round(sp5Cagr))}%</div><p>比較基準</p></div>
     <div class="card"><b>日経平均 5年CAGR</b><div class="value">${esc(round(nikkei5Cagr))}%</div><p>日本株比較</p></div>
@@ -426,17 +435,17 @@ async function main() {
 
   <section>
     <h2>出力CSV</h2>
-    <p><a href="725_long_term_stability_score.csv">長期安定性スコアCSV</a> / <a href="727_long_term_benchmark_summary.csv">ベンチマークCSV</a> / <a href="726_long_term_stability_fetch_log.csv">取得ログCSV</a></p>
+    <p><a href="${esc(SCORE_FILE)}">長期安定性スコアCSV</a> / <a href="${esc(BENCHMARK_FILE)}">ベンチマークCSV</a> / <a href="${esc(FETCH_LOG_FILE)}">取得ログCSV</a></p>
   </section>
 </main>
 </body>
 </html>`;
 
-  fs.writeFileSync(path.join(ROOT, 'long_term_stability_score_20260528.html'), html, 'utf8');
+  fs.writeFileSync(path.join(ROOT, HTML_FILE), html, 'utf8');
 
   console.log(JSON.stringify({
     generatedAt: GENERATED_AT,
-    output: 'long_term_stability_score_20260528.html',
+    output: HTML_FILE,
     rows: rows.length,
     averageScore: avgScore,
     stableCount
