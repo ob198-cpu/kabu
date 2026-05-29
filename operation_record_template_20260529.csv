@@ -1,0 +1,2 @@
+record_date,channel,ticker,name,action,amount_yen,reason,expected_return_pct,expected_period,benchmark,entry_price,nikkei_at_entry,topix_at_entry,sp500_at_entry,check_5d_return_pct,check_20d_return_pct,check_3m_return_pct,benchmark_diff_pct,decision_result,next_action,notes
+2026-06-19,1,8316.T,三井住友FG,初回購入候補,0,6月イベント後に再判定,,,,,,,,,,,,,,

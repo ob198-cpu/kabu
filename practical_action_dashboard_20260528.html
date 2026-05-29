@@ -88,6 +88,7 @@
       <a class="button secondary" href="top10_decision_control_board_20260528.html">10社判定コントロール表</a>
       <a class="button secondary" href="top10_score_input_calculator_20260528.html">10社スコア入力・再計算</a>
       <a class="button secondary" href="top10_price_metrics_refresh_20260528.html">株価時系列 取得結果</a>
+      <a class="button secondary" href="operation_record_template_20260529.csv">運用記録CSV</a>
     </div>
   </section>
 
@@ -412,6 +413,29 @@
             <td>インデックスに劣後、またはリスクに見合う上振れがない</td>
             <td>翌年の個別株比率を下げる。効いた指標と効かなかった指標を記録する</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>運用記録・予実管理</h2>
+    <p class="note">買付判断、見送り判断、候補除外の理由を残します。目的は、当たった/外れたを感覚で終わらせず、次回の銘柄選定と比率調整に反映することです。</p>
+    <div class="actions">
+      <a class="button" href="operation_record_template_20260529.csv">運用記録CSVを開く</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>記録する項目</th><th>内容</th><th>使い道</th></tr></thead>
+        <tbody>
+          <tr><td>判断日</td><td>購入、見送り、保留、除外を判断した日</td><td>イベント前後の判断だったかを後で検証する</td></tr>
+          <tr><td>チャンネル</td><td>総合、半導体製造装置・材料、データセンター・電力・冷却・電線</td><td>どのテーマが有効だったかを分けて見る</td></tr>
+          <tr><td>銘柄・行動</td><td>対象銘柄、購入候補、保留、除外、追加停止など</td><td>なぜその銘柄を扱ったかを追跡する</td></tr>
+          <tr><td>判断理由</td><td>数値根拠、質的仮説、警戒条件、6月イベント後の反応</td><td>後から説明不能な判断を減らす</td></tr>
+          <tr><td>期待値</td><td>想定利回り、想定期間、比較対象</td><td>S&P500/TOPIXを上回る前提が妥当だったかを見る</td></tr>
+          <tr><td>入口データ</td><td>購入時株価、日経平均、TOPIX、S&P500</td><td>指数との差を計算する基準にする</td></tr>
+          <tr><td>結果確認</td><td>5営業日、20営業日、3か月、1年のリターン</td><td>短期反応と1年保有テストの両方を検証する</td></tr>
+          <tr><td>次のアクション</td><td>継続、追加、比率引き下げ、除外、現金維持</td><td>次回判断をルール化する</td></tr>
         </tbody>
       </table>
     </div>
