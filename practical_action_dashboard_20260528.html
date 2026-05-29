@@ -317,6 +317,53 @@
   </section>
 
   <section>
+    <h2>6月判定 分岐ルール</h2>
+    <p class="note">入力チェック後の判断を下表で統一します。目的は、相場が悪い日に無理に買わないこと、逆に条件が整った時だけ小さく始めることです。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>判定</th><th>条件</th><th>初回投入</th><th>対象</th><th>次の確認</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="ok">開始可</td>
+            <td>CPI、日銀、FOMC後に金利・為替・指数が大崩れせず、候補10社の警戒条件も説明できる。</td>
+            <td>最大30%</td>
+            <td>購入検討候補に再分類された銘柄のみ</td>
+            <td>購入後5営業日、20営業日、次回決算で指数比較を確認</td>
+          </tr>
+          <tr>
+            <td class="warn">縮小開始</td>
+            <td>市場は大崩れしていないが、金利・為替・SOX・日経平均のどれかに警戒が残る。</td>
+            <td>10%〜15%</td>
+            <td>総合候補と低ボラ候補を優先。急騰銘柄は後回し</td>
+            <td>1週間後に再判定。条件改善まで追加しない</td>
+          </tr>
+          <tr>
+            <td class="warn">保留</td>
+            <td>候補理由はあるが、PER説明、決算資料、指数比較、イベント後反応のいずれかが不足。</td>
+            <td>0%</td>
+            <td>テスト候補のまま保持</td>
+            <td>不足データを補完してから再判定</td>
+          </tr>
+          <tr>
+            <td class="stop">停止</td>
+            <td>CPI悪化、金利急騰、急な円高、日経平均/TOPIX急落、SOX急落、個別決算悪化が出た。</td>
+            <td>0%</td>
+            <td>全チャンネル</td>
+            <td>市場が落ち着くまで現金維持。候補リストのみ更新</td>
+          </tr>
+          <tr>
+            <td class="stop">個別除外</td>
+            <td>決算下方修正、説明不能な高PER、直近急騰後の失速、指数に明確に劣後、仮説崩れが確認された。</td>
+            <td>0%</td>
+            <td>該当銘柄のみ</td>
+            <td>補欠候補へ入れ替え。除外理由を記録</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
     <h2>6月の実行フロー</h2>
     <div class="flow">
       <div class="step"><b>6/10</b><br>米CPIを確認<br><span class="warn">売買しない</span></div>
