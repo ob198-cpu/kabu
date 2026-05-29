@@ -11,7 +11,7 @@
     .page:last-child { page-break-after: auto; }
     .cover { background: #123d63; color: #fff; min-height: 180mm; padding: 22mm; }
     h1 { font-size: 30px; margin: 0 0 12px; letter-spacing: 0; }
-    h2 { font-size: 17px; margin: 0 0 8px; padding-left: 8px; border-left: 6px solid #0b5f96; color: #123d63; }
+    h2 { font-size: 17px; margin: 0 0 8px; padding-left: 8px; border-left: 6px solid #0b5f96; color: #123d63; page-break-after: avoid; break-after: avoid; }
     .cover h2 { color: #fff; border-color: #8fd3ff; }
     .lead { font-size: 15px; max-width: 940px; }
     .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0; }
@@ -19,7 +19,8 @@
     .cover .card { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.3); color: #fff; }
     .value { font-size: 23px; font-weight: 900; color: #0b5f96; }
     .cover .value { color: #fff; }
-    table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 6px 0 12px; page-break-inside: avoid; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 6px 0 12px; page-break-inside: avoid; break-inside: avoid; }
+    tr { page-break-inside: avoid; break-inside: avoid; }
     th, td { border: 1px solid #cbd8e6; padding: 5px; vertical-align: top; overflow-wrap: break-word; }
     th { background: #e6f1fb; color: #123d63; text-align: left; }
     .note { border-left: 6px solid #a85b00; background: #fff8ec; padding: 8px; margin: 8px 0 12px; }
@@ -67,20 +68,10 @@
       </tbody>
     </table>
 
-    <h2>3. 投資判断に有益な点</h2>
-    <table>
-      <thead><tr><th>有益な点</th><th>説明</th><th>注意点</th></tr></thead>
-      <tbody>
-        <tr><td>構造需要を見られる</td><td>AIの直接銘柄だけでなく、製造装置、検査、電力、冷却、電線など周辺需要を確認できます。</td><td>テーマが正しくても株価に織り込み済みの場合があります。</td></tr>
-        <tr><td>過熱銘柄を分けられる</td><td>1年急騰、60日急騰、最大下落率を見て、上がりすぎの候補を条件付きにできます。</td><td>上昇率が高い銘柄ほど、反落時の下落も大きくなりやすいです。</td></tr>
-        <tr><td>指数比較ができる</td><td>5年S&P500差を使い、単に上がっただけでなく指数を超えたかを確認できます。</td><td>将来も同じ差が続くとは限らないため、6月以降の実データで再確認します。</td></tr>
-        <tr><td>説明責任を持ちやすい</td><td>各社について、役割、スコア、CAGR、S&P差、最大下落、警戒点を残しています。</td><td>不足データがある銘柄は購入判断に進めず、補完後に再判定します。</td></tr>
-      </tbody>
-    </table>
   </section>
 
   <section class="page">
-    <h2>4. 半導体製造装置・材料 10社</h2>
+    <h2>3. 半導体製造装置・材料 10社</h2>
     <table>
       <thead><tr><th>順位</th><th>銘柄</th><th>役割</th><th>扱い</th><th>実用スコア</th><th>5年CAGR</th><th>5年S&P差</th><th>最大下落</th><th>警戒点</th></tr></thead>
       <tbody>
@@ -100,7 +91,7 @@
   </section>
 
   <section class="page">
-    <h2>5. データセンター・電力・冷却・電線 10社</h2>
+    <h2>4. データセンター・電力・冷却・電線 10社</h2>
     <table>
       <thead><tr><th>順位</th><th>銘柄</th><th>役割</th><th>扱い</th><th>実用スコア</th><th>5年CAGR</th><th>5年S&P差</th><th>最大下落</th><th>警戒点</th></tr></thead>
       <tbody>
@@ -120,7 +111,7 @@
   </section>
 
   <section class="page">
-    <h2>6. 妥当性と限界</h2>
+    <h2>5. 妥当性と限界</h2>
     <table>
       <thead><tr><th>論点</th><th>評価</th><th>今後の確認</th></tr></thead>
       <tbody>
@@ -131,7 +122,7 @@
       </tbody>
     </table>
 
-    <h2>7. 次回作業</h2>
+    <h2>6. 次回作業</h2>
     <table>
       <thead><tr><th>優先</th><th>作業</th><th>目的</th></tr></thead>
       <tbody>
