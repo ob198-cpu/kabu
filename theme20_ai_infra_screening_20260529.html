@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIインフラ関連20社 スクリーニング 2026年5月29日</title>
+  <style>
+    body{margin:0;background:#f4f7fb;color:#061624;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.62}
+    main{max-width:1380px;margin:0 auto;padding:28px}
+    h1{margin:0;color:#123d63;font-size:31px}
+    h2{margin:24px 0 10px;color:#123d63;border-left:8px solid #0b5f96;padding-left:12px}
+    .lead{background:#123d63;color:#fff;border-radius:14px;padding:20px;margin-bottom:16px}
+    .lead p{color:#e7f1fb;margin:8px 0 0}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+    .card{background:#fff;border:1px solid #d5e2ee;border-radius:12px;padding:14px}
+    .card b{display:block;color:#456}.card span{display:block;font-size:28px;font-weight:900;color:#0b5f96}
+    .note{background:#fff8eb;border-left:7px solid #c06b00;padding:12px;margin:12px 0}
+    .table-wrap{overflow-x:auto;background:#fff;border:1px solid #d5e2ee;border-radius:12px}
+    table{width:100%;border-collapse:collapse;min-width:1480px}
+    th,td{border:1px solid #d5e2ee;padding:7px;vertical-align:top;font-size:12px}
+    th{background:#e6f1fb;color:#123d63;text-align:left;position:sticky;top:0}
+    tr.ok td{background:#f3fff6} tr.watch td{background:#fffaf1} tr.drop td{background:#fff5f5}
+    .links{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .button{display:inline-block;background:#0b5f96;color:#fff;text-decoration:none;border-radius:9px;padding:9px 12px;font-weight:800}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.small{font-size:13px;color:#34465b}
+    @media(max-width:900px){main{padding:16px}.cards,.grid2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <section class="lead">
+    <h1>AIインフラ関連20社 スクリーニング</h1>
+    <p>半導体製造装置・材料10社、データセンター・電力・冷却・電線10社を、既存システムの数値とYahoo Financeの価格時系列で一次比較しました。</p>
+  </section>
+  <div class="cards">
+    <div class="card"><b>対象</b><span>20社</span><p>2テーマ各10社</p></div>
+    <div class="card"><b>一次候補</b><span>0</span><p>信頼度と警戒条件を通過</p></div>
+    <div class="card"><b>監視</b><span>4</span><p>点数は高いが過熱・下落確認</p></div>
+    <div class="card"><b>データ補完</b><span>7</span><p>財務・既存スコア不足</p></div>
+  </div>
+  <p class="note">総合判定では、質的仮説を点数に直接足していません。順位は、既存選定スコア、長期安定、S&P比較、下落耐性を中心に算出し、質的仮説は「なぜ調べる価値があるか」の補助欄として分けています。</p>
+  <p class="small">価格時系列: Yahoo Finance chart API。S&amp;P比較: ^GSPC、1年騰落 28.4%、5年CAGR 12.5%、10年CAGR 13.7%。財務・既存スコア: 199_universe100_screening.csv。</p>
+  <div class="links">
+    <a class="button" href="786_theme20_ai_infra_screening_20260529.csv">CSVを開く</a>
+    <a class="button" href="integrated_recalculated_10_20260528.html">既存10社の統合再計算</a>
+  </div>
+
+  <h2>1. 上位候補</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>半導体製造装置・材料 上位5</h3>
+      <ol><li><b>6857.T アドバンテスト</b> 56.7点 / データ補完 / 1年急騰、5年最大下落が深い、1年最大下落が深い</li><li><b>4186.T 東京応化工業</b> 54.6点 / データ補完 / 1年急騰、PER/PBR/ROE補完必要</li><li><b>6146.T ディスコ</b> 52.7点 / データ補完 / 5年最大下落が深い、PER/PBR/ROE補完必要</li><li><b>6525.T KOKUSAI ELECTRIC</b> 52.2点 / データ補完 / 上場/取得期間が短い、1年急騰、60日急騰、5年最大下落が深い、1年最大下落が深い、PER/PBR/ROE補完必要</li><li><b>8035.T 東京エレクトロン</b> 48点 / 保留 / 5年最大下落が深い、1年最大下落が深い、PER/PBR/ROE補完必要</li></ol>
+    </div>
+    <div class="card">
+      <h3>データセンター・電力・冷却・電線 上位5</h3>
+      <ol><li><b>5803.T フジクラ</b> 69.4点 / 監視 / 1年急騰、5年最大下落が深い、1年最大下落が深い</li><li><b>5801.T 古河電工</b> 68.1点 / 監視 / 1年急騰、60日急騰、5年最大下落が深い</li><li><b>5802.T 住友電工</b> 67.1点 / 監視 / 1年急騰</li><li><b>1942.T 関電工</b> 66.5点 / 監視 / PER/PBR/ROE補完必要</li><li><b>7011.T 三菱重工業</b> 57.9点 / データ補完 / 1年最大下落が深い</li></ol>
+    </div>
+  </div>
+
+  <h2>2. 20社スクリーニング表</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>順位</th><th>銘柄</th><th>テーマ群</th><th>役割</th><th>質的仮説</th><th>扱い</th><th>実用</th><th>4項目平均</th><th>信頼度</th><th>既存</th><th>長期</th><th>S&P</th><th>下落耐性</th><th>5年CAGR</th><th>10年CAGR</th><th>1年</th><th>60日</th><th>5年最大下落</th><th>注意点</th></tr></thead>
+    <tbody>
+  <tr class="watch">
+    <td>1</td>
+    <td>5803.T フジクラ</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>光配線・高速ケーブル</td>
+    <td>A</td>
+    <td>監視</td>
+    <td>69.4点</td>
+    <td>69.4点</td>
+    <td>100</td>
+    <td>68点</td>
+    <td>93点</td>
+    <td>97.4点</td>
+    <td>19.3点</td>
+    <td>132.4%</td>
+    <td>50.3%</td>
+    <td>314.9%</td>
+    <td>-0.3%</td>
+    <td>-50.7%</td>
+    <td>1年急騰 / 5年最大下落が深い / 1年最大下落が深い</td>
+  </tr>
+
+  <tr class="watch">
+    <td>2</td>
+    <td>5801.T 古河電工</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>光ファイバー・電力・放熱</td>
+    <td>A</td>
+    <td>監視</td>
+    <td>68.1点</td>
+    <td>68.1点</td>
+    <td>100</td>
+    <td>68点</td>
+    <td>66.7点</td>
+    <td>97.4点</td>
+    <td>40.4点</td>
+    <td>80.6%</td>
+    <td>37.2%</td>
+    <td>622.5%</td>
+    <td>69%</td>
+    <td>-52.1%</td>
+    <td>1年急騰 / 60日急騰 / 5年最大下落が深い</td>
+  </tr>
+
+  <tr class="watch">
+    <td>3</td>
+    <td>5802.T 住友電工</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>光ファイバー・電力ケーブル</td>
+    <td>A</td>
+    <td>監視</td>
+    <td>67.1点</td>
+    <td>67.1点</td>
+    <td>100</td>
+    <td>64点</td>
+    <td>63.2点</td>
+    <td>81.6点</td>
+    <td>59.6点</td>
+    <td>53.5%</td>
+    <td>26.5%</td>
+    <td>308%</td>
+    <td>13.1%</td>
+    <td>-41.4%</td>
+    <td>1年急騰</td>
+  </tr>
+
+  <tr class="watch">
+    <td>4</td>
+    <td>1942.T 関電工</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>電気設備工事</td>
+    <td>B</td>
+    <td>監視</td>
+    <td>66.5点</td>
+    <td>73.4点</td>
+    <td>53</td>
+    <td>未取得</td>
+    <td>70.2点</td>
+    <td>60.5点</td>
+    <td>89.5点</td>
+    <td>53.2%</td>
+    <td>26.2%</td>
+    <td>124.9%</td>
+    <td>-3.5%</td>
+    <td>-18.9%</td>
+    <td>PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="">
+    <td>5</td>
+    <td>7011.T 三菱重工業</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>電力・冷却・インフラ</td>
+    <td>B</td>
+    <td>データ補完</td>
+    <td>57.9点</td>
+    <td>57.9点</td>
+    <td>100</td>
+    <td>50点</td>
+    <td>75.4点</td>
+    <td>44.7点</td>
+    <td>61.4点</td>
+    <td>65.7%</td>
+    <td>27%</td>
+    <td>15%</td>
+    <td>-27.2%</td>
+    <td>-35.8%</td>
+    <td>1年最大下落が深い</td>
+  </tr>
+
+  <tr class="">
+    <td>6</td>
+    <td>6857.T アドバンテスト</td>
+    <td>半導体製造装置・材料</td>
+    <td>半導体テスター</td>
+    <td>A</td>
+    <td>データ補完</td>
+    <td>56.7点</td>
+    <td>56.7点</td>
+    <td>100</td>
+    <td>60点</td>
+    <td>56.1点</td>
+    <td>78.9点</td>
+    <td>31.6点</td>
+    <td>61.2%</td>
+    <td>57.8%</td>
+    <td>237.4%</td>
+    <td>-0.3%</td>
+    <td>-51.4%</td>
+    <td>1年急騰 / 5年最大下落が深い / 1年最大下落が深い</td>
+  </tr>
+
+  <tr class="">
+    <td>7</td>
+    <td>6503.T 三菱電機</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>電力機器・冷却・FA</td>
+    <td>A</td>
+    <td>データ補完</td>
+    <td>55.7点</td>
+    <td>55.7点</td>
+    <td>100</td>
+    <td>58点</td>
+    <td>33.3点</td>
+    <td>42.1点</td>
+    <td>89.5点</td>
+    <td>33.7%</td>
+    <td>20%</td>
+    <td>123.1%</td>
+    <td>8.9%</td>
+    <td>-34%</td>
+    <td>主要警戒なし</td>
+  </tr>
+
+  <tr class="">
+    <td>8</td>
+    <td>4186.T 東京応化工業</td>
+    <td>半導体製造装置・材料</td>
+    <td>フォトレジスト</td>
+    <td>A</td>
+    <td>データ補完</td>
+    <td>54.6点</td>
+    <td>60.2点</td>
+    <td>53</td>
+    <td>未取得</td>
+    <td>54.4点</td>
+    <td>63.2点</td>
+    <td>63.2点</td>
+    <td>39.6%</td>
+    <td>30.5%</td>
+    <td>194%</td>
+    <td>12.5%</td>
+    <td>-44.4%</td>
+    <td>1年急騰 / PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="">
+    <td>9</td>
+    <td>6501.T 日立製作所</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>送配電・電力制御</td>
+    <td>A</td>
+    <td>データ補完</td>
+    <td>52.9点</td>
+    <td>52.9点</td>
+    <td>100</td>
+    <td>53点</td>
+    <td>56.1点</td>
+    <td>28.9点</td>
+    <td>73.7点</td>
+    <td>37.8%</td>
+    <td>28.9%</td>
+    <td>30.3%</td>
+    <td>4.3%</td>
+    <td>-38.7%</td>
+    <td>主要警戒なし</td>
+  </tr>
+
+  <tr class="">
+    <td>10</td>
+    <td>6146.T ディスコ</td>
+    <td>半導体製造装置・材料</td>
+    <td>切断・研削</td>
+    <td>A</td>
+    <td>データ補完</td>
+    <td>52.7点</td>
+    <td>53.6点</td>
+    <td>92</td>
+    <td>60点</td>
+    <td>73.7点</td>
+    <td>47.4点</td>
+    <td>33.3点</td>
+    <td>44%</td>
+    <td>36.4%</td>
+    <td>86.1%</td>
+    <td>-13.7%</td>
+    <td>-65.2%</td>
+    <td>5年最大下落が深い / PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="">
+    <td>11</td>
+    <td>6525.T KOKUSAI ELECTRIC</td>
+    <td>半導体製造装置・材料</td>
+    <td>成膜・熱処理</td>
+    <td>A</td>
+    <td>データ補完</td>
+    <td>52.2点</td>
+    <td>57.6点</td>
+    <td>53</td>
+    <td>未取得</td>
+    <td>87.7点</td>
+    <td>76.3点</td>
+    <td>8.8点</td>
+    <td>63.3%</td>
+    <td>63.3%</td>
+    <td>166.7%</td>
+    <td>30.2%</td>
+    <td>-69.9%</td>
+    <td>上場/取得期間が短い / 1年急騰 / 60日急騰 / 5年最大下落が深い / 1年最大下落が深い / PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="drop">
+    <td>12</td>
+    <td>8035.T 東京エレクトロン</td>
+    <td>半導体製造装置・材料</td>
+    <td>前工程装置</td>
+    <td>A</td>
+    <td>保留</td>
+    <td>48点</td>
+    <td>48.8点</td>
+    <td>92</td>
+    <td>60点</td>
+    <td>61.4点</td>
+    <td>36.8点</td>
+    <td>36.8点</td>
+    <td>29.6%</td>
+    <td>38.3%</td>
+    <td>120.8%</td>
+    <td>21.3%</td>
+    <td>-55.8%</td>
+    <td>5年最大下落が深い / 1年最大下落が深い / PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="drop">
+    <td>13</td>
+    <td>1969.T 高砂熱学工業</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>空調設備工事</td>
+    <td>A</td>
+    <td>保留</td>
+    <td>47.2点</td>
+    <td>52点</td>
+    <td>53</td>
+    <td>未取得</td>
+    <td>47.4点</td>
+    <td>36.8点</td>
+    <td>71.9点</td>
+    <td>43.3%</td>
+    <td>24.4%</td>
+    <td>44.1%</td>
+    <td>-10.3%</td>
+    <td>-29.6%</td>
+    <td>1年最大下落が深い / PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="drop">
+    <td>14</td>
+    <td>7735.T SCREEN HD</td>
+    <td>半導体製造装置・材料</td>
+    <td>洗浄装置</td>
+    <td>A</td>
+    <td>保留</td>
+    <td>44.8点</td>
+    <td>44.8点</td>
+    <td>100</td>
+    <td>66点</td>
+    <td>29.8点</td>
+    <td>39.5点</td>
+    <td>43.9点</td>
+    <td>36.6%</td>
+    <td>25.6%</td>
+    <td>108.4%</td>
+    <td>-0.7%</td>
+    <td>-59.1%</td>
+    <td>5年最大下落が深い</td>
+  </tr>
+
+  <tr class="drop">
+    <td>15</td>
+    <td>6920.T レーザーテック</td>
+    <td>半導体製造装置・材料</td>
+    <td>EUV検査</td>
+    <td>A</td>
+    <td>保留</td>
+    <td>44.5点</td>
+    <td>44.5点</td>
+    <td>100</td>
+    <td>70点</td>
+    <td>49.1点</td>
+    <td>39.5点</td>
+    <td>19.3点</td>
+    <td>14.8%</td>
+    <td>62.4%</td>
+    <td>161.8%</td>
+    <td>14.8%</td>
+    <td>-76.6%</td>
+    <td>1年急騰 / 5年最大下落が深い / 1年最大下落が深い</td>
+  </tr>
+
+  <tr class="drop">
+    <td>16</td>
+    <td>6367.T ダイキン工業</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>空調・冷却</td>
+    <td>B</td>
+    <td>保留</td>
+    <td>40.5点</td>
+    <td>40.5点</td>
+    <td>100</td>
+    <td>56点</td>
+    <td>7点</td>
+    <td>13.2点</td>
+    <td>86点</td>
+    <td>3%</td>
+    <td>10.9%</td>
+    <td>45.4%</td>
+    <td>17.8%</td>
+    <td>-50%</td>
+    <td>5年最大下落が深い</td>
+  </tr>
+
+  <tr class="drop">
+    <td>17</td>
+    <td>6504.T 富士電機</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>UPS・電源設備</td>
+    <td>A</td>
+    <td>保留</td>
+    <td>36点</td>
+    <td>39.8点</td>
+    <td>53</td>
+    <td>未取得</td>
+    <td>26.3点</td>
+    <td>42.1点</td>
+    <td>50.9点</td>
+    <td>26.6%</td>
+    <td>23.7%</td>
+    <td>134.3%</td>
+    <td>12.6%</td>
+    <td>-52.9%</td>
+    <td>5年最大下落が深い / PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="drop">
+    <td>18</td>
+    <td>4063.T 信越化学工業</td>
+    <td>半導体製造装置・材料</td>
+    <td>ウェハ・材料</td>
+    <td>A</td>
+    <td>保留</td>
+    <td>32.9点</td>
+    <td>35点</td>
+    <td>70</td>
+    <td>18点</td>
+    <td>14点</td>
+    <td>23.7点</td>
+    <td>84.2点</td>
+    <td>17.8%</td>
+    <td>22%</td>
+    <td>67.9%</td>
+    <td>22.1%</td>
+    <td>-47.1%</td>
+    <td>PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="drop">
+    <td>19</td>
+    <td>3436.T SUMCO</td>
+    <td>半導体製造装置・材料</td>
+    <td>シリコンウェハ</td>
+    <td>B</td>
+    <td>保留</td>
+    <td>21.7点</td>
+    <td>24点</td>
+    <td>53</td>
+    <td>未取得</td>
+    <td>14点</td>
+    <td>47.4点</td>
+    <td>10.5点</td>
+    <td>11.7%</td>
+    <td>20.5%</td>
+    <td>298.8%</td>
+    <td>121%</td>
+    <td>-71.8%</td>
+    <td>1年急騰 / 60日急騰 / 5年最大下落が深い / 1年最大下落が深い / PER/PBR/ROE補完必要</td>
+  </tr>
+
+  <tr class="drop">
+    <td>20</td>
+    <td>4369.T トリケミカル研究所</td>
+    <td>半導体製造装置・材料</td>
+    <td>高純度化学品</td>
+    <td>B</td>
+    <td>保留</td>
+    <td>15.1点</td>
+    <td>16.7点</td>
+    <td>53</td>
+    <td>未取得</td>
+    <td>21.1点</td>
+    <td>2.6点</td>
+    <td>26.3点</td>
+    <td>2.3%</td>
+    <td>22.8%</td>
+    <td>23%</td>
+    <td>-0.5%</td>
+    <td>-62.8%</td>
+    <td>5年最大下落が深い / 1年最大下落が深い / PER/PBR/ROE補完必要</td>
+  </tr>
+</tbody>
+  </table></div>
+
+  <h2>3. 使い方</h2>
+  <p>この画面では、まず「一次候補」を次の詳細調査へ進めます。「監視」は点数が高くても急騰・急落・高ボラティリティを確認します。「データ補完」はPER/PBR/ROE、決算成長率、受注残、事業別売上比率を入れるまで購入候補にはしません。</p>
+  <p>次の作業は、一次候補と監視上位について、公式決算資料からPER/PBR/ROE、売上・利益成長率、受注残、データセンター/半導体関連売上の確認を追加することです。</p>
+</main>
+</body>
+</html>
