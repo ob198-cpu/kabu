@@ -35,10 +35,26 @@
     .flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; align-items:stretch; }
     .step { border:1px solid var(--line); border-radius:8px; padding:10px; background:#f8fbff; position:relative; }
     .step:not(:last-child)::after { content:"→"; position:absolute; right:-10px; top:38%; color:var(--blue); font-weight:900; }
+    .channel-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 14px; }
+    .channel-tab { border:1px solid var(--blue); border-radius:999px; background:#fff; color:var(--blue); padding:9px 13px; font-weight:900; cursor:pointer; }
+    .channel-tab.active { background:var(--blue); color:#fff; }
+    .channel-panel { display:none; border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:14px; }
+    .channel-panel.active { display:block; }
+    .channel-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; margin-bottom:10px; }
+    .channel-head h3 { margin:0 0 4px; color:var(--navy); font-size:20px; }
+    .channel-head p { margin:0; color:#1f3044; }
+    .channel-badge { display:inline-block; border-radius:999px; background:#e6f1fb; color:var(--navy); border:1px solid #bad4e8; padding:6px 10px; font-weight:900; white-space:nowrap; }
+    .channel-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:10px 0; }
+    .channel-summary div { border:1px solid var(--line); border-radius:8px; background:#fff; padding:9px; }
+    .channel-summary b { display:block; color:var(--navy); font-size:12px; }
+    .channel-summary span { display:block; color:#050b14; font-weight:900; }
+    .channel-actions { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+    .channel-actions .button { display:inline-flex; width:auto; min-height:38px; align-items:center; }
     @media (max-width:980px) {
       .grid,.actions,.flow { grid-template-columns:1fr; }
       .step::after { display:none; }
       table { table-layout:auto; }
+      .channel-head, .channel-summary { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -72,6 +88,113 @@
       <a class="button secondary" href="top10_decision_control_board_20260528.html">10社判定コントロール表</a>
       <a class="button secondary" href="top10_score_input_calculator_20260528.html">10社スコア入力・再計算</a>
       <a class="button secondary" href="top10_price_metrics_refresh_20260528.html">株価時系列 取得結果</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>継続確認チャンネル</h2>
+    <p class="note">今後はこの3チャンネルを分けて管理します。チャンネル1は昨日までの総合候補、チャンネル2は半導体製造装置・材料、チャンネル3はデータセンター・電力・冷却・電線です。分野を混ぜた10社は参考扱いで、正式な比較は下のチャンネル別に見ます。</p>
+    <div class="channel-tabs" role="tablist" aria-label="候補チャンネル">
+      <button class="channel-tab active" type="button" data-channel-tab="ch1">チャンネル1 総合</button>
+      <button class="channel-tab" type="button" data-channel-tab="ch2">チャンネル2 半導体製造装置・材料</button>
+      <button class="channel-tab" type="button" data-channel-tab="ch3">チャンネル3 データセンター・電力・冷却・電線</button>
+    </div>
+
+    <div class="channel-panel active" id="ch1" role="tabpanel">
+      <div class="channel-head">
+        <div>
+          <h3>チャンネル1: 昨日の総合候補</h3>
+          <p>100社母集団から、既存選定スコア、長期安定性、S&P比較、下落耐性を統合して見た候補群です。業種を限定せず、全体最適の候補確認に使います。</p>
+        </div>
+        <span class="channel-badge">総合比較</span>
+      </div>
+      <div class="channel-summary">
+        <div><b>用途</b><span>全体候補の基準線</span></div>
+        <div><b>現在の扱い</b><span>6月再判定前</span></div>
+        <div><b>主な確認</b><span>指数比較・下落耐性</span></div>
+        <div><b>注意</b><span>購入確定ではない</span></div>
+      </div>
+      <div class="channel-actions">
+        <a class="button" href="integrated_recalculated_10_20260528.html">チャンネル1を開く</a>
+        <a class="button secondary" href="784_integrated_recalculation_scores_20260528.csv">全スコアCSV</a>
+        <a class="button secondary" href="785_integrated_recalculated_10_20260528.csv">10社CSV</a>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>順位</th><th>銘柄</th><th>100点換算</th><th>現時点の扱い</th><th>確認すること</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>8316.T 三井住友FG</td><td>76.9</td><td class="ok">統合候補</td><td>金利、金融政策、信用コスト</td></tr>
+            <tr><td>2</td><td>8306.T 三菱UFJ FG</td><td>74.9</td><td class="ok">統合候補</td><td>日銀後の銀行株全体の反応</td></tr>
+            <tr><td>3</td><td>8725.T MS&AD</td><td>72.9</td><td class="ok">統合候補</td><td>保険セクターの継続性</td></tr>
+            <tr><td>4</td><td>8411.T みずほFG</td><td>71.2</td><td class="ok">統合候補</td><td>銀行内の比較順位</td></tr>
+            <tr><td>5</td><td>6503.T 三菱電機</td><td>70.8</td><td class="ok">統合候補</td><td>電力・FAテーマと株価反応</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="channel-panel" id="ch2" role="tabpanel">
+      <div class="channel-head">
+        <div>
+          <h3>チャンネル2: 半導体製造装置・材料 10社</h3>
+          <p>AI半導体需要から、製造装置、検査、切断・研削、材料へ資金が流れる仮説を検証する候補群です。急騰・高PER・大幅下落リスクを必ず分けて見ます。</p>
+        </div>
+        <span class="channel-badge">半導体サプライチェーン</span>
+      </div>
+      <div class="channel-summary">
+        <div><b>用途</b><span>AI半導体の構造需要確認</span></div>
+        <div><b>上位扱い</b><span>条件付き通過中心</span></div>
+        <div><b>主な確認</b><span>PER・受注・SOX指数</span></div>
+        <div><b>注意</b><span>高ボラ・急落耐性</span></div>
+      </div>
+      <div class="channel-actions">
+        <a class="button" href="theme20_separate_screened10_20260529.html#semiconductor">チャンネル2を開く</a>
+        <a class="button secondary" href="788_theme20_separate_screened10_20260529.csv">分野別CSV</a>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>順位</th><th>銘柄</th><th>扱い</th><th>実用スコア</th><th>警戒点</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>6857.T アドバンテスト</td><td class="warn">条件付き通過</td><td>56.7</td><td>1年急騰、ボラ高い</td></tr>
+            <tr><td>2</td><td>6146.T ディスコ</td><td class="warn">条件付き通過</td><td>52.7</td><td>5年下落深い</td></tr>
+            <tr><td>3</td><td>8035.T 東京エレクトロン</td><td class="warn">補欠</td><td>48.0</td><td>5年下落深い</td></tr>
+            <tr><td>4</td><td>7735.T SCREEN HD</td><td class="warn">補欠</td><td>44.8</td><td>5年下落深い</td></tr>
+            <tr><td>5</td><td>6920.T レーザーテック</td><td class="warn">補欠</td><td>44.5</td><td>1年急騰、5年下落深い、ボラ高い</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="channel-panel" id="ch3" role="tabpanel">
+      <div class="channel-head">
+        <div>
+          <h3>チャンネル3: データセンター・電力・冷却・電線 10社</h3>
+          <p>AIデータセンター増加から、電力、送配電、冷却、光ファイバー、電線へ資金が流れる仮説を検証する候補群です。急騰銘柄は点が高くても条件付き扱いにします。</p>
+        </div>
+        <span class="channel-badge">AIインフラ周辺</span>
+      </div>
+      <div class="channel-summary">
+        <div><b>用途</b><span>AI設備投資の周辺需要確認</span></div>
+        <div><b>上位扱い</b><span>通過3社あり</span></div>
+        <div><b>主な確認</b><span>電力需要・設備投資</span></div>
+        <div><b>注意</b><span>電線株の急騰反動</span></div>
+      </div>
+      <div class="channel-actions">
+        <a class="button" href="theme20_separate_screened10_20260529.html#datacenter">チャンネル3を開く</a>
+        <a class="button secondary" href="788_theme20_separate_screened10_20260529.csv">分野別CSV</a>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>順位</th><th>銘柄</th><th>扱い</th><th>実用スコア</th><th>警戒点</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>7011.T 三菱重工業</td><td class="ok">通過</td><td>57.9</td><td>重大な警戒表示なし</td></tr>
+            <tr><td>2</td><td>6503.T 三菱電機</td><td class="ok">通過</td><td>55.7</td><td>重大な警戒表示なし</td></tr>
+            <tr><td>3</td><td>6501.T 日立製作所</td><td class="ok">通過</td><td>52.9</td><td>重大な警戒表示なし</td></tr>
+            <tr><td>4</td><td>5803.T フジクラ</td><td class="warn">条件付き通過</td><td>69.4</td><td>1年急騰、1年下落深い、ボラ高い</td></tr>
+            <tr><td>5</td><td>5801.T 古河電工</td><td class="warn">条件付き通過</td><td>68.1</td><td>1年急騰、60日急騰、ボラ高い</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -150,5 +273,14 @@
     </div>
   </section>
 </main>
+<script>
+  document.querySelectorAll('[data-channel-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const target = button.dataset.channelTab;
+      document.querySelectorAll('[data-channel-tab]').forEach((item) => item.classList.toggle('active', item === button));
+      document.querySelectorAll('.channel-panel').forEach((panel) => panel.classList.toggle('active', panel.id === target));
+    });
+  });
+</script>
 </body>
 </html>
