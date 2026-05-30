@@ -32,6 +32,10 @@
     .priority a { display:block; text-decoration:none; border:1px solid var(--line); border-radius:9px; background:#f8fbff; padding:12px; color:var(--ink); }
     .priority b { display:block; color:var(--navy); margin-bottom:4px; }
     .priority span { display:block; font-size:12px; color:#36506a; font-weight:800; }
+    .scope-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .scope-box { border:1px solid var(--line); border-radius:9px; padding:12px; background:#f8fbff; }
+    .scope-box b { display:block; color:var(--navy); margin-bottom:6px; }
+    .scope-box ul { margin:0; padding-left:18px; }
     .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
     table { width:100%; border-collapse:collapse; table-layout:fixed; }
     th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
@@ -56,7 +60,7 @@
     .channel-actions .button { display:inline-flex; width:auto; min-height:38px; align-items:center; }
     .subnote { margin:8px 0 0; color:#36506a; font-size:12px; font-weight:800; }
     @media (max-width:980px) {
-      .grid,.actions,.flow,.priority { grid-template-columns:1fr; }
+      .grid,.actions,.flow,.priority,.scope-grid { grid-template-columns:1fr; }
       .step::after { display:none; }
       table { table-layout:auto; }
       .channel-head, .channel-summary { grid-template-columns:1fr; }
@@ -79,6 +83,28 @@
       <div class="card"><strong>検討上限</strong><div class="value">90%</div><p>条件良好時の上限案。10%は現金待機</p></div>
     </div>
     <p class="danger">現時点では購入検討の確定ではありません。6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後に再判定します。</p>
+  </section>
+
+  <section>
+    <h2>この画面の役割</h2>
+    <div class="scope-grid">
+      <div class="scope-box">
+        <b>できること</b>
+        <ul>
+          <li>候補群を、総合・半導体・AIインフラに分けて確認する</li>
+          <li>6月の主要イベント後に見る数値と判断分岐を確認する</li>
+          <li>判断理由、結果、次の確認日を記録する</li>
+        </ul>
+      </div>
+      <div class="scope-box">
+        <b>できないこと</b>
+        <ul>
+          <li>証券注文の自動実行</li>
+          <li>購入判断の確定や利益の保証</li>
+          <li>未確認データを使った最終判定</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <section>
