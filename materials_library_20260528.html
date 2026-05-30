@@ -20,6 +20,9 @@
     .button { display:inline-block; text-decoration:none; border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:9px 12px; font-weight:800; margin:3px 6px 3px 0; }
     .button.secondary { background:#fff; color:var(--blue); }
     .note { border-left:6px solid #a85b00; background:#fff8ec; border-radius:8px; padding:12px; margin:10px 0; }
+    .tag { display:inline-block; border-radius:999px; padding:3px 9px; margin-bottom:8px; font-size:12px; font-weight:800; color:#fff; background:#0b5f96; }
+    .tag.ref { background:#6a7280; }
+    .tag.history { background:#8a5a00; }
     @media (max-width:980px) { .grid { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -34,6 +37,7 @@
     <h2>まず読む資料</h2>
     <div class="grid">
       <div class="card">
+        <span class="tag">最新</span>
         <h3>最新の作業報告</h3>
         <p>2026年5月29日の作業内容。AIインフラ関連を2分野に分け、各10社を比較した結果と確認条件を整理。</p>
         <a class="button" href="daily_progress_report_20260529.pdf">PDF</a>
@@ -41,14 +45,16 @@
         <a class="button secondary" href="theme20_separate_screened10_20260529.html">分野別10社</a>
       </div>
       <div class="card">
-        <h3>候補10社の説明資料</h3>
-        <p>候補10社、選定ロジック、インデックス比較、6月判定フローの説明。</p>
+        <span class="tag ref">参考</span>
+        <h3>候補10社の過去資料</h3>
+        <p>候補10社、選定ロジック、インデックス比較、6月再判定フローの説明。現在の確認は実用パートで行います。</p>
         <a class="button" href="candidate_10_presentation_brief_20260527.html">10社選出根拠</a>
         <a class="button secondary" href="final_report_1600_20260527.html">候補10社 報告資料</a>
       </div>
       <div class="card">
-        <h3>提案・要約資料</h3>
-        <p>提案の全体像と1枚要約を確認する資料。</p>
+        <span class="tag ref">参考</span>
+        <h3>全体像・要約資料</h3>
+        <p>全体像と1枚要約を確認する資料。最新の候補や検討比率は実用パートを優先します。</p>
         <a class="button" href="broker_style_proposal_20260527.html">NISA日本株 提案資料</a>
         <a class="button secondary" href="today_onepage_summary_20260527.html">1枚要約</a>
       </div>
@@ -59,6 +65,7 @@
     <h2>根拠・検算資料</h2>
     <div class="grid">
       <div class="card">
+        <span class="tag">根拠</span>
         <h3>100社母集団</h3>
         <p>都合よく候補を選ばないための母集団定義、統合選定表、100社再計算結果。</p>
         <a class="button" href="integrated_recalculated_10_20260528.html">統合再計算10社</a>
@@ -67,12 +74,14 @@
         <a class="button secondary" href="integrated_selection_workbench_20260528.html">統合選定</a>
       </div>
       <div class="card">
+        <span class="tag">根拠</span>
         <h3>量的データ</h3>
         <p>株価時系列、長期安定性、スコア入力、再計算の確認。</p>
         <a class="button" href="top10_price_metrics_refresh_20260528.html">株価時系列</a>
         <a class="button secondary" href="long_term_stability_score_20260528.html">長期安定性</a>
       </div>
       <div class="card">
+        <span class="tag">最新</span>
         <h3>AIインフラ20社</h3>
         <p>半導体製造装置・材料10社、データセンター・電力・冷却・電線10社を分けて確認。混合版は参考扱い。</p>
         <a class="button" href="theme20_separate_screened10_20260529.html">分野別10社ずつ</a>
@@ -82,6 +91,7 @@
         <a class="button secondary" href="788_theme20_separate_screened10_20260529.csv">分野別CSV</a>
       </div>
       <div class="card">
+        <span class="tag ref">補助</span>
         <h3>質的データ</h3>
         <p>時流・イベント・構造優位を、仮説と検証に分ける資料。</p>
         <a class="button" href="qualitative_evidence_taxonomy_20260528.html">レイヤー設計</a>
@@ -94,18 +104,21 @@
     <h2>開発・管理資料</h2>
     <div class="grid">
       <div class="card">
+        <span class="tag">管理</span>
         <h3>データ取得</h3>
         <p>取得できたデータ、取得候補、未取得データの確認。</p>
         <a class="button" href="data_sources_view.html">データ取得結果</a>
         <a class="button secondary" href="top10_data_execution_plan_20260528.html">10社データ取得計画</a>
       </div>
       <div class="card">
+        <span class="tag">監査</span>
         <h3>モデル監査</h3>
         <p>未取得データの非加点、因果確認、過去検証などの監査資料。</p>
         <a class="button" href="model_integrity_audit.html">モデル監査</a>
         <a class="button secondary" href="event_causality_validation_20260525.html">イベント因果チェック</a>
       </div>
       <div class="card">
+        <span class="tag history">履歴</span>
         <h3>履歴資料</h3>
         <p>旧計画や初期MVPなど、現在の判断画面ではなく履歴として見る資料。</p>
         <a class="button" href="development_plan.html">旧開発計画</a>
@@ -116,7 +129,7 @@
 
   <section>
     <h2>実用パートへ</h2>
-    <p class="note">今日の候補、6月の日付、売買分岐、配分を見る場合は実用パートを使います。</p>
+    <p class="note">今日の候補、6月の日付、判断分岐、検討比率を見る場合は実用パートを使います。</p>
     <a class="button" href="practical_action_dashboard_20260528.html">実用パートを見る</a>
     <a class="button secondary" href="index.html">トップへ戻る</a>
   </section>
