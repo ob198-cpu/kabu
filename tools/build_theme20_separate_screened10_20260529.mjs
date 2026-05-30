@@ -212,7 +212,7 @@ const html = `<!doctype html>
 <main>
   <section>
     <h2>1. 結論</h2>
-    <p class="note">前回の「総合10社」は2分野を混ぜた一覧でした。このページは分野を混ぜず、それぞれ10社を最後まで同じゲートで評価した一覧です。購入確定ではなく、6月イベント後に再判定するテスト候補の優先順位です。</p>
+    <p class="note">前回の「総合10社」は2分野を混ぜた一覧でした。このページは分野を混ぜず、それぞれ10社を最後まで同じゲートで評価した一覧です。購入確定ではなく、6月の主要イベント確認後に再判定するテスト候補の優先順位です。</p>
     <div class="grid">
       <div class="card"><b>半導体製造装置・材料</b><span>${esc(summary(semi))}</span></div>
       <div class="card"><b>データセンター・電力・冷却・電線</b><span>${esc(summary(infra))}</span></div>
