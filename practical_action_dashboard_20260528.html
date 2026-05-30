@@ -159,12 +159,12 @@
     <h2>継続確認チャンネル</h2>
     <p class="note">今後はこの3チャンネルを分けて管理します。チャンネル1は昨日までの総合候補、チャンネル2は半導体製造装置・材料、チャンネル3はデータセンター・電力・冷却・電線です。分野を混ぜた10社は参考扱いで、正式な比較は下のチャンネル別に見ます。</p>
     <div class="channel-tabs" role="tablist" aria-label="候補チャンネル">
-      <button class="channel-tab active" type="button" data-channel-tab="ch1">チャンネル1 総合</button>
-      <button class="channel-tab" type="button" data-channel-tab="ch2">チャンネル2 半導体製造装置・材料</button>
-      <button class="channel-tab" type="button" data-channel-tab="ch3">チャンネル3 データセンター・電力・冷却・電線</button>
+      <button class="channel-tab active" id="tab-ch1" type="button" data-channel-tab="ch1" role="tab" aria-controls="ch1" aria-selected="true">チャンネル1 総合</button>
+      <button class="channel-tab" id="tab-ch2" type="button" data-channel-tab="ch2" role="tab" aria-controls="ch2" aria-selected="false">チャンネル2 半導体製造装置・材料</button>
+      <button class="channel-tab" id="tab-ch3" type="button" data-channel-tab="ch3" role="tab" aria-controls="ch3" aria-selected="false">チャンネル3 データセンター・電力・冷却・電線</button>
     </div>
 
-    <div class="channel-panel active" id="ch1" role="tabpanel">
+    <div class="channel-panel active" id="ch1" role="tabpanel" aria-labelledby="tab-ch1">
       <div class="channel-head">
         <div>
           <h3>チャンネル1: 昨日の総合候補</h3>
@@ -198,7 +198,7 @@
       <p class="subnote">この画面は上位の抜粋です。全10社と計算根拠は「チャンネル1を開く」またはCSVで確認します。</p>
     </div>
 
-    <div class="channel-panel" id="ch2" role="tabpanel">
+    <div class="channel-panel" id="ch2" role="tabpanel" aria-labelledby="tab-ch2">
       <div class="channel-head">
         <div>
           <h3>チャンネル2: 半導体製造装置・材料 10社</h3>
@@ -231,7 +231,7 @@
       <p class="subnote">この画面は上位の抜粋です。半導体製造装置・材料の全10社は「チャンネル2を開く」または分野別CSVで確認します。</p>
     </div>
 
-    <div class="channel-panel" id="ch3" role="tabpanel">
+    <div class="channel-panel" id="ch3" role="tabpanel" aria-labelledby="tab-ch3">
       <div class="channel-head">
         <div>
           <h3>チャンネル3: データセンター・電力・冷却・電線 10社</h3>
@@ -586,7 +586,11 @@
   document.querySelectorAll('[data-channel-tab]').forEach((button) => {
     button.addEventListener('click', () => {
       const target = button.dataset.channelTab;
-      document.querySelectorAll('[data-channel-tab]').forEach((item) => item.classList.toggle('active', item === button));
+      document.querySelectorAll('[data-channel-tab]').forEach((item) => {
+        const isActive = item === button;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-selected', String(isActive));
+      });
       document.querySelectorAll('.channel-panel').forEach((panel) => panel.classList.toggle('active', panel.id === target));
     });
   });
