@@ -147,7 +147,7 @@ const enriched = source.map((row) => {
 
   let passLevel = "除外";
   if (score !== null && confidence >= 90 && available === "4/4" && score >= 50 && [per, pbr, roe].filter((v) => v !== null).length >= 2) {
-    passLevel = issues.some((x) => /急騰|下落深い|ボラ高い/.test(x)) ? "条件付き通過" : "通過";
+    passLevel = issues.some((x) => /急騰|下落深い|ボラ高い/.test(x)) ? "条件付きテスト候補" : "テスト候補";
   } else if (score !== null && confidence >= 90 && available === "4/4" && score >= 44) {
     passLevel = "補欠";
   } else if (score !== null && confidence >= 50 && score >= 50) {
@@ -178,7 +178,7 @@ const enriched = source.map((row) => {
   };
 });
 
-const levelPriority = { "通過": 0, "条件付き通過": 1, "補欠": 2, "データ補完後に再判定": 3, "除外": 4 };
+const levelPriority = { "テスト候補": 0, "条件付きテスト候補": 1, "補欠": 2, "データ補完後に再判定": 3, "除外": 4 };
 const final10 = enriched
   .slice()
   .sort((a, b) => {
@@ -234,7 +234,7 @@ writeCsv("787_theme20_final_screened10_20260529.csv", csvRows, Object.keys(csvRo
 
 function mainRows(rows) {
   return rows.map((row) => `
-    <tr class="${row.passLevel === "通過" ? "pass" : row.passLevel === "条件付き通過" ? "conditional" : row.passLevel === "補欠" ? "reserve" : "review"}">
+    <tr class="${row.passLevel === "テスト候補" ? "pass" : row.passLevel === "条件付きテスト候補" ? "conditional" : row.passLevel === "補欠" ? "reserve" : "review"}">
       <td>${row.finalRank ?? ""}</td>
       <td><b>${esc(row.ticker)} ${esc(row.name)}</b><br><small>${esc(row.theme)} / ${esc(row.role)}</small></td>
       <td>${esc(row.passLevel)}</td>
@@ -311,8 +311,8 @@ const html = `<!doctype html>
       <h2>1. 結論</h2>
       <div class="cards">
         <div class="card"><b>対象</b><span>20社</span></div>
-        <div class="card"><b>通過</b><span>${count("通過")}社</span></div>
-        <div class="card"><b>条件付き通過</b><span>${count("条件付き通過")}社</span></div>
+        <div class="card"><b>テスト候補</b><span>${count("テスト候補")}社</span></div>
+        <div class="card"><b>条件付きテスト候補</b><span>${count("条件付きテスト候補")}社</span></div>
         <div class="card"><b>補欠</b><span>${count("補欠")}社</span></div>
         <div class="card"><b>今回の10社</b><span>10社</span></div>
       </div>
