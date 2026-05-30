@@ -1,2 +1,2 @@
 updated_at,checked_date,source_url,http_status,api_key_used,result,total_documents,candidate_documents,matched_doc_ids,limitation
-2026/05/19 17:44,2025-06-20,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2025-06-20&type=2,200,なし,APIキーが必要,,,,EDINET文書一覧APIはサブスクリプションキーが必要。EDINETコード取得までは完了、文書ID取得はキー設定後に再実行。
+2026/05/21 17:35,2025-06-20,https://api.edinet-fsa.go.jp/api/v2/documents.json?date=2025-06-20&type=2,200,なし,APIキーが必要,,,,EDINET文書一覧APIはサブスクリプションキーが必要。EDINETコード取得までは完了、文書ID取得はキー設定後に再実行。
