@@ -3,227 +3,114 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>データ取得結果 確認ページ</title>
+  <title>データ取得状況</title>
   <style>
-    body {
-      margin: 0;
-      font-family: "Yu Gothic", "Meiryo", Arial, sans-serif;
-      color: #172033;
-      background: #f4f8fb;
-      line-height: 1.6;
-    }
-    main {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 22px;
-    }
-    header {
-      background: #14395b;
-      color: #fff;
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 16px;
-    }
-    h1 { margin: 0 0 8px; font-size: 30px; }
-    header p { margin: 0; color: #dbeafe; }
-    section {
-      background: #fff;
-      border: 1px solid #d8e1ec;
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 14px;
-    }
-    h2 { margin: 0 0 10px; color: #14395b; font-size: 22px; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      border: 1px solid #d8e1ec;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-    th, td {
-      border-bottom: 1px solid #d8e1ec;
-      padding: 9px 10px;
-      text-align: left;
-      vertical-align: top;
-      font-size: 14px;
-    }
-    th {
-      background: #e8f4ff;
-      color: #14395b;
-      white-space: nowrap;
-    }
-    tr:last-child td { border-bottom: 0; }
-    a { color: #1f6f8b; font-weight: 700; }
-    .tag {
-      display: inline-flex;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-    .ok { background: #edf9f3; color: #17815a; }
-    .warn { background: #fff4e5; color: #c76a13; }
-    .ng { background: #fff0f0; color: #b83232; }
-    .links {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .link-card {
-      display: block;
-      text-decoration: none;
-      border: 1px solid #cfe6fb;
-      border-radius: 12px;
-      padding: 12px;
-      background: #f8fcff;
-      color: #14395b;
-    }
-    .link-card b { display: block; margin-bottom: 4px; }
-    .link-card span { display: block; color: #5f7085; font-weight: 400; font-size: 13px; }
-    .note {
-      background: #fff4e5;
-      border: 1px solid #ffd59a;
-      color: #68420c;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 10px;
-    }
-    @media (max-width: 780px) {
-      .links { grid-template-columns: 1fr; }
-      table { display: block; overflow-x: auto; white-space: nowrap; }
-    }
+    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; --ok:#08734f; --warn:#a85b00; --bad:#b3261e; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.7; }
+    main { max-width:1240px; margin:0 auto; padding:24px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:26px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:8px; background:#f8fbff; padding:14px; }
+    .card b { display:block; color:var(--navy); font-size:13px; }
+    .card span { display:block; font-size:28px; font-weight:900; color:#0b5f96; }
+    .notice { border-left:6px solid var(--warn); background:#fff8ec; border-radius:8px; padding:12px; margin:10px 0; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:8px; }
+    table { width:100%; border-collapse:collapse; min-width:920px; }
+    th, td { border-bottom:1px solid var(--line); padding:9px 10px; vertical-align:top; text-align:left; font-size:13px; }
+    th { background:#e7f2fb; color:var(--navy); white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .tag { display:inline-block; border-radius:999px; padding:3px 9px; font-size:12px; font-weight:900; white-space:nowrap; }
+    .done { background:#e7f8ef; color:var(--ok); }
+    .partial { background:#fff3dd; color:var(--warn); }
+    .blocked { background:#ffeceb; color:var(--bad); }
+    .linkbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .button { display:inline-block; text-decoration:none; border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:9px 12px; font-weight:800; }
+    .button.secondary { background:#fff; color:var(--blue); }
+    @media (max-width:900px) { .cards { grid-template-columns:1fr 1fr; } }
+    @media (max-width:560px) { .cards { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>データ取得結果 確認ページ</h1>
-      <p>Excelを開かなくても、どのデータが取得済みか、どれが接続確認だけかをこのページで確認できます。</p>
-    </header>
+<main>
+  <header>
+    <h1>データ取得状況</h1>
+    <p>株式分析MVPで、どのデータが取得済みか、どこまで計算に使えるかを確認するためのページです。</p>
+  </header>
 
-    <section>
-      <h2>すぐ開く</h2>
-      <div class="links">
-        <a class="link-card" href="stock_decision_mvp_calculated.xlsx">
-          <b>Excel分析ブック</b>
-          <span>株価・市場・スコア・1年データ入り</span>
-        </a>
-        <a class="link-card" href="mvp_charts.html">
-          <b>チャート分析</b>
-          <span>ブラウザで1年チャートを見る</span>
-        </a>
-        <a class="link-card" href="data_acquisition_report.pdf">
-          <b>成果報告書PDF</b>
-          <span>データ取得構築の報告書</span>
-        </a>
-      </div>
-    </section>
+  <section>
+    <h2>概要</h2>
+    <div class="cards">
+      <div class="card"><b>取得済み</b><span>6</span></div>
+      <div class="card"><b>接続確認</b><span>7</span></div>
+      <div class="card"><b>課題あり</b><span>2</span></div>
+      <div class="card"><b>計算投入</b><span>一部</span></div>
+    </div>
+    <p class="notice">このページはデータ取得の確認用です。銘柄の購入可否を直接判定する画面ではありません。購入検討は、実用パートで6月の主要イベント確認後に再判定します。</p>
+  </section>
 
-    <section>
-      <h2>取得データの状態</h2>
+  <section>
+    <h2>取得状況一覧</h2>
+    <div class="table-wrap">
       <table>
         <thead>
           <tr>
             <th>データ</th>
             <th>取得元</th>
             <th>状態</th>
-            <th>どこで見れるか</th>
-            <th>コメント</th>
+            <th>形式</th>
+            <th>現在の使い方</th>
+            <th>課題</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>株価</td>
-            <td>Yahoo Finance chart API</td>
-            <td><span class="tag ok">実データ保存済</span></td>
-            <td>Excel: <code>02b_raw_prices_1y</code></td>
-            <td>対象8銘柄の過去1年分日次データを保存済み</td>
-          </tr>
-          <tr>
-            <td>為替</td>
-            <td>Yahoo Finance chart API</td>
-            <td><span class="tag ok">実データ保存済</span></td>
-            <td>Excel: <code>03b_raw_macro_1y</code>, <code>03c_weekly_1y</code></td>
-            <td>ドル円を保存済み</td>
-          </tr>
-          <tr>
-            <td>米10年金利</td>
-            <td>Yahoo Finance / FRED</td>
-            <td><span class="tag ok">実データ保存済</span></td>
-            <td>Excel: <code>03b_raw_macro_1y</code>, FRED接続結果はJSON</td>
-            <td>Excel側はYahooの<code>^TNX</code>、FRED長期CSVは接続確認済み</td>
-          </tr>
-          <tr>
-            <td>米CPI</td>
-            <td>FRED</td>
-            <td><span class="tag warn">接続確認のみ</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>1947年以降のCSV取得は確認済み。Excel本体への保存は次工程</td>
-          </tr>
-          <tr>
-            <td>日本CPI</td>
-            <td>統計局 / e-Stat</td>
-            <td><span class="tag warn">接続確認のみ</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>統計局ページとExcelリンク確認済み。系列ID/API取得は次工程</td>
-          </tr>
-          <tr>
-            <td>e-Stat</td>
-            <td>e-Stat API</td>
-            <td><span class="tag warn">入口確認のみ</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>API入口は確認済み。利用にはキー/統計表ID/系列ID整理が必要</td>
-          </tr>
-          <tr>
-            <td>統計ダッシュボードAPI</td>
-            <td>統計ダッシュボード</td>
-            <td><span class="tag warn">入口確認のみ</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>API仕様と系列コード表の取得口を確認済み</td>
-          </tr>
-          <tr>
-            <td>鉱工業生産</td>
-            <td>経産省統計</td>
-            <td><span class="tag warn">接続確認のみ</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>経産省ページへのアクセス確認済み。統計ファイル抽出は次工程</td>
-          </tr>
-          <tr>
-            <td>自動車販売</td>
-            <td>自販連</td>
-            <td><span class="tag warn">接続確認のみ</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>統計ページへのアクセス確認済み。PDF/表の抽出は次工程</td>
-          </tr>
-          <tr>
-            <td>輸入車販売</td>
-            <td>JAIA</td>
-            <td><span class="tag ng">取得失敗</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>fetch失敗。URL/TLS/アクセス制限を再確認</td>
-          </tr>
-          <tr>
-            <td>企業決算</td>
-            <td>企業IR PDF</td>
-            <td><span class="tag warn">PDF取得確認</span></td>
-            <td>Excel: <code>11_top_review</code>, <code>15_review_adjusted</code></td>
-            <td>三菱商事・味の素は公式資料を見て補正済み。自動表抽出は次工程</td>
-          </tr>
-          <tr>
-            <td>TDnet</td>
-            <td>適時開示ページ</td>
-            <td><span class="tag warn">ページ確認のみ</span></td>
-            <td><code>reports/data_source_test_results.json</code></td>
-            <td>ページ取得は成功。開示PDFリンク抽出は次工程</td>
-          </tr>
+          <tr><td>株価・出来高</td><td>Yahoo Finance chart API</td><td><span class="tag done">取得済み</span></td><td>JSON</td><td>騰落率、移動平均、出来高倍率、下落率の計算に使用</td><td>Yahoo依存のため代替取得元も検討</td></tr>
+          <tr><td>為替 ドル円</td><td>Yahoo Finance chart API</td><td><span class="tag done">取得済み</span></td><td>JSON</td><td>円高・円安リスク判定の補助</td><td>日次更新の自動化が必要</td></tr>
+          <tr><td>米10年金利</td><td>FRED / Yahoo Finance</td><td><span class="tag done">取得済み</span></td><td>CSV / JSON</td><td>高PER株、半導体、金融株の地合い確認</td><td>基準値の検証が必要</td></tr>
+          <tr><td>米CPI</td><td>FRED</td><td><span class="tag done">取得済み</span></td><td>CSV</td><td>6月CPI後の市場再判定に使用予定</td><td>発表日カレンダーとの接続が必要</td></tr>
+          <tr><td>VIX・DXY・指数</td><td>Yahoo Finance等</td><td><span class="tag done">取得済み</span></td><td>JSON</td><td>リスクオフ、ドル急落、指数比較の確認</td><td>指数ごとの取得安定性確認</td></tr>
+          <tr><td>EDINETコード</td><td>EDINETコードリスト</td><td><span class="tag done">取得済み</span></td><td>CSV / ZIP</td><td>有価証券報告書・XBRL取得の前処理</td><td>文書ID取得にはAPIキー設定が必要</td></tr>
+          <tr><td>日本CPI</td><td>統計局 / e-Stat</td><td><span class="tag partial">接続確認</span></td><td>HTML / Excelリンク</td><td>インフレ環境の補助データ候補</td><td>系列IDと表の自動取得整理が必要</td></tr>
+          <tr><td>統計ダッシュボード</td><td>統計ダッシュボードAPI</td><td><span class="tag partial">接続確認</span></td><td>API / Excel資料</td><td>国内統計の取得候補</td><td>系列コード選定が必要</td></tr>
+          <tr><td>鉱工業生産</td><td>経産省</td><td><span class="tag partial">接続確認</span></td><td>HTML / Excelリンク</td><td>業界需要確認の候補</td><td>銘柄別スコアへの接続は未実装</td></tr>
+          <tr><td>自動車販売</td><td>自販連</td><td><span class="tag partial">接続確認</span></td><td>HTML / PDF等</td><td>自動車関連テーマの需要確認候補</td><td>表データ抽出の実装が必要</td></tr>
+          <tr><td>TDnet</td><td>適時開示ページ</td><td><span class="tag partial">接続確認</span></td><td>HTML</td><td>上方修正、下方修正、自社株買い検知候補</td><td>安定的なPDFリンク抽出は未実装</td></tr>
+          <tr><td>企業IR PDF</td><td>各社IR</td><td><span class="tag partial">PDF取得確認</span></td><td>PDF</td><td>決算数値・事業コメントの確認に使用</td><td>全文自動読解と表抽出は未完成</td></tr>
+          <tr><td>決算説明資料の構造化数値</td><td>企業IR / 有報 / XBRL</td><td><span class="tag partial">一部確認</span></td><td>PDF / XBRL</td><td>売上成長、利益成長、セグメント確認に使用予定</td><td>全候補への自動投入は未完成</td></tr>
+          <tr><td>輸入車販売</td><td>JAIA</td><td><span class="tag blocked">課題あり</span></td><td>未確定</td><td>現時点では計算未投入</td><td>fetch失敗。URLまたはアクセス制限の確認が必要</td></tr>
+          <tr><td>コンセンサスEPS</td><td>有料DB候補</td><td><span class="tag blocked">未取得</span></td><td>未取得</td><td>現時点では計算未投入</td><td>信頼できる取得元は有料サービス前提になりやすい</td></tr>
         </tbody>
       </table>
-      <div class="note">
-        注意: 「接続確認のみ」は、データ取得元へアクセスできることを確認した段階です。Excelに本体データとして保存済みなのは、株価・為替・指数・金利・VIX・DXYなどの市場データ中心です。
-      </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <section>
+    <h2>計算に使っているもの / まだ使っていないもの</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>区分</th><th>内容</th><th>扱い</th></tr></thead>
+        <tbody>
+          <tr><td>計算に使用中</td><td>株価、出来高、騰落率、移動平均、最大下落率、指数差、為替、金利、VIX等</td><td>量的スコア、下落耐性、イベント前後確認に使用</td></tr>
+          <tr><td>一部使用</td><td>PER/PBR/ROE、決算成長率、企業IRコメント</td><td>候補ごとに補完中。未取得値は点数に混ぜない</td></tr>
+          <tr><td>未投入</td><td>業界統計、TDnet長期履歴、コンセンサスEPS、IR PDF全文抽出</td><td>候補発見や確認条件には使えるが、検証前にスコアへ直接加点しない</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ページ</h2>
+    <div class="linkbar">
+      <a class="button" href="practical_action_dashboard_20260528.html">実用パート</a>
+      <a class="button secondary" href="materials_library_20260528.html">資料パート</a>
+      <a class="button secondary" href="edinet_code_list_status.html">EDINETコード取得結果</a>
+      <a class="button secondary" href="candidate_edinet_documents_status.html">EDINET文書取得状況</a>
+      <a class="button secondary" href="stock_decision_mvp_calculated.xlsx">Excel分析ブック</a>
+    </div>
+  </section>
+</main>
 </body>
 </html>
