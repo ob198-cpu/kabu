@@ -1679,8 +1679,8 @@
         <a href="top10_decision_control_board_20260528.html">10社判定コントロール表</a>
         <a href="top10_price_metrics_refresh_20260528.html">10社株価時系列 取得結果</a>
         <a href="morning_recalc_top10_20260528.html">今朝指標反映 10社暫定再計算</a>
-        <a href="trade_rules_common_stock_20260528.html">共通+銘柄別 売買ルール</a>
-        <a href="provisional_trade_execution_plan_20260528.html">暫定 売買実行ルール</a>
+        <a href="trade_rules_common_stock_20260528.html">共通+銘柄別 運用ルール</a>
+        <a href="provisional_trade_execution_plan_20260528.html">暫定 購入検討ルール</a>
         <a href="daily_progress_report_20260528.pdf">進捗資料 5/28 PDF</a>
         <a href="daily_progress_report_20260528.html">進捗資料 5/28 HTML</a>
         <a href="selection_change_report_20260528_reselected.pdf">候補10社変更理由 PDF</a>
@@ -1721,7 +1721,7 @@
           <div class="part-gateway" aria-label="システム入口">
             <a class="part-card primary" href="practical_action_dashboard_20260528.html">
               <b>実用パート</b>
-              <span>現在の10社、次の確認日、検討比率、売買分岐、上値・下値ルールを見る画面。</span>
+              <span>現在の10社、次の確認日、検討比率、判断分岐、上値・下値ルールを見る画面。</span>
             </a>
             <a class="part-card" href="materials_library_20260528.html">
               <b>資料パート</b>
@@ -2252,11 +2252,11 @@
           </div>
           <div class="panel">
             <h3>16-17B5. 質的×量的 運用システム</h3>
-            <p>質的監視、仮説、量的検証、銘柄選出、売買ルール、運用プランを一つの流れに接続した実装版です。</p>
+            <p>質的監視、仮説、量的検証、銘柄選出、運用ルール、検討プランを一つの流れに接続した実装版です。</p>
             <div class="hero-actions">
               <a class="button" href="qual_quant_operation_system_20260527.html">HTMLを開く</a>
               <a class="button" href="609_candidate_selection_operation_rules.csv">銘柄別ルールCSV</a>
-              <a class="button" href="610_trading_rule_master.csv">売買ルールCSV</a>
+              <a class="button" href="610_trading_rule_master.csv">運用ルールCSV</a>
               <a class="button" href="611_academic_practical_governance.csv">運用統制CSV</a>
             </div>
           </div>
@@ -2786,7 +2786,7 @@
               </ol>
               <div class="source-card">
                 <b>引用元</b><br>
-                表示データはGitHub ActionsがYahoo FinanceのチャートAPIから取得し、公開リポジトリ内のJSONへ保存したものです。PERなど一部の基準値は本資料のルール用に固定しているため、実売買前は証券会社画面・決算短信・四季報で再確認します。
+                表示データはGitHub ActionsがYahoo FinanceのチャートAPIから取得し、公開リポジトリ内のJSONへ保存したものです。PERなど一部の基準値は本資料のルール用に固定しているため、実際の購入検討前は証券会社画面・決算短信・四季報で再確認します。
                 <div class="source-links">
                   <a href="https://finance.yahoo.com/" target="_blank" rel="noopener">Yahoo Finance</a>
                   <a href="https://github.com/ob198-cpu/kabu/blob/main/data/market_update.json" target="_blank" rel="noopener">更新JSON</a>
@@ -4394,7 +4394,7 @@
             <article class="conclusion-card drop">
               <small>判定</small>
               <b>準備段階</b>
-              <p>売買判断の成績検証は、6月テスト開始後の記録と接続して行います。</p>
+              <p>運用判断の成績検証は、6月テスト開始後の記録と接続して行います。</p>
             </article>
           </div>
           <table class="mechanism-table">
@@ -5452,7 +5452,7 @@
         [/materials_library/, "資料パート"],
         [/morning_recalc_top10_20260528/, "現在の10社"],
         [/provisional_trade_execution_plan_20260528/, "日付入り実行予定"],
-        [/trade_rules_common_stock_20260528/, "売買ルール"],
+        [/trade_rules_common_stock_20260528/, "運用ルール"],
         [/top10_decision_control_board_20260528/, "10社判定コントロール表"],
         [/top10_score_input_calculator_20260528/, "10社スコア入力・再計算"],
         [/top10_price_metrics_refresh_20260528/, "株価時系列 取得結果"],

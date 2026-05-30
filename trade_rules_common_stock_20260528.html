@@ -3,70 +3,133 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>共通ルール + 銘柄別補正 売買ルール</title>
+  <title>共通ルール + 銘柄別補正 運用ルール</title>
   <style>
-    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; --amber:#a85b00; }
+    :root {
+      --ink:#06121f;
+      --navy:#123d63;
+      --blue:#0b5f96;
+      --line:#cbd8e6;
+      --bg:#eef4fa;
+      --soft:#f8fbff;
+      --amber:#9a5a00;
+      --red:#b42318;
+      --green:#067647;
+    }
     * { box-sizing:border-box; }
-    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.75; }
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.7;
+    }
     main { max-width:1320px; margin:0 auto; padding:28px 18px 56px; }
     header { background:var(--navy); color:#fff; border-radius:10px; padding:28px; margin-bottom:18px; }
-    h1 { margin:0 0 10px; font-size:30px; }
+    h1 { margin:0 0 10px; font-size:30px; letter-spacing:0; }
     h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
-    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; break-inside:avoid; page-break-inside:avoid; }
     .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
-    .card { border:1px solid var(--line); border-radius:9px; background:#f8fbff; padding:14px; }
+    .card { border:1px solid var(--line); border-radius:9px; background:var(--soft); padding:14px; }
     .value { font-size:30px; font-weight:900; color:var(--blue); }
     .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; }
     .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
     table { width:100%; border-collapse:collapse; table-layout:fixed; }
-    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
+    th,td { border:1px solid var(--line); padding:9px; vertical-align:top; font-size:13px; overflow-wrap:anywhere; color:var(--ink); }
     th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .good { color:var(--green); font-weight:800; }
+    .warn { color:var(--amber); font-weight:800; }
+    .bad { color:var(--red); font-weight:800; }
     a { color:#075e91; font-weight:800; }
     .links { display:flex; flex-wrap:wrap; gap:10px; }
     .links a { border:1px solid var(--blue); color:#fff; background:var(--blue); border-radius:8px; padding:9px 12px; text-decoration:none; }
     @media (max-width:980px) { .grid { grid-template-columns:1fr 1fr; } table { table-layout:auto; } }
+    @media print {
+      body { background:#fff; }
+      main { max-width:none; padding:14mm; }
+      section, .card, .table-wrap { break-inside:avoid; page-break-inside:avoid; }
+      th, td { font-size:11px; }
+    }
   </style>
 </head>
 <body>
 <main>
   <header>
-    <h1>共通ルール + 銘柄別補正 売買ルール</h1>
-    <p>売買判断を、全銘柄に共通する市場ルールと、銘柄ごとの事業・テーマ・過熱状態に応じた補正ルールへ分けました。</p>
-    <p>作成: 2026/05/28 16:12</p>
+    <h1>共通ルール + 銘柄別補正 運用ルール</h1>
+    <p>候補銘柄を実際の購入検討へ進める前に、下落時、上昇時、決算前後、指数劣後時の対応を確認するための判断補助ページです。</p>
+    <p>作成: 2026/05/28　更新: 2026/05/30</p>
   </header>
 
   <section>
     <div class="grid">
-      <div class="card"><b>共通ルール</b><div class="value">11</div><p>開始前、下値、上値、ベンチマーク</p></div>
-      <div class="card"><b>銘柄別補正</b><div class="value">10</div><p>10社ごとに補正</p></div>
-      <div class="card"><b>下値</b><div class="value">-5/-10</div><p>原因確認と再判定</p></div>
-      <div class="card"><b>上値</b><div class="value">+20/+30</div><p>一部利確と過熱確認</p></div>
+      <div class="card"><b>共通ルール</b><div class="value">11</div><p>市場条件、下落、上昇、ベンチマーク比較を確認します。</p></div>
+      <div class="card"><b>銘柄別補正</b><div class="value">10</div><p>各銘柄の業種、材料、弱点に合わせて補正します。</p></div>
+      <div class="card"><b>下値確認</b><div class="value">-5% / -10%</div><p>理由確認、保有継続可否、追加検討停止を分けます。</p></div>
+      <div class="card"><b>上値確認</b><div class="value">+20% / +30%</div><p>利益確定ではなく、過熱・決算・指数比較を確認します。</p></div>
     </div>
-    <p class="note">これは売買を自動実行するものではありません。実データ、証券口座、最新決算、6月イベント後の市場反応を確認して、判断補助として使います。</p>
+    <p class="note">このページは売買を自動実行するものではありません。実データ、証券会社画面、最新決算、6月の主要イベント確認後の市場反応を確認して、判断補助として使います。</p>
   </section>
 
   <section>
-    <h2>要約</h2>
-    <div class="table-wrap"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody><tr><td>実装内容</td><td>売買ルールを、全銘柄に共通する市場ルールと、銘柄別に変える補正ルールへ分離した。</td></tr><tr><td>下値の考え方</td><td>下落率、指数悪化、決算悪化、急落時のナンピン禁止を共通ルールにし、銘柄ごとの崩れる理由を補正として追加。</td></tr><tr><td>上値の考え方</td><td>早すぎる利確を避けつつ、+20%、+30%、過熱、PER急上昇、決算前急騰では一部利確や追加停止を検討。</td></tr><tr><td>使い方</td><td>購入前は共通ゲートを通し、購入後は共通ルールで初動判定し、最後に銘柄別補正で保有、減額、利確、停止を決める。</td></tr></tbody></table></div>
+    <h2>概要</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th style="width:24%">項目</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>目的</td><td>候補銘柄を「買う/買わない」で即断せず、共通条件と銘柄別条件で段階的に確認する。</td></tr>
+        <tr><td>下値の考え方</td><td>下落率だけで判断せず、指数悪化、決算悪化、業種材料の崩れ、急落時の追加検討停止を確認する。</td></tr>
+        <tr><td>上値の考え方</td><td>上昇時は早すぎる利益確定を避けつつ、+20%、+30%、高PER化、決算前急騰、指数との乖離を確認する。</td></tr>
+        <tr><td>使い方</td><td>購入検討前は共通ゲートを確認し、保有後は共通ルールで初動判定し、最後に銘柄別補正で継続、比率引き下げ、利益確定、停止を判断する。</td></tr>
+      </tbody>
+    </table></div>
   </section>
 
   <section>
     <h2>共通ルール</h2>
-    <div class="table-wrap"><table><thead><tr><th>区分</th><th>条件</th><th>行動</th><th>理由</th></tr></thead><tbody><tr><td>開始前ゲート</td><td>6月CPI、日銀会合、FOMCの確認前</td><td>新規購入は確定しない。候補比較とデータ補完だけ進める。</td><td>金利、為替、指数反応で候補の優先順位が変わるため。</td></tr><tr><td>開始前ゲート</td><td>日経平均が直近高値から-10%以上</td><td>予定投入額を半分以下に下げ、個別株の一括投入を避ける。</td><td>市場全体の下落で個別要因より指数要因が強くなるため。</td></tr><tr><td>開始前ゲート</td><td>日経平均が75日線を明確に下回る</td><td>新規買いを停止し、指数回復または再判定を待つ。</td><td>1年保有前提でも、地合い悪化時の初期エントリーを避けるため。</td></tr><tr><td>下値共通</td><td>購入後-5%</td><td>追加購入しない。指数、同業、決算、ニュースを確認し、原因を分類する。</td><td>単なる押し目か、仮説崩れかを分けるため。</td></tr><tr><td>下値共通</td><td>購入後-10%</td><td>保有継続を再判定。決算悪化、下方修正、同業劣後なら減額または撤退候補。</td><td>NISA 1年保有でも、前提が崩れた損失を放置しないため。</td></tr><tr><td>下値共通</td><td>ストップ安、急落、出来高急増を伴う下落</td><td>その場でナンピンしない。原因確認後に翌営業日以降で判断する。</td><td>情報の非対称性が大きく、初動での追加購入が危険なため。</td></tr><tr><td>上値共通</td><td>購入後+10%</td><td>原則保有。日経平均、S&amp;P500、同業比で上昇理由を確認する。</td><td>1年保有テストでは、早すぎる利確で上昇余地を捨てないため。</td></tr><tr><td>上値共通</td><td>購入後+20%</td><td>決算前、出来高急増、PER急上昇が重なる場合は25%利確を検討。</td><td>利益を一部固定しつつ、残りで1年保有の上昇余地を残すため。</td></tr><tr><td>上値共通</td><td>購入後+30%以上、または1年騰落率+150%超</td><td>過熱確認。利益成長が追いつかない場合は半分利確または新規追加停止。</td><td>価格上昇だけを実力と誤認しないため。</td></tr><tr><td>ベンチマーク</td><td>3か月時点で日経平均・S&amp;P500の双方に劣後</td><td>個別株比率を下げる候補。銘柄別の仮説が生きている場合だけ保留。</td><td>目標は既存の無難な運用を少なくとも+1%上回ることだから。</td></tr><tr><td>ベンチマーク</td><td>6か月時点でベンチマーク+1%未満</td><td>個別株の追加を停止し、指数運用比率を上げる案を検討。</td><td>個別株を選ぶ意味が薄くなるため。</td></tr></tbody></table></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th style="width:16%">区分</th><th style="width:24%">条件</th><th style="width:30%">対応</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>開始前ゲート</td><td>6月CPI、日銀会合、FOMCの確認前</td><td>新規購入検討は確定しない。候補比較とデータ補完を進める。</td><td>金利、為替、指数反応で候補の優先順位が変わるため。</td></tr>
+        <tr><td>開始前ゲート</td><td>日経平均が直近高値から-10%以上</td><td>予定していた検討額を半分以下に下げる。個別株の一括購入は避ける。</td><td>市場全体の下落では、個別要因より指数要因が強くなるため。</td></tr>
+        <tr><td>開始前ゲート</td><td>日経平均が75日線を明確に下回る</td><td>新規購入検討を停止し、指数回復または再判定を待つ。</td><td>1年保有前提でも、地合い悪化時の初期エントリーを避けるため。</td></tr>
+        <tr><td>下値共通</td><td>購入後-5%</td><td>追加検討しない。指数、同業、決算、ニュースを確認し、原因を分類する。</td><td>単なる押し目か、仮説崩れかを分けるため。</td></tr>
+        <tr><td>下値共通</td><td>購入後-10%</td><td>保有継続を再判定する。決算悪化、下方修正、同業劣後なら比率引き下げまたは撤退候補。</td><td>NISA 1年保有でも、前提が崩れた損失を放置しないため。</td></tr>
+        <tr><td>急落時</td><td>ストップ安、急落、出来高急増を伴う下落</td><td>その場で追加検討しない。翌営業日以降に材料の公式確認を行う。</td><td>情報の非対称性が大きく、反射的な判断が危険なため。</td></tr>
+        <tr><td>上値共通</td><td>購入後+10%</td><td>原則継続。日経平均、S&P500、同業比較で上昇理由を確認する。</td><td>1年保有テストでは、早すぎる利益確定で上昇余地を捨てないため。</td></tr>
+        <tr><td>上値共通</td><td>購入後+20%</td><td>決算前、出来高急増、高PER化が重なる場合は一部利益確定を検討する。</td><td>利益を一部固定しつつ、残りで1年保有の上昇余地を残すため。</td></tr>
+        <tr><td>上値共通</td><td>購入後+30%以上、または1年騰落率+150%超</td><td>過熱確認を行う。決算・PER・出来高で説明できなければ比率を下げる。</td><td>価格上昇だけを実力と誤認しないため。</td></tr>
+        <tr><td>ベンチマーク</td><td>3か月時点で日経平均・S&P500の双方に劣後</td><td>個別株比率を下げる候補にする。個別の仮説が生きている場合のみ保留。</td><td>目標は既存の無難な運用を上回ることであり、劣後が続くなら比率を見直すため。</td></tr>
+        <tr><td>ベンチマーク</td><td>6か月時点でベンチマーク+1%未満</td><td>追加購入検討を停止し、指数運用比率を上げる案を検討する。</td><td>個別株を選ぶ意味が薄くなるため。</td></tr>
+      </tbody>
+    </table></div>
   </section>
 
   <section>
     <h2>銘柄別補正</h2>
-    <div class="table-wrap"><table><thead><tr><th>順位</th><th>ticker</th><th>銘柄</th><th>業種</th><th>現時点の扱い</th><th>過熱判定</th><th>共通下値ルール</th><th>共通上値ルール</th><th>銘柄別下値補正</th><th>銘柄別上値補正</th><th>追加購入条件</th><th>個別停止条件</th><th>まだ必要な確認</th></tr></thead><tbody><tr><td>1</td><td>8316.T</td><td>三井住友FG</td><td>銀行</td><td>前面候補</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>金利上昇局面でも与信費用増加、銀行セクター劣後なら減額候補。</td><td>金利上昇とROE改善が確認できる間は保有優先。PBR急上昇と信用コスト増なら一部利確。</td><td>利ざや改善、与信費用抑制、ROE改善、株主還元。</td><td>与信費用増加が利ざや改善を上回る、または日銀後に銀行株全体が対TOPIXで大幅劣後</td><td>公式値照合 / 同業中央値比較</td></tr><tr><td>2</td><td>8766.T</td><td>東京海上HD</td><td>保険</td><td>比較候補</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>自然災害損害、海外保険採算悪化、保険セクター劣後なら減額候補。</td><td>保険料率改善と運用利回り改善が続く間は保有優先。災害損失が大きい場合は利確検討。</td><td>コンバインドレシオ、運用利回り、正味収入保険料の改善。</td><td>大規模災害損失、海外保険の採算悪化、保険セクター全体の反応悪化</td><td>公式値照合 / 同業中央値比較</td></tr><tr><td>3</td><td>8058.T</td><td>三菱商事</td><td>商社</td><td>補完後に再確認</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>資源価格下落、還元縮小、非資源利益悪化なら再判定。</td><td>資源価格だけで上昇した場合は一部利確を検討。非資源利益と還元で説明できる場合は保有。</td><td>非資源利益、ROE、株主還元、商品価格前提の確認。</td><td>資源価格下落で利益計画が崩れる、または還元縮小</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>4</td><td>8306.T</td><td>三菱UFJ FG</td><td>銀行</td><td>補完後に再確認</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>金利上昇局面でも与信費用増加、銀行セクター劣後なら減額候補。</td><td>金利上昇とROE改善が確認できる間は保有優先。PBR急上昇と信用コスト増なら一部利確。</td><td>利ざや改善、与信費用抑制、ROE改善、株主還元。</td><td>同業比較で劣後、または海外信用コスト増加</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>5</td><td>8031.T</td><td>三井物産</td><td>商社</td><td>補完後に再確認</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>資源価格下落、還元縮小、非資源利益悪化なら再判定。</td><td>資源価格だけで上昇した場合は一部利確を検討。非資源利益と還元で説明できる場合は保有。</td><td>非資源利益、ROE、株主還元、商品価格前提の確認。</td><td>商品市況依存が強く、非資源や還元で説明できない</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>6</td><td>7011.T</td><td>三菱重工</td><td>重工・防衛</td><td>保留寄り</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>受注増でも利益率が悪化する場合は減額候補。</td><td>受注残と利益率が伴う上昇なら保有。期待だけで急騰した場合は一部利確。</td><td>受注残、防衛関連売上、営業利益率、増産能力。</td><td>受注は増えても利益率が低下、または過熱指標が強い</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>7</td><td>8001.T</td><td>伊藤忠商事</td><td>商社</td><td>補完後に再確認</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>資源価格下落、還元縮小、非資源利益悪化なら再判定。</td><td>資源価格だけで上昇した場合は一部利確を検討。非資源利益と還元で説明できる場合は保有。</td><td>非資源利益、ROE、株主還元、商品価格前提の確認。</td><td>利益成長が弱い、還元縮小、商社内比較で劣後</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>8</td><td>6501.T</td><td>日立製作所</td><td>総合電機・IT</td><td>補完後に再確認</td><td>通常範囲</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>AI・電力テーマが部門売上に接続しない場合は減額候補。</td><td>部門売上、受注、利益率で説明できる上昇なら保有。テーマだけなら一部利確。</td><td>Lumada、エネルギー部門受注、営業利益率、海外比率。</td><td>テーマは強いが対象部門の寄与が小さい、または利益率悪化</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>9</td><td>5802.T</td><td>住友電工</td><td>電線・通信</td><td>過熱確認を優先</td><td>過熱・データ確認</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>急落時の追加購入は禁止。最大下落率、出来高、利益成長、同業比較を確認する。</td><td>上値追い禁止。購入後+10%でも利益成長確認前は追加しない。+20%以上で一部利確を検討。</td><td>売上・利益成長、受注、営業利益率が株価上昇に追いつくこと。</td><td>銅価格や原価上昇で利益率が悪化、または同業比較で劣後</td><td>PER/PBR/ROE / 売上成長率・利益成長率 / 決算後1日/5日/20日反応 / 同業中央値比較</td></tr><tr><td>10</td><td>5801.T</td><td>古河電工</td><td>電線・通信</td><td>過熱確認を優先</td><td>過熱・データ確認</td><td>-5%で原因確認、-10%で保有再判定、急落時は追加購入しない</td><td>+10%は原則保有、+20%で一部利確検討、+30%以上で過熱確認</td><td>急落時の追加購入は禁止。最大下落率、出来高、利益成長、同業比較を確認する。</td><td>上値追い禁止。購入後+10%でも利益成長確認前は追加しない。+20%以上で一部利確を検討。</td><td>売上・利益成長、受注、営業利益率が株価上昇に追いつくこと。</td><td>1年上昇率に対して利益成長が追いつかない、または最大下落リスクが大きい</td><td>過熱・最大下落確認 / 同業中央値比較</td></tr></tbody></table></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th style="width:8%">順位</th><th style="width:11%">ticker</th><th style="width:13%">銘柄</th><th style="width:12%">業種</th><th style="width:14%">現在の扱い</th><th>銘柄別に確認する点</th><th>比率を下げる条件</th><th style="width:15%">まだ必要な確認</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>8316.T</td><td>三井住友FG</td><td>銀行</td><td>前面候補</td><td>資金利益、信用コスト、ROE、株主還元、日銀政策後の銀行株反応。</td><td>信用コスト急増、銀行株全体の劣後、金利上昇が景気悪化扱いになった場合。</td><td>公式値照合、同業中央値比較。</td></tr>
+        <tr><td>2</td><td>8766.T</td><td>東京海上HD</td><td>保険</td><td>比較候補</td><td>保険料収入、海外保険、自然災害損失、株主還元。</td><td>大規模災害損失、海外保険の採算悪化、保険セクター全体の反応悪化。</td><td>公式値照合、同業中央値比較。</td></tr>
+        <tr><td>3</td><td>8058.T</td><td>三菱商事</td><td>商社</td><td>補完後に再確認</td><td>資源価格、非資源利益、円安影響、株主還元。</td><td>資源価格下落で利益計画が崩れる、または還元縮小。</td><td>PER/PBR/ROE、売上・利益成長、決算後反応。</td></tr>
+        <tr><td>4</td><td>8306.T</td><td>三菱UFJ FG</td><td>銀行</td><td>補完後に再確認</td><td>利ざや、信用コスト、海外金利、株主還元。</td><td>同業比較で劣後、海外信用コスト増加。</td><td>PER/PBR/ROE、売上・利益成長、決算後反応。</td></tr>
+        <tr><td>5</td><td>8031.T</td><td>三井物産</td><td>商社</td><td>補完後に再確認</td><td>非資源利益、商品価格、還元姿勢、同業比較。</td><td>商品市況依存が強く、非資源や還元で説明できない場合。</td><td>PER/PBR/ROE、売上・利益成長、同業中央値比較。</td></tr>
+        <tr><td>6</td><td>7011.T</td><td>三菱重工</td><td>重工・防衛</td><td>保留寄り</td><td>受注残、利益率、原価、増産能力、防衛関連需要。</td><td>受注は増えても利益率が伴わない、または過熱指標が強い場合。</td><td>直近弱さの要因、決算後反応、最大下落率。</td></tr>
+        <tr><td>7</td><td>8001.T</td><td>伊藤忠商事</td><td>商社</td><td>補完後に再確認</td><td>非資源利益、ROE、還元、商品価格耐性。</td><td>利益成長が弱い、円安縮小、商社内比較で劣後。</td><td>PER/PBR/ROE、売上・利益成長、同業中央値比較。</td></tr>
+        <tr><td>8</td><td>6501.T</td><td>日立製作所</td><td>総合電機・IT</td><td>補完後に再確認</td><td>Lumada、送配電、エネルギー、営業利益率。</td><td>テーマは強いが対象部門の寄与が小さい、または利益率悪化。</td><td>PER/PBR/ROE、部門別売上、決算後反応。</td></tr>
+        <tr><td>9</td><td>5802.T</td><td>住友電工</td><td>電線・通信</td><td>過熱確認を優先</td><td>電線需要、データセンター需要、利益率、同業比較。</td><td>銅価格や株価上昇に利益成長が追いつかない場合。</td><td>PER/PBR/ROE、最大下落、同業中央値比較。</td></tr>
+        <tr><td>10</td><td>5801.T</td><td>古河電工</td><td>電線・通信</td><td>過熱確認を優先</td><td>電線需要、AIデータセンター関連、利益率、ボラティリティ。</td><td>1年上昇率に対して利益成長が追いつかない、または最大下落リスクが大きい場合。</td><td>過熱・最大下落確認、同業中央値比較。</td></tr>
+      </tbody>
+    </table></div>
   </section>
 
   <section>
-    <h2>CSV</h2>
+    <h2>関連データ</h2>
     <div class="links">
       <a href="766_common_trade_rules.csv">共通ルールCSV</a>
       <a href="767_stock_trade_rule_overrides.csv">銘柄別補正CSV</a>
       <a href="768_trade_rule_summary.csv">要約CSV</a>
-      <a href="morning_recalc_top10_20260528.html">今朝指標反映 10社暫定再計算</a>
+      <a href="practical_action_dashboard_20260528.html">実用パートへ戻る</a>
+      <a href="morning_recalc_top10_20260528.html">暫定再計算ランキング</a>
     </div>
   </section>
 </main>
