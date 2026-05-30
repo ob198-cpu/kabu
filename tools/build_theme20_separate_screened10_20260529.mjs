@@ -105,7 +105,7 @@ const rows = parseCsv(fs.readFileSync(path.join(ROOT, "786_theme20_ai_infra_scre
   if (vol !== null && vol >= 65) issues.push("ボラ高い");
   let status = "除外";
   if (score !== null && confidence >= 90 && available === "4/4" && score >= 50 && [per, pbr, roe].filter((v) => v !== null).length >= 2) {
-    status = issues.some((x) => /急騰|下落深い|ボラ高い/.test(x)) ? "条件付き通過" : "通過";
+    status = issues.some((x) => /急騰|下落深い|ボラ高い/.test(x)) ? "条件付きテスト候補" : "テスト候補";
   } else if (score !== null && confidence >= 90 && available === "4/4" && score >= 44) {
     status = "補欠";
   } else if (score !== null && score >= 50) {
@@ -114,7 +114,7 @@ const rows = parseCsv(fs.readFileSync(path.join(ROOT, "786_theme20_ai_infra_scre
   return { ...row, ticker, name: m.name, category: m.category, role: m.role, score, confidence, issues, status };
 });
 
-const statusRank = { "通過": 0, "条件付き通過": 1, "補欠": 2, "データ補完後に再判定": 3, "除外": 4 };
+const statusRank = { "テスト候補": 0, "条件付きテスト候補": 1, "補欠": 2, "データ補完後に再判定": 3, "除外": 4 };
 const byCategory = (category) => rows
   .filter((row) => row.category === category)
   .sort((a, b) => (statusRank[a.status] ?? 9) - (statusRank[b.status] ?? 9) || (b.score ?? -1) - (a.score ?? -1))
@@ -163,7 +163,7 @@ fs.writeFileSync(path.join(ROOT, "788_theme20_separate_screened10_20260529.csv")
 
 function tableRows(list) {
   return list.map((row) => `
-    <tr class="${row.status === "通過" ? "pass" : row.status === "条件付き通過" ? "conditional" : row.status === "補欠" ? "reserve" : row.status === "データ補完後に再判定" ? "review" : "drop"}">
+    <tr class="${row.status === "テスト候補" ? "pass" : row.status === "条件付きテスト候補" ? "conditional" : row.status === "補欠" ? "reserve" : row.status === "データ補完後に再判定" ? "review" : "drop"}">
       <td>${row.categoryRank}</td>
       <td><b>${esc(row.ticker)} ${esc(row.name)}</b><br><small>${esc(row.role)}</small></td>
       <td>${esc(row.status)}</td>
@@ -181,7 +181,7 @@ function tableRows(list) {
 
 function summary(list) {
   const count = (status) => list.filter((row) => row.status === status).length;
-  return `通過${count("通過")}社 / 条件付き通過${count("条件付き通過")}社 / 補欠${count("補欠")}社 / データ補完${count("データ補完後に再判定")}社 / 除外${count("除外")}社`;
+  return `テスト候補${count("テスト候補")}社 / 条件付きテスト候補${count("条件付きテスト候補")}社 / 補欠${count("補欠")}社 / データ補完${count("データ補完後に再判定")}社 / 除外${count("除外")}社`;
 }
 
 const html = `<!doctype html>
@@ -212,7 +212,7 @@ const html = `<!doctype html>
 <main>
   <section>
     <h2>1. 結論</h2>
-    <p class="note">前回の「総合10社」は2分野を混ぜた一覧でした。このページは分野を混ぜず、それぞれ10社を最後まで同じゲートで通した一覧です。購入確定ではなく、6月イベント後に再判定するテスト候補の優先順位です。</p>
+    <p class="note">前回の「総合10社」は2分野を混ぜた一覧でした。このページは分野を混ぜず、それぞれ10社を最後まで同じゲートで評価した一覧です。購入確定ではなく、6月イベント後に再判定するテスト候補の優先順位です。</p>
     <div class="grid">
       <div class="card"><b>半導体製造装置・材料</b><span>${esc(summary(semi))}</span></div>
       <div class="card"><b>データセンター・電力・冷却・電線</b><span>${esc(summary(infra))}</span></div>
@@ -223,7 +223,7 @@ const html = `<!doctype html>
     </div>
   </section>
 
-  <section>
+  <section id="semiconductor">
     <h2>2. 半導体製造装置・材料 10社</h2>
     <div class="table-wrap"><table>
       <thead><tr><th style="width:48px">順位</th><th style="width:210px">銘柄</th><th style="width:110px">扱い</th><th style="width:90px">実用</th><th style="width:70px">信頼度</th><th style="width:110px">CAGR</th><th style="width:110px">S&P差</th><th style="width:110px">最大下落</th><th style="width:120px">PER/PBR/ROE</th><th>警戒点</th></tr></thead>
@@ -231,7 +231,7 @@ const html = `<!doctype html>
     </table></div>
   </section>
 
-  <section>
+  <section id="datacenter">
     <h2>3. データセンター・電力・冷却・電線 10社</h2>
     <div class="table-wrap"><table>
       <thead><tr><th style="width:48px">順位</th><th style="width:210px">銘柄</th><th style="width:110px">扱い</th><th style="width:90px">実用</th><th style="width:70px">信頼度</th><th style="width:110px">CAGR</th><th style="width:110px">S&P差</th><th style="width:110px">最大下落</th><th style="width:120px">PER/PBR/ROE</th><th>警戒点</th></tr></thead>
