@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>NISA別名義口座 操作・同一PC/IP利用リスク報告書</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Meiryo", "Yu Gothic", Arial, sans-serif;
+      color: #050b14;
+      background: #fff;
+      line-height: 1.55;
+      font-size: 10.4px;
+    }
+    .page { page-break-after: always; padding: 0; }
+    .page:last-child { page-break-after: auto; }
+    .cover {
+      min-height: 260mm;
+      padding: 22mm;
+      background: #123d63;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    h1 { font-size: 28px; margin: 0 0 12px; letter-spacing: 0; }
+    h2 {
+      font-size: 16px;
+      margin: 0 0 8px;
+      color: #123d63;
+      border-left: 6px solid #0b5f96;
+      padding-left: 8px;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .cover h2 { color: #fff; border-color: #8fd3ff; }
+    h3 { font-size: 12.5px; margin: 10px 0 5px; color: #123d63; }
+    section { margin: 0 0 12px; page-break-inside: avoid; break-inside: avoid; }
+    p { margin: 0 0 7px; }
+    .lead { font-size: 14px; max-width: 760px; }
+    .note, .danger, .okbox {
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin: 8px 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .note { border-left: 6px solid #a85b00; background: #fff8ec; }
+    .danger { border-left: 6px solid #b42318; background: #fff4f2; }
+    .okbox { border-left: 6px solid #087f5b; background: #effaf5; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+    .card { border: 1px solid #cbd8e6; border-radius: 8px; padding: 9px; background: #f8fbff; }
+    .card b { display: block; color: #123d63; margin-bottom: 3px; }
+    .value { font-size: 19px; font-weight: 900; color: #0b5f96; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin: 6px 0 10px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    tr { page-break-inside: avoid; break-inside: avoid; }
+    th, td {
+      border: 1px solid #cbd8e6;
+      padding: 5px;
+      vertical-align: top;
+      overflow-wrap: break-word;
+    }
+    th { background: #e6f1fb; color: #123d63; text-align: left; }
+    ul { margin: 4px 0 8px 18px; padding: 0; }
+    li { margin: 2px 0; }
+    .small { font-size: 9.2px; color: #34465b; }
+    a { color: #075e91; text-decoration: none; }
+    .tag-ok { color: #087f5b; font-weight: 800; }
+    .tag-warn { color: #a85b00; font-weight: 800; }
+    .tag-stop { color: #b42318; font-weight: 800; }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <h1>NISA別名義口座 操作・同一PC/IP利用リスク報告書</h1>
+    <h2>2026年5月31日版</h2>
+    <p class="lead">NISA運用で家族・親族など別名義の証券口座に触れる場合の法令・証券会社規約上の注意点を整理した資料です。同一PC・同一IPアドレスの利用そのものではなく、実質的に本人以外が取引していると見られることが主要リスクです。</p>
+    <div class="cards">
+      <div class="card"><b>最重要論点</b><div class="value">本人性</div><p>名義人本人の意思・資金・責任による取引か。</p></div>
+      <div class="card"><b>高リスク行為</b><div class="value">代理操作</div><p>ID共有、本人以外の注文、複数名義の一括操作。</p></div>
+      <div class="card"><b>安全寄り対応</b><div class="value">確認</div><p>各証券会社の家族利用・代理制度を事前確認。</p></div>
+    </div>
+    <p class="danger">本資料は一般的な制度・規約上の注意点を整理したものであり、個別案件の法的判断ではありません。実際の運用前には、利用予定の証券会社・税理士・弁護士等へ確認してください。</p>
+  </section>
+
+  <section class="page">
+    <h2>1. 結論</h2>
+    <div class="danger">
+      <p><b>結論:</b> 別名義のNISA口座を一つのPCや同一IPアドレスから操作する場合、問題の中心は「端末やIP」ではなく、本人以外が実質的に注文していると見られるかどうかです。</p>
+      <p>家族であっても、ID・パスワードを共有し、本人以外がログインして注文する運用は、仮名・借名取引、代理発注、本人確認・マネロン対策、不公正取引の観点でリスクがあります。</p>
+    </div>
+
+    <h2>2. 何が問題になるか</h2>
+    <table>
+      <thead><tr><th>論点</th><th>説明</th><th>実務上の注意</th></tr></thead>
+      <tbody>
+        <tr><td>仮名・借名取引</td><td>口座名義人と実質的な取引主体・効果帰属者が一致しない取引は問題になり得ます。</td><td>本人名義の口座を、別人が自分の判断で使う形は避ける。</td></tr>
+        <tr><td>代理発注</td><td>証券会社は、本人以外による口座利用や個別取引の問い合わせ・発注を制限することがあります。</td><td>家族でも、本人のID・暗証番号を使って注文しない。</td></tr>
+        <tr><td>ID・パスワード管理</td><td>オンライン取引では、ログイン情報は本人確認の中核です。共有すると本人性が崩れます。</td><td>同じPCを使う場合でも、本人ごとに本人がログイン・操作する。</td></tr>
+        <tr><td>疑わしい取引</td><td>借名口座の疑いがある口座での株式売買や投信購入は、金融機関が注意すべき取引類型に含まれます。</td><td>複数名義で同じ銘柄を同時に動かす場合は特に説明可能性が必要。</td></tr>
+        <tr><td>不公正取引</td><td>インサイダー情報、相場操縦、TOB・決算情報等を複数名義で使うと重大リスクになります。</td><td>未公表情報や相場形成に影響する取引は絶対に避ける。</td></tr>
+      </tbody>
+    </table>
+
+    <h2>3. 同一PC・同一IPアドレスの位置づけ</h2>
+    <div class="okbox">
+      <p>同じ家庭内Wi-Fi、同じPC、同じブラウザからアクセスしたことだけで、直ちに違法と断定されるわけではありません。</p>
+      <p>ただし、証券会社側から見ると、同一IP、同一端末、同一ブラウザ、同一メール、同一電話番号、類似した注文タイミング、同じ入出金経路などは、実質的に一人が複数名義を操作している疑いを確認する材料になり得ます。</p>
+    </div>
+    <table>
+      <thead><tr><th>状態</th><th>リスク評価</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>家族が同じPCを使うが、各本人が自分でログイン・判断・注文</td><td><span class="tag-warn">中</span></td><td>同一PC/IP自体はあり得るが、本人操作である記録・説明が必要。</td></tr>
+        <tr><td>一人が家族全員のIDでログインし、注文まで実施</td><td><span class="tag-stop">高</span></td><td>本人以外の操作、借名・代理発注の疑いが強くなる。</td></tr>
+        <tr><td>家族の意向を聞いて、本人が自分で注文</td><td><span class="tag-ok">低〜中</span></td><td>本人判断・本人操作ならリスクは下がる。ただし投資助言や一任運用の形にならないよう注意。</td></tr>
+        <tr><td>複数名義で同一銘柄を同時に大量発注</td><td><span class="tag-stop">高</span></td><td>借名、相場操縦、規制回避、IPO・優待・NISA枠の不適切利用に見える可能性。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="page">
+    <h2>4. 具体例</h2>
+    <table>
+      <thead><tr><th>ケース</th><th>何が起きているか</th><th>問題点</th><th>安全寄りの対応</th></tr></thead>
+      <tbody>
+        <tr><td>夫が妻のNISA口座にログインして発注</td><td>妻名義だが、実際の操作・判断は夫。</td><td>本人以外の取引、ID共有、代理発注の疑い。</td><td>妻本人が内容を理解し、自分でログイン・注文する。証券会社の代理制度があるか確認。</td></tr>
+        <tr><td>親が成人した子のNISA口座をまとめて運用</td><td>子名義の口座を親が操作。</td><td>子本人の意思・資金・責任が不明確。親の一任運用に見える。</td><td>子本人が判断・操作する。親は資料説明に留め、発注は本人が行う。</td></tr>
+        <tr><td>同じPCで家族それぞれがログイン</td><td>端末・IPは同じだが、操作主体は各本人。</td><td>証券会社から確認される可能性は残る。</td><td>パスワード共有をしない。本人ごとにログアウトし、注文前に本人確認を徹底。</td></tr>
+        <tr><td>TOB・決算・未公表情報を家族口座で分散購入</td><td>複数名義で情報を利用。</td><td>インサイダー取引・借名取引の重大リスク。</td><td>未公表重要事実に接した可能性がある場合は、本人・家族口座を含め取引しない。</td></tr>
+        <tr><td>IPO・株主優待・NISA枠のために家族口座を実質一人で使う</td><td>名義は別でも実質的な利用者が同一。</td><td>制度・規約の趣旨に反する可能性。確認・制限対象になり得る。</td><td>各名義人が自分の資金・目的・判断で利用する。</td></tr>
+      </tbody>
+    </table>
+
+    <h2>5. NISA特有の注意点</h2>
+    <table>
+      <thead><tr><th>項目</th><th>注意点</th><th>確認事項</th></tr></thead>
+      <tbody>
+        <tr><td>1人1口座</td><td>NISAは原則として1人1口座の制度です。家族それぞれが口座を持つことは可能ですが、各人の本人性が前提です。</td><td>各名義人が対象年齢・居住要件を満たしているか。</td></tr>
+        <tr><td>本人の意思</td><td>非課税枠を使う判断は、名義人本人の投資判断として説明できる必要があります。</td><td>本人が商品・リスク・金額を理解しているか。</td></tr>
+        <tr><td>本人の資金</td><td>資金の出所が本人以外の場合、贈与・名義預金・税務上の論点が生じる可能性があります。</td><td>入金元、贈与の有無、年間贈与額、税務処理。</td></tr>
+        <tr><td>本人の操作</td><td>家族が資料を作ることと、本人に代わって注文することは別です。</td><td>最終注文は本人が実施する体制にする。</td></tr>
+        <tr><td>記録</td><td>後から確認された場合、本人判断であったことを説明できる記録が重要です。</td><td>購入日、商品、金額、判断理由、本人確認メモ。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="page">
+    <h2>6. 実務上の運用ルール案</h2>
+    <table>
+      <thead><tr><th>ルール</th><th>内容</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>ログイン情報を共有しない</td><td>ID、パスワード、取引暗証番号は名義人本人が管理する。</td><td>本人確認の根幹であり、共有は本人性を崩すため。</td></tr>
+        <tr><td>注文は名義人本人が行う</td><td>家族が作った分析資料を見ても、最終発注は本人が実施する。</td><td>代理発注・借名取引と見られるリスクを下げるため。</td></tr>
+        <tr><td>同一PC利用時は完全ログアウト</td><td>利用者ごとにログアウト、ブラウザプロファイル分離、二要素認証を使う。</td><td>誤操作・アカウント混同・本人性疑義を減らすため。</td></tr>
+        <tr><td>同じ銘柄の一斉発注を避ける</td><td>複数名義で同時刻・同数量・同価格の注文を繰り返さない。</td><td>実質一人の取引、相場形成、制度回避に見える可能性を下げるため。</td></tr>
+        <tr><td>本人確認メモを残す</td><td>本人が理解した資料、判断理由、注文日、金額を記録。</td><td>後日、本人意思を説明しやすくするため。</td></tr>
+        <tr><td>証券会社に事前確認</td><td>家族同一PC利用、代理人制度、未成年・高齢者支援制度の可否を確認する。</td><td>証券会社ごとに運用・規約が異なるため。</td></tr>
+      </tbody>
+    </table>
+
+    <h2>7. 証券会社へ確認する質問</h2>
+    <ul>
+      <li>家族が同一PC・同一IPから、それぞれ本人としてログインすることに制限はあるか。</li>
+      <li>家族の口座を本人以外が操作することは、どの範囲まで禁止されているか。</li>
+      <li>本人の意思確認を前提に、家族が操作を補助できる正式な代理人制度はあるか。</li>
+      <li>高齢者・判断能力低下時に利用できる家族サポート口座や任意代理制度はあるか。</li>
+      <li>複数名義で同一銘柄を同時期に購入する場合、確認対象になり得るか。</li>
+      <li>NISA口座で家族資金・贈与資金を使う場合、証券会社として確認する事項はあるか。</li>
+    </ul>
+
+    <h2>8. 参考情報</h2>
+    <table>
+      <thead><tr><th>情報源</th><th>確認した内容</th><th>URL</th></tr></thead>
+      <tbody>
+        <tr><td>日本証券業協会</td><td>仮名取引の定義、名義人と効果帰属者が一致しない取引の考え方。</td><td><a href="https://www.jsda.or.jp/shijyo/seido/jishukisei/words/0062.html">JSDA 仮名取引</a></td></tr>
+        <tr><td>SBI証券</td><td>仮名・借名取引、パスワード管理、本人以外の口座利用・代理発注制限。</td><td><a href="https://search.sbisec.co.jp/v2/popwin/attention/trading/stock_12.html">SBI証券 注意喚起</a></td></tr>
+        <tr><td>金融庁</td><td>借名口座の疑いがある口座を使った株式・投信取引が疑わしい取引の参考事例に含まれること。</td><td><a href="https://www.fsa.go.jp/str/jirei/index.html">金融庁 疑わしい取引の参考事例</a></td></tr>
+        <tr><td>証券取引等監視委員会</td><td>親族の資金・親族口座・親族のための売買でも、違反行為者本人の自己の計算における売買とみなされ得る事例。</td><td><a href="https://www.fsa.go.jp/sesc/news/c_2010/2010/20101022-2.html">SESC アルファクスフード事案</a></td></tr>
+        <tr><td>政府広報オンライン</td><td>NISA口座は1人につき1口座のみ開設可能という制度概要。</td><td><a href="https://www.gov-online.go.jp/article/202401/entry-5555.html">政府広報 NISA解説</a></td></tr>
+        <tr><td>日本証券業協会</td><td>家族サポート証券口座の概要。本人と家族代理人の契約に基づく正式な制度例。</td><td><a href="https://market.jsda.or.jp/shijyo/kazokusupport/index.html">JSDA 家族サポート証券口座</a></td></tr>
+      </tbody>
+    </table>
+    <p class="small">作成日: 2026年5月31日。制度・証券会社規約は変更される可能性があるため、実際の取引前に最新情報を確認してください。</p>
+  </section>
+</body>
+</html>
