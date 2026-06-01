@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>当時情報確認ダッシュボード</title>
+  <style>
+    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; --green:#087f5b; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.7; }
+    main { max-width:1320px; margin:0 auto; padding:24px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:26px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:8px; background:#f8fbff; padding:14px; }
+    .card strong { display:block; font-size:14px; color:var(--navy); }
+    .value { font-size:28px; font-weight:900; color:var(--blue); margin:2px 0; }
+    .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; margin:10px 0; }
+    .danger { border-left:6px solid var(--red); background:#fff4f2; border-radius:8px; padding:12px; margin:10px 0; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+    .button { display:inline-flex; text-decoration:none; border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:10px 14px; font-weight:800; }
+    .button.secondary { background:#fff; color:var(--blue); }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    .ok { color:var(--green); font-weight:900; }
+    .warn { color:var(--amber); font-weight:900; }
+    .hold { color:var(--red); font-weight:900; }
+    @media (max-width:980px) { .grid { grid-template-columns:1fr; } table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>当時情報確認ダッシュボード</h1>
+    <p>過去検証で「その時点で本当に選べたか」を確認するための管理画面です。株価だけの後付け検算を本検証扱いにしないため、財務・決算・PER/PBR/ROEの確認状況を分けて表示します。</p>
+  </header>
+  <section>
+    <h2>現在の進捗</h2>
+    <div class="grid">
+      <div class="card"><strong>確認対象</strong><div class="value">45</div><p>15候補 × 3基準日</p></div>
+      <div class="card"><strong>株価・指数</strong><div class="value">45/45</div><p>株価検算は実施済み</p></div>
+      <div class="card"><strong>当時財務・決算</strong><div class="value">0/45</div><p>まだ本検証へ進めない</p></div>
+      <div class="card"><strong>本検証使用可</strong><div class="value">0/45</div><p>確認済み行のみ使用</p></div>
+    </div>
+    <p class="danger">現時点では、株価・指数の検算は完了していますが、当時の財務・決算情報は未確認です。そのため、この段階の結果は「参考検算」であり、購入判断用の本検証ではありません。</p>
+    <div class="actions">
+      <a class="button" href="793_asof_data_validation_queue_20260601.csv">当時情報確認キューCSV</a>
+      <a class="button secondary" href="795_asof_validation_status_summary_20260601.csv">進捗サマリーCSV</a>
+      <a class="button secondary" href="practical_action_dashboard_20260528.html">実用ダッシュボードへ戻る</a>
+    </div>
+  </section>
+  <section>
+    <h2>本検証へ進める条件</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>条件</th><th>確認内容</th><th>使える状態</th><th>未確認時の扱い</th></tr></thead>
+        <tbody>
+          <tr><td>PER/PBR/ROE</td><td>基準日以前に確認できた指標、または直近公表値</td><td>出所・対象期・基準日との関係を記録</td><td>割安/割高判定に使わない</td></tr>
+          <tr><td>売上・利益成長</td><td>基準日以前に公表済みの決算短信、有価証券報告書、IR資料</td><td>売上、営業利益または純利益、EPSの根拠がある</td><td>成長スコアに入れない</td></tr>
+          <tr><td>直近決算</td><td>基準日前に存在した最新決算と、その市場反応</td><td>決算日と株価反応を結合できる</td><td>決算後反応スコアに入れない</td></tr>
+          <tr><td>還元情報</td><td>配当、自社株買い、増配方針</td><td>発表日と根拠資料がある</td><td>還元評価に入れない</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section>
+    <h2>確認キュー一覧</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>基準日</th><th>チャンネル</th><th>銘柄</th><th>分類</th><th>株価</th><th>指数</th><th>PER/PBR/ROE</th><th>成長率</th><th>直近決算</th><th>本検証</th><th>理由</th></tr></thead>
+        <tbody>
+  <tr>
+    <td>2023-06-01</td>
+    <td>総合</td>
+    <td><b>8316.T</b><br>三井住友FG</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>総合</td>
+    <td><b>8306.T</b><br>三菱UFJ FG</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>総合</td>
+    <td><b>8725.T</b><br>MS&amp;AD</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>総合</td>
+    <td><b>8411.T</b><br>みずほFG</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>総合</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6857.T</b><br>アドバンテスト</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6146.T</b><br>ディスコ</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>8035.T</b><br>東京エレクトロン</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>7735.T</b><br>SCREEN HD</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6920.T</b><br>レーザーテック</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>7011.T</b><br>三菱重工業</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>6501.T</b><br>日立製作所</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>5803.T</b><br>フジクラ</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2023-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>5801.T</b><br>古河電工</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>総合</td>
+    <td><b>8316.T</b><br>三井住友FG</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>総合</td>
+    <td><b>8306.T</b><br>三菱UFJ FG</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>総合</td>
+    <td><b>8725.T</b><br>MS&amp;AD</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>総合</td>
+    <td><b>8411.T</b><br>みずほFG</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>総合</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6857.T</b><br>アドバンテスト</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6146.T</b><br>ディスコ</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>8035.T</b><br>東京エレクトロン</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>7735.T</b><br>SCREEN HD</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6920.T</b><br>レーザーテック</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>7011.T</b><br>三菱重工業</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>6501.T</b><br>日立製作所</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>5803.T</b><br>フジクラ</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2024-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>5801.T</b><br>古河電工</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>総合</td>
+    <td><b>8316.T</b><br>三井住友FG</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>総合</td>
+    <td><b>8306.T</b><br>三菱UFJ FG</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>総合</td>
+    <td><b>8725.T</b><br>MS&amp;AD</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>総合</td>
+    <td><b>8411.T</b><br>みずほFG</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>総合</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6857.T</b><br>アドバンテスト</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6146.T</b><br>ディスコ</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>8035.T</b><br>東京エレクトロン</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>7735.T</b><br>SCREEN HD</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>半導体製造装置・材料</td>
+    <td><b>6920.T</b><br>レーザーテック</td>
+    <td>観察</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>7011.T</b><br>三菱重工業</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>6501.T</b><br>日立製作所</td>
+    <td>購入検討候補</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>5803.T</b><br>フジクラ</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr>
+
+  <tr>
+    <td>2025-06-01</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td><b>5801.T</b><br>古河電工</td>
+    <td>条件付き</td>
+    <td class="ok">取得済み</td>
+    <td class="ok">取得済み</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="warn">未確認</td>
+    <td class="hold">保留</td>
+    <td>当時入手可能な財務・決算情報の確認前。株価検算のみでは購入判断に使わない。</td>
+  </tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
