@@ -165,11 +165,11 @@
       <table>
         <thead><tr><th>優先</th><th>改善項目</th><th>実装方針</th><th>完了条件</th><th>次アクション</th><th>状態</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>3チャンネル管理</td><td>総合、半導体製造装置・材料、データセンター・電力・冷却・電線を別々に管理する。</td><td>各チャンネルで10社、スコア、扱い、確認事項を表示する。</td><td>各チャンネルに「購入検討/条件付き/観察」の分類を追加する。</td><td class="ok">実装中</td></tr>
+          <tr><td>1</td><td>3チャンネル管理</td><td>総合、半導体製造装置・材料、データセンター・電力・冷却・電線を別々に管理する。</td><td>各チャンネルで10社、スコア、扱い、確認事項を表示する。</td><td>次は分類理由を全10社へ広げ、CSVにも反映する。</td><td class="ok">画面反映済み</td></tr>
           <tr><td>2</td><td>量的スコアと質的スコアの分離</td><td>株価、PER/PBR/ROE、CAGR、下落率などは量的。ニュース、政策、イベント仮説は質的として分ける。</td><td>質的材料が直接加点されず、確認条件、上限、警戒条件として表示される。</td><td>質的材料のA/B/Cと、否定条件を銘柄別に表示する。</td><td class="warn">改善中</td></tr>
           <tr><td>3</td><td>データ出所・取得日・欠損表示</td><td>銘柄ごとに取得元、取得日、手入力、未取得を表示する。</td><td>全候補に、取得済み/手入力/未取得/更新待ちが出る。</td><td>データ信頼度列と欠損理由列を候補表に追加する。</td><td class="warn">改善中</td></tr>
           <tr><td>4</td><td>S&P500/TOPIX比較</td><td>過去1年、5年、10年、最大下落率、ボラティリティを指数と比較する。</td><td>候補10社の平均と指数の差が表示され、+1%目標との距離が分かる。</td><td>各チャンネル別にS&P500/TOPIXとの差分表を追加する。</td><td class="warn">拡張中</td></tr>
-          <tr><td>5</td><td>購入候補と観察候補の分離</td><td>高スコアでも、欠損、急騰、決算反応未確認、説明不能な割高は観察扱いにする。</td><td>購入検討に進める銘柄と、観察に留める銘柄が分かれている。</td><td>分類理由を1行で表示し、購入検討へ進む条件を追加する。</td><td class="ok">一部実装</td></tr>
+          <tr><td>5</td><td>購入候補と観察候補の分離</td><td>高スコアでも、欠損、急騰、決算反応未確認、説明不能な割高は観察扱いにする。</td><td>購入検討に進める銘柄と、観察に留める銘柄が分かれている。</td><td>購入検討へ進む条件を銘柄別に追加する。</td><td class="ok">画面反映済み</td></tr>
           <tr><td>6</td><td>変更理由ログ</td><td>候補が入れ替わった理由を、指標追加、データ補完、リスク条件、指数比較に分けて記録する。</td><td>前回候補との差分と、入替理由が表で残る。</td><td>変更履歴CSVと画面表示を作る。</td><td class="warn">追加予定</td></tr>
           <tr><td>7</td><td>過去検証</td><td>過去の日付で同じ条件を使い、その後1年の結果を検算する。</td><td>少なくとも過去3時点で、候補選定後1年の勝敗、最大下落、指数差を確認する。</td><td>過去検証用CSVを作り、2023年/2024年/2025年基準で検算する。</td><td class="stop">未実装</td></tr>
         </tbody>
@@ -207,13 +207,13 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>順位</th><th>銘柄</th><th>100点換算</th><th>現時点の扱い</th><th>確認すること</th></tr></thead>
+          <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>100点換算</th><th>分類理由</th><th>次に確認すること</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td>8316.T 三井住友FG</td><td>76.9</td><td class="ok">統合候補</td><td>金利、金融政策、信用コスト</td></tr>
-            <tr><td>2</td><td>8306.T 三菱UFJ FG</td><td>74.9</td><td class="ok">統合候補</td><td>日銀後の銀行株全体の反応</td></tr>
-            <tr><td>3</td><td>8725.T MS&AD</td><td>72.9</td><td class="ok">統合候補</td><td>保険セクターの継続性</td></tr>
-            <tr><td>4</td><td>8411.T みずほFG</td><td>71.2</td><td class="ok">統合候補</td><td>銀行内の比較順位</td></tr>
-            <tr><td>5</td><td>6503.T 三菱電機</td><td>70.8</td><td class="ok">統合候補</td><td>電力・FAテーマと株価反応</td></tr>
+            <tr><td>1</td><td>8316.T 三井住友FG</td><td class="ok">購入検討候補</td><td>76.9</td><td>統合スコア上位。金融政策と金利テーマの説明がしやすい。</td><td>金利、金融政策、信用コスト</td></tr>
+            <tr><td>2</td><td>8306.T 三菱UFJ FG</td><td class="ok">購入検討候補</td><td>74.9</td><td>銀行セクター内で継続確認対象。日銀後の反応確認が必要。</td><td>日銀後の銀行株全体の反応</td></tr>
+            <tr><td>3</td><td>8725.T MS&AD</td><td class="ok">購入検討候補</td><td>72.9</td><td>金融内の分散先。銀行だけに偏らない候補として残す。</td><td>保険セクターの継続性</td></tr>
+            <tr><td>4</td><td>8411.T みずほFG</td><td class="warn">条件付き</td><td>71.2</td><td>銀行枠が重複するため、上位銀行との差を確認してから扱う。</td><td>銀行内の比較順位</td></tr>
+            <tr><td>5</td><td>6503.T 三菱電機</td><td class="warn">条件付き</td><td>70.8</td><td>電力・FAテーマはあるが、総合候補内での優先度を再確認する。</td><td>電力・FAテーマと株価反応</td></tr>
           </tbody>
         </table>
       </div>
@@ -240,13 +240,13 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>順位</th><th>銘柄</th><th>扱い</th><th>実用スコア</th><th>警戒点</th></tr></thead>
+          <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>実用スコア</th><th>分類理由</th><th>警戒点</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td>6857.T アドバンテスト</td><td class="warn">条件付きテスト候補</td><td>56.7</td><td>1年急騰、ボラ高い</td></tr>
-            <tr><td>2</td><td>6146.T ディスコ</td><td class="warn">条件付きテスト候補</td><td>52.7</td><td>5年下落深い</td></tr>
-            <tr><td>3</td><td>8035.T 東京エレクトロン</td><td class="warn">補欠</td><td>48.0</td><td>5年下落深い</td></tr>
-            <tr><td>4</td><td>7735.T SCREEN HD</td><td class="warn">補欠</td><td>44.8</td><td>5年下落深い</td></tr>
-            <tr><td>5</td><td>6920.T レーザーテック</td><td class="warn">補欠</td><td>44.5</td><td>1年急騰、5年下落深い、ボラ高い</td></tr>
+            <tr><td>1</td><td>6857.T アドバンテスト</td><td class="warn">条件付き</td><td>56.7</td><td>半導体テーマ適合は強いが、急騰と変動率が大きい。</td><td>1年急騰、ボラ高い</td></tr>
+            <tr><td>2</td><td>6146.T ディスコ</td><td class="warn">条件付き</td><td>52.7</td><td>構造優位はあるが、下落時の振れ幅を先に確認する。</td><td>5年下落深い</td></tr>
+            <tr><td>3</td><td>8035.T 東京エレクトロン</td><td class="warn">観察</td><td>48.0</td><td>代表銘柄として監視するが、現時点では優先度を上げない。</td><td>5年下落深い</td></tr>
+            <tr><td>4</td><td>7735.T SCREEN HD</td><td class="warn">観察</td><td>44.8</td><td>装置テーマの確認対象。指数反応と決算確認後に再判定。</td><td>5年下落深い</td></tr>
+            <tr><td>5</td><td>6920.T レーザーテック</td><td class="stop">観察</td><td>44.5</td><td>テーマ性は強いが、急騰・下落・変動率の警戒が重い。</td><td>1年急騰、5年下落深い、ボラ高い</td></tr>
           </tbody>
         </table>
       </div>
@@ -273,13 +273,13 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>順位</th><th>銘柄</th><th>扱い</th><th>実用スコア</th><th>警戒点</th></tr></thead>
+          <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>実用スコア</th><th>分類理由</th><th>警戒点</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td>7011.T 三菱重工業</td><td class="ok">テスト候補</td><td>57.9</td><td>重大な警戒表示なし</td></tr>
-            <tr><td>2</td><td>6503.T 三菱電機</td><td class="ok">テスト候補</td><td>55.7</td><td>重大な警戒表示なし</td></tr>
-            <tr><td>3</td><td>6501.T 日立製作所</td><td class="ok">テスト候補</td><td>52.9</td><td>重大な警戒表示なし</td></tr>
-            <tr><td>4</td><td>5803.T フジクラ</td><td class="warn">条件付きテスト候補</td><td>69.4</td><td>1年急騰、1年下落深い、ボラ高い</td></tr>
-            <tr><td>5</td><td>5801.T 古河電工</td><td class="warn">条件付きテスト候補</td><td>68.1</td><td>1年急騰、60日急騰、ボラ高い</td></tr>
+            <tr><td>1</td><td>7011.T 三菱重工業</td><td class="ok">購入検討候補</td><td>57.9</td><td>AIインフラ周辺だけでなく防衛・電力関連の複数テーマを持つ。</td><td>直近弱含み時は比率を抑える</td></tr>
+            <tr><td>2</td><td>6503.T 三菱電機</td><td class="ok">購入検討候補</td><td>55.7</td><td>電力、FA、社会インフラの確認対象として残す。</td><td>決算・受注の確認</td></tr>
+            <tr><td>3</td><td>6501.T 日立製作所</td><td class="ok">購入検討候補</td><td>52.9</td><td>データセンター周辺と社会インフラの両面を確認できる。</td><td>過熱感と指数反応</td></tr>
+            <tr><td>4</td><td>5803.T フジクラ</td><td class="warn">条件付き</td><td>69.4</td><td>スコアは高いが、急騰と変動率が大きいため条件付き。</td><td>1年急騰、1年下落深い、ボラ高い</td></tr>
+            <tr><td>5</td><td>5801.T 古河電工</td><td class="warn">条件付き</td><td>68.1</td><td>電線テーマは強いが、短期過熱を確認してから扱う。</td><td>1年急騰、60日急騰、ボラ高い</td></tr>
           </tbody>
         </table>
       </div>
