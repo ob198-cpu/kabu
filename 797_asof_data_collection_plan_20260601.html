@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>当時情報 取得計画</title>
+  <style>
+    :root { --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6; --bg:#eef4fa; --amber:#a85b00; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.7; }
+    main { max-width:1320px; margin:0 auto; padding:24px 18px 56px; }
+    header { background:var(--navy); color:#fff; border-radius:10px; padding:26px; margin-bottom:18px; }
+    h1 { margin:0 0 8px; font-size:30px; }
+    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
+    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
+    .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; margin:10px 0; }
+    .danger { border-left:6px solid var(--red); background:#fff4f2; border-radius:8px; padding:12px; margin:10px 0; }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+    .button { display:inline-flex; text-decoration:none; border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:10px 14px; font-weight:800; }
+    .button.secondary { background:#fff; color:var(--blue); }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
+    th { background:#e6f1fb; color:var(--navy); text-align:left; }
+    td span { color:#36506a; font-weight:800; }
+    .hold { color:#b42318; font-weight:900; }
+    @media (max-width:980px) { table { table-layout:auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>当時情報 取得計画</h1>
+    <p>過去検証を本検証へ進めるために、基準日以前に存在した財務・決算情報をどの順番で確認するかを固定した作業表です。</p>
+  </header>
+  <section>
+    <h2>方針</h2>
+    <p class="danger">現在値や後から分かった情報では埋めません。基準日以前に公表済みの資料だけを使い、確認できない行は本検証へ入れません。</p>
+    <p class="note">優先順位は 2025年基準 → 2024年基準 → 2023年基準です。まず最も資料を追いやすい2025年から確認し、同じ銘柄を過去に遡って確認します。</p>
+    <div class="actions">
+      <a class="button" href="796_asof_data_collection_plan_20260601.csv">取得計画CSV</a>
+      <a class="button secondary" href="794_asof_validation_dashboard_20260601.html">当時情報確認画面</a>
+      <a class="button secondary" href="practical_action_dashboard_20260528.html">実用ダッシュボードへ戻る</a>
+    </div>
+  </section>
+  <section>
+    <h2>取得計画一覧</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>優先</th><th>基準日</th><th>銘柄</th><th>チャンネル</th><th>確認開始先</th><th>重点確認</th><th>必要項目</th><th>方法</th><th>状態</th></tr></thead>
+        <tbody>
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>8316.T</b><br>三井住友FG</td>
+    <td>総合</td>
+    <td>三井住友フィナンシャルグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>8306.T</b><br>三菱UFJ FG</td>
+    <td>総合</td>
+    <td>三菱UFJフィナンシャル・グループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>8725.T</b><br>MS&amp;AD</td>
+    <td>総合</td>
+    <td>MS&amp;ADインシュアランスグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>保険は自然災害損失・コンバインドレシオも確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>8411.T</b><br>みずほFG</td>
+    <td>総合</td>
+    <td>みずほフィナンシャルグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>総合 / データセンター・電力・冷却・電線</td>
+    <td>三菱電機 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>FA・電力・社会インフラの受注説明を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>6857.T</b><br>アドバンテスト</td>
+    <td>半導体製造装置・材料</td>
+    <td>アドバンテスト IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>高PER説明、受注、半導体テスター需要を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>6146.T</b><br>ディスコ</td>
+    <td>半導体製造装置・材料</td>
+    <td>ディスコ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>装置サイクル・利益率・受注見通しを確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>8035.T</b><br>東京エレクトロン</td>
+    <td>半導体製造装置・材料</td>
+    <td>東京エレクトロン IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>前工程装置の受注・地域別売上を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>7735.T</b><br>SCREEN HD</td>
+    <td>半導体製造装置・材料</td>
+    <td>SCREENホールディングス IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>洗浄装置需要と半導体設備投資を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>6920.T</b><br>レーザーテック</td>
+    <td>半導体製造装置・材料</td>
+    <td>レーザーテック IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>EUV検査需要と高PER説明を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>7011.T</b><br>三菱重工業</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>三菱重工業 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>防衛・電力・エネルギー受注残を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>6501.T</b><br>日立製作所</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>日立製作所 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>送配電・デジタル・社会インフラ受注を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>5803.T</b><br>フジクラ</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>フジクラ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>光ファイバー・データセンター需要を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>1</td>
+    <td>2025-06-01</td>
+    <td><b>5801.T</b><br>古河電工</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>古河電気工業 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>光ファイバー・電力線・急騰反動を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>8316.T</b><br>三井住友FG</td>
+    <td>総合</td>
+    <td>三井住友フィナンシャルグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>8306.T</b><br>三菱UFJ FG</td>
+    <td>総合</td>
+    <td>三菱UFJフィナンシャル・グループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>8725.T</b><br>MS&amp;AD</td>
+    <td>総合</td>
+    <td>MS&amp;ADインシュアランスグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>保険は自然災害損失・コンバインドレシオも確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>8411.T</b><br>みずほFG</td>
+    <td>総合</td>
+    <td>みずほフィナンシャルグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>総合 / データセンター・電力・冷却・電線</td>
+    <td>三菱電機 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>FA・電力・社会インフラの受注説明を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>6857.T</b><br>アドバンテスト</td>
+    <td>半導体製造装置・材料</td>
+    <td>アドバンテスト IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>高PER説明、受注、半導体テスター需要を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>6146.T</b><br>ディスコ</td>
+    <td>半導体製造装置・材料</td>
+    <td>ディスコ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>装置サイクル・利益率・受注見通しを確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>8035.T</b><br>東京エレクトロン</td>
+    <td>半導体製造装置・材料</td>
+    <td>東京エレクトロン IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>前工程装置の受注・地域別売上を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>7735.T</b><br>SCREEN HD</td>
+    <td>半導体製造装置・材料</td>
+    <td>SCREENホールディングス IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>洗浄装置需要と半導体設備投資を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>6920.T</b><br>レーザーテック</td>
+    <td>半導体製造装置・材料</td>
+    <td>レーザーテック IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>EUV検査需要と高PER説明を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>7011.T</b><br>三菱重工業</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>三菱重工業 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>防衛・電力・エネルギー受注残を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>6501.T</b><br>日立製作所</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>日立製作所 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>送配電・デジタル・社会インフラ受注を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>5803.T</b><br>フジクラ</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>フジクラ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>光ファイバー・データセンター需要を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>2024-06-01</td>
+    <td><b>5801.T</b><br>古河電工</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>古河電気工業 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>光ファイバー・電力線・急騰反動を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>8316.T</b><br>三井住友FG</td>
+    <td>総合</td>
+    <td>三井住友フィナンシャルグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>8306.T</b><br>三菱UFJ FG</td>
+    <td>総合</td>
+    <td>三菱UFJフィナンシャル・グループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>8725.T</b><br>MS&amp;AD</td>
+    <td>総合</td>
+    <td>MS&amp;ADインシュアランスグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>保険は自然災害損失・コンバインドレシオも確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>8411.T</b><br>みずほFG</td>
+    <td>総合</td>
+    <td>みずほフィナンシャルグループ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>銀行指標は自己資本比率・与信費用も確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>総合 / データセンター・電力・冷却・電線</td>
+    <td>三菱電機 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>FA・電力・社会インフラの受注説明を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>6857.T</b><br>アドバンテスト</td>
+    <td>半導体製造装置・材料</td>
+    <td>アドバンテスト IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>高PER説明、受注、半導体テスター需要を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>6146.T</b><br>ディスコ</td>
+    <td>半導体製造装置・材料</td>
+    <td>ディスコ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>装置サイクル・利益率・受注見通しを確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>8035.T</b><br>東京エレクトロン</td>
+    <td>半導体製造装置・材料</td>
+    <td>東京エレクトロン IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>前工程装置の受注・地域別売上を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>7735.T</b><br>SCREEN HD</td>
+    <td>半導体製造装置・材料</td>
+    <td>SCREENホールディングス IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>洗浄装置需要と半導体設備投資を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>6920.T</b><br>レーザーテック</td>
+    <td>半導体製造装置・材料</td>
+    <td>レーザーテック IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>EUV検査需要と高PER説明を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>7011.T</b><br>三菱重工業</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>三菱重工業 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>防衛・電力・エネルギー受注残を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>6501.T</b><br>日立製作所</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>日立製作所 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>送配電・デジタル・社会インフラ受注を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>5803.T</b><br>フジクラ</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>フジクラ IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>光ファイバー・データセンター需要を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td>2023-06-01</td>
+    <td><b>5801.T</b><br>古河電工</td>
+    <td>データセンター・電力・冷却・電線</td>
+    <td>古河電気工業 IR<br><span>有価証券報告書 / 決算短信</span></td>
+    <td>光ファイバー・電力線・急騰反動を確認</td>
+    <td>PER/PBR/ROE、売上成長、利益成長、EPS、直近決算、還元情報</td>
+    <td>基準日以前に公表済みの資料だけを使用。現在値で埋めない。</td>
+    <td class="hold">未着手</td>
+  </tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
