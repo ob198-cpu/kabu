@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>高度税制確認 上級・確認必須</title>
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;background:#f5f8fb;color:#061f36;margin:0;line-height:1.75}
+    .wrap{max-width:1120px;margin:auto;padding:28px}
+    h1{border-left:8px solid #b42318;padding-left:14px;color:#123d63}
+    h2{border-bottom:2px solid #d5e5f2;padding-bottom:6px;margin-top:26px}
+    .lead,.box{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px;margin:12px 0}
+    .warn{background:#fff4f2;border-left:7px solid #b42318}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed;margin-top:12px}
+    th,td{border:1px solid #c8dbea;padding:9px;vertical-align:top;word-break:break-word}
+    th{background:#e3f0fa;color:#123d63;text-align:left}
+    .pill{display:inline-block;border-radius:999px;padding:3px 9px;font-weight:800;background:#fff0d9;color:#8a5200}
+    a{color:#0b5f96;font-weight:800}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>高度税制確認 上級・確認必須</h1>
+  <p class="lead warn"><b>このページは節税実行の指示ではありません。</b> 通常のNISA購入判断とは別枠で、税理士・税務署・証券会社への確認が必要な高度項目を整理する画面です。現時点では automatic ON ではなく、確認候補として表示します。</p>
+
+  <h2>どこに組み込まれているか</h2>
+  <table>
+    <thead><tr><th>項目</th><th>現在の扱い</th><th>見る画面</th></tr></thead>
+    <tbody>
+      <tr><td>損失繰越・損出し</td><td><span class="pill">実装済み</span><br>課税口座の含み損と年初来利益・配当を照合。NISA損失は対象外。</td><td><a href="843_tax_year_end_review_phase2_20260602.html">税制 年末レビュー Phase 2</a></td></tr>
+      <tr><td>NISA枠の優先配分</td><td><span class="pill">実装済み</span><br>10社候補にNISA優先度を横付け。損失通算不可のため下落耐性も確認。</td><td><a href="844_nisa_priority_allocation_phase3_20260602.html">NISA枠配分候補 Phase 3</a></td></tr>
+      <tr><td>配当課税方式比較</td><td><span class="pill">実装済み</span><br>国内株配当がある場合、申告不要・総合課税・申告分離課税の比較候補。</td><td><a href="842_tax_aware_operation_layer_phase1_20260602.html">税制レイヤー Phase 1</a></td></tr>
+      <tr><td>外国税額控除</td><td><span class="pill">実装済み</span><br>外国株・海外ETFの外国源泉税を確認候補に表示。全額戻る前提にはしない。</td><td><a href="842_tax_aware_operation_layer_phase1_20260602.html">税制レイヤー Phase 1</a></td></tr>
+      <tr><td>エンジェル税制</td><td><span class="pill">上級OFF</span><br>大きな譲渡益がある年の確認候補。対象企業・投資家要件・必要書類が未確認なら実行候補にしない。</td><td>advanced_tax_mode=true の時だけ表示予定</td></tr>
+      <tr><td>デリバティブヘッジ</td><td><span class="pill">上級OFF</span><br>大きな含み益を売らずに短期下落だけ抑える検討枠。ただし先物・オプションは別枠課税、証拠金、追証リスクあり。</td><td>advanced_tax_mode=true の時だけ表示予定</td></tr>
+    </tbody>
+  </table>
+
+  <h2>上級項目を通常候補に混ぜない理由</h2>
+  <div class="box">
+    <ul>
+      <li>エンジェル税制は、対象企業・投資家要件・必要書類・取得価額調整などの確認が必要です。</li>
+      <li>未上場株は元本毀損、換金不能、情報不足のリスクが高いため、節税額だけで判断できません。</li>
+      <li>先物・オプションは株式譲渡所得とは別枠で、証拠金・期限・追証リスクがあります。</li>
+      <li>そのため、このシステムでは「確認候補」として分離し、通常のNISA購入候補スコアには混ぜません。</li>
+    </ul>
+  </div>
+
+  <h2>公式確認先</h2>
+  <table>
+    <thead><tr><th>制度</th><th>確認先</th><th>確認すること</th></tr></thead>
+    <tbody>
+      <tr><td>エンジェル税制</td><td><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1544.htm">国税庁 No.1544</a><br><a href="https://www.meti.go.jp/policy/newbusiness/angeltax/index.html">経済産業省 エンジェル税制</a></td><td>制度概要、対象企業、投資家要件、控除・損失特例、必要書類。</td></tr>
+      <tr><td>先物・オプション</td><td><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1522.htm">国税庁 No.1522</a></td><td>先物取引に係る雑所得等の課税、株式譲渡所得との違い。</td></tr>
+      <tr><td>損失繰越</td><td><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1474.htm">国税庁 No.1474</a></td><td>上場株式等の譲渡損失の損益通算・繰越控除。</td></tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
