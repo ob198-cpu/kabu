@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2023/2024 当時決算情報 入力進捗 step2</title>
+  <style>
+    body{font-family:Arial,'Yu Gothic',Meiryo,sans-serif;background:#f5f8fb;color:#061f36;margin:0}
+    .wrap{max-width:1180px;margin:auto;padding:28px}
+    h1{border-left:8px solid #0a6496;padding-left:14px}
+    .lead{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px;line-height:1.7}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+    .card{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px}
+    .num{font-size:30px;font-weight:800;color:#064b73}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed;margin-top:14px}
+    th,td{border:1px solid #c8dbea;padding:8px;word-break:break-word;vertical-align:top}
+    th{background:#e3f0fa}
+    .small{font-size:13px;line-height:1.6}
+    @media print{.wrap{padding:12mm} table{page-break-inside:auto} tr{page-break-inside:avoid}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>2023/2024 当時決算情報 入力進捗 step2</h1>
+  <p class="lead">2025年基準だけでなく、過去時点でも同じ手順で銘柄を選べたか確認するため、2023年・2024年基準の当時決算情報を公式資料から入力しています。今回は金融・保険の主要4社、計8件を確認済みに更新しました。</p>
+  <div class="cards">
+    <div class="card"><div>対象件数</div><div class="num">28</div></div>
+    <div class="card"><div>確認済み</div><div class="num">8</div></div>
+    <div class="card"><div>未入力</div><div class="num">20</div></div>
+  </div>
+  <table>
+    <thead>
+      <tr><th>基準日</th><th>ticker</th><th>銘柄</th><th>基準日株価</th><th>売上成長</th><th>利益成長</th><th>EPS</th><th>ROE</th><th>PER</th><th>PBR</th><th>確認内容</th></tr>
+    </thead>
+    <tbody><tr>
+  <td>2023-06-01</td>
+  <td>8316.T</td>
+  <td>三井住友FG</td>
+  <td>1719.73</td>
+  <td>49.4%</td>
+  <td>14.0%</td>
+  <td>196.82</td>
+  <td>6.6%</td>
+  <td>8.74</td>
+  <td>0.55</td>
+  <td>公式決算短信。株式分割後の株価系列に合わせてEPS/BPSを調整しPER/PBRを算出。</td>
+</tr>
+<tr>
+  <td>2023-06-01</td>
+  <td>8306.T</td>
+  <td>三菱UFJ FG</td>
+  <td>874.23</td>
+  <td>52.8%</td>
+  <td>-1.3%</td>
+  <td>90.73</td>
+  <td>6.5%</td>
+  <td>9.64</td>
+  <td>0.61</td>
+  <td>公式決算短信。基準日株価からPER/PBRを算出。</td>
+</tr>
+<tr>
+  <td>2023-06-01</td>
+  <td>8725.T</td>
+  <td>MS&AD</td>
+  <td>1420.07</td>
+  <td>2.3%</td>
+  <td>-38.5%</td>
+  <td>99.93</td>
+  <td>5.2%</td>
+  <td>14.21</td>
+  <td>0.76</td>
+  <td>公式決算短信。2024年の株式分割を反映。2024年ROEは自己資本から概算。</td>
+</tr>
+<tr>
+  <td>2023-06-01</td>
+  <td>8411.T</td>
+  <td>みずほFG</td>
+  <td>1870.64</td>
+  <td>45.8%</td>
+  <td>4.7%</td>
+  <td>219.20</td>
+  <td>6.1%</td>
+  <td>8.53</td>
+  <td>0.52</td>
+  <td>公式決算短信。基準日株価からPER/PBRを算出。</td>
+</tr>
+<tr>
+  <td>2024-06-01</td>
+  <td>8316.T</td>
+  <td>三井住友FG</td>
+  <td>3249.85</td>
+  <td>52.3%</td>
+  <td>19.5%</td>
+  <td>241.52</td>
+  <td>7.3%</td>
+  <td>13.46</td>
+  <td>0.87</td>
+  <td>公式決算短信。株式分割後の株価系列に合わせてEPS/BPSを調整しPER/PBRを算出。</td>
+</tr>
+<tr>
+  <td>2024-06-01</td>
+  <td>8306.T</td>
+  <td>三菱UFJ FG</td>
+  <td>1583.28</td>
+  <td>28.1%</td>
+  <td>33.5%</td>
+  <td>124.65</td>
+  <td>8.1%</td>
+  <td>12.70</td>
+  <td>0.95</td>
+  <td>公式決算短信。基準日株価からPER/PBRを算出。</td>
+</tr>
+<tr>
+  <td>2024-06-01</td>
+  <td>8725.T</td>
+  <td>MS&AD</td>
+  <td>3108.86</td>
+  <td>25.2%</td>
+  <td>75.0%</td>
+  <td>231.83</td>
+  <td>約9.8%</td>
+  <td>13.41</td>
+  <td>1.10</td>
+  <td>公式決算短信。2024年の株式分割を反映。2024年ROEは自己資本から概算。</td>
+</tr>
+<tr>
+  <td>2024-06-01</td>
+  <td>8411.T</td>
+  <td>みずほFG</td>
+  <td>3074.43</td>
+  <td>51.3%</td>
+  <td>22.2%</td>
+  <td>267.88</td>
+  <td>7.0%</td>
+  <td>11.48</td>
+  <td>0.76</td>
+  <td>公式決算短信。基準日株価からPER/PBRを算出。</td>
+</tr></tbody>
+  </table>
+  <p class="small">未入力20件は、公式資料で当時点の売上、利益、EPS、ROE、PER/PBRの根拠を確認するまで、過去検証スコアには混ぜません。</p>
+</div>
+</body>
+</html>
