@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>量子コンピューター・フィジカルAI 探索枠</title>
+  <style>
+    :root{--ink:#071522;--navy:#123d63;--blue:#0b5f96;--line:#c8dbea;--bg:#eef4fa;--green:#087f5b;--amber:#a85b00;--red:#b42318}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7}
+    main{max-width:1280px;margin:0 auto;padding:24px 18px 56px}
+    header{background:var(--navy);color:#fff;border-radius:14px;padding:26px;margin-bottom:18px}
+    h1{margin:0 0 8px;font-size:30px;line-height:1.25;letter-spacing:0}
+    header p{margin:0;color:#fff;font-weight:700}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}
+    h2{margin:6px 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:22px}
+    .notice{background:#fff7e6;border:1px solid #e7bd75;border-left:7px solid var(--amber);border-radius:10px;padding:12px;margin:12px 0;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#f8fbff;padding:12px}
+    .card b{display:block;color:var(--navy);font-size:14px}.card strong{font-size:24px;color:var(--blue)}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+    .tab{border:1px solid var(--blue);background:#fff;color:var(--blue);border-radius:999px;padding:9px 14px;font-weight:900;cursor:pointer}
+    .tab.active{background:var(--blue);color:#fff}
+    .panel{display:none}.panel.active{display:block}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:1120px}
+    th,td{border:1px solid var(--line);padding:9px;vertical-align:top;word-break:break-word;font-size:13px;color:#071522}
+    th{background:#e3f0fa;color:var(--navy);text-align:left}
+    .score{font-size:20px;font-weight:900;color:var(--blue)}
+    .flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+    .step{border:1px solid var(--line);border-radius:10px;background:#f8fbff;padding:10px;font-weight:700}
+    .links a{display:inline-block;margin:6px 8px 0 0;border:1px solid var(--blue);background:#fff;color:var(--blue);text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
+    .links a.primary{background:var(--blue);color:#fff}
+    .small{font-size:12px;color:#34536e;font-weight:700}
+    @media(max-width:900px){.grid,.flow{grid-template-columns:1fr}table{table-layout:auto;min-width:960px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>量子コンピューター・フィジカルAI 探索枠</h1>
+    <p>作成日: 2026/06/02 / 既存の購入候補10社とは分けて、次の時流テーマ候補を継続監視するための枠です。</p>
+  </header>
+
+  <section>
+    <h2>この枠の目的</h2>
+    <p class="notice">量子コンピューターとフィジカルAIは、どちらも将来性のあるテーマですが、株価への効き方が違います。量子は国策・研究開発色が強く、1年の業績寄与が見えにくい。フィジカルAIはロボット、センサー、制御機器、モーターなどの実需に近く、決算・受注・利益率で検証しやすい。したがって、同じ表で混ぜずに別チャンネルとして扱います。</p>
+    <div class="grid">
+      <div class="card"><b>量子コンピューター</b><strong>長期探索</strong><span class="small">商用化・売上寄与の確認が必須</span></div>
+      <div class="card"><b>フィジカルAI</b><strong>実需寄り</strong><span class="small">受注・利益率・設備投資で検証</span></div>
+      <div class="card"><b>既存候補への影響</b><strong>別枠</strong><span class="small">自動で購入候補に混ぜない</span></div>
+      <div class="card"><b>次の判定</b><strong>6月以降</strong><span class="small">CPI・日銀・FOMC後に再確認</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+    <div class="flow">
+      <div class="step">1. テーマ候補として見る</div>
+      <div class="step">2. 既存100社データにあるか確認</div>
+      <div class="step">3. PER/PBR/ROE・CAGR・下落率を補完</div>
+      <div class="step">4. 決算・受注・ニュースの根拠を確認</div>
+      <div class="step">5. 通過したものだけ購入候補へ昇格検討</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>探索チャンネル</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="quantum" type="button">量子コンピューター</button>
+      <button class="tab" data-tab="physical" type="button">フィジカルAI</button>
+      <button class="tab" data-tab="rules" type="button">判定ルール</button>
+    </div>
+
+    <div class="panel active" id="quantum">
+      <p class="notice">量子枠は、国策・公式IR・研究開発の方向性を見る枠です。現時点では、量子テーマだけで1年NISAの購入候補にするのではなく、既存の量的スコアと実際の売上寄与を確認してから扱います。</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th style="width:58px">順位</th><th style="width:220px">銘柄/役割</th><th>扱い</th><th>根拠層</th><th style="width:90px">テーマ点</th><th>データ状況</th><th>昇格条件</th><th>主なリスク</th></tr></thead>
+        <tbody><tr>
+  <td>1</td>
+  <td><b>6702.T 富士通</b><br><small>国産量子コンピューター開発・HPC・企業向け計算基盤</small></td>
+  <td>長期探索候補</td>
+  <td>公式IR/国策</td>
+  <td class="score">82</td>
+  <td>既存100社データあり。量子事業の売上寄与は要分離</td>
+  <td>量子関連の受注・共同研究・商用サービス売上が確認できるまで購入スコアへ直結しない</td>
+  <td>量子は収益化時期が遠く、株価寄与がHPC・SI・半導体等に埋もれやすい</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><b>6701.T NEC</b><br><small>量子アニーリング/量子活用サービス・AI/通信/防衛IT</small></td>
+  <td>長期探索候補</td>
+  <td>公式IR/提携</td>
+  <td class="score">78</td>
+  <td>既存100社データあり。量子単独の寄与は要確認</td>
+  <td>量子案件の商用化、D-Wave等との提携進捗、AI/防衛ITとの複合材料を確認</td>
+  <td>量子テーマだけでは株価説明力が弱い可能性。大型IT・防衛・AI基盤として併せて評価</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><b>9432.T NTT</b><br><small>IOWN/光電融合・量子暗号/次世代通信基盤</small></td>
+  <td>観察候補</td>
+  <td>公式IR/国策</td>
+  <td class="score">72</td>
+  <td>既存100社データあり。安定性は高いが指数超過力は要確認</td>
+  <td>量子そのものより通信・光電融合・データセンター接続として評価</td>
+  <td>大型・低ボラ寄りで、1年でS&P+5%を狙う主役にはなりにくい</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><b>6501.T 日立製作所</b><br><small>研究開発・HPC/制御・産業DXへの量子活用余地</small></td>
+  <td>複合探索候補</td>
+  <td>公式IR/技術仮説</td>
+  <td class="score">69</td>
+  <td>既存100社データあり。量子より産業AI・電力・制御の寄与が大きい</td>
+  <td>量子単独ではなく、産業AI/電力/制御チャンネルと重ねて評価</td>
+  <td>テーマが広すぎるため、量子枠では主役にしない</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><b>6503.T 三菱電機</b><br><small>量子暗号/防衛・FA・電力制御との周辺技術</small></td>
+  <td>観察候補</td>
+  <td>技術仮説/周辺需要</td>
+  <td class="score">65</td>
+  <td>既存100社データあり。量子寄与は未分離</td>
+  <td>量子暗号・安全保障・FA需要との接続が確認できる場合のみ評価</td>
+  <td>量子売上の見える化が難しい。FA/電力の実績軸を優先</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><b>9613.T NTTデータG</b><br><small>量子計算の企業導入・SI/コンサル実装先</small></td>
+  <td>データ補完後に再判定</td>
+  <td>商用化仮説</td>
+  <td class="score">62</td>
+  <td>既存100社にない場合は追加取得が必要</td>
+  <td>量子導入支援の案件・売上・顧客事例を確認</td>
+  <td>量子より通常SI/クラウドの影響が大きい</td>
+</tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel" id="physical">
+      <p class="notice">フィジカルAI枠は、AIが現実世界で動くためのロボット、制御、センサー、モーター、FA部品を対象にします。量子よりも決算・受注・設備投資で検証しやすいため、6月の候補拡張ではこちらを優先して数値補完します。</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th style="width:58px">順位</th><th style="width:220px">銘柄/役割</th><th>扱い</th><th>根拠層</th><th style="width:90px">テーマ点</th><th>データ状況</th><th>昇格条件</th><th>主なリスク</th></tr></thead>
+        <tbody><tr>
+  <td>1</td>
+  <td><b>6506.T 安川電機</b><br><small>産業用ロボット・サーボ・モーション制御</small></td>
+  <td>実需探索候補</td>
+  <td>事業実績/テーマ</td>
+  <td class="score">84</td>
+  <td>既存100社にない場合は追加取得が必要</td>
+  <td>受注、ロボット需要、中国/米国設備投資、営業利益率を確認</td>
+  <td>設備投資サイクルと中国景気に影響されやすい</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><b>6954.T ファナック</b><br><small>FA・CNC・産業用ロボット</small></td>
+  <td>実需探索候補</td>
+  <td>事業実績/テーマ</td>
+  <td class="score">81</td>
+  <td>既存100社データあり</td>
+  <td>ロボット受注、工作機械需要、在庫循環、為替感応度を確認</td>
+  <td>過去の指数超過が弱い場合は購入候補ではなく観察に留める</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><b>6861.T キーエンス</b><br><small>センサー・画像処理・FAデータ取得</small></td>
+  <td>高品質探索候補</td>
+  <td>事業実績/質</td>
+  <td class="score">79</td>
+  <td>既存100社にない場合は追加取得が必要</td>
+  <td>PER、利益率、海外売上、FA投資回復を確認</td>
+  <td>高PERになりやすく、金利上昇時の下落リスクを確認</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><b>6273.T SMC</b><br><small>空圧制御・自動化部品</small></td>
+  <td>実需探索候補</td>
+  <td>事業実績/部品</td>
+  <td class="score">74</td>
+  <td>既存100社にない場合は追加取得が必要</td>
+  <td>設備投資回復、利益率、地域別需要を確認</td>
+  <td>AIというよりFAサイクル銘柄。テーマ過大評価に注意</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><b>6645.T オムロン</b><br><small>制御機器・センシング・FA</small></td>
+  <td>回復確認候補</td>
+  <td>事業実績/回復待ち</td>
+  <td class="score">70</td>
+  <td>既存100社にない場合は追加取得が必要</td>
+  <td>業績底打ち、制御機器受注、構造改革効果を確認</td>
+  <td>業績悪化局面ではテーマ性だけで買わない</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><b>6594.T ニデック</b><br><small>モーター・アクチュエータ・ロボット駆動部品</small></td>
+  <td>データ補完後に再判定</td>
+  <td>部品/テーマ</td>
+  <td class="score">68</td>
+  <td>既存100社にない場合は追加取得が必要</td>
+  <td>利益率、EV/精密小型モーター、ロボット向け寄与を確認</td>
+  <td>事業ポートフォリオが広く、フィジカルAI寄与の分離が必要</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><b>6762.T TDK</b><br><small>センサー・電源・バッテリー・部品</small></td>
+  <td>複合探索候補</td>
+  <td>部品/既存候補</td>
+  <td class="score">67</td>
+  <td>既存100社データあり</td>
+  <td>AIサーバー/電源/センサーの寄与と既存総合スコアを併用</td>
+  <td>電子部品サイクルとスマホ需要に左右される</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><b>6324.T ハーモニック・ドライブ・システムズ</b><br><small>精密減速機・ロボット関節部品</small></td>
+  <td>小型高感応候補</td>
+  <td>部品/高ボラ</td>
+  <td class="score">66</td>
+  <td>追加取得が必要</td>
+  <td>受注回復、赤字/黒字、財務安全性、流動性を確認</td>
+  <td>値動きが大きく、NISA 1年テストでは比率を抑える必要</td>
+</tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="panel" id="rules">
+      <div class="table-wrap"><table>
+        <thead><tr><th style="width:220px">ルール</th><th>内容</th></tr></thead>
+        <tbody><tr><td><b>枠の扱い</b></td><td>既存の購入候補10社とは分ける。まず探索チャンネルとして表示し、スコア未検証のまま購入候補へ自動昇格させない。</td></tr>
+<tr><td><b>量子コンピューター</b></td><td>国策・研究開発・公式IRを根拠にするが、1年NISAでは売上寄与が見えにくいため長期探索枠に置く。</td></tr>
+<tr><td><b>フィジカルAI</b></td><td>ロボット、センサー、制御、モーター、FA部品など実需に近い企業を対象にし、受注・利益率・PER・下落率で再判定する。</td></tr>
+<tr><td><b>購入候補への昇格条件</b></td><td>既存の量的スコア、5年/10年CAGR、S&P差、最大下落、PER/PBR/ROE、決算後反応、データ信頼度を通過した場合のみ。</td></tr>
+<tr><td><b>除外または観察条件</b></td><td>テーマだけで利益寄与が確認できない、PER過熱、直近急騰、最大下落が深い、決算反応が悪い、データ未取得の場合。</td></tr></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>根拠と確認先</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>分類</th><th>確認先</th><th>この枠での使い方</th></tr></thead>
+      <tbody>
+        <tr><td>量子政策</td><td>内閣府 量子技術イノベーション、理研QIH</td><td>国策テーマとして継続性を確認。ただし株価スコアには、企業別の売上寄与が確認できるまで直結しない。</td></tr>
+        <tr><td>量子企業IR</td><td>富士通、NEC、NTT等の公式IR/研究開発発表</td><td>企業が実際に開発・提携・商用化へ進んでいるかを確認する。</td></tr>
+        <tr><td>フィジカルAI</td><td>NVIDIA公式発表、経産省資料、各社IR</td><td>ロボット、産業自動化、AIデータ生成、センサー、制御機器への需要仮説を確認する。</td></tr>
+        <tr><td>購入候補化</td><td>既存の100社比較、5年/10年CAGR、S&P差、最大下落率、PER/PBR/ROE、決算後反応</td><td>テーマ点だけでは採用しない。量的データを通過した場合だけ、実用パートの候補へ進める。</td></tr>
+      </tbody>
+    </table></div>
+    <div class="links">
+      <a class="primary" href="practical_action_dashboard_20260528.html">実用パートへ戻る</a>
+      <a href="847_quantum_physical_ai_candidates_20260602.csv">候補CSV</a>
+      <a href="848_quantum_physical_ai_rules_20260602.csv">ルールCSV</a>
+      <a href="https://www8.cao.go.jp/cstp/ryoshigijutsu/ryoshigijutsu.html">内閣府 量子技術</a>
+      <a href="https://qih.riken.go.jp/">理研QIH</a>
+      <a href="https://global.fujitsu/en-global/pr/news/2025/08/01-01-en">Fujitsu 量子開発</a>
+      <a href="https://www.nec.com/en/press/202006/global_20200618_01.html">NEC 量子関連発表</a>
+      <a href="https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Global-Robotics-Leaders-Take-Physical-AI-to-the-Real-World/">NVIDIA Physical AI</a>
+    </div>
+  </section>
+</main>
+<script>
+  document.querySelectorAll("[data-tab]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+    });
+  });
+</script>
+</body>
+</html>
