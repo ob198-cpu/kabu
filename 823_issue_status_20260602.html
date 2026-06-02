@@ -1,0 +1,11 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>10課題 対応状況 2026/06/02</title><style>
+body{font-family:Arial,'Yu Gothic',Meiryo,sans-serif;background:#f5f8fb;color:#061f36;margin:0}.wrap{max-width:1180px;margin:auto;padding:28px}h1{border-left:8px solid #0a6496;padding-left:14px}.lead{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px;line-height:1.7}table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed}th,td{border:1px solid #c8dbea;padding:8px;vertical-align:top;word-break:break-word}th{background:#e3f0fa}</style></head><body><div class="wrap"><h1>10課題 対応状況</h1><p class="lead">今回の作業で、2025年基準の当時決算情報は大きく前進しました。一方、2023年・2024年の数値入力やイベント後リターンの実計算は、次工程として残っています。</p><table><thead><tr><th>No</th><th>課題</th><th>今回の対応</th><th>現在ステータス</th><th>残作業</th></tr></thead><tbody><tr><td>1</td><td>2025年基準の当時決算情報不足</td><td>14社すべてに公式/開示資料ベースの数値を入力。13社は使用可、レーザーテックは通期未公表時点のため限定使用。</td><td>大きく前進</td><td>レーザーテックは通期決算ではなく第3四半期/予想ベースとして別扱いを維持</td></tr>
+<tr><td>2</td><td>過去検証が株価中心</td><td>2025年基準についてPER/PBR/ROE/EPS/売上/利益を結合し、株価だけの検証から財務根拠付きに変更。</td><td>一部完了</td><td>2023年・2024年基準にも同じ財務情報を入れる</td></tr>
+<tr><td>3</td><td>2023年・2024年基準の当時情報未入力</td><td>28行の入力キューを作成。</td><td>準備完了</td><td>公式資料から数値入力する作業は未完了</td></tr>
+<tr><td>4</td><td>質的スコアの客観化</td><td>仮説データ層と実績データ層に分けた評価CSVを作成。</td><td>設計完了</td><td>ニュース取得・過去反応との自動結合は未完了</td></tr>
+<tr><td>5</td><td>イベント後リターン検証未完成</td><td>決算/CPI/日銀/FOMC/テーマニュース別の検証仕様を作成。</td><td>設計完了</td><td>イベント日CSVと株価を結合する実計算が必要</td></tr>
+<tr><td>6</td><td>100社前後の母集団固定が弱い</td><td>母集団の採用・除外条件をCSV化。</td><td>設計完了</td><td>実際の100社リストへ条件を適用する処理が必要</td></tr>
+<tr><td>7</td><td>チャンネル別比較ルールが粗い</td><td>3チャンネルと横断比較のルールをCSV化。</td><td>設計完了</td><td>チャンネル別スコアの自動再計算が必要</td></tr>
+<tr><td>8</td><td>指数比較が購入判断に直結していない</td><td>S&P500/TOPIX/日経比較から購入比率を下げる条件をCSV化。</td><td>設計完了</td><td>6月イベント後の実データ入力で適用</td></tr>
+<tr><td>9</td><td>上値・下値・途中決済ルールが暫定</td><td>下値、上値、決算前後、ストップ安対策の共通ルールと銘柄別補正方針をCSV化。</td><td>設計完了</td><td>各銘柄のボラティリティで閾値を具体化</td></tr>
+<tr><td>10</td><td>顧客向け資料と実用画面の整理不足</td><td>今日見る実用画面を作成し、実用ダッシュボードへリンク追加。</td><td>一部完了</td><td>既存ダッシュボードの文字化け・整理は追加修正が必要</td></tr></tbody></table></div></body></html>
