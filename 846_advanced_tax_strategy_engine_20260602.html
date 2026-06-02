@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>高度税制確認 実装版</title>
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;background:#f5f8fb;color:#061f36;margin:0;line-height:1.75}
+    .wrap{max-width:1240px;margin:auto;padding:28px}
+    h1{border-left:8px solid #b42318;padding-left:14px;color:#123d63}
+    h2{border-bottom:2px solid #d5e5f2;padding-bottom:6px;margin-top:26px}
+    .lead,.box{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px;margin:12px 0}
+    .warn{background:#fff4f2;border-left:7px solid #b42318}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+    .card{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:12px}
+    .num{font-size:26px;font-weight:900;color:#0b5f96}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed;margin-top:12px}
+    th,td{border:1px solid #c8dbea;padding:9px;vertical-align:top;word-break:break-word}
+    th{background:#e3f0fa;color:#123d63;text-align:left}
+    a{color:#0b5f96;font-weight:800}
+    .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 11px;border:1px solid #0a6496;border-radius:8px;text-decoration:none;background:#fff}
+    @media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)} table{table-layout:auto}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>高度税制確認 実装版</h1>
+  <p class="lead warn"><b>税制確認候補を実際に判定する画面です。</b> 実ロットから候補を出し、検算サンプルでエンジェル税制・デリバティブヘッジの分岐が動くことを確認できます。通常の銘柄スコアには混ぜません。</p>
+  <div class="cards">
+    <div class="card"><div>実ロット</div><div class="num">5</div></div>
+    <div class="card"><div>実ロット候補</div><div class="num">0</div></div>
+    <div class="card"><div>検算サンプル</div><div class="num">3</div></div>
+    <div class="card"><div>advanced_tax_mode</div><div class="num">OFF</div></div>
+  </div>
+  <div class="box links">
+    <a href="data/advanced_tax_strategy_input.csv">実ロット入力CSV</a>
+    <a href="reports/advanced_tax_strategy_flags.csv">実ロット判定CSV</a>
+    <a href="data/advanced_tax_strategy_test_cases.csv">検算サンプルCSV</a>
+    <a href="reports/advanced_tax_strategy_test_results.csv">検算結果CSV</a>
+    <a href="reports/advanced_tax_strategy_rules.csv">判定ルールCSV</a>
+  </div>
+  <h2>実ロット判定</h2>
+  <table>
+    <thead><tr><th>種別</th><th>銘柄</th><th>口座</th><th>含み損益</th><th>年初来譲渡益</th><th>高度税制アクション</th><th>ゲート</th><th>停止理由</th><th>確認事項</th></tr></thead>
+    <tbody><tr>
+    <td>実ロット</td><td>8316.T 三井住友FG</td><td>NISA</td><td>15,000円</td>
+    <td>0円</td><td>高度税制候補なし</td><td>停止または表示のみ</td><td>なし</td><td>通常の税制確認のみ</td>
+  </tr>
+<tr>
+    <td>実ロット</td><td>6857.T アドバンテスト</td><td>特定_源泉あり</td><td>-7,000円</td>
+    <td>120,000円</td><td>高度税制候補なし</td><td>停止または表示のみ</td><td>なし</td><td>通常の税制確認のみ</td>
+  </tr>
+<tr>
+    <td>実ロット</td><td>8058.T 三菱商事</td><td>特定_源泉あり</td><td>50,000円</td>
+    <td>120,000円</td><td>配当課税比較</td><td>停止または表示のみ</td><td>なし</td><td>申告不要、総合課税、申告分離課税の年次比較候補。</td>
+  </tr>
+<tr>
+    <td>実ロット</td><td>VOO Vanguard S&P500 ETF</td><td>NISA</td><td>12,000円</td>
+    <td>0円</td><td>外国税額控除確認</td><td>停止または表示のみ</td><td>なし</td><td>外国源泉税は全額戻るとは限らない。NISA内外と確定申告要否を確認。</td>
+  </tr>
+<tr>
+    <td>実ロット</td><td>6501.T 日立製作所</td><td>特定_源泉あり</td><td>80,000円</td>
+    <td>300,000円</td><td>高度税制候補なし</td><td>停止または表示のみ</td><td>なし</td><td>通常の税制確認のみ</td>
+  </tr></tbody>
+  </table>
+  <h2>検算サンプル</h2>
+  <table>
+    <thead><tr><th>種別</th><th>銘柄</th><th>口座</th><th>含み損益</th><th>年初来譲渡益</th><th>高度税制アクション</th><th>ゲート</th><th>停止理由</th><th>確認事項</th></tr></thead>
+    <tbody><tr>
+    <td>検算サンプル</td><td>SAMPLE-GAIN 大きな譲渡益サンプル</td><td>特定_源泉あり</td><td>0円</td>
+    <td>3,500,000円</td><td>エンジェル税制確認</td><td>停止または表示のみ</td><td>制度対象企業の確認が未完了</td><td>譲渡益が大きい年の制度確認候補。対象企業・投資家要件・必要書類を確認。</td>
+  </tr>
+<tr>
+    <td>検算サンプル</td><td>SAMPLE-HEDGE 含み益ヘッジサンプル</td><td>特定_源泉あり</td><td>2,200,000円</td>
+    <td>300,000円</td><td>デリバティブヘッジ確認</td><td>確認へ進める</td><td>なし</td><td>含み益を売らず短期下落リスクだけ下げる検討候補。株式譲渡所得とは別枠課税。</td>
+  </tr>
+<tr>
+    <td>検算サンプル</td><td>SAMPLE-NISA-LOSS NISA損失サンプル</td><td>NISA</td><td>-300,000円</td>
+    <td>0円</td><td>NISA損失注意</td><td>停止または表示のみ</td><td>なし</td><td>NISA損失は課税口座の利益と損益通算できない。</td>
+  </tr></tbody>
+  </table>
+  <h2>判定ルール</h2>
+  <table>
+    <thead><tr><th>ルール</th><th>発火条件</th><th>必要確認</th><th>停止方針</th></tr></thead>
+    <tbody><tr><td>エンジェル税制確認</td><td>課税口座かつ年初来譲渡益300万円以上</td><td>未上場株投資許容、対象企業確認、必要書類、税理士確認</td><td>節税目的だけでは非推奨。対象企業未確認なら停止。</td></tr>
+<tr><td>デリバティブヘッジ確認</td><td>課税口座かつ含み益100万円以上かつ短期リスク高</td><td>経験、証拠金余力、追証リスク、別枠課税、証券会社確認</td><td>未経験者には実行推奨しない。</td></tr>
+<tr><td>NISA損失注意</td><td>NISA口座内の含み損</td><td>損益通算できないことを確認</td><td>損出し候補にしない。</td></tr>
+<tr><td>外国税額控除確認</td><td>外国税あり</td><td>NISA内外、確定申告要否、控除限度</td><td>全額戻る前提にしない。</td></tr></tbody>
+  </table>
+  <div class="box">
+    <b>運用上の扱い</b><br>
+    実ロットで候補が出ても、税理士・税務署・証券会社確認前に売買や税務処理を実行しません。検算サンプルは動作確認専用で、投資候補ではありません。
+  </div>
+</div>
+</body>
+</html>

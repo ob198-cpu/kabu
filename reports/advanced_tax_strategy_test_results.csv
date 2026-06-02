@@ -1,0 +1,4 @@
+source_type,updated_at,ticker,name,account_type,asset_class,unrealized_gain_yen,realized_gain_ytd_yen,estimated_tax_reference_yen,risk_level,advanced_tax_action,angel_tax_status,derivative_hedge_status,severity,gate_result,blockers,required_confirmation,final_action,note
+検算サンプル,2026-06-02,SAMPLE-GAIN,大きな譲渡益サンプル,特定_源泉あり,国内株,0,3500000,711025,中,エンジェル税制確認,確認候補,対象外,高,停止または表示のみ,制度対象企業の確認が未完了,譲渡益が大きい年の制度確認候補。対象企業・投資家要件・必要書類を確認。,税理士確認,検算サンプル。実銘柄・実取引ではない。
+検算サンプル,2026-06-02,SAMPLE-HEDGE,含み益ヘッジサンプル,特定_源泉あり,国内株,2200000,300000,60945,高,デリバティブヘッジ確認,対象外,確認候補,高,確認へ進める,なし,含み益を売らず短期下落リスクだけ下げる検討候補。株式譲渡所得とは別枠課税。,証券会社・税理士確認,検算サンプル。実銘柄・実取引ではない。
+検算サンプル,2026-06-02,SAMPLE-NISA-LOSS,NISA損失サンプル,NISA,国内株,-300000,0,0,高,NISA損失注意,対象外,対象外,低,停止または表示のみ,なし,NISA損失は課税口座の利益と損益通算できない。,表示のみ,検算サンプル。実銘柄・実取引ではない。

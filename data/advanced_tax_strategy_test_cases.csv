@@ -1,0 +1,4 @@
+source_type,updated_at,account_type,ticker,name,asset_class,unrealized_gain_yen,realized_gain_ytd_yen,dividend_ytd_yen,foreign_tax_ytd_yen,risk_level,derivatives_experience,angel_investment_allowed,qualified_startup_confirmed,margin_capacity_confirmed,expected_holding_months,note
+検算サンプル,2026-06-02,特定_源泉あり,SAMPLE-GAIN,大きな譲渡益サンプル,国内株,0,3500000,0,0,中,なし,YES,NO,NO,12,エンジェル税制の候補表示が出るか確認するサンプル。実銘柄ではない。
+検算サンプル,2026-06-02,特定_源泉あり,SAMPLE-HEDGE,含み益ヘッジサンプル,国内株,2200000,300000,0,0,高,経験あり,NO,NO,YES,12,デリバティブヘッジ候補が出るか確認するサンプル。実銘柄ではない。
+検算サンプル,2026-06-02,NISA,SAMPLE-NISA-LOSS,NISA損失サンプル,国内株,-300000,0,0,0,高,なし,NO,NO,NO,12,NISA損失が損出し候補にならないことを確認するサンプル。

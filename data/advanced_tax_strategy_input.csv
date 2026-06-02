@@ -1,0 +1,6 @@
+source_type,updated_at,account_type,ticker,name,asset_class,unrealized_gain_yen,realized_gain_ytd_yen,dividend_ytd_yen,foreign_tax_ytd_yen,risk_level,derivatives_experience,angel_investment_allowed,qualified_startup_confirmed,margin_capacity_confirmed,expected_holding_months,note
+実ロット,2026-06-02,NISA,8316.T,三井住友FG,国内株,15000,0,0,0,未確認,未確認,NO,NO,NO,12,実データ。高度税制候補は確認候補のみ。
+実ロット,2026-06-02,特定_源泉あり,6857.T,アドバンテスト,国内株,-7000,120000,0,0,未確認,未確認,NO,NO,NO,12,実データ。高度税制候補は確認候補のみ。
+実ロット,2026-06-02,特定_源泉あり,8058.T,三菱商事,国内株,50000,120000,15000,0,未確認,未確認,NO,NO,NO,36,実データ。高度税制候補は確認候補のみ。
+実ロット,2026-06-02,NISA,VOO,Vanguard S&P500 ETF,外国ETF,12000,0,5000,500,未確認,未確認,NO,NO,NO,60,実データ。高度税制候補は確認候補のみ。
+実ロット,2026-06-02,特定_源泉あり,6501.T,日立製作所,国内株,80000,300000,0,0,未確認,未確認,NO,NO,NO,12,実データ。高度税制候補は確認候補のみ。
