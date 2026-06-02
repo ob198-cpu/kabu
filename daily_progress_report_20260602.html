@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年6月2日 作業報告書</title>
+  <style>
+    :root {
+      --ink:#050b14;
+      --navy:#123d63;
+      --blue:#0b5f96;
+      --line:#c7d9e8;
+      --bg:#f3f7fb;
+      --green:#087f5b;
+      --amber:#a85b00;
+      --red:#b42318;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.65;
+      font-size:14px;
+    }
+    main { max-width:1100px; margin:0 auto; padding:28px 22px 56px; }
+    header {
+      background:var(--navy);
+      color:#fff;
+      border-radius:14px;
+      padding:26px 28px;
+      margin-bottom:18px;
+    }
+    h1 { margin:0 0 8px; font-size:30px; line-height:1.25; letter-spacing:0; }
+    header p { margin:0; color:#fff; font-weight:700; }
+    section {
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:16px;
+      margin:16px 0;
+      break-inside:avoid;
+      page-break-inside:avoid;
+    }
+    h2 {
+      margin:4px 0 12px;
+      padding-left:12px;
+      border-left:8px solid var(--blue);
+      color:var(--navy);
+      font-size:22px;
+      letter-spacing:0;
+    }
+    .lead {
+      background:#fff7e6;
+      border:1px solid #e7bd75;
+      border-left:7px solid var(--amber);
+      border-radius:10px;
+      padding:12px;
+      font-weight:700;
+    }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .card {
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#f8fbff;
+      padding:12px;
+      min-height:92px;
+    }
+    .card b { display:block; color:var(--navy); font-size:13px; }
+    .card strong { display:block; margin-top:3px; font-size:24px; color:var(--blue); }
+    .card span { display:block; margin-top:2px; color:#283f55; font-weight:700; font-size:12px; }
+    .table-wrap {
+      overflow:visible;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+    }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td {
+      border:1px solid var(--line);
+      padding:8px 9px;
+      vertical-align:top;
+      color:var(--ink);
+      word-break:normal;
+      overflow-wrap:anywhere;
+    }
+    th { background:#e3f0fa; color:var(--navy); text-align:left; font-weight:900; }
+    tr { break-inside:avoid; page-break-inside:avoid; }
+    .ok { color:var(--green); font-weight:900; }
+    .work { color:var(--amber); font-weight:900; }
+    .hold { color:var(--blue); font-weight:900; }
+    .risk { color:var(--red); font-weight:900; }
+    .links a {
+      display:inline-block;
+      margin:6px 8px 0 0;
+      border:1px solid var(--blue);
+      border-radius:999px;
+      padding:7px 10px;
+      color:var(--blue);
+      text-decoration:none;
+      font-weight:900;
+      font-size:13px;
+    }
+    .page-start { break-before:page; page-break-before:always; }
+    .small { font-size:12px; color:#344f68; font-weight:700; }
+    @media print {
+      body { background:#fff; font-size:12.5px; }
+      main { max-width:none; padding:0; }
+      header, section { border-radius:0; box-shadow:none; }
+      h1 { font-size:24px; }
+      h2 { font-size:18px; }
+      .cards { grid-template-columns:repeat(4,1fr); }
+      th,td { padding:6px; }
+      a { color:var(--blue); }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>2026年6月2日 作業報告書</h1>
+    <p>NISA 1年保有テストに向けた判断補助システムの整備状況</p>
+  </header>
+
+  <section>
+    <h2>1. 本日の位置づけ</h2>
+    <p class="lead">本日は、6月以降の購入検討に向けて、候補銘柄の判断画面、NISA枠・税制確認、作業中テーマの管理方法を整理しました。購入候補を確定する作業ではなく、判断前に確認すべきデータ・条件・画面を整える作業です。</p>
+    <div class="cards">
+      <div class="card"><b>実用画面</b><strong>更新</strong><span>目的別・チャンネル別に整理</span></div>
+      <div class="card"><b>税制確認</b><strong>追加</strong><span>NISA/課税口座/年末確認を分離</span></div>
+      <div class="card"><b>NISA配分</b><strong>作成</strong><span>10社候補の枠配分候補を表示</span></div>
+      <div class="card"><b>新テーマ枠</b><strong>作業中</strong><span>量子・フィジカルAIを別枠化</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 本日の実施内容</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="width:170px">項目</th><th>実施内容</th><th style="width:120px">状態</th><th>補足</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>実用パート整理</td>
+            <td>ホームと実用ダッシュボードを、目的から辿れる構成に整理しました。毎日見る画面、候補10社、6月イベント後の再判定、NISA枠、税制確認に入口を分けています。</td>
+            <td class="ok">反映済み</td>
+            <td>資料閲覧用と実務確認用を分ける方向で整理を継続します。</td>
+          </tr>
+          <tr>
+            <td>NISA枠配分候補</td>
+            <td>現在の10社候補について、NISA枠で使う価値があるかを別軸で確認する画面とCSVを作成しました。</td>
+            <td class="ok">反映済み</td>
+            <td>既存の銘柄スコアを上書きせず、NISA優先度として横に並べる設計です。</td>
+          </tr>
+          <tr>
+            <td>税制確認レイヤー</td>
+            <td>NISA、課税口座、損出し候補、配当課税、外国税額控除、年末確認を分けて表示するデータ枠を作成しました。</td>
+            <td class="ok">反映済み</td>
+            <td>税務判断や売買指示ではなく、確認候補を表示する機能です。</td>
+          </tr>
+          <tr>
+            <td>高度税制確認</td>
+            <td>エンジェル税制、デリバティブヘッジ、NISA損失注意など、上級者向けの確認項目を通常候補とは別枠に分離しました。</td>
+            <td class="ok">反映済み</td>
+            <td>実行推奨ではなく、確認必須の候補として扱います。</td>
+          </tr>
+          <tr>
+            <td>量子コンピューター・フィジカルAI探索</td>
+            <td>既存候補とは混ぜず、量子コンピューターとフィジカルAIを新しい探索チャンネルとして作成しました。</td>
+            <td class="work">作業中</td>
+            <td>現時点では購入候補ではありません。既存の量的スコア、決算、受注、PER/PBR/ROE等を通過した場合のみ候補化します。</td>
+          </tr>
+          <tr>
+            <td>リンク確認</td>
+            <td>ホーム内のリンク検査を行い、主要リンクに欠落がないことを確認しました。</td>
+            <td class="ok">確認済み</td>
+            <td>GitHub Pagesへ反映済みです。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 量子・フィジカルAI探索枠の扱い</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="width:180px">区分</th><th>見方</th><th>現在の扱い</th><th>次に必要な確認</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>量子コンピューター</td>
+            <td>国策、研究開発、公式IRを根拠に長期テーマとして監視します。</td>
+            <td class="work">作業中</td>
+            <td>量子関連の受注、商用サービス売上、共同研究の進捗が株価に説明可能な形で出ているか確認します。</td>
+          </tr>
+          <tr>
+            <td>フィジカルAI</td>
+            <td>ロボット、センサー、制御機器、モーター、FA部品など、実需に近い企業群として見ます。</td>
+            <td class="work">作業中</td>
+            <td>受注、設備投資、営業利益率、PER/PBR/ROE、最大下落率を補完して既存候補と比較します。</td>
+          </tr>
+          <tr>
+            <td>既存候補との関係</td>
+            <td>テーマだけで既存の購入候補10社へ混ぜることはしません。</td>
+            <td class="hold">別枠管理</td>
+            <td>量的データを通過した場合に限り、購入検討候補への昇格を検討します。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="page-start">
+    <h2>4. 作成・更新した成果物</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="width:230px">成果物</th><th>内容</th><th style="width:120px">状態</th></tr></thead>
+        <tbody>
+          <tr><td>実用ダッシュボード</td><td>チャンネル4として量子・フィジカルAI探索枠を追加しました。</td><td class="ok">更新済み</td></tr>
+          <tr><td>今日見る画面</td><td>量子・フィジカルAI探索枠への入口を追加しました。</td><td class="ok">更新済み</td></tr>
+          <tr><td>ホーム画面</td><td>目的別ツリーに量子・フィジカルAI探索枠を追加しました。</td><td class="ok">更新済み</td></tr>
+          <tr><td>量子・フィジカルAI探索ページ</td><td>量子コンピューターとフィジカルAIを別タブで確認できるページを作成しました。</td><td class="work">作業中</td></tr>
+          <tr><td>候補CSV</td><td>量子・フィジカルAIの候補銘柄、根拠層、確認条件、リスクを一覧化しました。</td><td class="work">作業中</td></tr>
+          <tr><td>判定ルールCSV</td><td>テーマだけで候補化しない、量的データを通過した場合のみ昇格するルールを作成しました。</td><td class="ok">作成済み</td></tr>
+          <tr><td>税制関連CSV</td><td>税制アクション、年末レビュー、NISA優先配分、高度税制確認の出力CSVを作成しました。</td><td class="ok">作成済み</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 未完了・今後の作業</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="width:220px">残作業</th><th>理由</th><th>次の対応</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>量子・フィジカルAI候補の数値補完</td>
+            <td>テーマ枠は作成済みですが、各銘柄のPER/PBR/ROE、CAGR、下落率、決算・受注の確認がまだ十分ではありません。</td>
+            <td>既存100社データにある銘柄は接続し、不足銘柄は追加取得キューに入れます。</td>
+          </tr>
+          <tr>
+            <td>6月イベント後の再判定</td>
+            <td>6月のCPI、日銀、FOMC後に金利・為替・指数・個別株価の反応を見る必要があります。</td>
+            <td>イベント後の実数を入力し、購入検討候補を再判定します。</td>
+          </tr>
+          <tr>
+            <td>税制確認の実データ連携</td>
+            <td>現在は確認候補を表示する枠が中心で、証券会社の保有ロット実データとの接続は手入力前提です。</td>
+            <td>取引前チェック、年末レビュー、NISA枠消費額の確認に使えるよう入力欄を整備します。</td>
+          </tr>
+          <tr>
+            <td>顧客向け画面の整理継続</td>
+            <td>機能が増えているため、毎日見る画面と補足資料画面をさらに分離する必要があります。</td>
+            <td>実用画面は「今日見る項目」「買わない条件」「次の作業」に絞ります。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. 確認用URL</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="practical_action_dashboard_20260528.html">実用ダッシュボード</a>
+      <a href="821_practical_today_dashboard_20260602.html">今日見る画面</a>
+      <a href="844_nisa_priority_allocation_phase3_20260602.html">NISA枠配分候補</a>
+      <a href="846_advanced_tax_strategy_engine_20260602.html">高度税制確認</a>
+      <a href="847_quantum_physical_ai_channel_20260602.html">量子・フィジカルAI探索枠</a>
+    </div>
+    <p class="small">本資料は、投資助言、税務代理、自動売買を目的とするものではありません。実際の購入判断は、証券会社画面、最新決算、公式資料、市場イベント後の数値を確認して行います。</p>
+  </section>
+</main>
+</body>
+</html>
