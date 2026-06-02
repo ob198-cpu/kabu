@@ -1,0 +1,6 @@
+tax_year,account_type,ticker,name,unrealized_gain_yen,unrealized_loss_yen,realized_gain_ytd_yen,realized_loss_ytd_yen,dividend_ytd_yen,loss_harvest_candidate,gain_realization_candidate,carryforward_needed,review_comment
+2026,NISA,8316.T,三井住友FG,15000,0,0,0,0,NO,NO,NO,NISAは損出し対象外。
+2026,特定_源泉あり,6857.T,アドバンテスト,0,7000,120000,0,0,YES,NO,要確認,11月以降に年間取引報告書・確定申告要否を確認。
+2026,特定_源泉あり,8058.T,三菱商事,50000,0,120000,0,15000,NO,NO,NO,11月以降に年間取引報告書・確定申告要否を確認。
+2026,NISA,VOO,Vanguard S&P500 ETF,12000,0,0,0,5000,NO,NO,NO,NISAは損出し対象外。
+2026,特定_源泉あり,6501.T,日立製作所,80000,0,300000,0,0,NO,NO,NO,11月以降に年間取引報告書・確定申告要否を確認。

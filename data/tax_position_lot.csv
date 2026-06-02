@@ -1,0 +1,6 @@
+updated_at,account_type,broker,ticker,name,asset_class,quantity,avg_cost,market_price,unrealized_gain_yen,realized_gain_ytd_yen,dividend_ytd_yen,foreign_tax_ytd_yen,expected_holding_months,tax_note
+2026-06-02,NISA,SBI,8316.T,三井住友FG,国内株,100,3500,3650,15000,0,0,0,12,NISA候補。銀行株の金利感応度と短期売買化に注意。
+2026-06-02,特定_源泉あり,SBI,6857.T,アドバンテスト,国内株,10,7200,6500,-7000,120000,0,0,12,課税口座なら損出し候補。NISA損失ではないことを確認。
+2026-06-02,特定_源泉あり,SBI,8058.T,三菱商事,国内株,100,2800,3300,50000,120000,15000,0,36,配当課税方式比較の確認候補。
+2026-06-02,NISA,SBI,VOO,Vanguard S&P500 ETF,外国ETF,3,72000,76000,12000,0,5000,500,60,外国源泉税の扱いを確認。
+2026-06-02,特定_源泉あり,SBI,6501.T,日立製作所,国内株,100,3300,4100,80000,300000,0,0,12,含み益大。売却時課税を意識して上値ルールを確認。

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>税制配慮型・株式運用レイヤー Phase 1</title>
+  <style>
+    body{font-family:Arial,'Yu Gothic',Meiryo,sans-serif;background:#f5f8fb;color:#061f36;margin:0}
+    .wrap{max-width:1180px;margin:auto;padding:28px}
+    h1{border-left:8px solid #0a6496;padding-left:14px}
+    h2{margin-top:26px;border-bottom:2px solid #d5e5f2;padding-bottom:6px}
+    .lead,.box{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px;line-height:1.7}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+    .card{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px}
+    .num{font-size:28px;font-weight:900;color:#064b73}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed;margin-top:12px}
+    th,td{border:1px solid #c8dbea;padding:8px;word-break:break-word;vertical-align:top}
+    th{background:#e3f0fa}
+    .warn{color:#b00020;font-weight:900}
+    .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 11px;border:1px solid #0a6496;border-radius:8px;text-decoration:none;color:#0a6496;background:#fff;font-weight:800}
+    ul{margin-top:6px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>税制配慮型・株式運用レイヤー Phase 1</h1>
+  <p class="lead"><span class="warn">本表示は税務判断ではありません。</span> 既存の銘柄スコアを上書きせず、NISA向き、課税口座向き、損出し候補、配当課税比較、外国税額控除確認などを横に表示する補助レイヤーです。最終判断は証券会社画面、年間取引報告書、公式税制情報、税理士確認に基づいて行います。</p>
+  <div class="cards">
+    <div class="card"><div>入力ロット</div><div class="num">5</div></div>
+    <div class="card"><div>税制フラグ</div><div class="num">5</div></div>
+    <div class="card"><div>年末レビュー</div><div class="num">5</div></div>
+    <div class="card"><div>高度機能</div><div class="num">OFF</div></div>
+  </div>
+  <div class="box links">
+    <a href="data/tax_position_lot.csv">保有ロット入力CSV</a>
+    <a href="data/tax_config.json">税制設定JSON</a>
+    <a href="reports/tax_strategy_flags.csv">税制アクションCSV</a>
+    <a href="reports/tax_year_end_review.csv">年末レビューCSV</a>
+  </div>
+  <h2>税制アクション候補</h2>
+  <table>
+    <thead><tr><th>ticker</th><th>銘柄</th><th>推奨口座</th><th>税制アクション</th><th>税制ランク</th><th>税制スコア</th><th>理由</th><th>実行前確認</th></tr></thead>
+    <tbody><tr>
+  <td>8316.T</td><td>三井住友FG</td><td>どちらでも可</td><td>なし</td><td>C</td><td>40</td><td>税制面では表示のみ。</td><td>注文画面の口座区分がNISAであること、NISA残枠、配当金受取方式を確認。</td>
+</tr>
+<tr>
+  <td>6857.T</td><td>アドバンテスト</td><td>課税口座</td><td>損出し候補</td><td>B</td><td>70</td><td>課税口座の含み損を、同年利益や繰越控除の確認候補として扱う。</td><td>同年の利益・申告分離課税配当との通算余地、繰越控除には確定申告が必要か確認。</td>
+</tr>
+<tr>
+  <td>8058.T</td><td>三菱商事</td><td>どちらでも可</td><td>配当課税比較</td><td>C</td><td>50</td><td>配当の申告方式で税後手取りが変わる可能性を確認する候補。</td><td>申告不要、総合課税＋配当控除、申告分離課税＋損益通算の年次比較。</td>
+</tr>
+<tr>
+  <td>VOO</td><td>Vanguard S&P500 ETF</td><td>NISA</td><td>NISA優先 / 外国税額控除確認</td><td>確認必須</td><td>65</td><td>長期保有・非課税枠の税効果を確認する候補。</td><td>注文画面の口座区分がNISAであること、NISA残枠、配当金受取方式を確認。 / 外国源泉税は全額戻るとは限らず、NISAでの扱いと確定申告の要否を確認。</td>
+</tr>
+<tr>
+  <td>6501.T</td><td>日立製作所</td><td>どちらでも可</td><td>なし</td><td>C</td><td>40</td><td>税制面では表示のみ。</td><td>証券会社画面・年間取引報告書で確認。</td>
+</tr></tbody>
+  </table>
+  <h2>購入前ゲートに追加する確認</h2>
+  <div class="box">
+    <ul>
+      <li>NISA口座の開設状況、注文画面の口座区分、NISA枠残高を購入前に確認する。</li>
+      <li>NISA内の損失は課税口座の利益と損益通算できないため、高ボラ・短期売買候補は保留表示にする。</li>
+      <li>課税口座の含み損は、同年利益・配当・繰越控除の確認候補として表示する。</li>
+      <li>外国株・海外ETFは外国源泉税、外国税額控除、NISAでの扱いを確認する。</li>
+      <li>エンジェル税制とデリバティブヘッジは初期OFF。advanced_tax_mode=true の場合だけ確認候補として表示する。</li>
+    </ul>
+  </div>
+  <h2>公式確認先</h2>
+  <div class="box links">
+    <a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1474.htm">国税庁 No.1474 上場株式等の譲渡損失の損益通算及び繰越控除</a><a href="https://www.fsa.go.jp/policy/nisa2/know/">金融庁 NISA特設ウェブサイト</a><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1240.htm">国税庁 No.1240 外国税額控除</a><a href="https://www.meti.go.jp/policy/newbusiness/angeltax/index.html">経済産業省 エンジェル税制</a>
+  </div>
+</div>
+</body>
+</html>

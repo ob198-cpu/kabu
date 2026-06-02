@@ -1,0 +1,36 @@
+{
+  "version": "2026-06-02",
+  "japan_listed_stock_tax_rate_pct": 20.315,
+  "loss_carryforward_years": 3,
+  "nisa_annual_limit_yen": 3600000,
+  "nisa_lifetime_limit_yen": 18000000,
+  "nisa_growth_limit_yen": 12000000,
+  "foreign_tax_credit_requires_tax_return": true,
+  "dividend_tax_method_requires_annual_comparison": true,
+  "year_end_review_start_month": 11,
+  "advanced_tax_mode": false,
+  "warnings": {
+    "not_tax_advice": "本表示は税務判断ではありません。申告前に税理士または税務署で確認してください。",
+    "nisa_loss_not_offset": "NISA口座内の損失は課税口座の利益と損益通算できません。",
+    "derivatives_separate_bucket": "先物・オプション損益は株式譲渡所得とは別枠です。",
+    "no_auto_trade": "本システムは自動売買・投資助言・税務代理を行いません。"
+  },
+  "official_sources": [
+    {
+      "name": "国税庁 No.1474 上場株式等の譲渡損失の損益通算及び繰越控除",
+      "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1474.htm"
+    },
+    {
+      "name": "金融庁 NISA特設ウェブサイト",
+      "url": "https://www.fsa.go.jp/policy/nisa2/know/"
+    },
+    {
+      "name": "国税庁 No.1240 外国税額控除",
+      "url": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1240.htm"
+    },
+    {
+      "name": "経済産業省 エンジェル税制",
+      "url": "https://www.meti.go.jp/policy/newbusiness/angeltax/index.html"
+    }
+  ]
+}
