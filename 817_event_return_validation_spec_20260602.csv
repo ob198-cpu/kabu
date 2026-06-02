@@ -1,0 +1,6 @@
+event_type,event_date_source,target_return_window,benchmark,output,selection_rule
+決算発表,TDnet/IR手動確認CSV,1/5/20営業日,日経平均/TOPIX/S&P500,超過リターン、出来高倍率、ギャップ率,20営業日未到達は未確定扱い
+CPI/PPI,FRED/BLS/e-Stat/手動イベントCSV,1/5/20営業日,S&P500/TOPIX,金利感応銘柄の反応,悪化時は高PER・半導体比率を下げる
+日銀会合,日銀公式日程,1/5/20営業日,TOPIX/銀行指数代替,銀行・輸出・内需の分岐,急な円高または銀行指数劣後で買い延期
+FOMC,FRB公式日程,1/5/20営業日,S&P500/SOX/DXY/米10年,半導体・グロースの反応,金利急騰時は高PER銘柄を縮小
+テーマニュース,公式IR/政府資料/主要報道,5/20/60営業日,セクターETF/指数,仮説の実績検証,ニュースだけでは採用せず過去反応と結合
