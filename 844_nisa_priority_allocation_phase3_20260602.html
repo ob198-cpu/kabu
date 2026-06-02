@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>税制レイヤー Phase 3 NISA枠配分候補</title>
+  <style>
+    body{font-family:Arial,'Yu Gothic',Meiryo,sans-serif;background:#f5f8fb;color:#061f36;margin:0}
+    .wrap{max-width:1240px;margin:auto;padding:28px}
+    h1{border-left:8px solid #0a6496;padding-left:14px}
+    h2{margin-top:26px;border-bottom:2px solid #d5e5f2;padding-bottom:6px}
+    .lead,.box{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px;line-height:1.7}
+    .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:16px 0}
+    .card{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:12px}
+    .num{font-size:26px;font-weight:900;color:#064b73}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed;margin-top:12px}
+    th,td{border:1px solid #c8dbea;padding:8px;word-break:break-word;vertical-align:top}
+    th{background:#e3f0fa}
+    .warn{color:#b00020;font-weight:900}
+    .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 11px;border:1px solid #0a6496;border-radius:8px;text-decoration:none;color:#0a6496;background:#fff;font-weight:800}
+    @media(max-width:960px){.cards{grid-template-columns:repeat(2,1fr)} table{table-layout:auto}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>税制レイヤー Phase 3 NISA枠配分候補</h1>
+  <p class="lead"><span class="warn">購入指示ではありません。</span> 既存の10社候補に、NISA枠を使う価値があるかを横付けしました。NISAは利益が非課税になる一方、損失を課税口座と通算できないため、期待値だけでなく下落耐性と保有期間を確認します。</p>
+  <div class="cards">
+    <div class="card"><div>今回テスト予算</div><div class="num">2,000,000円</div></div>
+    <div class="card"><div>年間成長投資枠</div><div class="num">2,400,000円</div></div>
+    <div class="card"><div>枠判定</div><div class="num">枠内</div></div>
+    <div class="card"><div>候補数</div><div class="num">10</div></div>
+    <div class="card"><div>高度機能</div><div class="num">OFF</div></div>
+  </div>
+  <div class="box links">
+    <a href="reports/nisa_priority_allocation_phase3.csv">NISA配分候補CSV</a>
+    <a href="reports/nisa_frame_status_phase3.csv">NISA枠確認CSV</a>
+    <a href="reports/nisa_priority_formula_phase3.csv">算式説明CSV</a>
+    <a href="843_tax_year_end_review_phase2_20260602.html">Phase 2 年末レビュー</a>
+  </div>
+  <h2>NISA枠配分候補</h2>
+  <table>
+    <thead><tr><th>順位</th><th>コード</th><th>銘柄</th><th>口座候補</th><th>NISA優先</th><th>配分候補</th><th>既存点</th><th>長期</th><th>S&P超過</th><th>安定性</th><th>下落ペナルティ</th><th>短期ペナルティ</th><th>理由</th></tr></thead>
+    <tbody><tr>
+  <td>1</td><td>8058.T</td><td>三菱商事</td><td><b>NISA優先候補</b></td>
+  <td>75.1</td><td>220,000円</td>
+  <td>80.6</td><td>70.0</td><td>90.0</td>
+  <td>64.0</td><td>0</td><td>0</td>
+  <td>再選定点80.6点 / 5年CAGR42.5%・10年CAGR27.5% / S&P差平均40.0pt / 最大下落33.7% / 下落ペナルティ小 / 短期変動ペナルティ小</td>
+</tr>
+<tr>
+  <td>2</td><td>1605.T</td><td>INPEX</td><td><b>NISA優先候補</b></td>
+  <td>74.6</td><td>220,000円</td>
+  <td>78.4</td><td>62.4</td><td>100.0</td>
+  <td>66.0</td><td>0</td><td>0</td>
+  <td>再選定点78.4点 / 5年CAGR43.3%・10年CAGR19.1% / S&P差平均52.2pt / 最大下落32.9% / 下落ペナルティ小 / 短期変動ペナルティ小</td>
+</tr>
+<tr>
+  <td>3</td><td>8316.T</td><td>三井住友FG</td><td><b>NISA優先候補</b></td>
+  <td>72.5</td><td>210,000円</td>
+  <td>80.1</td><td>62.6</td><td>83.4</td>
+  <td>71.2</td><td>0</td><td>0</td>
+  <td>再選定点80.1点 / 5年CAGR39.9%・10年CAGR22.7% / S&P差平均33.4pt / 最大下落29.4% / 下落ペナルティ小 / 短期変動ペナルティ小</td>
+</tr>
+<tr>
+  <td>4</td><td>8306.T</td><td>三菱UFJ FG</td><td><b>NISAまたは課税口座で再確認</b></td>
+  <td>71.2</td><td>210,000円</td>
+  <td>78.7</td><td>64.3</td><td>79.3</td>
+  <td>67.5</td><td>0</td><td>0</td>
+  <td>再選定点78.7点 / 5年CAGR41.3%・10年CAGR23.0% / S&P差平均29.3pt / 最大下落31.8% / 下落ペナルティ小 / 短期変動ペナルティ小</td>
+</tr>
+<tr>
+  <td>5</td><td>8411.T</td><td>みずほFG</td><td><b>NISAまたは課税口座で再確認</b></td>
+  <td>71.1</td><td>210,000円</td>
+  <td>75.9</td><td>58.4</td><td>90.3</td>
+  <td>69.2</td><td>0</td><td>0</td>
+  <td>再選定点75.9点 / 5年CAGR38.3%・10年CAGR20.1% / S&P差平均40.3pt / 最大下落33.4% / 下落ペナルティ小 / 短期変動ペナルティ小</td>
+</tr>
+<tr>
+  <td>6</td><td>8002.T</td><td>丸紅</td><td><b>NISAまたは課税口座で再確認</b></td>
+  <td>67.2</td><td>200,000円</td>
+  <td>81.9</td><td>76.2</td><td>96.3</td>
+  <td>62.2</td><td>7</td><td>4</td>
+  <td>再選定点81.9点 / 5年CAGR45.2%・10年CAGR31.0% / S&P差平均46.3pt / 最大下落37.3% / NISAでは損失通算不可のため下落耐性を追加確認 / 短期変動が大きく一括投入は避ける</td>
+</tr>
+<tr>
+  <td>7</td><td>8053.T</td><td>住友商事</td><td><b>NISAまたは課税口座で再確認</b></td>
+  <td>66.1</td><td>190,000円</td>
+  <td>82.4</td><td>66.8</td><td>100.0</td>
+  <td>65.5</td><td>7</td><td>4</td>
+  <td>再選定点82.4点 / 5年CAGR41.2%・10年CAGR25.6% / S&P差平均50.6pt / 最大下落35.8% / NISAでは損失通算不可のため下落耐性を追加確認 / 短期変動が大きく一括投入は避ける</td>
+</tr>
+<tr>
+  <td>8</td><td>8725.T</td><td>MS&AD</td><td><b>NISAまたは課税口座で再確認</b></td>
+  <td>65.4</td><td>190,000円</td>
+  <td>75.4</td><td>56.4</td><td>65.5</td>
+  <td>67.8</td><td>0</td><td>0</td>
+  <td>再選定点75.4点 / 5年CAGR36.3%・10年CAGR20.1% / S&P差平均15.5pt / 最大下落32.6% / 下落ペナルティ小 / 短期変動ペナルティ小</td>
+</tr>
+<tr>
+  <td>9</td><td>6503.T</td><td>三菱電機</td><td><b>NISAまたは課税口座で再確認</b></td>
+  <td>64.0</td><td>190,000円</td>
+  <td>77.8</td><td>53.3</td><td>100.0</td>
+  <td>64.7</td><td>0</td><td>8</td>
+  <td>再選定点77.8点 / 5年CAGR33.3%・10年CAGR20.0% / S&P差平均61.1pt / 最大下落34.0% / 下落ペナルティ小 / 短期変動が大きく一括投入は避ける</td>
+</tr>
+<tr>
+  <td>10</td><td>8031.T</td><td>三井物産</td><td><b>NISAまたは課税口座で再確認</b></td>
+  <td>60.4</td><td>160,000円</td>
+  <td>76.1</td><td>66.3</td><td>91.0</td>
+  <td>60.0</td><td>12</td><td>0</td>
+  <td>再選定点76.1点 / 5年CAGR38.5%・10年CAGR27.8% / S&P差平均41.0pt / 最大下落41.7% / NISAでは損失通算不可のため下落耐性を追加確認 / 短期変動ペナルティ小</td>
+</tr></tbody>
+  </table>
+  <h2>算式の考え方</h2>
+  <table>
+    <thead><tr><th>要素</th><th>説明</th></tr></thead>
+    <tbody><tr><td>再選定点</td><td>既存の候補選定スコアを使用。税制レイヤーでは上書きしない。</td></tr>
+<tr><td>長期スコア</td><td>5年CAGRと10年CAGRの平均を0〜100点化。過去の伸びが長期で続いたかを見る。</td></tr>
+<tr><td>S&P超過スコア</td><td>5年S&P差と直近1年S&P差の平均を使う。指数を上回る根拠の確認。</td></tr>
+<tr><td>安定性スコア</td><td>月次勝率と最大下落率から作成。NISAで損失通算できないため下落耐性を重視。</td></tr>
+<tr><td>税繰延スコア</td><td>現時点では分配・配当課税データが不足するため中立50点。未取得値を高評価にしない。</td></tr>
+<tr><td>ペナルティ</td><td>最大下落が大きい銘柄、短期変動が大きい銘柄はNISA枠消費を慎重扱い。</td></tr></tbody>
+  </table>
+  <div class="box">
+    <b>運用上の扱い</b><br>
+    この表は、6月CPI・日銀・FOMC後の購入前ゲートで使う「NISA枠の使い道候補」です。未検証の税効果や未取得配当データを高評価にせず、現在は税繰延スコアを中立50点に置いています。
+  </div>
+</div>
+</body>
+</html>
