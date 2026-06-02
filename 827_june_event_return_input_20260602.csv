@@ -1,0 +1,5 @@
+event_date,event_name,event_type,watch_target,calculation_rule
+2026-06-10,米CPI,CPI,高PER・半導体・円相場・米金利を確認,結果発表後に米10年金利、DXY、SOX、候補株を1/5/20営業日で確認
+2026-06-15,日銀会合,BOJ,銀行・輸出・円高ショックを確認,日銀発表後に銀行候補、日経平均、TOPIX、ドル円を1/5/20営業日で確認
+2026-06-16,FOMC,FOMC,米金利・NASDAQ・SOX・高PERを確認,FOMC後に半導体・AI関連、高PER銘柄、S&P500を1/5/20営業日で確認
+2026-08-中旬,4-6月期決算確認,EARNINGS,候補各社の決算後反応を確認,決算翌日、5営業日、20営業日の指数超過を確認

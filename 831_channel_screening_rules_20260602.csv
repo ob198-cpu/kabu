@@ -1,0 +1,5 @@
+channel,main_theme,must_check,reject_or_hold_condition
+channel,main_theme,must_check,reject_or_hold_condition
+総合,金融・保険・総合電機・商社など,財務、指数比較、下落耐性、金利/景気影響,指数劣後、決算悪化、テーマ説明不可
+半導体製造装置・材料,AI半導体の製造工程で必要な装置・材料,売上成長、受注、PER説明、SOX感応度、最大下落,SOX悪化、高PER説明不可、受注鈍化
+データセンター・電力・冷却・電線,電力需要、送配電、冷却、電線、インフラ,受注、設備投資、電力需要、利益接続、過熱,テーマだけで利益に接続しない、直近急騰過多
