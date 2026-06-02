@@ -1,0 +1,6 @@
+tax_year,account_type,ticker,name,unrealized_gain_yen,unrealized_loss_yen,realized_gain_ytd_yen,realized_loss_ytd_yen,dividend_ytd_yen,foreign_tax_ytd_yen,offset_check_amount_yen,tax_effect_reference_yen,year_end_action,review_rank,display_timing,review_comment
+2026,NISA,8316.T,三井住友FG,15000,0,0,0,0,0,0,0,表示のみ,C,11月以降に強調,NISA口座区分、NISA残枠、配当金受取方式を確認
+2026,特定_源泉あり,6857.T,アドバンテスト,0,7000,120000,0,0,0,7000,1422,損出し確認候補,A,11月以降に強調,課税口座の含み損と年初来利益・配当の通算余地を確認 / 繰越控除を使う場合は確定申告の継続要件を確認
+2026,特定_源泉あり,8058.T,三菱商事,50000,0,120000,0,15000,0,0,0,表示のみ,B,11月以降に強調,国内株配当は申告不要、総合課税、申告分離課税の比較対象
+2026,NISA,VOO,Vanguard S&P500 ETF,12000,0,0,0,5000,500,0,0,表示のみ,B,11月以降に強調,NISA口座区分、NISA残枠、配当金受取方式を確認 / 外国源泉税と外国税額控除の要否を確認 / NISAでは外国税額控除の扱いに注意
+2026,特定_源泉あり,6501.T,日立製作所,80000,0,300000,0,0,0,0,0,表示のみ,C,11月以降に強調,年間取引報告書で損益・配当を確認

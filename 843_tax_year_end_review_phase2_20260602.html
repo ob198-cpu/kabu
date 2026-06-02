@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>税制レイヤー Phase 2 年末レビュー</title>
+  <style>
+    body{font-family:Arial,'Yu Gothic',Meiryo,sans-serif;background:#f5f8fb;color:#061f36;margin:0}
+    .wrap{max-width:1220px;margin:auto;padding:28px}
+    h1{border-left:8px solid #0a6496;padding-left:14px}
+    h2{margin-top:26px;border-bottom:2px solid #d5e5f2;padding-bottom:6px}
+    .lead,.box{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:14px;line-height:1.7}
+    .cards{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:16px 0}
+    .card{background:#fff;border:1px solid #c8dbea;border-radius:10px;padding:12px}
+    .num{font-size:26px;font-weight:900;color:#064b73}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed;margin-top:12px}
+    th,td{border:1px solid #c8dbea;padding:8px;word-break:break-word;vertical-align:top}
+    th{background:#e3f0fa}
+    .warn{color:#b00020;font-weight:900}
+    .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 11px;border:1px solid #0a6496;border-radius:8px;text-decoration:none;color:#0a6496;background:#fff;font-weight:800}
+    @media(max-width:960px){.cards{grid-template-columns:repeat(2,1fr)} table{table-layout:auto}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>税制レイヤー Phase 2 年末レビュー</h1>
+  <p class="lead"><span class="warn">税額の確定表示ではありません。</span> 保有ロット、含み損益、年初来確定損益、配当、外国源泉税をもとに、11〜12月に確認すべき候補を分ける画面です。NISA損失は損益通算・繰越控除の対象外として扱います。</p>
+  <div class="cards">
+    <div class="card"><div>ロット数</div><div class="num">5</div></div>
+    <div class="card"><div>損出し候補</div><div class="num">1</div></div>
+    <div class="card"><div>利益確定候補</div><div class="num">0</div></div>
+    <div class="card"><div>NISA損失注意</div><div class="num">0</div></div>
+    <div class="card"><div>外国税確認</div><div class="num">1</div></div>
+    <div class="card"><div>配当比較</div><div class="num">2</div></div>
+  </div>
+  <div class="box links">
+    <a href="reports/tax_year_end_review_detailed.csv">年末レビュー詳細CSV</a>
+    <a href="reports/tax_year_end_review_summary.csv">年末レビュー集計CSV</a>
+    <a href="reports/tax_prebuy_gate_addendum.csv">購入前ゲート追加CSV</a>
+    <a href="842_tax_aware_operation_layer_phase1_20260602.html">Phase 1 税制レイヤー</a>
+  </div>
+  <h2>年末レビュー候補</h2>
+  <table>
+    <thead><tr><th>銘柄</th><th>口座</th><th>含み益</th><th>含み損</th><th>年初来確定益</th><th>配当</th><th>通算確認額</th><th>税効果参考</th><th>候補</th><th>確認コメント</th></tr></thead>
+    <tbody><tr>
+  <td>8316.T 三井住友FG</td>
+  <td>NISA</td>
+  <td>15,000円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td><b>表示のみ</b></td>
+  <td>NISA口座区分、NISA残枠、配当金受取方式を確認</td>
+</tr>
+<tr>
+  <td>6857.T アドバンテスト</td>
+  <td>特定_源泉あり</td>
+  <td>0円</td>
+  <td>7,000円</td>
+  <td>120,000円</td>
+  <td>0円</td>
+  <td>7,000円</td>
+  <td>1,422円</td>
+  <td><b>損出し確認候補</b></td>
+  <td>課税口座の含み損と年初来利益・配当の通算余地を確認 / 繰越控除を使う場合は確定申告の継続要件を確認</td>
+</tr>
+<tr>
+  <td>8058.T 三菱商事</td>
+  <td>特定_源泉あり</td>
+  <td>50,000円</td>
+  <td>0円</td>
+  <td>120,000円</td>
+  <td>15,000円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td><b>表示のみ</b></td>
+  <td>国内株配当は申告不要、総合課税、申告分離課税の比較対象</td>
+</tr>
+<tr>
+  <td>VOO Vanguard S&P500 ETF</td>
+  <td>NISA</td>
+  <td>12,000円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td>5,000円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td><b>表示のみ</b></td>
+  <td>NISA口座区分、NISA残枠、配当金受取方式を確認 / 外国源泉税と外国税額控除の要否を確認 / NISAでは外国税額控除の扱いに注意</td>
+</tr>
+<tr>
+  <td>6501.T 日立製作所</td>
+  <td>特定_源泉あり</td>
+  <td>80,000円</td>
+  <td>0円</td>
+  <td>300,000円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td>0円</td>
+  <td><b>表示のみ</b></td>
+  <td>年間取引報告書で損益・配当を確認</td>
+</tr></tbody>
+  </table>
+  <h2>購入前ゲート追加</h2>
+  <table>
+    <thead><tr><th>確認項目</th><th>状態</th><th>アクション</th><th>理由</th><th>公式根拠</th></tr></thead>
+    <tbody><tr><td>NISA口座区分確認</td><td>購入前必須</td><td>注文画面でNISA/課税口座を確認</td><td>NISA枠の消費と課税口座の損益通算可否が変わるため</td><td>金融庁NISA制度情報</td></tr>
+<tr><td>NISA損失通算不可</td><td>購入前必須</td><td>高ボラ・短期売買候補をNISAに入れる前に再確認</td><td>NISA損失は損益通算・繰越控除できないため</td><td>国税庁 No.1474</td></tr>
+<tr><td>課税口座の損出し確認</td><td>年末確認</td><td>含み損、年初来利益、配当を照合</td><td>課税口座の損失は条件により損益通算・繰越控除の確認対象になるため</td><td>国税庁 No.1474</td></tr>
+<tr><td>配当課税方式比較</td><td>申告時確認</td><td>申告不要、総合課税、申告分離課税を比較</td><td>配当の申告方式により税後手取りが変わる場合があるため</td><td>国税庁 No.1331</td></tr>
+<tr><td>外国税額控除確認</td><td>申告時確認</td><td>外国源泉税、NISA内外、確定申告要否を確認</td><td>外国源泉税が必ず全額戻るとは限らないため</td><td>国税庁 No.1240</td></tr></tbody>
+  </table>
+  <div class="box">
+    <b>運用上の扱い</b><br>
+    この画面は、購入・売却を指示するものではありません。11月以降に年間取引報告書、証券会社画面、確定申告要否、税理士確認へつなぐための候補整理です。
+  </div>
+</div>
+</body>
+</html>
