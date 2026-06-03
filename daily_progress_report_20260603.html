@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026年6月3日 作業報告書</title>
+  <style>
+    :root{--ink:#000;--navy:#123d63;--blue:#0b5f96;--line:#c8dbea;--bg:#f3f7fb;--amber:#a85b00;--green:#087f5b;--red:#b42318}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:14px}
+    main{max-width:1120px;margin:0 auto;padding:28px 22px 60px}
+    header{background:var(--navy);color:#fff;border-radius:14px;padding:26px 28px;margin-bottom:18px}
+    h1{margin:0 0 8px;font-size:30px;line-height:1.25;letter-spacing:0}
+    header p{margin:0;color:#fff;font-weight:700}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0;break-inside:avoid;page-break-inside:avoid}
+    h2{margin:4px 0 12px;padding-left:12px;border-left:8px solid var(--blue);color:var(--navy);font-size:22px;letter-spacing:0}
+    p{margin:8px 0}.lead{background:#fff7e6;border:1px solid #e7bd75;border-left:7px solid var(--amber);border-radius:10px;padding:12px;font-weight:800}
+    .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.card{border:1px solid var(--line);border-radius:10px;background:#f8fbff;padding:12px;min-height:100px}.card b{display:block;color:var(--navy);font-size:13px}.card strong{display:block;margin:3px 0;font-size:25px;color:var(--blue);line-height:1.2}.card span{display:block;font-size:12px;font-weight:700}
+    .table-wrap{overflow:visible;border:1px solid var(--line);border-radius:10px;background:#fff}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid var(--line);padding:8px 9px;vertical-align:top;color:#000;word-break:normal;overflow-wrap:anywhere}th{background:#e3f0fa;color:var(--navy);text-align:left;font-weight:900}tr{break-inside:avoid;page-break-inside:avoid}
+    .ok{color:var(--green);font-weight:900}.work{color:var(--amber);font-weight:900}.risk{color:var(--red);font-weight:900}.page-start{break-before:page;page-break-before:always}
+    .links a{display:block;color:var(--blue);font-weight:900;text-decoration:none;margin:5px 0;overflow-wrap:anywhere}
+    @media print{body{background:#fff;font-size:12px}main{max-width:none;padding:0}header,section{border-radius:0}h1{font-size:24px}h2{font-size:18px}.cards{grid-template-columns:repeat(5,1fr)}th,td{padding:5px 6px}.card{min-height:auto;padding:8px}.card strong{font-size:20px}}
+  </style>
+</head>
+<body><main>
+<header>
+  <h1>2026年6月3日 作業報告書</h1>
+  <p>NISA 1年保有テストに向けた候補10社の根拠整理と、未取得データの分離</p>
+</header>
+
+<section>
+  <h2>1. 本日の位置づけ</h2>
+  <p class="lead">本日は、6月以降の購入検討に進む前段階として、候補10社の根拠データを横断整理しました。長期株価・指数比較・NISA配分候補は10社分そろっています。一方、PER/PBR/ROE、決算成長率、決算後反応には未取得が残るため、未取得欄を点数に混ぜず、購入判断前の補完対象として明示しました。</p>
+</section>
+
+<section>
+  <h2>2. 本日の主な作業</h2>
+  <div class="table-wrap"><table><thead><tr><th style="width:18%">項目</th><th>本日の作業</th><th>成果</th><th style="width:11%">状態</th></tr></thead><tbody><tr><td>10項目改善の整理</td><td>課題を「必要データ」「完了条件」「現在の状態」に分解し、未取得データを点数に混ぜない前提を明確化。</td><td>10項目改善ダッシュボード、解消ワークベンチを公開。</td><td>進行中</td></tr><tr><td>候補10社の根拠確認</td><td>候補10社について、長期株価、S&amp;P差、最大下落率、NISA配分候補、PER/PBR/ROE、決算後反応を横断確認。</td><td>候補10社 統合データ確認画面を追加。</td><td>一部完了</td></tr><tr><td>未取得データの分離</td><td>PER/PBR/ROE、決算成長率、決算後反応の未取得欄を明示し、購入判断の点数へ混ぜない扱いに統一。</td><td>残る補完欄CSVを作成。</td><td>継続</td></tr><tr><td>実用導線の整理</td><td>ホーム、今日見る実用画面、10項目ワークベンチから統合データ確認へ移動できるようリンクを追加。</td><td>実務で見る画面への導線を追加。</td><td>反映済み</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2>3. 数値化できている範囲</h2>
+  <div class="cards">
+    <div class="card"><b>長期株価・指数比較</b><strong>10/10社</strong><span>5年CAGR、10年CAGR、S&amp;P差、最大下落率を確認</span></div><div class="card"><b>NISA配分候補</b><strong>10/10社</strong><span>NISA優先点と配分候補を横断表示</span></div><div class="card"><b>PER/PBR/ROE参考値</b><strong>4/10社</strong><span>既存CSVから拾えた値。公式再確認が必要</span></div><div class="card"><b>決算成長率参考値</b><strong>4/10社</strong><span>売上・利益・EPSなどの断片値</span></div><div class="card"><b>決算後反応</b><strong>3/10社</strong><span>1日/5日反応の参考値。20営業日未到達あり</span></div>
+  </div>
+  <p>現時点で購入判断に近い材料として使えるのは、長期株価・指数比較・最大下落率・NISA配分候補です。財務・決算後反応は一部のみ参考値があり、公式資料での補完が必要です。</p>
+</section>
+
+<section class="page-start">
+  <h2>4. 候補10社の統合確認</h2>
+  <div class="table-wrap"><table><thead><tr><th style="width:6%">順位</th><th style="width:10%">コード</th><th style="width:14%">銘柄</th><th style="width:9%">再選定点</th><th style="width:10%">NISA優先点</th><th>PER/PBR/ROE</th><th style="width:10%">決算後反応</th><th>データ状態</th></tr></thead><tbody><tr><td>1</td><td>8053.T</td><td>住友商事</td><td>82.4</td><td>66.1</td><td>13.73 / 1.87 / 12.94</td><td>59.6</td><td>参考値あり</td></tr><tr><td>2</td><td>8002.T</td><td>丸紅</td><td>81.9</td><td>67.2</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td></tr><tr><td>3</td><td>8058.T</td><td>三菱商事</td><td>80.6</td><td>75.1</td><td>19.47 / 2.27</td><td>未取得</td><td>一部参考値あり</td></tr><tr><td>4</td><td>8316.T</td><td>三井住友FG</td><td>80.1</td><td>72.5</td><td>13.40 / 1.44 / 10.38</td><td>55.5</td><td>参考値あり</td></tr><tr><td>5</td><td>8306.T</td><td>三菱UFJ FG</td><td>78.7</td><td>71.2</td><td>1.54 / 11.34</td><td>55.4</td><td>参考値あり</td></tr><tr><td>6</td><td>1605.T</td><td>INPEX</td><td>78.4</td><td>74.6</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td></tr><tr><td>7</td><td>6503.T</td><td>三菱電機</td><td>77.8</td><td>64.0</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td></tr><tr><td>8</td><td>8031.T</td><td>三井物産</td><td>76.1</td><td>60.4</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td></tr><tr><td>9</td><td>8411.T</td><td>みずほFG</td><td>75.9</td><td>71.1</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td></tr><tr><td>10</td><td>8725.T</td><td>MS&amp;AD</td><td>75.4</td><td>65.4</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2>5. 現時点で分かること</h2>
+  <table><tbody>
+    <tr><th style="width:26%">分かったこと</th><td>候補10社は、長期株価・S&P500との差・最大下落率・NISA配分候補では横並び比較できる状態になりました。</td></tr>
+    <tr><th>まだ分からないこと</th><td>各銘柄のPER/PBR/ROE、公式決算成長率、決算後反応は未取得が残ります。これらは購入判断前に補完します。</td></tr>
+    <tr><th>判断上の扱い</th><td>未取得データは加点しません。現在の候補10社は、最終購入候補ではなく、6月イベント後の再判定にかける候補群です。</td></tr>
+  </tbody></table>
+</section>
+
+<section>
+  <h2>6. 残る作業</h2>
+  <div class="table-wrap"><table><thead><tr><th style="width:22%">残タスク</th><th>内容</th><th>購入判断への影響</th></tr></thead><tbody><tr><td>PER/PBR/ROEの公式再確認</td><td>現時点で参考値が拾えているのは4社。残りは公式決算、IR、信頼できるデータ元で補完。</td><td>割高・割安の説明力に直結するため、未取得のまま最終判断に進めない。</td></tr><tr><td>決算成長率の補完</td><td>売上成長率、利益成長率、EPS成長率などを銘柄別に確認。</td><td>株価上昇が業績で説明できるかを確認するために必要。</td></tr><tr><td>決算後反応の更新</td><td>決算後1日、5日、20営業日の対指数反応を到来日ごとに更新。</td><td>良い決算が実際に買われたかを確認する。</td></tr><tr><td>6月イベント後の再判定</td><td>6/10米CPI、6/15-16日銀、6/16-17FOMC後の金利、為替、指数、候補株反応を入力。</td><td>6月購入可否、延期、見送りの分岐に使う。</td></tr><tr><td>S&amp;P500/TOPIX比較と配分判断</td><td>指数より+1%以上を狙える説明が成立するか確認し、劣後時は個別株比率を上げない。</td><td>個別株を選ぶ意味の確認に直結する。</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2>7. 確認用URL</h2>
+  <div class="links">
+    <a href="https://ob198-cpu.github.io/kabu/">ホーム: https://ob198-cpu.github.io/kabu/</a><a href="https://ob198-cpu.github.io/kabu/865_candidate10_integrated_known_metrics_20260603.html">候補10社 統合データ確認: https://ob198-cpu.github.io/kabu/865_candidate10_integrated_known_metrics_20260603.html</a><a href="https://ob198-cpu.github.io/kabu/863_candidate10_data_completion_progress_20260603.html">候補10社 データ補完進捗: https://ob198-cpu.github.io/kabu/863_candidate10_data_completion_progress_20260603.html</a><a href="https://ob198-cpu.github.io/kabu/859_gap10_completion_workbench_20260603.html">10項目 解消ワークベンチ: https://ob198-cpu.github.io/kabu/859_gap10_completion_workbench_20260603.html</a><a href="https://ob198-cpu.github.io/kabu/858_practical_today_dashboard_20260603.html">今日見る実用画面: https://ob198-cpu.github.io/kabu/858_practical_today_dashboard_20260603.html</a>
+  </div>
+</section>
+</main></body></html>
