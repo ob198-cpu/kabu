@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>候補10社 統合データ確認 2026/06/03</title>
+  <style>
+    :root{--ink:#061f36;--navy:#123d63;--blue:#0b5f96;--line:#c8dbea;--bg:#eef4fa;--green:#087f5b;--amber:#a85b00;--red:#b42318}
+    *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75}
+    main{max-width:1320px;margin:0 auto;padding:24px 18px 70px}header{background:var(--navy);color:#fff;border-radius:14px;padding:26px;margin-bottom:16px}
+    h1{margin:0 0 8px;font-size:30px;line-height:1.3}header p{margin:0;color:#dbeafe}h2{margin:26px 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:22px}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.card{border:1px solid var(--line);border-radius:10px;background:#f8fbff;padding:14px}.card b{display:block;color:var(--navy);font-size:14px}.num{font-size:30px;font-weight:900;color:var(--blue);line-height:1.2}.ok{color:var(--green);font-weight:900}.warn{color:var(--amber);font-weight:900}.ng{color:var(--red);font-weight:900}
+    .note{border-left:7px solid var(--amber);background:#fff7e6;border-radius:10px;padding:12px 14px;margin:12px 0}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fff}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid var(--line);padding:9px;vertical-align:top;word-break:break-word;font-size:13px}th{background:#e3f0fa;color:var(--navy);text-align:left}
+    .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.links a{display:block;text-decoration:none;border:1px solid var(--blue);border-radius:9px;padding:11px;background:#fff;color:var(--blue);font-weight:900}
+    @media(max-width:900px){.cards,.links{grid-template-columns:1fr}table{table-layout:auto}}
+  </style>
+</head>
+<body><main>
+<header><h1>候補10社 統合データ確認</h1><p>既に集めたCSVから、候補10社の長期株価、NISA配分候補、PER/PBR/ROE、決算成長率の参考値、決算後反応を横断して整理した画面です。</p></header>
+<section><h2>現在どこまで確認できているか</h2>
+  <div class="cards">
+    <div class="card"><b>長期株価・指数比較</b><div class="num">10/10</div><p>5年CAGR、10年CAGR、S&P差、最大下落率。</p></div>
+    <div class="card"><b>NISA配分候補</b><div class="num">10/10</div><p>税制レイヤーのNISA優先点・配分候補。</p></div>
+    <div class="card"><b>PER/PBR/ROE</b><div class="num">4/10</div><p>既存CSVから拾えた参考値。公式再確認が必要。</p></div>
+    <div class="card"><b>決算成長率参考値</b><div class="num">4/10</div><p>売上・利益・EPSなどの断片値。公式再確認が必要。</p></div>
+    <div class="card"><b>決算後反応</b><div class="num">3/10</div><p>1日/5日反応の参考値。20営業日未到達あり。</p></div>
+  </div>
+  <p class="note"><b>重要:</b> 未取得データは点数に混ぜません。この画面は「購入候補を確定する画面」ではなく、6月判断前に何が使えて何が不足しているかを明確にする画面です。</p>
+</section>
+<section><h2>候補10社 統合表</h2>
+<div class="table-wrap"><table><thead><tr><th>順位</th><th>コード</th><th>銘柄</th><th>再選定点</th><th>NISA優先点</th><th>配分候補円</th><th>5年CAGR</th><th>10年CAGR</th><th>直近1年騰落率</th><th>5年S&amp;P差</th><th>最大下落率5年</th><th>PER</th><th>PBR</th><th>ROE</th><th>売上成長率</th><th>利益成長率</th><th>EPS成長率</th><th>決算後反応点</th><th>データ状態</th><th>扱い</th></tr></thead><tbody><tr><td>1</td><td>8053.T</td><td>住友商事</td><td>82.4</td><td>66.1</td><td>190000</td><td>41.2</td><td>25.6</td><td>99.8</td><td>28.9</td><td>-35.8</td><td>13.73</td><td>1.87</td><td>12.94</td><td>0.6</td><td>0.9</td><td>未取得</td><td>59.6</td><td>参考値あり</td><td>候補比較の参考に使用可。購入前に公式再確認</td></tr><tr><td>2</td><td>8002.T</td><td>丸紅</td><td>81.9</td><td>67.2</td><td>200000</td><td>45.2</td><td>31</td><td>87.2</td><td>32.8</td><td>-37.3</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>3</td><td>8058.T</td><td>三菱商事</td><td>80.6</td><td>75.1</td><td>220000</td><td>42.5</td><td>27.5</td><td>77.3</td><td>30.2</td><td>-33.7</td><td>19.47</td><td>2.27</td><td>未取得</td><td>1.6</td><td>-21.3</td><td>-11</td><td>未取得</td><td>一部参考値あり</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>4</td><td>8316.T</td><td>三井住友FG</td><td>80.1</td><td>72.5</td><td>210000</td><td>39.9</td><td>22.7</td><td>66.8</td><td>27.5</td><td>-29.4</td><td>13.40</td><td>1.44</td><td>10.38</td><td>6.1</td><td>34</td><td>未取得</td><td>55.5</td><td>参考値あり</td><td>候補比較の参考に使用可。購入前に公式再確認</td></tr><tr><td>5</td><td>8306.T</td><td>三菱UFJ FG</td><td>78.7</td><td>71.2</td><td>210000</td><td>41.3</td><td>23</td><td>57.1</td><td>29</td><td>-31.8</td><td>未取得</td><td>1.54</td><td>11.34</td><td>7.3</td><td>27.7</td><td>30.3</td><td>55.4</td><td>参考値あり</td><td>候補比較の参考に使用可。購入前に公式再確認</td></tr><tr><td>6</td><td>1605.T</td><td>INPEX</td><td>78.4</td><td>74.6</td><td>220000</td><td>43.3</td><td>19.1</td><td>100.9</td><td>30.9</td><td>-32.9</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>7</td><td>6503.T</td><td>三菱電機</td><td>77.8</td><td>64.0</td><td>190000</td><td>33.3</td><td>20</td><td>128.8</td><td>20.9</td><td>-34</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>8</td><td>8031.T</td><td>三井物産</td><td>76.1</td><td>60.4</td><td>160000</td><td>38.5</td><td>27.8</td><td>83.4</td><td>26.2</td><td>-41.7</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>9</td><td>8411.T</td><td>みずほFG</td><td>75.9</td><td>71.1</td><td>210000</td><td>38.3</td><td>20.1</td><td>82.1</td><td>26</td><td>-33.4</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>10</td><td>8725.T</td><td>MS&amp;AD</td><td>75.4</td><td>65.4</td><td>190000</td><td>36.3</td><td>20.1</td><td>34.7</td><td>23.9</td><td>-32.6</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>長期株価・配分候補のみ</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr></tbody></table></div>
+</section>
+<section><h2>未取得・公式補完が必要な欄</h2>
+<div class="table-wrap"><table><thead><tr><th>コード</th><th>銘柄</th><th>長期株価指標</th><th>NISA配分候補</th><th>PER/PBR/ROE</th><th>決算成長率参考値</th><th>決算後反応</th><th>購入判断への扱い</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>取得済み</td><td>取得済み</td><td>一部取得</td><td>一部取得</td><td>一部取得</td><td>候補比較の参考に使用可。購入前に公式再確認</td></tr><tr><td>8002.T</td><td>丸紅</td><td>取得済み</td><td>取得済み</td><td>未取得</td><td>未取得</td><td>未取得</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>取得済み</td><td>取得済み</td><td>一部取得</td><td>一部取得</td><td>未取得</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>取得済み</td><td>取得済み</td><td>一部取得</td><td>一部取得</td><td>一部取得</td><td>候補比較の参考に使用可。購入前に公式再確認</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>取得済み</td><td>取得済み</td><td>一部取得</td><td>一部取得</td><td>一部取得</td><td>候補比較の参考に使用可。購入前に公式再確認</td></tr><tr><td>1605.T</td><td>INPEX</td><td>取得済み</td><td>取得済み</td><td>未取得</td><td>未取得</td><td>未取得</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>取得済み</td><td>取得済み</td><td>未取得</td><td>未取得</td><td>未取得</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>8031.T</td><td>三井物産</td><td>取得済み</td><td>取得済み</td><td>未取得</td><td>未取得</td><td>未取得</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>8411.T</td><td>みずほFG</td><td>取得済み</td><td>取得済み</td><td>未取得</td><td>未取得</td><td>未取得</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr><tr><td>8725.T</td><td>MS&amp;AD</td><td>取得済み</td><td>取得済み</td><td>未取得</td><td>未取得</td><td>未取得</td><td>候補比較の補助まで。購入判断には補完が必要</td></tr></tbody></table></div>
+</section>
+<section><h2>この画面から分かること</h2>
+  <table><tbody>
+    <tr><th>使えること</th><td>長期株価、指数との差、最大下落率、NISA配分候補は10社すべてで比較できます。候補同士の大まかな優先度確認には使えます。</td></tr>
+    <tr><th>まだ足りないこと</th><td>PER/PBR/ROE、決算成長率、決算後反応は銘柄によって未取得があります。ここを公式資料で埋めるまで、購入判断の最終根拠にはしません。</td></tr>
+    <tr><th>次の作業</th><td>未取得欄を公式決算短信・IR資料・株価反応データで補完し、6月CPI・日銀・FOMC後の実数を入力して再判定します。</td></tr>
+  </tbody></table>
+</section>
+<section><h2>関連ファイル</h2><div class="links">
+  <a href="865_candidate10_integrated_known_metrics_20260603.csv">統合データCSV</a>
+  <a href="866_candidate10_remaining_official_gap_20260603.csv">残る補完欄CSV</a>
+  <a href="863_candidate10_data_completion_progress_20260603.html">候補10社 データ補完進捗</a>
+  <a href="859_gap10_completion_workbench_20260603.html">10項目 解消ワークベンチ</a>
+  <a href="858_practical_today_dashboard_20260603.html">今日見る実用画面</a>
+  <a href="index.html">ホームへ戻る</a>
+</div></section>
+</main></body></html>
