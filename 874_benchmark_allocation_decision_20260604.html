@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ベンチマーク比較・個別株比率ゲート 2026/06/04</title>
+  <style>
+    :root { --ink:#061f36; --navy:#123d63; --blue:#0b5f96; --line:#c8dbea; --bg:#eef4fa; --amber:#a85b00; --red:#b42318; --green:#087443; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.75; }
+    main { max-width:1220px; margin:0 auto; padding:24px 18px 70px; }
+    header { background:var(--navy); color:#fff; border-radius:16px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    header p { margin:0; color:#dbeafe; }
+    section { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; page-break-inside:avoid; break-inside:avoid; }
+    h2 { color:var(--navy); border-left:8px solid var(--blue); padding-left:12px; }
+    .note { background:#fff7e6; border:1px solid #f0c36a; border-left:7px solid var(--amber); border-radius:12px; padding:12px 14px; font-weight:700; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:12px; padding:12px; background:#f8fbff; }
+    .card b { display:block; color:var(--navy); font-size:18px; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:9px; vertical-align:top; font-size:14px; word-break:break-word; }
+    th { background:#e3f0fa; color:var(--navy); text-align:left; }
+    code { background:#eef4fa; border:1px solid var(--line); padding:2px 5px; border-radius:6px; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 9px; font-weight:900; color:#fff; }
+    .green { background:var(--green); }
+    .amber { background:var(--amber); }
+    .red { background:var(--red); }
+    .links { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .links a { text-decoration:none; border:1px solid var(--blue); border-radius:10px; padding:10px 12px; color:var(--navy); background:#f8fbff; font-weight:800; }
+    @media(max-width:900px){ .grid,.links{grid-template-columns:1fr;} table{table-layout:auto;} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>ベンチマーク比較・個別株比率ゲート</h1>
+    <p>S&P500、日経平均、TOPIXを1年で上回る説明が成立する場合だけ、個別株比率を上げるための実務ルールです。</p>
+  </header>
+
+  <section>
+    <h2>結論</h2>
+    <div class="note">
+      現時点では、個別株比率を自動的に増やす段階ではありません。6月イベント後の実数、候補10社の未到達20営業日反応、指数比較を入力してから、比率上限を判定します。
+    </div>
+  </section>
+
+  <section>
+    <h2>この画面の役割</h2>
+    <div class="grid">
+      <div class="card"><b>目的</b>個別株を選ぶ意味があるかを、S&P500やTOPIXとの比較で確認する。</div>
+      <div class="card"><b>判断</b>期待値が指数を十分に上回らない場合、個別株比率を上げない。</div>
+      <div class="card"><b>出力</b>100万円または200万円のうち、個別株へ入れてよい上限を出す。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使う計算</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>項目</th><th>式</th><th>意味</th><th>注意</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>候補ポートフォリオ期待年率</td>
+            <td><code>Σ(銘柄比率 × 銘柄別期待年率)</code></td>
+            <td>10社を指定比率で持った場合の概算年率。</td>
+            <td>過去実績だけでなく、決算・過熱・下落率で確認する。未検証係数は使わない。</td>
+          </tr>
+          <tr>
+            <td>S&P500との差</td>
+            <td><code>候補期待年率 - S&P500想定年率</code></td>
+            <td>個別株を選ぶ理由があるかを見る。</td>
+            <td>最低目標はS&P500を+1%以上。強い採用ラインは+5%以上。</td>
+          </tr>
+          <tr>
+            <td>TOPIXとの差</td>
+            <td><code>候補期待年率 - TOPIX想定年率</code></td>
+            <td>日本株内で個別選定する意味を見る。</td>
+            <td>日本株全体に負けるなら、個別株比率を上げない。</td>
+          </tr>
+          <tr>
+            <td>下落耐性</td>
+            <td><code>候補最大下落率 - 指数最大下落率</code></td>
+            <td>高い年率に見えても、下落リスクが過大なら比率を下げる。</td>
+            <td>最大下落が指数より大幅に悪い場合は、1段階引き下げる。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>個別株比率の上限ルール</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>判定ライン</th><th>条件</th><th>個別株比率の上限</th><th>行動</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="pill red">見送り</span></td>
+            <td>S&P500またはTOPIXを+1%以上上回る説明が成立しない。</td>
+            <td>0〜20%</td>
+            <td>個別株は観察枠。指数連動投信を中心にする。</td>
+          </tr>
+          <tr>
+            <td><span class="pill amber">小額テスト</span></td>
+            <td>S&P500/TOPIXを+1%以上、+3%未満で上回る。</td>
+            <td>20〜35%</td>
+            <td>分割購入のみ。6月イベント後も悪化がないか確認する。</td>
+          </tr>
+          <tr>
+            <td><span class="pill amber">条件付き採用</span></td>
+            <td>+3%以上、+5%未満で上回り、下落耐性も許容範囲。</td>
+            <td>35〜50%</td>
+            <td>10社分散。ただし未入力データが残る銘柄は比率を下げる。</td>
+          </tr>
+          <tr>
+            <td><span class="pill green">積極採用候補</span></td>
+            <td>+5%以上で上回り、最大下落・ボラティリティ・決算後反応を説明できる。</td>
+            <td>50〜70%</td>
+            <td>購入前ゲート通過後に段階投入。全額一括はしない。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>購入後の比率引き下げルール</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>時点</th><th>条件</th><th>対応</th><th>理由</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>購入後1か月</td>
+            <td>候補10社平均がS&P500またはTOPIXに-3%以上劣後。</td>
+            <td>追加購入停止。</td>
+            <td>選定仮説が短期で外れている可能性を見る。</td>
+          </tr>
+          <tr>
+            <td>購入後3か月</td>
+            <td>-5%以上劣後し、決算・テーマ・金利環境も悪化。</td>
+            <td>個別株比率を1段階引き下げ。</td>
+            <td>NISA枠の機会損失を抑える。</td>
+          </tr>
+          <tr>
+            <td>決算後</td>
+            <td>決算後20営業日反応が指数に大きく劣後。</td>
+            <td>該当銘柄の比率を下げる、または候補から外す。</td>
+            <td>数字が良くても市場が買っていない場合を避ける。</td>
+          </tr>
+          <tr>
+            <td>6月イベント後</td>
+            <td>CPI、日銀、FOMC後に金利・為替・指数が悪化。</td>
+            <td>買い増し延期。高PER、高ボラ銘柄を先に下げる。</td>
+            <td>市場全体の逆風を個別銘柄の力で相殺できない可能性がある。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ファイル</h2>
+    <div class="links">
+      <a href="874_benchmark_allocation_decision_20260604.csv">CSV</a>
+      <a href="873_june_gate_decision_engine_20260604.html">6月ゲート判定エンジン</a>
+      <a href="871_june_practical_action_board_20260604.html">6月実用アクションボード</a>
+      <a href="index.html">ホームへ戻る</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
