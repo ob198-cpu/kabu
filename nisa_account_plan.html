@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>NISA口座運用代替案 比較報告書 2026年6月4日</title>
+  <style>
+    @page { size: A4 landscape; margin: 9mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Meiryo", "Yu Gothic", Arial, sans-serif;
+      color: #050b14;
+      background: #fff;
+      line-height: 1.55;
+      font-size: 10.5px;
+    }
+    .page { page-break-after: always; padding: 8mm 10mm; }
+    .page:last-child { page-break-after: auto; }
+    .cover {
+      background: #123d63;
+      color: #fff;
+      min-height: 180mm;
+      padding: 22mm;
+    }
+    h1 { font-size: 28px; margin: 0 0 10px; letter-spacing: 0; }
+    h2 {
+      font-size: 17px;
+      margin: 0 0 8px;
+      padding-left: 8px;
+      border-left: 6px solid #0b5f96;
+      color: #123d63;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .cover h2 { color: #fff; border-color: #8fd3ff; }
+    h3 { font-size: 13px; margin: 10px 0 6px; color: #123d63; }
+    .lead { font-size: 14px; max-width: 980px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .card {
+      border: 1px solid #cbd8e6;
+      border-radius: 8px;
+      padding: 9px;
+      background: #f8fbff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .cover .card { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.3); color: #fff; }
+    .value { font-size: 20px; font-weight: 900; color: #0b5f96; }
+    .cover .value { color: #fff; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin: 6px 0 12px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    tr { page-break-inside: avoid; break-inside: avoid; }
+    th, td {
+      border: 1px solid #cbd8e6;
+      padding: 5px;
+      vertical-align: top;
+      overflow-wrap: break-word;
+      color: #050b14;
+    }
+    th { background: #e6f1fb; color: #123d63; text-align: left; }
+    .note {
+      border-left: 6px solid #a85b00;
+      background: #fff8ec;
+      padding: 8px;
+      margin: 8px 0 12px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .ok {
+      border-left: 6px solid #087443;
+      background: #effaf5;
+      padding: 8px;
+      margin: 8px 0 12px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .risk {
+      border-left: 6px solid #b42318;
+      background: #fff4f2;
+      padding: 8px;
+      margin: 8px 0 12px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .small { font-size: 9px; color: #34465b; }
+    .rank { font-size: 16px; font-weight: 900; color: #123d63; }
+    ul { margin: 4px 0 8px 18px; padding: 0; }
+    .pill { display:inline-block; border-radius: 999px; padding: 1px 8px; color:#fff; font-weight:900; }
+    .green { background:#087443; }
+    .amber { background:#a85b00; }
+    .red { background:#b42318; }
+    .blue { background:#0b5f96; }
+    a { color: #064f85; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <h1>NISA口座運用代替案 比較報告書</h1>
+    <h2>2026年6月4日 作成</h2>
+    <p class="lead">
+      再来週の株式購入検討に向け、他人名義NISAを直接操作しない前提で、運用満足度を落とさない代替案を整理した報告書です。
+      本資料は、証券会社の正式制度、本人発注型、登録業者連携、NISA対応ラップ、課税口座・信託等の代替設計を比較します。
+    </p>
+    <div class="cards">
+      <div class="card"><b>最優先確認</b><div class="value">代理人登録</div><p>証券会社所定の代理人制度で、注文権限を正式に持てるか確認する。</p></div>
+      <div class="card"><b>再来週対応</b><div class="value">二段構え</div><p>代理人登録が間に合わなければ、初回は本人発注型で実行可能性を残す。</p></div>
+      <div class="card"><b>中期拡張</b><div class="value">IFA/助言</div><p>継続サービス化する場合は登録業者連携で助言・発注周辺を整える。</p></div>
+      <div class="card"><b>安全策</b><div class="value">ラップ等</div><p>個別株運用にこだわらない顧客には、NISA対応ラップも選択肢にする。</p></div>
+    </div>
+    <p class="small">本資料は法令・税務・投資判断の確定意見ではありません。実行前に各証券会社、公式資料、必要に応じて専門家へ確認します。</p>
+  </section>
+
+  <section class="page">
+    <h2>1. 現時点の結論</h2>
+    <div class="ok">
+      最も有力な代替案は「証券会社所定の代理人登録」を確認し、可能なら正式な権限設定のもとで運用補助を行う方法です。
+      ただし、再来週の購入に間に合うかは証券会社ごとの手続き次第です。間に合わない場合は、初回だけ「本人発注型 + 注文票作成」で進め、中期的に代理人登録または登録業者連携へ移行します。
+    </div>
+
+    <h2>2. 代替案の比較</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:5%">優先</th>
+          <th style="width:19%">案</th>
+          <th style="width:15%">再来週に間に合うか</th>
+          <th style="width:12%">顧客満足</th>
+          <th style="width:12%">法令面</th>
+          <th style="width:23%">具体的な使い方</th>
+          <th style="width:14%">確認事項</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank">1</td>
+          <td><b>証券会社の代理人登録</b></td>
+          <td>要確認。書面・審査が必要な場合は時間がかかる。</td>
+          <td><span class="pill green">高</span><br>実務負担を大きく下げられる。</td>
+          <td><span class="pill green">高</span><br>所定制度なら説明しやすい。</td>
+          <td>証券会社の代理人選任・家族代理人制度を利用し、権限範囲を明確にして注文・決済が可能か確認する。</td>
+          <td>NISA口座で代理注文が可能か。対象証券会社、必要書類、開始時期。</td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td><b>本人発注型 + 注文票作成</b></td>
+          <td>高。口座があれば最短で進めやすい。</td>
+          <td><span class="pill amber">中</span><br>本人操作の手間は残る。</td>
+          <td><span class="pill green">高</span><br>本人確認と本人操作を維持できる。</td>
+          <td>候補10社、購入額、買う日、買わない条件、利確・損切り条件を注文票として渡し、本人が発注する。</td>
+          <td>本人がログイン・注文できる状態か。口座区分がNISAになっているか。</td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td><b>登録助言業者・IFA連携</b></td>
+          <td>中。提携先選定と契約が必要。</td>
+          <td><span class="pill green">高</span><br>継続運用の納得感を作りやすい。</td>
+          <td><span class="pill green">高</span><br>助言領域を登録業者に寄せられる。</td>
+          <td>当システムは分析・候補抽出・資料作成を担当し、助言や発注周辺は登録業者の枠内で行う。</td>
+          <td>提携可能な登録業者、報酬体系、責任分界、顧客説明資料。</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td><b>NISAファンドラップ</b></td>
+          <td>中。金融機関の商品・審査次第。</td>
+          <td><span class="pill amber">中</span><br>運用委任には近いが個別株戦略とは違う。</td>
+          <td><span class="pill green">高</span><br>金融機関の商品として整理される。</td>
+          <td>個別株10社戦略にこだわらない顧客には、NISA対応ラップや投信運用を安全策として提示する。</td>
+          <td>NISA対象商品、手数料、運用方針、個別株戦略との差。</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td><b>家族信託・法人管理</b></td>
+          <td>低。再来週には難しい。</td>
+          <td><span class="pill green">高</span><br>一元管理ニーズには合う。</td>
+          <td><span class="pill amber">要専門家</span><br>税務・信託・贈与の確認が必要。</td>
+          <td>NISAの非課税枠より、一元管理や承継を優先する場合の中長期案として検討する。</td>
+          <td>税理士、司法書士、証券会社対応、贈与・信託・法人税務。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="page">
+    <h2>3. 顧客満足を落とさない実行設計</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:19%">設計</th>
+          <th style="width:27%">内容</th>
+          <th style="width:27%">顧客にとっての価値</th>
+          <th style="width:27%">注意点</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>注文票方式</b></td>
+          <td>本人別に、銘柄・金額・口座区分・買う日・買わない条件を1枚にする。</td>
+          <td>本人は判断に迷わず、注文内容を確認して発注できる。</td>
+          <td>本人操作は残る。代理操作ではないことを明確にする。</td>
+        </tr>
+        <tr>
+          <td><b>代理人登録の確認</b></td>
+          <td>SBI、楽天、auカブコム、対面証券などに、NISA口座での代理人注文可否を確認する。</td>
+          <td>正式に代理権限を持てる場合、実務負担を大幅に下げられる。</td>
+          <td>証券会社ごとに対応差があり、再来週に間に合うかは未確認。</td>
+        </tr>
+        <tr>
+          <td><b>登録業者連携</b></td>
+          <td>本格的に継続運用する場合、登録投資助言業者やIFAと責任分界を作る。</td>
+          <td>顧客に対して正式な運用支援体制を説明しやすい。</td>
+          <td>契約・報酬・コンプライアンス整理が必要。</td>
+        </tr>
+        <tr>
+          <td><b>安全運用代替</b></td>
+          <td>個別株が難しい顧客には、NISA対応ファンドラップや投信中心案を併記する。</td>
+          <td>無理な個別株運用を避け、運用そのものは止めない。</td>
+          <td>独自モデルでS&P500+1%以上を狙う趣旨とは別枠になる。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4. 再来週購入に向けた現実的な進め方</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:13%">日程</th>
+          <th style="width:23%">作業</th>
+          <th style="width:34%">実施内容</th>
+          <th style="width:30%">判断</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>6/4〜6/6</td>
+          <td>証券会社制度確認</td>
+          <td>代理人登録、家族サポート証券口座、NISA口座での代理注文可否を確認する。</td>
+          <td>可能な証券会社があれば最優先候補にする。</td>
+        </tr>
+        <tr>
+          <td>6/4〜6/9</td>
+          <td>本人別の口座状況確認</td>
+          <td>NISA口座の有無、証券会社、ログイン可否、本人スマホ、投資可能額を確認する。</td>
+          <td>本人操作できる口座だけ初回購入対象にする。</td>
+        </tr>
+        <tr>
+          <td>6/10</td>
+          <td>米CPI確認</td>
+          <td>米金利・為替・NASDAQ/SOX・日本株指数の反応を見る。</td>
+          <td>悪化なら購入比率を下げる、または延期。</td>
+        </tr>
+        <tr>
+          <td>6/15〜6/17</td>
+          <td>日銀・FOMC確認</td>
+          <td>日銀後の円高/銀行株反応、FOMC後の米金利・指数反応を確認する。</td>
+          <td>条件通過後のみ注文票を確定。</td>
+        </tr>
+        <tr>
+          <td>6/18以降</td>
+          <td>購入実行</td>
+          <td>代理人登録が間に合えば正式代理フロー。間に合わなければ本人発注型で実行。</td>
+          <td>全額一括ではなく、分割購入を基本にする。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="page">
+    <h2>5. 証券会社に確認する質問リスト</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:25%">確認先</th>
+          <th style="width:37%">質問</th>
+          <th style="width:38%">判定に使う理由</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SBI証券、楽天証券、auカブコム等</td>
+          <td>NISA口座において、所定の代理人登録により代理人が注文・決済を行えるか。</td>
+          <td>可能なら、本人発注型より実務負担を下げる正式案になる。</td>
+        </tr>
+        <tr>
+          <td>対面証券</td>
+          <td>家族サポート証券口座、予約型代理人、家族代理人制度が利用できるか。</td>
+          <td>高齢者・家族運用の正式導線として使える可能性がある。</td>
+        </tr>
+        <tr>
+          <td>各証券会社</td>
+          <td>代理人登録の必要書類、審査期間、開始可能日、対象取引、NISA対象可否。</td>
+          <td>再来週に間に合うかを判断する。</td>
+        </tr>
+        <tr>
+          <td>登録投資助言業者・IFA</td>
+          <td>銘柄選定システムの分析結果を、助言業務の中で利用できるか。</td>
+          <td>継続サービス化する場合の責任分界を作る。</td>
+        </tr>
+        <tr>
+          <td>税理士・司法書士</td>
+          <td>家族信託、法人、課税口座一元管理を使う場合の税務・贈与・信託上の論点。</td>
+          <td>NISAにこだわらず資産管理を一元化する場合の中長期案に使う。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>6. 最終提案の型</h2>
+    <div class="note">
+      初回購入は「代理人登録の可否確認」と「本人発注型」を並行します。正式な代理人登録が間に合えば代理人登録を使い、間に合わなければ本人発注型で初回だけ進めます。
+      その後、継続運用に入る前に、登録助言業者・IFA連携、NISAラップ、家族サポート証券口座などを比較し、運用管理の負担を下げる形へ移行します。
+    </div>
+
+    <h2>7. 参考情報</h2>
+    <table>
+      <thead><tr><th style="width:28%">項目</th><th>確認した内容</th><th style="width:30%">出典</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>家族サポート証券口座</td>
+          <td>本人と家族代理人の任意代理契約を前提に、本人の認知判断能力の状況に応じて代理取引を可能にする制度。</td>
+          <td>日本証券業協会、スターツ証券等</td>
+        </tr>
+        <tr>
+          <td>代理人選任申請</td>
+          <td>一部証券会社では、所定書面で注文・決済権限を代理人に委任する形式がある。</td>
+          <td>三菱UFJ eスマート証券 代理人選任申請書</td>
+        </tr>
+        <tr>
+          <td>投資助言・代理業</td>
+          <td>顧客に有価証券等の分析に基づく投資判断について助言する業務は、登録が必要となる領域がある。</td>
+          <td>金融庁、関東財務局</td>
+        </tr>
+        <tr>
+          <td>NISA対応ラップ</td>
+          <td>一部金融機関では、ファンドラップでNISA口座を利用できる商品がある。</td>
+          <td>三井住友信託銀行 ファンドラップNISA資料</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small">
+      参考URL: 日本証券業協会 家族サポート証券口座 https://market.jsda.or.jp/shijyo/kazokusupport/index.html / 
+      三菱UFJ eスマート証券 代理人選任申請書 https://kabu.com/support/img/dairinin-shinseisyo.pdf / 
+      金融庁 登録手続ガイドブック https://www.fsa.go.jp/policy/marketentry/guidebook/02.html / 
+      関東財務局 投資助言・代理業関係 https://lfb.mof.go.jp/kantou/kinyuu/toushijogen/annai.htm
+    </p>
+  </section>
+</body>
+</html>
