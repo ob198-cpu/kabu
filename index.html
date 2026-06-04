@@ -3,305 +3,217 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>株式判断補助システム ホーム</title>
+  <title>株式購入判断補助システム</title>
   <style>
     :root {
-      --ink:#061f36;
-      --muted:#496276;
-      --bg:#eef4fa;
-      --panel:#ffffff;
-      --line:#c8dbea;
-      --navy:#123d63;
-      --blue:#0b5f96;
-      --green:#087f5b;
-      --amber:#a85b00;
-      --red:#b42318;
+      --ink: #061f36;
+      --navy: #123d63;
+      --blue: #0b5f96;
+      --line: #c8dbea;
+      --bg: #eef4fa;
+      --green: #087443;
+      --amber: #a85b00;
+      --red: #b42318;
     }
-    * { box-sizing:border-box; }
+    * { box-sizing: border-box; }
     body {
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;
-      background:var(--bg);
-      color:var(--ink);
-      line-height:1.75;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
     }
-    main { max-width:1180px; margin:0 auto; padding:24px 18px 64px; }
+    main { max-width: 1240px; margin: 0 auto; padding: 24px 18px 80px; }
     header {
-      background:var(--navy);
-      color:#fff;
-      border-radius:14px;
-      padding:26px;
-      margin-bottom:18px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 18px;
     }
-    h1 { margin:0 0 8px; font-size:30px; line-height:1.25; }
-    header p { margin:0; color:#dbeafe; }
-    h2 {
-      margin:26px 0 12px;
-      border-left:8px solid var(--blue);
-      padding-left:12px;
-      color:var(--navy);
-      font-size:22px;
-    }
+    h1 { margin: 0 0 8px; font-size: 32px; letter-spacing: 0; }
+    header p { margin: 0; color: #dbeafe; }
     .notice {
-      background:#fff7e6;
-      border:1px solid #e7bd75;
-      border-left:7px solid var(--amber);
-      border-radius:12px;
-      padding:13px 14px;
-      margin:16px 0;
+      background: #fff7e6;
+      border: 1px solid #f0c36a;
+      border-left: 7px solid var(--amber);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-weight: 700;
+    }
+    h2 {
+      color: var(--navy);
+      border-left: 8px solid var(--blue);
+      padding-left: 12px;
+      margin-top: 30px;
     }
     .quick {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-      margin:16px 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 16px 0 22px;
     }
     .quick a, .node-link {
-      display:block;
-      text-decoration:none;
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:#fff;
-      color:var(--ink);
-      padding:13px;
+      display: block;
+      text-decoration: none;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
     }
-    .quick b, .node-link b { display:block; color:var(--navy); margin-bottom:4px; font-size:15px; }
-    .quick span, .node-link span { display:block; color:var(--muted); font-size:13px; }
-    .primary {
-      background:var(--blue) !important;
-      border-color:var(--blue) !important;
-      color:#fff !important;
+    .quick a.primary {
+      background: #f4fbff;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(11, 95, 150, 0.08) inset;
     }
-    .primary b, .primary span { color:#fff !important; }
-    .tree {
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
+    .quick b, .node-link b { display: block; color: var(--navy); font-size: 17px; margin-bottom: 4px; }
+    .quick span, .node-link span { display: block; color: #27445f; font-size: 14px; }
+    section.tree {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 18px 0;
     }
     details {
-      border:1px solid var(--line);
-      border-radius:12px;
-      background:#fbfdff;
-      margin:10px 0;
-      overflow:hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      background: #fbfdff;
     }
     summary {
-      list-style:none;
-      cursor:pointer;
-      padding:14px 16px;
-      font-weight:900;
-      color:var(--navy);
-      display:grid;
-      grid-template-columns:auto 1fr auto;
-      gap:10px;
-      align-items:center;
+      cursor: pointer;
+      color: var(--navy);
+      font-size: 18px;
+      font-weight: 900;
     }
-    summary::-webkit-details-marker { display:none; }
-    summary::before {
-      content:"+";
-      display:inline-grid;
-      place-items:center;
-      width:24px;
-      height:24px;
-      border-radius:50%;
-      background:#e3f0fa;
-      color:var(--blue);
-      font-weight:900;
-    }
-    details[open] summary::before { content:"-"; }
-    .tag {
-      justify-self:end;
-      font-size:12px;
-      color:#fff;
-      background:var(--blue);
-      border-radius:999px;
-      padding:3px 9px;
-      white-space:nowrap;
-    }
-    .tag.warn { background:var(--amber); }
-    .tag.green { background:var(--green); }
-    .tag.red { background:var(--red); }
     .children {
-      border-top:1px solid var(--line);
-      padding:12px 14px 14px;
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
     }
-    .full { grid-column:1 / -1; }
+    .full { grid-column: 1 / -1; }
     .mini {
-      color:var(--muted);
-      font-size:13px;
-      margin:0 0 8px;
+      margin: 0;
+      color: #284761;
+      background: #eef6ff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
     }
-    table {
-      width:100%;
-      border-collapse:collapse;
-      background:#fff;
-      table-layout:fixed;
+    .tag {
+      display: inline-block;
+      margin-left: 8px;
+      border-radius: 999px;
+      padding: 2px 9px;
+      font-size: 12px;
+      color: #fff;
+      background: var(--blue);
+      vertical-align: middle;
     }
-    th,td {
-      border:1px solid var(--line);
-      padding:9px;
-      vertical-align:top;
-      word-break:break-word;
-      font-size:13px;
-    }
-    th { background:#e3f0fa; color:var(--navy); text-align:left; }
-    .footer-links {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:14px;
-    }
-    .footer-links a {
-      color:var(--blue);
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:999px;
-      padding:7px 10px;
-      text-decoration:none;
-      font-weight:800;
-      font-size:13px;
-    }
-    @media(max-width:860px) {
-      .quick, .children { grid-template-columns:1fr; }
-      summary { grid-template-columns:auto 1fr; }
-      .tag { justify-self:start; grid-column:2; }
-      table { table-layout:auto; }
+    .tag.green { background: var(--green); }
+    .tag.warn { background: var(--amber); }
+    .tag.red { background: var(--red); }
+    footer { color: #526b82; font-size: 13px; margin-top: 26px; }
+    @media (max-width: 850px) {
+      .quick, .children { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
     }
   </style>
 </head>
 <body>
 <main>
   <header>
-    <h1>株式判断補助システム ホーム</h1>
-    <p>目的から順にたどる入口です。毎日見る画面、候補選定、6月イベント判定、NISA・税制、検証データ、報告資料を分けています。</p>
+    <h1>株式購入判断補助システム</h1>
+    <p>NISA 1年保有テストに向けて、候補銘柄、購入前ゲート、6月イベント、税制確認、根拠資料を分けて確認する入口です。</p>
   </header>
 
   <div class="notice">
-    このシステムは投資助言、自動売買、税務代理を行いません。実購入前は、証券会社画面、最新決算、NISA口座区分、6月の市場イベントを確認します。
+    このシステムは投資助言、自動売買、税務代理を行いません。購入前は証券会社画面、公式決算、NISA口座区分、6月イベント後の実数を確認します。
   </div>
 
-  <h2>最初に開く3つ</h2>
+  <h2>最初に見る画面</h2>
   <div class="quick">
-    <a class="primary" href="practical_action_dashboard_20260528.html">
-      <b>1. 実用ダッシュボード</b>
-      <span>今どの銘柄を見るか、何を確認するかの入口。</span>
+    <a class="primary" href="871_june_practical_action_board_20260604.html">
+      <b>1. 6月実用アクションボード</b>
+      <span>日付別に、何を見るか、何をしたら停止か、次の作業を確認します。</span>
     </a>
-    <a href="858_practical_today_dashboard_20260603.html">
-      <b>2. 今日見る画面</b>
-      <span>今日の確認リンク、未入力データ、買わない条件。</span>
+    <a class="primary" href="873_june_gate_decision_engine_20260604.html">
+      <b>2. 6月ゲート判定エンジン</b>
+      <span>CPI、日銀、FOMC、決算後反応を入れた後、買う/待つ/見送るを分岐します。</span>
     </a>
-    <a href="844_nisa_priority_allocation_phase3_20260602.html">
-      <b>3. NISA枠配分候補</b>
-      <span>10社候補をNISA枠で使う価値があるか確認。</span>
+    <a class="primary" href="872_june_event_actual_input_sheet_20260604.html">
+      <b>3. 6月イベント実数入力表</b>
+      <span>イベント後に実際の数値を入れるための入力表です。</span>
     </a>
   </div>
 
   <h2>目的別ツリー</h2>
   <section class="tree">
     <details open>
-      <summary>目的A: 6月にNISAで買う候補を決める <span class="tag green">実用</span></summary>
+      <summary>目的1: 6月に買う候補を判断する <span class="tag green">実用</span></summary>
       <div class="children">
-        <p class="mini full">候補10社を見て、買う・待つ・見送るの判断に必要な画面です。</p>
-        <a class="node-link" href="871_june_practical_action_board_20260604.html"><b>6月実用アクションボード</b><span>日付別に、見るデータ・停止条件・次アクションを確認。</span></a>
-        <a class="node-link" href="872_june_event_actual_input_sheet_20260604.html"><b>6月イベント 実数入力表</b><span>イベント後に実数を入れ、買う/待つ/見送るを再判定。</span></a>
-        <a class="node-link" href="873_june_gate_decision_engine_20260604.html"><b>6月ゲート判定エンジン</b><span>入力後の買う/待つ/見送る分岐を確認。</span></a>
-        <a class="node-link" href="practical_action_dashboard_20260528.html"><b>実用ダッシュボード</b><span>行動確認の中心画面。</span></a>
-        <a class="node-link" href="849_gap10_improvement_dashboard_20260603.html"><b>10項目改善ダッシュボード</b><span>不足点ごとの改善内容、残データ、次アクションを確認。</span></a>
-        <a class="node-link" href="859_gap10_completion_workbench_20260603.html"><b>10項目 解消ワークベンチ</b><span>必要データ、実作業、完了条件を確認。</span></a>
-        <a class="node-link" href="867_candidate10_integrated_update_20260604.html"><b>候補10社 統合データ確認 更新版</b><span>追加で拾えた参考値、出所区分、未完了理由を確認。</span></a>
-        <a class="node-link" href="869_candidate10_earnings_reaction_rebuild_20260604.html"><b>候補10社 決算後反応 再計算</b><span>1日・5日・20営業日の対日経平均反応を確認。</span></a>
-        <a class="node-link" href="870_candidate10_reaction_remaining_schedule_20260604.html"><b>20営業日反応 更新予定</b><span>未到達5社の再計算日と扱いを確認。</span></a>
-        <a class="node-link" href="daily_progress_report_20260603.pdf"><b>2026年6月3日 作業報告PDF</b><span>本日の進捗、数値化範囲、残タスクを確認。</span></a>
-        <a class="node-link" href="865_candidate10_integrated_known_metrics_20260603.html"><b>候補10社 統合データ確認</b><span>既存CSVから拾えた財務・反応・NISA配分と未取得欄を統合</span></a>
-        <a class="node-link" href="863_candidate10_data_completion_progress_20260603.html"><b>候補10社 データ補完進捗</b><span>既に入った数値と残タスクを確認。</span></a>
-        <a class="node-link" href="844_nisa_priority_allocation_phase3_20260602.html"><b>NISA枠配分候補</b><span>200万円をNISA成長投資枠でどう使うかの候補。</span></a>
-        <a class="node-link" href="782_reselected_10_candidates_20260528.csv"><b>再選定10社CSV</b><span>現在の10社候補の元データ。</span></a>
-        <a class="node-link" href="universe100_reselected_10_candidates_20260528.html"><b>100社母集団からの再選定</b><span>なぜその10社になったかの確認。</span></a>
-              <a class="node-link" href="847_quantum_physical_ai_channel_20260602.html"><b>量子・フィジカルAI探索枠</b><span>既存候補とは分け、次の時流テーマを継続監視する。</span></a>
+        <p class="mini full">日々見る中心画面です。現在の候補、止める条件、未入力データ、次にやる作業を確認します。</p>
+        <a class="node-link" href="871_june_practical_action_board_20260604.html"><b>6月実用アクションボード</b><span>日程、確認項目、停止条件、次アクション。</span></a>
+        <a class="node-link" href="873_june_gate_decision_engine_20260604.html"><b>6月ゲート判定エンジン</b><span>イベント後の分岐ルールと候補別の扱い。</span></a>
+        <a class="node-link" href="872_june_event_actual_input_sheet_20260604.html"><b>6月イベント実数入力表</b><span>6月CPI、日銀、FOMC、指数、為替、候補別確認の入力欄。</span></a>
+        <a class="node-link" href="869_candidate10_earnings_reaction_rebuild_20260604.html"><b>候補10社 決算後反応</b><span>決算後1日、5日、20営業日の対日経平均反応。</span></a>
+        <a class="node-link" href="870_candidate10_reaction_remaining_schedule_20260604.html"><b>20営業日反応 更新予定</b><span>未到達銘柄の再計算日と扱い。</span></a>
+        <a class="node-link" href="867_candidate10_integrated_update_20260604.html"><b>候補10社 統合データ</b><span>株価、決算、指標、未取得項目の整理。</span></a>
+      </div>
+    </details>
+
+    <details open>
+      <summary>目的2: どの10社を候補にしたか確認する <span class="tag">選定根拠</span></summary>
+      <div class="children">
+        <p class="mini full">100社前後の母集団から、総合、半導体製造装置・材料、データセンター・電力・冷却・電線の3系統で候補を管理します。</p>
+        <a class="node-link" href="theme20_separate_screened10_20260529.html"><b>テーマ別10社</b><span>半導体製造装置・材料、データセンター・電力・冷却・電線を別枠で確認。</span></a>
+        <a class="node-link" href="theme20_final_screened10_20260529.html"><b>テーマ20社からの最終候補</b><span>テーマ候補をスクリーニングした結果。</span></a>
+        <a class="node-link" href="universe100_reselected_10_candidates_20260528.html"><b>100社母集団からの再選定</b><span>母集団、長期安定性、指数比較、下落率の確認。</span></a>
+        <a class="node-link" href="850_universe100_fixed_rulebook_20260603.csv"><b>母集団固定ルール CSV</b><span>なぜこの母集団を見るかのルール。</span></a>
       </div>
     </details>
 
     <details>
-      <summary>目的B: 6月イベント後に買う・待つを判定する <span class="tag warn">購入前</span></summary>
+      <summary>目的3: 質的テーマを扱う <span class="tag warn">補助</span></summary>
       <div class="children">
-        <p class="mini full">CPI、日銀、FOMC後に、条件が悪化していないかを確認します。</p>
-        <a class="node-link" href="june_redecision_input_20260527.html"><b>6月最終再判定 入力画面</b><span>イベント後の実数を入れる画面。</span></a>
-        <a class="node-link" href="june_scenario_simulation_20260527.html"><b>6月シナリオ別候補10社</b><span>良好・中立・悪化ケースで見る。</span></a>
-        <a class="node-link" href="june_redecision_input_20260527.html"><b>6月再判定アクションプラン</b><span>買う、延期、見送りの分岐を入力画面で確認。</span></a>
-        <a class="node-link" href="843_tax_year_end_review_phase2_20260602.html"><b>税制 年末レビュー</b><span>NISAと課税口座の扱いを確認。</span></a>
+        <p class="mini full">質的材料は単純加点せず、仮説、実績、ニュース出所、過去反応に分けて扱います。</p>
+        <a class="node-link" href="qualitative_evidence_taxonomy_20260528.html"><b>質的データ分類</b><span>仮説層、実績層、ニュース出所の分離。</span></a>
+        <a class="node-link" href="qualitative_reflection_matrix_20260528.html"><b>質的データ反映表</b><span>質的材料を購入判断にどう反映するか。</span></a>
+        <a class="node-link" href="847_quantum_physical_ai_channel_20260602.html"><b>量子・フィジカルAI探索枠</b><span>作業中の探索枠。購入候補ではなく調査枠。</span></a>
+        <a class="node-link" href="853_qualitative_theme_validation_gate_20260603.csv"><b>質的テーマ検証ゲート CSV</b><span>テーマが実際に株価へ効いたかを確認する項目。</span></a>
       </div>
     </details>
 
     <details>
-      <summary>目的C: なぜこの銘柄なのかを説明する <span class="tag">根拠</span></summary>
+      <summary>目的4: 税制とNISA口座を確認する <span class="tag red">購入前確認</span></summary>
       <div class="children">
-        <p class="mini full">候補の根拠、長期安定性、S&P比較、質的テーマを確認します。</p>
-        <a class="node-link" href="candidate_10_presentation_brief_20260527.html"><b>候補10社 説明ブリーフ</b><span>説明用の要点整理。</span></a>
-        <a class="node-link" href="723_candidate_continuation_score.csv"><b>継続期待スコアCSV</b><span>5年・10年、S&P差、下落率など。</span></a>
-        <a class="node-link" href="754_qualitative_evidence_taxonomy.csv"><b>質的データ分類</b><span>ニュース・政策・構造優位を分類。</span></a>
-        <a class="node-link" href="755_qualitative_candidate_connection.csv"><b>質的データと候補接続</b><span>テーマを銘柄へどう接続したか。</span></a>
+        <p class="mini full">NISA向き、課税口座向き、損益通算、外国税額控除、配当課税方式は確認補助として扱います。税額の確定表示はしません。</p>
+        <a class="node-link" href="842_tax_aware_operation_layer_phase1_20260602.html"><b>税制レイヤー Phase 1</b><span>NISA、課税口座、損出し、外国税額控除などの確認欄。</span></a>
+        <a class="node-link" href="843_tax_year_end_review_phase2_20260602.html"><b>年末レビュー</b><span>11月以降の損益確認、配当課税、繰越確認。</span></a>
+        <a class="node-link" href="844_nisa_priority_allocation_phase3_20260602.html"><b>NISA枠配分候補</b><span>NISA枠を使う価値がある銘柄か確認。</span></a>
+        <a class="node-link" href="nisa_multi_account_pc_ip_risk_report_20260531.pdf"><b>NISA口座操作時の注意 PDF</b><span>本人操作、本人ログイン、誤解を避ける運用方法の確認。</span></a>
       </div>
     </details>
 
     <details>
-      <summary>目的D: データが足りているか確認する <span class="tag red">検証</span></summary>
+      <summary>目的5: 顧客向け報告書を確認する <span class="tag">報告資料</span></summary>
       <div class="children">
-        <p class="mini full">未確認データはスコアに混ぜず、入力キューで管理します。</p>
-        <a class="node-link" href="814_asof_2025_completion_dashboard_20260602.html"><b>2025当時情報 完了状況</b><span>2025年基準の財務根拠。</span></a>
-        <a class="node-link" href="838_asof_2023_2024_progress_step2_20260602.html"><b>2023/2024入力進捗</b><span>過去時点で同じ判断ができたか。</span></a>
-        <a class="node-link" href="841_asof_2023_2024_remaining_queue_20260602.html"><b>2023/2024未入力キュー</b><span>残り20件の公式IR確認先。</span></a>
-        <a class="node-link" href="829_event_return_calculation_queue_20260602.html"><b>イベント後リターン計算キュー</b><span>CPI、日銀、FOMC後の反応を記録。</span></a>
-      </div>
-    </details>
-
-    <details>
-      <summary>目的E: NISA・税制を確認する <span class="tag warn">税制</span></summary>
-      <div class="children">
-        <p class="mini full">税務判断ではなく、NISA枠、損益通算、配当課税、外国税額控除の確認候補を整理します。</p>
-        <a class="node-link" href="842_tax_aware_operation_layer_phase1_20260602.html"><b>税制レイヤー Phase 1</b><span>税制アクション候補の一覧。</span></a>
-        <a class="node-link" href="843_tax_year_end_review_phase2_20260602.html"><b>税制 年末レビュー Phase 2</b><span>損出し・配当課税・外国税確認。</span></a>
-        <a class="node-link" href="844_nisa_priority_allocation_phase3_20260602.html"><b>NISA枠配分候補 Phase 3</b><span>NISA枠をどこに使うか。</span></a>
-        <a class="node-link" href="reports/tax_prebuy_gate_addendum.csv"><b>購入前ゲート 税制追加CSV</b><span>NISA口座区分などの確認項目。</span></a>
-        <a class="node-link" href="845_advanced_tax_strategy_reference_20260602.html"><b>高度税制確認（上級・確認必須）</b><span>エンジェル税制、デリバティブヘッジ、損失繰越などの別枠。</span></a>\n        <a class="node-link" href="846_advanced_tax_strategy_engine_20260602.html"><b>高度税制確認 実装版</b><span>実ロット入力CSVから上級税制候補を判定。</span></a>
-      </div>
-    </details>
-
-    <details>
-      <summary>目的F: 報告・資料を見る <span class="tag">資料</span></summary>
-      <div class="children">
-        <p class="mini full">進捗報告・提出資料の確認欄です。実用判断は上のA〜Eを優先します。</p>
-        <a class="node-link" href="daily_progress_report_20260602.pdf"><b>2026年6月2日 作業報告PDF</b><span>本日の実施内容、成果物、作業中項目、残作業。</span></a>
-        <a class="node-link" href="daily_progress_report_20260602.html"><b>2026年6月2日 作業報告HTML</b><span>PDFと同じ内容をブラウザで確認。</span></a>
-        <a class="node-link" href="daily_progress_report_20260529.pdf"><b>進捗報告PDF</b><span>日次報告資料。</span></a>
-        <a class="node-link" href="candidate_10_client_explanation_20260527.html"><b>候補10社 説明整理</b><span>説明用の文章・根拠。</span></a>
-        <a class="node-link" href="candidate_10_delivery_hub_20260527.html"><b>納品資料ハブ</b><span>候補10社関連の提出用資料。</span></a>
-        <a class="node-link" href="nisa_multi_account_pc_ip_risk_report_20260531.pdf"><b>NISA名義・操作リスク報告</b><span>本人操作・別名義口座の注意点。</span></a>
+        <p class="mini full">提出用の報告資料です。未確認事項や作業中項目は確定情報のように表示しません。</p>
+        <a class="node-link" href="daily_progress_report_20260603.pdf"><b>2026年6月3日 作業報告 PDF</b><span>進捗、残タスク、次工程の整理。</span></a>
+        <a class="node-link" href="daily_progress_report_20260602.pdf"><b>2026年6月2日 作業報告 PDF</b><span>税制レイヤーと量子・フィジカルAI探索枠。</span></a>
+        <a class="node-link" href="system_spec_schedule.pdf"><b>仕様・工程説明 PDF</b><span>システムの目的、できること、工期。</span></a>
       </div>
     </details>
   </section>
 
-  <h2>見る順番</h2>
-  <table>
-    <thead><tr><th>順番</th><th>見るもの</th><th>判断すること</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>実用ダッシュボード</td><td>今日、何を確認するか。</td></tr>
-      <tr><td>2</td><td>候補10社・NISA枠配分</td><td>どの候補を中心に見るか。</td></tr>
-      <tr><td>3</td><td>6月イベント後の再判定</td><td>CPI、日銀、FOMC後に買える状態か。</td></tr>
-      <tr><td>4</td><td>データ未入力キュー</td><td>まだ根拠不足の銘柄をスコアに混ぜていないか。</td></tr>
-      <tr><td>5</td><td>税制レイヤー</td><td>NISAで買うか、課税口座で扱うか。</td></tr>
-    </tbody>
-  </table>
-
-  <div class="footer-links">
-    <a href="https://github.com/ob198-cpu/kabu">GitHub</a>
-    <a href="README.md">README</a>
-    <a href="858_practical_today_dashboard_20260603.html">今日見る画面</a>
-    <a href="practical_action_dashboard_20260528.html">実用ダッシュボード</a>
-  </div>
+  <footer>
+    更新: 2026年6月4日。ホーム画面は、日々使う実用パートを先頭にし、資料は補足として確認する構成に整理しています。
+  </footer>
 </main>
 </body>
 </html>
