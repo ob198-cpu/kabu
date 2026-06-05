@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA購入準備 進捗ダッシュボード 2026/06/05</title>
+  <style>
+    :root { --ink:#061f36; --navy:#123d63; --blue:#0b5f96; --line:#c8dbea; --bg:#eef4fa; --amber:#a85b00; --green:#087443; --red:#b42318; --pale:#f8fbff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.72; }
+    main { max-width:1280px; margin:0 auto; padding:24px 18px 70px; }
+    header { background:var(--navy); color:#fff; border-radius:18px; padding:28px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    header p { margin:0; color:#dbeafe; }
+    section { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; margin:16px 0; }
+    h2 { color:var(--navy); border-left:8px solid var(--blue); padding-left:12px; margin:0 0 12px; }
+    .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { background:var(--pale); border:1px solid var(--line); border-radius:14px; padding:14px; }
+    .card b { display:block; color:var(--navy); font-size:18px; }
+    .num { font-size:28px; font-weight:900; color:var(--blue); }
+    .note { background:#fff7e6; border:1px solid #f0c36a; border-left:7px solid var(--amber); border-radius:12px; padding:12px 14px; font-weight:700; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:13px; word-break:break-word; }
+    th { background:#e3f0fa; color:var(--navy); text-align:left; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 9px; color:#fff; font-weight:900; font-size:12px; }
+    .green { background:var(--green); }
+    .amber { background:var(--amber); }
+    .red { background:var(--red); }
+    .blue { background:var(--blue); }
+    .links { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .links a { text-decoration:none; border:1px solid var(--blue); border-radius:10px; padding:10px 12px; color:var(--navy); background:var(--pale); font-weight:800; }
+    @media(max-width:1000px){ .cards,.links{grid-template-columns:1fr;} table{table-layout:auto;} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>NISA購入準備 進捗ダッシュボード</h1>
+    <p>再来週の購入判断に向け、証券会社確認、本人別準備、市場イベント、注文票の進捗を一画面で確認します。</p>
+  </header>
+
+  <section>
+    <h2>現在の進捗</h2>
+    <div class="cards">
+      <div class="card"><b>証券会社確認</b><div class="num">0/8</div><span>回答入力前。確認先は作成済み。</span></div>
+      <div class="card"><b>本人別準備</b><div class="num">0/4</div><span>本人A〜Dの確認欄を用意済み。</span></div>
+      <div class="card"><b>市場イベント</b><div class="num">0/3</div><span>CPI・日銀・FOMCの実数入力待ち。</span></div>
+      <div class="card"><b>注文票</b><div class="num">0/3</div><span>テンプレート作成済み。確定は6月ゲート後。</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>今日から埋める項目</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:15%">区分</th>
+            <th style="width:25%">入力するもの</th>
+            <th style="width:25%">確認先</th>
+            <th style="width:20%">完了条件</th>
+            <th style="width:15%">状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>証券会社</td>
+            <td>NISA口座で代理人注文が可能か。</td>
+            <td>SBI、楽天、三菱UFJ eスマート、対面証券など。</td>
+            <td>回答を確認シートに記録。</td>
+            <td><span class="pill amber">未入力</span></td>
+          </tr>
+          <tr>
+            <td>本人別</td>
+            <td>NISA口座、本人スマホ、ログイン、入金、投資可能額。</td>
+            <td>本人A〜D。</td>
+            <td>購入可/保留/延期を分類。</td>
+            <td><span class="pill amber">未入力</span></td>
+          </tr>
+          <tr>
+            <td>市場イベント</td>
+            <td>CPI、日銀、FOMC後の金利・為替・指数反応。</td>
+            <td>6月イベント実数入力表。</td>
+            <td>ゲート判定エンジンへ入力。</td>
+            <td><span class="pill amber">待機</span></td>
+          </tr>
+          <tr>
+            <td>注文票</td>
+            <td>本人別の銘柄、金額、口座区分、買わない条件。</td>
+            <td>本人別注文票。</td>
+            <td>6月ゲート通過後に作成。</td>
+            <td><span class="pill amber">準備中</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>次アクション</h2>
+    <div class="note">
+      まず証券会社へ代理人制度の確認を行い、回答を確認シートへ入力します。並行して、本人別にNISA口座・ログイン・入金状況を確認します。市場イベントは6月CPI、日銀、FOMC後に実数を入れ、購入票を確定します。
+    </div>
+  </section>
+
+  <section>
+    <h2>ルート別の現在位置</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:18%">ルート</th>
+            <th style="width:32%">現在の状態</th>
+            <th style="width:25%">進める条件</th>
+            <th style="width:25%">止まる条件</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill green">A 正式代理</span></td>
+            <td>制度確認前。</td>
+            <td>NISA代理注文可、再来週に間に合う。</td>
+            <td>NISA不可、照会のみ、開始が遅い。</td>
+          </tr>
+          <tr>
+            <td><span class="pill amber">B 本人発注</span></td>
+            <td>本人別確認前。</td>
+            <td>本人スマホ、ログイン、入金、NISA口座が整う。</td>
+            <td>本人操作不可、NISA口座未開設。</td>
+          </tr>
+          <tr>
+            <td><span class="pill blue">C 中期移行</span></td>
+            <td>候補として保持。</td>
+            <td>代理制度・IFA・ラップのいずれかが現実的。</td>
+            <td>コストや手続負担が大きすぎる。</td>
+          </tr>
+          <tr>
+            <td><span class="pill red">D 購入延期</span></td>
+            <td>該当者が出た場合に使用。</td>
+            <td>本人操作も代理制度も整わない。</td>
+            <td>口座体制が整えば再判定。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ファイル</h2>
+    <div class="links">
+      <a href="882_nisa_account_operation_hub_20260605.html">NISA口座運用ハブ</a>
+      <a href="875_nisa_broker_confirmation_matrix_20260605.html">証券会社確認シート</a>
+      <a href="878_nisa_person_account_execution_tracker_20260605.html">本人別実行管理表</a>
+      <a href="879_nisa_person_order_ticket_20260605.html">本人別注文票</a>
+      <a href="883_nisa_readiness_dashboard_20260605.csv">CSV</a>
+      <a href="index.html">ホームへ戻る</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
