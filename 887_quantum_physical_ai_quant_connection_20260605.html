@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>フィジカルAI・量子 既存数値接続チェック</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--good:#0b6b4f;--hold:#a85b00;--watch:#455a6f;--bad:#b42318}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7}
+    header{background:var(--navy);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:0;line-height:1.25}
+    header p{margin:0;color:white;font-weight:800}
+    main{max-width:1460px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .notice{border-left:7px solid #b76500;background:#fff7e7;color:#111;padding:12px 14px;margin:12px 0;font-weight:800;border-radius:8px}
+    .summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;padding:13px;background:#fbfdff}
+    .card b{display:block;color:var(--navy);font-size:17px;margin-bottom:4px}.card strong{display:block;font-size:28px;color:var(--blue)}
+    .links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:white}
+    table{width:100%;border-collapse:collapse;min-width:1380px;table-layout:fixed;font-size:13px}
+    th,td{border:1px solid var(--line);padding:8px;vertical-align:top;overflow-wrap:anywhere;word-break:break-word;color:#111}
+    th{background:#e5f1fa;color:#073b62;text-align:left;font-weight:900}
+    .badge{display:inline-block;border-radius:999px;color:white;padding:4px 9px;font-weight:900;font-size:12px}
+    .badge.good{background:var(--good)}.badge.hold{background:var(--hold)}.badge.watch{background:var(--watch)}.badge.bad{background:var(--bad)}
+    @media(max-width:980px){main{padding:12px}.summary{grid-template-columns:1fr}table{min-width:1180px}}
+    @media print{section{box-shadow:none;break-inside:avoid}.panel{display:block}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>フィジカルAI・量子 既存数値接続チェック</h1>
+  <p>作成: 2026/06/05 13:48 / 新しく作ったテーマ候補20社を、既存の100社スクリーニング数値へ接続した確認表です。</p>
+</header>
+<main>
+  <section>
+    <h2>1. 結論</h2>
+    <p class="notice">この画面では、新しい予測利回りを作っていません。既存の100社スクリーニング表にある実データだけを接続し、数値確認済み、観察、保留、数値接続前に分けています。テーマだけで購入候補に昇格させないための確認画面です。</p>
+    <div class="summary">
+      <div class="card"><b>フィジカルAI 数値確認済み</b><strong>1</strong><span>既存100社数値で確認できた件数</span></div>
+      <div class="card"><b>フィジカルAI 保留/観察</b><strong>6</strong><span>不足・警戒条件あり</span></div>
+      <div class="card"><b>量子 数値確認済み</b><strong>0</strong><span>現時点では購入候補化しない</span></div>
+      <div class="card"><b>量子 接続前/観察</b><strong>10</strong><span>長期探索または追加確認</span></div>
+    </div>
+    <div class="links">
+      <a href="887_quantum_physical_ai_quant_connection_20260605.csv">CSVを開く</a>
+      <a href="886_quantum_physical_ai_screening_20260605.html">候補整理へ戻る</a>
+      <a href="index.html">ホームへ戻る</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. フィジカルAI</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:46px">順位</th><th style="width:210px">銘柄</th><th style="width:120px">数値ゲート</th><th style="width:80px">既存スコア</th><th style="width:120px">PER/PBR/ROE</th><th style="width:120px">決算成長</th><th style="width:120px">株価反応</th><th style="width:120px">下落/位置</th><th>判定理由</th><th>次アクション</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td>1</td>
+        <td><b>6762.T TDK</b><br><small>センサー、電源、バッテリー、電子部品</small></td>
+        <td><span class="badge good">数値確認済み</span><br><small>接続済み / 100%</small></td>
+        <td>66</td>
+        <td>PER 26.7<br>PBR 2.75<br>ROE 9.81</td>
+        <td>売上 13.6%<br>利益 21.5%</td>
+        <td>60日 30.4%<br>1年 105.9%</td>
+        <td>200日 41.1%<br>最大下落 -20%</td>
+        <td>既存100社スコアと主要指標の入力率は確認済み。決算後反応・受注確認へ進める。</td>
+        <td>電源・センサー寄与と電子部品サイクルを分ける</td>
+      </tr>
+    
+      <tr>
+        <td>2</td>
+        <td><b>6954.T ファナック</b><br><small>FA、CNC、産業用ロボット</small></td>
+        <td><span class="badge watch">観察</span><br><small>接続済み / 100%</small></td>
+        <td>52</td>
+        <td>PER 38.82<br>PBR 3.85<br>ROE 9.28</td>
+        <td>売上 7.6%<br>利益 15.7%</td>
+        <td>60日 21.2%<br>1年 96.1%</td>
+        <td>200日 38.5%<br>最大下落 -25.5%</td>
+        <td>数値は接続できたが、購入候補化には追加確認が必要。</td>
+        <td>過去5年/10年の指数差と決算後反応を接続する</td>
+      </tr>
+    
+      <tr>
+        <td>3</td>
+        <td><b>6861.T キーエンス</b><br><small>センサー、画像処理、FAデータ取得</small></td>
+        <td><span class="badge watch">観察</span><br><small>接続済み / 89%</small></td>
+        <td>50</td>
+        <td>PER 未取得<br>PBR 5.4<br>ROE 13.53</td>
+        <td>売上 10.4%<br>利益 8.4%</td>
+        <td>60日 32.2%<br>1年 24.4%</td>
+        <td>200日 30.4%<br>最大下落 -18.3%</td>
+        <td>数値は接続できたが、購入候補化には追加確認が必要。</td>
+        <td>PER水準と利益率の安定性を入れる</td>
+      </tr>
+    
+      <tr>
+        <td>4</td>
+        <td><b>6594.T ニデック</b><br><small>モーター、アクチュエータ、駆動部品</small></td>
+        <td><span class="badge watch">観察</span><br><small>接続済み / 89%</small></td>
+        <td>50</td>
+        <td>PER 未取得<br>PBR 1.7<br>ROE 9.81</td>
+        <td>売上 11.1%<br>利益 47.1%</td>
+        <td>60日 11.9%<br>1年 -4.3%</td>
+        <td>200日 8.8%<br>最大下落 -20.1%</td>
+        <td>数値は接続できたが、購入候補化には追加確認が必要。</td>
+        <td>セグメント別の利益率と成長源を整理する</td>
+      </tr>
+    
+      <tr>
+        <td>5</td>
+        <td><b>6273.T SMC</b><br><small>空圧制御、自動化部品</small></td>
+        <td><span class="badge hold">保留</span><br><small>接続済み / 100%</small></td>
+        <td>36</td>
+        <td>PER 23.84<br>PBR 1.92<br>ROE 8.28</td>
+        <td>売上 6.4%<br>利益 0.2%</td>
+        <td>60日 -9.5%<br>1年 17.7%</td>
+        <td>200日 10.1%<br>最大下落 -23.7%</td>
+        <td>既存100社スコア50点未満 / リスク減点が大きい</td>
+        <td>公式決算の地域別売上と利益率を入れる</td>
+      </tr>
+    
+      <tr>
+        <td>6</td>
+        <td><b>6645.T オムロン</b><br><small>制御機器、センシング、FA</small></td>
+        <td><span class="badge hold">保留</span><br><small>接続済み / 100%</small></td>
+        <td>54</td>
+        <td>PER 38.7<br>PBR 1.27<br>ROE 3.54</td>
+        <td>売上 -4.3%<br>利益 10.9%</td>
+        <td>60日 12.9%<br>1年 40%</td>
+        <td>200日 24.5%<br>最大下落 -22.7%</td>
+        <td>リスク減点が大きい</td>
+        <td>直近決算で制御機器の回復を確認する</td>
+      </tr>
+    
+      <tr>
+        <td>7</td>
+        <td><b>6981.T 村田製作所</b><br><small>センサー、通信部品、電子部品</small></td>
+        <td><span class="badge hold">保留</span><br><small>接続済み / 100%</small></td>
+        <td>58</td>
+        <td>PER 41.64<br>PBR 4.49<br>ROE 8.83</td>
+        <td>売上 5%<br>利益 0.8%</td>
+        <td>60日 86.3%<br>1年 223.7%</td>
+        <td>200日 98.8%<br>最大下落 -19.3%</td>
+        <td>1年急騰後</td>
+        <td>スマホ依存とAI/自動車/産業向けの寄与を分ける</td>
+      </tr>
+    
+      <tr>
+        <td>8</td>
+        <td><b>6506.T 安川電機</b><br><small>産業用ロボット、サーボ、モーション制御</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>公式決算短信と決算説明資料から受注・利益率を入れる</td>
+      </tr>
+    
+      <tr>
+        <td>9</td>
+        <td><b>6324.T ハーモニック・ドライブ・システムズ</b><br><small>精密減速機、ロボット関節部品</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>受注回復と損益改善を確認する</td>
+      </tr>
+    
+      <tr>
+        <td>10</td>
+        <td><b>6479.T ミネベアミツミ</b><br><small>モーター、センサー、精密部品</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>ロボット・産業機器向け売上の確認</td>
+      </tr>
+    </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 量子コンピューター</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:46px">順位</th><th style="width:210px">銘柄</th><th style="width:120px">数値ゲート</th><th style="width:80px">既存スコア</th><th style="width:120px">PER/PBR/ROE</th><th style="width:120px">決算成長</th><th style="width:120px">株価反応</th><th style="width:120px">下落/位置</th><th>判定理由</th><th>次アクション</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td>1</td>
+        <td><b>6702.T 富士通</b><br><small>国産量子コンピューター、HPC、企業向け計算基盤</small></td>
+        <td><span class="badge watch">観察</span><br><small>接続済み / 100%</small></td>
+        <td>53</td>
+        <td>PER 18.07<br>PBR 2.77<br>ROE 23.87</td>
+        <td>売上 -1.3%<br>利益 31.4%</td>
+        <td>60日 -12.5%<br>1年 0.8%</td>
+        <td>200日 -14.2%<br>最大下落 -20.8%</td>
+        <td>数値は接続できたが、購入候補化には追加確認が必要。</td>
+        <td>HPC、AI基盤、量子の寄与を分けて確認する</td>
+      </tr>
+    
+      <tr>
+        <td>2</td>
+        <td><b>6501.T 日立製作所</b><br><small>研究開発、HPC、制御、産業DXへの量子活用余地</small></td>
+        <td><span class="badge watch">観察</span><br><small>接続済み / 100%</small></td>
+        <td>53</td>
+        <td>PER 26.81<br>PBR 3.47<br>ROE 12.93</td>
+        <td>売上 8.2%<br>利益 24.6%</td>
+        <td>60日 3.1%<br>1年 32.8%</td>
+        <td>200日 6.7%<br>最大下落 -14.6%</td>
+        <td>数値は接続できたが、購入候補化には追加確認が必要。</td>
+        <td>既存総合候補との重複評価を整理する</td>
+      </tr>
+    
+      <tr>
+        <td>3</td>
+        <td><b>6503.T 三菱電機</b><br><small>量子暗号、防衛、FA、電力制御の周辺技術</small></td>
+        <td><span class="badge watch">観察</span><br><small>接続済み / 100%</small></td>
+        <td>58</td>
+        <td>PER 26.09<br>PBR 2.76<br>ROE 9.67</td>
+        <td>売上 6.8%<br>利益 10.5%</td>
+        <td>60日 7.7%<br>1年 108.2%</td>
+        <td>200日 29%<br>最大下落 -16.8%</td>
+        <td>数値は接続できたが、購入候補化には追加確認が必要。</td>
+        <td>量子ではなく電力・FA側の評価と接続する</td>
+      </tr>
+    
+      <tr>
+        <td>4</td>
+        <td><b>6701.T NEC</b><br><small>量子アニーリング、量子活用サービス、AI/通信/防衛IT</small></td>
+        <td><span class="badge hold">保留</span><br><small>接続済み / 89%</small></td>
+        <td>48</td>
+        <td>PER 未取得<br>PBR 2.51<br>ROE 13.03</td>
+        <td>売上 4.7%<br>利益 40.3%</td>
+        <td>60日 2.9%<br>1年 14.4%</td>
+        <td>200日 -13.3%<br>最大下落 -15.8%</td>
+        <td>既存100社スコア50点未満</td>
+        <td>量子関連案件と防衛IT・AI基盤の寄与を分ける</td>
+      </tr>
+    
+      <tr>
+        <td>5</td>
+        <td><b>9432.T NTT</b><br><small>IOWN、光電融合、量子暗号、次世代通信基盤</small></td>
+        <td><span class="badge hold">保留</span><br><small>接続済み / 100%</small></td>
+        <td>40</td>
+        <td>PER 12.81<br>PBR 1.29<br>ROE 10.4</td>
+        <td>売上 5.1%<br>利益 3.4%</td>
+        <td>60日 0.8%<br>1年 1%</td>
+        <td>200日 -0.9%<br>最大下落 -6.7%</td>
+        <td>既存100社スコア50点未満</td>
+        <td>通信安定枠としての役割を確認する</td>
+      </tr>
+    
+      <tr>
+        <td>6</td>
+        <td><b>9613.T NTTデータグループ</b><br><small>量子計算の企業導入、SI、コンサル実装</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>導入支援案件と財務指標を確認する</td>
+      </tr>
+    
+      <tr>
+        <td>7</td>
+        <td><b>3687.T フィックスターズ</b><br><small>高速化ソフト、量子アニーリング関連の調査候補</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>公式IRと長期株価指標を確認する</td>
+      </tr>
+    
+      <tr>
+        <td>8</td>
+        <td><b>4307.T 野村総合研究所</b><br><small>金融・企業向け高度計算、導入支援の可能性</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>量子関連案件が公式に確認できるか調べる</td>
+      </tr>
+    
+      <tr>
+        <td>9</td>
+        <td><b>3626.T TIS</b><br><small>企業向けIT、金融IT、先端技術導入支援の可能性</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>公式資料で量子関連案件の有無を確認する</td>
+      </tr>
+    
+      <tr>
+        <td>10</td>
+        <td><b>4812.T 電通総研</b><br><small>企業DX、数理最適化、研究開発支援の可能性</small></td>
+        <td><span class="badge bad">数値接続前</span><br><small>未接続 / 0%</small></td>
+        <td>未接続</td>
+        <td>PER 未取得<br>PBR 未取得<br>ROE 未取得</td>
+        <td>売上 未取得%<br>利益 未取得%</td>
+        <td>60日 未取得%<br>1年 未取得%</td>
+        <td>200日 未取得%<br>最大下落 未取得%</td>
+        <td>既存100社スクリーニング表に同一tickerがないため、購入候補判定には使わない。</td>
+        <td>量子・HPC・数理最適化関連の公式開示を確認する</td>
+      </tr>
+    </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. 次の実作業</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>優先</th><th>作業</th><th>理由</th><th>完了条件</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>フィジカルAIの未接続・保留銘柄にPER/PBR/ROE、受注、利益率を入れる。</td><td>実需に近いため、購入候補化の可能性が量子より高い。</td><td>数値ゲートが「数値確認済み」または「保留理由明確」になる。</td></tr>
+          <tr><td>2</td><td>量子は公式IRで商用化・売上寄与・受注を確認する。</td><td>国策テーマでも、1年保有では売上寄与が見えないと購入候補にしにくい。</td><td>量子関連の売上・案件が公式資料で確認できる。</td></tr>
+          <tr><td>3</td><td>既存10社、半導体、データセンター、フィジカルAIを横並び比較する。</td><td>テーマ別にバラバラだと、最終10社に入れる理由が弱くなる。</td><td>同じ列、同じゲート、同じ未取得ルールで比較できる。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>
