@@ -39,7 +39,7 @@ const rows = [
     currentUse: "構造需要候補",
     promoteCondition: "電力・送配電・光通信・冷却需要が決算や受注に出ている。直近急騰だけでなく利益率・受注残で説明できる。",
     rejectCondition: "テーマは強いが株価に織り込み済み、急騰後、受注・利益率が確認できない。",
-    action: "6月テストで最も現実的に比較するテーマ枠。既存総合候補と重複する銘柄は総合側で扱う。",
+    action: "6月テストで現実的に比較するテーマ枠。既存総合候補と重複する銘柄は総合側で扱う。",
     reason: "AI需要からデータセンター、電力、通信、冷却へ資金流入する連鎖を説明しやすい。",
   },
   {
@@ -85,12 +85,18 @@ const esc = (value) => String(value ?? "")
   .replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;");
 
+function badgeClass(currentUse) {
+  if (currentUse.includes("基準") || currentUse.includes("構造")) return "good";
+  if (currentUse.includes("長期")) return "watch";
+  return "hold";
+}
+
 function tableRows() {
   return rows.map((row) => `
     <tr>
       <td>${esc(row.step)}</td>
       <td><b>${esc(row.lane)}</b><br><small>${esc(row.target)}</small></td>
-      <td><span class="badge ${row.currentUse.includes("基準") || row.currentUse.includes("構造") ? "good" : row.currentUse.includes("長期") ? "watch" : "hold"}">${esc(row.currentUse)}</span></td>
+      <td><span class="badge ${badgeClass(row.currentUse)}">${esc(row.currentUse)}</span></td>
       <td>${esc(row.promoteCondition)}</td>
       <td>${esc(row.rejectCondition)}</td>
       <td>${esc(row.action)}</td>
@@ -129,7 +135,7 @@ const html = `<!doctype html>
 <body>
 <header>
   <h1>6月テーマ候補 統合ゲート</h1>
-  <p>作成: ${esc(generatedAt)} / テーマ候補を6月NISAテストに入れるかどうかを、既存候補と同じ条件で判断するための表です。</p>
+  <p>作成: ${esc(generatedAt)} / テーマ候補を6月NISAテストに入れるかどうかを、既存候補と同じ条件で判定するための表です。</p>
 </header>
 <main>
   <section>
@@ -142,6 +148,7 @@ const html = `<!doctype html>
     </div>
     <div class="links">
       <a href="890_june_theme_integration_gate_20260605.csv">CSVを開く</a>
+      <a href="891_june_theme_execution_matrix_20260605.html">6月テーマ候補 実行判定表</a>
       <a href="889_cross_channel_candidate_comparison_20260605.html">テーマ別候補 横並び比較</a>
       <a href="888_quantum_physical_ai_promotion_queue_20260605.html">フィジカルAI・量子 昇格作業キュー</a>
       <a href="index.html">ホームへ戻る</a>
@@ -153,7 +160,7 @@ const html = `<!doctype html>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th style="width:48px">順</th><th style="width:210px">枠/対象</th><th style="width:120px">現時点の扱い</th><th>昇格条件</th><th>見送り条件</th><th>実行すること</th><th>理由</th></tr>
+          <tr><th style="width:48px">順</th><th style="width:210px">枠/対象</th><th style="width:120px">現在の扱い</th><th>昇格条件</th><th>見送り条件</th><th>実行すること</th><th>理由</th></tr>
         </thead>
         <tbody>${tableRows()}</tbody>
       </table>
@@ -181,12 +188,12 @@ const csv = [headers.join(","), ...rows.map((row) => headers.map((header) => csv
 fs.writeFileSync(path.join(ROOT, "890_june_theme_integration_gate_20260605.csv"), `\uFEFF${csv}\n`, "utf8");
 fs.writeFileSync(path.join(ROOT, "890_june_theme_integration_gate_20260605.html"), html, "utf8");
 
+const link = '<a class="button secondary" href="890_june_theme_integration_gate_20260605.html">6月テーマ候補 統合ゲート</a>';
 for (const file of ["index.html", "practical_action_dashboard_20260528.html", "889_cross_channel_candidate_comparison_20260605.html"]) {
   const filePath = path.join(ROOT, file);
   if (!fs.existsSync(filePath)) continue;
   let text = fs.readFileSync(filePath, "utf8");
   if (text.includes("890_june_theme_integration_gate_20260605.html")) continue;
-  const link = '<a class="button secondary" href="890_june_theme_integration_gate_20260605.html">6月テーマ候補 統合ゲート</a>';
   if (text.includes("889_cross_channel_candidate_comparison_20260605.html")) {
     text = text.replace(/(<a[^>]+href="889_cross_channel_candidate_comparison_20260605\.html"[^>]*>.*?<\/a>)/s, `$1\n      ${link}`);
   } else if (text.includes("</section>")) {
