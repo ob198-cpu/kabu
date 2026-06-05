@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>フィジカルAI・量子コンピューター候補 整理表</title>
+  <style>
+    :root {
+      --ink:#061827;
+      --navy:#103b60;
+      --blue:#0b67a3;
+      --line:#c9dceb;
+      --bg:#f4f8fb;
+      --good:#0b6b4f;
+      --hold:#a85b00;
+      --watch:#455a6f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", Meiryo, sans-serif;
+      line-height: 1.7;
+    }
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 30px;
+    }
+    header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: 0;
+      line-height: 1.25;
+    }
+    header p {
+      margin: 0;
+      color: white;
+      font-weight: 800;
+    }
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+    section {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      margin: 0 0 18px;
+      box-shadow: 0 8px 20px rgba(20,60,90,.08);
+      page-break-inside: avoid;
+    }
+    h2 {
+      margin: 0 0 12px;
+      border-left: 8px solid var(--blue);
+      padding-left: 12px;
+      color: var(--navy);
+      font-size: 24px;
+    }
+    .notice {
+      border-left: 7px solid #b76500;
+      background: #fff7e7;
+      color: #111;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-weight: 800;
+      border-radius: 8px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 13px;
+      background: #fbfdff;
+    }
+    .card b {
+      display: block;
+      color: var(--navy);
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+    .card strong {
+      display: block;
+      font-size: 28px;
+      color: var(--blue);
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+    .tab {
+      border: 1px solid var(--blue);
+      background: white;
+      color: var(--blue);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .tab.active {
+      background: var(--blue);
+      color: white;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1320px;
+      table-layout: fixed;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: #111;
+    }
+    th {
+      background: #e5f1fa;
+      color: #073b62;
+      text-align: left;
+      font-weight: 900;
+    }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      color: white;
+      padding: 4px 9px;
+      font-weight: 900;
+      font-size: 12px;
+    }
+    .badge.good { background: var(--good); }
+    .badge.hold { background: var(--hold); }
+    .badge.watch { background: var(--watch); }
+    .links a {
+      display: inline-block;
+      margin: 6px 8px 0 0;
+      background: var(--blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-weight: 900;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f8fbff;
+      padding: 12px;
+      font-weight: 800;
+    }
+    @media (max-width: 980px) {
+      main { padding: 12px; }
+      .summary, .flow { grid-template-columns: 1fr; }
+      table { min-width: 1180px; }
+    }
+    @media print {
+      header { padding: 20px; }
+      main { padding: 12px; }
+      section { box-shadow: none; break-inside: avoid; }
+      .tabs { display: none; }
+      .panel { display: block; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>フィジカルAI・量子コンピューター候補 整理表</h1>
+  <p>作成: 2026/06/05 13:42 / 既存の購入候補とは分け、テーマ候補を購入候補へ上げてよいかを確認する画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>1. 結論</h2>
+    <p class="notice">フィジカルAIは、ロボット・制御・センサー・モーターなど実需に近いため、数値補完後にテスト候補へ昇格できる可能性があります。量子コンピューターは、国策・研究開発テーマとして重要ですが、1年NISAで株価に効く売上寄与が見えにくいため、現時点では購入候補ではなく探索枠です。</p>
+    <div class="summary">
+      <div class="card"><b>フィジカルAI</b><strong>10社</strong><span>優先補完・優先検証を開始</span></div>
+      <div class="card"><b>量子コンピューター</b><strong>10社</strong><span>探索枠。購入候補化はまだ不可</span></div>
+      <div class="card"><b>購入候補への昇格条件</b><strong>数値通過</strong><span>PER/PBR/ROE、CAGR、指数差、決算反応、受注を確認</span></div>
+    </div>
+    <div class="links">
+      <a href="886_quantum_physical_ai_screening_20260605.csv">CSVを開く</a>
+      <a href="847_quantum_physical_ai_channel_20260602.html">旧探索枠</a>
+      <a href="practical_action_dashboard_20260528.html">実用パートへ戻る</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 購入候補へ上げるまでの手順</h2>
+    <div class="flow">
+      <div class="step">1. テーマ仮説を置く</div>
+      <div class="step">2. 公式IR・決算で売上寄与を確認</div>
+      <div class="step">3. PER/PBR/ROE・CAGR・下落率を入力</div>
+      <div class="step">4. 決算後反応・受注・指数差を検証</div>
+      <div class="step">5. 通過銘柄だけテスト候補へ昇格</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 候補一覧</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab active" type="button" data-tab="physical">フィジカルAI</button>
+      <button class="tab" type="button" data-tab="quantum">量子コンピューター</button>
+    </div>
+    <div class="panel active" id="physical">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:48px">順位</th>
+              <th style="width:210px">銘柄</th>
+              <th style="width:100px">現状</th>
+              <th>構造仮説</th>
+              <th>根拠の状態</th>
+              <th style="width:90px">数値</th>
+              <th>不足データ</th>
+              <th>購入候補での扱い</th>
+              <th>次アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+    <tr>
+      <td>1</td>
+      <td><b>6954.T ファナック</b><br><small>FA、CNC、産業用ロボット</small></td>
+      <td><span class="badge good">優先検証</span></td>
+      <td>工場自動化とロボット需要の代表銘柄。フィジカルAIの実需確認に使いやすい。</td>
+      <td>既存100社データあり。ロボット受注、工作機械需要、在庫循環を確認する。</td>
+      <td>一部あり</td>
+      <td>決算後反応、受注、為替感応度</td>
+      <td>既存スコア通過後にテスト候補へ昇格可</td>
+      <td>過去5年/10年の指数差と決算後反応を接続する</td>
+    </tr>
+  
+    <tr>
+      <td>2</td>
+      <td><b>6506.T 安川電機</b><br><small>産業用ロボット、サーボ、モーション制御</small></td>
+      <td><span class="badge good">優先補完</span></td>
+      <td>AIが現実空間で動く場合、ロボット・制御機器・モーター需要が増えるという構造仮説に近い。</td>
+      <td>事業実体あり。受注、地域別需要、営業利益率、設備投資サイクルの確認が必要。</td>
+      <td>追加取得</td>
+      <td>PER/PBR/ROE、直近決算、受注、1年/5年/10年指数差</td>
+      <td>購入候補ではなく、数値補完後に候補化を判定</td>
+      <td>公式決算短信と決算説明資料から受注・利益率を入れる</td>
+    </tr>
+  
+    <tr>
+      <td>3</td>
+      <td><b>6861.T キーエンス</b><br><small>センサー、画像処理、FAデータ取得</small></td>
+      <td><span class="badge good">優先補完</span></td>
+      <td>AIが物理空間を見るための入力データ、検査、センサー側の中核候補。</td>
+      <td>高収益企業だが高PERになりやすい。割高耐性と金利上昇時の下落確認が必要。</td>
+      <td>追加取得</td>
+      <td>PER/PBR/ROE、利益率、海外売上、過去下落率</td>
+      <td>割高確認を通るまで購入候補にしない</td>
+      <td>PER水準と利益率の安定性を入れる</td>
+    </tr>
+  
+    <tr>
+      <td>4</td>
+      <td><b>6762.T TDK</b><br><small>センサー、電源、バッテリー、電子部品</small></td>
+      <td><span class="badge hold">複合候補</span></td>
+      <td>フィジカルAI、AIサーバー、電源、センサーの複合テーマ候補。</td>
+      <td>既存候補。電子部品サイクルとスマホ需要の影響を分ける必要がある。</td>
+      <td>一部あり</td>
+      <td>テーマ別売上寄与、決算後反応</td>
+      <td>既存候補と重複するため、単独枠ではなく総合枠で確認</td>
+      <td>電源・センサー寄与と電子部品サイクルを分ける</td>
+    </tr>
+  
+    <tr>
+      <td>5</td>
+      <td><b>6273.T SMC</b><br><small>空圧制御、自動化部品</small></td>
+      <td><span class="badge hold">補完後再判定</span></td>
+      <td>ロボット単体ではなく工場全体の自動化部品として需要波及を見る候補。</td>
+      <td>設備投資サイクルに左右される。地域別需要と利益率を確認する。</td>
+      <td>追加取得</td>
+      <td>株価指標、決算、地域別需要、営業利益率</td>
+      <td>購入候補ではなく観察候補</td>
+      <td>公式決算の地域別売上と利益率を入れる</td>
+    </tr>
+  
+    <tr>
+      <td>6</td>
+      <td><b>6594.T ニデック</b><br><small>モーター、アクチュエータ、駆動部品</small></td>
+      <td><span class="badge hold">補完後再判定</span></td>
+      <td>ロボット駆動部品としての接続はあるが、事業範囲が広く寄与分離が必要。</td>
+      <td>EV、精密小型モーター、ロボット向け寄与の分離が必要。</td>
+      <td>追加取得</td>
+      <td>セグメント寄与、利益率、PER/PBR/ROE</td>
+      <td>テーマ寄与が見えるまで購入候補にしない</td>
+      <td>セグメント別の利益率と成長源を整理する</td>
+    </tr>
+  
+    <tr>
+      <td>7</td>
+      <td><b>6645.T オムロン</b><br><small>制御機器、センシング、FA</small></td>
+      <td><span class="badge hold">回復確認</span></td>
+      <td>制御・センシング枠。ただし業績回復が確認できないとテーマだけになる。</td>
+      <td>構造改革・業績底打ち確認が必要。</td>
+      <td>追加取得</td>
+      <td>業績回復、受注、利益率、決算後反応</td>
+      <td>業績確認まで購入候補にしない</td>
+      <td>直近決算で制御機器の回復を確認する</td>
+    </tr>
+  
+    <tr>
+      <td>8</td>
+      <td><b>6324.T ハーモニック・ドライブ・システムズ</b><br><small>精密減速機、ロボット関節部品</small></td>
+      <td><span class="badge hold">小型高感応</span></td>
+      <td>ロボット関節の高感応候補。需要回復時の反応は大きい可能性がある。</td>
+      <td>小型・高ボラ。赤字/黒字、受注回復、財務安全性の確認が必要。</td>
+      <td>追加取得</td>
+      <td>業績、財務安全性、流動性、最大下落率</td>
+      <td>NISA 1年では比率を抑える前提。購入候補化は慎重</td>
+      <td>受注回復と損益改善を確認する</td>
+    </tr>
+  
+    <tr>
+      <td>9</td>
+      <td><b>6981.T 村田製作所</b><br><small>センサー、通信部品、電子部品</small></td>
+      <td><span class="badge hold">調査追加</span></td>
+      <td>ロボット、IoT、エッジAIの部品側候補。ただしスマホ・電子部品サイクルの影響が大きい。</td>
+      <td>テーマ接続はあるが、フィジカルAI単独の説明力は要確認。</td>
+      <td>追加取得</td>
+      <td>セグメント寄与、指数差、決算後反応</td>
+      <td>部品サイクル確認後に候補化を判定</td>
+      <td>スマホ依存とAI/自動車/産業向けの寄与を分ける</td>
+    </tr>
+  
+    <tr>
+      <td>10</td>
+      <td><b>6479.T ミネベアミツミ</b><br><small>モーター、センサー、精密部品</small></td>
+      <td><span class="badge hold">調査追加</span></td>
+      <td>小型モーター・センサー・精密部品としてロボット/自動化に接続しうる。</td>
+      <td>テーマはあるが事業範囲が広い。利益寄与の分離が必要。</td>
+      <td>追加取得</td>
+      <td>セグメント寄与、利益率、株価長期指標</td>
+      <td>追加データ取得まで観察</td>
+      <td>ロボット・産業機器向け売上の確認</td>
+    </tr>
+  </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel" id="quantum">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:48px">順位</th>
+              <th style="width:210px">銘柄</th>
+              <th style="width:100px">現状</th>
+              <th>構造仮説</th>
+              <th>根拠の状態</th>
+              <th style="width:90px">数値</th>
+              <th>不足データ</th>
+              <th>購入候補での扱い</th>
+              <th>次アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+    <tr>
+      <td>1</td>
+      <td><b>9613.T NTTデータグループ</b><br><small>量子計算の企業導入、SI、コンサル実装</small></td>
+      <td><span class="badge hold">補完後再判定</span></td>
+      <td>企業が量子を使う段階で導入支援が発生する可能性を見る。</td>
+      <td>量子より通常SI/クラウドの影響が大きい可能性。</td>
+      <td>追加取得</td>
+      <td>株価指標、案件、売上寄与</td>
+      <td>量子案件の商用化確認まで購入候補にしない</td>
+      <td>導入支援案件と財務指標を確認する</td>
+    </tr>
+  
+    <tr>
+      <td>2</td>
+      <td><b>3687.T フィックスターズ</b><br><small>高速化ソフト、量子アニーリング関連の調査候補</small></td>
+      <td><span class="badge hold">調査追加</span></td>
+      <td>量子・HPC・高速化ソフトの高感応候補。ただし小型で値動きが大きくなりやすい。</td>
+      <td>公式確認と流動性確認が必要。</td>
+      <td>追加取得</td>
+      <td>公式IR、PER/PBR/ROE、最大下落、流動性</td>
+      <td>小型高ボラのため購入候補化は慎重</td>
+      <td>公式IRと長期株価指標を確認する</td>
+    </tr>
+  
+    <tr>
+      <td>3</td>
+      <td><b>6702.T 富士通</b><br><small>国産量子コンピューター、HPC、企業向け計算基盤</small></td>
+      <td><span class="badge watch">長期探索</span></td>
+      <td>国策・研究開発・HPCと接続するが、量子単独の売上寄与はまだ見えにくい。</td>
+      <td>既存100社データあり。量子事業の売上寄与は要分離。</td>
+      <td>一部あり</td>
+      <td>量子関連売上、受注、商用サービス進捗</td>
+      <td>量子単独では購入候補にしない</td>
+      <td>HPC、AI基盤、量子の寄与を分けて確認する</td>
+    </tr>
+  
+    <tr>
+      <td>4</td>
+      <td><b>6701.T NEC</b><br><small>量子アニーリング、量子活用サービス、AI/通信/防衛IT</small></td>
+      <td><span class="badge watch">長期探索</span></td>
+      <td>量子、AI、防衛ITの複合テーマ。単独テーマより複合材料で見る。</td>
+      <td>既存100社データあり。量子単独寄与は要確認。</td>
+      <td>一部あり</td>
+      <td>量子案件の商用化、売上寄与、決算後反応</td>
+      <td>購入候補ではなく複合テーマ観察</td>
+      <td>量子関連案件と防衛IT・AI基盤の寄与を分ける</td>
+    </tr>
+  
+    <tr>
+      <td>5</td>
+      <td><b>6501.T 日立製作所</b><br><small>研究開発、HPC、制御、産業DXへの量子活用余地</small></td>
+      <td><span class="badge hold">複合探索</span></td>
+      <td>量子単独より、産業AI・電力・制御チャンネルと重ねて見る銘柄。</td>
+      <td>既存100社データあり。量子より産業AI・電力・制御の寄与が大きい。</td>
+      <td>一部あり</td>
+      <td>量子寄与の分離、決算後反応</td>
+      <td>量子枠の主役ではなく総合枠で確認</td>
+      <td>既存総合候補との重複評価を整理する</td>
+    </tr>
+  
+    <tr>
+      <td>6</td>
+      <td><b>9432.T NTT</b><br><small>IOWN、光電融合、量子暗号、次世代通信基盤</small></td>
+      <td><span class="badge watch">観察</span></td>
+      <td>量子そのものより通信インフラ・光電融合・データセンター接続で見る。</td>
+      <td>既存100社データあり。安定性は高いが指数超過力は要確認。</td>
+      <td>一部あり</td>
+      <td>テーマ寄与、指数超過、1年期待リターン</td>
+      <td>1年でS&amp;P+5%を狙う主役にはしにくい</td>
+      <td>通信安定枠としての役割を確認する</td>
+    </tr>
+  
+    <tr>
+      <td>7</td>
+      <td><b>6503.T 三菱電機</b><br><small>量子暗号、防衛、FA、電力制御の周辺技術</small></td>
+      <td><span class="badge watch">観察</span></td>
+      <td>量子暗号と安全保障・FA・電力制御の周辺需要として扱う。</td>
+      <td>既存100社データあり。量子売上の見える化が難しい。</td>
+      <td>一部あり</td>
+      <td>量子暗号の売上寄与、テーマ別受注</td>
+      <td>FA/電力の実績軸を優先</td>
+      <td>量子ではなく電力・FA側の評価と接続する</td>
+    </tr>
+  
+    <tr>
+      <td>8</td>
+      <td><b>4307.T 野村総合研究所</b><br><small>金融・企業向け高度計算、導入支援の可能性</small></td>
+      <td><span class="badge watch">周辺観察</span></td>
+      <td>量子そのものではなく、金融・企業向け計算/導入支援の周辺候補。</td>
+      <td>量子テーマとの直接性は弱い。SI/コンサルとして確認。</td>
+      <td>追加取得</td>
+      <td>量子案件有無、財務指標、指数差</td>
+      <td>テーマだけでは採用しない</td>
+      <td>量子関連案件が公式に確認できるか調べる</td>
+    </tr>
+  
+    <tr>
+      <td>9</td>
+      <td><b>3626.T TIS</b><br><small>企業向けIT、金融IT、先端技術導入支援の可能性</small></td>
+      <td><span class="badge watch">周辺観察</span></td>
+      <td>量子導入のSI周辺候補。ただし量子との直接性は弱い。</td>
+      <td>公式案件確認が必要。</td>
+      <td>追加取得</td>
+      <td>量子関連案件、財務指標、株価長期指標</td>
+      <td>購入候補ではなく調査対象</td>
+      <td>公式資料で量子関連案件の有無を確認する</td>
+    </tr>
+  
+    <tr>
+      <td>10</td>
+      <td><b>4812.T 電通総研</b><br><small>企業DX、数理最適化、研究開発支援の可能性</small></td>
+      <td><span class="badge watch">周辺観察</span></td>
+      <td>量子計算の実装支援に接続しうるが、直接性は弱い。</td>
+      <td>量子関連の公式確認が必要。</td>
+      <td>追加取得</td>
+      <td>公式案件、財務指標、指数差、流動性</td>
+      <td>現時点では購入候補にしない</td>
+      <td>量子・HPC・数理最適化関連の公式開示を確認する</td>
+    </tr>
+  </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. 現時点の扱い</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>区分</th><th>扱い</th><th>理由</th><th>次に必要なこと</th></tr></thead>
+        <tbody>
+          <tr><td>フィジカルAI</td><td>優先補完対象</td><td>ロボット、制御、センサー、モーターは需要と売上に接続しやすい。</td><td>公式決算、受注、利益率、PER/PBR/ROE、過去リターンを入れる。</td></tr>
+          <tr><td>量子コンピューター</td><td>長期探索枠</td><td>国策・技術テーマとしては強いが、1年保有で株価に効く売上寄与が見えにくい。</td><td>量子関連の受注、商用サービス、共同研究、売上寄与を公式資料で確認する。</td></tr>
+          <tr><td>購入候補への昇格</td><td>未実施</td><td>テーマだけでは昇格させない。既存の量的スコアを通す必要がある。</td><td>既存100社スコア表へ接続し、同じ条件で再計算する。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+  document.querySelectorAll("[data-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.tab;
+      document.querySelectorAll("[data-tab]").forEach((item) => item.classList.toggle("active", item.dataset.tab === target));
+      document.querySelectorAll(".panel").forEach((panel) => panel.classList.toggle("active", panel.id === target));
+    });
+  });
+</script>
+</body>
+</html>
