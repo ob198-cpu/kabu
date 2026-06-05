@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA代理人・口座運用 確認シート 2026/06/05</title>
+  <style>
+    :root { --ink:#061f36; --navy:#123d63; --blue:#0b5f96; --line:#c8dbea; --bg:#eef4fa; --amber:#a85b00; --red:#b42318; --green:#087443; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.72; }
+    main { max-width:1280px; margin:0 auto; padding:24px 18px 70px; }
+    header { background:var(--navy); color:#fff; border-radius:16px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    header p { margin:0; color:#dbeafe; }
+    section { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; }
+    h2 { color:var(--navy); border-left:8px solid var(--blue); padding-left:12px; margin:0 0 12px; }
+    .note { background:#fff7e6; border:1px solid #f0c36a; border-left:7px solid var(--amber); border-radius:12px; padding:12px 14px; font-weight:700; }
+    .ok { background:#effaf5; border:1px solid #b9e7d0; border-left:7px solid var(--green); border-radius:12px; padding:12px 14px; }
+    .risk { background:#fff4f2; border:1px solid #f0b8b3; border-left:7px solid var(--red); border-radius:12px; padding:12px 14px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:12px; padding:12px; background:#f8fbff; }
+    .card b { display:block; color:var(--navy); font-size:18px; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:13px; word-break:break-word; }
+    th { background:#e3f0fa; color:var(--navy); text-align:left; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 9px; color:#fff; font-weight:900; }
+    .green { background:var(--green); }
+    .amber { background:var(--amber); }
+    .red { background:var(--red); }
+    .blue { background:var(--blue); }
+    .script { background:#f8fbff; border:1px solid var(--line); border-radius:12px; padding:12px; white-space:pre-wrap; }
+    .links { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .links a { text-decoration:none; border:1px solid var(--blue); border-radius:10px; padding:10px 12px; color:var(--navy); background:#f8fbff; font-weight:800; }
+    @media(max-width:900px){ .grid,.links{grid-template-columns:1fr;} table{table-layout:auto;} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>NISA代理人・口座運用 確認シート</h1>
+    <p>再来週の購入予定に向け、証券会社へ確認する内容、回答の記録、採用/不採用の判定を一枚で管理するための実務シートです。</p>
+  </header>
+
+  <section>
+    <h2>このシートの目的</h2>
+    <div class="grid">
+      <div class="card"><b>目的1</b>代理人登録が使える証券会社を確認する。</div>
+      <div class="card"><b>目的2</b>NISA口座で代理注文まで可能かを確認する。</div>
+      <div class="card"><b>目的3</b>再来週に間に合う案と、間に合わない案を分ける。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>最初に確認する結論</h2>
+    <div class="note">
+      確認すべき核心は「代理人制度があるか」ではなく、「NISA口座で、注文・売却・口座区分指定まで代理人ができるか」です。照会だけ可能な制度では、本件の実務解決としては弱い扱いにします。
+    </div>
+  </section>
+
+  <section>
+    <h2>証券会社別 確認マトリクス</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:13%">確認先</th>
+            <th style="width:13%">位置づけ</th>
+            <th style="width:16%">聞くこと</th>
+            <th style="width:12%">回答</th>
+            <th style="width:12%">再来週可否</th>
+            <th style="width:14%">採用判定</th>
+            <th style="width:20%">メモ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SBI証券</td>
+            <td>ネット証券候補</td>
+            <td>NISA口座で家族代理人・取引代理人が注文可能か。</td>
+            <td>未確認</td>
+            <td>未確認</td>
+            <td><span class="pill amber">確認待ち</span></td>
+            <td>可能なら低コスト運用候補。不可なら本人発注型。</td>
+          </tr>
+          <tr>
+            <td>楽天証券</td>
+            <td>ネット証券候補</td>
+            <td>NISA口座で代理人注文、家族サポート、委任手続があるか。</td>
+            <td>未確認</td>
+            <td>未確認</td>
+            <td><span class="pill amber">確認待ち</span></td>
+            <td>既存利用者が多い場合は優先確認。</td>
+          </tr>
+          <tr>
+            <td>三菱UFJ eスマート証券</td>
+            <td>代理人申請例あり</td>
+            <td>代理人選任申請でNISA口座の注文・決済まで対象か。</td>
+            <td>公式申請書例あり。NISA対象可否は要確認。</td>
+            <td>要確認</td>
+            <td><span class="pill blue">優先確認</span></td>
+            <td>申請書上は注文・決済権限の記載例があるため、最初に確認する価値が高い。</td>
+          </tr>
+          <tr>
+            <td>野村證券</td>
+            <td>対面証券候補</td>
+            <td>家族サポート証券口座、代理人取引、NISA対象可否。</td>
+            <td>未確認</td>
+            <td>未確認</td>
+            <td><span class="pill amber">確認待ち</span></td>
+            <td>手続が重い可能性はあるが、家族運用の制度確認先として有力。</td>
+          </tr>
+          <tr>
+            <td>大和証券</td>
+            <td>対面証券候補</td>
+            <td>家族代理人、代理取引、NISAでの利用可否。</td>
+            <td>未確認</td>
+            <td>未確認</td>
+            <td><span class="pill amber">確認待ち</span></td>
+            <td>対面で説明を受けやすい可能性。</td>
+          </tr>
+          <tr>
+            <td>SMBC日興証券</td>
+            <td>対面証券候補</td>
+            <td>家族サポート証券口座、代理人手続、NISA対象可否。</td>
+            <td>未確認</td>
+            <td>未確認</td>
+            <td><span class="pill amber">確認待ち</span></td>
+            <td>銀行・証券連携ニーズがある場合に確認。</td>
+          </tr>
+          <tr>
+            <td>三井住友信託銀行</td>
+            <td>NISAラップ候補</td>
+            <td>ファンドラップNISAの対象商品、手数料、口座変更、開始時期。</td>
+            <td>NISAオプション情報あり。詳細は要確認。</td>
+            <td>要確認</td>
+            <td><span class="pill blue">代替案</span></td>
+            <td>個別株戦略ではないが、本人発注負担を下げる安全策。</td>
+          </tr>
+          <tr>
+            <td>IFA/登録助言業者</td>
+            <td>中期正式化</td>
+            <td>本システムの分析結果を助言・顧客説明に使えるか。</td>
+            <td>未確認</td>
+            <td>低</td>
+            <td><span class="pill blue">中期案</span></td>
+            <td>継続運用を商品化する場合の本命。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>電話・メールで聞く文面</h2>
+    <div class="script">本人の同意と証券会社所定の書類を前提に、家族代理人または取引代理人がNISA口座で国内株・投資信託の注文を行える制度はありますか。
+ある場合、代理人ができる範囲は「照会のみ」でしょうか。それとも「注文・売却・決済・NISA口座区分指定」まで可能でしょうか。
+必要書類、審査期間、最短開始日、対象外取引、オンライン対応可否を教えてください。</div>
+  </section>
+
+  <section>
+    <h2>回答後の判定ルール</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>回答</th>
+            <th>判定</th>
+            <th>再来週の対応</th>
+            <th>顧客への説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>NISA口座で代理注文まで可能。開始日も間に合う。</td>
+            <td><span class="pill green">採用候補</span></td>
+            <td>正式代理フローで準備。</td>
+            <td>証券会社所定制度を使うため、本人発注型より運用負担を下げられる。</td>
+          </tr>
+          <tr>
+            <td>代理制度はあるが、照会のみ、またはNISA対象外。</td>
+            <td><span class="pill amber">補助扱い</span></td>
+            <td>初回は本人発注型。</td>
+            <td>確認効率化には使えるが、発注代行の解決策にはならない。</td>
+          </tr>
+          <tr>
+            <td>代理注文は可能だが、審査が再来週に間に合わない。</td>
+            <td><span class="pill amber">中期採用</span></td>
+            <td>初回は本人発注型。翌月以降に移行。</td>
+            <td>初回購入を止めず、継続運用で正式化する。</td>
+          </tr>
+          <tr>
+            <td>代理制度なし。本人も操作困難。</td>
+            <td><span class="pill red">購入延期</span></td>
+            <td>その本人分は買わない。</td>
+            <td>口座体制が整うまで無理にNISA枠を使わない。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ファイル</h2>
+    <div class="links">
+      <a href="875_nisa_broker_confirmation_matrix_20260605.csv">CSV</a>
+      <a href="nisa_account_plan.pdf">NISA口座運用代替案 PDF</a>
+      <a href="nisa_account_plan.html">NISA口座運用代替案 HTML</a>
+      <a href="index.html">ホームへ戻る</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
