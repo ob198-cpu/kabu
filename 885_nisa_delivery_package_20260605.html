@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA口座運用 納品パック 2026/06/05</title>
+  <style>
+    :root { --ink:#061f36; --navy:#123d63; --blue:#0b5f96; --line:#c8dbea; --bg:#eef4fa; --amber:#a85b00; --green:#087443; --red:#b42318; --pale:#f8fbff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.72; }
+    main { max-width:1280px; margin:0 auto; padding:24px 18px 70px; }
+    header { background:var(--navy); color:#fff; border-radius:18px; padding:28px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    header p { margin:0; color:#dbeafe; }
+    section { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; margin:16px 0; }
+    h2 { color:var(--navy); border-left:8px solid var(--blue); padding-left:12px; margin:0 0 12px; }
+    .note { background:#fff7e6; border:1px solid #f0c36a; border-left:7px solid var(--amber); border-radius:12px; padding:12px 14px; font-weight:700; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:13px; word-break:break-word; }
+    th { background:#e3f0fa; color:var(--navy); text-align:left; }
+    a { color:#064f85; font-weight:800; text-decoration:none; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 9px; color:#fff; font-weight:900; font-size:12px; }
+    .green { background:var(--green); }
+    .amber { background:var(--amber); }
+    .red { background:var(--red); }
+    .blue { background:var(--blue); }
+    .links { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .links a { border:1px solid var(--blue); border-radius:10px; padding:10px 12px; color:var(--navy); background:var(--pale); }
+    @media(max-width:900px){ .links{grid-template-columns:1fr;} table{table-layout:auto;} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>NISA口座運用 納品パック</h1>
+    <p>NISA口座運用に関する資料を、顧客提出用・内部確認用・実行管理用に分けて整理した入口です。</p>
+  </header>
+
+  <section>
+    <h2>納品時の順番</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:8%">順番</th>
+            <th style="width:18%">資料</th>
+            <th style="width:13%">用途</th>
+            <th style="width:36%">説明</th>
+            <th style="width:25%">リンク</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>やさしい解説PDF</td>
+            <td><span class="pill green">顧客提出</span></td>
+            <td>NISA口座、代理人、本人発注、IFA、ラップの全体像を説明する資料。</td>
+            <td><a href="nisa_account_mechanism_plain_guide.pdf">PDFを開く</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>顧客説明スクリプト</td>
+            <td><span class="pill green">説明用</span></td>
+            <td>5分で説明する流れ、想定質問への回答、避ける表現。</td>
+            <td><a href="881_nisa_client_explanation_script_20260605.html">HTMLを開く</a></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>NISA口座運用代替案PDF</td>
+            <td><span class="pill green">顧客提出</span></td>
+            <td>正式代理、本人発注、IFA連携、NISAラップ、信託・法人管理を比較。</td>
+            <td><a href="nisa_account_plan.pdf">PDFを開く</a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>証券会社確認依頼テンプレート</td>
+            <td><span class="pill amber">実務確認</span></td>
+            <td>証券会社へ送るメール・電話文面。回答後の分岐も記録。</td>
+            <td><a href="884_nisa_broker_contact_templates_20260605.html">HTMLを開く</a></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>証券会社確認シート</td>
+            <td><span class="pill amber">内部確認</span></td>
+            <td>SBI、楽天、三菱UFJ eスマート、対面証券等の回答を記録。</td>
+            <td><a href="875_nisa_broker_confirmation_matrix_20260605.html">HTMLを開く</a></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>代理制度判定エンジン</td>
+            <td><span class="pill amber">内部判定</span></td>
+            <td>回答結果をA正式代理、B本人発注、C中期移行、D購入延期へ分岐。</td>
+            <td><a href="876_nisa_broker_decision_engine_20260605.html">HTMLを開く</a></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>本人別実行管理表</td>
+            <td><span class="pill blue">実行管理</span></td>
+            <td>本人ごとに、NISA口座、ログイン、入金、購入ルートを管理。</td>
+            <td><a href="878_nisa_person_account_execution_tracker_20260605.html">HTMLを開く</a></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>本人別注文票</td>
+            <td><span class="pill blue">実行管理</span></td>
+            <td>本人ごとに、銘柄、金額、口座区分、買わない条件を整理。</td>
+            <td><a href="879_nisa_person_order_ticket_20260605.html">HTMLを開く</a></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>進捗ダッシュボード</td>
+            <td><span class="pill blue">進捗管理</span></td>
+            <td>証券会社確認、本人別準備、市場イベント、注文票の進捗を確認。</td>
+            <td><a href="883_nisa_readiness_dashboard_20260605.html">HTMLを開く</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>顧客提出用と内部用の分け方</h2>
+    <div class="note">
+      顧客に最初に渡すのは「やさしい解説PDF」と「NISA口座運用代替案PDF」です。確認シート、判定エンジン、本人別注文票は、実務確認が進んだ後に必要な範囲だけ見せます。
+    </div>
+  </section>
+
+  <section>
+    <h2>関連リンク</h2>
+    <div class="links">
+      <a href="882_nisa_account_operation_hub_20260605.html">NISA口座運用ハブ</a>
+      <a href="883_nisa_readiness_dashboard_20260605.html">進捗ダッシュボード</a>
+      <a href="index.html">システムホーム</a>
+      <a href="885_nisa_delivery_package_20260605.csv">CSV</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
