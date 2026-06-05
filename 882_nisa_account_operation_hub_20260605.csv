@@ -1,0 +1,10 @@
+order,title,url,purpose
+1,NISA口座運用の仕組み,880_nisa_account_mechanism_plain_guide_20260605.html,素人向けにNISA・代理人・IFA・ラップを解説
+2,やさしい解説PDF,nisa_account_mechanism_plain_guide.pdf,印刷・送付用PDF
+3,顧客説明スクリプト,881_nisa_client_explanation_script_20260605.html,5分説明・質問回答・避ける表現
+4,証券会社確認シート,875_nisa_broker_confirmation_matrix_20260605.html,証券会社への確認事項と回答記録
+5,代理制度判定エンジン,876_nisa_broker_decision_engine_20260605.html,正式代理・本人発注・中期移行・購入延期へ分岐
+6,顧客提案・実行パック,877_nisa_client_proposal_action_pack_20260605.html,再来週までのToDoと提案文
+7,本人別実行管理表,878_nisa_person_account_execution_tracker_20260605.html,口座・ログイン・入金・購入ルート管理
+8,本人別注文票,879_nisa_person_order_ticket_20260605.html,本人別の注文前確認資料
+9,NISA口座運用代替案PDF,nisa_account_plan.pdf,代理人登録・IFA・NISAラップ比較報告

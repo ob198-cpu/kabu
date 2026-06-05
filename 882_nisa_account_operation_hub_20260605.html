@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA口座運用ハブ 2026/06/05</title>
+  <style>
+    :root { --ink:#061f36; --navy:#123d63; --blue:#0b5f96; --line:#c8dbea; --bg:#eef4fa; --amber:#a85b00; --green:#087443; --red:#b42318; --pale:#f8fbff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.72; }
+    main { max-width:1260px; margin:0 auto; padding:24px 18px 70px; }
+    header { background:var(--navy); color:#fff; border-radius:18px; padding:28px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    header p { margin:0; color:#dbeafe; }
+    section { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; margin:16px 0; }
+    h2 { color:var(--navy); border-left:8px solid var(--blue); padding-left:12px; margin:0 0 12px; }
+    .note { background:#fff7e6; border:1px solid #f0c36a; border-left:7px solid var(--amber); border-radius:12px; padding:12px 14px; font-weight:700; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { display:block; text-decoration:none; color:var(--ink); background:var(--pale); border:1px solid var(--line); border-radius:14px; padding:14px; min-height:136px; }
+    .card b { display:block; color:var(--navy); font-size:18px; margin-bottom:5px; }
+    .card span { display:block; color:#284761; font-size:14px; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 9px; color:#fff; font-weight:900; font-size:12px; margin-bottom:8px; }
+    .green { background:var(--green); }
+    .amber { background:var(--amber); }
+    .red { background:var(--red); }
+    .blue { background:var(--blue); }
+    .flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+    .step { background:#fff; border:1px solid var(--line); border-radius:13px; padding:12px; position:relative; min-height:110px; }
+    .step:not(:last-child)::after { content:"→"; position:absolute; right:-12px; top:39%; background:#fff; border:1px solid var(--line); color:var(--blue); border-radius:50%; width:24px; height:24px; text-align:center; line-height:22px; font-weight:900; }
+    .step b { display:block; color:var(--navy); }
+    @media(max-width:1000px){ .grid,.flow{grid-template-columns:1fr;} .step::after{display:none;} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>NISA口座運用ハブ</h1>
+    <p>NISA口座を本人操作・正式代理・中期移行のどのルートで進めるか、顧客説明から注文票まで一画面で確認する入口です。</p>
+  </header>
+
+  <section>
+    <h2>最初に見る順番</h2>
+    <div class="flow">
+      <div class="step"><b>1. 仕組み理解</b>なぜ他人名義操作にしないかを理解。</div>
+      <div class="step"><b>2. 顧客説明</b>5分で説明する台本を確認。</div>
+      <div class="step"><b>3. 証券会社確認</b>代理人制度の可否を記録。</div>
+      <div class="step"><b>4. ルート判定</b>A/B/C/Dに分岐。</div>
+      <div class="step"><b>5. 注文票</b>本人別に発注前資料を作る。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>重要リンク</h2>
+    <div class="grid">
+      <a class="card" href="880_nisa_account_mechanism_plain_guide_20260605.html"><span class="pill blue">理解</span><b>NISA口座運用の仕組み</b><span>素人向けに、NISA・代理人・IFA・ラップをクリック式で解説。</span></a>
+      <a class="card" href="nisa_account_mechanism_plain_guide.pdf"><span class="pill blue">PDF</span><b>やさしい解説PDF</b><span>印刷・送付用のPDF。</span></a>
+      <a class="card" href="881_nisa_client_explanation_script_20260605.html"><span class="pill green">説明</span><b>顧客説明スクリプト</b><span>5分説明、質問回答、避ける表現。</span></a>
+      <a class="card" href="875_nisa_broker_confirmation_matrix_20260605.html"><span class="pill amber">確認</span><b>証券会社確認シート</b><span>どの証券会社に何を聞くか、回答を記録。</span></a>
+      <a class="card" href="876_nisa_broker_decision_engine_20260605.html"><span class="pill amber">判定</span><b>代理制度判定エンジン</b><span>正式代理、本人発注、中期移行、購入延期へ分岐。</span></a>
+      <a class="card" href="877_nisa_client_proposal_action_pack_20260605.html"><span class="pill green">提案</span><b>顧客提案・実行パック</b><span>再来週までのToDoと顧客向け提案文。</span></a>
+      <a class="card" href="878_nisa_person_account_execution_tracker_20260605.html"><span class="pill blue">管理</span><b>本人別実行管理表</b><span>口座、本人スマホ、ログイン、入金、購入ルートを管理。</span></a>
+      <a class="card" href="879_nisa_person_order_ticket_20260605.html"><span class="pill green">注文</span><b>本人別注文票</b><span>銘柄、金額、口座区分、買わない条件、購入後管理を整理。</span></a>
+      <a class="card" href="nisa_account_plan.pdf"><span class="pill blue">資料</span><b>NISA口座運用代替案PDF</b><span>代理人登録、IFA、NISAラップ等の比較報告書。</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>現在の結論</h2>
+    <div class="note">
+      再来週の購入を止めないため、まず証券会社の正式代理制度を確認します。間に合えば正式代理、間に合わなければ本人発注型で初回購入を検討します。継続運用では代理人登録、IFA連携、NISAラップなどへ移行できるかを比較します。
+    </div>
+  </section>
+
+  <section>
+    <h2>システムホーム</h2>
+    <div class="grid">
+      <a class="card" href="index.html"><span class="pill blue">全体</span><b>システムホームへ戻る</b><span>株式購入判断補助システム全体の入口。</span></a>
+      <a class="card" href="873_june_gate_decision_engine_20260604.html"><span class="pill amber">市場</span><b>6月ゲート判定エンジン</b><span>CPI、日銀、FOMC後に買う/待つ/見送るを判定。</span></a>
+      <a class="card" href="874_benchmark_allocation_decision_20260604.html"><span class="pill amber">指数</span><b>ベンチマーク比較ゲート</b><span>S&P500/TOPIXを上回る説明が弱い場合、個別株比率を上げない。</span></a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
