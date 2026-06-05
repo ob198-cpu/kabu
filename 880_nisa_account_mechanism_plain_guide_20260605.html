@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA口座運用の仕組み やさしい解説 2026/06/05</title>
+  <style>
+    :root {
+      --ink:#061f36; --navy:#123d63; --blue:#0b5f96; --line:#c8dbea;
+      --bg:#eef4fa; --amber:#a85b00; --red:#b42318; --green:#087443;
+      --pale:#f8fbff;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.75;
+    }
+    main { max-width:1280px; margin:0 auto; padding:24px 18px 70px; }
+    header {
+      background:var(--navy);
+      color:#fff;
+      border-radius:18px;
+      padding:28px;
+      margin-bottom:16px;
+    }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    header p { margin:0; color:#dbeafe; }
+    section { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; margin:16px 0; }
+    h2 { color:var(--navy); border-left:8px solid var(--blue); padding-left:12px; margin:0 0 12px; }
+    h3 { color:var(--navy); margin:14px 0 8px; }
+    .note { background:#fff7e6; border:1px solid #f0c36a; border-left:7px solid var(--amber); border-radius:12px; padding:12px 14px; font-weight:700; }
+    .ok { background:#effaf5; border:1px solid #b9e7d0; border-left:7px solid var(--green); border-radius:12px; padding:12px 14px; }
+    .risk { background:#fff4f2; border:1px solid #f0b8b3; border-left:7px solid var(--red); border-radius:12px; padding:12px 14px; }
+    .flow {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:10px;
+      align-items:stretch;
+    }
+    .step {
+      background:var(--pale);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      position:relative;
+      min-height:128px;
+    }
+    .step:not(:last-child)::after {
+      content:"→";
+      position:absolute;
+      right:-12px;
+      top:42%;
+      font-weight:900;
+      color:var(--blue);
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:50%;
+      width:24px;
+      height:24px;
+      text-align:center;
+      line-height:22px;
+      z-index:2;
+    }
+    .step b { display:block; color:var(--navy); font-size:17px; margin-bottom:4px; }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { background:var(--pale); border:1px solid var(--line); border-radius:14px; padding:13px; }
+    .card b { display:block; color:var(--navy); font-size:18px; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 9px; color:#fff; font-weight:900; font-size:12px; }
+    .green { background:var(--green); }
+    .amber { background:var(--amber); }
+    .red { background:var(--red); }
+    .blue { background:var(--blue); }
+    details {
+      background:var(--pale);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:11px 13px;
+      margin:10px 0;
+    }
+    summary {
+      cursor:pointer;
+      font-weight:900;
+      color:var(--navy);
+      font-size:17px;
+    }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:13px; word-break:break-word; }
+    th { background:#e3f0fa; color:var(--navy); text-align:left; }
+    .links { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .links a { text-decoration:none; border:1px solid var(--blue); border-radius:10px; padding:10px 12px; color:var(--navy); background:var(--pale); font-weight:800; }
+    .source a { color:#064f85; font-weight:800; }
+    @media(max-width:1000px){ .flow,.cards,.links{grid-template-columns:1fr;} .step::after{display:none;} table{table-layout:auto;} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>NISA口座運用の仕組み やさしい解説</h1>
+    <p>「なぜ他人名義でそのまま操作できないのか」「ではどうすれば顧客満足を落とさず運用できるのか」を、素人向けに整理したページです。</p>
+  </header>
+
+  <section>
+    <h2>まず全体像</h2>
+    <div class="flow">
+      <div class="step"><b>1. NISA口座</b>本人名義で作る非課税口座。18歳以上の居住者が対象。</div>
+      <div class="step"><b>2. 購入判断</b>どの銘柄を、いつ、いくら買うかを資料化する。</div>
+      <div class="step"><b>3. 発注権限</b>本人が押すのか、正式な代理人が押せるのかを確認する。</div>
+      <div class="step"><b>4. 証券会社確認</b>代理人登録や家族サポート制度が使えるか確認する。</div>
+      <div class="step"><b>5. 実行ルート</b>正式代理、本人発注、中期移行、購入延期に分ける。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>結論</h2>
+    <div class="ok">
+      目指す形は「他人名義口座を勝手に操作する」ことではありません。購入判断、注文票、買わない条件、購入後管理をこちらで整え、発注権限は本人または証券会社が認めた正式代理人に寄せる形です。
+    </div>
+  </section>
+
+  <section>
+    <h2>4つの実行ルート</h2>
+    <div class="cards">
+      <div class="card"><b><span class="pill green">A</span> 正式代理</b>証券会社がNISA口座で代理注文を認め、再来週に間に合う場合。最も強い案。</div>
+      <div class="card"><b><span class="pill amber">B</span> 本人発注</b>代理制度が間に合わない場合。本人がスマホで発注し、こちらは注文票を作る。</div>
+      <div class="card"><b><span class="pill blue">C</span> 中期移行</b>初回は本人発注、継続運用では代理人登録・IFA・ラップへ移る。</div>
+      <div class="card"><b><span class="pill red">D</span> 購入延期</b>本人操作も正式代理も整っていない場合。無理に買わない。</div>
+      <div class="card"><b><span class="pill blue">代替</span> NISAラップ</b>個別株運用が合わない人向け。本人操作負担を下げやすい。</div>
+      <div class="card"><b><span class="pill blue">拡張</span> IFA/助言連携</b>継続サービス化するなら、登録業者との連携で正式性を上げる。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>クリックで詳しく見る</h2>
+    <details open>
+      <summary>NISA口座とは</summary>
+      <p>NISAは、投資で得た配当や売却益が非課税になる制度です。2024年以降の新NISAは、つみたて投資枠120万円、成長投資枠240万円を併用でき、年間360万円まで投資できます。対象は日本国内に住む18歳以上の人で、1人につき1口座です。</p>
+      <p class="source">出典: <a href="https://www.fsa.go.jp/policy/nisa2/about/nisa2024/">金融庁 NISAを知る</a>、<a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1535.htm">国税庁 NISA制度</a></p>
+    </details>
+    <details>
+      <summary>なぜ他人名義NISAをそのまま操作しないのか</summary>
+      <p>証券口座は、本人名義・本人資金・本人意思で使うことが基本です。本人以外が実質的に使っているように見えると、仮名・借名取引の疑義が出ます。したがって、便利さだけで他人名義口座をまとめて操作する形にはしません。</p>
+      <p class="source">参考: <a href="https://www.click-sec.com/corp/info/compliance/temp.html">GMOクリック証券 仮名取引・借名取引</a></p>
+    </details>
+    <details>
+      <summary>代理人登録とは</summary>
+      <p>証券会社所定の書類で、本人が代理人に一定の権限を与える制度です。ただし、証券会社ごとに対象範囲が違います。重要なのは「照会だけ」なのか、「注文・売却・決済・NISA口座区分指定」まで可能なのかです。</p>
+      <p class="source">参考: <a href="https://kabu.com/support/img/dairinin-shinseisyo.pdf">三菱UFJ eスマート証券 代理人選任申請書</a></p>
+    </details>
+    <details>
+      <summary>家族サポート証券口座とは</summary>
+      <p>将来の認知判断能力の低下に備えて、本人と信頼できる家族代理人があらかじめ任意代理契約を結び、必要なタイミングで家族代理人による取引等を可能にする仕組みです。高齢者の資産管理に近い制度で、再来週の初回購入に間に合うかは別途確認が必要です。</p>
+      <p class="source">出典: <a href="https://market.jsda.or.jp/shijyo/kazokusupport/index.html">日本証券業協会 家族サポート証券口座</a></p>
+    </details>
+    <details>
+      <summary>IFA・投資助言業者とは</summary>
+      <p>顧客に対して投資判断に関する助言を業として行う場合、投資助言・代理業の登録が関わる領域があります。継続サービス化する場合は、こちらのシステムは分析・資料作成を担当し、助言や顧客対応は登録業者と連携する案が現実的です。</p>
+      <p class="source">出典: <a href="https://www.fsa.go.jp/policy/marketentry/guidebook/02.html">金融庁 登録手続ガイドブック</a>、<a href="https://lfb.mof.go.jp/kantou/kinyuu/toushijogen/annai.htm">関東財務局 投資助言・代理業関係</a></p>
+    </details>
+    <details>
+      <summary>NISAファンドラップとは</summary>
+      <p>金融機関が提供するラップ型運用で、NISA口座を使える商品があります。個別株10社を選ぶ戦略とは違いますが、本人が毎回発注する負担を下げたい場合の安全代替案になります。</p>
+      <p class="source">参考: <a href="https://faq.smtb.jp/faq/show/23437?category_id=855&site_domain=default">三井住友信託銀行 ファンドラップNISAオプション</a></p>
+    </details>
+  </section>
+
+  <section>
+    <h2>素人向けの判断表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:20%">状況</th>
+            <th style="width:20%">選ぶ案</th>
+            <th style="width:30%">理由</th>
+            <th style="width:30%">次にすること</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>証券会社がNISA代理注文を認める</td>
+            <td><span class="pill green">正式代理</span></td>
+            <td>本人操作負担を下げつつ、証券会社所定制度で説明しやすい。</td>
+            <td>必要書類と開始日を確認し、本人別注文票を作る。</td>
+          </tr>
+          <tr>
+            <td>代理制度はあるが再来週に間に合わない</td>
+            <td><span class="pill amber">本人発注 + 中期移行</span></td>
+            <td>初回購入を止めず、後から正式制度へ移れる。</td>
+            <td>初回は本人発注、翌月以降の代理登録を進める。</td>
+          </tr>
+          <tr>
+            <td>代理制度がないが本人は操作できる</td>
+            <td><span class="pill amber">本人発注</span></td>
+            <td>本人意思・本人操作を維持できる。</td>
+            <td>注文票、買わない条件、購入後管理表を渡す。</td>
+          </tr>
+          <tr>
+            <td>本人操作もできない</td>
+            <td><span class="pill red">購入延期</span></td>
+            <td>無理に買うと口座運用の説明が弱くなる。</td>
+            <td>家族サポート証券口座、IFA、ラップ等を確認する。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>このシステムで用意するもの</h2>
+    <div class="cards">
+      <div class="card"><b>候補銘柄</b>6月イベント後に買う/待つ/見送るを判定する。</div>
+      <div class="card"><b>本人別注文票</b>本人ごとに、銘柄、金額、口座区分、買わない条件を整理する。</div>
+      <div class="card"><b>代理制度確認</b>証券会社へ何を聞き、回答でどう分岐するかを管理する。</div>
+      <div class="card"><b>購入後管理</b>1か月、3か月、決算後20営業日、指数劣後時の見直しを記録する。</div>
+      <div class="card"><b>代替案</b>IFA、NISAラップ、家族サポート証券口座を比較する。</div>
+      <div class="card"><b>説明資料</b>顧客が「何を買うのか、なぜ買うのか」を理解できる資料にする。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ファイル</h2>
+    <div class="links">
+      <a href="880_nisa_account_mechanism_plain_guide_20260605.csv">CSV</a>
+      <a href="nisa_account_plan.pdf">NISA口座運用代替案 PDF</a>
+      <a href="879_nisa_person_order_ticket_20260605.html">本人別注文票</a>
+      <a href="index.html">ホームへ戻る</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
