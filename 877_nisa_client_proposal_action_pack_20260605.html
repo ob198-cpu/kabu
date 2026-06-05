@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA口座運用 顧客提案・実行パック 2026/06/05</title>
+  <style>
+    :root { --ink:#061f36; --navy:#123d63; --blue:#0b5f96; --line:#c8dbea; --bg:#eef4fa; --amber:#a85b00; --red:#b42318; --green:#087443; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.72; }
+    main { max-width:1280px; margin:0 auto; padding:24px 18px 70px; }
+    header { background:var(--navy); color:#fff; border-radius:16px; padding:26px; margin-bottom:16px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    header p { margin:0; color:#dbeafe; }
+    section { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; margin:16px 0; }
+    h2 { color:var(--navy); border-left:8px solid var(--blue); padding-left:12px; margin:0 0 12px; }
+    .note { background:#fff7e6; border:1px solid #f0c36a; border-left:7px solid var(--amber); border-radius:12px; padding:12px 14px; font-weight:700; }
+    .ok { background:#effaf5; border:1px solid #b9e7d0; border-left:7px solid var(--green); border-radius:12px; padding:12px 14px; }
+    .risk { background:#fff4f2; border:1px solid #f0b8b3; border-left:7px solid var(--red); border-radius:12px; padding:12px 14px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:12px; padding:12px; background:#f8fbff; }
+    .card b { display:block; color:var(--navy); font-size:18px; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; }
+    th, td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:13px; word-break:break-word; }
+    th { background:#e3f0fa; color:var(--navy); text-align:left; }
+    .script { background:#f8fbff; border:1px solid var(--line); border-radius:12px; padding:12px; white-space:pre-wrap; }
+    .pill { display:inline-block; border-radius:999px; padding:2px 9px; color:#fff; font-weight:900; }
+    .green { background:var(--green); }
+    .amber { background:var(--amber); }
+    .red { background:var(--red); }
+    .blue { background:var(--blue); }
+    .links { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+    .links a { text-decoration:none; border:1px solid var(--blue); border-radius:10px; padding:10px 12px; color:var(--navy); background:#f8fbff; font-weight:800; }
+    @media(max-width:900px){ .grid,.links{grid-template-columns:1fr;} table{table-layout:auto;} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>NISA口座運用 顧客提案・実行パック</h1>
+    <p>顧客へ説明する提案文、選択肢別の案内、再来週までの実行ToDoをまとめた実務画面です。</p>
+  </header>
+
+  <section>
+    <h2>顧客へ伝える結論</h2>
+    <div class="ok">
+      NISA口座を第三者が無断操作する形ではなく、証券会社の正式な代理制度を確認します。再来週に間に合う場合は正式代理フロー、間に合わない場合は初回のみ本人発注型で購入判断を進め、継続運用では代理人登録・IFA連携・NISAラップ等へ移行する二段構えで提案します。
+    </div>
+  </section>
+
+  <section>
+    <h2>提案メニュー</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:16%">メニュー</th>
+            <th style="width:29%">内容</th>
+            <th style="width:16%">再来週</th>
+            <th style="width:20%">顧客メリット</th>
+            <th style="width:19%">注意点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>正式代理確認</b></td>
+            <td>証券会社所定の代理人登録でNISA注文まで可能かを確認する。</td>
+            <td><span class="pill amber">要確認</span></td>
+            <td>通れば本人操作負担を大きく下げられる。</td>
+            <td>証券会社・書類・審査期間次第。</td>
+          </tr>
+          <tr>
+            <td><b>初回実行</b></td>
+            <td>本人別の注文票を作成し、本人スマホ・本人ログイン・本人発注で進める。</td>
+            <td><span class="pill green">可</span></td>
+            <td>購入予定を止めずに進められる。</td>
+            <td>本人操作の手間は残る。</td>
+          </tr>
+          <tr>
+            <td><b>IFA/助言連携</b></td>
+            <td>継続運用では登録業者・IFAと連携し、助言領域を正式化する。</td>
+            <td><span class="pill blue">中期</span></td>
+            <td>サービスとして説明しやすくなる。</td>
+            <td>契約・報酬・責任分界が必要。</td>
+          </tr>
+          <tr>
+            <td><b>NISAラップ等</b></td>
+            <td>個別株が合わない顧客には、NISA対応ラップや投信運用を代替案にする。</td>
+            <td><span class="pill blue">代替</span></td>
+            <td>本人発注負担を下げやすい。</td>
+            <td>個別株10社戦略とは別枠。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>説明文</h2>
+    <div class="script">今回のNISA運用については、他人名義口座をこちらが直接操作する形にはしません。
+一方で、運用判断を本人任せにするのではなく、こちらで候補銘柄、購入金額、購入日、買わない条件、購入後の見直し条件まで整理します。
+
+まず証券会社の正式な代理人制度を確認し、NISA口座で代理人注文まで可能で、再来週に間に合う場合はその制度を使います。
+間に合わない場合は、初回のみ本人が自分のスマホで発注できる注文票を作成し、購入予定を止めずに進めます。
+継続運用では、代理人登録、IFA・登録助言業者との連携、NISA対応ラップ等を比較し、本人の操作負担を下げる体制へ移行します。</div>
+  </section>
+
+  <section>
+    <h2>再来週までのToDo</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:14%">期限</th>
+            <th style="width:24%">作業</th>
+            <th style="width:34%">内容</th>
+            <th style="width:28%">完了条件</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>6/5〜6/7</td>
+            <td>証券会社確認</td>
+            <td>SBI、楽天、三菱UFJ eスマート、対面証券に代理人制度・NISA対象可否を確認。</td>
+            <td>確認シートに回答を記録。</td>
+          </tr>
+          <tr>
+            <td>6/5〜6/9</td>
+            <td>本人別口座確認</td>
+            <td>証券会社、NISA口座有無、ログイン可否、本人スマホ、投資可能額を確認。</td>
+            <td>購入できる本人と保留する本人を分ける。</td>
+          </tr>
+          <tr>
+            <td>6/10</td>
+            <td>米CPI確認</td>
+            <td>米金利、為替、NASDAQ、SOX、日経先物の反応を確認。</td>
+            <td>買い増し停止条件に該当するか判定。</td>
+          </tr>
+          <tr>
+            <td>6/15〜6/17</td>
+            <td>日銀・FOMC確認</td>
+            <td>円高、銀行株、半導体、米金利、指数反応を確認。</td>
+            <td>6月ゲート判定エンジンに入力。</td>
+          </tr>
+          <tr>
+            <td>6/18以降</td>
+            <td>購入ルート決定</td>
+            <td>A正式代理、B本人発注、C中期移行、D購入延期に分岐。</td>
+            <td>本人別の注文票または延期理由を作成。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>本人別に作るもの</h2>
+    <div class="grid">
+      <div class="card"><b>注文票</b>銘柄、株数または金額、NISA口座区分、買う日、買わない条件。</div>
+      <div class="card"><b>確認表</b>本人スマホ、ログイン可否、2段階認証、入金状況。</div>
+      <div class="card"><b>リスク表</b>下落時、決算悪化時、指数劣後時の対応。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ファイル</h2>
+    <div class="links">
+      <a href="875_nisa_broker_confirmation_matrix_20260605.html">確認シート</a>
+      <a href="876_nisa_broker_decision_engine_20260605.html">判定エンジン</a>
+      <a href="nisa_account_plan.pdf">代替案PDF</a>
+      <a href="index.html">ホームへ戻る</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
