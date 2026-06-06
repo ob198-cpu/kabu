@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>現時点 判定スナップショット</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--green:#0b6b4f;--red:#a01818;--gray:#455a6f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7}
+    header{background:var(--navy);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+    header p{margin:0;color:white;font-weight:800}
+    main{max-width:1460px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:12px 0;font-weight:900;border-radius:8px}
+    .links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}
+    th,td{border:1px solid var(--line);padding:9px;vertical-align:top;overflow-wrap:anywhere;color:#111}
+    th{background:#e5f1fb;color:var(--navy);text-align:left;font-weight:900}
+    .muted{color:#526b82;font-size:12px;font-weight:800}
+    .badge{display:inline-block;border-radius:999px;color:white;padding:4px 9px;font-weight:900}
+    .conditional{background:var(--amber)}.backup{background:var(--gray)}.center{background:var(--green)}.watch{background:#6d4aa3}.exclude{background:var(--red)}
+    @media(max-width:980px){main{padding:12px}table{font-size:14px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>現時点 判定スナップショット</h1>
+  <p>作成: 2026/06/06 12:54 / ワークベンチの初期値をもとに、保守判定と緑通過後の仮判定を並べた確認表です。</p>
+</header>
+<main>
+  <section>
+    <h2>1. 位置づけ</h2>
+    <p class="notice">このページは購入確定ではありません。6月イベント前の保守判定では、攻め枠を抑え、データ未確認の銘柄を補欠または除外寄りに扱います。緑通過後の仮判定は、CPI・日銀・FOMC後に市場が崩れていない場合の見え方です。</p>
+    <div class="links">
+      <a href="908_final10_decision_workbench_20260606.html">判定ワークベンチで調整</a>
+      <a href="898_final_candidate_selection_logic_20260606.html">最終確定ロジック</a>
+      <a href="909_final10_current_snapshot_20260606.csv">CSVを開く</a>
+      <a href="practical_action_dashboard_20260528.html">実用ダッシュボード</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 保守判定: 市場ゲート黄</h2>
+    <p>市場に警戒が残る場合の見え方です。個別株上限は45%、攻め枠は縮小します。</p>
+    <table>
+      <thead><tr><th style="width:55px">順</th><th style="width:150px">銘柄</th><th style="width:190px">枠</th><th style="width:70px">点</th><th style="width:120px">分類</th><th style="width:120px">配分目安</th><th>理由</th><th style="width:150px">扱い</th></tr></thead>
+      <tbody>
+    <tr>
+      <td><b>1</b></td>
+      <td><b>8053.T</b><br>住友商事</td>
+      <td>総合候補<br><span class="muted">商社・資源・還元</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>2</b></td>
+      <td><b>8316.T</b><br>三井住友FG</td>
+      <td>総合候補<br><span class="muted">銀行・金利・還元</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>3</b></td>
+      <td><b>6501.T</b><br>日立製作所</td>
+      <td>データセンター・電力・冷却・電線<br><span class="muted">電力網・制御・デジタル</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>4</b></td>
+      <td><b>6503.T</b><br>三菱電機</td>
+      <td>総合候補<br><span class="muted">電力制御・FA・複合</span></td>
+      <td>7</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>5</b></td>
+      <td><b>6857.T</b><br>アドバンテスト</td>
+      <td>半導体製造装置・材料<br><span class="muted">AI半導体検査</span></td>
+      <td>7</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>6</b></td>
+      <td><b>8035.T</b><br>東京エレクトロン</td>
+      <td>半導体製造装置・材料<br><span class="muted">前工程装置</span></td>
+      <td>7</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>7</b></td>
+      <td><b>7011.T</b><br>三菱重工業</td>
+      <td>データセンター・電力・冷却・電線<br><span class="muted">電力・冷却・防衛</span></td>
+      <td>7</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>8</b></td>
+      <td><b>6762.T</b><br>TDK</td>
+      <td>フィジカルAI<br><span class="muted">電源・センサー・電子部品</span></td>
+      <td>7</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>112,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 仮判定: 市場ゲート緑</h2>
+    <p>6月イベント後に市場が崩れていない場合の見え方です。個別株上限は70%ですが、未確認データが残る銘柄は中心候補にはしません。</p>
+    <table>
+      <thead><tr><th style="width:55px">順</th><th style="width:150px">銘柄</th><th style="width:190px">枠</th><th style="width:70px">点</th><th style="width:120px">分類</th><th style="width:120px">配分目安</th><th>理由</th><th style="width:150px">扱い</th></tr></thead>
+      <tbody>
+    <tr>
+      <td><b>1</b></td>
+      <td><b>8053.T</b><br>住友商事</td>
+      <td>総合候補<br><span class="muted">商社・資源・還元</span></td>
+      <td>9</td>
+      <td><span class="badge conditional">条件付き候補</span></td>
+      <td>262,500円</td>
+      <td>停止条件には触れていないが、決算反応・税制/口座・高ボラ確認が残る。</td>
+      <td>追加確認後に小さく検討</td>
+    </tr>
+  
+    <tr>
+      <td><b>2</b></td>
+      <td><b>8316.T</b><br>三井住友FG</td>
+      <td>総合候補<br><span class="muted">銀行・金利・還元</span></td>
+      <td>9</td>
+      <td><span class="badge conditional">条件付き候補</span></td>
+      <td>262,500円</td>
+      <td>停止条件には触れていないが、決算反応・税制/口座・高ボラ確認が残る。</td>
+      <td>追加確認後に小さく検討</td>
+    </tr>
+  
+    <tr>
+      <td><b>3</b></td>
+      <td><b>6501.T</b><br>日立製作所</td>
+      <td>データセンター・電力・冷却・電線<br><span class="muted">電力網・制御・デジタル</span></td>
+      <td>9</td>
+      <td><span class="badge conditional">条件付き候補</span></td>
+      <td>262,500円</td>
+      <td>停止条件には触れていないが、決算反応・税制/口座・高ボラ確認が残る。</td>
+      <td>追加確認後に小さく検討</td>
+    </tr>
+  
+    <tr>
+      <td><b>4</b></td>
+      <td><b>6503.T</b><br>三菱電機</td>
+      <td>総合候補<br><span class="muted">電力制御・FA・複合</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>87,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>5</b></td>
+      <td><b>6857.T</b><br>アドバンテスト</td>
+      <td>半導体製造装置・材料<br><span class="muted">AI半導体検査</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>87,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>6</b></td>
+      <td><b>8035.T</b><br>東京エレクトロン</td>
+      <td>半導体製造装置・材料<br><span class="muted">前工程装置</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>87,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>7</b></td>
+      <td><b>7011.T</b><br>三菱重工業</td>
+      <td>データセンター・電力・冷却・電線<br><span class="muted">電力・冷却・防衛</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>87,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>8</b></td>
+      <td><b>6762.T</b><br>TDK</td>
+      <td>フィジカルAI<br><span class="muted">電源・センサー・電子部品</span></td>
+      <td>8</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>87,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>9</b></td>
+      <td><b>6146.T</b><br>ディスコ</td>
+      <td>半導体製造装置・材料<br><span class="muted">切断・研削・先端パッケージ</span></td>
+      <td>7</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>87,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  
+    <tr>
+      <td><b>10</b></td>
+      <td><b>5803.T</b><br>フジクラ</td>
+      <td>データセンター・電力・冷却・電線<br><span class="muted">光通信・電線</span></td>
+      <td>7</td>
+      <td><span class="badge backup">補欠候補</span></td>
+      <td>87,500円</td>
+      <td>補欠候補。追加データ確認後に昇格余地あり。</td>
+      <td>入替候補</td>
+    </tr>
+  </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>4. 説明文</h2>
+    <p>現時点では、6月イベント前の保守判定と、イベント通過後の仮判定を分けて確認しています。黄判定では個別株比率を抑え、中心候補を無理に作りません。緑判定になった場合でも、決算後反応、税制/口座確認、高ボラ確認が残る銘柄は条件付きまたは補欠として扱います。量子コンピューターは長期テーマとして監視しますが、1年NISAテストの購入候補にはまだ入れません。</p>
+  </section>
+</main>
+</body>
+</html>
