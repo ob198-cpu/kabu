@@ -3,832 +3,215 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>実用パート 操作ダッシュボード</title>
+  <title>実用ダッシュボード</title>
   <style>
-    :root {
-      --ink:#050b14; --navy:#123d63; --blue:#0b5f96; --line:#cbd8e6;
-      --bg:#eef4fa; --green:#087f5b; --amber:#a85b00; --red:#b42318;
-    }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif; color:var(--ink); background:var(--bg); line-height:1.7; }
-    main { max-width:1320px; margin:0 auto; padding:24px 18px 56px; }
-    header { background:var(--navy); color:#fff; border-radius:10px; padding:26px; margin-bottom:18px; }
-    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
-    h2 { margin:24px 0 12px; padding-left:12px; border-left:7px solid var(--blue); color:var(--navy); }
-    section { background:#fff; border:1px solid var(--line); border-radius:9px; padding:16px; margin:16px 0; }
-    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
-    .card { border:1px solid var(--line); border-radius:8px; background:#f8fbff; padding:14px; }
-    .card strong { display:block; font-size:14px; color:var(--navy); }
-    .value { font-size:28px; font-weight:900; color:var(--blue); margin:2px 0; }
-    .ok { color:var(--green); font-weight:800; }
-    .warn { color:var(--amber); font-weight:800; }
-    .stop { color:var(--red); font-weight:800; }
-    .note { border-left:6px solid var(--amber); background:#fff8ec; border-radius:8px; padding:12px; margin:10px 0; }
-    .danger { border-left:6px solid var(--red); background:#fff4f2; border-radius:8px; padding:12px; margin:10px 0; }
-    .actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
-    .button { display:block; text-align:center; text-decoration:none; border:1px solid var(--blue); background:var(--blue); color:#fff; border-radius:8px; padding:11px 12px; font-weight:800; }
-    .button.secondary { background:#fff; color:var(--blue); }
-    .priority { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
-    .priority a { display:block; text-decoration:none; border:1px solid var(--line); border-radius:9px; background:#f8fbff; padding:12px; color:var(--ink); }
-    .priority b { display:block; color:var(--navy); margin-bottom:4px; }
-    .priority span { display:block; font-size:12px; color:#36506a; font-weight:800; }
-    .scope-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-    .scope-box { border:1px solid var(--line); border-radius:9px; padding:12px; background:#f8fbff; }
-    .scope-box b { display:block; color:var(--navy); margin-bottom:6px; }
-    .scope-box ul { margin:0; padding-left:18px; }
-    .data-status { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
-    .data-status div { border:1px solid var(--line); border-radius:9px; padding:12px; background:#fff; }
-    .data-status b { display:block; color:var(--navy); margin-bottom:4px; }
-    .data-status span { display:block; font-size:12px; color:#36506a; font-weight:800; }
-    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:#fff; }
-    table { width:100%; border-collapse:collapse; table-layout:fixed; }
-    th,td { border:1px solid var(--line); padding:8px; vertical-align:top; font-size:12px; overflow-wrap:break-word; color:#050b14; }
-    th { background:#e6f1fb; color:var(--navy); text-align:left; }
-    .flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; align-items:stretch; }
-    .step { border:1px solid var(--line); border-radius:8px; padding:10px; background:#f8fbff; position:relative; }
-    .step:not(:last-child)::after { content:"→"; position:absolute; right:-10px; top:38%; color:var(--blue); font-weight:900; }
-    .channel-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 14px; }
-    .channel-tab { border:1px solid var(--blue); border-radius:999px; background:#fff; color:var(--blue); padding:9px 13px; font-weight:900; cursor:pointer; }
-    .channel-tab.active { background:var(--blue); color:#fff; }
-    .channel-panel { display:none; border:1px solid var(--line); border-radius:10px; background:#fbfdff; padding:14px; }
-    .channel-panel.active { display:block; }
-    .channel-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; margin-bottom:10px; }
-    .channel-head h3 { margin:0 0 4px; color:var(--navy); font-size:20px; }
-    .channel-head p { margin:0; color:#1f3044; }
-    .channel-badge { display:inline-block; border-radius:999px; background:#e6f1fb; color:var(--navy); border:1px solid #bad4e8; padding:6px 10px; font-weight:900; white-space:nowrap; }
-    .channel-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:10px 0; }
-    .channel-summary div { border:1px solid var(--line); border-radius:8px; background:#fff; padding:9px; }
-    .channel-summary b { display:block; color:var(--navy); font-size:12px; }
-    .channel-summary span { display:block; color:#050b14; font-weight:900; }
-    .channel-actions { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
-    .channel-actions .button { display:inline-flex; width:auto; min-height:38px; align-items:center; }
-    .subnote { margin:8px 0 0; color:#36506a; font-size:12px; font-weight:800; }
-    @media (max-width:980px) {
-      .grid,.actions,.flow,.priority,.scope-grid,.data-status { grid-template-columns:1fr; }
-      .step::after { display:none; }
-      table { table-layout:auto; }
-      .channel-head, .channel-summary { grid-template-columns:1fr; }
-    }
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7}
+    header{background:var(--navy);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+    header p{margin:0;color:white;font-weight:800}
+    main{max-width:1450px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px;line-height:1.35}
+    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:0 0 18px;font-weight:900;border-radius:8px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+    .card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    .quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+    .quick a{display:block;text-align:center;text-decoration:none;background:var(--blue);color:white;border-radius:10px;padding:12px;font-weight:900}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}
+    th,td{border:1px solid var(--line);padding:10px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e5f1fb;color:var(--navy);text-align:left}
+    tr{break-inside:avoid}
+    .small{font-size:13px;color:#354b60;font-weight:800}
+    .red{color:var(--red);font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:980px){main{padding:12px}.grid,.quick{grid-template-columns:1fr}table{font-size:14px}}
   </style>
 </head>
 <body>
+<header>
+  <h1>6月NISA 1年テスト 実用ダッシュボード</h1>
+  <p>作成: 2026/06/06 11:28 / 毎日見る項目、止める条件、次に行う作業を1画面で確認する入口です。</p>
+</header>
 <main>
-  <header>
-    <h1>実用パート 操作ダッシュボード</h1>
-    <p>「いつ何を確認し、どの条件なら何をするか」を見るための入口です。資料を読む画面ではなく、6月のNISA 1年保有テストに向けたアクション確認用です。</p>
-  </header>
+  <p class="notice">この画面は購入確定、投資助言、自動売買の画面ではありません。購入前には証券会社画面、公式決算資料、6月イベント後の実データを確認します。</p>
+
+  <div class="quick">
+    <a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
+    <a href="895_june_execution_cockpit_20260606.html">実行コックピット</a>
+    <a href="893_june_event_gate_engine_20260606.html">イベント判定</a>
+    <a href="894_june_candidate_action_after_gate_20260606.html">候補別分岐</a>
+  </div>
 
   <section>
-    <h2>最初に見る結論</h2>
+    <h2>1. 今日最初に見る画面</h2>
     <div class="grid">
-      <div class="card"><strong>現在の位置</strong><div class="value">購入検討前</div><p>既存スコアと追加指標の統合候補確認段階</p></div>
-      <div class="card"><strong>次の重要確認</strong><div class="value">6/10</div><p>米CPI後の金利・為替・指数反応</p></div>
-      <div class="card"><strong>初回検討日</strong><div class="value">6/19</div><p>6/18再判定が良好な場合</p></div>
-      <div class="card"><strong>検討上限</strong><div class="value">90%</div><p>条件良好時の上限案。10%は現金待機</p></div>
-    </div>
-    <p class="danger">現時点では購入検討の確定ではありません。6月10日CPI、6月15〜16日日銀、6月16〜17日FOMC後に再判定します。</p>
+  <a class="card" href="896_practical_entry_hub_20260606.html">
+    <b>実用パート入口</b>
+    <span>毎日見る画面と補足資料を分けた入口。迷ったらここから確認する。</span>
+  </a>
+
+  <a class="card" href="895_june_execution_cockpit_20260606.html">
+    <b>6月実行コックピット</b>
+    <span>6月のイベント、見る指標、止める条件、次の作業を1画面で確認する。</span>
+  </a>
+
+  <a class="card" href="893_june_event_gate_engine_20260606.html">
+    <b>6月イベント判定エンジン</b>
+    <span>CPI、日銀、FOMC後の市場状態を緑・黄・赤で整理する。</span>
+  </a>
+
+  <a class="card" href="894_june_candidate_action_after_gate_20260606.html">
+    <b>候補別アクション分岐表</b>
+    <span>イベント後に各候補を残す、保留、落とすのどれで扱うか確認する。</span>
+  </a>
+</div>
   </section>
 
   <section>
-    <h2>この画面の役割</h2>
-    <div class="scope-grid">
-      <div class="scope-box">
-        <b>できること</b>
-        <ul>
-          <li>候補群を、総合・半導体・AIインフラに分けて確認する</li>
-          <li>6月の主要イベント後に見る数値と判断分岐を確認する</li>
-          <li>判断理由、結果、次の確認日を記録する</li>
-        </ul>
-      </div>
-      <div class="scope-box">
-        <b>できないこと</b>
-        <ul>
-          <li>証券注文の自動実行</li>
-          <li>購入判断の確定や利益の保証</li>
-          <li>未確認データを使った最終判定</li>
-        </ul>
-      </div>
-    </div>
+    <h2>2. 6月の確認順</h2>
+    <table>
+      <thead><tr><th style="width:8%">日付</th><th style="width:12%">イベント</th><th>見る数値</th><th>止める条件</th><th>次の作業</th></tr></thead>
+      <tbody>
+  <tr>
+    <td><b>6/10</b></td>
+    <td>米CPI</td>
+    <td>CPI、米10年金利、SOX、NASDAQ、VIX、ドル円</td>
+    <td>CPI悪化と米金利急騰が同時に出る場合、半導体・AI関連の追加判断を止める。</td>
+    <td>数値をイベント判定エンジンへ入力し、テーマ候補の扱いを再判定する。</td>
+  </tr>
+
+  <tr>
+    <td><b>6/15-16</b></td>
+    <td>日銀会合</td>
+    <td>政策金利、声明文、ドル円、日本10年金利、日経平均、TOPIX</td>
+    <td>急な円高、銀行・輸出・半導体への大きな逆風が出る場合は購入判断を保留する。</td>
+    <td>金融、商社、輸出、半導体装置の扱いを分けて確認する。</td>
+  </tr>
+
+  <tr>
+    <td><b>6/16-17</b></td>
+    <td>FOMC</td>
+    <td>政策金利、ドットプロット、FRB議長会見、米10年金利、VIX、NASDAQ</td>
+    <td>米金利急騰、VIX急騰、NASDAQ/SOX急落が重なる場合は攻め枠を止める。</td>
+    <td>6/18以降の一次再判定で、候補10社とテーマ候補を分けて処理する。</td>
+  </tr>
+
+  <tr>
+    <td><b>6/18以降</b></td>
+    <td>一次再判定</td>
+    <td>3イベント後の色判定、候補別スコア、指数差、直近下落、未確認データ</td>
+    <td>赤判定が残る、または根拠不足の銘柄は購入候補に進めない。</td>
+    <td>候補別の購入可否、保留理由、入れ替え候補を記録する。</td>
+  </tr>
+</tbody>
+    </table>
   </section>
 
   <section>
-    <h2>データ鮮度</h2>
-    <div class="data-status">
-      <div><b>現在反映済み</b><span>2026年5月28日〜29日に作成した候補表、株価時系列、長期安定性、分野別スクリーニング</span></div>
-      <div><b>6月に更新する数値</b><span>米CPI、日銀会合、FOMC、米10年金利、為替、日経平均、TOPIX、S&P500、SOX、各候補の株価反応</span></div>
-      <div><b>最終判定に使わないもの</b><span>未確認データ、未検証の固定係数、質的仮説だけで作った点数</span></div>
-    </div>
+    <h2>3. 候補の扱い</h2>
+    <table>
+      <thead><tr><th style="width:25%">区分</th><th style="width:18%">役割</th><th>使い方</th><th>注意点</th></tr></thead>
+      <tbody>
+  <tr>
+    <td><b>チャンネル1 総合候補</b></td>
+    <td>既存の総合候補を基準にする</td>
+    <td>量的スコア、長期安定性、指数比較、下落耐性を優先して見る。</td>
+    <td>未確認データが残る銘柄は、スコアが高くても購入確定にしない。</td>
+  </tr>
+
+  <tr>
+    <td><b>チャンネル2 半導体製造装置・材料</b></td>
+    <td>半導体テーマの攻め枠</td>
+    <td>SOX、NASDAQ、米金利、受注・利益率、PER/PBR/ROEを確認して扱う。</td>
+    <td>高PER、高ボラ、直近過熱が強い場合は比率を下げるか保留する。</td>
+  </tr>
+
+  <tr>
+    <td><b>チャンネル3 データセンター・電力・冷却・電線</b></td>
+    <td>AI需要の周辺インフラ枠</td>
+    <td>電力需要、冷却、電線、データセンター投資の構造需要を確認する。</td>
+    <td>テーマが正しくても株価に織り込み済みの場合があるため、過熱確認を必須にする。</td>
+  </tr>
+
+  <tr>
+    <td><b>フィジカルAI</b></td>
+    <td>補完後に昇格候補</td>
+    <td>FA、センサー、ロボット、電子部品の実需と決算成長を分けて見る。</td>
+    <td>テーマ名だけでは採用しない。決算と株価反応の両方が必要。</td>
+  </tr>
+
+  <tr>
+    <td><b>量子コンピューター</b></td>
+    <td>監視枠</td>
+    <td>ニュース、提携、研究開発、関連部材を観察する。</td>
+    <td>現時点では6月NISA 1年テストの中心候補ではなく、作業中の探索枠とする。</td>
+  </tr>
+</tbody>
+    </table>
   </section>
 
   <section>
-    <h2>主要確認項目</h2>
+    <h2>4. NISA準備・口座運用</h2>
+    <p class="small"><span class="red">本人操作、本人確認、口座区分の確認を前提にします。</span> ここは購入前の実務準備を整理する場所です。</p>
     <div class="grid">
-      <div class="card"><strong>1. 候補の現状</strong><p>総合候補、半導体、データセンター系を分けて見る。</p><a class="button" href="#channels">チャンネルを見る</a></div>
-      <div class="card"><strong>2. 6月の日程</strong><p>CPI、日銀、FOMC後に何を確認するかを見る。</p><a class="button" href="#schedule">日程を見る</a></div>
-      <div class="card"><strong>3. 運用ルール</strong><p>下落、上昇、決算前後、指数劣後時の対応を見る。</p><a class="button" href="#rules">ルールを見る</a></div>
-      <div class="card"><strong>4. リスク対策</strong><p>危険率、ストップ安接近度、発生前後の対応を見る。</p><a class="button" href="#risk-simulation">リスクを見る</a></div>
-    </div>
+  <a class="card" href="882_nisa_account_operation_hub_20260605.html">
+    <b>NISA口座運用ハブ</b>
+    <span>本人操作、証券会社確認、注文票、口座区分の入口。</span>
+  </a>
+
+  <a class="card" href="883_nisa_readiness_dashboard_20260605.html">
+    <b>NISA購入準備ダッシュボード</b>
+    <span>本人別の準備状況、スマホ、入金、注文票の進捗を見る。</span>
+  </a>
+
+  <a class="card" href="884_nisa_broker_contact_templates_20260605.html">
+    <b>証券会社確認テンプレート</b>
+    <span>代理人登録、本人操作、注文時の確認事項を証券会社へ聞くための整理。</span>
+  </a>
+
+  <a class="card" href="879_nisa_person_order_ticket_20260605.html">
+    <b>本人別注文票テンプレート</b>
+    <span>本人が確認して発注するための注文票。</span>
+  </a>
+</div>
   </section>
 
   <section>
-    <h2>確認の優先順</h2>
-    <div class="priority">
-      <a href="#improvement-roadmap"><b>0. 改善管理</b><span>完了条件、次アクション、未実装項目を確認</span></a>
-      <a href="#channels"><b>1. 候補群</b><span>総合・半導体・AIインフラの3チャンネルを確認</span></a>
-      <a href="#benchmark-compare"><b>2. 指数比較</b><span>S&P500/TOPIXを+1%以上上回る説明を確認</span></a>
-      <a href="#change-log"><b>3. 変更理由</b><span>候補が変わった理由と次確認を確認</span></a>
-      <a href="#backtest-plan"><b>4. 過去検証</b><span>合格ラインとCSV項目を確認</span></a>
-      <a href="#schedule"><b>5. 6月日程</b><span>CPI、日銀、FOMC後の再判定条件を確認</span></a>
-      <a href="#rules"><b>6. 判断分岐</b><span>開始可、延期、停止、比率縮小の条件を確認</span></a>
-      <a href="#risk-simulation"><b>7. リスク</b><span>危険率とストップ安対策を確認</span></a>
-      <a href="#record"><b>8. 記録</b><span>判断理由と結果確認を残す項目を確認</span></a>
-    </div>
+    <h2>5. 補足資料・記録</h2>
+    <div class="grid">
+  <a class="card" href="891_june_theme_execution_matrix_20260605.html">
+    <b>テーマ候補 実行判定表</b>
+    <span>各テーマ候補を残す条件、止める条件、必要データを確認する。</span>
+  </a>
+
+  <a class="card" href="890_june_theme_integration_gate_20260605.html">
+    <b>テーマ候補 統合ゲート</b>
+    <span>既存10社とテーマ候補を混ぜずに比較するためのゲート。</span>
+  </a>
+
+  <a class="card" href="892_june_event_actual_input_and_replacement_log_20260606.html">
+    <b>イベント実数入力・入替記録</b>
+    <span>イベント後の実数、候補入替、理由を記録する。</span>
+  </a>
+
+  <a class="card" href="842_tax_aware_operation_layer_phase1_20260602.html">
+    <b>税制確認 Phase 1</b>
+    <span>NISA向き、課税口座向き、損益通算などの確認補助。</span>
+  </a>
+
+  <a class="card" href="nisa_multi_account_pc_ip_risk_report_20260531.pdf">
+    <b>NISA口座注意PDF</b>
+    <span>本人操作、別名義口座、誤解を避ける運用方法の確認資料。</span>
+  </a>
+</div>
   </section>
 
-  <section>
-    <h2>実用リンク</h2>
-    <div class="actions">
-      <a class="button" href="849_gap10_improvement_dashboard_20260603.html">10項目改善ダッシュボード</a>
-      <a class="button secondary" href="858_practical_today_dashboard_20260603.html">今日見る実用画面</a>
-      <a class="button" href="integrated_recalculated_10_20260528.html">統合再計算10社を見る</a>
-      <a class="button" href="theme20_separate_screened10_20260529.html">AIインフラ 分野別10社を見る</a>
-      <a class="button" href="847_quantum_physical_ai_channel_20260602.html">量子・フィジカルAI探索枠を見る</a>
-        <a class="button secondary" href="886_quantum_physical_ai_screening_20260605.html">フィジカルAI・量子 候補整理</a>
-        <a class="button secondary" href="887_quantum_physical_ai_quant_connection_20260605.html">フィジカルAI・量子 数値接続</a>
-      <a class="button secondary" href="888_quantum_physical_ai_promotion_queue_20260605.html">フィジカルAI・量子 昇格作業キュー</a>
-      <a class="button secondary" href="889_cross_channel_candidate_comparison_20260605.html">テーマ別候補 横並び比較</a>
-      <a class="button secondary" href="890_june_theme_integration_gate_20260605.html">6月テーマ候補 統合ゲート</a>
-      <a class="button secondary" href="891_june_theme_execution_matrix_20260605.html">6月テーマ候補 実行判定表</a>
-      <a class="button secondary" href="892_june_event_actual_input_and_replacement_log_20260606.html">6月イベント後 実データ入力・入替記録</a>
-      <a class="button secondary" href="893_june_event_gate_engine_20260606.html">6月イベント判定エンジン</a>
-      <a class="button secondary" href="894_june_candidate_action_after_gate_20260606.html">6月候補別アクション分岐表</a>
-      <a class="button secondary" href="895_june_execution_cockpit_20260606.html">6月実行コックピット</a>
-      <a class="button secondary" href="896_practical_entry_hub_20260606.html">実用パート入口</a>
-      <a class="button secondary" href="theme20_final_screened10_20260529.html">AIインフラ 混合10社</a>
-      <a class="button" href="theme20_ai_infra_screening_20260529.html">AIインフラ20社を見る</a>
-      <a class="button" href="provisional_trade_execution_plan_20260528.html">日付入り検討予定を見る</a>
-      <a class="button" href="trade_rules_common_stock_20260528.html">運用ルールを見る</a>
-      <a class="button secondary" href="top10_decision_control_board_20260528.html">10社判定コントロール表</a>
-      <a class="button secondary" href="top10_score_input_calculator_20260528.html">10社スコア入力・再計算</a>
-      <a class="button secondary" href="top10_price_metrics_refresh_20260528.html">株価時系列 取得結果</a>
-      <a class="button secondary" href="https://raw.githubusercontent.com/ob198-cpu/kabu/main/operation_record_template_20260529.csv">運用記録CSV</a>
-    </div>
-  </section>
-
-  <section id="improvement-roadmap">
-    <h2>システム改善ロードマップ</h2>
-    <p class="note">次の改善は、候補を増やすためではなく、説明責任と再現性を上げるために実施します。未取得データや未検証の仮説は、購入検討スコアへ直接混ぜません。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>優先</th><th>改善項目</th><th>実装方針</th><th>完了条件</th><th>次アクション</th><th>状態</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>3チャンネル管理</td><td>総合、半導体製造装置・材料、データセンター・電力・冷却・電線を別々に管理する。</td><td>各チャンネルで10社、スコア、扱い、確認事項を表示する。</td><td>次は分類理由を全10社へ広げ、CSVにも反映する。</td><td class="ok">画面反映済み</td></tr>
-          <tr><td>2</td><td>量的スコアと質的スコアの分離</td><td>株価、PER/PBR/ROE、CAGR、下落率などは量的。ニュース、政策、イベント仮説は質的として分ける。</td><td>質的材料が直接加点されず、確認条件、上限、警戒条件として表示される。</td><td>次は質的材料の根拠URL、確認日、証拠レベルを追加する。</td><td class="ok">画面反映済み</td></tr>
-          <tr><td>3</td><td>データ出所・取得日・欠損表示</td><td>銘柄ごとに取得元、取得日、手入力、未取得を表示する。</td><td>全候補に、取得済み/手入力/未取得/更新待ちが出る。</td><td>次は取得元URLと更新日を候補CSVへ反映する。</td><td class="ok">画面反映済み</td></tr>
-          <tr><td>4</td><td>S&P500/TOPIX比較</td><td>過去1年、5年、10年、最大下落率、ボラティリティを指数と比較する。</td><td>候補10社の平均と指数の差が表示され、+1%目標との距離が分かる。</td><td>次は各チャンネル10社平均をCSVから自動集計する。</td><td class="ok">画面反映済み</td></tr>
-          <tr><td>5</td><td>購入候補と観察候補の分離</td><td>高スコアでも、欠損、急騰、決算反応未確認、説明不能な割高は観察扱いにする。</td><td>購入検討に進める銘柄と、観察に留める銘柄が分かれている。</td><td>購入検討へ進む条件を銘柄別に追加する。</td><td class="ok">画面反映済み</td></tr>
-          <tr><td>6</td><td>変更理由ログ</td><td>候補が入れ替わった理由を、指標追加、データ補完、リスク条件、指数比較に分けて記録する。</td><td>前回候補との差分と、入替理由が表で残る。</td><td>次は変更履歴CSVを作り、候補入替時に自動追記する。</td><td class="ok">画面反映済み</td></tr>
-          <tr><td>7</td><td>過去検証</td><td>過去の日付で同じ条件を使い、その後1年の結果を検算する。</td><td>少なくとも過去3時点で、候補選定後1年の勝敗、最大下落、指数差を確認する。</td><td>当時情報確認キューを使い、財務・決算・PER/PBR/ROEの確認済み行だけ本検証へ進める。</td><td class="warn">当時情報キュー作成</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="channels">
-    <h2>継続確認チャンネル</h2>
-    <p class="note">継続的にこの3チャンネルを分けて管理します。チャンネル1は既存の総合候補、チャンネル2は半導体製造装置・材料、チャンネル3はデータセンター・電力・冷却・電線です。分野を混ぜた10社は参考扱いで、正式な比較は下のチャンネル別に見ます。</p>
-    <div class="channel-tabs" role="tablist" aria-label="候補チャンネル">
-      <button class="channel-tab active" id="tab-ch1" type="button" data-channel-tab="ch1" role="tab" aria-controls="ch1" aria-selected="true">チャンネル1 総合</button>
-      <button class="channel-tab" id="tab-ch2" type="button" data-channel-tab="ch2" role="tab" aria-controls="ch2" aria-selected="false">チャンネル2 半導体製造装置・材料</button>
-      <button class="channel-tab" id="tab-ch3" type="button" data-channel-tab="ch3" role="tab" aria-controls="ch3" aria-selected="false">チャンネル3 データセンター・電力・冷却・電線</button>
-      <button class="channel-tab" id="tab-ch4" type="button" data-channel-tab="ch4" role="tab" aria-controls="ch4" aria-selected="false">チャンネル4 量子・フィジカルAI</button>
-    </div>
-
-    <div class="channel-panel active" id="ch1" role="tabpanel" aria-labelledby="tab-ch1">
-      <div class="channel-head">
-        <div>
-          <h3>チャンネル1: 既存の総合候補</h3>
-          <p>100社母集団から、既存選定スコア、長期安定性、S&P比較、下落耐性を統合して見た候補群です。業種を限定せず、全体最適の候補確認に使います。</p>
-        </div>
-        <span class="channel-badge">総合比較</span>
-      </div>
-      <div class="channel-summary">
-        <div><b>用途</b><span>全体候補の基準線</span></div>
-        <div><b>現在の扱い</b><span>6月再判定前</span></div>
-        <div><b>主な確認</b><span>指数比較・下落耐性</span></div>
-        <div><b>注意</b><span>購入確定ではない</span></div>
-      </div>
-      <div class="channel-actions">
-        <a class="button" href="integrated_recalculated_10_20260528.html">チャンネル1を開く</a>
-        <a class="button secondary" href="784_integrated_recalculation_scores_20260528.csv">全スコアCSV</a>
-        <a class="button secondary" href="785_integrated_recalculated_10_20260528.csv">10社CSV</a>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>100点換算</th><th>データ状態</th><th>質的材料</th><th>崩れる条件</th><th>次に確認すること</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>8316.T 三井住友FG</td><td class="ok">購入検討候補</td><td>76.9</td><td>株価・指数取得済み / 財務確認待ち</td><td>A: 金利正常化・銀行還元</td><td>急な景気悪化、信用コスト増、日銀後の銀行株失速</td><td>金利、金融政策、信用コスト</td></tr>
-            <tr><td>2</td><td>8306.T 三菱UFJ FG</td><td class="ok">購入検討候補</td><td>74.9</td><td>株価・指数取得済み / 財務確認待ち</td><td>A: 金利正常化・大型銀行</td><td>日銀後に銀行セクター全体が指数劣後</td><td>日銀後の銀行株全体の反応</td></tr>
-            <tr><td>3</td><td>8725.T MS&AD</td><td class="ok">購入検討候補</td><td>72.9</td><td>株価・指数取得済み / 決算確認待ち</td><td>B: 金融分散・保険還元</td><td>金融株全体の弱含み、保険料・災害損失悪化</td><td>保険セクターの継続性</td></tr>
-            <tr><td>4</td><td>8411.T みずほFG</td><td class="warn">条件付き</td><td>71.2</td><td>株価・指数取得済み / 上位銀行比較待ち</td><td>B: 銀行テーマ</td><td>上位銀行より反応が弱い、銀行枠が過多</td><td>銀行内の比較順位</td></tr>
-            <tr><td>5</td><td>6503.T 三菱電機</td><td class="warn">条件付き</td><td>70.8</td><td>株価・指数取得済み / 受注確認待ち</td><td>B: 電力・FA・社会インフラ</td><td>受注やFA需要が弱い、電力テーマへの反応が鈍い</td><td>電力・FAテーマと株価反応</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="subnote">この画面は上位の抜粋です。全10社と計算根拠は「チャンネル1を開く」またはCSVで確認します。</p>
-    </div>
-
-    <div class="channel-panel" id="ch2" role="tabpanel" aria-labelledby="tab-ch2">
-      <div class="channel-head">
-        <div>
-          <h3>チャンネル2: 半導体製造装置・材料 10社</h3>
-          <p>AI半導体需要から、製造装置、検査、切断・研削、材料へ資金が流れる仮説を検証する候補群です。急騰・高PER・大幅下落リスクを必ず分けて見ます。</p>
-        </div>
-        <span class="channel-badge">半導体サプライチェーン</span>
-      </div>
-      <div class="channel-summary">
-        <div><b>用途</b><span>AI半導体の構造需要確認</span></div>
-        <div><b>上位扱い</b><span>条件付きテスト候補中心</span></div>
-        <div><b>主な確認</b><span>PER・受注・SOX指数</span></div>
-        <div><b>注意</b><span>高ボラ・急落耐性</span></div>
-      </div>
-      <div class="channel-actions">
-        <a class="button" href="theme20_separate_screened10_20260529.html#semiconductor">チャンネル2を開く</a>
-        <a class="button secondary" href="788_theme20_separate_screened10_20260529.csv">分野別CSV</a>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>実用スコア</th><th>データ状態</th><th>質的材料</th><th>崩れる条件</th><th>警戒点</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>6857.T アドバンテスト</td><td class="warn">条件付き</td><td>56.7</td><td>株価取得済み / 受注・PER確認待ち</td><td>A: AI半導体検査需要</td><td>SOX悪化、米金利上昇、高PER売り、受注鈍化</td><td>1年急騰、ボラ高い</td></tr>
-            <tr><td>2</td><td>6146.T ディスコ</td><td class="warn">条件付き</td><td>52.7</td><td>株価取得済み / 決算資料確認待ち</td><td>A: 半導体工程の構造優位</td><td>半導体設備投資の減速、指数劣後、急落再発</td><td>5年下落深い</td></tr>
-            <tr><td>3</td><td>8035.T 東京エレクトロン</td><td class="warn">観察</td><td>48.0</td><td>株価取得済み / 受注見通し確認待ち</td><td>B: 製造装置代表銘柄</td><td>SOX指数悪化、装置受注見通し悪化</td><td>5年下落深い</td></tr>
-            <tr><td>4</td><td>7735.T SCREEN HD</td><td class="warn">観察</td><td>44.8</td><td>株価取得済み / 決算後反応確認待ち</td><td>B: 洗浄装置・工程需要</td><td>決算後反応弱い、設備投資サイクル鈍化</td><td>5年下落深い</td></tr>
-            <tr><td>5</td><td>6920.T レーザーテック</td><td class="stop">観察</td><td>44.5</td><td>株価取得済み / 高PER説明確認待ち</td><td>B: 先端検査装置</td><td>高期待の反動、受注・利益率の失速、指数劣後</td><td>1年急騰、5年下落深い、ボラ高い</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="subnote">この画面は上位の抜粋です。半導体製造装置・材料の全10社は「チャンネル2を開く」または分野別CSVで確認します。</p>
-    </div>
-
-    <div class="channel-panel" id="ch3" role="tabpanel" aria-labelledby="tab-ch3">
-      <div class="channel-head">
-        <div>
-          <h3>チャンネル3: データセンター・電力・冷却・電線 10社</h3>
-          <p>AIデータセンター増加から、電力、送配電、冷却、光ファイバー、電線へ資金が流れる仮説を検証する候補群です。急騰銘柄は点が高くても条件付き扱いにします。</p>
-        </div>
-        <span class="channel-badge">AIインフラ周辺</span>
-      </div>
-      <div class="channel-summary">
-        <div><b>用途</b><span>AI設備投資の周辺需要確認</span></div>
-        <div><b>上位扱い</b><span>テスト候補3社あり</span></div>
-        <div><b>主な確認</b><span>電力需要・設備投資</span></div>
-        <div><b>注意</b><span>電線株の急騰反動</span></div>
-      </div>
-      <div class="channel-actions">
-        <a class="button" href="theme20_separate_screened10_20260529.html#datacenter">チャンネル3を開く</a>
-        <a class="button secondary" href="788_theme20_separate_screened10_20260529.csv">分野別CSV</a>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>順位</th><th>銘柄</th><th>分類</th><th>実用スコア</th><th>データ状態</th><th>質的材料</th><th>崩れる条件</th><th>警戒点</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>7011.T 三菱重工業</td><td class="ok">購入検討候補</td><td>57.9</td><td>株価取得済み / 受注確認待ち</td><td>A: 電力・防衛・インフラ複合</td><td>受注鈍化、政策期待の後退、直近弱含み継続</td><td>直近弱含み時は比率を抑える</td></tr>
-            <tr><td>2</td><td>6503.T 三菱電機</td><td class="ok">購入検討候補</td><td>55.7</td><td>株価取得済み / FA需要確認待ち</td><td>B: 電力・FA・社会インフラ</td><td>FA需要や受注が弱い、指数反応が鈍い</td><td>決算・受注の確認</td></tr>
-            <tr><td>3</td><td>6501.T 日立製作所</td><td class="ok">購入検討候補</td><td>52.9</td><td>株価取得済み / インフラ受注確認待ち</td><td>A: データセンター・電力・社会インフラ</td><td>過熱感、受注鈍化、IT/インフラ株の指数劣後</td><td>過熱感と指数反応</td></tr>
-            <tr><td>4</td><td>5803.T フジクラ</td><td class="warn">条件付き</td><td>69.4</td><td>株価取得済み / 需要統計確認待ち</td><td>A: 電線・光ファイバー需要</td><td>需要確認前の急騰反動、出来高減、指数劣後</td><td>1年急騰、1年下落深い、ボラ高い</td></tr>
-            <tr><td>5</td><td>5801.T 古河電工</td><td class="warn">条件付き</td><td>68.1</td><td>株価取得済み / 需要統計確認待ち</td><td>B: 電線・送配電テーマ</td><td>電線テーマの反動、60日急騰の失速</td><td>1年急騰、60日急騰、ボラ高い</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="subnote">この画面は上位の抜粋です。データセンター・電力・冷却・電線の全10社は「チャンネル3を開く」または分野別CSVで確認します。</p>
-    </div>
-
-    <div class="channel-panel" id="ch4" role="tabpanel" aria-labelledby="tab-ch4">
-      <div class="channel-head">
-        <div>
-          <h3>チャンネル4: 量子コンピューター・フィジカルAI探索枠</h3>
-          <p>既存の購入候補とは分け、量子コンピューターとフィジカルAIを継続監視する枠です。テーマだけで購入候補へ昇格させず、既存の量的スコアと決算・受注・PER/PBR/ROEを通過した場合のみ候補化します。</p>
-        </div>
-        <span class="channel-badge">探索枠</span>
-      </div>
-      <div class="channel-summary">
-        <div><b>用途</b><span>次のテーマ候補の発見</span></div>
-        <div><b>量子</b><span>長期探索・売上寄与確認</span></div>
-        <div><b>フィジカルAI</b><span>受注・設備投資で検証</span></div>
-        <div><b>扱い</b><span>購入候補へ自動混入しない</span></div>
-      </div>
-      <div class="channel-actions">
-        <a class="button" href="847_quantum_physical_ai_channel_20260602.html">探索枠を開く</a>
-        <a class="button secondary" href="847_quantum_physical_ai_candidates_20260602.csv">候補CSV</a>
-        <a class="button secondary" href="848_quantum_physical_ai_rules_20260602.csv">ルールCSV</a>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>仕様上の確認事項</h2>
-    <p class="danger">この画面は、NISA 1年保有テストに向けた候補確認用です。表示上の候補は購入確定ではなく、6月のCPI、日銀、FOMC、各銘柄の最新決算・株価反応を確認してから再判定します。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>確認項目</th><th>現状の懸念</th><th>実務上の扱い</th></tr></thead>
-        <tbody>
-          <tr><td>100社母集団</td><td>条件が固定されないと、後から都合よく選んだように見える。</td><td>母集団条件を固定し、同じ条件で総合・半導体・データセンター系を比較する。</td></tr>
-          <tr><td>質的情報</td><td>AI、半導体、電力不足、政策などは重要だが、未検証のまま点数化すると過大評価になる。</td><td>仮説層と実績検証層を分け、質的情報は量的スコアを上書きしない。</td></tr>
-          <tr><td>過去実績</td><td>過去1年・5年の上昇だけを見ると、過熱銘柄を拾う可能性がある。</td><td>CAGR、S&P差、最大下落率、ボラティリティを同時に確認する。</td></tr>
-          <tr><td>業種差</td><td>銀行、商社、半導体、電線を同じPER/PBR/ROEだけで比較すると歪む。</td><td>業種内比較と全体比較を分け、業種別の割高・割安を確認する。</td></tr>
-          <tr><td>6月判断</td><td>イベント前に購入検討判断を固定すると、金利・為替・指数急落を取り込めない。</td><td>6月の主要イベント確認後にテスト候補を再判定し、検討比率を調整する。</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>母集団と質的情報の固定ルール</h2>
-    <p class="note">今後の候補入れ替えは、下記ルールを前提に行います。質的な時流テーマは候補発見には使いますが、未検証のまま購入検討スコアへ単純加点しません。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>区分</th><th>使う目的</th><th>採用ルール</th><th>購入判断への扱い</th></tr></thead>
-        <tbody>
-          <tr><td>チャンネル1 総合</td><td>業種を限定しない基準候補を見る</td><td>既存選定スコア、長期安定性、S&P比較、下落耐性を同じ表で再計算する。</td><td>6月の主要イベント確認後に再判定する対象。単独で購入確定にしない。</td></tr>
-          <tr><td>チャンネル2 半導体製造装置・材料</td><td>AI半導体需要から製造装置・材料へ資金が流れる仮説を検証する</td><td>PER、PBR、ROE、CAGR、S&P差、最大下落率、ボラティリティ、SOX指数反応を確認する。</td><td>急騰・高PER・大幅下落がある場合は条件付きテスト候補に留める。</td></tr>
-          <tr><td>チャンネル3 データセンター・電力・冷却・電線</td><td>AIデータセンター投資から電力・冷却・送配電へ波及する仮説を検証する</td><td>電力需要、設備投資、電線・冷却需要、直近急騰、最大下落率を分けて確認する。</td><td>テーマ適合だけでは採用しない。量的データと警戒条件を通してから候補化する。</td></tr>
-          <tr><td>質的情報 仮説層</td><td>新商品、政策、IPO、TOB、地政学、供給不足などの材料を拾う</td><td>「なぜその企業に資金が流れる可能性があるか」を文章で記録する。</td><td>候補発見には使うが、点数へ直接足さない。</td></tr>
-          <tr><td>質的情報 実績検証層</td><td>過去に似たイベントで株価が実際に反応したかを見る</td><td>イベント前後の1日、5日、20営業日リターンを日経平均・TOPIX・S&P500と比較する。</td><td>実績が確認できたものだけ補助評価に使う。</td></tr>
-          <tr><td>購入検討ゲート</td><td>テスト候補を購入検討の対象に進めるかを見る</td><td>6月CPI、日銀、FOMC後に、指数、金利、為替、個別株価、決算資料を再確認する。</td><td>この確認が終わるまで「購入候補」とは呼ばない。</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>チャンネル別 判定フロー</h2>
-    <p class="note">各チャンネルは同じ順番で確認します。まず候補を見つけ、次に数値で検査し、警戒条件で落とし、最後に6月の主要イベント確認後の再判定で購入検討へ進めるかを判断します。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>チャンネル</th><th>1. 候補発見</th><th>2. 数値検査</th><th>3. 警戒条件</th><th>4. 6月再判定</th><th>現時点の扱い</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>1 総合</td>
-            <td>100社母集団から、既存選定スコアと追加指標がそろう銘柄を見る。</td>
-            <td>長期安定性、S&P比較、最大下落率、ボラティリティを同じ表で比較する。</td>
-            <td>指数より弱い、下落が深すぎる、データ不足が大きい銘柄は優先度を下げる。</td>
-            <td>6月CPI、日銀、FOMC後に、指数・金利・為替・個別株価の反応を確認する。</td>
-            <td>全体候補の基準線。購入確定ではない。</td>
-          </tr>
-          <tr>
-            <td>2 半導体製造装置・材料</td>
-            <td>AI半導体需要、製造装置、検査、切断・研削、材料の構造需要から候補を探す。</td>
-            <td>CAGR、S&P差、PER/PBR/ROE、SOX指数、最大下落率、直近急騰を確認する。</td>
-            <td>高PER、1年急騰、大幅下落、SOX悪化がある場合は条件付きテスト候補に留める。</td>
-            <td>6月の主要イベント確認後に、半導体指数、米金利、円相場、決算資料の受注見通しを再確認する。</td>
-            <td>テーマ性は強いが、過熱と下落耐性の確認が必須。</td>
-          </tr>
-          <tr>
-            <td>3 データセンター・電力・冷却・電線</td>
-            <td>AIデータセンター投資、電力不足、冷却、送配電、光ファイバー需要から候補を探す。</td>
-            <td>CAGR、S&P差、最大下落率、ボラティリティ、電力・設備投資関連の材料を確認する。</td>
-            <td>電線株の急騰、短期過熱、需要先行だけで業績確認が弱い銘柄は条件付きにする。</td>
-            <td>6月の主要イベント確認後に、設備投資ニュース、金利、指数反応、個別の決算見通しを再確認する。</td>
-            <td>構造需要はあるが、急騰銘柄は検討比率を抑える。</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="score-governance">
-    <h2>スコアの取り扱いルール</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>区分</th><th>対象データ</th><th>スコアへの入れ方</th><th>禁止する扱い</th></tr></thead>
-        <tbody>
-          <tr><td>量的データ</td><td>株価、出来高、PER/PBR/ROE、CAGR、最大下落率、ボラティリティ、指数比較</td><td>取得元と計算式が確認できるものだけ購入検討スコアへ入れる。</td><td>取得できていない数値を推定で埋めて点数化しない。</td></tr>
-          <tr><td>質的データ</td><td>AI、半導体、電力不足、政策、金利、為替、商品市況、上場・IPO、バフェット保有動向など</td><td>直接加点ではなく、確認条件、警戒条件、候補の上限、観察理由として扱う。</td><td>ニュースや仮説をそのまま点数に足して購入候補を上げない。</td></tr>
-          <tr><td>イベント仮説</td><td>新商品、合併、TOB、決算修正、規制変更、地政学、供給不足</td><td>仮説、確認数字、否定条件、過去類似反応を分ける。</td><td>「起きそう」だけで購入検討へ進めない。</td></tr>
-          <tr><td>未取得データ</td><td>未確認の同業比較、コンセンサス、長期イベント履歴、PDF未抽出数値</td><td>信頼度を下げ、補完タスクとして表示する。</td><td>空欄を平均値や固定係数で埋めて最終判断に使わない。</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="benchmark-compare">
-    <h2>S&P500/TOPIX比較の見方</h2>
-    <p class="note">目標は、単に個別株を買うことではなく、既存の無難な運用候補を1年で+1%以上上回る説明が成立するかを確認することです。下表は各チャンネルを指数比較へ接続するための確認表です。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>チャンネル</th><th>比較対象</th><th>見る数字</th><th>+1%を狙う理由</th><th>不足している確認</th></tr></thead>
-        <tbody>
-          <tr><td>チャンネル1 総合</td><td>S&P500、TOPIX、日経平均</td><td>1年騰落率、5年CAGR、10年CAGR、最大下落率、月次勝率</td><td>金融、保険、商社など、指数と違う要因で動く候補を混ぜ、指数一本よりリスク分散を狙う。</td><td>10社平均の自動集計、指数との差分、下落時の劣後確認</td></tr>
-          <tr><td>チャンネル2 半導体製造装置・材料</td><td>S&P500、NASDAQ、SOX、TOPIX</td><td>SOX連動、1年急騰率、最大下落率、PER説明、決算後反応</td><td>AI半導体需要が強い局面では指数を上回る余地があるが、逆風時の下落も大きいため条件付きで見る。</td><td>SOX悪化時の下落検証、受注見通し、決算後20営業日反応</td></tr>
-          <tr><td>チャンネル3 データセンター・電力・冷却・電線</td><td>S&P500、TOPIX、電機・機械・非鉄金属関連指数</td><td>電力需要、設備投資、電線需要、1年急騰率、最大下落率</td><td>AIデータセンター投資が電力・冷却・送配電へ波及するなら、指数より高い成長テーマを持つ可能性がある。</td><td>需要統計、受注確認、急騰反動、テーマが既に株価へ織り込まれたか</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="danger">
-      <p><b>使い方:</b> 指数比較は購入を確定する材料ではありません。チャンネル別の期待値が高く見えても、6月のCPI、日銀、FOMC後に指数、金利、為替、各銘柄の株価反応を再確認します。</p>
-    </div>
-  </section>
-
-  <section id="change-log">
-    <h2>候補変更理由ログ</h2>
-    <p class="note">候補が変わった場合は、感覚ではなく、どの指標・データ・リスク条件で変わったかを残します。ここに記録がない入替は、正式な更新として扱いません。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>日付</th><th>対象</th><th>変更内容</th><th>主な理由</th><th>分類</th><th>次に確認すること</th></tr></thead>
-        <tbody>
-          <tr><td>2026-05-28</td><td>総合候補</td><td>短期勢い中心から、長期安定性・S&P比較・下落耐性を加えた再確認へ変更。</td><td>1年上昇だけでは過熱を拾いやすく、NISA 1年保有の説明として弱いため。</td><td>指標追加</td><td>10社平均とS&P500/TOPIXとの差分を自動集計する。</td></tr>
-          <tr><td>2026-05-29</td><td>チャンネル2</td><td>半導体製造装置・材料を独立チャンネル化。</td><td>AI半導体需要から製造工程へ波及する仮説を、総合候補と混ぜずに検証するため。</td><td>チャンネル分離</td><td>SOX指数、受注、決算後反応を確認する。</td></tr>
-          <tr><td>2026-05-29</td><td>チャンネル3</td><td>データセンター・電力・冷却・電線を独立チャンネル化。</td><td>AIデータセンター投資から電力・冷却・送配電へ波及する仮説を別枠で検証するため。</td><td>チャンネル分離</td><td>需要統計、設備投資、急騰反動を確認する。</td></tr>
-          <tr><td>2026-06-01</td><td>全チャンネル</td><td>分類、質的材料、崩れる条件、データ状態、指数比較を実用画面に追加。</td><td>購入検討候補、条件付き、観察を分け、未確認データを点数化しているように見える問題を減らすため。</td><td>表示改善</td><td>全10社への展開、CSV反映、過去検証へ進める。</td></tr>
-          <tr><td>2026-06-01</td><td>過去検証</td><td>15候補×3基準日の1年後リターン、最大下落、S&P500・TOPIX連動ETF・日経平均との差をCSV化。</td><td>候補が過去に指数を上回ったかを、画面上の印象ではなく実際の株価データで確認するため。</td><td>初版検算</td><td>当時財務データ、候補入替ルール、生存者バイアスを追加確認する。</td></tr>
-          <tr><td>2026-06-01</td><td>当時情報確認</td><td>15候補×3基準日の財務・決算・PER/PBR/ROE確認キューをCSV化。</td><td>株価だけの後付け検算を避け、基準日時点で実際に判断材料があったかを分けるため。</td><td>検証ゲート</td><td>確認済み行だけ本検証へ進め、未確認行は購入判断用の検証に混ぜない。</td></tr>
-          <tr><td>2026-06-02</td><td>当時情報確認</td><td>2025年基準候補14社のうち、三井住友FG、三菱UFJ FG、みずほFGの公式決算短信を確認し、収益・利益・EPS・ROE・PER/PBRを入力。</td><td>過去株価だけの検算ではなく、当時の決算情報を使って候補を検証するため。</td><td>3/14確認済み</td><td>残り11社の公式決算資料を確認し、確認済み行だけ本検証へ進める。</td></tr>
-          <tr><td>2026-06-02</td><td>当時情報確認</td><td>MS&ADの2025年3月期決算短信を追加確認し、収益・利益・EPS・ROE・PER/PBRを入力。</td><td>保険セクターの候補も銀行と同じ形式で検証できるようにするため。</td><td>4/14確認済み</td><td>残り10社の公式決算資料を確認し、確認済み行だけ本検証へ進める。</td></tr>
-          <tr><td>2026-06-02</td><td>当時情報確認</td><td>三菱電機、アドバンテストの2025年3月期決算短信を追加確認し、売上・利益・EPS・ROE・PER/PBRを入力。</td><td>総合候補と半導体製造装置候補を同じ形式で検証できるようにするため。</td><td>6/14確認済み</td><td>残り8社の公式決算資料を確認し、確認済み行だけ本検証へ進める。</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="backtest-plan">
-    <h2>過去検証の設計</h2>
-    <p class="note">現時点のスコアを実際の購入判断へ近づけるには、過去のある時点で同じルールを使った場合、その後1年で指数を上回ったかを検算します。ここでは検証仕様と、初版の実計算結果を分けて表示します。</p>
-    <div class="danger">
-      <p><b>初版検算の範囲:</b> 下記CSVは、現在の候補を2023年、2024年、2025年の基準日に置いた場合の株価検算です。当時その銘柄を選べたか、当時のPER/PBR/ROEや決算情報まで再現した完全なバックテストではありません。TOPIXは取得安定性のためTOPIX連動ETF 1348.Tを代替指標にしています。購入判断に近づけるには、当時データ制約、候補入替ルール、生存者バイアスの確認を追加します。</p>
-    </div>
-    <div class="actions">
-      <a class="button" href="791_backtest_1y_result_with_topix_20260601.csv">初版検算 明細CSV</a>
-      <a class="button secondary" href="792_backtest_1y_summary_with_topix_20260601.csv">初版検算 サマリーCSV</a>
-      <a class="button secondary" href="794_asof_validation_dashboard_20260601.html">当時情報確認画面</a>
-      <a class="button secondary" href="797_asof_data_collection_plan_20260601.html">当時情報 取得計画</a>
-      <a class="button secondary" href="799_asof_2025_batch_input_20260601.html">2025年基準 入力表</a>
-      <a class="button secondary" href="814_asof_2025_completion_dashboard_20260602.html">2025年基準 入力進捗</a>
-      <a class="button secondary" href="812_asof_2025_batch_filled_complete_20260602.csv">2025年基準 入力CSV</a>
-      <a class="button secondary" href="793_asof_data_validation_queue_20260601.csv">当時情報確認キューCSV</a>
-      <a class="button secondary" href="821_practical_today_dashboard_20260602.html">今日見る実用画面</a>
-      <a class="button secondary" href="832_universe_channel_workbook_20260602.html">母集団・チャンネル比較</a>
-      <a class="button secondary" href="838_asof_2023_2024_progress_step2_20260602.html">2023/2024入力進捗</a>
-      <a class="button secondary" href="841_asof_2023_2024_remaining_queue_20260602.html">2023/2024未入力キュー</a>
-      <a class="button secondary" href="842_tax_aware_operation_layer_phase1_20260602.html">税制レイヤー Phase 1</a>
-      <a class="button secondary" href="843_tax_year_end_review_phase2_20260602.html">税制 年末レビュー Phase 2</a>
-      <a class="button secondary" href="844_nisa_priority_allocation_phase3_20260602.html">NISA枠配分候補 Phase 3</a>
-      <a class="button secondary" href="846_advanced_tax_strategy_engine_20260602.html">高度税制確認 実装版</a>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>当時情報ゲート</th><th>確認する内容</th><th>本検証へ進める条件</th><th>未確認時の扱い</th></tr></thead>
-        <tbody>
-          <tr><td>財務・決算</td><td>基準日以前に公表済みの決算短信、有価証券報告書、IR資料で、売上・利益・EPS・還元を確認する。</td><td>出所、対象期、確認日が記録できる。</td><td>株価検算は参考扱い。購入判断用の検証には入れない。</td></tr>
-          <tr><td>PER/PBR/ROE</td><td>基準日時点または直近公表値として説明できる指標を確認する。</td><td>数値、取得元、基準日との関係が記録できる。</td><td>割安・割高判定をしない。</td></tr>
-          <tr><td>候補選定可能性</td><td>その時点で候補に入れる理由が、後知恵ではなく説明できるかを確認する。</td><td>量的根拠と質的材料が基準日前に存在する。</td><td>生存者バイアスありとして別扱いにする。</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>検証項目</th><th>内容</th><th>合格ライン</th><th>未達時の扱い</th></tr></thead>
-        <tbody>
-          <tr><td>基準日検証</td><td>2023年、2024年、2025年の同時期を基準に候補を作った想定で、その後1年を確認する。</td><td>3回中2回以上でS&P500/TOPIXのどちらかを+1%以上上回る。</td><td>個別株比率を下げ、観察候補中心へ戻す。</td></tr>
-          <tr><td>最大下落検証</td><td>候補10社の1年内最大下落率を確認する。</td><td>想定下落が許容範囲内。急落銘柄が集中しない。</td><td>高ボラ銘柄の比率を下げる。</td></tr>
-          <tr><td>月次勝率</td><td>12か月のうち、指数を上回った月数を見る。</td><td>月次勝率が50%以上、または下落月の損失が指数より抑えられる。</td><td>短期勢い依存の候補を減らす。</td></tr>
-          <tr><td>入替検証</td><td>候補を固定した場合と、四半期ごとに再判定した場合を比べる。</td><td>頻繁な入替で成績が悪化しない。</td><td>入替ルールを厳しくする。</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>検証用CSV項目</th><th>目的</th></tr></thead>
-        <tbody>
-          <tr><td>base_date, channel, ticker, name, score, category</td><td>過去の基準日時点で、どの候補を選んだかを固定する。</td></tr>
-          <tr><td>price_base, price_1y, return_1y, max_drawdown_1y, volatility_1y</td><td>1年後リターン、最大下落、変動率を計算する。</td></tr>
-          <tr><td>sp500_return_1y, topix_return_1y, nikkei_return_1y</td><td>指数との差を確認する。</td></tr>
-          <tr><td>excess_vs_sp500, excess_vs_topix, pass_fail, fail_reason</td><td>+1%目標を満たしたか、満たさない理由を残す。</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>6月再判定 入力チェック表</h2>
-    <p class="note">6月の購入検討は、下表の数値を入れてから行います。未入力の項目が残る場合は、購入判断ではなくテスト候補のまま保留します。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>確認日</th><th>入力する数値・事実</th><th>良好条件</th><th>警戒条件</th><th>実務アクション</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>6/10 米CPI後</td>
-            <td>米CPI前年比、前月比、米10年金利、ドル円、S&P500/NASDAQ/SOXの反応</td>
-            <td>インフレ再加速が弱く、米10年金利が急騰せず、SOXが大崩れしない</td>
-            <td>CPI上振れ、金利急騰、NASDAQ/SOX急落</td>
-            <td>半導体・AIインフラ候補の購入検討可否を一段階下げるか確認</td>
-          </tr>
-          <tr>
-            <td>6/15-16 日銀後</td>
-            <td>日銀政策、10年国債利回り、ドル円、銀行・輸出・内需株の反応</td>
-            <td>円高ショックがなく、銀行株・大型株の反応が安定</td>
-            <td>急な円高、日経平均/TOPIXの下落、銀行株の失速</td>
-            <td>チャンネル1の金融・保険・商社候補を再確認</td>
-          </tr>
-          <tr>
-            <td>6/16-17 FOMC後</td>
-            <td>政策金利見通し、米10年金利、S&P500/NASDAQ/SOX、VIX、ドル円</td>
-            <td>金利・VIXが落ち着き、米株とSOXが持ち直す</td>
-            <td>金利上昇、VIX上昇、グロース・半導体売り</td>
-            <td>チャンネル2・3の条件付き候補を購入検討対象に進めるか確認</td>
-          </tr>
-          <tr>
-            <td>6/18 再判定日</td>
-            <td>各候補の株価、5日騰落率、60日騰落率、PER/PBR/ROE、決算資料の確認状況</td>
-            <td>指数より大きく崩れず、割高・急騰・決算不安が説明可能</td>
-            <td>指数劣後、直近急騰、PER説明不可、決算資料未確認</td>
-            <td>購入検討候補、条件付き候補、保留、除外に再分類</td>
-          </tr>
-          <tr>
-            <td>6/19以降</td>
-            <td>再判定後の10社、検討比率、初回検討額、損切り・利確・途中決済条件</td>
-            <td>候補理由、リスク、検討比率、停止条件を説明できる</td>
-            <td>説明不能な候補、数値不足、S&P/TOPIXに対する優位性不明</td>
-            <td>初回に検討する上限は最大30%まで。条件未達なら現金比率を高くする</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>6月判定 分岐ルール</h2>
-    <p class="note">入力チェック後の判断を下表で統一します。目的は、相場が悪い日に無理に買わないこと、逆に条件が整った時だけ小さく始めることです。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>判定</th><th>条件</th><th>初回検討上限</th><th>対象</th><th>次の確認</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="ok">開始可</td>
-            <td>CPI、日銀、FOMC後に金利・為替・指数が大崩れせず、候補10社の警戒条件も説明できる。</td>
-            <td>最大30%</td>
-            <td>購入検討候補に再分類された銘柄のみ</td>
-            <td>購入後5営業日、20営業日、次回決算で指数比較を確認</td>
-          </tr>
-          <tr>
-            <td class="warn">縮小開始</td>
-            <td>市場は大崩れしていないが、金利・為替・SOX・日経平均のどれかに警戒が残る。</td>
-            <td>10%〜15%</td>
-            <td>総合候補と低ボラ候補を優先。急騰銘柄は後回し</td>
-            <td>1週間後に再判定。条件改善まで追加しない</td>
-          </tr>
-          <tr>
-            <td class="warn">保留</td>
-            <td>候補理由はあるが、PER説明、決算資料、指数比較、イベント後反応のいずれかが不足。</td>
-            <td>0%</td>
-            <td>テスト候補のまま保持</td>
-            <td>不足データを補完してから再判定</td>
-          </tr>
-          <tr>
-            <td class="stop">停止</td>
-            <td>CPI悪化、金利急騰、急な円高、日経平均/TOPIX急落、SOX急落、個別決算悪化が出た。</td>
-            <td>0%</td>
-            <td>全チャンネル</td>
-            <td>市場が落ち着くまで現金維持。候補リストのみ更新</td>
-          </tr>
-          <tr>
-            <td class="stop">個別除外</td>
-            <td>決算下方修正、説明不能な高PER、直近急騰後の失速、指数に明確に劣後、仮説崩れが確認された。</td>
-            <td>0%</td>
-            <td>該当銘柄のみ</td>
-            <td>補欠候補へ入れ替え。除外理由を記録</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>購入後モニタリング・比率調整ルール</h2>
-    <p class="note">購入後は、銘柄単体の損益だけでなく、S&P500、TOPIX、日経平均と比較して判断します。目標は、無難なインデックス運用を1年以上で上回る可能性を高めることであり、劣後が続く場合は個別株比率を下げます。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>確認タイミング</th><th>見る数値</th><th>良好</th><th>警戒</th><th>アクション</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>購入後5営業日</td>
-            <td>個別騰落率、日経平均差、TOPIX差、S&P500差、出来高</td>
-            <td>指数並み以上、または下落理由が市場全体と一致</td>
-            <td>個別だけ-5%以上、出来高を伴う下落、同業より明確に弱い</td>
-            <td>追加検討を停止。理由を確認して、仮説崩れなら保留へ下げる</td>
-          </tr>
-          <tr>
-            <td>購入後20営業日</td>
-            <td>20営業日リターン、指数超過リターン、60日トレンド、PER変化</td>
-            <td>指数を上回る、または下落しても業績仮説が維持されている</td>
-            <td>指数に-3%以上劣後、PER説明が弱い、決算・材料が悪化</td>
-            <td>比率を増やさない。次回追加枠を現金または上位候補へ回す</td>
-          </tr>
-          <tr>
-            <td>3か月時点</td>
-            <td>3か月リターン、S&P500差、TOPIX差、最大下落率、勝率</td>
-            <td>S&P500またはTOPIXを+1%以上上回る</td>
-            <td>S&P500とTOPIXの両方に劣後、または最大下落が想定超過</td>
-            <td>個別株比率を下げ、指数・現金・上位候補へ配分を戻す</td>
-          </tr>
-          <tr>
-            <td>決算発表前</td>
-            <td>決算日、直近株価、PER、過去決算後反応、会社予想の変更有無</td>
-            <td>過熱が小さく、決算期待が株価に織り込まれすぎていない</td>
-            <td>決算前に急騰、高PER説明不足、過去決算で急落が多い</td>
-            <td>一部利益確定または決算発表後の反応確認まで追加停止</td>
-          </tr>
-          <tr>
-            <td>決算発表後</td>
-            <td>売上、営業利益、EPS、会社予想、決算翌日/5日反応</td>
-            <td>増収増益、上方修正、指数を上回る株価反応</td>
-            <td>下方修正、利益率悪化、指数より大きく売られる</td>
-            <td>仮説維持なら保有継続。仮説崩れなら比率引き下げまたは除外</td>
-          </tr>
-          <tr>
-            <td>1年評価</td>
-            <td>実績リターン、S&P500差、TOPIX差、最大下落率、説明できた判断と外れた判断</td>
-            <td>インデックスを+1%以上上回り、下落幅も許容範囲</td>
-            <td>インデックスに劣後、またはリスクに見合う上振れがない</td>
-            <td>翌年の個別株比率を下げる。効いた指標と効かなかった指標を記録する</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="risk-simulation">
-    <h2>リスクシミュレーション・ストップ安対策</h2>
-    <p class="note">危険率は「損失確率を保証する数値」ではなく、購入検討前に止まるための警戒スコアです。過去下落、直近ボラティリティ、出来高、イベント、流動性を分けて確認し、一定以上なら購入検討を延期または比率縮小します。</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>計算名</th><th>式</th><th>意味</th></tr></thead>
-        <tbody>
-          <tr><td>危険率</td><td>0.30×最大下落点 + 0.20×ボラ点 + 0.20×過熱/割高点 + 0.20×イベント点 + 0.10×流動性点</td><td>各項目を0〜100点で採点し、60%以上なら購入検討を止めて原因確認を優先する。</td></tr>
-          <tr><td>ストップ安接近度</td><td>100 × (前日終値 - 現在値) ÷ 制限値幅</td><td>前日終値では0%、ストップ安水準では100%。70%以上なら当日中の新規検討は避ける。</td></tr>
-          <tr><td>ストップ安余力</td><td>(現在値 - 制限下限値) ÷ 現在値 × 100</td><td>ストップ安まで何%残っているか。余力が小さいほど、流動性と悪材料確認を優先する。</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>項目</th><th>計算・確認方法</th><th>危険率への反映</th><th>止まる目安</th></tr></thead>
-        <tbody>
-          <tr><td>最大下落リスク</td><td>過去60日、1年、5年の最大下落率を確認</td><td>30%</td><td>60日最大下落-20%以下、または5年最大下落-50%級は高警戒</td></tr>
-          <tr><td>直近ボラティリティ</td><td>20営業日の平均変動率、急落日数、指数との差を確認</td><td>20%</td><td>指数より大きく揺れ、下落日だけ出来高が増える場合は比率縮小</td></tr>
-          <tr><td>過熱・割高</td><td>1年騰落率、PER/PBR、同業中央値との差を確認</td><td>20%</td><td>1年+150%以上、PERが同業中央値の2倍超、利益成長で説明できない場合は保留</td></tr>
-          <tr><td>イベントリスク</td><td>決算、下方修正、増資、TOB、規制、不祥事、地政学イベントを確認</td><td>20%</td><td>決算直前、下方修正懸念、増資・希薄化、悪材料未確認時は新規検討しない</td></tr>
-          <tr><td>流動性・値幅</td><td>出来高、売買代金、前日終値から制限値幅を確認</td><td>10%</td><td>出来高が薄い、売買代金が小さい、値幅制限までの距離が近い場合は小さく扱う</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-wrap" style="margin-top:12px;">
-      <table>
-        <thead><tr><th>判定</th><th>危険率</th><th>扱い</th><th>具体アクション</th></tr></thead>
-        <tbody>
-          <tr><td class="ok">低</td><td>0〜34%</td><td>通常確認</td><td>6月の主要イベント確認後、候補表どおりに検討可能。ただし決算・適時開示は確認する。</td></tr>
-          <tr><td class="warn">中</td><td>35〜59%</td><td>比率縮小</td><td>検討比率を半分以下にする。決算後5営業日、20営業日の反応確認まで追加検討しない。</td></tr>
-          <tr><td class="stop">高</td><td>60〜79%</td><td>保留</td><td>購入検討を延期。指数、同業、決算、ニュース、出来高を確認し、危険要因が解消するまで候補に留める。</td></tr>
-          <tr><td class="stop">停止</td><td>80%以上</td><td>除外候補</td><td>下方修正、増資、不祥事、会計問題、需給崩壊などがある場合は検討対象から外す。</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-wrap" style="margin-top:12px;">
-      <table>
-        <thead><tr><th>ストップ安を避ける事前ゲート</th><th>確認内容</th><th>止める条件</th></tr></thead>
-        <tbody>
-          <tr><td>決算前ゲート</td><td>決算日、過去決算後の急落率、PER、直近急騰率を確認</td><td>決算前に+20%以上急騰、PER説明不足、過去決算で急落が多い場合は決算後まで待つ。</td></tr>
-          <tr><td>悪材料ゲート</td><td>TDnet、会社IR、報道、増資、下方修正、不祥事を確認</td><td>公式確認できない悪材料が出ている場合は新規検討しない。</td></tr>
-          <tr><td>需給ゲート</td><td>出来高急増、信用倍率、短期急騰、売買代金を確認</td><td>出来高急増後の陰線、1年急騰、値動き急拡大が重なる場合は見送り。</td></tr>
-          <tr><td>テーマ崩れゲート</td><td>AI、半導体、電力、金利、資源などの前提が崩れていないか確認</td><td>テーマは強いが個社売上・利益に接続していない場合は加点せず、保留にする。</td></tr>
-          <tr><td>指数ゲート</td><td>日経平均、TOPIX、S&P500、SOX、VIX、米10年金利を確認</td><td>指数急落、VIX上昇、米金利急騰、SOX急落が同時に出た場合は候補全体を延期。</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-wrap" style="margin-top:12px;">
-      <table>
-        <thead><tr><th>ストップ安・急落発生後</th><th>最初にすること</th><th>原因別の対応</th><th>記録すること</th></tr></thead>
-        <tbody>
-          <tr><td>当日</td><td>その場で追加検討しない。公式IR、TDnet、決算、報道、指数を確認する。</td><td>原因不明なら保留。反射的な判断を避ける。</td><td>発生日、下落率、出来高、同業比較、指数比較。</td></tr>
-          <tr><td>市場全体要因</td><td>日経平均、TOPIX、SOX、米株、金利、為替を確認。</td><td>個社仮説が維持されるなら保有再判定。追加検討は5営業日後まで待つ。</td><td>指数との差、同業との差、戻りの有無。</td></tr>
-          <tr><td>個社悪材料</td><td>下方修正、会計、不祥事、増資、主力事業悪化を確認。</td><td>比率引き下げまたは除外候補。NISAでも前提崩れは放置しない。</td><td>悪材料の種類、業績影響、回復条件。</td></tr>
-          <tr><td>テーマ崩れ</td><td>AI需要、半導体受注、電力投資、金利メリットなどの前提を確認。</td><td>テーマ接続が消えた場合は、質的スコアの反映を止める。</td><td>仮説、反証、次回確認日。</td></tr>
-          <tr><td>翌営業日以降</td><td>寄り付き後の出来高、下げ止まり、会社説明を確認。</td><td>原因が説明でき、指数より戻りが強い場合のみ候補維持。説明不能なら除外寄り。</td><td>翌日、5営業日、20営業日のリターン。</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="record">
-    <h2>運用記録・予実管理</h2>
-    <p class="note">購入検討、見送り、候補除外の理由を残します。目的は、当たった/外れたを感覚で終わらせず、次回の銘柄選定と比率調整に反映することです。</p>
-    <div class="actions">
-      <a class="button" href="https://raw.githubusercontent.com/ob198-cpu/kabu/main/operation_record_template_20260529.csv">運用記録CSVを開く</a>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>記録する項目</th><th>内容</th><th>使い道</th></tr></thead>
-        <tbody>
-          <tr><td>判断日</td><td>購入、見送り、保留、除外を判断した日</td><td>イベント前後の判断だったかを後で検証する</td></tr>
-          <tr><td>チャンネル</td><td>総合、半導体製造装置・材料、データセンター・電力・冷却・電線</td><td>どのテーマが有効だったかを分けて見る</td></tr>
-          <tr><td>銘柄・行動</td><td>対象銘柄、購入検討候補、保留、除外、追加停止など</td><td>なぜその銘柄を扱ったかを追跡する</td></tr>
-          <tr><td>判断理由</td><td>数値根拠、質的仮説、警戒条件、6月の主要イベント確認後の反応</td><td>後から説明不能な判断を減らす</td></tr>
-          <tr><td>期待値</td><td>想定利回り、想定期間、比較対象</td><td>S&P500/TOPIXを上回る前提が妥当だったかを見る</td></tr>
-          <tr><td>入口データ</td><td>購入時株価、日経平均、TOPIX、S&P500</td><td>指数との差を計算する基準にする</td></tr>
-          <tr><td>結果確認</td><td>5営業日、20営業日、3か月、1年のリターン</td><td>短期反応と1年保有テストの両方を検証する</td></tr>
-          <tr><td>次のアクション</td><td>継続、追加、比率引き下げ、除外、現金維持</td><td>次回判断をルール化する</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="schedule">
-    <h2>6月の確認フロー</h2>
-    <div class="flow">
-      <div class="step"><b>6/10</b><br>米CPIを確認<br><span class="warn">購入検討を確定しない</span></div>
-      <div class="step"><b>6/15〜6/16</b><br>日銀結果を確認<br><span class="warn">原則、購入検討を確定しない</span></div>
-      <div class="step"><b>6/16〜6/17</b><br>FOMC結果を確認<br><span class="warn">原則、購入検討を確定しない</span></div>
-      <div class="step"><b>6/18</b><br>候補10社を再判定<br><span class="ok">条件良好なら検討準備</span></div>
-      <div class="step"><b>6/19</b><br>初回上限の検討<br><span class="ok">最大30%</span></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>統合再計算10社</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>順位</th><th>銘柄</th><th>4項目合計</th><th>100点換算</th><th>現時点の扱い</th><th>確認すること</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>8316.T 三井住友FG</td><td>307.7</td><td>76.9</td><td class="ok">統合候補</td><td>旧候補にも残り、追加指標でも候補圏を維持</td></tr>
-          <tr><td>2</td><td>8306.T 三菱UFJ FG</td><td>299.6</td><td>74.9</td><td class="ok">統合候補</td><td>旧候補にも残り、追加指標でも候補圏を維持</td></tr>
-          <tr><td>3</td><td>8725.T MS&AD</td><td>291.5</td><td>72.9</td><td class="ok">統合候補</td><td>既存スコアと追加指標の合算で候補圏に浮上</td></tr>
-          <tr><td>4</td><td>8411.T みずほFG</td><td>284.9</td><td>71.2</td><td class="ok">統合候補</td><td>既存スコアと追加指標の合算で候補圏に浮上</td></tr>
-          <tr><td>5</td><td>6503.T 三菱電機</td><td>283.4</td><td>70.8</td><td class="ok">統合候補</td><td>S&P比較と下落耐性を加えて候補圏に浮上</td></tr>
-          <tr><td>6</td><td>8750.T 第一生命HD</td><td>279.7</td><td>69.9</td><td class="ok">統合候補</td><td>既存スコアと下落耐性を含めて候補圏</td></tr>
-          <tr><td>7</td><td>8058.T 三菱商事</td><td>277.8</td><td>69.4</td><td class="ok">統合候補</td><td>旧候補にも残り、長期・S&P比較でも説明可能</td></tr>
-          <tr><td>8</td><td>9983.T ファーストリテイリング</td><td>262.6</td><td>65.7</td><td class="ok">統合候補</td><td>既存評価に追加指標を重ねて候補圏</td></tr>
-          <tr><td>9</td><td>7012.T 川崎重工業</td><td>261.9</td><td>65.5</td><td class="ok">統合候補</td><td>既存スコアを残した上で長期・S&P差を確認</td></tr>
-          <tr><td>10</td><td>6971.T 京セラ</td><td>260.5</td><td>65.1</td><td class="ok">統合候補</td><td>既存評価と下落耐性を含めて候補圏</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>資金配分の検討上限案</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>区分</th><th>日付候補</th><th>検討上限</th><th>上限額</th><th>条件</th></tr></thead>
-        <tbody>
-          <tr><td>初回検討</td><td>2026-06-19</td><td>30%</td><td>600,000円</td><td>CPI、日銀、FOMC確認後に市場が崩れていない</td></tr>
-          <tr><td>第2回検討</td><td>2026-06-26</td><td>25%</td><td>500,000円</td><td>初回検討後に候補が指数へ大きく劣後しない</td></tr>
-          <tr><td>第3回検討</td><td>2026-07-03</td><td>20%</td><td>400,000円</td><td>月末月初の需給と75日線を確認</td></tr>
-          <tr><td>決算後検討</td><td>2026-08-14</td><td>15%</td><td>300,000円</td><td>4〜6月期決算と決算後反応を確認</td></tr>
-          <tr><td>現金</td><td>常時</td><td>10%</td><td>200,000円</td><td>急落、入替、イベント悪化への待機</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="rules">
-    <h2>分岐ルール</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>状況</th><th>行動</th><th>理由</th></tr></thead>
-        <tbody>
-          <tr><td>米CPI悪化、米10年金利急騰、米株急落</td><td class="stop">初回検討を延期または上限を半分以下へ縮小</td><td>高PER・景気敏感株の下落リスクを避ける</td></tr>
-          <tr><td>日銀後に円高ショック、日経平均75日線割れ</td><td class="stop">新規検討停止</td><td>個別要因より市場全体の地合い悪化が強いため</td></tr>
-          <tr><td>条件良好、候補に停止条件なし</td><td class="ok">6/19に最大30%を検討</td><td>主要イベント確認後の市場反応を確認できるため</td></tr>
-          <tr><td>購入後-5%</td><td class="warn">追加検討をせず原因確認</td><td>押し目か仮説崩れかを分ける</td></tr>
-          <tr><td>購入後-10%</td><td class="stop">保有再判定、悪材料なら減額</td><td>NISAでも前提崩れは放置しない</td></tr>
-          <tr><td>購入後+20%</td><td class="warn">一部利確を検討</td><td>利益固定と1年保有余地を両立する</td></tr>
-          <tr><td>3か月で比較対象に劣後</td><td class="warn">個別株比率を下げる候補</td><td>目標は無難な代替運用を+1%以上上回ること</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2>資料パートへ</h2>
-    <p>説明資料、根拠資料、進捗PDF、開発・履歴資料は別画面に分けました。</p>
-    <div class="actions">
-      <a class="button secondary" href="materials_library_20260528.html">資料パートを見る</a>
-      <a class="button secondary" href="index.html">トップへ戻る</a>
-    </div>
-  </section>
+  <footer>未確認データ、公式決算、証券会社画面の確認が残る場合は、購入判断に進めません。</footer>
 </main>
-<script>
-  document.querySelectorAll('[data-channel-tab]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const target = button.dataset.channelTab;
-      document.querySelectorAll('[data-channel-tab]').forEach((item) => {
-        const isActive = item === button;
-        item.classList.toggle('active', isActive);
-        item.setAttribute('aria-selected', String(isActive));
-      });
-      document.querySelectorAll('.channel-panel').forEach((panel) => panel.classList.toggle('active', panel.id === target));
-    });
-  });
-</script>
 </body>
 </html>

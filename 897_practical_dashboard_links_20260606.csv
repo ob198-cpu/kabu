@@ -1,0 +1,23 @@
+﻿category,title_or_date,url_or_event,description_1,description_2
+primary_link,実用パート入口,896_practical_entry_hub_20260606.html,毎日見る画面と補足資料を分けた入口。迷ったらここから確認する。,
+primary_link,6月実行コックピット,895_june_execution_cockpit_20260606.html,6月のイベント、見る指標、止める条件、次の作業を1画面で確認する。,
+primary_link,6月イベント判定エンジン,893_june_event_gate_engine_20260606.html,CPI、日銀、FOMC後の市場状態を緑・黄・赤で整理する。,
+primary_link,候補別アクション分岐表,894_june_candidate_action_after_gate_20260606.html,イベント後に各候補を残す、保留、落とすのどれで扱うか確認する。,
+schedule,6/10,米CPI,CPI、米10年金利、SOX、NASDAQ、VIX、ドル円,CPI悪化と米金利急騰が同時に出る場合、半導体・AI関連の追加判断を止める。 / 数値をイベント判定エンジンへ入力し、テーマ候補の扱いを再判定する。
+schedule,6/15-16,日銀会合,政策金利、声明文、ドル円、日本10年金利、日経平均、TOPIX,急な円高、銀行・輸出・半導体への大きな逆風が出る場合は購入判断を保留する。 / 金融、商社、輸出、半導体装置の扱いを分けて確認する。
+schedule,6/16-17,FOMC,政策金利、ドットプロット、FRB議長会見、米10年金利、VIX、NASDAQ,米金利急騰、VIX急騰、NASDAQ/SOX急落が重なる場合は攻め枠を止める。 / 6/18以降の一次再判定で、候補10社とテーマ候補を分けて処理する。
+schedule,6/18以降,一次再判定,3イベント後の色判定、候補別スコア、指数差、直近下落、未確認データ,赤判定が残る、または根拠不足の銘柄は購入候補に進めない。 / 候補別の購入可否、保留理由、入れ替え候補を記録する。
+candidate_handling,チャンネル1 総合候補,既存の総合候補を基準にする,量的スコア、長期安定性、指数比較、下落耐性を優先して見る。,未確認データが残る銘柄は、スコアが高くても購入確定にしない。
+candidate_handling,チャンネル2 半導体製造装置・材料,半導体テーマの攻め枠,SOX、NASDAQ、米金利、受注・利益率、PER/PBR/ROEを確認して扱う。,高PER、高ボラ、直近過熱が強い場合は比率を下げるか保留する。
+candidate_handling,チャンネル3 データセンター・電力・冷却・電線,AI需要の周辺インフラ枠,電力需要、冷却、電線、データセンター投資の構造需要を確認する。,テーマが正しくても株価に織り込み済みの場合があるため、過熱確認を必須にする。
+candidate_handling,フィジカルAI,補完後に昇格候補,FA、センサー、ロボット、電子部品の実需と決算成長を分けて見る。,テーマ名だけでは採用しない。決算と株価反応の両方が必要。
+candidate_handling,量子コンピューター,監視枠,ニュース、提携、研究開発、関連部材を観察する。,現時点では6月NISA 1年テストの中心候補ではなく、作業中の探索枠とする。
+nisa_link,NISA口座運用ハブ,882_nisa_account_operation_hub_20260605.html,本人操作、証券会社確認、注文票、口座区分の入口。,
+nisa_link,NISA購入準備ダッシュボード,883_nisa_readiness_dashboard_20260605.html,本人別の準備状況、スマホ、入金、注文票の進捗を見る。,
+nisa_link,証券会社確認テンプレート,884_nisa_broker_contact_templates_20260605.html,代理人登録、本人操作、注文時の確認事項を証券会社へ聞くための整理。,
+nisa_link,本人別注文票テンプレート,879_nisa_person_order_ticket_20260605.html,本人が確認して発注するための注文票。,
+detail_link,テーマ候補 実行判定表,891_june_theme_execution_matrix_20260605.html,各テーマ候補を残す条件、止める条件、必要データを確認する。,
+detail_link,テーマ候補 統合ゲート,890_june_theme_integration_gate_20260605.html,既存10社とテーマ候補を混ぜずに比較するためのゲート。,
+detail_link,イベント実数入力・入替記録,892_june_event_actual_input_and_replacement_log_20260606.html,イベント後の実数、候補入替、理由を記録する。,
+detail_link,税制確認 Phase 1,842_tax_aware_operation_layer_phase1_20260602.html,NISA向き、課税口座向き、損益通算などの確認補助。,
+detail_link,NISA口座注意PDF,nisa_multi_account_pc_ip_risk_report_20260531.pdf,本人操作、別名義口座、誤解を避ける運用方法の確認資料。,
