@@ -219,7 +219,17 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>5. 候補別入力・判定</h2>
+    <h2>5. 説明用サマリー</h2>
+    <p class="notice">下の文章は、判定画面の入力内容から自動生成される説明補助です。購入確定ではなく、6月イベント後の再判定結果として説明します。</p>
+    <div class="control">
+      <label for="explainText">説明文</label>
+      <textarea id="explainText" rows="9" readonly style="width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;color:#111;background:#fff"></textarea>
+    </div>
+    <button class="secondary" type="button" id="copyExplain">説明文をコピー</button>
+  </section>
+
+  <section>
+    <h2>6. 候補別入力・判定</h2>
     <div class="table-wrap">
       <table>
         <thead>
@@ -335,6 +345,43 @@ function renderSelected(results, marketGate) {
   }).join('');
 }
 
+function renderExplanation(results, marketGate) {
+  const nisaReady = document.getElementById('nisaReady').value;
+  const eligible = results
+    .filter((item) => ['center', 'conditional', 'backup'].includes(item.result.cls))
+    .sort((a, b) => classRank[a.result.cls] - classRank[b.result.cls] || b.result.score - a.result.score)
+    .slice(0, 10);
+  const center = eligible.filter((item) => item.result.cls === 'center').length;
+  const conditional = eligible.filter((item) => item.result.cls === 'conditional').length;
+  const backup = eligible.filter((item) => item.result.cls === 'backup').length;
+  const stopped = results.length - eligible.length;
+  const names = eligible.map((item) => item.row.children[1].textContent.trim().replace(/\\s+/g, ' '));
+  const marketText = marketGate === 'green'
+    ? '市場ゲートは緑判定のため、中心候補を軸に最大10社を確認できます。'
+    : marketGate === 'yellow'
+      ? '市場ゲートは黄判定のため、個別株上限を下げ、条件付き候補は小さく扱います。'
+      : '市場ゲートは赤判定のため、購入配分は出さず、再判定待ちです。';
+  const nisaText = nisaReady === 'pass'
+    ? 'NISA口座・本人操作・口座区分の確認は通過扱いです。'
+    : nisaReady === 'partial'
+      ? 'NISA口座・本人操作・口座区分は確認中のため、実行前に止めて確認します。'
+      : 'NISA口座・本人操作・口座区分が未確認のため、購入前停止です。';
+
+  const selectedText = names.length
+    ? '現時点で最大10社抽出に残る候補は、' + names.join('、') + 'です。'
+    : '現時点で最終10社に進める候補はありません。';
+
+  const text = [
+    '候補10社の判定は、固定した選定ロジックに基づき、必須データ、財務・割高度、決算後反応、質的テーマ、リスク、税制/口座確認を分けて確認しています。',
+    marketText,
+    nisaText,
+    selectedText,
+    '分類内訳は、中心候補' + center + '社、条件付き候補' + conditional + '社、補欠' + backup + '社、監視または除外' + stopped + '社です。',
+    '未確認データや赤判定がある銘柄は、点数が高くても購入候補に進めません。10社に足りない場合は無理に埋めず、現金またはインデックス比率を上げます。'
+  ].join('\\n');
+  document.getElementById('explainText').value = text;
+}
+
 function recalc() {
   const marketGate = document.getElementById('marketGate').value;
   const nisaReady = document.getElementById('nisaReady').value;
@@ -354,6 +401,7 @@ function recalc() {
   document.getElementById('countStop').textContent = counts.watch + counts.exclude;
   document.getElementById('stockLimit').textContent = stockLimitText(marketGate);
   renderSelected(results, marketGate);
+  renderExplanation(results, marketGate);
 }
 
 function csvEscape(value) {
@@ -387,6 +435,17 @@ function downloadCsv() {
 
 document.getElementById('recalc').addEventListener('click', recalc);
 document.getElementById('downloadCsv').addEventListener('click', downloadCsv);
+document.getElementById('copyExplain').addEventListener('click', async () => {
+  const text = document.getElementById('explainText').value;
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById('copyExplain').textContent = 'コピーしました';
+    setTimeout(() => document.getElementById('copyExplain').textContent = '説明文をコピー', 1400);
+  } catch {
+    document.getElementById('explainText').focus();
+    document.getElementById('explainText').select();
+  }
+});
 document.querySelectorAll('select,input').forEach((el) => el.addEventListener('change', recalc));
 recalc();
 </script>
