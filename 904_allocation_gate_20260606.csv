@@ -1,0 +1,4 @@
+﻿market_gate,condition,stock_limit,attack_limit,cash
+緑,全イベント通過、金利・指数・VIXに重大悪化なし,最大70%,最大20%,最低10%
+黄,一部警戒。金利、SOX、為替、指数のどれかが不安定,最大45%,最大8%,最低30%
+赤,CPI悪化、金利急騰、SOX/NASDAQ急落、日銀ショック等,0-20%,0%,最低60%

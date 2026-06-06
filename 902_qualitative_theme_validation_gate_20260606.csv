@@ -1,0 +1,5 @@
+﻿layer,rule
+hypothesis,theme_name_only_max_B
+evidence,official_source_or_past_reaction_required
+actual,sales_or_order_connection_required_for_A
+missing,watch_only

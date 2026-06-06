@@ -1,0 +1,5 @@
+﻿item,rule
+1day,record_as_short_reaction
+5day,record_as_short_reaction
+20day,use_only_after_arrival
+missing,do_not_mix_into_final_score
