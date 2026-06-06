@@ -5,240 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>株式購入判断補助システム</title>
   <style>
-    :root {
-      --ink: #061f36;
-      --navy: #123d63;
-      --blue: #0b5f96;
-      --line: #c8dbea;
-      --bg: #eef4fa;
-      --green: #087443;
-      --amber: #a85b00;
-      --red: #b42318;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", Meiryo, sans-serif;
-      color: var(--ink);
-      background: var(--bg);
-      line-height: 1.7;
-    }
-    main { max-width: 1240px; margin: 0 auto; padding: 24px 18px 80px; }
-    header {
-      background: var(--navy);
-      color: #fff;
-      border-radius: 16px;
-      padding: 28px;
-      margin-bottom: 18px;
-    }
-    h1 { margin: 0 0 8px; font-size: 32px; letter-spacing: 0; }
-    header p { margin: 0; color: #dbeafe; }
-    .notice {
-      background: #fff7e6;
-      border: 1px solid #f0c36a;
-      border-left: 7px solid var(--amber);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin: 16px 0;
-      font-weight: 700;
-    }
-    h2 {
-      color: var(--navy);
-      border-left: 8px solid var(--blue);
-      padding-left: 12px;
-      margin-top: 30px;
-    }
-    .quick {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin: 16px 0 22px;
-    }
-    .quick a, .node-link {
-      display: block;
-      text-decoration: none;
-      color: var(--ink);
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 14px;
-    }
-    .quick a.primary {
-      background: #f4fbff;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 2px rgba(11, 95, 150, 0.08) inset;
-    }
-    .quick b, .node-link b { display: block; color: var(--navy); font-size: 17px; margin-bottom: 4px; }
-    .quick span, .node-link span { display: block; color: #27445f; font-size: 14px; }
-    section.tree {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      margin: 18px 0;
-    }
-    details {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin: 12px 0;
-      background: #fbfdff;
-    }
-    summary {
-      cursor: pointer;
-      color: var(--navy);
-      font-size: 18px;
-      font-weight: 900;
-    }
-    .children {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .full { grid-column: 1 / -1; }
-    .mini {
-      margin: 0;
-      color: #284761;
-      background: #eef6ff;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
-    .tag {
-      display: inline-block;
-      margin-left: 8px;
-      border-radius: 999px;
-      padding: 2px 9px;
-      font-size: 12px;
-      color: #fff;
-      background: var(--blue);
-      vertical-align: middle;
-    }
-    .tag.green { background: var(--green); }
-    .tag.warn { background: var(--amber); }
-    .tag.red { background: var(--red); }
-    footer { color: #526b82; font-size: 13px; margin-top: 26px; }
-    @media (max-width: 850px) {
-      .quick, .children { grid-template-columns: 1fr; }
-      h1 { font-size: 26px; }
-    }
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7}
+    header{background:var(--navy);color:white;padding:32px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,44px);letter-spacing:0;line-height:1.2}
+    header p{margin:0;color:white;font-weight:800;max-width:1100px}
+    main{max-width:1380px;margin:0 auto;padding:22px}
+    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:0 0 18px;font-weight:900;border-radius:8px}
+    .hero-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .hero-actions a{display:block;text-decoration:none;text-align:center;background:var(--blue);color:white;border-radius:10px;padding:14px;font-weight:900}
+    .hero-actions a.secondary{background:white;color:var(--blue);border:1px solid var(--blue)}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    .primary-section{border-color:#7bb6dd;box-shadow:0 0 0 2px rgba(11,103,163,.08),0 8px 20px rgba(20,60,90,.08)}
+    .section-head{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
+    h2{margin:0;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .badge{display:inline-block;background:var(--red);color:white;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900;white-space:nowrap}
+    .lead{margin:0 0 12px;font-weight:800;color:#1b3349}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+    .card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:860px){main{padding:12px}.grid,.hero-actions{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}}
   </style>
 </head>
 <body>
+<header>
+  <h1>株式購入判断補助システム</h1>
+  <p>NISA 1年保有テストに向けて、候補選定、6月イベント判定、NISA準備、記録を分けて確認するための入口です。</p>
+</header>
 <main>
-  <header>
-    <h1>株式購入判断補助システム</h1>
-    <p>NISA 1年保有テストに向けて、候補銘柄、購入前ゲート、6月イベント、税制確認、根拠資料を分けて確認する入口です。</p>
-  </header>
-
-  <div class="notice">
-    このシステムは投資助言、自動売買、税務代理を行いません。購入前は証券会社画面、公式決算、NISA口座区分、6月イベント後の実数を確認します。
+  <p class="notice">このシステムは投資助言、自動売買、税務判断を行いません。購入前には、証券会社画面、公式決算、イベント後の実データを確認します。</p>
+  <div class="hero-actions">
+    <a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
+    <a class="secondary" href="895_june_execution_cockpit_20260606.html">6月実行コックピット</a>
+    <a class="secondary" href="893_june_event_gate_engine_20260606.html">イベント判定エンジン</a>
   </div>
-
-  <h2>最初に見る画面</h2>
-  <div class="quick">
-    <a class="primary" href="871_june_practical_action_board_20260604.html">
-      <b>1. 6月実用アクションボード</b>
-      <span>日付別に、何を見るか、何をしたら停止か、次の作業を確認します。</span>
-    </a>
-    <a class="primary" href="873_june_gate_decision_engine_20260604.html">
-      <b>2. 6月ゲート判定エンジン</b>
-      <span>CPI、日銀、FOMC、決算後反応を入れた後、買う/待つ/見送るを分岐します。</span>
-    </a>
-    <a class="primary" href="872_june_event_actual_input_sheet_20260604.html">
-      <b>3. 6月イベント実数入力表</b>
-      <span>イベント後に実際の数値を入れるための入力表です。</span>
-    </a>
-  </div>
-
-  <h2>目的別ツリー</h2>
-  <section class="tree">
-    <details open>
-      <summary>目的1: 6月に買う候補を判断する <span class="tag green">実用</span></summary>
-      <div class="children">
-        <p class="mini full">日々見る中心画面です。現在の候補、止める条件、未入力データ、次にやる作業を確認します。</p>
-        <a class="node-link" href="871_june_practical_action_board_20260604.html"><b>6月実用アクションボード</b><span>日程、確認項目、停止条件、次アクション。</span></a>
-        <a class="node-link" href="873_june_gate_decision_engine_20260604.html"><b>6月ゲート判定エンジン</b><span>イベント後の分岐ルールと候補別の扱い。</span></a>
-        <a class="node-link" href="874_benchmark_allocation_decision_20260604.html"><b>ベンチマーク比較・個別株比率ゲート</b><span>S&P500/TOPIXを上回る説明が弱い場合に、個別株比率を上げないためのルール。</span></a>
-        <a class="node-link" href="872_june_event_actual_input_sheet_20260604.html"><b>6月イベント実数入力表</b><span>6月CPI、日銀、FOMC、指数、為替、候補別確認の入力欄。</span></a>
-        <a class="node-link" href="869_candidate10_earnings_reaction_rebuild_20260604.html"><b>候補10社 決算後反応</b><span>決算後1日、5日、20営業日の対日経平均反応。</span></a>
-        <a class="node-link" href="870_candidate10_reaction_remaining_schedule_20260604.html"><b>20営業日反応 更新予定</b><span>未到達銘柄の再計算日と扱い。</span></a>
-        <a class="node-link" href="867_candidate10_integrated_update_20260604.html"><b>候補10社 統合データ</b><span>株価、決算、指標、未取得項目の整理。</span></a>
-      </div>
-    </details>
-
-    <details open>
-      <summary>目的2: どの10社を候補にしたか確認する <span class="tag">選定根拠</span></summary>
-      <div class="children">
-        <p class="mini full">100社前後の母集団から、総合、半導体製造装置・材料、データセンター・電力・冷却・電線の3系統で候補を管理します。</p>
-        <a class="node-link" href="theme20_separate_screened10_20260529.html"><b>テーマ別10社</b><span>半導体製造装置・材料、データセンター・電力・冷却・電線を別枠で確認。</span></a>
-        <a class="node-link" href="theme20_final_screened10_20260529.html"><b>テーマ20社からの最終候補</b><span>テーマ候補をスクリーニングした結果。</span></a>
-        <a class="node-link" href="universe100_reselected_10_candidates_20260528.html"><b>100社母集団からの再選定</b><span>母集団、長期安定性、指数比較、下落率の確認。</span></a>
-        <a class="node-link" href="850_universe100_fixed_rulebook_20260603.csv"><b>母集団固定ルール CSV</b><span>なぜこの母集団を見るかのルール。</span></a>
-      </div>
-    </details>
-
-    <details>
-      <summary>目的3: 質的テーマを扱う <span class="tag warn">補助</span></summary>
-      <div class="children">
-        <p class="mini full">質的材料は単純加点せず、仮説、実績、ニュース出所、過去反応に分けて扱います。</p>
-        <a class="node-link" href="qualitative_evidence_taxonomy_20260528.html"><b>質的データ分類</b><span>仮説層、実績層、ニュース出所の分離。</span></a>
-        <a class="node-link" href="qualitative_reflection_matrix_20260528.html"><b>質的データ反映表</b><span>質的材料を購入判断にどう反映するか。</span></a>
-        <a class="node-link" href="847_quantum_physical_ai_channel_20260602.html"><b>量子・フィジカルAI探索枠</b><span>作業中の探索枠。購入候補ではなく調査枠。</span></a>
-        <a class="button secondary" href="886_quantum_physical_ai_screening_20260605.html">フィジカルAI・量子 候補整理</a>
-        <a class="button secondary" href="887_quantum_physical_ai_quant_connection_20260605.html">フィジカルAI・量子 数値接続</a>
-      <a class="button secondary" href="888_quantum_physical_ai_promotion_queue_20260605.html">フィジカルAI・量子 昇格作業キュー</a>
-      <a class="button secondary" href="889_cross_channel_candidate_comparison_20260605.html">テーマ別候補 横並び比較</a>
-      <a class="button secondary" href="890_june_theme_integration_gate_20260605.html">6月テーマ候補 統合ゲート</a>
-      <a class="button secondary" href="891_june_theme_execution_matrix_20260605.html">6月テーマ候補 実行判定表</a>
-      <a class="button secondary" href="892_june_event_actual_input_and_replacement_log_20260606.html">6月イベント後 実データ入力・入替記録</a>
-      <a class="button secondary" href="893_june_event_gate_engine_20260606.html">6月イベント判定エンジン</a>
-      <a class="button secondary" href="894_june_candidate_action_after_gate_20260606.html">6月候補別アクション分岐表</a>
-      <a class="button secondary" href="895_june_execution_cockpit_20260606.html">6月実行コックピット</a>
-      <a class="button secondary" href="896_practical_entry_hub_20260606.html">実用パート入口</a>
-        <a class="node-link" href="853_qualitative_theme_validation_gate_20260603.csv"><b>質的テーマ検証ゲート CSV</b><span>テーマが実際に株価へ効いたかを確認する項目。</span></a>
-      </div>
-    </details>
-
-    <details>
-      <summary>目的4: 税制とNISA口座を確認する <span class="tag red">購入前確認</span></summary>
-      <div class="children">
-        <p class="mini full">NISA向き、課税口座向き、損益通算、外国税額控除、配当課税方式は確認補助として扱います。税額の確定表示はしません。</p>
-        <a class="node-link" href="882_nisa_account_operation_hub_20260605.html"><b>NISA口座運用ハブ</b><span>仕組み理解、顧客説明、証券会社確認、本人別注文票をまとめた入口。</span></a>
-        <a class="node-link" href="883_nisa_readiness_dashboard_20260605.html"><b>NISA購入準備 進捗ダッシュボード</b><span>証券会社確認、本人別準備、市場イベント、注文票の進捗を確認。</span></a>
-        <a class="node-link" href="884_nisa_broker_contact_templates_20260605.html"><b>NISA証券会社 確認依頼テンプレート</b><span>証券会社へ送るメール文面、電話用の聞き方、回答後の分岐。</span></a>
-        <a class="node-link" href="885_nisa_delivery_package_20260605.html"><b>NISA口座運用 納品パック</b><span>顧客提出用、内部確認用、実行管理用の資料を順番に整理。</span></a>
-        <a class="node-link" href="842_tax_aware_operation_layer_phase1_20260602.html"><b>税制レイヤー Phase 1</b><span>NISA、課税口座、損出し、外国税額控除などの確認欄。</span></a>
-        <a class="node-link" href="843_tax_year_end_review_phase2_20260602.html"><b>年末レビュー</b><span>11月以降の損益確認、配当課税、繰越確認。</span></a>
-        <a class="node-link" href="844_nisa_priority_allocation_phase3_20260602.html"><b>NISA枠配分候補</b><span>NISA枠を使う価値がある銘柄か確認。</span></a>
-        <a class="node-link" href="nisa_multi_account_pc_ip_risk_report_20260531.pdf"><b>NISA口座操作時の注意 PDF</b><span>本人操作、本人ログイン、誤解を避ける運用方法の確認。</span></a>
-      </div>
-    </details>
-
-    <details>
-      <summary>目的5: 顧客向け報告書を確認する <span class="tag">報告資料</span></summary>
-      <div class="children">
-        <p class="mini full">提出用の報告資料です。未確認事項や作業中項目は確定情報のように表示しません。</p>
-        <a class="node-link" href="daily_progress_report_20260603.pdf"><b>2026年6月3日 作業報告 PDF</b><span>進捗、残タスク、次工程の整理。</span></a>
-        <a class="node-link" href="nisa_account_plan.pdf"><b>NISA口座運用代替案 PDF</b><span>代理人登録、本人発注型、IFA連携、NISAラップ、信託・法人管理の比較。</span></a>
-        <a class="node-link" href="875_nisa_broker_confirmation_matrix_20260605.html"><b>NISA代理人・口座運用 確認シート</b><span>証券会社へ何を聞き、回答後にどう判定するかを記録する実務表。</span></a>
-        <a class="node-link" href="876_nisa_broker_decision_engine_20260605.html"><b>NISA代理制度 判定エンジン</b><span>証券会社の回答を、正式代理/本人発注/中期移行/購入延期へ分岐。</span></a>
-        <a class="node-link" href="877_nisa_client_proposal_action_pack_20260605.html"><b>NISA顧客提案・実行パック</b><span>顧客へ話す提案文、再来週までのToDo、本人別に作るもの。</span></a>
-        <a class="node-link" href="878_nisa_person_account_execution_tracker_20260605.html"><b>NISA本人別 実行管理表</b><span>本人ごとに、口座・ログイン・入金・購入ルートを管理。</span></a>
-        <a class="node-link" href="879_nisa_person_order_ticket_20260605.html"><b>NISA本人別 注文票テンプレート</b><span>本人ごとの購入日、口座区分、銘柄、金額、買わない条件を整理。</span></a>
-        <a class="node-link" href="880_nisa_account_mechanism_plain_guide_20260605.html"><b>NISA口座運用の仕組み やさしい解説</b><span>全体像、専門用語、実行ルートをクリック式で確認。</span></a>
-        <a class="node-link" href="881_nisa_client_explanation_script_20260605.html"><b>NISA顧客説明スクリプト</b><span>5分で説明する流れ、質問回答、避ける表現。</span></a>
-        <a class="node-link" href="nisa_account_mechanism_plain_guide.pdf"><b>NISA口座運用の仕組み PDF</b><span>クリック式解説の印刷・送付用PDF。</span></a>
-        <a class="node-link" href="daily_progress_report_20260602.pdf"><b>2026年6月2日 作業報告 PDF</b><span>税制レイヤーと量子・フィジカルAI探索枠。</span></a>
-        <a class="node-link" href="system_spec_schedule.pdf"><b>仕様・工程説明 PDF</b><span>システムの目的、できること、工期。</span></a>
-      </div>
-    </details>
+  
+  <section class="primary-section">
+    <div class="section-head">
+      <h2>1. 実用パート</h2>
+      <span class="badge">最初に見る</span>
+    </div>
+    <p class="lead">日々の確認、6月イベント後の判定、候補別アクションを見る入口です。</p>
+    <div class="grid">
+      
+        <a class="card" href="896_practical_entry_hub_20260606.html">
+          <b>実用パート入口</b>
+          <span>迷ったらここから。実用画面、候補判断、NISA準備、補足資料に分けた入口。</span>
+        </a>
+      
+        <a class="card" href="895_june_execution_cockpit_20260606.html">
+          <b>6月実行コックピット</b>
+          <span>6月イベント後に何を見るか、何なら止めるか、次に何をするかを見る。</span>
+        </a>
+      
+        <a class="card" href="893_june_event_gate_engine_20260606.html">
+          <b>6月イベント判定エンジン</b>
+          <span>CPI、金利、SOX、NASDAQ、VIXなどを緑・黄・赤で判定する。</span>
+        </a>
+      
+        <a class="card" href="894_june_candidate_action_after_gate_20260606.html">
+          <b>6月候補別アクション分岐表</b>
+          <span>市場ゲート後に銘柄ごとの扱いを確認する。</span>
+        </a>
+      
+    </div>
   </section>
 
-  <footer>
-    更新: 2026年6月4日。ホーム画面は、日々使う実用パートを先頭にし、資料は補足として確認する構成に整理しています。
-  </footer>
+  <section class="">
+    <div class="section-head">
+      <h2>2. テーマ候補・選定根拠</h2>
+      
+    </div>
+    <p class="lead">既存10社、半導体、データセンター、フィジカルAI、量子を混同せずに確認します。</p>
+    <div class="grid">
+      
+        <a class="card" href="891_june_theme_execution_matrix_20260605.html">
+          <b>6月テーマ候補 実行判定表</b>
+          <span>テーマ候補ごとの必要データ、通過条件、停止条件。</span>
+        </a>
+      
+        <a class="card" href="890_june_theme_integration_gate_20260605.html">
+          <b>6月テーマ候補 統合ゲート</b>
+          <span>既存10社を基準に、テーマ枠を入れる条件を確認。</span>
+        </a>
+      
+        <a class="card" href="889_cross_channel_candidate_comparison_20260605.html">
+          <b>テーマ別候補 横並び比較</b>
+          <span>総合、半導体、データセンター、フィジカルAI、量子を横並び比較。</span>
+        </a>
+      
+        <a class="card" href="888_quantum_physical_ai_promotion_queue_20260605.html">
+          <b>フィジカルAI・量子 昇格作業キュー</b>
+          <span>購入候補に近いもの、補完後候補、長期探索を分ける。</span>
+        </a>
+      
+    </div>
+  </section>
+
+  <section class="">
+    <div class="section-head">
+      <h2>3. NISA準備・口座運用</h2>
+      
+    </div>
+    <p class="lead">実際の購入前に、本人操作、証券会社確認、注文票、進捗を整理します。</p>
+    <div class="grid">
+      
+        <a class="card" href="882_nisa_account_operation_hub_20260605.html">
+          <b>NISA口座運用ハブ</b>
+          <span>本人操作、証券会社確認、提案資料、注文票の入口。</span>
+        </a>
+      
+        <a class="card" href="883_nisa_readiness_dashboard_20260605.html">
+          <b>NISA購入準備 進捗ダッシュボード</b>
+          <span>本人別の口座準備、スマホ準備、入金、注文票の進捗。</span>
+        </a>
+      
+        <a class="card" href="884_nisa_broker_contact_templates_20260605.html">
+          <b>NISA証券会社 確認依頼テンプレート</b>
+          <span>証券会社へ確認する内容を整理。</span>
+        </a>
+      
+        <a class="card" href="879_nisa_person_order_ticket_20260605.html">
+          <b>NISA本人別 注文票テンプレート</b>
+          <span>本人が確認して発注するための注文票。</span>
+        </a>
+      
+    </div>
+  </section>
+
+  <section class="">
+    <div class="section-head">
+      <h2>4. 記録・補足資料</h2>
+      
+    </div>
+    <p class="lead">判断理由、予想と実績、税制確認、注意事項を残すための資料です。</p>
+    <div class="grid">
+      
+        <a class="card" href="892_june_event_actual_input_and_replacement_log_20260606.html">
+          <b>6月イベント後 実データ入力・入替記録</b>
+          <span>イベント後の実数と、候補を入れ替えた理由を記録。</span>
+        </a>
+      
+        <a class="card" href="https://raw.githubusercontent.com/ob198-cpu/kabu/main/operation_record_template_20260529.csv">
+          <b>運用記録CSV</b>
+          <span>判断理由、予想、実績、差分を記録するテンプレート。</span>
+        </a>
+      
+        <a class="card" href="842_tax_aware_operation_layer_phase1_20260602.html">
+          <b>税制レイヤー Phase 1</b>
+          <span>NISA、課税口座、損益通算などの確認補助。</span>
+        </a>
+      
+        <a class="card" href="nisa_multi_account_pc_ip_risk_report_20260531.pdf">
+          <b>NISA口座操作時の注意 PDF</b>
+          <span>本人操作、別名義口座の注意点、誤解を避ける運用方法。</span>
+        </a>
+      
+    </div>
+  </section>
+
+  <footer>公開URL: https://ob198-cpu.github.io/kabu/ / 作成: 2026/06/06 11:23</footer>
 </main>
 </body>
 </html>
