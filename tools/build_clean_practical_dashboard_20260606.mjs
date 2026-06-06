@@ -101,6 +101,15 @@ const nisaLinks = [
   ["本人別注文票テンプレート", "879_nisa_person_order_ticket_20260605.html", "本人が確認して発注するための注文票。"],
 ];
 
+const candidateReviewLinks = [
+  ["3チャンネル横並び比較", "889_cross_channel_candidate_comparison_20260605.html", "総合、半導体製造装置・材料、データセンター・電力・冷却・電線を混ぜずに比較する。"],
+  ["100社母集団からの再選定10社", "universe100_reselected_10_candidates_20260528.html", "約100社の母集団から、量的指標を使って候補を絞った表を確認する。"],
+  ["統合再計算10社", "integrated_recalculated_10_20260528.html", "既存選定スコアと追加指標を並べ、総合候補として残った銘柄を確認する。"],
+  ["半導体・AIインフラ 分野別10社", "theme20_separate_screened10_20260529.html", "半導体製造装置・材料と、データセンター・電力・冷却・電線を分けて見る。"],
+  ["フィジカルAI・量子 候補整理", "886_quantum_physical_ai_screening_20260605.html", "探索枠の候補を購入候補と混同せず、作業中の候補として確認する。"],
+  ["フィジカルAI・量子 数値接続", "887_quantum_physical_ai_quant_connection_20260605.html", "テーマ候補を既存の量的データへ接続できるか確認する。"],
+];
+
 const detailLinks = [
   ["テーマ候補 実行判定表", "891_june_theme_execution_matrix_20260605.html", "各テーマ候補を残す条件、止める条件、必要データを確認する。"],
   ["テーマ候補 統合ゲート", "890_june_theme_integration_gate_20260605.html", "既存10社とテーマ候補を混ぜずに比較するためのゲート。"],
@@ -206,13 +215,19 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>4. NISA準備・口座運用</h2>
+    <h2>4. 候補比較へ進む</h2>
+    <p class="small">候補は1つの表で混ぜず、総合候補、半導体製造装置・材料、データセンター・電力・冷却・電線、探索枠に分けて確認します。</p>
+    <div class="grid">${cardLinks(candidateReviewLinks)}</div>
+  </section>
+
+  <section>
+    <h2>5. NISA準備・口座運用</h2>
     <p class="small"><span class="red">本人操作、本人確認、口座区分の確認を前提にします。</span> ここは購入前の実務準備を整理する場所です。</p>
     <div class="grid">${cardLinks(nisaLinks)}</div>
   </section>
 
   <section>
-    <h2>5. 補足資料・記録</h2>
+    <h2>6. 補足資料・記録</h2>
     <div class="grid">${cardLinks(detailLinks)}</div>
   </section>
 
@@ -226,6 +241,7 @@ const csvRows = [
   ...primaryLinks.map(([title, url, desc]) => ["primary_link", title, url, desc, ""]),
   ...scheduleRows.map((row) => ["schedule", row.date, row.event, row.watch, `${row.stop} / ${row.next}`]),
   ...candidateRows.map((row) => ["candidate_handling", row.group, row.role, row.use, row.caution]),
+  ...candidateReviewLinks.map(([title, url, desc]) => ["candidate_review_link", title, url, desc, ""]),
   ...nisaLinks.map(([title, url, desc]) => ["nisa_link", title, url, desc, ""]),
   ...detailLinks.map(([title, url, desc]) => ["detail_link", title, url, desc, ""]),
 ];
