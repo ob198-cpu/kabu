@@ -18,6 +18,7 @@ const sections = [
     primary: true,
     links: [
       ["実用パート入口", "896_practical_entry_hub_20260606.html", "迷ったらここから。実用画面、候補判断、NISA準備、補足資料に分けた入口。"],
+      ["候補10社 最終確定ロジック", "898_final_candidate_selection_logic_20260606.html", "約100社から最大10社へ絞る固定ルール。採点、除外条件、6月イベント後の分類を確認。"],
       ["6月実行コックピット", "895_june_execution_cockpit_20260606.html", "6月イベント後に何を見るか、何なら止めるか、次に何をするかを見る。"],
       ["6月イベント判定エンジン", "893_june_event_gate_engine_20260606.html", "CPI、金利、SOX、NASDAQ、VIXなどを緑・黄・赤で判定する。"],
       ["6月候補別アクション分岐表", "894_june_candidate_action_after_gate_20260606.html", "市場ゲート後に銘柄ごとの扱いを確認する。"],
@@ -27,6 +28,7 @@ const sections = [
     title: "テーマ候補・選定根拠",
     lead: "既存10社、半導体、データセンター、フィジカルAI、量子を混同せずに確認します。",
     links: [
+      ["候補10社 最終確定ロジック 固定版", "898_final_candidate_selection_logic_20260606.html", "選定の手順、スコア構造、ハード除外、最終分類を確認。"],
       ["6月テーマ候補 実行判定表", "891_june_theme_execution_matrix_20260605.html", "テーマ候補ごとの必要データ、通過条件、停止条件。"],
       ["6月テーマ候補 統合ゲート", "890_june_theme_integration_gate_20260605.html", "既存10社を基準に、テーマ枠を入れる条件を確認。"],
       ["テーマ別候補 横並び比較", "889_cross_channel_candidate_comparison_20260605.html", "総合、半導体、データセンター、フィジカルAI、量子を横並び比較。"],

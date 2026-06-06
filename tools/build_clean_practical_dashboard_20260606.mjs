@@ -102,6 +102,7 @@ const nisaLinks = [
 ];
 
 const candidateReviewLinks = [
+  ["候補10社 最終確定ロジック 固定版", "898_final_candidate_selection_logic_20260606.html", "約100社から最大10社へ絞る手続き、除外条件、採点構造、6月イベント後の最終分類を確認する。"],
   ["3チャンネル横並び比較", "889_cross_channel_candidate_comparison_20260605.html", "総合、半導体製造装置・材料、データセンター・電力・冷却・電線を混ぜずに比較する。"],
   ["100社母集団からの再選定10社", "universe100_reselected_10_candidates_20260528.html", "約100社の母集団から、量的指標を使って候補を絞った表を確認する。"],
   ["統合再計算10社", "integrated_recalculated_10_20260528.html", "既存選定スコアと追加指標を並べ、総合候補として残った銘柄を確認する。"],
