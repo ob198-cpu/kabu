@@ -40,7 +40,7 @@
 <body>
 <header>
   <h1>最終10社 判定ワークベンチ</h1>
-  <p>作成: 2026/06/06 12:20 / 固定ロジックに、6月イベント後の実数・確認状況を入れて、候補を分類する画面です。</p>
+  <p>作成: 2026/06/06 12:22 / 固定ロジックに、6月イベント後の実数・確認状況を入れて、候補を分類する画面です。</p>
 </header>
 <main>
   <section>
@@ -102,7 +102,30 @@
   </section>
 
   <section>
-    <h2>4. 候補別入力・判定</h2>
+    <h2>4. 最大10社の抽出結果</h2>
+    <p class="notice">下表は利回り予測ではなく、固定ロジックを通過した候補を最大10社に絞るための実務出力です。赤判定では購入配分を出さず、黄判定では個別株上限を下げます。</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:55px">順</th>
+            <th style="width:150px">銘柄</th>
+            <th style="width:170px">枠</th>
+            <th style="width:80px">点</th>
+            <th style="width:130px">分類</th>
+            <th style="width:120px">配分目安</th>
+            <th>理由</th>
+          </tr>
+        </thead>
+        <tbody id="selectedBody">
+          <tr><td colspan="7">入力後に再計算します。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 候補別入力・判定</h2>
     <div class="table-wrap">
       <table>
         <thead>
@@ -842,6 +865,8 @@
 </main>
 <script>
 const scoreMap = { pass: 2, partial: 1, fail: 0 };
+const classRank = { center: 1, conditional: 2, backup: 3, watch: 9, exclude: 10 };
+const classWeight = { center: 3, conditional: 1.5, backup: 0.5 };
 const classLabel = {
   center: '<span class="badge center">中心候補</span>',
   conditional: '<span class="badge conditional">条件付き</span>',
@@ -876,12 +901,68 @@ function stockLimitText(marketGate) {
   return '0-20%';
 }
 
+function stockLimitRate(marketGate) {
+  if (marketGate === 'green') return 0.70;
+  if (marketGate === 'yellow') return 0.45;
+  return 0;
+}
+
+function yen(value) {
+  return Math.round(value).toLocaleString('ja-JP') + '円';
+}
+
+function selectedReason(result, row) {
+  const channel = row.children[2].textContent.trim().replace(/\s+/g, ' ');
+  if (result.cls === 'center') return '必須ゲートを通過し、中心候補として扱える。';
+  if (result.cls === 'conditional') return '一部確認中だが、停止条件には触れていない。小さく扱う候補。';
+  if (result.cls === 'backup') return '中心候補が落ちた場合の入替候補。';
+  if (channel.includes('量子')) return '量子は商用売上・受注・株価反応が不足しており監視枠。';
+  return '停止条件または重要データ不足。';
+}
+
+function renderSelected(results, marketGate) {
+  const body = document.getElementById('selectedBody');
+  const budget = Number(document.getElementById('budget').value || 0);
+  const eligible = results
+    .filter((item) => ['center', 'conditional', 'backup'].includes(item.result.cls))
+    .sort((a, b) => classRank[a.result.cls] - classRank[b.result.cls] || b.result.score - a.result.score)
+    .slice(0, 10);
+
+  if (marketGate === 'red') {
+    body.innerHTML = '<tr><td colspan="7">赤判定のため、最終10社の購入配分は出しません。再判定待ちです。</td></tr>';
+    return;
+  }
+  if (!eligible.length) {
+    body.innerHTML = '<tr><td colspan="7">通過候補がありません。データ補完または市場再判定が必要です。</td></tr>';
+    return;
+  }
+
+  const stockBudget = budget * stockLimitRate(marketGate);
+  const totalWeight = eligible.reduce((sum, item) => sum + classWeight[item.result.cls], 0);
+  body.innerHTML = eligible.map((item, index) => {
+    const tickerName = item.row.children[1].textContent.trim().replace(/\s+/g, ' ');
+    const channel = item.row.children[2].textContent.trim().replace(/\s+/g, ' ');
+    const amount = stockBudget * classWeight[item.result.cls] / totalWeight;
+    return '<tr>' +
+      '<td><b>' + (index + 1) + '</b></td>' +
+      '<td>' + tickerName + '</td>' +
+      '<td>' + channel + '</td>' +
+      '<td>' + item.result.score + '</td>' +
+      '<td>' + classLabel[item.result.cls] + '</td>' +
+      '<td>' + yen(amount) + '</td>' +
+      '<td>' + selectedReason(item.result, item.row) + '</td>' +
+    '</tr>';
+  }).join('');
+}
+
 function recalc() {
   const marketGate = document.getElementById('marketGate').value;
   const nisaReady = document.getElementById('nisaReady').value;
   const counts = { center: 0, conditional: 0, backup: 0, watch: 0, exclude: 0 };
+  const results = [];
   document.querySelectorAll('tr[data-row]').forEach((row) => {
     const result = classifyRow(row, marketGate, nisaReady);
+    results.push({ row, result });
     counts[result.cls] += 1;
     row.querySelector('[data-score]').textContent = result.score;
     row.querySelector('[data-class]').innerHTML = classLabel[result.cls];
@@ -892,6 +973,7 @@ function recalc() {
   document.getElementById('countBackup').textContent = counts.backup;
   document.getElementById('countStop').textContent = counts.watch + counts.exclude;
   document.getElementById('stockLimit').textContent = stockLimitText(marketGate);
+  renderSelected(results, marketGate);
 }
 
 function csvEscape(value) {
