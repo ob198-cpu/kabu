@@ -183,6 +183,37 @@ const rows = [
 ];
 
 const headers = ["channel", "priority", "ticker", "name", "status", "basis", "strength", "risk", "nextCheck", "juneUse"];
+const priorityRows = [
+  {
+    rank: "A",
+    group: "総合候補 + 数値接続済み候補",
+    target: "住友商事、三井住友FG、三菱電機、TDKなど",
+    use: "6月イベント後に、候補10社の中心候補として優先確認する。",
+    condition: "PER/PBR/ROE、決算後反応、指数差、下落耐性が確認できること。",
+  },
+  {
+    rank: "B",
+    group: "半導体製造装置・材料 / AIインフラ",
+    target: "アドバンテスト、ディスコ、東京エレクトロン、日立、フジクラなど",
+    use: "テーマが強い場合の攻め枠。比率は市場ゲート通過後に限定する。",
+    condition: "SOX、NASDAQ、米10年金利、受注、利益率、直近過熱を確認すること。",
+  },
+  {
+    rank: "C",
+    group: "補完後に昇格検討",
+    target: "ファナック、キーエンス、三菱重工業など",
+    use: "テーマ仮説はあるが、まだ購入候補ではなく追加データ待ち。",
+    condition: "受注、決算後反応、PER、テーマ別売上寄与を補完すること。",
+  },
+  {
+    rank: "監視",
+    group: "量子コンピューター",
+    target: "富士通、NECなど",
+    use: "長期テーマとして観察。6月NISA 1年テストの中心にはしない。",
+    condition: "量子事業の商用売上、受注、株価反応が確認できるまでは購入候補化しない。",
+  },
+];
+
 const csvCell = (value) => {
   const text = String(value ?? "");
   return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
@@ -209,6 +240,18 @@ function tableRows(list) {
   `).join("");
 }
 
+function priorityTableRows(list) {
+  return list.map((row) => `
+    <tr>
+      <td><b>${esc(row.rank)}</b></td>
+      <td>${esc(row.group)}</td>
+      <td>${esc(row.target)}</td>
+      <td>${esc(row.use)}</td>
+      <td>${esc(row.condition)}</td>
+    </tr>
+  `).join("");
+}
+
 const html = `<!doctype html>
 <html lang="ja">
 <head>
@@ -227,13 +270,16 @@ const html = `<!doctype html>
     h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
     .notice{border-left:7px solid #b76500;background:#fff7e7;color:#111;padding:12px 14px;margin:12px 0;font-weight:800;border-radius:8px}
     .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.card{border:1px solid var(--line);border-radius:10px;padding:13px;background:#fbfdff}.card b{display:block;color:var(--navy);font-size:17px}.card strong{display:block;font-size:28px;color:var(--blue)}
+    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+    .flow div{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px;font-weight:800}
+    .flow b{display:block;color:var(--navy);font-size:16px;margin-bottom:5px}
     .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:white}
     table{width:100%;border-collapse:collapse;min-width:1380px;table-layout:fixed;font-size:13px}
     th,td{border:1px solid var(--line);padding:8px;vertical-align:top;overflow-wrap:anywhere;word-break:break-word;color:#111}
     th{background:#e5f1fa;color:#073b62;text-align:left;font-weight:900}
     .badge{display:inline-block;border-radius:999px;color:white;padding:4px 9px;font-weight:900;font-size:12px}.badge.good{background:var(--good)}.badge.hold{background:var(--hold)}.badge.watch{background:var(--watch)}
     .links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
-    @media(max-width:980px){main{padding:12px}.cards{grid-template-columns:1fr}table{min-width:1180px}}
+    @media(max-width:980px){main{padding:12px}.cards,.flow{grid-template-columns:1fr}table{min-width:1180px}}
   </style>
 </head>
 <body>
@@ -255,12 +301,32 @@ const html = `<!doctype html>
       <a href="889_cross_channel_candidate_comparison_20260605.csv">CSVを開く</a>
       <a href="888_quantum_physical_ai_promotion_queue_20260605.html">フィジカルAI・量子 昇格作業キュー</a>
       <a href="887_quantum_physical_ai_quant_connection_20260605.html">既存数値接続チェック</a>
+      <a href="practical_action_dashboard_20260528.html">実用ダッシュボードへ戻る</a>
       <a href="index.html">ホームへ戻る</a>
     </div>
   </section>
 
   <section>
-    <h2>2. 横並び比較</h2>
+    <h2>2. 6月テストへの使い方</h2>
+    <p class="notice">この表は「テーマが面白い銘柄」をそのまま買うための表ではありません。総合候補、攻め枠、補完後候補、監視枠に分け、6月イベント後に実データを入れて候補化できるものだけを残します。</p>
+    <div class="flow">
+      <div><b>1. 総合候補</b>既存スコアと長期安定性を確認する。</div>
+      <div><b>2. テーマ候補</b>半導体・AIインフラは市場ゲート通過後だけ扱う。</div>
+      <div><b>3. 補完候補</b>PER、受注、決算後反応が足りなければ保留する。</div>
+      <div><b>4. 監視枠</b>量子のように商用寄与が弱いものは購入候補化しない。</div>
+    </div>
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead>
+          <tr><th style="width:80px">優先度</th><th>区分</th><th>対象例</th><th>6月での使い方</th><th>候補化の条件</th></tr>
+        </thead>
+        <tbody>${priorityTableRows(priorityRows)}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 横並び比較</h2>
     <div class="table-wrap">
       <table>
         <thead>
@@ -272,7 +338,7 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>3. 次の判断</h2>
+    <h2>4. 次の判断</h2>
     <div class="table-wrap">
       <table>
         <thead><tr><th>判断</th><th>内容</th><th>理由</th></tr></thead>
