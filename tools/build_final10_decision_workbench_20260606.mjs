@@ -12,21 +12,25 @@ const generatedAt = new Intl.DateTimeFormat("ja-JP", {
 }).format(new Date());
 
 const candidates = [
-  ["8053.T", "住友商事", "総合候補", "商社・資源・還元"],
-  ["8316.T", "三井住友FG", "総合候補", "銀行・金利・還元"],
-  ["6503.T", "三菱電機", "総合候補", "電力制御・FA・複合"],
-  ["6857.T", "アドバンテスト", "半導体製造装置・材料", "AI半導体検査"],
-  ["6146.T", "ディスコ", "半導体製造装置・材料", "切断・研削・先端PKG"],
-  ["8035.T", "東京エレクトロン", "半導体製造装置・材料", "前工程装置"],
-  ["6501.T", "日立製作所", "データセンター・電力・冷却・電線", "電力網・制御・デジタル"],
-  ["5803.T", "フジクラ", "データセンター・電力・冷却・電線", "光通信・電線"],
-  ["7011.T", "三菱重工業", "データセンター・電力・冷却・電線", "電力・冷却・防衛"],
-  ["6762.T", "TDK", "フィジカルAI", "電源・センサー・電子部品"],
-  ["6954.T", "ファナック", "フィジカルAI", "FA・ロボット"],
-  ["6861.T", "キーエンス", "フィジカルAI", "センサー・画像処理"],
-  ["6702.T", "富士通", "量子コンピューター", "量子・HPC・AI基盤"],
-  ["6701.T", "NEC", "量子コンピューター", "量子・AI・防衛IT"],
+  ["8053.T", "住友商事", "総合候補", "商社・資源・還元", { data: "pass", financial: "pass", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["8316.T", "三井住友FG", "総合候補", "銀行・金利・還元", { data: "pass", financial: "pass", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["6503.T", "三菱電機", "総合候補", "電力制御・FA・複合", { data: "pass", financial: "partial", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["6857.T", "アドバンテスト", "半導体製造装置・材料", "AI半導体検査", { data: "pass", financial: "partial", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["6146.T", "ディスコ", "半導体製造装置・材料", "切断・研削・先端PKG", { data: "partial", financial: "partial", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["8035.T", "東京エレクトロン", "半導体製造装置・材料", "前工程装置", { data: "pass", financial: "partial", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["6501.T", "日立製作所", "データセンター・電力・冷却・電線", "電力網・制御・デジタル", { data: "pass", financial: "pass", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["5803.T", "フジクラ", "データセンター・電力・冷却・電線", "光通信・電線", { data: "partial", financial: "partial", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["7011.T", "三菱重工業", "データセンター・電力・冷却・電線", "電力・冷却・防衛", { data: "pass", financial: "partial", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["6762.T", "TDK", "フィジカルAI", "電源・センサー・電子部品", { data: "pass", financial: "partial", reaction: "partial", theme: "pass", risk: "partial", tax: "partial" }],
+  ["6954.T", "ファナック", "フィジカルAI", "FA・ロボット", { data: "partial", financial: "partial", reaction: "partial", theme: "partial", risk: "partial", tax: "partial" }],
+  ["6861.T", "キーエンス", "フィジカルAI", "センサー・画像処理", { data: "partial", financial: "partial", reaction: "partial", theme: "partial", risk: "partial", tax: "partial" }],
+  ["6702.T", "富士通", "量子コンピューター", "量子・HPC・AI基盤", { data: "partial", financial: "partial", reaction: "partial", theme: "partial", risk: "partial", tax: "partial" }],
+  ["6701.T", "NEC", "量子コンピューター", "量子・AI・防衛IT", { data: "partial", financial: "partial", reaction: "partial", theme: "partial", risk: "partial", tax: "partial" }],
 ];
+
+function optionHtml(current, value, label) {
+  return `<option value="${value}"${current === value ? " selected" : ""}>${label}</option>`;
+}
 
 const esc = (value) => String(value ?? "")
   .replace(/&/g, "&amp;")
@@ -39,51 +43,51 @@ const csvCell = (value) => {
   return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 };
 
-const candidateRows = candidates.map(([ticker, name, channel, role], index) => `
+const candidateRows = candidates.map(([ticker, name, channel, role, defaults], index) => `
   <tr data-row>
     <td>${index + 1}</td>
     <td><b>${esc(ticker)}</b><br>${esc(name)}</td>
     <td>${esc(channel)}<br><span class="muted">${esc(role)}</span></td>
     <td>
       <select data-field="data">
-        <option value="pass">主要データ確認済み</option>
-        <option value="partial" selected>一部補完待ち</option>
-        <option value="fail">重要データ不足</option>
+        ${optionHtml(defaults.data, "pass", "主要データ確認済み")}
+        ${optionHtml(defaults.data, "partial", "一部補完待ち")}
+        ${optionHtml(defaults.data, "fail", "重要データ不足")}
       </select>
     </td>
     <td>
       <select data-field="financial">
-        <option value="pass">財務・割高度OK</option>
-        <option value="partial" selected>確認中</option>
-        <option value="fail">説明不能な割高/悪化</option>
+        ${optionHtml(defaults.financial, "pass", "財務・割高度OK")}
+        ${optionHtml(defaults.financial, "partial", "確認中")}
+        ${optionHtml(defaults.financial, "fail", "説明不能な割高/悪化")}
       </select>
     </td>
     <td>
       <select data-field="reaction">
-        <option value="pass">決算後反応OK</option>
-        <option value="partial" selected>20営業日未到達/確認中</option>
-        <option value="fail">指数劣後/反応悪化</option>
+        ${optionHtml(defaults.reaction, "pass", "決算後反応OK")}
+        ${optionHtml(defaults.reaction, "partial", "20営業日未到達/確認中")}
+        ${optionHtml(defaults.reaction, "fail", "指数劣後/反応悪化")}
       </select>
     </td>
     <td>
       <select data-field="theme">
-        <option value="pass">実績層あり</option>
-        <option value="partial" selected>仮説層中心</option>
-        <option value="fail">テーマ根拠不足</option>
+        ${optionHtml(defaults.theme, "pass", "実績層あり")}
+        ${optionHtml(defaults.theme, "partial", "仮説層中心")}
+        ${optionHtml(defaults.theme, "fail", "テーマ根拠不足")}
       </select>
     </td>
     <td>
       <select data-field="risk">
-        <option value="pass">リスク通常</option>
-        <option value="partial" selected>高ボラ/過熱注意</option>
-        <option value="fail">停止条件あり</option>
+        ${optionHtml(defaults.risk, "pass", "リスク通常")}
+        ${optionHtml(defaults.risk, "partial", "高ボラ/過熱注意")}
+        ${optionHtml(defaults.risk, "fail", "停止条件あり")}
       </select>
     </td>
     <td>
       <select data-field="tax">
-        <option value="pass">NISA/口座確認OK</option>
-        <option value="partial" selected>口座・税制確認中</option>
-        <option value="fail">購入前停止</option>
+        ${optionHtml(defaults.tax, "pass", "NISA/口座確認OK")}
+        ${optionHtml(defaults.tax, "partial", "口座・税制確認中")}
+        ${optionHtml(defaults.tax, "fail", "購入前停止")}
       </select>
     </td>
     <td data-score>0</td>
@@ -454,7 +458,7 @@ recalc();
 
 const csvRows = [
   ["ticker", "name", "channel", "role", "default_data", "default_financial", "default_reaction", "default_theme", "default_risk", "default_tax"],
-  ...candidates.map(([ticker, name, channel, role]) => [ticker, name, channel, role, "partial", "partial", "partial", "partial", "partial", "partial"]),
+  ...candidates.map(([ticker, name, channel, role, defaults]) => [ticker, name, channel, role, defaults.data, defaults.financial, defaults.reaction, defaults.theme, defaults.risk, defaults.tax]),
 ];
 
 fs.writeFileSync(path.join(ROOT, "908_final10_decision_workbench_20260606.csv"), `\uFEFF${csvRows.map((row) => row.map(csvCell).join(",")).join("\n")}\n`, "utf8");
