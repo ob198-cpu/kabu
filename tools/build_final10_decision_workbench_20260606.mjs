@@ -1,0 +1,323 @@
+import fs from "node:fs";
+import path from "node:path";
+
+const ROOT = process.cwd();
+const generatedAt = new Intl.DateTimeFormat("ja-JP", {
+  timeZone: "Asia/Tokyo",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+}).format(new Date());
+
+const candidates = [
+  ["8053.T", "住友商事", "総合候補", "商社・資源・還元"],
+  ["8316.T", "三井住友FG", "総合候補", "銀行・金利・還元"],
+  ["6503.T", "三菱電機", "総合候補", "電力制御・FA・複合"],
+  ["6857.T", "アドバンテスト", "半導体製造装置・材料", "AI半導体検査"],
+  ["6146.T", "ディスコ", "半導体製造装置・材料", "切断・研削・先端PKG"],
+  ["8035.T", "東京エレクトロン", "半導体製造装置・材料", "前工程装置"],
+  ["6501.T", "日立製作所", "データセンター・電力・冷却・電線", "電力網・制御・デジタル"],
+  ["5803.T", "フジクラ", "データセンター・電力・冷却・電線", "光通信・電線"],
+  ["7011.T", "三菱重工業", "データセンター・電力・冷却・電線", "電力・冷却・防衛"],
+  ["6762.T", "TDK", "フィジカルAI", "電源・センサー・電子部品"],
+  ["6954.T", "ファナック", "フィジカルAI", "FA・ロボット"],
+  ["6861.T", "キーエンス", "フィジカルAI", "センサー・画像処理"],
+  ["6702.T", "富士通", "量子コンピューター", "量子・HPC・AI基盤"],
+  ["6701.T", "NEC", "量子コンピューター", "量子・AI・防衛IT"],
+];
+
+const esc = (value) => String(value ?? "")
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;");
+
+const csvCell = (value) => {
+  const text = String(value ?? "");
+  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+};
+
+const candidateRows = candidates.map(([ticker, name, channel, role], index) => `
+  <tr data-row>
+    <td>${index + 1}</td>
+    <td><b>${esc(ticker)}</b><br>${esc(name)}</td>
+    <td>${esc(channel)}<br><span class="muted">${esc(role)}</span></td>
+    <td>
+      <select data-field="data">
+        <option value="pass">主要データ確認済み</option>
+        <option value="partial" selected>一部補完待ち</option>
+        <option value="fail">重要データ不足</option>
+      </select>
+    </td>
+    <td>
+      <select data-field="financial">
+        <option value="pass">財務・割高度OK</option>
+        <option value="partial" selected>確認中</option>
+        <option value="fail">説明不能な割高/悪化</option>
+      </select>
+    </td>
+    <td>
+      <select data-field="reaction">
+        <option value="pass">決算後反応OK</option>
+        <option value="partial" selected>20営業日未到達/確認中</option>
+        <option value="fail">指数劣後/反応悪化</option>
+      </select>
+    </td>
+    <td>
+      <select data-field="theme">
+        <option value="pass">実績層あり</option>
+        <option value="partial" selected>仮説層中心</option>
+        <option value="fail">テーマ根拠不足</option>
+      </select>
+    </td>
+    <td>
+      <select data-field="risk">
+        <option value="pass">リスク通常</option>
+        <option value="partial" selected>高ボラ/過熱注意</option>
+        <option value="fail">停止条件あり</option>
+      </select>
+    </td>
+    <td>
+      <select data-field="tax">
+        <option value="pass">NISA/口座確認OK</option>
+        <option value="partial" selected>口座・税制確認中</option>
+        <option value="fail">購入前停止</option>
+      </select>
+    </td>
+    <td data-score>0</td>
+    <td data-class>未判定</td>
+    <td data-action>入力後に再計算</td>
+  </tr>
+`).join("");
+
+const html = `<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>最終10社 判定ワークベンチ</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--green:#0b6b4f;--red:#a01818;--gray:#455a6f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.65}
+    header{background:var(--navy);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+    header p{margin:0;color:white;font-weight:800}
+    main{max-width:1540px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:12px 0;font-weight:900;border-radius:8px}
+    .controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+    .control{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
+    label{display:block;font-weight:900;color:var(--navy);margin-bottom:6px}
+    select,input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px;background:white;color:#111;font:inherit}
+    button,a.button{display:inline-block;border:0;border-radius:9px;background:var(--blue);color:white;text-decoration:none;padding:10px 13px;font-weight:900;cursor:pointer;margin:6px 8px 0 0}
+    button.secondary,a.secondary{background:white;color:var(--blue);border:1px solid var(--blue)}
+    .summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .metric{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
+    .metric b{display:block;color:var(--navy)}
+    .metric strong{display:block;font-size:28px;color:var(--blue)}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:white}
+    table{width:100%;border-collapse:collapse;min-width:1480px;table-layout:fixed}
+    th,td{border:1px solid var(--line);padding:8px;vertical-align:top;overflow-wrap:anywhere;color:#111;font-size:13px}
+    th{background:#e5f1fb;color:var(--navy);text-align:left;font-weight:900}
+    tr{break-inside:avoid}
+    td select{font-size:12px;padding:7px}
+    .muted{color:#526b82;font-size:12px;font-weight:800}
+    .badge{display:inline-block;border-radius:999px;color:white;padding:4px 8px;font-weight:900}
+    .center{background:var(--green)}.conditional{background:var(--amber)}.backup{background:var(--gray)}.watch{background:#6d4aa3}.exclude{background:var(--red)}
+    @media(max-width:980px){main{padding:12px}.controls,.summary{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>最終10社 判定ワークベンチ</h1>
+  <p>作成: ${esc(generatedAt)} / 固定ロジックに、6月イベント後の実数・確認状況を入れて、候補を分類する画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>1. 使い方</h2>
+    <p class="notice">これは購入確定画面ではありません。6月イベント後の市場判定、公式決算、PER/PBR/ROE、決算後反応、NISA口座確認を入力し、中心候補・条件付き候補・補欠・監視枠・除外に分けるための作業画面です。</p>
+    <div>
+      <a class="button" href="898_final_candidate_selection_logic_20260606.html">最終確定ロジック</a>
+      <a class="button secondary" href="899_gap_resolution_execution_20260606.html">不足点10項目 回収実装</a>
+      <a class="button secondary" href="practical_action_dashboard_20260528.html">実用ダッシュボード</a>
+      <button class="secondary" type="button" id="downloadCsv">判定結果CSVを出力</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 6月イベント後の市場ゲート</h2>
+    <div class="controls">
+      <div class="control">
+        <label for="marketGate">市場判定</label>
+        <select id="marketGate">
+          <option value="green">緑: 通過</option>
+          <option value="yellow" selected>黄: 警戒</option>
+          <option value="red">赤: 停止</option>
+        </select>
+      </div>
+      <div class="control">
+        <label for="budget">予算</label>
+        <input id="budget" type="number" value="2000000" step="10000">
+      </div>
+      <div class="control">
+        <label for="indexTarget">指数超過目標</label>
+        <select id="indexTarget">
+          <option value="1">S&P500/TOPIX +1%以上</option>
+          <option value="5">S&P500 +5%を狙う場合</option>
+        </select>
+      </div>
+      <div class="control">
+        <label for="nisaReady">NISA準備</label>
+        <select id="nisaReady">
+          <option value="pass">本人操作・口座区分確認済み</option>
+          <option value="partial" selected>確認中</option>
+          <option value="fail">未確認</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <button type="button" id="recalc">再計算</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 判定サマリー</h2>
+    <div class="summary">
+      <div class="metric"><b>中心候補</b><strong id="countCenter">0</strong></div>
+      <div class="metric"><b>条件付き</b><strong id="countConditional">0</strong></div>
+      <div class="metric"><b>補欠</b><strong id="countBackup">0</strong></div>
+      <div class="metric"><b>監視/除外</b><strong id="countStop">0</strong></div>
+      <div class="metric"><b>個別株上限</b><strong id="stockLimit">未判定</strong></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. 候補別入力・判定</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:45px">順</th>
+            <th style="width:145px">銘柄</th>
+            <th style="width:170px">枠</th>
+            <th>データ</th>
+            <th>財務・割高</th>
+            <th>決算反応</th>
+            <th>質的テーマ</th>
+            <th>リスク</th>
+            <th>税制/口座</th>
+            <th style="width:65px">点</th>
+            <th style="width:120px">分類</th>
+            <th style="width:190px">次アクション</th>
+          </tr>
+        </thead>
+        <tbody>${candidateRows}</tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+const scoreMap = { pass: 2, partial: 1, fail: 0 };
+const classLabel = {
+  center: '<span class="badge center">中心候補</span>',
+  conditional: '<span class="badge conditional">条件付き</span>',
+  backup: '<span class="badge backup">補欠</span>',
+  watch: '<span class="badge watch">監視枠</span>',
+  exclude: '<span class="badge exclude">除外</span>'
+};
+
+function classifyRow(row, marketGate, nisaReady) {
+  const channel = row.children[2].textContent;
+  const values = {};
+  row.querySelectorAll('select[data-field]').forEach((select) => values[select.dataset.field] = select.value);
+
+  if (channel.includes('量子')) return { score: 0, cls: 'watch', action: '監視のみ。商用売上・受注・株価反応が見えるまで購入候補化しない。' };
+  if (marketGate === 'red') return { score: 0, cls: 'exclude', action: '赤イベント中。購入判断停止。再判定待ち。' };
+  if (nisaReady === 'fail' || values.tax === 'fail') return { score: 0, cls: 'exclude', action: 'NISA/口座区分未確認。購入前停止。' };
+  if (values.data === 'fail' || values.financial === 'fail' || values.risk === 'fail') return { score: 0, cls: 'exclude', action: '必須データまたは停止条件に抵触。補完または除外。' };
+
+  const base = ['data','financial','reaction','theme','risk','tax'].reduce((sum, key) => sum + scoreMap[values[key]], 0);
+  const marketPenalty = marketGate === 'yellow' ? 1 : 0;
+  const score = Math.max(0, base - marketPenalty);
+
+  if (score >= 11 && marketGate === 'green') return { score, cls: 'center', action: '中心候補。比率上限内で検討。' };
+  if (score >= 9) return { score, cls: 'conditional', action: '条件付き候補。イベント後の追加確認後に小さく検討。' };
+  if (score >= 7) return { score, cls: 'backup', action: '補欠。中心候補が落ちた場合の入替候補。' };
+  return { score, cls: 'exclude', action: '現時点では最終10社に入れない。' };
+}
+
+function stockLimitText(marketGate) {
+  if (marketGate === 'green') return '最大70%';
+  if (marketGate === 'yellow') return '最大45%';
+  return '0-20%';
+}
+
+function recalc() {
+  const marketGate = document.getElementById('marketGate').value;
+  const nisaReady = document.getElementById('nisaReady').value;
+  const counts = { center: 0, conditional: 0, backup: 0, watch: 0, exclude: 0 };
+  document.querySelectorAll('tr[data-row]').forEach((row) => {
+    const result = classifyRow(row, marketGate, nisaReady);
+    counts[result.cls] += 1;
+    row.querySelector('[data-score]').textContent = result.score;
+    row.querySelector('[data-class]').innerHTML = classLabel[result.cls];
+    row.querySelector('[data-action]').textContent = result.action;
+  });
+  document.getElementById('countCenter').textContent = counts.center;
+  document.getElementById('countConditional').textContent = counts.conditional;
+  document.getElementById('countBackup').textContent = counts.backup;
+  document.getElementById('countStop').textContent = counts.watch + counts.exclude;
+  document.getElementById('stockLimit').textContent = stockLimitText(marketGate);
+}
+
+function csvEscape(value) {
+  const text = String(value ?? '');
+  return /[",\\n\\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+}
+
+function downloadCsv() {
+  recalc();
+  const rows = [['ticker','name','channel','score','class','action']];
+  document.querySelectorAll('tr[data-row]').forEach((row) => {
+    const tickerName = row.children[1].textContent.trim().split(/\\s+/);
+    rows.push([
+      tickerName[0],
+      tickerName.slice(1).join(' '),
+      row.children[2].textContent.trim().replace(/\\s+/g, ' '),
+      row.querySelector('[data-score]').textContent,
+      row.querySelector('[data-class]').textContent.trim(),
+      row.querySelector('[data-action]').textContent.trim()
+    ]);
+  });
+  const csv = '\\uFEFF' + rows.map((row) => row.map(csvEscape).join(',')).join('\\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'final10_decision_result_20260606.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('recalc').addEventListener('click', recalc);
+document.getElementById('downloadCsv').addEventListener('click', downloadCsv);
+document.querySelectorAll('select,input').forEach((el) => el.addEventListener('change', recalc));
+recalc();
+</script>
+</body>
+</html>`;
+
+const csvRows = [
+  ["ticker", "name", "channel", "role", "default_data", "default_financial", "default_reaction", "default_theme", "default_risk", "default_tax"],
+  ...candidates.map(([ticker, name, channel, role]) => [ticker, name, channel, role, "partial", "partial", "partial", "partial", "partial", "partial"]),
+];
+
+fs.writeFileSync(path.join(ROOT, "908_final10_decision_workbench_20260606.csv"), `\uFEFF${csvRows.map((row) => row.map(csvCell).join(",")).join("\n")}\n`, "utf8");
+fs.writeFileSync(path.join(ROOT, "908_final10_decision_workbench_20260606.html"), html, "utf8");
+
+console.log("wrote 908_final10_decision_workbench_20260606.html");
+console.log("wrote 908_final10_decision_workbench_20260606.csv");

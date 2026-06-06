@@ -195,6 +195,7 @@ const html = `<!doctype html>
     <p class="notice">この画面は購入確定ではありません。6月イベント後の実数、公式決算、証券会社画面を確認してから、固定ロジックに沿って候補を再判定します。</p>
     <div class="links">
       <a href="898_final_candidate_selection_logic_20260606.html">候補10社 最終確定ロジック</a>
+      <a href="908_final10_decision_workbench_20260606.html">最終10社 判定ワークベンチ</a>
       <a href="practical_action_dashboard_20260528.html">実用ダッシュボード</a>
       <a href="899_gap_resolution_execution_20260606.csv">CSVを開く</a>
     </div>
