@@ -27,6 +27,7 @@ const sections = [
       ["購入前 最終ゲートチェック", "910_prebuy_final_gate_checklist_20260606.html", "候補、市場、NISA口座、税制、記録がそろっているかを購入前に確認する最終ゲート。"],
       ["候補10社 銘柄別アクション票", "911_ticker_action_tickets_20260606.html", "緑・黄判定時の扱い、停止条件、利確条件、追加確認を銘柄別に確認。"],
       ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "CPI・日銀・FOMC後の実数と判定理由を入力し、購入前ゲートへつなげる。"],
+      ["指数劣後時の比率引き下げルール", "915_benchmark_underperformance_rules_20260606.html", "S&P500・TOPIX・日経平均に劣後した場合の個別株比率調整を確認。"],
       ["6月実行コックピット", "895_june_execution_cockpit_20260606.html", "6月イベント後に何を見るか、何なら止めるか、次に何をするかを見る。"],
       ["6月イベント判定エンジン", "893_june_event_gate_engine_20260606.html", "CPI、金利、SOX、NASDAQ、VIXなどを緑・黄・赤で判定する。"],
       ["6月候補別アクション分岐表", "894_june_candidate_action_after_gate_20260606.html", "市場ゲート後に銘柄ごとの扱いを確認する。"],

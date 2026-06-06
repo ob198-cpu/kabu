@@ -111,6 +111,7 @@ const candidateReviewLinks = [
   ["購入前 最終ゲートチェック", "910_prebuy_final_gate_checklist_20260606.html", "候補、市場、NISA口座、税制、記録がそろっているかを購入前に確認する。"],
   ["候補10社 銘柄別アクション票", "911_ticker_action_tickets_20260606.html", "緑・黄判定時の扱い、停止条件、利確条件、追加確認を銘柄別に確認する。"],
   ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "CPI・日銀・FOMC後の実数と判定理由を入力し、購入前ゲートへつなげる。"],
+  ["指数劣後時の比率引き下げルール", "915_benchmark_underperformance_rules_20260606.html", "S&P500・TOPIX・日経平均に劣後した場合の個別株比率調整を確認する。"],
   ["3チャンネル横並び比較", "889_cross_channel_candidate_comparison_20260605.html", "総合、半導体製造装置・材料、データセンター・電力・冷却・電線を混ぜずに比較する。"],
   ["100社母集団からの再選定10社", "universe100_reselected_10_candidates_20260528.html", "約100社の母集団から、量的指標を使って候補を絞った表を確認する。"],
   ["統合再計算10社", "integrated_recalculated_10_20260528.html", "既存選定スコアと追加指標を並べ、総合候補として残った銘柄を確認する。"],

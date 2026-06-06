@@ -63,6 +63,7 @@ const blocks = [
     action: "購入理由、買わない条件、実績、指数との差、次回修正を記録する。",
     pages: [
       ["6月イベント後 実データ入力・入替記録", "892_june_event_actual_input_and_replacement_log_20260606.html", "実数と候補入替理由を記録する。"],
+      ["指数劣後時の比率引き下げルール", "915_benchmark_underperformance_rules_20260606.html", "指数に劣後した場合の個別株比率調整を確認する。"],
       ["運用記録CSV", "https://raw.githubusercontent.com/ob198-cpu/kabu/main/operation_record_template_20260529.csv", "予想、実績、差分を記録するCSV。"],
       ["税制レイヤー Phase 1", "842_tax_aware_operation_layer_phase1_20260602.html", "NISA・課税口座・損益通算不可などの確認補助を見る。"],
     ],
