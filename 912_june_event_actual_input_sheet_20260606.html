@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月イベント 実数入力シート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818;--green:#0b6b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.6}
+    header{background:var(--navy);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+    header p{margin:0;color:white;font-weight:800}
+    main{max-width:1540px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:0 0 14px;font-weight:900;border-radius:8px}
+    .links a,.btn{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border:0;border-radius:8px;padding:9px 12px;font-weight:900;cursor:pointer}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}
+    th,td{border:1px solid var(--line);padding:9px;vertical-align:top;overflow-wrap:anywhere;color:#111}
+    th{background:#e5f1fb;color:var(--navy);text-align:left;font-weight:900}
+    tr{break-inside:avoid}
+    textarea{width:100%;min-height:86px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit}
+    select{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-weight:900;background:white}
+    .summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+    .box{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
+    .box b{display:block;color:var(--navy);font-size:22px}
+    .green{color:var(--green)}.yellow{color:#a85b00}.red{color:var(--red)}
+    pre{white-space:pre-wrap;background:#061827;color:white;border-radius:10px;padding:12px;max-height:260px;overflow:auto}
+    @media(max-width:980px){main{padding:12px}table{font-size:14px}.summary{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>6月イベント 実数入力シート</h1>
+  <p>作成: 2026/06/06 18:16 / CPI・日銀・FOMC後の実数を記録し、購入前ゲートへつなげるページです。</p>
+</header>
+<main>
+  <section>
+    <h2>1. 使い方</h2>
+    <p class="notice">ここでは実数と判断理由を記録します。未入力のまま購入判断に進まないためのページです。入力内容はブラウザ内の確認用であり、保存する場合はCSV出力を使います。</p>
+    <div class="links">
+      <a href="910_prebuy_final_gate_checklist_20260606.html">購入前 最終ゲート</a>
+      <a href="911_ticker_action_tickets_20260606.html">銘柄別アクション票</a>
+      <a href="893_june_event_gate_engine_20260606.html">イベント判定エンジン</a>
+      <a href="912_june_event_actual_input_sheet_20260606.csv">初期CSV</a>
+      <button class="btn" id="copyCsv" type="button">入力内容をCSV化</button>
+    </div>
+    <div class="summary">
+      <div class="box"><span>緑</span><b id="greenCount" class="green">0</b></div>
+      <div class="box"><span>黄</span><b id="yellowCount" class="yellow">0</b></div>
+      <div class="box"><span>赤</span><b id="redCount" class="red">0</b></div>
+      <div class="box"><span>未入力</span><b id="blankCount">4</b></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 実数入力表</h2>
+    <table>
+      <thead><tr><th style="width:105px">日程</th><th style="width:130px">イベント</th><th>見る数値</th><th>確認するリスク</th><th>影響しやすい枠</th><th>実数・確認結果</th><th style="width:96px">判定</th><th>判断理由</th></tr></thead>
+      <tbody>
+  <tr data-row="0">
+    <td><b>6/10</b></td>
+    <td>米CPI</td>
+    <td>米CPI実績、市場予想との差、米10年金利、NASDAQ/SOX、VIX</td>
+    <td>インフレ再加速と金利急騰が同時に出るか</td>
+    <td>半導体、AIインフラ、グロース寄り候補</td>
+    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
+    <td>
+      <select data-field="status">
+        <option value="未入力">未入力</option>
+        <option value="緑">緑</option>
+        <option value="黄">黄</option>
+        <option value="赤">赤</option>
+      </select>
+    </td>
+    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
+  </tr>
+
+  <tr data-row="1">
+    <td><b>6/15〜6/16</b></td>
+    <td>日銀会合</td>
+    <td>政策金利、声明文、ドル円、日本10年金利、日経平均/TOPIX</td>
+    <td>急な円高、国内金利急騰、日本株全体の下落が出るか</td>
+    <td>銀行、商社、輸出・半導体、内需</td>
+    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
+    <td>
+      <select data-field="status">
+        <option value="未入力">未入力</option>
+        <option value="緑">緑</option>
+        <option value="黄">黄</option>
+        <option value="赤">赤</option>
+      </select>
+    </td>
+    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
+  </tr>
+
+  <tr data-row="2">
+    <td><b>6/16〜6/17</b></td>
+    <td>FOMC</td>
+    <td>政策金利、ドットプロット、議長会見、米10年金利、NASDAQ/SOX、VIX</td>
+    <td>米金利上昇とリスク資産売りが同時に出るか</td>
+    <td>半導体、AI、データセンター、フィジカルAI</td>
+    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
+    <td>
+      <select data-field="status">
+        <option value="未入力">未入力</option>
+        <option value="緑">緑</option>
+        <option value="黄">黄</option>
+        <option value="赤">赤</option>
+      </select>
+    </td>
+    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
+  </tr>
+
+  <tr data-row="3">
+    <td><b>6/18以降</b></td>
+    <td>総合再判定</td>
+    <td>CPI、日銀、FOMC後の3点をまとめた市場ゲート</td>
+    <td>3イベント後に緑・黄・赤のどれで扱うか</td>
+    <td>候補10社全体、配分、購入可否</td>
+    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
+    <td>
+      <select data-field="status">
+        <option value="未入力">未入力</option>
+        <option value="緑">緑</option>
+        <option value="黄">黄</option>
+        <option value="赤">赤</option>
+      </select>
+    </td>
+    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
+  </tr>
+</tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. CSV出力</h2>
+    <pre id="csvOutput">未出力</pre>
+  </section>
+</main>
+<script>
+const rows = [["6/10","米CPI","米CPI実績、市場予想との差、米10年金利、NASDAQ/SOX、VIX","インフレ再加速と金利急騰が同時に出るか","半導体、AIインフラ、グロース寄り候補"],["6/15〜6/16","日銀会合","政策金利、声明文、ドル円、日本10年金利、日経平均/TOPIX","急な円高、国内金利急騰、日本株全体の下落が出るか","銀行、商社、輸出・半導体、内需"],["6/16〜6/17","FOMC","政策金利、ドットプロット、議長会見、米10年金利、NASDAQ/SOX、VIX","米金利上昇とリスク資産売りが同時に出るか","半導体、AI、データセンター、フィジカルAI"],["6/18以降","総合再判定","CPI、日銀、FOMC後の3点をまとめた市場ゲート","3イベント後に緑・黄・赤のどれで扱うか","候補10社全体、配分、購入可否"]];
+function csvCell(value){
+  const text = String(value ?? "");
+  return /[",\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+}
+function collect(){
+  const result = [["date","event","watch_items","risk_question","affected_area","actual_input","status","memo"]];
+  document.querySelectorAll("tbody tr[data-row]").forEach((tr) => {
+    const index = Number(tr.dataset.row);
+    const actual = tr.querySelector('[data-field="actual"]').value;
+    const status = tr.querySelector('[data-field="status"]').value;
+    const memo = tr.querySelector('[data-field="memo"]').value;
+    result.push([...rows[index], actual, status, memo]);
+  });
+  return result;
+}
+function updateCounts(){
+  const statuses = [...document.querySelectorAll('[data-field="status"]')].map((el) => el.value);
+  const count = (name) => statuses.filter((value) => value === name).length;
+  document.getElementById("greenCount").textContent = count("緑");
+  document.getElementById("yellowCount").textContent = count("黄");
+  document.getElementById("redCount").textContent = count("赤");
+  document.getElementById("blankCount").textContent = count("未入力");
+}
+function outputCsv(){
+  const text = collect().map((row) => row.map(csvCell).join(",")).join("\n");
+  document.getElementById("csvOutput").textContent = text;
+  navigator.clipboard?.writeText(text).catch(() => {});
+}
+document.addEventListener("input", updateCounts);
+document.addEventListener("change", updateCounts);
+document.getElementById("copyCsv").addEventListener("click", outputCsv);
+updateCounts();
+</script>
+</body>
+</html>
