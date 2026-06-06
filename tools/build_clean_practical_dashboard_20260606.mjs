@@ -25,6 +25,7 @@ const csvCell = (value) => {
 
 const primaryLinks = [
   ["実用パート入口", "896_practical_entry_hub_20260606.html", "毎日見る画面と補足資料を分けた入口。迷ったらここから確認する。"],
+  ["実用パート 運用フロー", "914_daily_operation_flow_20260606.html", "今日見る、イベント後に見る、購入前に見る、記録する、の4段階で確認する。"],
   ["6月実行コックピット", "895_june_execution_cockpit_20260606.html", "6月のイベント、見る指標、止める条件、次の作業を1画面で確認する。"],
   ["6月イベント判定エンジン", "893_june_event_gate_engine_20260606.html", "CPI、日銀、FOMC後の市場状態を緑・黄・赤で整理する。"],
   ["候補別アクション分岐表", "894_june_candidate_action_after_gate_20260606.html", "イベント後に各候補を残す、保留、落とすのどれで扱うか確認する。"],
