@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 銘柄別アクション票</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.6}
+    header{background:var(--navy);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+    header p{margin:0;color:white;font-weight:800}
+    main{max-width:1540px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:0 0 14px;font-weight:900;border-radius:8px}
+    .links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}
+    th,td{border:1px solid var(--line);padding:9px;vertical-align:top;overflow-wrap:anywhere;color:#111}
+    th{background:#e5f1fb;color:var(--navy);text-align:left;font-weight:900}
+    tr{break-inside:avoid}
+    .muted{color:#526b82;font-size:12px;font-weight:800}
+    .red{color:var(--red);font-weight:900}
+    @media(max-width:980px){main{padding:12px}table{font-size:14px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>候補10社 銘柄別アクション票</h1>
+  <p>作成: 2026/06/06 13:02 / 6月イベント後に、銘柄ごとにどう扱うかを確認する実務用ページです。</p>
+</header>
+<main>
+  <section>
+    <h2>1. 位置づけ</h2>
+    <p class="notice">これは購入確定ではありません。市場ゲートが緑または黄になった場合に、各銘柄を中心候補、条件付き、補欠、監視へ分けるための確認票です。未確認データが残る銘柄は、スコアが高くても購入判断に進めません。</p>
+    <div class="links">
+      <a href="910_prebuy_final_gate_checklist_20260606.html">購入前 最終ゲート</a>
+      <a href="909_final10_current_snapshot_20260606.html">現時点 判定スナップショット</a>
+      <a href="908_final10_decision_workbench_20260606.html">判定ワークベンチ</a>
+      <a href="911_ticker_action_tickets_20260606.csv">CSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 銘柄別アクション</h2>
+    <table>
+      <thead><tr><th style="width:46px">No</th><th style="width:130px">銘柄</th><th style="width:170px">枠・役割</th><th>緑判定なら</th><th>黄判定なら</th><th>停止条件</th><th>利確条件</th><th>追加確認</th></tr></thead>
+      <tbody>
+  <tr>
+    <td><b>1</b></td>
+    <td><b>8053.T</b><br>住友商事</td>
+    <td>総合候補<br><span class="muted">商社・資源・還元の総合候補</span></td>
+    <td>少額から中心候補として検討。資源価格、円相場、株主還元方針を同時確認。</td>
+    <td>保守候補。資源価格や商社全体が弱い場合は比率を下げる。</td>
+    <td>決算で利益見通し悪化、資源価格急落、日経平均/TOPIXより大きく劣後する場合は追加停止。</td>
+    <td>短期急騰時は一部利益確定を検討し、残りは1年保有テストで検証。</td>
+    <td>PER/PBR/ROE、セグメント利益、株主還元、同業商社との比較。</td>
+  </tr>
+
+  <tr>
+    <td><b>2</b></td>
+    <td><b>8316.T</b><br>三井住友FG</td>
+    <td>総合候補<br><span class="muted">銀行・金利上昇耐性候補</span></td>
+    <td>日銀後の金利環境が悪化していなければ中心候補として検討。</td>
+    <td>金融政策が不明瞭なら小さく扱う。信用コスト増加の兆候を確認。</td>
+    <td>急な金利低下、信用コスト悪化、銀行株全体の下落が続く場合は追加停止。</td>
+    <td>銀行株全体が過熱し、短期で指数を大きく上回った場合は一部利益確定候補。</td>
+    <td>利ざや、与信費用、自己資本、配当方針、日銀政策後の銀行指数反応。</td>
+  </tr>
+
+  <tr>
+    <td><b>3</b></td>
+    <td><b>6503.T</b><br>三菱電機</td>
+    <td>データセンター・電力・冷却・電線<br><span class="muted">電力制御・FA・社会インフラ候補</span></td>
+    <td>AIインフラ、電力制御、FA需要が崩れていなければ候補継続。</td>
+    <td>設備投資関連が弱い場合は条件付き。決算確認後に扱う。</td>
+    <td>受注鈍化、利益率低下、FA関連の需要悪化が出る場合は追加停止。</td>
+    <td>電力・FAテーマで短期上昇が強い場合は、決算前に一部利確も検討。</td>
+    <td>受注、営業利益率、FA・社会システムの伸び、同業比較。</td>
+  </tr>
+
+  <tr>
+    <td><b>4</b></td>
+    <td><b>6857.T</b><br>アドバンテスト</td>
+    <td>半導体製造装置・材料<br><span class="muted">AI半導体検査装置候補</span></td>
+    <td>SOX/NASDAQが崩れず、AI半導体需要が継続する場合のみ候補。</td>
+    <td>高PER・高ボラを前提に小さく扱う。指数が弱い場合は保留。</td>
+    <td>米金利急騰、SOX急落、決算後反応悪化、高PER説明不能なら追加停止。</td>
+    <td>急騰時は利益確定を優先し、1年保有比率を上げすぎない。</td>
+    <td>PER、受注、検査装置需要、SOXとの連動、決算後1日/5日/20日反応。</td>
+  </tr>
+
+  <tr>
+    <td><b>5</b></td>
+    <td><b>6146.T</b><br>ディスコ</td>
+    <td>半導体製造装置・材料<br><span class="muted">切断・研削・先端パッケージ候補</span></td>
+    <td>半導体製造の構造需要が強く、株価が過熱しすぎていない場合に候補。</td>
+    <td>未確認データが残る場合は補欠。高値追いは避ける。</td>
+    <td>SOX急落、決算後失速、受注・利益率の鈍化が見える場合は追加停止。</td>
+    <td>高値更新後の急伸は一部利確を検討し、反落耐性を確認。</td>
+    <td>受注、利益率、PER/PBR/ROE、過去最大下落率、同業装置株との比較。</td>
+  </tr>
+
+  <tr>
+    <td><b>6</b></td>
+    <td><b>8035.T</b><br>東京エレクトロン</td>
+    <td>半導体製造装置・材料<br><span class="muted">前工程装置の代表候補</span></td>
+    <td>半導体製造装置全体が買われ、米金利・SOXが悪化していなければ候補。</td>
+    <td>半導体指数が弱い場合は保留寄り。買う場合も分割前提。</td>
+    <td>SOX/NASDAQが大きく崩れる、受注見通し悪化、決算後反応悪化なら追加停止。</td>
+    <td>半導体テーマが過熱した場合は比率調整し、指数劣後を監視。</td>
+    <td>受注、売上見通し、PER、SOX連動、決算後反応。</td>
+  </tr>
+
+  <tr>
+    <td><b>7</b></td>
+    <td><b>6501.T</b><br>日立製作所</td>
+    <td>データセンター・電力・冷却・電線<br><span class="muted">電力網・制御・デジタルインフラ候補</span></td>
+    <td>電力網、制御、AIインフラ需要が強い場合に中心候補として検討。</td>
+    <td>株価が過熱している場合は条件付き。決算・受注確認後に扱う。</td>
+    <td>大型案件の鈍化、利益率低下、指数に対する劣後が続く場合は追加停止。</td>
+    <td>インフラテーマで短期急伸した場合は一部利確し、残りで検証。</td>
+    <td>受注、営業利益率、電力・デジタル部門、5年/10年CAGR、最大下落率。</td>
+  </tr>
+
+  <tr>
+    <td><b>8</b></td>
+    <td><b>5803.T</b><br>フジクラ</td>
+    <td>データセンター・電力・冷却・電線<br><span class="muted">光通信・電線・データセンター候補</span></td>
+    <td>データセンター・光通信需要が継続し、過熱が許容範囲なら候補。</td>
+    <td>上昇が急すぎる場合は補欠。反落時の下値ルールを優先。</td>
+    <td>光通信需要の鈍化、急落、決算後反応悪化、過熱指標が強い場合は追加停止。</td>
+    <td>短期上昇幅が大きい場合は一部利確を優先し、残りを検証。</td>
+    <td>売上成長、利益率、光通信関連、最大下落率、出来高急増の持続性。</td>
+  </tr>
+
+  <tr>
+    <td><b>9</b></td>
+    <td><b>7011.T</b><br>三菱重工業</td>
+    <td>データセンター・電力・冷却・電線<br><span class="muted">電力・冷却・防衛・大型インフラ候補</span></td>
+    <td>電力・防衛・大型インフラ需要が継続し、直近の弱さが致命的でない場合に候補。</td>
+    <td>直近調整が続く場合は補欠。反転確認なしの高比率は避ける。</td>
+    <td>直近下落が継続、決算後反応悪化、テーマ過熱の剥落が見える場合は追加停止。</td>
+    <td>大型テーマで急騰した場合は一部利益確定し、下落耐性を確認。</td>
+    <td>受注残、利益率、電力・防衛・冷却関連、直近60日騰落、最大下落率。</td>
+  </tr>
+
+  <tr>
+    <td><b>10</b></td>
+    <td><b>6762.T</b><br>TDK</td>
+    <td>フィジカルAI<br><span class="muted">電源・センサー・電子部品候補</span></td>
+    <td>AI端末、電源、センサー需要が強く、電子部品市況が悪化していなければ候補。</td>
+    <td>電子部品市況の確認が弱い場合は条件付き。</td>
+    <td>電子部品需要悪化、為替逆風、決算後反応悪化なら追加停止。</td>
+    <td>テーマ上昇後は比率を抑え、1年保有の検証を優先。</td>
+    <td>受注、在庫、営業利益率、為替感応度、同業電子部品比較。</td>
+  </tr>
+</tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 共通の上値・下値ルール</h2>
+    <table>
+      <thead><tr><th style="width:170px">トリガー</th><th>対応</th></tr></thead>
+      <tbody>
+  <tr>
+    <td><b>-5%下落</b></td>
+    <td>市場全体も下げているか、銘柄固有かを確認。固有悪材料なら追加停止。</td>
+  </tr>
+
+  <tr>
+    <td><b>-10%下落</b></td>
+    <td>購入理由が崩れていないか再判定。崩れていれば損切り候補、崩れていなければ保留・小口確認。</td>
+  </tr>
+
+  <tr>
+    <td><b>指数比 -3%以上劣後</b></td>
+    <td>S&amp;P500、TOPIX、日経平均のどれに劣後したかを記録し、次回配分を下げる候補にする。</td>
+  </tr>
+
+  <tr>
+    <td><b>決算前</b></td>
+    <td>未確認リスクが大きい銘柄は比率を落とす。決算またぎを目的にしない。</td>
+  </tr>
+
+  <tr>
+    <td><b>決算後</b></td>
+    <td>1日、5日、20営業日の反応を記録し、候補継続・保留・除外を再分類する。</td>
+  </tr>
+
+  <tr>
+    <td><b>短期急騰</b></td>
+    <td>急騰の理由が決算・受注・政策で説明できるか確認。説明不能なら一部利益確定候補。</td>
+  </tr>
+</tbody>
+    </table>
+  </section>
+</main>
+</body>
+</html>
