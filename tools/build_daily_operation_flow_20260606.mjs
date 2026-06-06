@@ -51,6 +51,7 @@ const blocks = [
     action: "購入前ゲートを確認し、銘柄別アクション票で扱いを決める。",
     pages: [
       ["購入前 最終ゲートチェック", "910_prebuy_final_gate_checklist_20260606.html", "購入前に必要な確認がそろっているか確認する。"],
+      ["購入準備 判定ボード", "916_purchase_readiness_board_20260606.html", "進める、保留、停止を一画面で確認する。"],
       ["候補10社 銘柄別アクション票", "911_ticker_action_tickets_20260606.html", "緑・黄判定時の扱い、停止条件、利確条件を見る。"],
       ["最終10社 判定ワークベンチ", "908_final10_decision_workbench_20260606.html", "確認状況を入れて中心候補・条件付き・補欠へ分類する。"],
       ["NISA口座運用ハブ", "882_nisa_account_operation_hub_20260605.html", "本人操作、口座区分、注文票を確認する。"],
