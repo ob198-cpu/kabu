@@ -1,0 +1,292 @@
+import fs from "node:fs";
+import path from "node:path";
+
+const ROOT = process.cwd();
+const generatedAt = new Intl.DateTimeFormat("ja-JP", {
+  timeZone: "Asia/Tokyo",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+}).format(new Date());
+
+const eventRows = [
+  {
+    date: "2026-06-10",
+    event: "米CPI 5月分",
+    source: "BLS",
+    inputFields: "総合CPI前年比、総合CPI前月比、コアCPI前年比、コアCPI前月比、米10年金利、NASDAQ、SOX、ドル円",
+    green: "インフレ再加速が限定的で、米10年金利が急騰せず、SOX/NASDAQが崩れない",
+    yellow: "CPIは悪くないが、米10年金利またはSOXが不安定",
+    red: "CPI悪化、金利急騰、SOX急落",
+    affected: "半導体、データセンター、フィジカルAI、既存10社全体",
+    action: "赤ならテーマ枠の昇格を止める。黄なら小比率以下で再判定。緑なら日銀・FOMCまで保留して次確認。",
+  },
+  {
+    date: "2026-06-15〜2026-06-16",
+    event: "日銀金融政策決定会合",
+    source: "日本銀行",
+    inputFields: "政策金利、声明文、国債買入方針、ドル円、10年国債利回り、銀行株、日経平均/TOPIX",
+    green: "円高ショックがなく、銀行・大型株・指数が大きく崩れない",
+    yellow: "円高または金利反応があるが、指数が75日線を大きく割らない",
+    red: "急な円高、指数急落、銀行株または輸出株の大幅悪化",
+    affected: "金融、商社、輸出、半導体、データセンター",
+    action: "赤なら購入候補の追加を停止。黄なら為替感応度の高い銘柄を保留。緑ならFOMC後に最終比較へ進む。",
+  },
+  {
+    date: "2026-06-16〜2026-06-17",
+    event: "FOMC",
+    source: "FRB",
+    inputFields: "政策金利、声明文、ドットプロット、FRB議長会見、米10年金利、NASDAQ、SOX、VIX",
+    green: "金利急騰がなく、NASDAQ/SOX/VIXがリスク許容の範囲",
+    yellow: "政策は想定内だが、会見後に金利・VIXが不安定",
+    red: "金利急騰、VIX急騰、NASDAQ/SOX急落",
+    affected: "半導体、AI、フィジカルAI、データセンター、全体比率",
+    action: "赤なら攻め枠を入れない。黄なら攻め枠を小比率に限定。緑なら候補入れ替え表へ進む。",
+  },
+  {
+    date: "2026-06-18〜2026-06-21",
+    event: "3イベント後の一次再判定",
+    source: "内部判定",
+    inputFields: "上記3イベントの色判定、候補別の株価反応、指数差、出来高、過熱、下落率",
+    green: "3イベントの赤がなく、候補銘柄が既存10社より指数差・下落耐性・事業寄与で上回る",
+    yellow: "全体は許容だが、候補ごとに未確認データが残る",
+    red: "赤イベントがある、または候補の説明が既存10社を上回らない",
+    affected: "最終10社、テーマ枠、小比率枠",
+    action: "緑のみ入れ替え検討。黄は保留。赤は既存10社を維持または個別株比率を下げる。",
+  },
+  {
+    date: "2026-06-24",
+    event: "日銀 主な意見 公表",
+    source: "日本銀行",
+    inputFields: "主な意見の内容、利上げ・国債買入・為替への市場反応、銀行株・指数反応",
+    green: "市場が追加悪材料として反応しない",
+    yellow: "文言はやや警戒だが、株価反応は限定的",
+    red: "日銀関連の追加警戒で円高・金利上昇・株安が出る",
+    affected: "金融、商社、輸出、指数全体",
+    action: "6/18判定後でも、赤なら追加投入を延期。黄なら次の営業日まで確認。緑なら候補維持。",
+  },
+];
+
+const replacementRows = [
+  {
+    candidate: "6857.T アドバンテスト",
+    channel: "半導体製造装置・材料",
+    currentUse: "攻め枠候補",
+    replaceTarget: "既存10社のうち、指数差・成長性・下落耐性で劣る銘柄",
+    requiredCheck: "SOX、米10年金利、PER、受注、決算後反応、直近上昇率",
+    decisionRule: "緑判定かつ既存候補を上回る場合だけ小比率で採用",
+    recordBeforeAfter: "入替前銘柄、入替後銘柄、比率、理由、未確認事項を記録",
+  },
+  {
+    candidate: "6146.T ディスコ",
+    channel: "半導体製造装置・材料",
+    currentUse: "攻め枠候補",
+    replaceTarget: "攻め枠の比較対象",
+    requiredCheck: "月次売上、受注、決算後反応、最大下落率、出来高",
+    decisionRule: "構造需要が数字で確認でき、下落リスクを許容できる場合のみ採用",
+    recordBeforeAfter: "採用比率の上限と停止条件を記録",
+  },
+  {
+    candidate: "6501.T 日立製作所",
+    channel: "データセンター・電力・冷却・電線",
+    currentUse: "守り寄り成長候補",
+    replaceTarget: "既存10社の中でテーマ寄与が弱い銘柄",
+    requiredCheck: "送配電・電力制御・デジタル事業の受注、利益率、指数差",
+    decisionRule: "電力・制御需要が決算で確認でき、指数比で優位なら採用検討",
+    recordBeforeAfter: "どの事業寄与を理由に入れるか記録",
+  },
+  {
+    candidate: "5803.T フジクラ",
+    channel: "データセンター・電力・冷却・電線",
+    currentUse: "攻め枠候補",
+    replaceTarget: "高成長枠の比較対象",
+    requiredCheck: "光通信・電線需要、受注、利益率、過熱、最大下落率",
+    decisionRule: "需要は強くても、過熱が大きい場合は採用しない、または小比率に限定",
+    recordBeforeAfter: "採用時は上限比率と下落時対応を記録",
+  },
+  {
+    candidate: "6762.T TDK",
+    channel: "フィジカルAI",
+    currentUse: "代表比較候補",
+    replaceTarget: "フィジカルAI枠を1銘柄だけ入れる場合の比較対象",
+    requiredCheck: "電源・センサー寄与、電子部品サイクル、PER/PBR/ROE、決算後反応",
+    decisionRule: "既存候補より説明力がある場合のみ候補化。テーマだけでは採用しない",
+    recordBeforeAfter: "フィジカルAIとして入れる理由と、電子部品市況リスクを記録",
+  },
+  {
+    candidate: "6702.T 富士通 / 6701.T NEC",
+    channel: "量子コンピューター",
+    currentUse: "長期探索",
+    replaceTarget: "なし",
+    requiredCheck: "商用サービス、受注、売上寄与、イベント後株価反応",
+    decisionRule: "6月NISA 1年テストには入れない",
+    recordBeforeAfter: "監視理由だけ記録し、購入候補とは分ける",
+  },
+];
+
+const sources = [
+  { label: "BLS CPI release schedule / CPI home", url: "https://www.bls.gov/cpi/" },
+  { label: "Federal Reserve FOMC calendars", url: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" },
+  { label: "Bank of Japan release schedule", url: "https://www.boj.or.jp/en/about/calendar/" },
+];
+
+const esc = (value) => String(value ?? "")
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;");
+const csvCell = (value) => {
+  const text = String(value ?? "");
+  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+};
+
+function toCsv(headers, rows) {
+  return [headers.join(","), ...rows.map((row) => headers.map((header) => csvCell(row[header])).join(","))].join("\n");
+}
+
+const eventHeaders = ["date", "event", "source", "inputFields", "green", "yellow", "red", "affected", "action"];
+const replacementHeaders = ["candidate", "channel", "currentUse", "replaceTarget", "requiredCheck", "decisionRule", "recordBeforeAfter"];
+
+const eventHtmlRows = eventRows.map((row) => `
+  <tr>
+    <td><b>${esc(row.date)}</b></td>
+    <td>${esc(row.event)}<br><small>${esc(row.source)}</small></td>
+    <td>${esc(row.inputFields)}</td>
+    <td><span class="ok">緑</span>${esc(row.green)}</td>
+    <td><span class="warn">黄</span>${esc(row.yellow)}</td>
+    <td><span class="stop">赤</span>${esc(row.red)}</td>
+    <td>${esc(row.affected)}</td>
+    <td>${esc(row.action)}</td>
+  </tr>
+`).join("");
+
+const replacementHtmlRows = replacementRows.map((row) => `
+  <tr>
+    <td><b>${esc(row.candidate)}</b></td>
+    <td>${esc(row.channel)}</td>
+    <td>${esc(row.currentUse)}</td>
+    <td>${esc(row.replaceTarget)}</td>
+    <td>${esc(row.requiredCheck)}</td>
+    <td>${esc(row.decisionRule)}</td>
+    <td>${esc(row.recordBeforeAfter)}</td>
+  </tr>
+`).join("");
+
+const html = `<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月イベント後 実データ入力・入替記録表</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--ok:#0b6b4f;--warn:#a85b00;--stop:#a01818}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7}
+    header{background:var(--navy);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(28px,4vw,40px);letter-spacing:0;line-height:1.25}
+    header p{margin:0;color:white;font-weight:800}
+    main{max-width:1500px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .lead{border-left:7px solid #b76500;background:#fff7e7;color:#111;padding:12px 14px;margin:12px 0;font-weight:900;border-radius:8px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;padding:13px;background:#fbfdff}
+    .card b{display:block;color:var(--navy);font-size:16px}.card strong{display:block;font-size:26px;color:var(--blue)}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:white}
+    table{width:100%;border-collapse:collapse;min-width:1400px;table-layout:fixed;font-size:13px}
+    th,td{border:1px solid var(--line);padding:8px;vertical-align:top;overflow-wrap:anywhere;word-break:break-word;color:#111}
+    th{background:#e5f1fa;color:#073b62;text-align:left;font-weight:900}
+    .ok,.warn,.stop{display:inline-block;color:white;border-radius:999px;padding:2px 7px;margin-right:5px;font-weight:900;font-size:12px}
+    .ok{background:var(--ok)}.warn{background:var(--warn)}.stop{background:var(--stop)}
+    .links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
+    .sources a{color:#064f86;font-weight:900}.small{font-size:13px;color:#26394a}
+    @media(max-width:980px){main{padding:12px}.cards{grid-template-columns:1fr}table{min-width:1180px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>6月イベント後 実データ入力・入替記録表</h1>
+  <p>作成: ${esc(generatedAt)} / CPI、日銀、FOMC後に実数を入れ、候補入れ替えを説明できるようにするための表です。</p>
+</header>
+<main>
+  <section>
+    <h2>1. 目的</h2>
+    <p class="lead">6月の購入可否は、イベント前の期待ではなく、イベント後の実データで再判定します。この表では、何を入力し、何なら進むか、何なら止めるか、どの候補を入れ替え検討するかを記録します。</p>
+    <div class="cards">
+      <div class="card"><b>入力するもの</b><strong>CPI / 日銀 / FOMC</strong><span>金利・為替・指数反応を確認</span></div>
+      <div class="card"><b>判定</b><strong>緑 / 黄 / 赤</strong><span>進む、保留、停止を分ける</span></div>
+      <div class="card"><b>候補入替</b><strong>理由を記録</strong><span>感覚で入れ替えない</span></div>
+      <div class="card"><b>量子</b><strong>探索維持</strong><span>6月購入候補にしない</span></div>
+    </div>
+    <div class="links">
+      <a href="892_june_event_actual_input_and_replacement_log_20260606.csv">CSVを開く</a>
+      <a href="891_june_theme_execution_matrix_20260605.html">6月テーマ候補 実行判定表</a>
+      <a href="890_june_theme_integration_gate_20260605.html">6月テーマ候補 統合ゲート</a>
+      <a href="index.html">ホームへ戻る</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. イベント後 実データ入力表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:120px">日付</th><th style="width:150px">イベント</th><th>入力する実データ</th><th>緑判定</th><th>黄判定</th><th>赤判定</th><th>影響候補</th><th>アクション</th></tr>
+        </thead>
+        <tbody>${eventHtmlRows}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 候補入れ替え記録表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:170px">候補</th><th style="width:170px">テーマ</th><th style="width:120px">現在の扱い</th><th>入れ替え対象</th><th>確認するデータ</th><th>判定ルール</th><th>記録すること</th></tr>
+        </thead>
+        <tbody>${replacementHtmlRows}</tbody>
+      </table>
+    </div>
+    <p class="small">この表は、実際の売買指示ではありません。6月イベント後の実データ、公式決算、証券会社画面を確認し、最終判断の前に候補入れ替え理由を残すための表です。</p>
+  </section>
+
+  <section>
+    <h2>4. 出典</h2>
+    <ul class="sources">
+      ${sources.map((source) => `<li><a href="${esc(source.url)}">${esc(source.label)}</a></li>`).join("")}
+    </ul>
+  </section>
+</main>
+</body>
+</html>`;
+
+const csv = [
+  "# event_input",
+  toCsv(eventHeaders, eventRows),
+  "",
+  "# replacement_log",
+  toCsv(replacementHeaders, replacementRows),
+].join("\n");
+
+fs.writeFileSync(path.join(ROOT, "892_june_event_actual_input_and_replacement_log_20260606.csv"), `\uFEFF${csv}\n`, "utf8");
+fs.writeFileSync(path.join(ROOT, "892_june_event_actual_input_and_replacement_log_20260606.html"), html, "utf8");
+
+const link = '<a class="button secondary" href="892_june_event_actual_input_and_replacement_log_20260606.html">6月イベント後 実データ入力・入替記録</a>';
+for (const file of ["index.html", "practical_action_dashboard_20260528.html", "891_june_theme_execution_matrix_20260605.html"]) {
+  const filePath = path.join(ROOT, file);
+  if (!fs.existsSync(filePath)) continue;
+  let text = fs.readFileSync(filePath, "utf8");
+  if (text.includes("892_june_event_actual_input_and_replacement_log_20260606.html")) continue;
+  if (text.includes("891_june_theme_execution_matrix_20260605.html")) {
+    text = text.replace(/(<a[^>]+href="891_june_theme_execution_matrix_20260605\.html"[^>]*>.*?<\/a>)/s, `$1\n      ${link}`);
+  } else if (text.includes("</section>")) {
+    text = text.replace("</section>", `<div class="links">${link}</div></section>`);
+  }
+  fs.writeFileSync(filePath, text, "utf8");
+}
+
+console.log("wrote 892_june_event_actual_input_and_replacement_log_20260606.html");
+console.log("wrote 892_june_event_actual_input_and_replacement_log_20260606.csv");
