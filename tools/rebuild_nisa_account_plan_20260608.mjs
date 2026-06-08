@@ -57,13 +57,6 @@ const alternatives = [
   },
 ];
 
-const decisions = [
-  ["短期", "本人発注型を基本にする", "正式制度は確認に時間がかかるため、初回は本人別注文票を作り、本人が自分のスマホで発注する形が最も現実的です。"],
-  ["同時並行", "証券会社の正式制度を確認する", "代理人登録、家族サポート証券口座、NISA注文権限の可否を確認し、使える制度があれば中期運用へ移行します。"],
-  ["継続運用", "IFA・助言業者・ラップも比較する", "本人が毎回操作する負担を下げるため、個別株以外の運用ルートも残します。"],
-  ["未成年者分", "登録親権者制度を別確認する", "未成年口座は成人本人NISAとは別制度です。親権者関与の可否を個別に確認します。"],
-];
-
 const evidence = [
   {
     title: "証券会社の制限",
@@ -105,14 +98,6 @@ const optionCards = alternatives.map((a, i) => `
     <p class="summary">${a.summary}</p>
     <div class="explain"><b>どう使うか</b><p>${a.use}</p></div>
     <div class="explain"><b>確認すること</b><p>${a.point}</p></div>
-  </article>
-`).join("");
-
-const decisionCards = decisions.map(([label, title, text]) => `
-  <article class="decision">
-    <span>${label}</span>
-    <h3>${title}</h3>
-    <p>${text}</p>
   </article>
 `).join("");
 
@@ -164,8 +149,6 @@ const html = `<!doctype html>
     .explain { background: #f3f8fc; border-left: 4px solid #7eb3d4; padding: 7px 8px; margin-top: 6px; border-radius: 6px; }
     .explain b { display: block; color: #063456; margin-bottom: 2px; }
     .explain p { margin-bottom: 0; }
-    .decision span { display: inline-block; color: #fff; background: #0a6797; border-radius: 999px; padding: 2px 9px; font-size: 11px; font-weight: 800; margin-bottom: 6px; }
-    .decision-wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .note { border: 1.4px solid #d7b06b; background: #fff9ee; border-left: 7px solid #b87500; padding: 9px 12px; border-radius: 8px; margin: 10px 0 12px; break-inside: avoid; page-break-inside: avoid; }
     .evidence { background: #fff; border-left: 7px solid #176b9d; }
     .source b { display:block; color:#063456; margin-bottom:3px; }
@@ -185,17 +168,15 @@ const html = `<!doctype html>
       <div class="card"><b>専門家連携</b><div class="value">IFA/助言業者</div><p>説明責任や継続助言を登録業者と分担する。</p></div>
       <div class="card"><b>負担軽減案</b><div class="value">ラップ/投信</div><p>個別株管理が重い本人分は低負担運用へ切り替える。</p></div>
     </div>
-    <h2>1. 結論</h2>
-    <div class="decision-wrap">${decisionCards}</div>
   </section>
 
   <section class="page">
-    <h2>2. 代替手段の全体像</h2>
+    <h2>1. 代替手段の全体像</h2>
     <div class="option-grid">${optionCards}</div>
   </section>
 
   <section class="page">
-    <h2>3. 正式ルートが必要な理由</h2>
+    <h2>2. 正式ルートが必要な理由</h2>
     <div class="note">
       成人本人のNISA口座は、本人確認、口座規約、発注権限、金融商品取引業の登録要否が関係します。代替手段を検討する場合も、本人発注型、証券会社所定制度、登録業者連携のように、役割と権限を分けて整理します。
     </div>
@@ -203,7 +184,7 @@ const html = `<!doctype html>
   </section>
 
   <section class="page">
-    <h2>4. 参考情報</h2>
+    <h2>3. 参考情報</h2>
     ${sourceBlocks}
   </section>
 </body>
