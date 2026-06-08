@@ -276,7 +276,15 @@ const html = `<!doctype html>
   </section>
 
   <section class="page">
-    <h2>1. 本命案: 本人NISA口座 + 正式な金銭貸借</h2>
+    <h2>1. その他の制度確認ルート</h2>
+    <div class="note">
+      以下は、完全に不要という意味ではありません。ただし、再来週の購入に間に合わせる本命案ではなく、証券会社・専門家確認を経て使えるかを判断するルートです。
+    </div>
+    <div class="option-grid">${optionCards}</div>
+  </section>
+
+  <section class="page">
+    <h2>2. 本人NISA口座 + 正式な金銭貸借</h2>
     <div class="note">
       投資資金を個人から借りて、あとで本当に返す形であれば、借りた元本そのものは通常、贈与ではなく借入として整理できます。ただし、税務上は契約書の有無だけでなく、返済能力、返済期限、返済状況、利息、返済免除の有無など、実態が見られます。
     </div>
@@ -284,19 +292,11 @@ const html = `<!doctype html>
   </section>
 
   <section class="page">
-    <h2>2. 借入案で確認すること</h2>
+    <h2>3. 借入案で確認すること</h2>
     ${loanCheckCards}
     <div class="note">
       実務上は、投資が失敗しても返済する契約にすることが重要です。損したら返さない、利益が出たら分ける、という設計にすると、借入ではなく出資・共同投資・贈与の論点が強くなります。
     </div>
-  </section>
-
-  <section class="page">
-    <h2>3. その他の制度確認ルート</h2>
-    <div class="note">
-      以下は、完全に不要という意味ではありません。ただし、再来週の購入に間に合わせる本命案ではなく、証券会社・専門家確認を経て使えるかを判断するルートです。
-    </div>
-    <div class="option-grid">${optionCards}</div>
   </section>
 
   <section class="page">
