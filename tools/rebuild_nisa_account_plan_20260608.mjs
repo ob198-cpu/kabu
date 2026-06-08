@@ -5,6 +5,88 @@ import { execFileSync } from "child_process";
 const root = path.resolve(process.cwd());
 const now = "2026年6月8日";
 
+const alternatives = [
+  {
+    title: "本人発注型 + 注文票作成",
+    tag: "短期の最有力案",
+    summary: "本人別に、候補銘柄、購入日、購入金額、買わない条件を注文票にまとめ、本人が自分のスマホで確認して発注する方法です。",
+    use: "再来週の購入予定に最も間に合わせやすい案です。こちらは判断材料と注文票を整え、発注操作は本人に残します。",
+    point: "本人スマホ、本人ログイン、NISA口座区分、入金、二段階認証、注文内容の理解を確認します。",
+  },
+  {
+    title: "証券会社の正式代理制度",
+    tag: "中期の本命確認先",
+    summary: "証券会社が認める代理人登録、法定代理、任意代理、家族向けサポート制度を確認する方法です。",
+    use: "認められる範囲が明確であれば、本人発注型より運用負担を下げられます。長期運用の正式ルートになりやすい案です。",
+    point: "照会のみ、売却のみ、NISA対象外などの制限があり得ます。注文権限まで認められるかを確認します。",
+  },
+  {
+    title: "家族サポート証券口座",
+    tag: "高齢家族・遠方家族向け",
+    summary: "本人と家族代理人の任意代理契約を前提に、将来の判断能力低下に備える制度です。",
+    use: "遠方家族や高齢家族について、本人が操作しにくくなった場合の継続運用の選択肢になります。",
+    point: "取り扱い証券会社が限られます。すぐに全員分のNISA個別株購入へ使えるとは限りません。",
+  },
+  {
+    title: "登録助言業者・IFA連携",
+    tag: "説明責任を強化",
+    summary: "投資助言業者、IFA、金融商品仲介業者など、登録を受けた専門家と連携する方法です。",
+    use: "銘柄選定、助言、説明資料、継続フォローの責任分担を明確にできます。",
+    point: "登録区分、報酬、対応商品、注文権限、利益相反を確認します。",
+  },
+  {
+    title: "NISA対応ラップ・投信中心代替",
+    tag: "低負担運用",
+    summary: "個別株10社戦略ではなく、NISA対応ラップ、バランスファンド、インデックス投信などを使う方法です。",
+    use: "個別株の説明や発注が重い本人分について、運用負担を下げる代替案になります。",
+    point: "個別株で指数超過を狙う設計とは目的が変わります。手数料、商品性、NISA対象、期待リターンを確認します。",
+  },
+  {
+    title: "未成年口座の登録親権者",
+    tag: "未成年者分のみ",
+    summary: "未成年口座で、登録親権者が未成年者本人に代わり財産管理を目的として取引する制度を確認する方法です。",
+    use: "未成年者分については、成人本人NISAとは別に、親権者関与の制度を使える可能性があります。",
+    point: "成人家族のNISA運用代替にはそのまま使えません。対象者が未成年の場合だけ別ルートで確認します。",
+  },
+  {
+    title: "家族信託・成年後見・法人管理",
+    tag: "長期の資産管理案",
+    summary: "家族信託、成年後見、任意後見、法人管理などを専門家と検討する方法です。",
+    use: "相続、判断能力低下、財産管理まで含めて長期的に設計したい場合の選択肢です。",
+    point: "再来週のNISA購入には間に合いにくく、NISA口座の即時操作代替ではありません。",
+  },
+];
+
+const decisions = [
+  ["短期", "本人発注型を基本にする", "正式制度は確認に時間がかかるため、初回は本人別注文票を作り、本人が自分のスマホで発注する形が最も現実的です。"],
+  ["同時並行", "証券会社の正式制度を確認する", "代理人登録、家族サポート証券口座、NISA注文権限の可否を確認し、使える制度があれば中期運用へ移行します。"],
+  ["継続運用", "IFA・助言業者・ラップも比較する", "本人が毎回操作する負担を下げるため、個別株以外の運用ルートも残します。"],
+  ["未成年者分", "登録親権者制度を別確認する", "未成年口座は成人本人NISAとは別制度です。親権者関与の可否を個別に確認します。"],
+];
+
+const evidence = [
+  {
+    title: "証券会社の制限",
+    text: "SBI証券は、パスワード管理・代理発注等の制限として、仮名・借名取引が脱税、マネー・ローンダリング、不公正取引の温床となる可能性があり、法令諸規則等により委託・受託が禁止されている旨を示しています。したがって、ID・パスワードを預かって本人になり代わる注文は採用しません。",
+  },
+  {
+    title: "金融商品取引業の登録",
+    text: "金融庁は、顧客資産やファンドの運用を行う場合は投資運用業の登録が必要であり、助言に留まる場合でも投資助言・代理業の登録対象になり得ると説明しています。継続的な銘柄選定、売買判断、発注実行まで引き受けると登録業務の論点が出ます。",
+  },
+  {
+    title: "投資助言・代理業の登録要否",
+    text: "関東財務局Q&Aでは、投資助言・代理業を行うには金融商品取引法第29条に基づく登録が必要とされています。金融庁監督指針でも、一連の行為の一部だけを見て直ちに登録不要と判断するのは適切でない旨が示されています。",
+  },
+  {
+    title: "ID・パスワード利用",
+    text: "警察庁は、他人のIDやパスワードを使用してサービスを悪用する行為を不正アクセスとして説明しています。不正アクセス禁止法では、他人の識別符号の入力によるアクセス制限された利用が規制対象になります。ただし承諾等の要件も関係するため、本人同意だけで判断しません。",
+  },
+  {
+    title: "正規の例外制度",
+    text: "未成年口座、家族サポート証券口座、法定代理、証券会社所定代理など、制度上の代理権限がある場合は別ルートとして確認できます。家族だから触れる、ではなく、制度上の権限がある範囲で扱います。",
+  },
+];
+
 const sources = [
   ["SBI証券 パスワード管理・代理発注等の制限", "https://search.sbisec.co.jp/v2/popwin/attention/trading/stock_12.html"],
   ["日本証券業協会 家族サポート証券口座", "https://market.jsda.or.jp/shijyo/kazokusupport/index.html"],
@@ -17,78 +99,33 @@ const sources = [
   ["日本法令外国語訳 不正アクセス禁止法", "https://www.japaneselawtranslation.go.jp/en/laws/view/3933"],
 ];
 
-const alternatives = [
-  {
-    rank: "1",
-    name: "本人発注型 + 注文票作成",
-    summary: "再来週の購入予定に最も間に合わせやすい実務案",
-    what: "本人別に、候補銘柄、購入日、購入金額、買わない条件、確認項目を注文票にまとめる。本人が自分のスマホでログインし、注文票を確認して発注する。",
-    merit: "口座操作を本人に残しながら、こちらは判断材料と手順を整理できる。準備が早く、6月イベント後の購入判断に接続しやすい。",
-    risk: "本人が内容を理解できる資料、本人スマホ、本人ログイン、入金、NISA口座区分の確認が必要。",
-    timing: "即日準備可能",
-    fit: "初回購入の最有力案",
-  },
-  {
-    rank: "2",
-    name: "証券会社の正式代理制度",
-    summary: "証券会社が認める範囲で代理権限を設定する案",
-    what: "証券会社に、代理人登録、法定代理、任意代理、家族サポート制度、NISA注文の対象可否、必要書類、開始日を確認する。",
-    merit: "通れば本人発注型より運用負担を下げられる。口座規約に沿うため、長期運用の正式ルートになりやすい。",
-    risk: "照会のみ、売却のみ、NISA対象外などの制限があり得る。再来週に間に合うかは証券会社次第。",
-    timing: "要確認",
-    fit: "中期の本命確認先",
-  },
-  {
-    rank: "3",
-    name: "家族サポート証券口座",
-    summary: "将来の判断能力低下に備え、家族代理人を使う制度案",
-    what: "本人と家族代理人の任意代理契約を前提に、認知判断能力の状況に応じて家族代理人による取引等を可能にする枠組みを確認する。",
-    merit: "高齢者や遠方家族の継続運用の不安に対して、制度として説明しやすい。",
-    risk: "開始している証券会社が限られる。すぐに全員のNISA個別株購入へ使えるとは限らない。",
-    timing: "中期",
-    fit: "高齢家族・遠方家族向け",
-  },
-  {
-    rank: "4",
-    name: "登録助言業者・IFA連携",
-    summary: "投資判断の説明責任を登録業者と分担する案",
-    what: "登録を受けた投資助言業者、IFA、金融商品仲介業者等と連携し、助言・説明・確認の責任範囲を整理する。",
-    merit: "継続的な助言、銘柄選定、説明責任を外部専門家と分担できる。家族が勝手に運用している印象を避けやすい。",
-    risk: "報酬、登録区分、対応商品、注文権限、利益相反を確認する必要がある。",
-    timing: "中期",
-    fit: "継続運用・説明責任強化",
-  },
-  {
-    rank: "5",
-    name: "NISA対応ラップ・投信中心代替",
-    summary: "個別株管理が重い本人分を低負担運用へ切り替える案",
-    what: "個別株10社戦略ではなく、NISA対応のラップ、バランスファンド、インデックス投信、テーマ投信を比較する。",
-    merit: "本人の発注回数や理解負担を下げやすい。個別株を選びにくい本人分の代替になる。",
-    risk: "指数を上回る個別株戦略とは目的が変わる。手数料、商品性、NISA対象、期待リターンを比較する必要がある。",
-    timing: "短期から中期",
-    fit: "操作負担を優先する本人向け",
-  },
-  {
-    rank: "6",
-    name: "未成年口座の登録親権者",
-    summary: "未成年者分に限り、親権者関与を制度として使う案",
-    what: "未成年口座で取引主体を親権者とする場合、登録親権者が未成年者本人に代わり財産管理を目的として取引できる仕組みを確認する。",
-    merit: "成人本人NISAとは違い、親権者の関与が制度として整理されている。",
-    risk: "未成年者向けの話であり、成人家族のNISA運用代替にはそのまま使えない。",
-    timing: "対象者がいれば確認",
-    fit: "未成年者分のみ",
-  },
-  {
-    rank: "7",
-    name: "家族信託・成年後見・法人管理",
-    summary: "相続・判断能力・財産管理まで含めた長期案",
-    what: "家族信託、成年後見、任意後見、法人管理などを、弁護士・司法書士・税理士等と確認する。",
-    merit: "将来の財産管理、相続、判断能力低下に備えた包括的な設計ができる。",
-    risk: "再来週のNISA購入には間に合いにくい。NISA口座の即時操作代替ではない。",
-    timing: "長期",
-    fit: "資産管理全体の設計",
-  },
-];
+const optionCards = alternatives.map((a, i) => `
+  <article class="option">
+    <div class="option-head"><span class="num">${i + 1}</span><div><h3>${a.title}</h3><p class="tag">${a.tag}</p></div></div>
+    <p class="summary">${a.summary}</p>
+    <div class="explain"><b>どう使うか</b><p>${a.use}</p></div>
+    <div class="explain"><b>確認すること</b><p>${a.point}</p></div>
+  </article>
+`).join("");
+
+const decisionCards = decisions.map(([label, title, text]) => `
+  <article class="decision">
+    <span>${label}</span>
+    <h3>${title}</h3>
+    <p>${text}</p>
+  </article>
+`).join("");
+
+const evidenceBlocks = evidence.map((e, i) => `
+  <article class="evidence">
+    <div class="option-head"><span class="num">${i + 1}</span><h3>${e.title}</h3></div>
+    <p>${e.text}</p>
+  </article>
+`).join("");
+
+const sourceBlocks = sources.map(([label, url]) => `
+  <div class="source"><b>${label}</b><a href="${url}">${url}</a></div>
+`).join("");
 
 const html = `<!doctype html>
 <html lang="ja">
@@ -103,33 +140,36 @@ const html = `<!doctype html>
       color: #061826;
       background: #fff;
       font-family: "Noto Sans JP", "Yu Gothic", "Meiryo", Arial, sans-serif;
-      font-size: 12.2px;
+      font-size: 12.6px;
       line-height: 1.58;
     }
     .page { width: 100%; padding: 10px 18px 18px; break-after: page; page-break-after: always; }
     .page:last-child { break-after: auto; page-break-after: auto; }
     h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: 27px; color: #062f4f; margin: 0 0 8px; padding-bottom: 8px; border-bottom: 3px solid #176b9d; letter-spacing: 0; }
-    h2 { font-size: 18px; color: #07385f; margin: 18px 0 8px; padding-left: 10px; border-left: 7px solid #176b9d; break-after: avoid; page-break-after: avoid; }
-    h3 { font-size: 14px; color: #063456; margin: 12px 0 6px; }
-    .lead { font-size: 14px; border: 1.5px solid #a6c7df; border-left: 8px solid #176b9d; background: #f4f9fd; padding: 10px 13px; border-radius: 8px; margin: 10px 0 13px; break-inside: avoid; page-break-inside: avoid; }
+    h1 { font-size: 28px; color: #062f4f; margin: 0 0 8px; padding-bottom: 8px; border-bottom: 3px solid #176b9d; letter-spacing: 0; }
+    h2 { font-size: 18px; color: #07385f; margin: 18px 0 9px; padding-left: 10px; border-left: 7px solid #176b9d; break-after: avoid; page-break-after: avoid; }
+    h3 { font-size: 14px; color: #063456; margin: 0 0 4px; }
+    .small { font-size: 11px; color: #263849; }
+    .lead { font-size: 14px; border: 1.5px solid #a6c7df; border-left: 8px solid #176b9d; background: #f4f9fd; padding: 11px 13px; border-radius: 8px; margin: 10px 0 13px; break-inside: avoid; page-break-inside: avoid; }
     .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin: 12px 0; break-inside: avoid; page-break-inside: avoid; }
-    .card { border: 1.4px solid #b8d2e6; border-radius: 8px; padding: 10px; background: #f8fbfe; min-height: 92px; break-inside: avoid; page-break-inside: avoid; }
+    .card { border: 1.4px solid #b8d2e6; border-radius: 8px; padding: 10px; background: #f8fbfe; min-height: 94px; break-inside: avoid; page-break-inside: avoid; }
     .card b { display: block; color: #063456; font-size: 13px; margin-bottom: 4px; }
     .value { font-size: 18px; font-weight: 800; color: #0a6797; margin-bottom: 4px; }
-    table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; break-inside: avoid; page-break-inside: avoid; table-layout: fixed; }
-    th, td { border: 1px solid #bfd4e5; padding: 7px 8px; vertical-align: top; overflow-wrap: anywhere; word-break: normal; }
-    th { background: #e5f1fa; color: #063456; font-weight: 800; text-align: left; }
-    tr { break-inside: avoid; page-break-inside: avoid; }
+    .option-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .option, .decision, .evidence, .source { border: 1.3px solid #c3d8e8; border-radius: 8px; background: #fbfdff; padding: 10px 12px; margin-bottom: 10px; break-inside: avoid; page-break-inside: avoid; }
+    .option-head { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 6px; }
+    .num { display: inline-flex; align-items: center; justify-content: center; width: 25px; height: 25px; border-radius: 999px; background: #0a6797; color: #fff; font-weight: 800; flex: 0 0 auto; }
+    .tag { color: #0a6797; font-weight: 800; margin: 0; font-size: 11.5px; }
+    .summary { font-weight: 700; margin-bottom: 8px; }
+    .explain { background: #f3f8fc; border-left: 4px solid #7eb3d4; padding: 7px 8px; margin-top: 6px; border-radius: 6px; }
+    .explain b { display: block; color: #063456; margin-bottom: 2px; }
+    .explain p { margin-bottom: 0; }
+    .decision span { display: inline-block; color: #fff; background: #0a6797; border-radius: 999px; padding: 2px 9px; font-size: 11px; font-weight: 800; margin-bottom: 6px; }
+    .decision-wrap { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .note { border: 1.4px solid #d7b06b; background: #fff9ee; border-left: 7px solid #b87500; padding: 9px 12px; border-radius: 8px; margin: 10px 0 12px; break-inside: avoid; page-break-inside: avoid; }
-    .ok { color: #007a4d; font-weight: 800; }
-    .warn { color: #b26800; font-weight: 800; }
-    .ng { color: #bd1f2d; font-weight: 800; }
-    .small { font-size: 11px; color: #263849; }
-    .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0 14px; }
-    .check { border: 1px solid #c8dcec; border-radius: 8px; padding: 9px 10px; background: #fbfdff; break-inside: avoid; page-break-inside: avoid; }
-    .check b { display: block; margin-bottom: 3px; color: #063456; }
-    a { color: #075f94; text-decoration: none; }
+    .evidence { background: #fff; border-left: 7px solid #176b9d; }
+    .source b { display:block; color:#063456; margin-bottom:3px; }
+    .source a { color:#075f94; text-decoration:none; overflow-wrap:anywhere; }
   </style>
 </head>
 <body>
@@ -137,7 +177,7 @@ const html = `<!doctype html>
     <h1>NISA口座運用代替案 比較報告書</h1>
     <p class="small">作成日: ${now} / 対象: 家族・複数本人分のNISA運用準備</p>
     <div class="lead">
-      本報告書の主題は「NISA口座を本人ごとに安全に使いながら、運用の手間をどう下げるか」です。代替手段は一つではありません。短期では本人発注型、中期では証券会社の正式代理制度・家族サポート証券口座・登録助言業者/IFA連携・NISA対応ラップを比較し、本人の負担、実行時期、法令面、満足度を分けて判断します。
+      本報告書の主題は「NISA口座を本人ごとに安全に使いながら、運用の手間をどう下げるか」です。代替手段は一つではありません。短期では本人発注型、中期では証券会社の正式代理制度・家族サポート証券口座・登録助言業者/IFA連携・NISA対応ラップを比較します。
     </div>
     <div class="cards">
       <div class="card"><b>短期の実行案</b><div class="value">本人発注型</div><p>注文票を作り、本人がスマホで確認して発注する。</p></div>
@@ -145,62 +185,26 @@ const html = `<!doctype html>
       <div class="card"><b>専門家連携</b><div class="value">IFA/助言業者</div><p>説明責任や継続助言を登録業者と分担する。</p></div>
       <div class="card"><b>負担軽減案</b><div class="value">ラップ/投信</div><p>個別株管理が重い本人分は低負担運用へ切り替える。</p></div>
     </div>
-
-    <h2>1. 代替手段の全体像</h2>
-    <table>
-      <colgroup><col style="width:5%"><col style="width:19%"><col style="width:22%"><col style="width:17%"><col style="width:16%"><col style="width:21%"></colgroup>
-      <thead><tr><th>優先</th><th>代替手段</th><th>どのようなものか</th><th>いつ使うか</th><th>向いている場面</th><th>最初に確認すること</th></tr></thead>
-      <tbody>
-        ${alternatives.map(a => `<tr><td>${a.rank}</td><td><b>${a.name}</b></td><td>${a.summary}</td><td>${a.timing}</td><td>${a.fit}</td><td>${a.risk}</td></tr>`).join("")}
-      </tbody>
-    </table>
-
-    <h2>2. 結論</h2>
-    <table>
-      <colgroup><col style="width:20%"><col style="width:28%"><col style="width:52%"></colgroup>
-      <thead><tr><th>期間</th><th>採用方針</th><th>理由</th></tr></thead>
-      <tbody>
-        <tr><td>再来週まで</td><td><span class="ok">本人発注型を基本に準備</span></td><td>正式代理制度は確認に時間がかかるため、購入予定を止めない現実案として本人別注文票を作る。</td></tr>
-        <tr><td>同時並行</td><td><span class="warn">証券会社の正式制度を照会</span></td><td>代理人登録、家族サポート証券口座、NISA注文権限の可否を確認し、通る場合は中期運用へ移行する。</td></tr>
-        <tr><td>継続運用</td><td><span class="warn">IFA/助言業者・ラップも比較</span></td><td>本人が毎回操作する負担を下げるため、個別株運用以外の選択肢も残す。</td></tr>
-        <tr><td>未成年者分</td><td><span class="ok">登録親権者の制度を別確認</span></td><td>未成年口座は成人本人NISAとは別制度のため、親権者関与の可否を個別に確認する。</td></tr>
-      </tbody>
-    </table>
+    <h2>1. 結論</h2>
+    <div class="decision-wrap">${decisionCards}</div>
   </section>
 
   <section class="page">
-    <h2>3. 各代替手段の中身</h2>
-    <table>
-      <colgroup><col style="width:18%"><col style="width:29%"><col style="width:25%"><col style="width:28%"></colgroup>
-      <thead><tr><th>代替手段</th><th>実務内容</th><th>利点</th><th>注意点</th></tr></thead>
-      <tbody>
-        ${alternatives.map(a => `<tr><td><b>${a.name}</b></td><td>${a.what}</td><td>${a.merit}</td><td>${a.risk}</td></tr>`).join("")}
-      </tbody>
-    </table>
+    <h2>2. 代替手段の全体像</h2>
+    <div class="option-grid">${optionCards}</div>
   </section>
 
   <section class="page">
-    <h2>4. 正式ルートが必要な理由</h2>
-    <table>
-      <colgroup><col style="width:18%"><col style="width:31%"><col style="width:28%"><col style="width:23%"></colgroup>
-      <thead><tr><th>根拠区分</th><th>確認できる内容</th><th>実務への影響</th><th>対応</th></tr></thead>
-      <tbody>
-        <tr><td><b>証券会社の制限</b></td><td>SBI証券は、パスワード管理・代理発注等の制限として、仮名・借名取引が脱税、マネー・ローンダリング、不公正取引の温床となる可能性があり、法令諸規則等により委託・受託が禁止されている旨を示している。</td><td>ID・パスワードを預かって本人になり代わる注文は採用しない。</td><td>本人発注型または証券会社所定の代理制度に寄せる。</td></tr>
-        <tr><td><b>金融商品取引業の登録</b></td><td>金融庁は、顧客資産やファンドの運用を行う場合は投資運用業の登録が必要であり、助言に留まる場合でも投資助言・代理業の登録対象になり得ると説明している。</td><td>継続的な銘柄選定、売買判断、発注実行まで引き受けると登録業務の論点が出る。</td><td>判断補助、注文票作成、本人発注に分ける。</td></tr>
-        <tr><td><b>投資助言・代理業の登録要否</b></td><td>関東財務局Q&Aでは、投資助言・代理業を行うには金融商品取引法第29条に基づく登録が必要とされている。金融庁監督指針では、一連の行為の一部だけで登録不要と判断するのは適切でない旨が示されている。</td><td>有償で具体的な投資判断を継続提供する場合は、登録業者連携を検討する。</td><td>IFA・登録助言業者を代替案に入れる。</td></tr>
-        <tr><td><b>ID・パスワード利用</b></td><td>警察庁は、他人のIDやパスワードを使用してサービスを悪用する行為を不正アクセスとして説明している。不正アクセス禁止法では、他人の識別符号の入力によるアクセス制限された利用が規制対象になる。ただし承諾等の要件も関係するため、本人同意だけで判断しない。</td><td>証券口座は金融資産を扱うため、第三者ログインを証券会社が認めているか確認が必要。</td><td>本人端末・本人ログインを原則にする。</td></tr>
-        <tr><td><b>正規の例外制度</b></td><td>未成年口座、家族サポート証券口座、法定代理、証券会社所定代理など、制度上の代理権限がある場合は別ルートとして確認できる。</td><td>家族だから触れる、ではなく、制度上の権限がある範囲で扱う。</td><td>各制度の対象、権限、開始条件を確認する。</td></tr>
-      </tbody>
-    </table>
+    <h2>3. 正式ルートが必要な理由</h2>
+    <div class="note">
+      成人本人のNISA口座は、本人確認、口座規約、発注権限、金融商品取引業の登録要否が関係します。代替手段を検討する場合も、本人発注型、証券会社所定制度、登録業者連携のように、役割と権限を分けて整理します。
+    </div>
+    ${evidenceBlocks}
+  </section>
 
-    <h2>5. 参考情報</h2>
-    <table>
-      <colgroup><col style="width:30%"><col style="width:70%"></colgroup>
-      <thead><tr><th>情報</th><th>URL</th></tr></thead>
-      <tbody>
-        ${sources.map(([label, url]) => `<tr><td>${label}</td><td><a href="${url}">${url}</a></td></tr>`).join("")}
-      </tbody>
-    </table>
+  <section class="page">
+    <h2>4. 参考情報</h2>
+    ${sourceBlocks}
   </section>
 </body>
 </html>`;
