@@ -180,60 +180,7 @@ const html = `<!doctype html>
   </section>
 
   <section class="page">
-    <h2>4. 再来週に間に合わせる実務プラン</h2>
-    <table>
-      <colgroup><col style="width:12%"><col style="width:18%"><col style="width:36%"><col style="width:18%"><col style="width:16%"></colgroup>
-      <thead><tr><th>日程</th><th>作業</th><th>内容</th><th>成果物</th><th>判定</th></tr></thead>
-      <tbody>
-        <tr><td>6/8〜6/10</td><td>証券会社確認</td><td>SBI、楽天、対面証券等に、代理人登録、家族サポート制度、NISA注文権限、必要書類、開始可能日を確認する。</td><td>証券会社確認メモ</td><td>正式制度の可否</td></tr>
-        <tr><td>6/8〜6/12</td><td>本人別準備</td><td>本人スマホ、本人メール、ログイン、NISA口座、入金、二段階認証、配当金受取方式を確認する。</td><td>本人別チェック表</td><td>本人発注可否</td></tr>
-        <tr><td>6/10〜6/17</td><td>市場イベント確認</td><td>CPI、日銀、FOMC、為替、金利、指数、候補銘柄の反応を更新する。</td><td>購入前ゲート</td><td>買う/待つ</td></tr>
-        <tr><td>6/18以降</td><td>初回購入判断</td><td>正式制度が間に合えばその範囲で実行。間に合わなければ本人発注型で、本人が注文票を確認して発注する。</td><td>本人別注文票</td><td>購入/延期</td></tr>
-        <tr><td>6月下旬〜7月</td><td>中期移行</td><td>継続運用のため、正式代理、家族サポート証券口座、IFA連携、NISAラップのどれが最も負担を下げるか比較する。</td><td>中期移行案</td><td>運用体制決定</td></tr>
-      </tbody>
-    </table>
-
-    <h2>5. 証券会社へ確認する質問</h2>
-    <div class="checklist">
-      <div class="check"><b>代理制度</b>成人本人NISAで、代理人登録により注文できる制度はありますか。</div>
-      <div class="check"><b>権限範囲</b>照会、注文、売却、出金、書類請求のどこまで可能ですか。</div>
-      <div class="check"><b>NISA対象可否</b>代理人登録や家族サポート制度はNISA口座の取引にも使えますか。</div>
-      <div class="check"><b>開始時期</b>書類提出から登録完了までの日数はどれくらいですか。6/18以降に間に合いますか。</div>
-      <div class="check"><b>必要書類</b>委任状、本人確認、代理人確認、家族関係書類、任意代理契約等は必要ですか。</div>
-      <div class="check"><b>本人発注型</b>本人がスマホで発注し、家族が横で説明する場合の注意点はありますか。</div>
-      <div class="check"><b>家族サポート</b>家族サポート証券口座の取り扱い予定、対象者、開始条件、取引範囲を確認します。</div>
-      <div class="check"><b>記録方法</b>説明資料、注文票、本人の最終確認をどのように残すべきですか。</div>
-    </div>
-  </section>
-
-  <section class="page">
-    <h2>6. 採用ルートの判断表</h2>
-    <table>
-      <colgroup><col style="width:24%"><col style="width:24%"><col style="width:24%"><col style="width:28%"></colgroup>
-      <thead><tr><th>確認結果</th><th>採用ルート</th><th>初回購入</th><th>継続運用</th></tr></thead>
-      <tbody>
-        <tr><td>代理人登録がNISA注文まで可能で、6/18以降に間に合う</td><td><span class="ok">正式代理</span></td><td>証券会社所定の権限範囲で実行。</td><td>本人確認と運用報告を継続。</td></tr>
-        <tr><td>代理制度はあるが、登録完了が間に合わない</td><td><span class="warn">本人発注 + 中期移行</span></td><td>本人発注型で初回対応。</td><td>翌月以降に正式代理、家族サポート、IFA、ラップへ移行。</td></tr>
-        <tr><td>代理制度は照会のみ、またはNISA注文不可</td><td><span class="warn">本人発注型</span></td><td>本人スマホ・本人ログイン・本人発注。</td><td>注文票と説明資料を整備し、操作負担を下げる。</td></tr>
-        <tr><td>本人発注も難しい</td><td><span class="ng">購入延期</span></td><td>該当本人分は購入しない。</td><td>口座、スマホ、本人確認、正式制度を整えてから再検討。</td></tr>
-        <tr><td>個別株の説明負担が大きい</td><td><span class="warn">投信・ラップ代替</span></td><td>NISA対応商品を別途確認。</td><td>個別株戦略ではなく、本人負担を下げる運用へ切替。</td></tr>
-      </tbody>
-    </table>
-
-    <h2>7. 成人本人NISAと未成年口座の違い</h2>
-    <table>
-      <colgroup><col style="width:20%"><col style="width:30%"><col style="width:24%"><col style="width:26%"></colgroup>
-      <thead><tr><th>区分</th><th>誰が関与できるか</th><th>今回の扱い</th><th>確認ポイント</th></tr></thead>
-      <tbody>
-        <tr><td>成人本人のNISA</td><td>本人が口座開設、ログイン、発注するのが基本。</td><td>本人発注型または証券会社の正式代理制度を確認。</td><td>本人確認、NISA口座区分、二段階認証、注文内容の理解。</td></tr>
-        <tr><td>未成年口座</td><td>親権者・未成年後見人が関与する制度がある。</td><td>登録親権者として手続きする場合は別ルートで確認。</td><td>取引主体、親権者の同意、登録親権者、必要署名。</td></tr>
-        <tr><td>家族サポート証券口座</td><td>本人と家族代理人の任意代理契約を前提にする。</td><td>中期の正式化候補として確認。</td><td>取り扱い証券会社、対象取引、開始条件、NISA対象可否。</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="page">
-    <h2>8. 正式ルートが必要な理由</h2>
+    <h2>4. 正式ルートが必要な理由</h2>
     <table>
       <colgroup><col style="width:18%"><col style="width:31%"><col style="width:28%"><col style="width:23%"></colgroup>
       <thead><tr><th>根拠区分</th><th>確認できる内容</th><th>実務への影響</th><th>対応</th></tr></thead>
@@ -246,7 +193,7 @@ const html = `<!doctype html>
       </tbody>
     </table>
 
-    <h2>9. 参考情報</h2>
+    <h2>5. 参考情報</h2>
     <table>
       <colgroup><col style="width:30%"><col style="width:70%"></colgroup>
       <thead><tr><th>情報</th><th>URL</th></tr></thead>
