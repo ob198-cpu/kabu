@@ -306,7 +306,15 @@ const html = `<!doctype html>
   </section>
 
   <section class="page">
-    <h2>4. 他人口座を直接操作する案を後回しにする理由</h2>
+    <h2>4. 関連法: 他人の口座を触る場合に問題になり得るもの</h2>
+    <div class="note">
+      以下は「必ず違反になる」という断定ではありません。ただし、他人名義の証券口座を第三者が操作する場合、複数の法律・規則・証券会社規約にまたがって確認が必要になります。
+    </div>
+    ${legalBlocks}
+  </section>
+
+  <section class="page">
+    <h2>5. 他人口座を直接操作する案を後回しにする理由</h2>
     <div class="note">
       他人名義口座を直接操作する案は、本人同意があっても、証券会社規約、金融商品取引業の登録、不正アクセス、借名・仮名取引の確認が残ります。そのため、短期では「本人NISA口座 + 正式な借入 + 本人発注」に寄せます。
     </div>
@@ -314,16 +322,8 @@ const html = `<!doctype html>
   </section>
 
   <section class="page">
-    <h2>5. 参考情報</h2>
+    <h2>6. 参考情報</h2>
     ${sourceBlocks}
-  </section>
-
-  <section class="page">
-    <h2>6. 関連法: 他人の口座を触る場合に問題になり得るもの</h2>
-    <div class="note">
-      以下は「必ず違反になる」という断定ではありません。ただし、他人名義の証券口座を第三者が操作する場合、複数の法律・規則・証券会社規約にまたがって確認が必要になります。
-    </div>
-    ${legalBlocks}
   </section>
 </body>
 </html>`;
