@@ -1,8 +1,22 @@
-<!doctype html>
+import fs from "fs";
+import path from "path";
+import { execFileSync } from "child_process";
+
+const root = path.resolve(process.cwd());
+const now = "2026年6月8日";
+
+const sources = [
+  ["日本証券業協会 家族サポート証券口座", "https://market.jsda.or.jp/shijyo/kazokusupport/index.html"],
+  ["SBI証券 未成年口座: 取引主体と親権者", "https://faq.sbisec.co.jp/answer/5ec23dacd31ea500111ec166/"],
+  ["SBI証券 未成年口座の開設", "https://faq.sbisec.co.jp/answer/5ec23361d31ea500111ebd45/"],
+  ["金融庁 投資運用業等 登録手続ガイドブック", "https://www.fsa.go.jp/policy/marketentry/guidebook/02.html"],
+];
+
+const html = `<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>NISA口座運用代替案 比較報告書 2026年6月8日</title>
+  <title>NISA口座運用代替案 比較報告書 ${now}</title>
   <style>
     @page { size: A4 landscape; margin: 9mm; }
     * { box-sizing: border-box; }
@@ -145,7 +159,7 @@
 <body>
   <section class="page">
     <h1>NISA口座運用代替案 比較報告書</h1>
-    <p class="small">作成日: 2026年6月8日 / 対象: NISA口座を用いた家族・複数本人分の運用準備</p>
+    <p class="small">作成日: ${now} / 対象: NISA口座を用いた家族・複数本人分の運用準備</p>
     <div class="lead">
       本報告書は、NISA口座を安全に運用するための実務ルートを比較したものです。結論として、成人本人のNISA口座は本人名義・本人ログイン・本人発注を基本にし、第三者がIDやパスワードを預かって操作する形は採用しません。負担を下げる代替案として、証券会社所定の代理制度、家族サポート証券口座、登録助言業者・IFA連携、NISA対応ラップ等を確認します。
     </div>
@@ -281,7 +295,7 @@
       <colgroup><col style="width:28%"><col style="width:72%"></colgroup>
       <thead><tr><th>情報</th><th>URL</th></tr></thead>
       <tbody>
-        <tr><td>日本証券業協会 家族サポート証券口座</td><td><a href="https://market.jsda.or.jp/shijyo/kazokusupport/index.html">https://market.jsda.or.jp/shijyo/kazokusupport/index.html</a></td></tr><tr><td>SBI証券 未成年口座: 取引主体と親権者</td><td><a href="https://faq.sbisec.co.jp/answer/5ec23dacd31ea500111ec166/">https://faq.sbisec.co.jp/answer/5ec23dacd31ea500111ec166/</a></td></tr><tr><td>SBI証券 未成年口座の開設</td><td><a href="https://faq.sbisec.co.jp/answer/5ec23361d31ea500111ebd45/">https://faq.sbisec.co.jp/answer/5ec23361d31ea500111ebd45/</a></td></tr><tr><td>金融庁 投資運用業等 登録手続ガイドブック</td><td><a href="https://www.fsa.go.jp/policy/marketentry/guidebook/02.html">https://www.fsa.go.jp/policy/marketentry/guidebook/02.html</a></td></tr>
+        ${sources.map(([label, url]) => `<tr><td>${label}</td><td><a href="${url}">${url}</a></td></tr>`).join("")}
       </tbody>
     </table>
     <div class="note">
@@ -289,4 +303,48 @@
     </div>
   </section>
 </body>
-</html>
+</html>`;
+
+const htmlFiles = [
+  "nisa_account_plan.html",
+  "nisa_account_alternative_plan_20260604.html",
+  "nisa_account_alternative_plan_20260608.html",
+];
+
+for (const file of htmlFiles) {
+  fs.writeFileSync(path.join(root, file), html, "utf8");
+}
+
+const chromeCandidates = [
+  "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+];
+const chrome = chromeCandidates.find((p) => fs.existsSync(p));
+
+if (!chrome) {
+  console.log("HTML files generated. Chrome/Edge was not found, so PDF was not regenerated.");
+  process.exit(0);
+}
+
+const pdfTargets = [
+  ["nisa_account_plan.html", "nisa_account_plan.pdf"],
+  ["nisa_account_alternative_plan_20260604.html", "nisa_account_alternative_plan_20260604.pdf"],
+  ["nisa_account_alternative_plan_20260608.html", "nisa_account_alternative_plan_20260608.pdf"],
+];
+
+for (const [htmlFile, pdfFile] of pdfTargets) {
+  const inputUrl = `file:///${path.join(root, htmlFile).replace(/\\/g, "/")}`;
+  const output = path.join(root, pdfFile);
+  execFileSync(chrome, [
+    "--headless=new",
+    "--disable-gpu",
+    "--no-sandbox",
+    "--print-to-pdf-no-header",
+    `--print-to-pdf=${output}`,
+    inputUrl,
+  ], { stdio: "inherit" });
+}
+
+console.log("Generated NISA account alternative plan HTML/PDF files.");
