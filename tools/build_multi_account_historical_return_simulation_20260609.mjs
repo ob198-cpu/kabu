@@ -296,7 +296,7 @@ const html = `<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>過去実績ベース 複利シミュレーション</title>
+  <title>NISA候補10社 過去実績ベース 複利シミュレーション</title>
   <style>
     :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--soft:#eef6fc;--amber:#a85b00;--red:#a01818}
     *{box-sizing:border-box}
@@ -333,8 +333,8 @@ const html = `<!doctype html>
 </head>
 <body>
 <header>
-  <h1>過去実績ベース 複利シミュレーション</h1>
-  <p>仮置きの8%・10%・12%ではなく、現10社の過去5年CAGR、10年CAGR、直近1年、S&amp;P差、最大下落を使って作成した版です。</p>
+  <h1>NISA候補10社 過去実績ベース 複利シミュレーション</h1>
+  <p>本資料は、NISAで1年保有を検討する候補10社について、過去の株価実績と下落リスクを整理し、240万円を段階投資した場合の資産推移を試算する資料です。</p>
 </header>
 <main>
   <section>
