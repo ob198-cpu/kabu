@@ -26,7 +26,7 @@ const sections = [
       ["現時点 判定スナップショット", "909_final10_current_snapshot_20260606.html", "ワークベンチの初期値をもとに、保守判定と緑通過後の仮判定を固定表示。"],
       ["購入前 最終ゲートチェック", "910_prebuy_final_gate_checklist_20260606.html", "候補、市場、NISA口座、税制、記録がそろっているかを購入前に確認する最終ゲート。"],
       ["購入準備 判定ボード", "916_purchase_readiness_board_20260606.html", "市場、候補、配分、NISA口座、税制、記録がそろっているかを一画面で判定。"],
-      ["240万円×1〜10口座 複利シミュレーション", "multi_account_compound_simulation_20260609.html", "口座数、銘柄比率、段階投入、短期・長期の資産推移を確認するサンプル。"],
+      ["240万円×1〜10口座 過去実績ベース複利", "historical_return_compound_simulation_20260609.html", "現10社の5年CAGR、10年CAGR、直近1年、最大下落を使った資産推移。"],
       ["候補10社 銘柄別アクション票", "911_ticker_action_tickets_20260606.html", "緑・黄判定時の扱い、停止条件、利確条件、追加確認を銘柄別に確認。"],
       ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "CPI・日銀・FOMC後の実数と判定理由を入力し、購入前ゲートへつなげる。"],
       ["指数劣後時の比率引き下げルール", "915_benchmark_underperformance_rules_20260606.html", "S&P500・TOPIX・日経平均に劣後した場合の個別株比率調整を確認。"],
