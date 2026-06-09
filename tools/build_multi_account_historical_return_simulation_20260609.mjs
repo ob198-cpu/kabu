@@ -300,30 +300,35 @@ const html = `<!doctype html>
   <style>
     :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--soft:#eef6fc;--amber:#a85b00;--red:#a01818}
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.65}
-    header{background:var(--navy);color:white;padding:28px 34px}
-    h1{margin:0 0 8px;font-size:30px;letter-spacing:0}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.72;font-size:16px}
+    header{background:var(--navy);color:white;padding:30px 36px}
+    h1{margin:0 0 10px;font-size:34px;letter-spacing:0}
     header p{margin:0;font-weight:800;color:white}
     main{max-width:1460px;margin:0 auto;padding:22px}
     section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
-    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:22px}
-    .note{background:#fff7e7;border-left:7px solid var(--amber);padding:12px;border-radius:8px;font-weight:900;color:#111;margin:0 0 12px}
+    h2{margin:0 0 14px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:26px}
+    .lead{font-size:18px;font-weight:900;color:#061827;margin:0 0 14px}
+    .note{background:#fff7e7;border-left:7px solid var(--amber);padding:14px;border-radius:8px;font-weight:900;color:#111;margin:0 0 14px;font-size:16px}
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
     .metric{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px}
-    .metric b{display:block;color:var(--navy);font-size:13px}
-    .metric strong{display:block;font-size:22px;margin-top:4px}
+    .metric b{display:block;color:var(--navy);font-size:15px}
+    .metric strong{display:block;font-size:25px;margin-top:4px}
     .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
     table{width:100%;border-collapse:collapse;background:white}
     th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;color:#061827}
     th{background:#e2f0fb;color:#053b63;font-weight:900;white-space:nowrap}
-    td{font-size:13px}
-    .formula{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:12px;font-weight:900}
+    td{font-size:15px}
+    .formula{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:14px;font-weight:900;font-size:16px}
     .explain{display:grid;grid-template-columns:1.1fr 1fr;gap:12px}
-    .box{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:12px;font-weight:900}
+    .box{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:15px;font-weight:900;font-size:16px}
+    .hypothesis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .hypothesis-card{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:15px}
+    .hypothesis-card h3{margin:0 0 8px;color:var(--navy);font-size:20px}
+    .hypothesis-card p{margin:0;font-weight:850}
     .box b{color:var(--navy)}
     .links a{display:inline-block;margin:0 8px 8px 0;background:#0b67a3;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:900}
-    @media print{body{background:white}main{max-width:none;padding:9mm}section{box-shadow:none;break-inside:avoid;page-break-inside:avoid}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px}}
-    @media(max-width:900px){main{padding:12px}.grid,.explain{grid-template-columns:1fr}}
+    @media print{body{background:white;font-size:13px}main{max-width:none;padding:9mm}section{box-shadow:none;break-inside:avoid;page-break-inside:avoid}h1{font-size:28px}h2{font-size:21px}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px}.note,.box,.formula{font-size:13px}}
+    @media(max-width:900px){main{padding:12px}.grid,.explain,.hypothesis-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -346,7 +351,30 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>2. この版で直したこと</h2>
+    <h2>2. この試算で置いている仮説</h2>
+    <p class="lead">この資料は「選んだ10社を買えば必ずこの利回りになる」という予測ではありません。過去の株価実績を使い、6月に買う場合の候補銘柄・比率・タイミングを検討するための仮説試算です。</p>
+    <div class="hypothesis-grid">
+      <div class="hypothesis-card">
+        <h3>目的</h3>
+        <p>個別株を選ぶ意味があるかを見るため、S&amp;P500や日経平均に対して、候補10社が過去にどの程度上回ってきたかを確認します。</p>
+      </div>
+      <div class="hypothesis-card">
+        <h3>使った実績</h3>
+        <p>各銘柄の過去5年CAGR、過去10年CAGR、直近1年騰落率、S&amp;P500との差、最大下落率、月次勝率を使います。</p>
+      </div>
+      <div class="hypothesis-card">
+        <h3>仮説の置き方</h3>
+        <p>強気に見せないため、保守実績仮説は「5年CAGR・10年CAGR・直近1年騰落率のうち一番低い値」を採用します。</p>
+      </div>
+      <div class="hypothesis-card">
+        <h3>限界</h3>
+        <p>過去実績は将来保証ではありません。6月のCPI、日銀、FOMC、為替、金利、決算反応で条件が崩れた場合は買付を延期します。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. この版で直したこと</h2>
     <p class="note">前回の8%・10%・12%は説明用シナリオであり、銘柄ごとの過去実績から出した数字ではありません。この版では、現10社それぞれの過去実績を読み込み、5年CAGR、10年CAGR、保守実績仮説を分けて口座数別の資産推移に反映しています。</p>
     <div class="grid">
       <div class="metric"><b>株式投入比率</b><strong>${fmtPct(stockRatio * 100)}</strong></div>
@@ -357,7 +385,7 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>3. 計算式</h2>
+    <h2>4. 計算式</h2>
     <div class="formula">
       5年CAGR継続 = 過去5年の年平均ペースが続く場合<br>
       10年CAGR継続 = 過去10年の年平均ペースが続く場合<br>
@@ -367,7 +395,7 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>4. 銘柄別の過去実績と仮説利回り</h2>
+    <h2>5. 銘柄別の過去実績と仮説利回り</h2>
     <div class="table-wrap">
       <table>
         <thead><tr><th>ticker</th><th>銘柄</th><th>株式内比率</th><th>5年CAGR</th><th>10年CAGR</th><th>直近1年</th><th>5年S&amp;P差</th><th>5年最大下落</th><th>月次勝率</th><th>保守実績仮説</th><th>警戒理由</th></tr></thead>
@@ -377,7 +405,7 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>5. 1口座240万円での銘柄別購入予定</h2>
+    <h2>6. 1口座240万円での銘柄別購入予定</h2>
     <p class="note">この表が実務用の中心です。1口座240万円の場合、最終的に株式168万円、現金72万円を残す前提で、各銘柄にいつ・いくら入れるかを示します。10口座の場合は各金額を10倍します。</p>
     <div class="table-wrap">
       <table>
@@ -388,14 +416,14 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>6. 買付タイミング</h2>
+    <h2>7. 買付タイミング</h2>
     <div class="table-wrap">
       <table><thead><tr><th>予定日</th><th>段階</th><th>元本比率</th><th>1口座240万円</th><th>実行条件</th></tr></thead><tbody>${phaseRows}<tr><td>常時</td><td>現金待機</td><td>${fmtPct(cashRatio * 100)}</td><td>${fmtYen(baseCapital * cashRatio)}</td><td>急落時、イベント悪化時、口座・税制確認未完了時に使わない資金。</td></tr></tbody></table>
     </div>
   </section>
 
   <section>
-    <h2>7. 口座数別の資産推移</h2>
+    <h2>8. 口座数別の資産推移</h2>
     <p class="note">5年CAGR継続は「過去5年と同じ勢いが1年続いた場合」、10年CAGR継続は「長期平均に戻した場合」、保守実績仮説は「5年・10年・直近1年のうち一番低い実績値を使った場合」です。</p>
     <div class="table-wrap">
       <table>
@@ -406,7 +434,7 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>8. CSV</h2>
+    <h2>9. CSV</h2>
     <div class="links">
       <a href="932_historical_return_by_ticker_20260609.csv">銘柄別 実績・仮説利回りCSV</a>
       <a href="933_historical_return_account_sim_20260609.csv">口座数別 資産推移CSV</a>
