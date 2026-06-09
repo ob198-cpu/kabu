@@ -179,6 +179,9 @@ for (let accounts = 1; accounts <= 10; accounts += 1) {
   accountRows.push({
     accounts,
     total,
+    phase1: total * phases[0][2],
+    phase2: total * phases[1][2],
+    phase3: total * phases[2][2],
     invested: total * stockRatio,
     cash: total * cashRatio,
     y1p5: projected(total, p5, 1),
@@ -191,12 +194,51 @@ for (let accounts = 1; accounts <= 10; accounts += 1) {
 }
 
 const accountCsv = [
-  ["口座数", "元本合計", "株式投入", "現金待機", "1年後_5年CAGR継続", "1年後_10年CAGR継続", "1年後_保守実績仮説", "3年後_保守実績仮説", "5年後_保守実績仮説", "10年後_保守実績仮説"],
-  ...accountRows.map((r) => [r.accounts, r.total, r.invested, r.cash, r.y1p5, r.y1p10, r.y1cons, r.y3cons, r.y5cons, r.y10cons].map((v, i) => i === 0 ? v : Math.round(v))),
+  ["口座数", "元本合計", "6/18-24初回投入", "7/15前後追加", "8/17-21追加", "株式投入合計", "現金待機", "1年後_5年CAGR継続", "1年後_10年CAGR継続", "1年後_保守実績仮説", "3年後_保守実績仮説", "5年後_保守実績仮説", "10年後_保守実績仮説"],
+  ...accountRows.map((r) => [r.accounts, r.total, r.phase1, r.phase2, r.phase3, r.invested, r.cash, r.y1p5, r.y1p10, r.y1cons, r.y3cons, r.y5cons, r.y10cons].map((v, i) => i === 0 ? v : Math.round(v))),
 ].map((row) => row.map(csvEscape).join(",")).join("\n");
 
 fs.writeFileSync(path.join(ROOT, "932_historical_return_by_ticker_20260609.csv"), "\uFEFF" + byTickerCsv, "utf8");
 fs.writeFileSync(path.join(ROOT, "933_historical_return_account_sim_20260609.csv"), "\uFEFF" + accountCsv, "utf8");
+
+const allocationRows = [];
+for (let accounts = 1; accounts <= 10; accounts += 1) {
+  const total = baseCapital * accounts;
+  for (const r of candidateRows) {
+    allocationRows.push({
+      accounts,
+      ticker: r.ticker,
+      name: r.name,
+      stockWeight: r.stockWeight,
+      capitalWeight: r.capitalWeight,
+      phase1: total * phases[0][2] * r.stockWeight,
+      phase2: total * phases[1][2] * r.stockWeight,
+      phase3: total * phases[2][2] * r.stockWeight,
+      finalAmount: total * stockRatio * r.stockWeight,
+      conservative: r.conservative,
+      note: r.note,
+    });
+  }
+}
+
+const allocationCsv = [
+  ["口座数", "ticker", "銘柄", "株式内比率", "元本比率", "6/18-24初回購入額", "7/15前後追加購入額", "8/17-21追加購入額", "最終購入額", "保守実績仮説利回り", "警戒理由"],
+  ...allocationRows.map((r) => [
+    r.accounts,
+    r.ticker,
+    r.name,
+    fmtPct(r.stockWeight * 100),
+    fmtPct(r.capitalWeight * 100),
+    Math.round(r.phase1),
+    Math.round(r.phase2),
+    Math.round(r.phase3),
+    Math.round(r.finalAmount),
+    r.conservative === null ? "未取得" : r.conservative.toFixed(1),
+    r.note,
+  ]),
+].map((row) => row.map(csvEscape).join(",")).join("\n");
+
+fs.writeFileSync(path.join(ROOT, "934_historical_return_ticker_timing_allocation_20260609.csv"), "\uFEFF" + allocationCsv, "utf8");
 
 const tickerRows = candidateRows.map((r) => `
   <tr>
@@ -214,10 +256,27 @@ const tickerRows = candidateRows.map((r) => `
   </tr>
 `).join("");
 
+const oneAccountBuyRows = allocationRows.filter((r) => r.accounts === 1).map((r) => `
+  <tr>
+    <td>${esc(r.ticker)}</td>
+    <td><b>${esc(r.name)}</b></td>
+    <td>${fmtPct(r.stockWeight * 100)}</td>
+    <td>${fmtPct(r.capitalWeight * 100)}</td>
+    <td>${fmtYen(r.phase1)}</td>
+    <td>${fmtYen(r.phase2)}</td>
+    <td>${fmtYen(r.phase3)}</td>
+    <td><b>${fmtYen(r.finalAmount)}</b></td>
+    <td>${r.conservative === null ? "未取得" : fmtPct(r.conservative)}</td>
+  </tr>
+`).join("");
+
 const accountHtmlRows = accountRows.map((r) => `
   <tr>
     <td>${r.accounts}</td>
     <td>${fmtYen(r.total)}</td>
+    <td>${fmtYen(r.phase1)}</td>
+    <td>${fmtYen(r.phase2)}</td>
+    <td>${fmtYen(r.phase3)}</td>
     <td>${fmtYen(r.invested)}</td>
     <td>${fmtYen(r.cash)}</td>
     <td>${fmtYen(r.y1p5)}</td>
@@ -302,28 +361,40 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>4. 買付タイミング</h2>
+    <h2>4. 1口座240万円での銘柄別購入予定</h2>
+    <p class="note">この表が実務用の中心です。1口座240万円の場合、最終的に株式168万円、現金72万円を残す前提で、各銘柄にいつ・いくら入れるかを示します。10口座の場合は各金額を10倍します。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ticker</th><th>銘柄</th><th>株式内比率</th><th>元本比率</th><th>6/18〜24 初回</th><th>7/15前後 追加</th><th>8/17〜21 追加</th><th>最終購入額</th><th>保守実績仮説</th></tr></thead>
+        <tbody>${oneAccountBuyRows}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 買付タイミング</h2>
     <div class="table-wrap">
       <table><thead><tr><th>予定日</th><th>段階</th><th>元本比率</th><th>1口座240万円</th><th>実行条件</th></tr></thead><tbody>${phaseRows}<tr><td>常時</td><td>現金待機</td><td>${fmtPct(cashRatio * 100)}</td><td>${fmtYen(baseCapital * cashRatio)}</td><td>急落時、イベント悪化時、口座・税制確認未完了時に使わない資金。</td></tr></tbody></table>
     </div>
   </section>
 
   <section>
-    <h2>5. 口座数別の資産推移</h2>
+    <h2>6. 口座数別の資産推移</h2>
     <p class="note">5年CAGR継続は「過去5年と同じ勢いが1年続いた場合」、10年CAGR継続は「長期平均に戻した場合」、保守実績仮説は「5年・10年・直近1年のうち一番低い実績値を使った場合」です。</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>口座数</th><th>元本合計</th><th>株式投入</th><th>現金</th><th>1年後 5年CAGR継続</th><th>1年後 10年CAGR継続</th><th>1年後 保守実績仮説</th><th>5年後 保守実績仮説</th><th>10年後 保守実績仮説</th></tr></thead>
+        <thead><tr><th>口座数</th><th>元本合計</th><th>6/18〜24</th><th>7/15前後</th><th>8/17〜21</th><th>株式投入</th><th>現金</th><th>1年後 5年CAGR継続</th><th>1年後 10年CAGR継続</th><th>1年後 保守実績仮説</th><th>5年後 保守実績仮説</th><th>10年後 保守実績仮説</th></tr></thead>
         <tbody>${accountHtmlRows}</tbody>
       </table>
     </div>
   </section>
 
   <section>
-    <h2>6. CSV</h2>
+    <h2>7. CSV</h2>
     <div class="links">
       <a href="932_historical_return_by_ticker_20260609.csv">銘柄別 実績・仮説利回りCSV</a>
       <a href="933_historical_return_account_sim_20260609.csv">口座数別 資産推移CSV</a>
+      <a href="934_historical_return_ticker_timing_allocation_20260609.csv">口座数別 銘柄購入額CSV</a>
       <a href="historical_return_compound_simulation_20260609.pdf">PDF版</a>
     </div>
   </section>
