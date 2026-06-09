@@ -374,13 +374,13 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>3. この版で直したこと</h2>
-    <p class="note">前回の8%・10%・12%は説明用シナリオであり、銘柄ごとの過去実績から出した数字ではありません。この版では、現10社それぞれの過去実績を読み込み、5年CAGR、10年CAGR、保守実績仮説を分けて口座数別の資産推移に反映しています。</p>
+    <h2>3. 試算の前提</h2>
+    <p class="note">対象は、現時点でNISA 1年保有テストの候補として整理している10社です。過去5年・過去10年・直近1年の株価実績を確認し、1口座240万円で段階的に買う場合の資産推移を試算しています。購入を確定する資料ではなく、6月の市場イベント後に再判定するための確認資料です。</p>
     <div class="grid">
-      <div class="metric"><b>株式投入比率</b><strong>${fmtPct(stockRatio * 100)}</strong></div>
-      <div class="metric"><b>5年CAGR継続</b><strong>${fmtPct(p5)}</strong></div>
-      <div class="metric"><b>10年CAGR継続</b><strong>${fmtPct(p10)}</strong></div>
-      <div class="metric"><b>保守実績仮説</b><strong>${fmtPct(pConservative)}</strong></div>
+      <div class="metric"><b>株式に使う予定比率</b><strong>${fmtPct(stockRatio * 100)}</strong></div>
+      <div class="metric"><b>過去5年ペースの場合</b><strong>${fmtPct(p5)}</strong></div>
+      <div class="metric"><b>過去10年ペースの場合</b><strong>${fmtPct(p10)}</strong></div>
+      <div class="metric"><b>慎重に見た場合</b><strong>${fmtPct(pConservative)}</strong></div>
     </div>
   </section>
 
