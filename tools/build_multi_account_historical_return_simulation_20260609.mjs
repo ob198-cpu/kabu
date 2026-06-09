@@ -300,34 +300,34 @@ const html = `<!doctype html>
   <style>
     :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--soft:#eef6fc;--amber:#a85b00;--red:#a01818}
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.72;font-size:16px}
-    header{background:var(--navy);color:white;padding:30px 36px}
-    h1{margin:0 0 10px;font-size:34px;letter-spacing:0}
-    header p{margin:0;font-weight:800;color:white}
-    main{max-width:1460px;margin:0 auto;padding:22px}
-    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
-    h2{margin:0 0 14px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:26px}
-    .lead{font-size:18px;font-weight:900;color:#061827;margin:0 0 14px}
-    .note{background:#fff7e7;border-left:7px solid var(--amber);padding:14px;border-radius:8px;font-weight:900;color:#111;margin:0 0 14px;font-size:16px}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.78;font-size:18px}
+    header{background:var(--navy);color:white;padding:34px 40px}
+    h1{margin:0 0 12px;font-size:40px;letter-spacing:0}
+    header p{margin:0;font-weight:850;color:white;font-size:19px}
+    main{max-width:1560px;margin:0 auto;padding:24px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:22px;margin:0 0 22px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 16px;border-left:10px solid var(--blue);padding-left:14px;color:var(--navy);font-size:31px}
+    .lead{font-size:21px;font-weight:900;color:#061827;margin:0 0 16px}
+    .note{background:#fff7e7;border-left:8px solid var(--amber);padding:16px;border-radius:8px;font-weight:900;color:#111;margin:0 0 16px;font-size:19px}
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-    .metric{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px}
-    .metric b{display:block;color:var(--navy);font-size:15px}
-    .metric strong{display:block;font-size:25px;margin-top:4px}
+    .metric{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:15px}
+    .metric b{display:block;color:var(--navy);font-size:17px}
+    .metric strong{display:block;font-size:31px;margin-top:4px}
     .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
     table{width:100%;border-collapse:collapse;background:white}
-    th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;color:#061827}
-    th{background:#e2f0fb;color:#053b63;font-weight:900;white-space:nowrap}
-    td{font-size:15px}
-    .formula{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:14px;font-weight:900;font-size:16px}
+    th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;color:#061827}
+    th{background:#e2f0fb;color:#053b63;font-weight:900;white-space:nowrap;font-size:17px}
+    td{font-size:17px}
+    .formula{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:16px;font-weight:900;font-size:19px}
     .explain{display:grid;grid-template-columns:1.1fr 1fr;gap:12px}
-    .box{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:15px;font-weight:900;font-size:16px}
+    .box{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:17px;font-weight:900;font-size:19px}
     .hypothesis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-    .hypothesis-card{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:15px}
-    .hypothesis-card h3{margin:0 0 8px;color:var(--navy);font-size:20px}
+    .hypothesis-card{background:#f7fbff;border:1px solid var(--line);border-radius:10px;padding:17px}
+    .hypothesis-card h3{margin:0 0 10px;color:var(--navy);font-size:24px}
     .hypothesis-card p{margin:0;font-weight:850}
     .box b{color:var(--navy)}
     .links a{display:inline-block;margin:0 8px 8px 0;background:#0b67a3;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:900}
-    @media print{body{background:white;font-size:13px}main{max-width:none;padding:9mm}section{box-shadow:none;break-inside:avoid;page-break-inside:avoid}h1{font-size:28px}h2{font-size:21px}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px}.note,.box,.formula{font-size:13px}}
+    @media print{body{background:white;font-size:15px}main{max-width:none;padding:8mm}section{box-shadow:none;break-inside:avoid;page-break-inside:avoid;padding:14px}h1{font-size:31px}h2{font-size:24px}.lead{font-size:17px}.table-wrap{overflow:visible}th{font-size:12px;padding:6px}td{font-size:12px;padding:6px}.note,.box,.formula{font-size:15px}.metric strong{font-size:23px}.hypothesis-card h3{font-size:18px}}
     @media(max-width:900px){main{padding:12px}.grid,.explain,.hypothesis-grid{grid-template-columns:1fr}}
   </style>
 </head>
