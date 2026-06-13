@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月18日以降 購入前・最終検査ボード</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7;font-size:18px}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;color:#fff;font-weight:900}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--amber);background:#fff7e7;padding:14px 16px;border-radius:10px;font-weight:900;color:#111;margin:0 0 14px}
+    .notice.bad{border-left-color:var(--red);background:#fff1f1}
+    .notice.ok{border-left-color:var(--green);background:#effaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px;min-height:112px}
+    .card b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
+    .card strong{display:block;font-size:28px;color:var(--blue);line-height:1.2}
+    .card span{display:block;font-size:14px;font-weight:800;color:#41566c;margin-top:6px}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .links a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;border:1px solid #78acd2;color:#06436d;background:#fff;border-radius:9px;padding:9px 15px;font-weight:900}
+    .table-wrap{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{border-collapse:collapse;width:100%;min-width:980px;background:#fff}
+    th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:10px 11px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e5f1fb;color:var(--navy);font-weight:900}
+    tr:last-child td{border-bottom:0}
+    th:last-child,td:last-child{border-right:0}
+    .pill{display:inline-block;border-radius:999px;padding:3px 9px;color:#fff;font-weight:900;font-size:14px;background:#50677c}
+    .pill.bad{background:var(--red)}
+    .pill.warn{background:var(--amber)}
+    .pill.ok{background:var(--green)}
+    @media(max-width:860px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff;font-size:13px}header{padding:18px 22px}section{box-shadow:none;border-radius:0;break-inside:avoid}.links{display:none}.table-wrap{overflow:visible}table{min-width:0;font-size:11px}th,td{padding:6px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>6月18日以降 購入前・最終検査ボード</h1>
+  <p>作成: 2026/06/13 21:20 / イベント、候補10社、資金配分、本人操作、NISA口座区分、記録がそろうまで発注へ進まないための実務画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice bad">停止: イベント未入力。E02/E03/E04など未入力イベントが3件あります。現時点では購入金額を確定しません。</p>
+    <div class="cards">
+      <div class="card"><b>現時点の投入上限</b><strong>0円</strong><span>未入力イベントが埋まるまで購入金額を確定しない。</span></div>
+      <div class="card"><b>未入力イベント</b><strong>3件</strong><span>E02/E03/E04が残る間は停止</span></div>
+      <div class="card"><b>緑通過時の参考上限</b><strong>840,000円</strong><span>全イベント確認後のみ</span></div>
+      <div class="card"><b>黄注意時の参考上限</b><strong>360,000円</strong><span>注意が残る場合の保守上限</span></div>
+    </div>
+    <div class="links">
+      <a href="post_0618_event_csv_apply_helper_20260613.html">CSV正本反映補助</a>
+      <a href="post_0618_event_update_runbook_20260613.html">CSV反映ランブック</a>
+      <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
+      <a href="capital_allocation_plan.html">資金配分</a>
+      <a href="post_0618_prebuy_final_verification_20260613.csv">検査結果CSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>最終ゲート</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:6%">順番</th><th style="width:16%">ゲート</th><th style="width:12%">判定</th><th style="width:20%">見るもの</th><th style="">通過条件</th><th style="">未通過時</th></tr></thead><tbody><tr><td>1</td><td>6月イベント入力</td><td>未入力</td><td>102_june_event_result_input.csv</td><td>E01〜E04が入力済み。悪化がない。</td><td>購入金額を確定しない。</td></tr><tr><td>2</td><td>資金配分</td><td>現時点0円</td><td>108_capital_allocation_by_ticker.csv / 109_capital_scenario_plan.csv</td><td>イベント判定に応じた上限が出ており、現在の上限が説明できる。</td><td>全銘柄を保留。緑通過時・黄注意時の上限だけ参考表示。</td></tr><tr><td>3</td><td>候補10社の扱い</td><td>10社確認</td><td>106_june_event_engine_output.csv / 当日運用ボード</td><td>候補10社が中心候補・条件付き候補・保留に分類されている。</td><td>候補数や分類が崩れていれば注文票に進めない。</td></tr><tr><td>4</td><td>本人操作・NISA口座区分</td><td>手動確認必須</td><td>本人スマホ、本人ログイン、証券会社画面</td><td>本人が注文画面を開き、口座区分がNISA、数量・金額・残枠を確認する。</td><td>本人操作・NISA区分・残枠が未確認なら発注しない。</td></tr><tr><td>5</td><td>注文票・記録</td><td>手動確認必須</td><td>本人別注文票、運用記録CSV</td><td>購入理由、買わない条件、上値・下値ルール、次回確認日が残っている。</td><td>記録できない注文は行わない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>イベント入力状況</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:7%">ID</th><th style="width:14%">日程</th><th style="">イベント</th><th style="width:10%">状態</th><th style="">入力状況</th><th style="">市場反応</th><th style="">失敗時の扱い</th></tr></thead><tbody><tr><td>E01</td><td>2026-06-10</td><td>米5月CPI</td><td>注意</td><td>入力済み/確認中</td><td>注意</td><td>半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td></tr><tr><td>E02</td><td>2026-06-15〜2026-06-16</td><td>日銀会合</td><td>未入力</td><td>未入力</td><td>未入力</td><td>日本株の予定買付を延期、または比率を下げる</td></tr><tr><td>E03</td><td>2026-06-16〜2026-06-17</td><td>FOMC</td><td>未入力</td><td>未入力</td><td>未入力</td><td>半導体・高PER・高ボラ候補を延期</td></tr><tr><td>E04</td><td>2026-06-18以降</td><td>最終購入前確認</td><td>未入力</td><td>未入力</td><td>未入力</td><td>監視継続または初回除外</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>候補10社と投入上限</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:17%">銘柄</th><th style="width:12%">役割</th><th style="">目標比率</th><th style="">現在</th><th style="width:10%">現在上限</th><th style="">緑通過時</th><th style="">黄注意時</th><th style="">確認条件</th></tr></thead><tbody><tr><td>8053.T 住友商事</td><td>中心候補</td><td>18.75%</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T 三井住友FG</td><td>中心候補</td><td>18.75%</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T 日立製作所</td><td>中心候補</td><td>18.75%</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T 三菱電機</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T アドバンテスト</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T 東京エレクトロン</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T 三菱重工業</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T TDK</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T ディスコ</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T フジクラ</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>6/18以降の操作順</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:12%">時点</th><th style="width:18%">作業</th><th style="">内容</th><th style="">止める条件</th></tr></thead><tbody><tr><td>6/15〜6/16</td><td>日銀会合後の入力</td><td>ドル円、日経平均/TOPIX、銀行・商社・輸出株の反応をE02へ入力。</td><td>急な円高、指数大幅下落、日本株全体のリスクオフ。</td></tr><tr><td>6/16〜6/17</td><td>FOMC後の入力</td><td>米10年金利、NASDAQ、SOX、ドル円の反応をE03へ入力。</td><td>米長期金利急騰、NASDAQ/SOX急落、高PER株売り。</td></tr><tr><td>6/18以降</td><td>最終購入前確認</td><td>候補別株価、PER/PBR/ROE、直近下落率、未確認データ、証券会社画面をE04へ入力。</td><td>未確認データを点数に混ぜる必要がある、本人操作やNISA区分が未確認。</td></tr><tr><td>入力後</td><td>CSV正本反映</td><td>102_june_event_result_input_to_apply.csvを反映補助で検査し、102正本へ反映。</td><td>列名不一致、E01〜E04欠落、状態分類の不正、悪化イベント。</td></tr><tr><td>反映後</td><td>注文票へ進むか判定</td><td>この最終検査ボード、資金配分、当日運用ボードを確認する。</td><td>現在上限0円、本人操作未確認、注文票未作成。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>本人操作・注文前チェック</h2>
+    <p class="notice">この欄は自動判定ではありません。発注前に、本人が証券会社画面で確認する項目です。ここが埋まらない場合は、イベントが通過していても注文に進みません。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:8%">確認欄</th><th style="width:22%">項目</th><th style="">内容</th></tr></thead><tbody><tr><td>□</td><td>本人スマホ・本人ログイン</td><td>本人が自分の端末で証券会社アプリまたはWebにログインする。</td></tr><tr><td>□</td><td>NISA口座区分</td><td>注文画面で口座区分がNISAになっていることを本人が確認する。</td></tr><tr><td>□</td><td>NISA残枠</td><td>注文予定金額が年間枠・成長投資枠・残枠を超えていないことを確認する。</td></tr><tr><td>□</td><td>注文内容</td><td>銘柄、数量、概算金額、成行/指値、手数料、受渡日を確認する。</td></tr><tr><td>□</td><td>買わない条件</td><td>当日急落、イベント悪化、候補別停止条件に該当しないか確認する。</td></tr><tr><td>□</td><td>記録</td><td>購入理由、見送り理由、次回確認日を運用記録に残す。</td></tr></tbody></table></div>
+  </section>
+</main>
+</body>
+</html>

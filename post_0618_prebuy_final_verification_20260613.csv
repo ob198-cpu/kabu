@@ -1,0 +1,21 @@
+﻿section,item,status,value,note
+summary,overall_status,停止: イベント未入力,0円,E02/E03/E04など未入力イベントが3件あります。現時点では購入金額を確定しません。
+summary,pending_events,3,,未入力が残る間は購入金額を確定しない。
+summary,attention_events,1,,注意が残る場合は小比率または保留。
+summary,green_initial_upper,参考,"840,000円",全イベント確認後のみ使う上限。
+summary,yellow_initial_upper,参考,"360,000円",注意が残る場合の保守上限。
+gate,6月イベント入力,未入力,102_june_event_result_input.csv,購入金額を確定しない。
+gate,資金配分,現時点0円,108_capital_allocation_by_ticker.csv / 109_capital_scenario_plan.csv,全銘柄を保留。緑通過時・黄注意時の上限だけ参考表示。
+gate,候補10社の扱い,10社確認,106_june_event_engine_output.csv / 当日運用ボード,候補数や分類が崩れていれば注文票に進めない。
+gate,本人操作・NISA口座区分,手動確認必須,本人スマホ、本人ログイン、証券会社画面,本人操作・NISA区分・残枠が未確認なら発注しない。
+gate,注文票・記録,手動確認必須,本人別注文票、運用記録CSV,記録できない注文は行わない。
+candidate,8053.T 住友商事,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,8316.T 三井住友FG,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,6501.T 日立製作所,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,6503.T 三菱電機,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,6857.T アドバンテスト,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,8035.T 東京エレクトロン,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,7011.T 三菱重工業,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,6762.T TDK,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,6146.T ディスコ,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
+candidate,5803.T フジクラ,保留,0円,E01からE04、本人操作、NISA口座区分、証券会社画面確認
