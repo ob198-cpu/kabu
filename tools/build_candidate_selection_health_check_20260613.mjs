@@ -25,6 +25,8 @@ const FILES = {
   channels: "889_cross_channel_candidate_comparison_20260605.csv",
   universe: "780_universe100_reselection_metrics_20260528.csv",
   reaction: "869_candidate10_earnings_reaction_rebuild_20260604.csv",
+  reactionFocus: "656_focus10_reaction_metrics.csv",
+  reactionDue: "517_candidate_10_reaction_due_for_closure.csv",
 };
 
 function exists(file) {
@@ -46,6 +48,16 @@ function byTicker(rows) {
 
 function normalizeChannel(value) {
   return String(value ?? "").replace("半導体材料・製造装置", "半導体製造装置・材料");
+}
+
+function reactionLabel(row) {
+  if (!row) return "未収録";
+  return row.status || row.reaction_status || row.score_connection || "収録あり";
+}
+
+function reactionUsableForScore(row) {
+  const label = reactionLabel(row);
+  return label.includes("20営業日到達") || label.includes("接続候補");
 }
 
 function makeRow(check, status, purpose, result, action = "") {
@@ -78,8 +90,15 @@ const channels = exists(FILES.channels) ? readCsv(FILES.channels) : [];
 const logic = exists(FILES.finalLogic) ? readCsv(FILES.finalLogic) : [];
 const universe = exists(FILES.universe) ? readCsv(FILES.universe) : [];
 const reaction = exists(FILES.reaction) ? readCsv(FILES.reaction) : [];
+const reactionFocus = exists(FILES.reactionFocus) ? readCsv(FILES.reactionFocus) : [];
+const reactionDue = exists(FILES.reactionDue) ? readCsv(FILES.reactionDue) : [];
 const events = exists(FILES.eventInput) ? readCsv(FILES.eventInput) : [];
 const scenario = exists(FILES.scenario) ? readCsv(FILES.scenario) : [];
+
+const reactionByTicker = new Map();
+for (const row of [...reaction, ...reactionDue, ...reactionFocus]) {
+  if (row.ticker && !reactionByTicker.has(row.ticker)) reactionByTicker.set(row.ticker, row);
+}
 
 const selectedTickers = allocation.map((row) => row.ticker);
 const selectedUnique = unique(selectedTickers);
@@ -127,7 +146,7 @@ const maps = {
   eventOutput: byTicker(eventOutput),
   workbench: byTicker(workbench),
   channels: byTicker(channels),
-  reaction: byTicker(reaction),
+  reaction: reactionByTicker,
 };
 
 for (const [label, map] of Object.entries(maps)) {
@@ -140,6 +159,21 @@ for (const [label, map] of Object.entries(maps)) {
     missing.length === 0 ? "" : "該当CSVへ候補を追加、または未接続理由を明記する",
   ));
 }
+
+const reactionNotUsable = selectedUnique
+  .map((ticker) => {
+    const row = maps.reaction.get(ticker);
+    if (!row) return `${ticker}: 未収録`;
+    return reactionUsableForScore(row) ? null : `${ticker}: ${reactionLabel(row)}`;
+  })
+  .filter(Boolean);
+checks.push(makeRow(
+  "決算後反応の採点接続",
+  reactionNotUsable.length === 0 ? "OK" : "注意",
+  "決算後1日・5日だけで過信せず、20営業日到達または接続候補になったものだけを採点へ使う",
+  reactionNotUsable.length === 0 ? "10社すべて採点接続可能" : reactionNotUsable.join(" / "),
+  reactionNotUsable.length === 0 ? "" : "未収録・未到達・暫定の銘柄は、購入前説明では補完待ちとして扱う",
+));
 
 const greenRows = snapshot.filter((row) => row.scenario === "green");
 const yellowRows = snapshot.filter((row) => row.scenario === "yellow");
@@ -237,7 +271,7 @@ const selectedRows = allocation.map((row) => {
   const engine = maps.eventOutput.get(row.ticker) ?? {};
   const wb = maps.workbench.get(row.ticker) ?? {};
   const ch = maps.channels.get(row.ticker) ?? {};
-  const react = maps.reaction.get(row.ticker) ?? {};
+  const react = maps.reaction.get(row.ticker);
   const pass = statusFields.filter((field) => wb[field] === "pass").length;
   const partial = statusFields.filter((field) => wb[field] === "partial").length;
   return {
@@ -249,7 +283,7 @@ const selectedRows = allocation.map((row) => {
     "緑通過時": yen(row.all_pass_allocation_yen),
     "スコア": engine.reference_score || "",
     "データ": `pass ${pass}/6・partial ${partial}/6`,
-    "決算反応": react.status || "未接続",
+    "決算反応": reactionLabel(react),
     "チャンネル上の扱い": ch.status || "未接続",
     "停止条件": row.max_position_note,
   };
