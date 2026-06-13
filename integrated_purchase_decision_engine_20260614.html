@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>統合購入可否エンジン</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1200px}
+    main{max-width:1600px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .sub{border-left-color:var(--blue);background:#eef7ff}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .links a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards,.links{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>統合購入可否エンジン</h1>
+  <p>イベント、口座、財務、100社扱い、期待仮説、急落リスクをまとめて、各銘柄の現上限とブロック理由を出す実用画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">現在は全銘柄「購入不可」、現上限は0円です。6月イベント、本人別NISA口座、公式財務の未完了が残っているため、注文票へ金額を反映しません。</p>
+    <div class="cards">
+      <div class="card"><b>総合判定</b><strong>購入不可</strong><span>全銘柄0円</span></div>
+      <div class="card"><b>イベント上限</b><strong>0円</strong><span>現在</span></div>
+      <div class="card"><b>口座確認</b><strong>0/10</strong><span>未確認は0円</span></div>
+      <div class="card"><b>財務pass</b><strong>3/10</strong><span>partialは比率引上げ禁止</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>統合サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:180px">項目</th><th style="width:220px">状態</th><th style="width:160px">数値</th><th style="width:700px">理由</th></tr></thead><tbody><tr><td class="">現在の総合判定</td><td class="bad">購入不可</td><td class="bad">買付上限0円</td><td class="ok">6月イベント・本人別NISA口座・一部公式財務が未完了のため</td></tr><tr><td class="">口座準備</td><td class="ok">0/10口座確認済み</td><td class="bad">0円ロック</td><td class="bad">本人スマホ、本人ログイン、NISA残枠、注文画面のNISA区分が未確認なら注文へ進めない</td></tr><tr><td class="">イベント準備</td><td class="">現在</td><td class="bad">0円</td><td class="bad">買付しない。日銀、FOMC、最終購入前確認を先に入力する</td></tr><tr><td class="">銘柄ゲート</td><td class="ok">3/10 財務pass</td><td class="ok">5/10 再選定候補</td><td class="bad">財務partial、監視、除外、期待信頼度Cは予定比率を上げない</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>候補10社 現在の購入可否</h2>
+    <p class="notice sub">緑時・黄時の金額は参考上限です。現在はイベントと口座が未完了のため、現上限は全て0円です。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:92px">ticker</th><th style="width:130px">銘柄</th><th>役割</th><th style="width:100px">現判定</th><th style="width:80px">現上限</th><th style="width:110px">緑時参考上限</th><th style="width:110px">黄時参考上限</th><th style="width:360px">ブロック理由</th><th style="width:360px">解除条件</th><th>100社扱い</th><th>財務状態</th><th>期待信頼度</th><th>決算後反応</th><th>最大下落</th><th>注文票反映</th></tr></thead><tbody><tr><td class="">8053.T</td><td class="">住友商事</td><td class="ok">中心候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">157,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認</td><td class="ok">再選定候補</td><td class="ok">pass</td><td class="ok">B</td><td class="">43.7</td><td class="">-35.8%</td><td class="">反映しない</td></tr><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="ok">中心候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">157,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認</td><td class="ok">再選定候補</td><td class="ok">pass</td><td class="ok">A</td><td class="">57.1</td><td class="">-29.4%</td><td class="">反映しない</td></tr><tr><td class="">6501.T</td><td class="">日立製作所</td><td class="ok">中心候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">157,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 期待仮説信頼度C / 決算後反応が弱い</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 期待仮説信頼度Cの理由を解消または比率抑制</td><td class="ok">再選定候補</td><td class="ok">pass</td><td class="bad">C</td><td class="">29.1</td><td class="">-38.7%</td><td class="">反映しない</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="warn">条件付き候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">52,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 公式財務がpartial</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 公式IRでPER/PBR/ROE・利益率・受注等を補完</td><td class="ok">再選定候補</td><td class="warn">partial</td><td class="ok">B</td><td class="">43.9</td><td class="">-34.0%</td><td class="">反映しない</td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">条件付き候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">52,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 公式財務がpartial / 監視扱い / 期待仮説信頼度C / 決算後反応が弱い / 過去最大下落が大きい</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 公式IRでPER/PBR/ROE・利益率・受注等を補完 / 100社再選定の除外・監視理由が解消するまで保留 / 期待仮説信頼度Cの理由を解消または比率抑制</td><td class="warn">監視</td><td class="warn">partial</td><td class="bad">C</td><td class="">20.4</td><td class="">-51.4%</td><td class="">反映しない</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">条件付き候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">52,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 公式財務がpartial / 監視扱い / 過去最大下落が大きい</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 公式IRでPER/PBR/ROE・利益率・受注等を補完 / 100社再選定の除外・監視理由が解消するまで保留</td><td class="warn">監視</td><td class="warn">partial</td><td class="ok">B</td><td class="">68.2</td><td class="">-55.8%</td><td class="">反映しない</td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="warn">条件付き候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">52,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 公式財務がpartial / 100社再選定で除外 / 期待仮説信頼度C / 決算後反応が弱い</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 公式IRでPER/PBR/ROE・利益率・受注等を補完 / 100社再選定の除外・監視理由が解消するまで保留 / 期待仮説信頼度Cの理由を解消または比率抑制</td><td class="bad">除外</td><td class="warn">partial</td><td class="bad">C</td><td class="">34.5</td><td class="">-35.8%</td><td class="">反映しない</td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="warn">条件付き候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">52,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 公式財務がpartial / 過去最大下落が大きい</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 公式IRでPER/PBR/ROE・利益率・受注等を補完</td><td class="ok">再選定候補</td><td class="warn">partial</td><td class="ok">B</td><td class="">91.6</td><td class="">-46.3%</td><td class="">反映しない</td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="warn">条件付き候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">52,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 公式財務がpartial / 100社再選定で除外 / 期待仮説信頼度C / 決算後反応が弱い / 過去最大下落が大きい</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 公式IRでPER/PBR/ROE・利益率・受注等を補完 / 100社再選定の除外・監視理由が解消するまで保留 / 期待仮説信頼度Cの理由を解消または比率抑制</td><td class="bad">除外</td><td class="warn">partial</td><td class="bad">C</td><td class="">32.3</td><td class="">-65.2%</td><td class="">反映しない</td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="warn">条件付き候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">52,500円</td><td class="bad">0円</td><td class="bad">6月イベント未完了 / 本人別NISA口座未確認 / 公式財務がpartial / 100社再選定で除外 / 期待仮説信頼度C / 決算後反応が弱い / 過去最大下落が大きい</td><td class="bad">日銀・FOMC・最終確認を入力 / 本人別NISA口座・本人操作・残枠を確認 / 公式IRでPER/PBR/ROE・利益率・受注等を補完 / 100社再選定の除外・監視理由が解消するまで保留 / 期待仮説信頼度Cの理由を解消または比率抑制</td><td class="bad">除外</td><td class="warn">partial</td><td class="bad">C</td><td class="">0</td><td class="">-50.7%</td><td class="">反映しない</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>実行の順番</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:60px">順番</th><th style="width:220px">作業</th><th style="width:520px">通過条件</th><th style="width:260px">失敗時</th></tr></thead><tbody><tr><td class="">1</td><td class="">6月イベント入力</td><td class="bad">日銀・FOMC・最終購入前確認が緑または黄</td><td class="bad">全銘柄0円</td></tr><tr><td class="">2</td><td class="ok">本人別NISA口座確認</td><td class="ok">本人スマホ・本人ログイン・NISA残枠・注文画面区分確認</td><td class="bad">該当口座は0円</td></tr><tr><td class="">3</td><td class="bad">銘柄別ロック確認</td><td class="ok">財務pass、再選定候補、期待信頼度A/B、反応弱すぎない</td><td class="bad">保留・監視・除外</td></tr><tr><td class="">4</td><td class="">資金配分反映</td><td class="">Green/Yellowの上限内で注文票を作る</td><td class="">注文票へ反映しない</td></tr><tr><td class="">5</td><td class="">購入後記録</td><td class="">購入理由・指数比・予測誤差・途中決済理由を記録</td><td class="bad">次回追加停止</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="latest_practical_start_20260614.html">最新 実用パート入口</a>
+      <a href="remaining_gap_hardening_board_20260614.html">未完了改善・購入ロック一覧</a>
+      <a href="june_event_input_decision_board_20260614.html">6月イベント入力・判定ボード</a>
+      <a href="nisa_account_execution_gate_20260614.html">NISA口座・本人操作 実行ゲート</a>
+      <a href="benchmark_allocation_switchboard_20260614.html">S&P500/TOPIX +1% 資金配分スイッチ</a>
+      <a href="postbuy_operation_record_board_20260614.html">購入後 運用記録・予実管理ボード</a>
+    </div>
+  </section>
+  <footer>作成: 2026/06/14 05:32 / 本画面は購入推奨ではありません。各ゲートの未完了を買付上限へ反映するための実用画面です。</footer>
+</main>
+</body>
+</html>
