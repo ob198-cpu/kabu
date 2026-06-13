@@ -1,0 +1,5 @@
+﻿順番,作業,使う資料,出力
+1,event_actual_input_template を埋める,CPI、日銀、FOMC、指数、為替、金利,6月イベント判定の更新
+2,account_readiness_input_template を埋める,本人スマホ、証券会社画面、NISA残枠、本人銀行、二段階認証,本人別の購入可否
+3,financial_partial_input_template を埋める,公式IR、決算短信、決算説明資料,partial銘柄の保留解除可否
+4,統合購入可否エンジンを再生成,上記3テンプレートの入力結果,0円解除可否、上限、注文票反映

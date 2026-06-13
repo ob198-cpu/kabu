@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6/18再判定 入力作業台</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1600px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .sub{border-left-color:var(--blue);background:#eef7ff}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .links a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px;font-weight:900}
+    .downloads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .downloads a{display:block;text-decoration:none;background:#0b67a3;color:#fff;border-radius:10px;padding:14px;font-weight:900;text-align:center}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.links,.downloads{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>6/18再判定 入力作業台</h1>
+  <p>6/18以降に実データを入れて、購入不可0円を解除できるかを再判定するための入力テンプレートです。</p>
+</header>
+<main>
+  <section>
+    <h2>この画面の役割</h2>
+    <p class="notice">ここは購入判断の画面ではありません。イベント、本人別口座、公式財務の入力漏れをなくし、入力後に統合購入可否エンジンへ反映するための作業台です。</p>
+    <div class="downloads">
+      <a href="redecision_event_input_template_20260614.csv">イベント入力CSV</a>
+      <a href="redecision_account_input_template_20260614.csv">本人別口座入力CSV</a>
+      <a href="redecision_financial_partial_input_template_20260614.csv">財務partial補完CSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>作業順序</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:60px">順番</th><th style="width:320px">作業</th><th style="width:520px">使う資料</th><th style="width:360px">出力</th></tr></thead><tbody><tr><td class="">1</td><td class="">event_actual_input_template を埋める</td><td class="">CPI、日銀、FOMC、指数、為替、金利</td><td class="">6月イベント判定の更新</td></tr><tr><td class="">2</td><td class="">account_readiness_input_template を埋める</td><td class="">本人スマホ、証券会社画面、NISA残枠、本人銀行、二段階認証</td><td class="">本人別の購入可否</td></tr><tr><td class="">3</td><td class="">financial_partial_input_template を埋める</td><td class="">公式IR、決算短信、決算説明資料</td><td class="">partial銘柄の保留解除可否</td></tr><tr><td class="">4</td><td class="">統合購入可否エンジンを再生成</td><td class="">上記3テンプレートの入力結果</td><td class="bad">0円解除可否、上限、注文票反映</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>イベント入力テンプレート</h2>
+    <p class="notice sub">E02、E03、E04が空欄のままだと全銘柄0円です。実数と市場反応を入力してから再判定します。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:70px">event_id</th><th style="width:130px">日付</th><th style="width:150px">イベント</th><th style="width:220px">入力する実数</th><th style="width:160px">市場反応</th><th style="width:100px">判定入力</th><th>入力候補</th><th style="width:360px">合格条件</th><th style="width:300px">失敗時対応</th><th>入力メモ</th></tr></thead><tbody><tr><td class="">E01</td><td class="">2026-06-10</td><td class="">米5月CPI</td><td class="warn">入力済み/確認中</td><td class="warn">注意</td><td class="warn">注意</td><td class="bad">緑 / 黄 / 赤 / 注意 / 未入力</td><td class="">インフレ再加速と米金利急騰が同時に起きず、NASDAQ/SOXが大崩れしない</td><td class="">半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td><td class=""></td></tr><tr><td class="">E02</td><td class="">2026-06-15〜2026-06-16</td><td class="">日銀会合</td><td class=""></td><td class=""></td><td class=""></td><td class="bad">緑 / 黄 / 赤 / 注意 / 未入力</td><td class="">急な円高ショックと日本株指数の大幅下落が同時に出ない</td><td class="">日本株の予定買付を延期、または比率を下げる</td><td class=""></td></tr><tr><td class="">E03</td><td class="">2026-06-16〜2026-06-17</td><td class="">FOMC</td><td class=""></td><td class=""></td><td class=""></td><td class="bad">緑 / 黄 / 赤 / 注意 / 未入力</td><td class="">米長期金利が急騰せず、ハイテク株のリスク許容度が崩れない</td><td class="">半導体・高PER・高ボラ候補を延期</td><td class=""></td></tr><tr><td class="">E04</td><td class="">2026-06-18以降</td><td class="">最終購入前確認</td><td class=""></td><td class=""></td><td class=""></td><td class="bad">緑 / 黄 / 赤 / 注意 / 未入力</td><td class="bad">停止条件なし、未確認データを点数に混ぜない、本人操作とNISA口座区分を確認</td><td class="warn">監視継続または初回除外</td><td class=""></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>本人別口座入力テンプレート</h2>
+    <p class="notice sub">本人操作とNISA口座区分が確認できない口座は0円です。ここは口座ごとの実務確認に使います。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:80px">account_id</th><th style="width:120px">本人名</th><th style="width:120px">証券会社</th><th>NISA口座</th><th>本人スマホ</th><th>本人銀行口座</th><th>二段階認証</th><th style="width:120px">NISA残枠円</th><th>入力候補</th><th style="width:220px">注文可能判定</th><th>メモ</th></tr></thead><tbody><tr><td class="">口座1</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座2</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座3</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座4</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座5</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座6</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座7</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座8</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座9</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr><tr><td class="">口座10</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">確認済み / 未確認</td><td class="ok">全項目確認済みなら再判定</td><td class=""></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>財務partial補完テンプレート</h2>
+    <p class="notice sub">partial銘柄は、公式IRで数値確認できるまで比率を上げません。空欄のままなら、監視または保留の扱いを残します。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:90px">ticker</th><th style="width:130px">銘柄</th><th style="width:100px">100社扱い</th><th>期待信頼度</th><th style="width:200px">確認元</th><th style="width:360px">必須項目</th><th>PER</th><th>PBR</th><th>ROE_pct</th><th>営業利益率_pct</th><th>今期会社予想_前期比</th><th>受注またはセグメント寄与</th><th style="width:220px">高PER説明</th><th style="width:220px">参照URLまたは資料名</th><th>資料日付</th><th>入力状態</th><th>再判定メモ</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">再選定候補</td><td class="">B</td><td class="">三菱電機IR/決算短信・説明資料</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">未確認</td><td class=""></td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">監視</td><td class="">C</td><td class="">アドバンテストIR/決算資料</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">未確認</td><td class=""></td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">監視</td><td class="">B</td><td class="">東京エレクトロンIR/決算短信</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">未確認</td><td class=""></td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="">除外</td><td class="">C</td><td class="">三菱重工IR/決算資料</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">未確認</td><td class=""></td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="">再選定候補</td><td class="">B</td><td class="">TDK IR/決算短信</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">未確認</td><td class=""></td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="">除外</td><td class="">C</td><td class="">ディスコIR/決算説明資料</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">未確認</td><td class=""></td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="">除外</td><td class="">C</td><td class="">フジクラIR/決算短信</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="bad">未確認</td><td class=""></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>検算ルール</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:160px">対象</th><th style="width:460px">OK条件</th><th style="width:340px">NG条件</th><th style="width:300px">反映</th></tr></thead><tbody><tr><td class="">6月イベント</td><td class="bad">actual_value、market_reaction、判定入力が空欄でない</td><td class="bad">E02/E03/E04が未入力</td><td class="bad">未入力がある間は全銘柄0円</td></tr><tr><td class="">本人別NISA口座</td><td class="ok">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み</td><td class="bad">本人操作またはNISA区分が未確認</td><td class="bad">該当口座は0円</td></tr><tr><td class="">公式財務</td><td class="ok">PER/PBR/ROE、利益率、会社予想、必要に応じて受注・高PER説明が公式資料で確認済み</td><td class="">partialのまま、または出所がない</td><td class="warn">比率引上げ禁止、監視または保留</td></tr><tr><td class="warn">除外・監視銘柄</td><td class="warn">除外・監視理由が解消し、同じゲートを再通過</td><td class="">価格反応・下落・財務説明が弱いまま</td><td class="bad">初回買付不可または小口保留</td></tr><tr><td class="">再生成</td><td class="">入力後に関連CSVとHTMLを再生成</td><td class="">入力しただけで画面未反映</td><td class="">古い判定のままになる</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="purchase_unlock_input_queue_20260614.html">購入ロック解除 入力キュー</a>
+      <a href="integrated_purchase_decision_engine_20260614.html">統合購入可否エンジン</a>
+      <a href="june_event_input_decision_board_20260614.html">6月イベント入力・判定ボード</a>
+      <a href="nisa_account_execution_gate_20260614.html">NISA口座・本人操作 実行ゲート</a>
+      <a href="candidate10_financial_confirmation_gate_20260614.html">候補10社 財務確認ゲート</a>
+      <a href="latest_practical_start_20260614.html">最新 実用パート入口</a>
+    </div>
+  </section>
+  <footer>作成: 2026/06/14 05:40 / 入力テンプレートは購入推奨ではありません。再判定に必要な実データを漏れなく集めるための作業台です。</footer>
+</main>
+</body>
+</html>
