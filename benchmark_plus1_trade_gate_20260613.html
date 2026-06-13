@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S&amp;P500/TOPIX +1%目標と買付比率ゲート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1560px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    h3{margin:14px 0 8px;color:var(--navy);font-size:21px}
+    p{margin:0 0 12px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .okbox{border-left-color:var(--green);background:#eefaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .link-card{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .link-card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .link-card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+    .link-card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;table-layout:auto;background:#fff}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    ul,ol{margin:8px 0 0 1.4em}
+    li{margin:5px 0}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){body{font-size:16px}main{padding:12px}.cards,.links{grid-template-columns:1fr}.table-wrap{overflow-x:auto}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:13px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+<header><h1>S&amp;P500/TOPIX +1%目標と買付比率ゲート</h1><p>個別株を選ぶ目的を指数超過に接続し、劣後した場合の追加停止・比率引下げを明文化します。</p></header>
+<main>
+<section><h2>現在の扱い</h2><p class="notice danger">現時点では、6月イベントと本人操作確認が未完了のため買付上限は 0円 です。指数比較は買付比率を上げる理由ではなく、上げてよいかを確認するゲートとして使います。</p></section>
+<section><h2>指数+1%目標の分岐</h2><div class="table-wrap"><table><thead><tr><th>時点</th><th>条件</th><th>行動</th><th>理由</th></tr></thead><tbody><tr><td class="">購入前</td><td class="warn">イベント入力が未完了、または本人操作・NISA口座区分が未確認</td><td class="">買付0円</td><td class="">市場条件以前に実行条件が未充足</td></tr><tr><td class="">購入前</td><td class="ok">候補10社バスケットがS&amp;P500/TOPIXに対し20営業日または60営業日で-1%以上劣後</td><td class="bad">初回買付を延期、または高リスク銘柄を除外</td><td class="">指数+1%目標と逆方向のため、個別株を選ぶ根拠が弱い</td></tr><tr><td class="">購入前</td><td class="ok">候補10社バスケットが指数に+1%以上優位、かつイベント緑判定</td><td class="">初回35%上限を検討</td><td class="">個別株比率を持つ説明が成立しやすい</td></tr><tr><td class="">購入前</td><td class="warn">指数優位が0〜+1%未満、またはイベントに注意判定が残る</td><td class="">初回15%上限。半導体・高ボラはさらに半分</td><td class="">勝ち筋はあるが、指数を明確に上回る根拠が弱い</td></tr><tr><td class="">保有後1か月</td><td class="">個別株バスケットがS&amp;P500/TOPIXへ-1%以上劣後</td><td class="bad">追加買付停止</td><td class="">当初仮説の再点検</td></tr><tr><td class="">保有後1〜3か月</td><td class="">個別株バスケットが-3%以上劣後、かつ理由が説明できない</td><td class="ok">次回追加比率を半分へ低下</td><td class="">指数投資に劣る可能性を抑える</td></tr><tr><td class="">保有後</td><td class="">個別株バスケットが-5%以上劣後、または主要銘柄が下方修正</td><td class="bad">個別株追加停止。現金または指数へ退避候補</td><td class="">S&amp;P500/TOPIX+1%目標から外れるため</td></tr></tbody></table></div></section>
+<footer>作成: 2026/06/13 23:55 / 本画面は売買指示ではなく、NISA 1年保有テストの判断補助・検証記録です。</footer>
+</main>
+</body>
+</html>

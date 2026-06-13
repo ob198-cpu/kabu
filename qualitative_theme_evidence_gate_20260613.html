@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的テーマ 仮説・実績分離ゲート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1560px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    h3{margin:14px 0 8px;color:var(--navy);font-size:21px}
+    p{margin:0 0 12px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .okbox{border-left-color:var(--green);background:#eefaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .link-card{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .link-card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .link-card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+    .link-card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;table-layout:auto;background:#fff}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    ul,ol{margin:8px 0 0 1.4em}
+    li{margin:5px 0}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){body{font-size:16px}main{padding:12px}.cards,.links{grid-template-columns:1fr}.table-wrap{overflow-x:auto}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:13px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+<header><h1>質的テーマ 仮説・実績分離ゲート</h1><p>ニュースや連想材料をそのまま足し算せず、仮説層、実績層、量的スコアを分けて扱います。</p></header>
+<main>
+<section><h2>基本ルール</h2><p class="notice">質的テーマは、購入スコアへ単純加点しません。まず候補探索に使い、次に公式数字・業界統計・株価反応の実績で検証し、最後に量的スコアを通ったものだけ購入候補へ接続します。</p></section>
+<section><h2>テーマ別の扱い</h2><div class="table-wrap"><table><thead><tr><th>テーマ</th><th>仮説層</th><th>必要な実績層</th><th>スコアへの反映</th><th>現状</th></tr></thead><tbody><tr><td class="">半導体製造装置・材料</td><td class="">AI投資が続くなら、GPUそのものだけでなく検査、前工程、切断・研削、材料へ資金が回る</td><td class="">SOX/NASDAQ、半導体装置受注、決算の受注・粗利率、決算後株価反応</td><td class="ok">証拠が2種類以上そろうまで加点しない。候補探索の入口に限定</td><td class="ok">一部確認済み。過去イベントとの定量照合は継続</td></tr><tr><td class="">AIインフラ・データセンター・電力</td><td class="">AI利用増で電力、冷却、電線、光通信、制御機器の需要が増える</td><td class="">電力需要統計、データセンター投資発表、企業受注、関連銘柄の指数超過</td><td class="">テーマ名だけで買わない。受注・売上寄与が確認できた銘柄だけ補助評価</td><td class="">テーマ整理済み。売上寄与・受注の銘柄別接続は不足</td></tr><tr><td class="">フィジカルAI</td><td class="">AIが現場・工場・ロボットへ広がると、FA、センサー、電源、モーター周辺に需要が出る</td><td class="">設備投資統計、FA受注、会社説明資料、過去決算後反応</td><td class="warn">監視枠。1年NISA候補にするには量的スコア通過が必要</td><td class="warn">探索枠。購入候補ではなく監視</td></tr><tr><td class="">量子コンピューター</td><td class="">研究・政策・大手提携で期待は出るが、短期売上との接続が弱い場合が多い</td><td class="">公式受注、売上寄与、政府予算、株価反応の継続性</td><td class="warn">原則監視。売上寄与が薄い場合は購入スコアへ入れない</td><td class="ok">探索枠。購入候補ではない</td></tr><tr><td class="">金利・銀行</td><td class="">金利上昇で利ざや改善が期待される一方、信用コストと政策変更がリスク</td><td class="">日銀政策、長期金利、銀行株指数、決算の利ざや・信用コスト</td><td class="">量的データと相性が良いテーマ。指数比較を必ず見る</td><td class="ok">中心候補に接続済み</td></tr><tr><td class="">資源・商社</td><td class="">資源価格、円安、株主還元で買われるが、資源価格急落時は逆回転しやすい</td><td class="">資源価格、為替、還元方針、セグメント利益、配当・自社株買い</td><td class="">財務・還元・指数比較を主、テーマは補助</td><td class="ok">中心候補に接続済み</td></tr></tbody></table></div></section>
+<footer>作成: 2026/06/13 23:55 / 本画面は売買指示ではなく、NISA 1年保有テストの判断補助・検証記録です。</footer>
+</main>
+</body>
+</html>

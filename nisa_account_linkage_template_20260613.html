@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA口座・本人操作 連動テンプレート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1560px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    h3{margin:14px 0 8px;color:var(--navy);font-size:21px}
+    p{margin:0 0 12px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .okbox{border-left-color:var(--green);background:#eefaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .link-card{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .link-card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .link-card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+    .link-card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;table-layout:auto;background:#fff}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    ul,ol{margin:8px 0 0 1.4em}
+    li{margin:5px 0}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){body{font-size:16px}main{padding:12px}.cards,.links{grid-template-columns:1fr}.table-wrap{overflow-x:auto}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:13px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+<header><h1>NISA口座・本人操作 連動テンプレート</h1><p>税制レイヤーを確認補助で終わらせず、実際の口座状態、NISA残枠、本人操作可否を購入前ゲートへ接続します。</p></header>
+<main>
+<section><h2>購入前の扱い</h2><p class="notice danger">この表の各口座で、NISA口座、本人スマホ、本人ログイン、本人操作、証券会社画面のNISA区分、NISA残枠が未確認なら、その本人分は購入不可です。</p></section>
+<section><h2>本人別チェック表</h2><div class="table-wrap"><table><thead><tr><th>口座</th><th>本人</th><th>証券会社</th><th>NISA状態</th><th>本人スマホ</th><th>本人銀行口座</th><th>二段階認証</th><th>NISA残枠</th><th>操作</th><th>ゲート</th><th>確認事項</th></tr></thead><tbody><tr><td class="">口座1</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座2</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座3</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座4</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座5</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座6</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座7</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座8</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座9</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr><tr><td class="">口座10</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="warn">未確認</td><td class="bad">未入力</td><td class="">本人操作のみ</td><td class="bad">未入力のため購入不可</td><td class="">本人名義スマホ・本人ログイン・本人操作・NISA口座区分を確認</td></tr></tbody></table></div></section>
+<footer>作成: 2026/06/13 23:55 / 本画面は売買指示ではなく、NISA 1年保有テストの判断補助・検証記録です。</footer>
+</main>
+</body>
+</html>

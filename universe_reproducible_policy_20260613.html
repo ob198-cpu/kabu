@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>100社前後 母集団固定ルール</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1560px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    h3{margin:14px 0 8px;color:var(--navy);font-size:21px}
+    p{margin:0 0 12px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .okbox{border-left-color:var(--green);background:#eefaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .link-card{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .link-card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .link-card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+    .link-card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;table-layout:auto;background:#fff}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    ul,ol{margin:8px 0 0 1.4em}
+    li{margin:5px 0}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){body{font-size:16px}main{padding:12px}.cards,.links{grid-template-columns:1fr}.table-wrap{overflow-x:auto}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:13px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+<header><h1>100社前後 母集団固定ルール</h1><p>候補10社が恣意的に見えないよう、母集団の作り方、除外条件、テーマ枠の扱いを固定します。</p></header>
+<main>
+<section><h2>母集団の考え方</h2><p>目的は、最初から好きな銘柄を選ぶことではなく、一定条件を満たす母集団から同じ基準で候補を比較することです。完全な100社固定より、条件を固定して80〜120社程度に収める方が実務上は自然です。</p><div class="table-wrap"><table><thead><tr><th>ルール</th><th>内容</th><th>理由</th></tr></thead><tbody><tr><td class="">対象市場</td><td class="">原則として国内上場の流動性がある大型・中型銘柄を対象にする</td><td class="">NISAで1年保有するため、売買しやすさと情報取得性を確保する</td></tr><tr><td class="">母集団数</td><td class="">厳密に100社固定ではなく、80〜120社程度を許容</td><td class="ok">恣意的な調整を避けつつ、テーマごとの候補を落としすぎない</td></tr><tr><td class="ok">最低データ</td><td class="">株価、出来高、5年CAGR、10年CAGR、S&amp;P差、最大下落、月次勝率</td><td class="">価格だけでなく継続性と下落耐性を見る</td></tr><tr><td class="">財務補完</td><td class="">PER/PBR/ROE、利益率、受注、セグメント寄与は公式資料または信頼できるデータで補完</td><td class="">株価が良いだけの銘柄を避ける</td></tr><tr><td class="">テーマ枠</td><td class="">半導体、AIインフラ、フィジカルAI、量子などは別チャンネルで抽出してから同じゲートへ通す</td><td class="">テーマの思いつきと量的選定を混ぜない</td></tr><tr><td class="bad">除外条件</td><td class="bad">直近60日が弱い、1年で指数劣後、最大下落が大きすぎる、決算後反応が弱い場合は監視または除外</td><td class="">上昇期待だけでなく反落リスクを制御する</td></tr><tr><td class="">再現性</td><td class="bad">抽出条件、除外条件、採用理由、未確認項目をCSVに残す</td><td class="">なぜ選ばれたか、後で検証できるようにする</td></tr></tbody></table></div></section>
+<footer>作成: 2026/06/13 23:55 / 本画面は売買指示ではなく、NISA 1年保有テストの判断補助・検証記録です。</footer>
+</main>
+</body>
+</html>
