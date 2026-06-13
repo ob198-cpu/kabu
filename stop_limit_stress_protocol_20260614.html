@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ストップ安・急落対策プロトコル</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1580px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .okbox{border-left-color:var(--green);background:#eefaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{font-weight:800;color:#263e55}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;table-layout:auto;background:#fff}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:13px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+<header><h1>ストップ安・急落対策プロトコル</h1><p>過去最大下落、直近下落、決算後反応、100社再選定での扱いから急落警戒度を出し、当日・翌営業日・追加買付・売却検討の行動を分けます。</p></header>
+<main>
+<section><h2>この画面の使い方</h2><p class="notice danger">急落警戒度は「ストップ安になる確率」ではありません。過去データと現時点の弱点から、買い増しを止めるべき銘柄を見分けるための安全側スコアです。</p><div class="cards"><div class="card"><b>急落警戒度 高</b><strong>4/10</strong><span>初回買付を小口または見送り。追加買付は原則停止</span></div><div class="card"><b>初回除外</b><strong>3/10</strong><span>100社再選定側で除外。財務確認だけでは復帰させない</span></div><div class="card"><b>買い増し禁止条件</b><strong>共通</strong><span>ストップ安または前日比-10%以上なら当日買い増し禁止</span></div><div class="card"><b>翌営業日確認</b><strong>共通</strong><span>出来高、気配、指数差、会社発表、テーマ崩れを確認</span></div></div></section>
+<section><h2>共通ルール</h2><div class="table-wrap"><table><thead><tr><th>トリガー</th><th>行動</th><th>理由</th></tr></thead><tbody><tr><td class="">ストップ安、または前日比-10%以上</td><td class="bad">当日買い増し禁止</td><td class="">落ちる理由が判明する前に平均単価を下げに行かない</td></tr><tr><td class="">指数は横ばいなのに個別だけ急落</td><td class="">個別材料を確認。会社発表・決算・需給を調べる</td><td class="">市場全体ではなく銘柄固有リスクの可能性</td></tr><tr><td class="">SOX/NASDAQ/日経平均も同時に急落</td><td class="bad">全体リスクとして追加停止。半導体・高ボラは一段厳格化</td><td class="">個別株で取り返す局面ではない可能性</td></tr><tr><td class="">2営業日連続で大幅下落</td><td class="warn">保有継続理由を再確認。指数劣後なら一部縮小候補</td><td class="">単発ノイズではなくトレンド変化の可能性</td></tr><tr><td class="">下方修正・不祥事・資金繰り悪化</td><td class="">NISAでも売却検討</td><td class="">非課税メリットより元本毀損リスクを優先</td></tr></tbody></table></div></section>
+<section><h2>銘柄別 急落警戒度</h2><div class="table-wrap"><table><thead><tr><th>銘柄</th><th>名称</th><th>100社扱い</th><th>警戒度</th><th>警戒ランク</th><th>上限</th><th>5年最大下落</th><th>1年最大下落</th><th>60日騰落</th><th>決算反応</th><th>初回扱い</th><th>当日対応</th><th>翌営業日対応</th><th>追加ルール</th><th>売却検討</th></tr></thead><tbody><tr><td class="">8053.T</td><td class="">住友商事</td><td class="ok">再選定候補</td><td class="">36.5</td><td class="warn">中</td><td class="">18.75%</td><td class="">-35.8%</td><td class="">-18.8%</td><td class="">11.9%</td><td class="">43.7</td><td class="">通常確認</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="ok">共通ゲート通過後のみ追加可</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="ok">再選定候補</td><td class="">23.8</td><td class="ok">低</td><td class="">18.75%</td><td class="">-29.4%</td><td class="">-19.3%</td><td class="">0.8%</td><td class="">57.1</td><td class="">通常確認</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="ok">共通ゲート通過後のみ追加可</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">6501.T</td><td class="">日立製作所</td><td class="ok">再選定候補</td><td class="">52</td><td class="warn">中</td><td class="">6.25%</td><td class="">-38.7%</td><td class="">-22.8%</td><td class="">1.1%</td><td class="">29.1</td><td class="">通常確認</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="ok">共通ゲート通過後のみ追加可</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="ok">再選定候補</td><td class="">34.3</td><td class="ok">低</td><td class="">6.25%</td><td class="">-34%</td><td class="">-16.3%</td><td class="">12.3%</td><td class="">43.9</td><td class="">通常確認</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="ok">共通ゲート通過後のみ追加可</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">監視</td><td class="">77</td><td class="bad">高</td><td class="">6.25%</td><td class="">-51.4%</td><td class="">-28.9%</td><td class="">-6.2%</td><td class="">20.4</td><td class="">小口または見送り</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="bad">追加買付は原則停止。再開は指数回復と材料確認後</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">監視</td><td class="">47</td><td class="warn">中</td><td class="">3%</td><td class="">-55.8%</td><td class="">-28.8%</td><td class="">16.6%</td><td class="">68.2</td><td class="">通常確認</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="ok">共通ゲート通過後のみ追加可</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="bad">除外</td><td class="">86.7</td><td class="bad">高</td><td class="">3%</td><td class="">-35.8%</td><td class="">-26.6%</td><td class="">-22.2%</td><td class="">34.5</td><td class="bad">初回除外</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="bad">追加買付は原則停止。再開は指数回復と材料確認後</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="ok">再選定候補</td><td class="">36.3</td><td class="warn">中</td><td class="">6.25%</td><td class="">-46.3%</td><td class="">-28.2%</td><td class="">57.7%</td><td class="">91.6</td><td class="">通常確認</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="ok">共通ゲート通過後のみ追加可</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="bad">除外</td><td class="">88.9</td><td class="bad">高</td><td class="">3%</td><td class="">-65.2%</td><td class="">-24.7%</td><td class="">-15.6%</td><td class="">32.3</td><td class="bad">初回除外</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="bad">追加買付は原則停止。再開は指数回復と材料確認後</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="bad">除外</td><td class="">91.7</td><td class="bad">高</td><td class="">3%</td><td class="">-50.7%</td><td class="">-45.3%</td><td class="">10.1%</td><td class="">0</td><td class="bad">初回除外</td><td class="bad">ストップ安または前日比-10%以上の日は買い増し禁止。成行売りも避け、材料確認を優先</td><td class="bad">翌営業日に出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定</td><td class="bad">追加買付は原則停止。再開は指数回復と材料確認後</td><td class="">下方修正、粉飾・不祥事、資金繰り悪化、テーマ根拠消滅ならNISAでも売却検討</td></tr></tbody></table></div></section>
+<section><h2>関連</h2><ul><li><a href="practical_action_cockpit_20260614.html">6/18以降 実用判断コックピット</a></li><li><a href="candidate10_risk_trade_rules_20260613.html">候補10社 銘柄別リスク・売買ルール</a></li><li><a href="stop_limit_stress_protocol_20260614.csv">CSVを開く</a></li></ul></section>
+<footer>作成: 2026/06/14 00:45 / 本画面は急落時の行動ルールであり、損失回避を保証するものではありません。</footer>
+</main>
+</body>
+</html>
