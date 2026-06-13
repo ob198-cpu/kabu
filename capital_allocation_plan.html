@@ -1,36 +1,60 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>240万円 資金配分ゲート</title>
-<style>
-:root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#d88700;--red:#b43c3c;--line:#d9e4ef;--bg:#f5f8fb}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.7}
-header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1320px;margin:auto;padding:22px}
-h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px;border-left:8px solid var(--blue);padding-left:12px;color:#083a5b}.lead{max-width:980px;color:#e8f6ff;font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
-.card b{display:block;font-size:30px;color:var(--blue)}.warn{border-left:8px solid var(--amber);background:#fff8ea}.bad{border-left:8px solid var(--red);background:#fff1f1}.ok{border-left:8px solid var(--green);background:#effaf5}
-.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
-table{border-collapse:collapse;width:100%;min-width:980px;table-layout:fixed}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;overflow-wrap:anywhere;word-break:break-word}th{background:#e8f3fb;color:#083a5b}
-.links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
-.pill{display:inline-block;border-radius:999px;color:#fff;padding:4px 10px;font-weight:900}.hold{background:var(--amber)}.go{background:var(--green)}.stop{background:var(--red)}
-@media(max-width:860px){main{padding:12px}table{min-width:900px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>240万円 資金配分ゲート</title>
+  <style>
+    :root { --ink:#061a2f; --blue:#0b4b78; --line:#c7d9ea; --soft:#f4f8fc; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",Arial,sans-serif; color:var(--ink); background:#edf4fa; font-size:18px; line-height:1.75; }
+    header { background:#0d3f66; color:#fff; padding:30px 42px; }
+    h1 { margin:0 0 8px; font-size:34px; }
+    main { max-width:1220px; margin:0 auto; padding:28px 24px 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:10px; padding:24px; margin:0 0 22px; }
+    h2 { margin:0 0 14px; font-size:25px; border-left:8px solid var(--blue); padding-left:12px; }
+    .summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:10px; background:var(--soft); padding:15px; }
+    .card b { display:block; font-size:16px; }
+    .card strong { display:block; font-size:26px; }
+    .links { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .links a { color:#06436d; text-decoration:none; font-weight:700; border:1px solid #78acd2; border-radius:9px; padding:9px 14px; background:#fff; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { border-collapse:collapse; width:100%; min-width:980px; background:#fff; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:11px 12px; text-align:left; vertical-align:top; overflow-wrap:anywhere; }
+    th { background:#e2f0fb; font-weight:800; }
+    tr:last-child td { border-bottom:0; }
+    th:last-child,td:last-child { border-right:0; }
+    @media (max-width:860px){ body{font-size:16px;} header{padding:24px 20px;} main{padding:18px 12px 40px;} .summary{grid-template-columns:1fr;} }
+  </style>
 </head>
 <body>
-<header><h1>240万円 資金配分ゲート</h1><p class="lead">作成: 2026/06/13 19:08 / 6月イベント後の判定に応じて、1口座240万円の初回投入上限を切り替える表です。</p></header>
+<header>
+  <h1>240万円 資金配分ゲート</h1>
+  <p>102_june_event_result_input.csv の状態をもとに、現時点の初回投入上限と銘柄別上限を再計算したページです。</p>
+</header>
 <main>
-<div class="links">
-  <a href="index.html">ホーム</a>
-  <a href="914_daily_operation_flow_20260606.html">実用フロー</a>
-  <a href="june_event_gate_engine.html">銘柄別イベント判定</a>
-  <a href="capital_allocation_plan.html">資金配分</a>
-</div>
-<section class="box warn"><h2>現在の扱い</h2><p>現時点ではE02・E03・E04が未入力のため、現在の購入額は0円です。6/18以降にイベント結果、候補別反応、本人操作、NISA口座区分、証券会社画面を確認してから上限を使います。</p></section>
-  <section class="box"><h2>1. シナリオ別配分</h2><div class="table-wrap"><table><thead><tr><th>scenario</th><th>stock_investment_yen</th><th>cash_yen</th><th>action</th></tr></thead><tbody><tr><td>緑: 全イベント確認後</td><td>840000</td><td>1560000</td><td>初回35%上限。中心候補を厚め、条件付き候補を小比率。</td></tr><tr><td>黄: 注意あり</td><td>360000</td><td>2040000</td><td>初回15%上限。半導体・高PER・高ボラは保留または小比率。</td></tr><tr><td>赤: 悪化</td><td>0</td><td>2400000</td><td>新規購入停止。監視と記録のみ。</td></tr><tr><td>第2回</td><td>480000</td><td></td><td>初回後の実績、指数比較、決算後反応を確認して追加上限20%。</td></tr><tr><td>第3回</td><td>360000</td><td></td><td>さらに確認後の追加上限15%。最低30%は現金待機。</td></tr></tbody></table></div></section>
-  <section class="box"><h2>2. 銘柄別配分上限</h2><div class="table-wrap"><table><thead><tr><th>ticker</th><th>name</th><th>role</th><th>target_weight_pct</th><th>market_signal</th><th>current_allocation_yen</th><th>all_pass_allocation_yen</th><th>attention_allocation_yen</th><th>bad_event_allocation_yen</th><th>condition_to_use</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>中心候補</td><td>18.75</td><td>買い可</td><td>0</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>中心候補</td><td>18.75</td><td>確認</td><td>0</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>中心候補</td><td>18.75</td><td>買い可</td><td>0</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>条件付き候補</td><td>6.25</td><td>確認</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>6.25</td><td>確認</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T</td><td>三菱重工業</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T</td><td>TDK</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>条件付き候補</td><td>6.25</td><td>確認</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody></table></div></section>
-  <section class="box"><h2>3. 比率引き下げ・途中停止ルール</h2><div class="table-wrap"><table><thead><tr><th>trigger</th><th>action</th><th>note</th></tr></thead><tbody><tr><td>個別株がS&amp;P500/TOPIXに1か月で2%以上劣後</td><td>追加購入を止める</td><td>原因を指数・業種・個別決算に分解</td></tr><tr><td>個別株が3か月でS&amp;P500/TOPIXに5%以上劣後</td><td>個別株比率を下げる</td><td>候補10社の入替または投信比率増加を検討</td></tr><tr><td>候補銘柄が購入後-5%</td><td>理由確認</td><td>指数連動なら保留、個別悪材料なら縮小</td></tr><tr><td>候補銘柄が購入後-10%</td><td>追加停止</td><td>決算・下方修正・テーマ崩れを確認</td></tr><tr><td>ストップ安または重大悪材料</td><td>新規買付停止</td><td>成行売却は避け、寄付き後の流動性と開示を確認</td></tr></tbody></table></div></section>
+  <section>
+    <h2>現在の結論</h2>
+    <div class="summary">
+      <div class="card"><b>イベント判定</b><strong>未入力あり</strong></div>
+      <div class="card"><b>初回投入上限</b><strong>0円</strong></div>
+      <div class="card"><b>現金待機</b><strong>2,400,000円</strong></div>
+      <div class="card"><b>更新時刻</b><strong>2026/06/13 20:57</strong></div>
+    </div>
+    <p>未入力イベントが埋まるまで購入金額を確定しない。</p>
+    <div class="links">
+      <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
+      <a href="post_0618_event_update_runbook_20260613.html">CSV反映ランブック</a>
+      <a href="post_0618_event_reflection_workflow_20260613.html">反映ワークフロー</a>
+      <a href="108_capital_allocation_by_ticker.csv">銘柄別CSV</a>
+      <a href="109_capital_scenario_plan.csv">シナリオCSV</a>
+    </div>
+  </section>
+  <section>
+    <h2>銘柄別の投入上限</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:18%">銘柄</th><th style="">役割</th><th style="">目標比率</th><th style="">現時点扱い</th><th style="width:13%">現在の投入上限</th><th style="">通過時上限</th><th style="">注意時上限</th><th style="">使用条件</th></tr></thead><tbody><tr><td>8053.T 住友商事</td><td>中心候補</td><td>18.75%</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T 三井住友FG</td><td>中心候補</td><td>18.75%</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T 日立製作所</td><td>中心候補</td><td>18.75%</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T 三菱電機</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T アドバンテスト</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T 東京エレクトロン</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T 三菱重工業</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T TDK</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T ディスコ</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T フジクラ</td><td>条件付き候補</td><td>6.25%</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody></table></div>
+  </section>
 </main>
 </body>
 </html>

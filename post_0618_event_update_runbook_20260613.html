@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月イベントCSV 反映・再生成ランブック</title>
+  <style>
+    :root { --ink:#061a2f; --blue:#0b4b78; --line:#c7d9ea; --soft:#f4f8fc; --bad:#b42318; --warn:#b76e00; --ok:#067647; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: "Yu Gothic", "Meiryo", Arial, sans-serif; color:var(--ink); background:#edf4fa; line-height:1.75; font-size:18px; }
+    header { background:#0d3f66; color:#fff; padding:32px 44px; }
+    header h1 { margin:0 0 10px; font-size:34px; letter-spacing:0; }
+    header p { margin:0; max-width:1100px; font-size:19px; }
+    main { max-width:1220px; margin:0 auto; padding:28px 24px 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:10px; padding:24px; margin:0 0 22px; page-break-inside:avoid; break-inside:avoid; }
+    h2 { margin:0 0 14px; font-size:25px; border-left:8px solid var(--blue); padding-left:12px; }
+    .links { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .links a { display:inline-flex; align-items:center; min-height:44px; padding:9px 15px; border:1px solid #78acd2; border-radius:9px; color:#06436d; text-decoration:none; font-weight:700; background:#fff; }
+    .summary-grid { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap:12px; }
+    .summary-card { border:1px solid var(--line); background:var(--soft); border-radius:10px; padding:16px; min-height:112px; }
+    .summary-card b { display:block; font-size:17px; margin-bottom:6px; }
+    .summary-card strong { display:block; font-size:28px; }
+    .status-box { border:2px solid var(--line); border-radius:12px; padding:18px; background:#fff; }
+    .status-box.bad { border-color:#f1a7a0; background:#fff5f5; }
+    .status-box.warn { border-color:#f4c47c; background:#fff9ee; }
+    .status-box.ok { border-color:#9bd8ba; background:#f0fff7; }
+    .status-box.pending { border-color:#94b9db; background:#f4f8fc; }
+    .status-line { display:grid; grid-template-columns: 170px 1fr; gap:12px; margin:8px 0; }
+    .table-wrap { width:100%; overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { border-collapse:collapse; width:100%; min-width:900px; background:#fff; }
+    th, td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:12px 13px; vertical-align:top; text-align:left; word-break:normal; overflow-wrap:anywhere; }
+    th { background:#e2f0fb; font-weight:800; }
+    tr:last-child td { border-bottom:0; }
+    td:last-child, th:last-child { border-right:0; }
+    code { display:block; white-space:normal; overflow-wrap:anywhere; background:#f7fafc; border:1px solid #d8e6f1; border-radius:8px; padding:9px 10px; font-size:16px; }
+    .note { border-left:5px solid var(--blue); background:#f7fbff; padding:14px 16px; margin:12px 0 0; }
+    @media (max-width: 860px) {
+      body { font-size:16px; }
+      header { padding:24px 20px; }
+      header h1 { font-size:28px; }
+      main { padding:18px 12px 40px; }
+      section { padding:18px; }
+      .summary-grid { grid-template-columns:1fr; }
+      .status-line { grid-template-columns:1fr; }
+    }
+    @media print {
+      body { background:#fff; font-size:14px; }
+      header { padding:18px 24px; }
+      section { border:1px solid #ccd8e3; border-radius:0; margin-bottom:14px; page-break-inside:avoid; break-inside:avoid; }
+      .links { display:none; }
+      .table-wrap { overflow:visible; }
+      table { min-width:0; font-size:12px; }
+      th, td { padding:7px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>6月イベントCSV 反映・再生成ランブック</h1>
+  <p>イベント実数を入力した後、どのCSVを正本にして、どのページを再生成し、どの条件なら購入判断へ進めないかを確認する実務用ページです。現在の判定は 102_june_event_result_input.csv を読み込んで作成しています。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の反映状態</h2>
+    <div class="summary-grid">
+      <div class="summary-card"><b>未入力</b><strong>3件</strong></div>
+      <div class="summary-card"><b>注意</b><strong>1件</strong></div>
+      <div class="summary-card"><b>悪化</b><strong>0件</strong></div>
+      <div class="summary-card"><b>通過</b><strong>0件</strong></div>
+    </div>
+    <div class="status-box pending">
+      <div class="status-line"><b>現時点の判定</b><span>購入判断へ進めない</span></div>
+      <div class="status-line"><b>初回投入上限</b><span>0円</span></div>
+      <div class="status-line"><b>理由</b><span>未入力イベントがあります。</span></div>
+      <div class="status-line"><b>次の操作</b><span>日銀、FOMC、最終購入前確認を入力してから再判定します。</span></div>
+    </div>
+    <div class="links">
+      <a href="912_june_event_actual_input_sheet_20260606.html">イベント実数入力</a>
+      <a href="post_0618_event_reflection_workflow_20260613.html">反映ワークフロー</a>
+      <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
+      <a href="post_0618_event_update_runbook_20260613.csv">CSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>CSV検証</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:18%">確認</th><th style="width:28%">結果</th><th style="">対応</th></tr></thead><tbody><tr><td>必須列</td><td>OK</td><td>再計算可能</td></tr><tr><td>必須イベント</td><td>OK</td><td>再計算可能</td></tr><tr><td>ステータス</td><td>OK</td><td>未入力・通過・注意・悪化のいずれかにする</td></tr><tr><td>空欄</td><td>6件</td><td>空欄があっても未入力扱い。ただし根拠説明には入力が必要</td></tr></tbody></table></div>
+    <p class="note">未入力が残る間は、銘柄がよく見えても購入金額を確定しません。悪化が1件でもあれば、新規購入停止を優先します。</p>
+  </section>
+
+  <section>
+    <h2>イベント別の入力状況</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:7%">ID</th><th style="width:14%">日程</th><th style="">イベント</th><th style="width:10%">状態</th><th style="">入力済み内容</th><th style="">市場反応</th><th style="">失敗時の扱い</th></tr></thead><tbody><tr><td>E01</td><td>2026-06-10</td><td>米5月CPI</td><td>注意</td><td>入力済み/確認中</td><td>注意</td><td>半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td></tr><tr><td>E02</td><td>2026-06-15〜2026-06-16</td><td>日銀会合</td><td>未入力</td><td>未入力</td><td>未入力</td><td>日本株の予定買付を延期、または比率を下げる</td></tr><tr><td>E03</td><td>2026-06-16〜2026-06-17</td><td>FOMC</td><td>未入力</td><td>未入力</td><td>未入力</td><td>半導体・高PER・高ボラ候補を延期</td></tr><tr><td>E04</td><td>2026-06-18以降</td><td>最終購入前確認</td><td>未入力</td><td>未入力</td><td>未入力</td><td>監視継続または初回除外</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>操作手順</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:6%">順番</th><th style="width:18%">作業</th><th style="width:22%">対象</th><th style="">確認</th><th style="">止める条件</th></tr></thead><tbody><tr><td>1</td><td>イベント実数を入力</td><td>912_june_event_actual_input_sheet_20260606.html</td><td>CPI、日銀、FOMC、最終確認の実数・市場反応・状態を入れる。</td><td>実数が未確認、または悪化判定を説明できない場合は進めない。</td></tr><tr><td>2</td><td>判定用CSVを正本CSVへ反映</td><td>102_june_event_result_input.csv</td><td>ブラウザで出したCSVを、公開フォルダの正本CSVへ反映する。</td><td>列名が変わった、E01からE04が欠けた、状態が4分類以外になった場合は反映しない。</td></tr><tr><td>3</td><td>CSV状態を検証</td><td>post_0618_event_update_runbook_20260613.html</td><td>このページで、未入力・注意・悪化・通過の件数と初回投入上限を見る。</td><td>未入力または悪化がある場合は、購入金額を確定しない。</td></tr><tr><td>4</td><td>関連ページを再生成</td><td>イベント判定、資金配分、当日運用ボード</td><td>再生成後に、当日運用ボードの投入上限と銘柄別扱いが更新されたか確認する。</td><td>古い時刻、古いCSV、リンク切れがある場合は使わない。</td></tr><tr><td>5</td><td>購入前の最終確認</td><td>証券会社画面、本人操作、NISA口座区分</td><td>このシステムは判断補助。注文は本人が証券会社画面で確認して行う。</td><td>本人操作・口座区分・注文数量・NISA枠が確認できない場合は発注しない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>再生成コマンド</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:24%">目的</th><th style="width:38%">コマンド</th><th style="">注意</th></tr></thead><tbody><tr><td>このページを再生成</td><td>node tools/build_event_update_runbook_20260613.mjs</td><td>CSVを上書きせず、状態確認ページだけ作ります。</td></tr><tr><td>イベント結果を候補・資金配分へ反映</td><td>node tools/recalculate_event_outputs_from_102_20260613.mjs</td><td>102を読み、106/108/109と資金配分ページを更新します。102自体は上書きしません。</td></tr><tr><td>当日運用ボードを再生成</td><td>node tools/build_post_0618_operation_board_20260613.mjs</td><td>102/106/108/109 CSVを読んで、当日ボードを更新します。</td></tr><tr><td>イベント反映ワークフローを再生成</td><td>node tools/build_event_reflection_workflow_20260613.mjs</td><td>102から108/109/当日ボードへの反映状況を更新します。</td></tr><tr><td>リンク切れ確認</td><td>node tools/check_critical_links_20260613.mjs</td><td>主要ページのリンク切れを検査します。</td></tr></tbody></table></div>
+    <p class="note">一括再構築系の処理は、入力CSVを初期値で上書きする可能性があるため、イベント実数入力後はこの表の対象ページだけを再生成します。</p>
+  </section>
+</main>
+</body>
+</html>

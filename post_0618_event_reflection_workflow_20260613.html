@@ -149,6 +149,7 @@
     <nav class="nav" aria-label="関連ページ">
       <a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
       <a href="912_june_event_actual_input_sheet_20260606.html">6月イベント実数入力</a>
+      <a href="post_0618_event_update_runbook_20260613.html">CSV反映ランブック</a>
       <a href="june_event_gate_engine.html">銘柄別イベント判定</a>
       <a href="capital_allocation_plan.html">資金配分プラン</a>
       <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
@@ -219,7 +220,7 @@
   <div class="table-wrap">
     <table>
       <thead><tr><th style="width:190px">scenario</th><th style="width:150px">stock_investment_yen</th><th style="width:150px">cash_yen</th><th style="">action</th></tr></thead>
-      <tbody><tr><td>緑: 全イベント確認後</td><td>840,000円</td><td>1,560,000円</td><td>初回35%上限。中心候補を厚め、条件付き候補を小比率。</td></tr><tr><td>黄: 注意あり</td><td>360,000円</td><td>2,040,000円</td><td>初回15%上限。半導体・高PER・高ボラは保留または小比率。</td></tr><tr><td>赤: 悪化</td><td>0円</td><td>2,400,000円</td><td>新規購入停止。監視と記録のみ。</td></tr><tr><td>第2回</td><td>480,000円</td><td>-</td><td>初回後の実績、指数比較、決算後反応を確認して追加上限20%。</td></tr><tr><td>第3回</td><td>360,000円</td><td>-</td><td>さらに確認後の追加上限15%。最低30%は現金待機。</td></tr></tbody>
+      <tbody><tr><td>現在</td><td>0円</td><td>2,400,000円</td><td>未入力イベントが埋まるまで購入金額を確定しない。</td></tr><tr><td>緑: 全イベント確認後</td><td>840,000円</td><td>1,560,000円</td><td>初回35%上限。中心候補を厚め、条件付き候補を小比率。</td></tr><tr><td>黄: 注意あり</td><td>360,000円</td><td>2,040,000円</td><td>初回15%上限。半導体・高PER・高ボラは保留または小比率。</td></tr><tr><td>赤: 悪化</td><td>0円</td><td>2,400,000円</td><td>新規購入停止。監視と記録のみ。</td></tr><tr><td>第2回</td><td>480,000円</td><td>-</td><td>初回後の実績、指数比較、決算後反応を確認して追加上限20%。</td></tr><tr><td>第3回</td><td>360,000円</td><td>-</td><td>さらに確認後の追加上限15%。最低30%は現金待機。</td></tr></tbody>
     </table>
   </div>
     </section>
@@ -230,7 +231,7 @@
   <div class="table-wrap">
     <table>
       <thead><tr><th style="width:95px">ticker</th><th style="">name</th><th style="width:120px">role</th><th style="">signal</th><th style="width:95px">current</th><th style="width:95px">green</th><th style="width:95px">yellow</th><th style="width:80px">red</th><th style="">condition</th></tr></thead>
-      <tbody><tr><td>8053.T</td><td>住友商事</td><td>中心候補</td><td>買い可</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>中心候補</td><td>確認</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>中心候補</td><td>買い可</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>条件付き候補</td><td>確認</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>確認</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T</td><td>三菱重工業</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T</td><td>TDK</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>条件付き候補</td><td>確認</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody>
+      <tbody><tr><td>8053.T</td><td>住友商事</td><td>中心候補</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>中心候補</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>中心候補</td><td>保留</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>条件付き候補</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>条件付き候補</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T</td><td>三菱重工業</td><td>条件付き候補</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T</td><td>TDK</td><td>条件付き候補</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>条件付き候補</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>条件付き候補</td><td>保留</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E01からE04、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody>
     </table>
   </div>
     </section>
@@ -259,6 +260,6 @@
       </ol>
     </section>
   </main>
-  <!-- generated: 2026/06/13 20:41 / total capital: 2400000 -->
+  <!-- generated: 2026/06/13 20:57 / total capital: 2400000 -->
 </body>
 </html>

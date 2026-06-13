@@ -1,0 +1,16 @@
+﻿section,item,value,note
+summary,status,購入判断へ進めない,未入力イベントがあります。
+summary,initial_limit,0円,日銀、FOMC、最終購入前確認を入力してから再判定します。
+status_count,未入力,3件,
+status_count,通過,0件,
+status_count,注意,1件,
+status_count,悪化,0件,
+validation,必須列,OK,再計算可能
+validation,必須イベント,OK,再計算可能
+validation,ステータス,OK,未入力・通過・注意・悪化のいずれかにする
+validation,空欄,6件,空欄があっても未入力扱い。ただし根拠説明には入力が必要
+operation_step,1,イベント実数を入力,912_june_event_actual_input_sheet_20260606.html / CPI、日銀、FOMC、最終確認の実数・市場反応・状態を入れる。
+operation_step,2,判定用CSVを正本CSVへ反映,102_june_event_result_input.csv / ブラウザで出したCSVを、公開フォルダの正本CSVへ反映する。
+operation_step,3,CSV状態を検証,post_0618_event_update_runbook_20260613.html / このページで、未入力・注意・悪化・通過の件数と初回投入上限を見る。
+operation_step,4,関連ページを再生成,イベント判定、資金配分、当日運用ボード / 再生成後に、当日運用ボードの投入上限と銘柄別扱いが更新されたか確認する。
+operation_step,5,購入前の最終確認,証券会社画面、本人操作、NISA口座区分 / このシステムは判断補助。注文は本人が証券会社画面で確認して行う。
