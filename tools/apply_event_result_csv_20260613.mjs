@@ -1,8 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
+import {
+  ROOT,
+  esc,
+  readCsvWithHeaders,
+  table,
+  writeCsv,
+} from "./lib/report_utils_20260613.mjs";
 
-const ROOT = process.cwd();
 const SOURCE_ARG = process.argv[2] || "";
 const CANONICAL_FILE = "102_june_event_result_input.csv";
 const DEFAULT_INPUT_FILE = "102_june_event_result_input_to_apply.csv";
@@ -22,90 +28,6 @@ const REQUIRED_HEADERS = [
 ];
 const REQUIRED_EVENTS = ["E01", "E02", "E03", "E04"];
 const ALLOWED_STATUSES = ["未入力", "通過", "注意", "悪化"];
-
-const generatedAt = new Intl.DateTimeFormat("ja-JP", {
-  timeZone: "Asia/Tokyo",
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-}).format(new Date());
-
-function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let quoted = false;
-  const clean = text.replace(/^\uFEFF/, "");
-  for (let i = 0; i < clean.length; i += 1) {
-    const ch = clean[i];
-    const next = clean[i + 1];
-    if (quoted) {
-      if (ch === '"' && next === '"') {
-        cell += '"';
-        i += 1;
-      } else if (ch === '"') {
-        quoted = false;
-      } else {
-        cell += ch;
-      }
-    } else if (ch === '"') {
-      quoted = true;
-    } else if (ch === ",") {
-      row.push(cell);
-      cell = "";
-    } else if (ch === "\n") {
-      row.push(cell.replace(/\r$/, ""));
-      rows.push(row);
-      row = [];
-      cell = "";
-    } else {
-      cell += ch;
-    }
-  }
-  if (cell.length > 0 || row.length > 0) {
-    row.push(cell.replace(/\r$/, ""));
-    rows.push(row);
-  }
-  return rows.filter((line) => line.some((value) => value !== ""));
-}
-
-function readCsvRaw(file) {
-  const rows = parseCsv(fs.readFileSync(file, "utf8"));
-  const [headers, ...body] = rows;
-  if (!headers) return { headers: [], rows: [] };
-  return {
-    headers,
-    rows: body.map((line) => Object.fromEntries(headers.map((header, index) => [header, line[index] ?? ""]))),
-  };
-}
-
-function csvCell(value) {
-  const text = String(value ?? "");
-  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
-}
-
-function writeCsv(file, headers, rows) {
-  const text = [
-    headers.join(","),
-    ...rows.map((row) => headers.map((header) => csvCell(row[header])).join(",")),
-  ].join("\n");
-  fs.writeFileSync(path.join(ROOT, file), `\uFEFF${text}\n`, "utf8");
-}
-
-function esc(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function table(headers, rows, options = {}) {
-  const widths = options.widths ?? {};
-  return `<div class="table-wrap"><table><thead><tr>${headers.map((header) => `<th style="${widths[header] ? `width:${widths[header]}` : ""}">${esc(header)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${headers.map((header) => `<td>${esc(row[header])}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
-}
 
 function resolveSource() {
   if (!SOURCE_ARG) return "";
@@ -167,7 +89,7 @@ function counts(rows) {
 }
 
 function writeHelperPage(result) {
-  const current = readCsvRaw(path.join(ROOT, CANONICAL_FILE));
+  const current = readCsvWithHeaders(path.join(ROOT, CANONICAL_FILE));
   const currentCounts = counts(current.rows);
   const resultRows = [
     { "項目": "現在の正本CSV", "内容": CANONICAL_FILE },
@@ -271,7 +193,7 @@ function applySource(sourcePath) {
       warnings: [],
     };
   }
-  const { headers, rows } = readCsvRaw(sourcePath);
+  const { headers, rows } = readCsvWithHeaders(sourcePath);
   const validation = validate(headers, rows);
   if (validation.errors.length > 0) {
     return {
