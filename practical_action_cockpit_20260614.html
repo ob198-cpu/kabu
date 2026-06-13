@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6/18以降 実用判断コックピット</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1580px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .okbox{border-left-color:var(--green);background:#eefaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{font-weight:800;color:#263e55}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;table-layout:auto;background:white}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:white}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:13px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+<header><h1>6/18以降 実用判断コックピット</h1><p>買う・待つ・止める条件を1画面に集約した実用入口です。現時点では買付不可を明示し、次に入力すべきイベントと口座確認を示します。</p></header>
+<main>
+
+<section>
+  <h2>今日の結論</h2>
+  <p class="notice danger">現時点の判断は「購入不可」です。買付上限は 0円。理由は、日銀会合、FOMC、最終購入前確認 の確認が残っているためです。</p>
+  <div class="cards">
+    <div class="card"><b>現判断</b><strong>購入不可</strong><span>注文へ進まない</span></div>
+    <div class="card"><b>買付上限</b><strong>0円</strong><span>イベント未完了時は0円</span></div>
+    <div class="card"><b>候補10社</b><strong>10</strong><span>全件ゲート接続済み</span></div>
+    <div class="card"><b>次の作業</b><strong>入力</strong><span>日銀・FOMC・最終確認</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>今やること</h2>
+  <div class="table-wrap"><table><thead><tr><th>区分</th><th>状態</th><th>現在値</th><th>次の作業</th><th>止める条件</th></tr></thead><tbody><tr><td class="">総合判断</td><td class="bad">購入不可</td><td class="">0円</td><td class="">日銀、FOMC、最終購入前確認を入力し、本人操作・NISA口座区分を確認する</td><td class="bad">未入力イベント、本人操作未確認、NISA口座区分未確認がある場合は買付しない</td></tr><tr><td class="">S&amp;P500/TOPIX +1%目標</td><td class="ok">接続済み</td><td class="bad">劣後時は追加停止</td><td class="bad">20営業日・60営業日で指数比を確認し、-1%以上劣後なら追加停止</td><td class="bad">-3%以上劣後で次回追加を半分、-5%以上劣後で個別株追加停止</td></tr><tr><td class="">質的テーマ</td><td class="">補助扱い</td><td class="">単純加点しない</td><td class="">ニュース・連想材料は公式数字、業界指標、株価反応の実績で裏付ける</td><td class="">仮説だけで購入候補に昇格しない</td></tr><tr><td class="">税制・口座</td><td class="">未連動</td><td class="">本人別入力が必要</td><td class="">本人スマホ、本人ログイン、NISA残枠、配当方式、注文画面のNISA区分を確認</td><td class="">本人操作が確認できない口座は購入しない</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2>6月イベント入力</h2>
+  <div class="table-wrap"><table><thead><tr><th>日付</th><th>イベント</th><th>状態</th><th>入力する数値</th><th>処理</th></tr></thead><tbody><tr><td class="">2026-06-10</td><td class="">米5月CPI</td><td class="warn">注意</td><td class="">CPI前年比・前月比、米10年金利、NASDAQ、SOX、VIX、ドル円</td><td class="">半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td></tr><tr><td class="">2026-06-15〜2026-06-16</td><td class="">日銀会合</td><td class="bad">未入力</td><td class="">政策変更、ドル円、日経平均/TOPIX、銀行・商社・輸出株反応</td><td class="">入力後に再判定</td></tr><tr><td class="">2026-06-16〜2026-06-17</td><td class="">FOMC</td><td class="bad">未入力</td><td class="">政策金利見通し、米10年金利、NASDAQ、SOX、ドル円</td><td class="">入力後に再判定</td></tr><tr><td class="">2026-06-18以降</td><td class="">最終購入前確認</td><td class="bad">未入力</td><td class="warn">候補別株価、PER/PBR/ROE、直近下落率、未確認データ、証券会社画面</td><td class="">入力後に再判定</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2>候補10社の現時点の扱い</h2>
+  <p class="notice">ここは「買う銘柄一覧」ではなく、6/18以降に再判定するための状態表です。100社再選定で監視・除外になっている銘柄は、初回買付でそのまま通しません。</p>
+  <div class="table-wrap"><table><thead><tr><th>銘柄</th><th>名称</th><th>役割</th><th>100社扱い</th><th>決算反応</th><th>20日超過</th><th>危険度</th><th>上限</th><th>現時点の扱い</th><th>確認理由</th></tr></thead><tbody><tr><td class="">8053.T</td><td class="">住友商事</td><td class="">中心候補</td><td class="ok">再選定候補</td><td class="">43.7</td><td class="">-14.91%</td><td class="">中</td><td class="">18.75%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 20営業日で日経平均に大きく劣後</td></tr><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">中心候補</td><td class="ok">再選定候補</td><td class="">57.1</td><td class="">4.97%</td><td class="">中</td><td class="">18.75%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動</td></tr><tr><td class="">6501.T</td><td class="">日立製作所</td><td class="">中心候補</td><td class="ok">再選定候補</td><td class="">29.1</td><td class="">-13.12%</td><td class="">中高</td><td class="">6.25%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 決算後反応が弱い / 20営業日で日経平均に大きく劣後</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="warn">条件付き候補</td><td class="ok">再選定候補</td><td class="">43.9</td><td class="">-11.55%</td><td class="">中</td><td class="">6.25%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 財務・公式決算の未確認あり / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 20営業日で日経平均に大きく劣後</td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">条件付き候補</td><td class="warn">監視</td><td class="">20.4</td><td class="">-26.49%</td><td class="">中高</td><td class="">6.25%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 財務・公式決算の未確認あり / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 100社再選定では監視扱い / 決算後反応が弱い / 20営業日で日経平均に大きく劣後</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">条件付き候補</td><td class="warn">監視</td><td class="">68.2</td><td class="">8.43%</td><td class="">高</td><td class="">3%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 財務・公式決算の未確認あり / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 100社再選定では監視扱い</td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="warn">条件付き候補</td><td class="bad">除外</td><td class="">34.5</td><td class="">-19.87%</td><td class="">高</td><td class="">3%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 財務・公式決算の未確認あり / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 100社再選定では除外: 直近1年でS&amp;P500に劣後 / 直近60日が弱い / 20営業日で日経平均に大きく劣後</td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="warn">条件付き候補</td><td class="ok">再選定候補</td><td class="">91.6</td><td class="">41.6%</td><td class="">中高</td><td class="">6.25%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 財務・公式決算の未確認あり / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動</td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="warn">条件付き候補</td><td class="bad">除外</td><td class="">32.3</td><td class="">-19.66%</td><td class="">高</td><td class="">3%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 財務・公式決算の未確認あり / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 100社再選定では除外: 直近60日が弱い / 5年最大下落率が大きい / 20営業日で日経平均に大きく劣後</td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="warn">条件付き候補</td><td class="bad">除外</td><td class="">0</td><td class="">-37.32%</td><td class="">高</td><td class="">3%</td><td class="bad">購入不可</td><td class="bad">未入力あり: 日銀会合、FOMC、最終購入前確認 / 財務・公式決算の未確認あり / 銘柄別リスク・下値上値ルールは補正中 / NISA・本人操作・口座区分未連動 / 100社再選定では除外: 直近1年の下落率が大きい / 急騰後の反動確認が必要 / 決算後反応が弱い / 20営業日で日経平均に大きく劣後</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2>関連画面</h2>
+  <ul>
+    <li><a href="decision_improvement_pack_20260613.html">実用判断 改善パック</a></li>
+    <li><a href="candidate10_strict_gate_review_20260613.html">候補10社 厳格ゲートレビュー</a></li>
+    <li><a href="candidate10_risk_trade_rules_20260613.html">候補10社 銘柄別リスク・売買ルール</a></li>
+    <li><a href="benchmark_plus1_trade_gate_20260613.html">S&P500/TOPIX +1%目標と買付比率ゲート</a></li>
+    <li><a href="nisa_account_linkage_template_20260613.html">NISA口座・本人操作 連動テンプレート</a></li>
+  </ul>
+</section>
+
+<footer>作成: 2026/06/14 00:10 / 本画面は売買指示ではなく、6月イベント後に判断するための確認画面です。</footer>
+</main>
+</body>
+</html>
