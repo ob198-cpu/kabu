@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>再判定準備バリデーター</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1600px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .sub{border-left-color:var(--blue);background:#eef7ff}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .links a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards,.links{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>再判定準備バリデーター</h1>
+  <p>6/18再判定入力作業台に入れた内容が、統合購入可否エンジンへ反映できる状態かを検査します。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">現在は再判定不可です。NG項目が残っているため、統合購入可否エンジンを再生成しても買付上限0円が残ります。</p>
+    <div class="cards">
+      <div class="card"><b>総合</b><strong>不可</strong><span>再判定準備</span></div>
+      <div class="card"><b>OK</b><strong>0</strong><span>入力済み</span></div>
+      <div class="card"><b>条件付き</b><strong>0</strong><span>注意・監視</span></div>
+      <div class="card"><b>NG</b><strong>21</strong><span>入力不足</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>総合サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:160px">項目</th><th style="width:220px">内容</th><th style="width:260px">数値</th><th style="width:650px">影響</th></tr></thead><tbody><tr><td class="">総合判定</td><td class="bad">再判定不可</td><td class="bad">0 OK / 0 条件付き / 21 NG / 21件</td><td class="bad">統合購入可否エンジンを再生成しても購入上限0円が残る</td></tr><tr><td class="">次の最優先</td><td class="bad">NG項目を埋める</td><td class="">21件</td><td class="">イベント、口座、財務の順に入力する</td></tr><tr><td class="">現在の注文票</td><td class="bad">反映不可</td><td class="bad">0円</td><td class="ok">再判定可能になるまで注文票へ金額を出さない</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>区分別検査</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:200px">検査区分</th><th style="width:130px">対象数</th><th>OK</th><th>条件付き</th><th>NG</th><th style="width:180px">判定</th></tr></thead><tbody><tr><td class="">6月イベント</td><td class="">4件</td><td class="">0件</td><td class="">0件</td><td class="">4件</td><td class="bad">再判定不可</td></tr><tr><td class="">本人別NISA口座</td><td class="">10口座</td><td class="">0口座</td><td class="">0口座</td><td class="">10口座</td><td class="bad">再判定不可</td></tr><tr><td class="warn">公式財務partial</td><td class="">7銘柄</td><td class="">0銘柄</td><td class="">0銘柄</td><td class="">7銘柄</td><td class="bad">再判定不可</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>詳細検査</h2>
+    <p class="notice sub">ここでNGになっている項目を埋めると、再判定の準備が進みます。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:160px">区分</th><th style="width:220px">対象</th><th style="width:100px">検査結果</th><th style="width:360px">不足項目</th><th style="width:320px">再判定への影響</th><th style="width:320px">次アクション</th></tr></thead><tbody><tr><td class="">6月イベント</td><td class="">E01 米5月CPI</td><td class="bad">NG</td><td class="">入力する実数</td><td class="bad">全銘柄0円継続</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="">6月イベント</td><td class="">E02 日銀会合</td><td class="bad">NG</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="bad">全銘柄0円継続</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="">6月イベント</td><td class="">E03 FOMC</td><td class="bad">NG</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="bad">全銘柄0円継続</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="">6月イベント</td><td class="">E04 最終購入前確認</td><td class="bad">NG</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="bad">全銘柄0円継続</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座1</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座2</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座3</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座4</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座5</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座6</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座7</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座8</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座9</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="">本人別NISA口座</td><td class="">口座10</td><td class="bad">NG</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">該当口座0円継続</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="warn">公式財務partial</td><td class="">6503.T 三菱電機</td><td class="bad">NG</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">比率引上げ禁止</td><td class="">公式IRで不足項目を補完</td></tr><tr><td class="warn">公式財務partial</td><td class="">6857.T アドバンテスト</td><td class="bad">NG</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">比率引上げ禁止</td><td class="">公式IRで不足項目を補完</td></tr><tr><td class="warn">公式財務partial</td><td class="">8035.T 東京エレクトロン</td><td class="bad">NG</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">比率引上げ禁止</td><td class="">公式IRで不足項目を補完</td></tr><tr><td class="warn">公式財務partial</td><td class="">7011.T 三菱重工業</td><td class="bad">NG</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">比率引上げ禁止</td><td class="">公式IRで不足項目を補完</td></tr><tr><td class="warn">公式財務partial</td><td class="">6762.T TDK</td><td class="bad">NG</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">比率引上げ禁止</td><td class="">公式IRで不足項目を補完</td></tr><tr><td class="warn">公式財務partial</td><td class="">6146.T ディスコ</td><td class="bad">NG</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">比率引上げ禁止</td><td class="">公式IRで不足項目を補完</td></tr><tr><td class="warn">公式財務partial</td><td class="">5803.T フジクラ</td><td class="bad">NG</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">比率引上げ禁止</td><td class="">公式IRで不足項目を補完</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="redecision_input_workbench_20260614.html">6/18再判定 入力作業台</a>
+      <a href="purchase_unlock_input_queue_20260614.html">購入ロック解除 入力キュー</a>
+      <a href="integrated_purchase_decision_engine_20260614.html">統合購入可否エンジン</a>
+      <a href="redecision_event_input_template_20260614.csv">イベント入力CSV</a>
+      <a href="redecision_account_input_template_20260614.csv">本人別口座入力CSV</a>
+      <a href="redecision_financial_partial_input_template_20260614.csv">財務partial補完CSV</a>
+    </div>
+  </section>
+  <footer>作成: 2026/06/14 05:46 / 本画面は購入推奨ではありません。再判定前の入力漏れを検査する画面です。</footer>
+</main>
+</body>
+</html>
