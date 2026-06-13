@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>最新 実用パート入口</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{font-weight:800;color:#263e55}
+    .steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .step{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .step:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .step b{display:block;color:var(--navy);font-size:18px;margin-bottom:6px}
+    .step span{display:block;font-weight:800;color:#263e55}
+    .step em{display:inline-block;margin-top:8px;font-style:normal;font-size:13px;font-weight:900;color:#fff;background:var(--blue);border-radius:999px;padding:3px 9px}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards,.steps{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>最新 実用パート入口</h1>
+  <p>日々見る画面を8個に絞った入口です。資料を探す前に、まずこの順番で確認します。</p>
+</header>
+<main>
+  <section>
+    <h2>今の結論</h2>
+    <p class="notice">現在は購入不可です。買付上限は0円です。理由は、6月イベント未入力、本人別NISA口座未確認、注文票0円が残っているためです。</p>
+    <div class="cards">
+      <div class="card"><b>総合判断</b><strong>購入不可</strong><span>0円</span></div>
+      <div class="card"><b>6月イベント</b><strong>0円</strong><span>未完了: 3件未入力 / 注意1件</span></div>
+      <div class="card"><b>NISA口座</b><strong>0/10</strong><span>確認済み口座</span></div>
+      <div class="card"><b>注文票</b><strong>0円</strong><span>イベント・口座確認後に再生成</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>見る順番</h2>
+    <div class="steps">
+      <a class="step" href="prebuy_readiness_closure_board_20260614.html">
+        <b>1. 実行準備クロージングボード</b>
+        <span>何が未完了で、なぜ今0円なのかを見る</span>
+        <em>毎回最初</em>
+      </a>
+<a class="step" href="june_event_input_decision_board_20260614.html">
+        <b>2. 6月イベント入力・判定ボード</b>
+        <span>日銀・FOMC・最終確認を緑/黄/赤にする</span>
+        <em>6/15〜6/18</em>
+      </a>
+<a class="step" href="nisa_account_execution_gate_20260614.html">
+        <b>3. NISA口座・本人操作 実行ゲート</b>
+        <span>本人名義スマホ、本人ログイン、NISA残枠を確認する</span>
+        <em>口座ごと</em>
+      </a>
+<a class="step" href="benchmark_allocation_switchboard_20260614.html">
+        <b>4. S&amp;P500/TOPIX +1%目標 資金配分スイッチ</b>
+        <span>84万円・36万円・0円のどれにするか決める</span>
+        <em>イベント結果確認後</em>
+      </a>
+<a class="step" href="candidate10_financial_confirmation_gate_20260614.html">
+        <b>5. 候補10社 財務確認ゲート</b>
+        <span>財務確認済みと未確認を分け、未確認値を点数に混ぜない</span>
+        <em>銘柄別確認</em>
+      </a>
+<a class="step" href="ticker_trade_rule_matrix_20260614.html">
+        <b>6. 候補10社 上値・下値・途中決済ルール</b>
+        <span>買付後の追加停止、縮小、利確確認を銘柄別に見る</span>
+        <em>買付前・保有中</em>
+      </a>
+<a class="step" href="stop_limit_stress_protocol_20260614.html">
+        <b>7. ストップ安・急落対策プロトコル</b>
+        <span>急落時に当日買い増し禁止、翌営業日確認の流れを使う</span>
+        <em>急落時</em>
+      </a>
+<a class="step" href="postbuy_operation_record_board_20260614.html">
+        <b>8. 購入後 運用記録・予実管理ボード</b>
+        <span>買った理由、指数差、予測誤差、途中決済理由を残す</span>
+        <em>購入後</em>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>現状サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>状態</th><th style="width:360px">内容</th><th style="width:360px">次にすること</th></tr></thead><tbody><tr><td class="">現在の結論</td><td class="bad">購入不可</td><td class="bad">買付上限 0円</td><td class="warn">日銀、FOMC、最終購入前確認を入力し、本人操作・NISA口座区分を確認する</td></tr><tr><td class="">6月イベント</td><td class="bad">未完了: 3件未入力 / 注意1件</td><td class="bad">3件が未入力、1件が注意</td><td class="">6/15〜6/18の実数を入力する</td></tr><tr><td class="">NISA口座</td><td class="bad">未完了: 10口座すべて未確認</td><td class="warn">確認済み 0/10口座</td><td class="">本人別に口座情報を入力する</td></tr><tr><td class="">注文票</td><td class="bad">全行0円</td><td class="">イベントゲートと口座ゲートがそろうまで金額を出さない</td><td class="">6/18以降に再生成</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>補足</h2>
+    <p>資料パートは詳細確認用です。実務では、この入口から「未完了を埋める」「0円の理由を消す」「買付上限を再計算する」「購入後に記録する」の順で使います。</p>
+  </section>
+  <footer>作成: 2026/06/14 04:59 / 本画面は売買指示ではなく、実用パートの入口整理です。</footer>
+</main>
+</body>
+</html>

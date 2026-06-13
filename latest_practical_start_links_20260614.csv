@@ -1,0 +1,9 @@
+﻿順番,画面,URL,目的,使う場面
+1,実行準備クロージングボード,prebuy_readiness_closure_board_20260614.html,何が未完了で、なぜ今0円なのかを見る,毎回最初
+2,6月イベント入力・判定ボード,june_event_input_decision_board_20260614.html,日銀・FOMC・最終確認を緑/黄/赤にする,6/15〜6/18
+3,NISA口座・本人操作 実行ゲート,nisa_account_execution_gate_20260614.html,本人名義スマホ、本人ログイン、NISA残枠を確認する,口座ごと
+4,S&P500/TOPIX +1%目標 資金配分スイッチ,benchmark_allocation_switchboard_20260614.html,84万円・36万円・0円のどれにするか決める,イベント結果確認後
+5,候補10社 財務確認ゲート,candidate10_financial_confirmation_gate_20260614.html,財務確認済みと未確認を分け、未確認値を点数に混ぜない,銘柄別確認
+6,候補10社 上値・下値・途中決済ルール,ticker_trade_rule_matrix_20260614.html,買付後の追加停止、縮小、利確確認を銘柄別に見る,買付前・保有中
+7,ストップ安・急落対策プロトコル,stop_limit_stress_protocol_20260614.html,急落時に当日買い増し禁止、翌営業日確認の流れを使う,急落時
+8,購入後 運用記録・予実管理ボード,postbuy_operation_record_board_20260614.html,買った理由、指数差、予測誤差、途中決済理由を残す,購入後
