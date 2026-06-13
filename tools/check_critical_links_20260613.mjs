@@ -15,6 +15,7 @@ const pages = [
   "system_health_check_20260613.html",
   "candidate_selection_health_check_20260613.html",
   "candidate10_partial_resolution_20260613.html",
+  "post0618_prebuy_ticket_20260613.html",
   "candidate10_reaction_backfill_20260613.html",
   "june_gate_operation.html",
   "capital_allocation_plan.html",
