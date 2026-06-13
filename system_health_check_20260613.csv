@@ -1,0 +1,22 @@
+﻿name,status,purpose,result,action
+構文チェック: tools/lib/report_utils_20260613.mjs,OK,実行前に文法エラーを止める,構文エラーなし,
+構文チェック: tools/apply_event_result_csv_20260613.mjs,OK,実行前に文法エラーを止める,構文エラーなし,
+構文チェック: tools/build_event_update_runbook_20260613.mjs,OK,実行前に文法エラーを止める,構文エラーなし,
+構文チェック: tools/build_prebuy_final_verification_20260613.mjs,OK,実行前に文法エラーを止める,構文エラーなし,
+構文チェック: tools/recalculate_event_outputs_from_102_20260613.mjs,OK,実行前に文法エラーを止める,構文エラーなし,
+構文チェック: tools/rebuild_june_operation_state_20260613.mjs,OK,実行前に文法エラーを止める,構文エラーなし,
+構文チェック: tools/check_critical_links_20260613.mjs,OK,実行前に文法エラーを止める,構文エラーなし,
+共通部品: 円表示,OK,金額表示の文字化け・単位欠落を検出する,"123,456円 として出力",
+実行チェック: node tools/build_event_update_runbook_20260613.mjs,OK,実用導線の生成・リンク検査を実行確認する,"generated post_0618_event_update_runbook_20260613.html
+generated post_0618_event_update_runbook_20260613.csv",
+実行チェック: node tools/apply_event_result_csv_20260613.mjs,OK,実用導線の生成・リンク検査を実行確認する,準備完了: 102_june_event_result_input_to_apply.csv を編集してから反映コマンドを実行します。,
+実行チェック: node tools/build_prebuy_final_verification_20260613.mjs,OK,実用導線の生成・リンク検査を実行確認する,"generated post_0618_prebuy_final_verification_20260613.html
+generated post_0618_prebuy_final_verification_20260613.csv",
+実行チェック: node tools/check_critical_links_20260613.mjs,OK,実用導線の生成・リンク検査を実行確認する,critical links OK,
+重要文言チェック: post_0618_prebuy_final_verification_20260613.html,OK,公開画面に必要な停止条件・金額・操作条件が残っているか確認する,必要文言あり,
+重要文言チェック: post_0618_event_csv_apply_helper_20260613.html,OK,公開画面に必要な停止条件・金額・操作条件が残っているか確認する,必要文言あり,
+重要文言チェック: post_0618_event_update_runbook_20260613.html,OK,公開画面に必要な停止条件・金額・操作条件が残っているか確認する,必要文言あり,
+イベントCSV: E01〜E04存在,OK,6月イベント判定の必須4項目が欠けていないか確認する,E01〜E04あり,
+購入停止ゲート: 未入力時の投入上限,OK,未入力イベントが残る間に購入金額が出てしまう事故を防ぐ,未入力3件 / 悪化0件 / 現時点上限0円,
+候補数チェック,OK,候補10社の前提が崩れていないか確認する,10社,
+共通部品化チェック,OK,最新の実用導線に同じCSV/HTML処理が重複していないか確認する,最新3スクリプトは共通部品を使用,
