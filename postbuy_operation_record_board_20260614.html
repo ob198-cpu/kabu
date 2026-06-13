@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>購入後 運用記録・予実管理ボード</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1560px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{font-weight:800;color:#263e55}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>購入後 運用記録・予実管理ボード</h1>
+  <p>購入した後に、買付根拠、指数比較、超過リターン、途中決済理由、予測誤差を記録するための実用画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の状態</h2>
+    <p class="notice danger">現時点では購入実績は未開始です。6月イベント、本人操作、NISA口座確認が未完了のため、買付金額は0円のままです。</p>
+    <div class="cards">
+      <div class="card"><b>購入記録</b><strong>0件</strong><span>現時点は未開始</span></div>
+      <div class="card"><b>対象銘柄</b><strong>10社</strong><span>現在候補10社</span></div>
+      <div class="card"><b>確認タイミング</b><strong>6回</strong><span>翌営業日〜1年</span></div>
+      <div class="card"><b>目的</b><strong>予実管理</strong><span>予想との差を残す</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>購入時に記録する項目</h2>
+    <p class="notice">買付理由と買わない条件を残せない場合は、後から検証できないため、テストとしての価値が下がります。</p>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>name</th><th>role</th><th>planned_weight_pct</th><th>buy_status</th><th>account_id</th><th>buy_date</th><th>buy_amount_yen</th><th>buy_price</th><th>quantity</th><th>benchmark_primary</th><th>benchmark_secondary</th><th>benchmark_start_value</th><th style="width:240px">buy_reason</th><th style="width:240px">no_buy_condition</th><th>review_status</th></tr></thead><tbody><tr><td class="">8053.T</td><td class="">住友商事</td><td class="">中心候補</td><td class="">18.75</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">記録待ち</td></tr><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">中心候補</td><td class="">18.75</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">記録待ち</td></tr><tr><td class="">6501.T</td><td class="">日立製作所</td><td class="">中心候補</td><td class="">18.75</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">記録待ち</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">条件付き候補</td><td class="">6.25</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">記録待ち</td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="">条件付き候補</td><td class="">6.25</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">記録待ち</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">条件付き候補</td><td class="">6.25</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">記録待ち</td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="">条件付き候補</td><td class="">6.25</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">初回買付不可</td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="">条件付き候補</td><td class="">6.25</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">記録待ち</td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="">条件付き候補</td><td class="">6.25</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">初回買付不可</td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="">条件付き候補</td><td class="">6.25</td><td class="bad">未開始</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">0円</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="">S&amp;P500</td><td class="">TOPIX</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="warn">未入力</td><td class="bad">初回買付不可</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>確認スケジュール</h2>
+    <div class="table-wrap"><table><thead><tr><th>timing</th><th>purpose</th><th style="width:430px">input</th><th>formula</th><th style="width:300px">action</th></tr></thead><tbody><tr><td class="">購入日</td><td class="">買付根拠を固定</td><td class="">買付日、口座、金額、単価、数量、比較指数の開始値、買った理由、買わない条件</td><td class="">記録のみ</td><td class="">記録できない場合は買付しない</td></tr><tr><td class="">翌営業日</td><td class="warn">初期反応と急落確認</td><td class="">終値、出来高、指数差、材料の真偽</td><td class="">銘柄リターン - 比較指数リターン</td><td class="bad">ストップ安級・前日比-10%以上なら追加停止</td></tr><tr><td class="">5営業日</td><td class="warn">初動の過熱・失望を確認</td><td class="">5日リターン、指数差、出来高変化</td><td class="">5日超過リターン</td><td class="bad">-1%以上劣後なら追加停止候補</td></tr><tr><td class="">20営業日</td><td class="warn">月次の合格確認</td><td class="">20日リターン、S&amp;P500/TOPIX差、決算後反応</td><td class="">超過リターン = 銘柄/バスケット - 比較指数</td><td class="bad">-1%以上劣後で追加停止、-3%以上劣後で次回追加を半分</td></tr><tr><td class="">60営業日</td><td class="warn">中期の仮説確認</td><td class="">60日リターン、最大下落、テーマ継続、会社発表</td><td class="">超過リターン、最大下落率、ボラティリティ</td><td class="bad">-5%以上劣後または下方修正で個別株追加停止</td></tr><tr><td class="">1年</td><td class="">NISA 1年保有テストの評価</td><td class="">1年リターン、配当、比較指数、途中売買理由</td><td class="">税引前リターン、指数差、予測誤差</td><td class="">S&amp;P500/TOPIX +1%以上を達成できたか評価</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>計算式</h2>
+    <div class="table-wrap"><table><thead><tr><th>item</th><th style="width:360px">formula</th><th style="width:430px">use</th></tr></thead><tbody><tr><td class="">銘柄リターン</td><td class="">(現在値 - 買値 + 受取配当) ÷ 買値</td><td class="">その銘柄が買値から何%増減したかを見る</td></tr><tr><td class="">比較指数リターン</td><td class="">(現在の指数値 - 購入日の指数値) ÷ 購入日の指数値</td><td class="">S&amp;P500/TOPIXにただ投資した場合との比較</td></tr><tr><td class="">超過リターン</td><td class="">銘柄またはバスケットのリターン - 比較指数リターン</td><td class="bad">+1%以上なら個別株を選ぶ根拠が残る。マイナスなら追加停止候補</td></tr><tr><td class="">予測誤差</td><td class="">実績リターン - 事前に置いた期待レンジ</td><td class="">予想がどれだけ外れたかを記録し、次のモデル修正に使う</td></tr><tr><td class="">最大下落率</td><td class="">期間中の高値から安値までの最大下落</td><td class="bad">ストップ安級、追加停止、途中決済ルールの厳しさを調整</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>実績に応じたアクション</h2>
+    <div class="table-wrap"><table><thead><tr><th>condition</th><th style="width:360px">action</th><th style="width:430px">reason</th></tr></thead><tbody><tr><td class="">超過リターン +1%以上</td><td class="warn">維持。追加はイベント・口座・銘柄別ルール確認後</td><td class="">個別株を選ぶ目的と整合する</td></tr><tr><td class="">超過リターン 0〜+1%未満</td><td class="ok">維持は可。追加は急がない</td><td class="">指数を明確に上回る根拠がまだ弱い</td></tr><tr><td class="">超過リターン -1%以下</td><td class="bad">追加買付停止</td><td class="">S&amp;P500/TOPIX +1%目標と逆方向</td></tr><tr><td class="">超過リターン -3%以下</td><td class="">次回追加比率を半分へ下げる</td><td class="">個別株比率を下げる具体処理</td></tr><tr><td class="">超過リターン -5%以下、または下方修正</td><td class="bad">個別株追加停止。現金または指数比較へ戻す</td><td class="">当初仮説が壊れている可能性が高い</td></tr><tr><td class="">ストップ安級、または前日比-10%以上</td><td class="warn">当日買い増し禁止。翌営業日に出来高、気配、会社発表を確認</td><td class="">理由が分からない急落に反射的に資金を入れない</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <ul>
+      <li><a href="prebuy_readiness_closure_board_20260614.html">6/18前 実行準備クロージングボード</a></li>
+      <li><a href="benchmark_allocation_switchboard_20260614.html">S&P500/TOPIX +1%目標 資金配分スイッチ</a></li>
+      <li><a href="ticker_trade_rule_matrix_20260614.html">候補10社 上値・下値・途中決済ルール</a></li>
+      <li><a href="nisa_account_execution_gate_20260614.html">NISA口座・本人操作 実行ゲート</a></li>
+    </ul>
+  </section>
+  <footer>作成: 2026/06/14 04:56 / 本画面は購入後の記録・検証用であり、売買指示ではありません。</footer>
+</main>
+</body>
+</html>
