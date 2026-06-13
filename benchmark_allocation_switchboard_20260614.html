@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S&P500/TOPIX +1%目標 資金配分スイッチ</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1560px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{font-weight:800;color:#263e55}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>S&P500/TOPIX +1%目標 資金配分スイッチ</h1>
+  <p>個別株が指数を上回る根拠が弱い場合に、どの金額を止め、どの金額を現金または指数比較へ戻すかを明確にした実用画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の扱い</h2>
+    <p class="notice danger">現時点では、6月イベント・本人操作・NISA口座確認が未完了のため、個別株買付上限は0円です。ここでは、条件がそろった後の資金配分ルールを示します。</p>
+    <div class="cards">
+      <div class="card"><b>現在</b><strong>0円</strong><span>実行条件未完了</span></div>
+      <div class="card"><b>緑判定</b><strong>84万円</strong><span>240万円の35%</span></div>
+      <div class="card"><b>黄判定</b><strong>36万円</strong><span>240万円の15%</span></div>
+      <div class="card"><b>劣後時</b><strong>0円</strong><span>追加停止</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>分岐表</h2>
+    <div class="table-wrap"><table><thead><tr><th>判定</th><th style="width:330px">条件</th><th>個別株比率</th><th>個別株上限</th><th>現金または指数待機</th><th style="width:260px">実務アクション</th><th style="width:260px">意味</th></tr></thead><tbody><tr><td class="">現在</td><td class="warn">6月イベント、本人操作、NISA口座区分、残枠のいずれかが未確認</td><td class="">0%</td><td class="bad">0円</td><td class="bad">2,400,000円</td><td class="bad">買付0円。注文票を作らない</td><td class="">市場以前の実行条件が未完了</td></tr><tr><td class="ok">緑</td><td class="warn">6月イベント結果確認、本人操作、NISA区分がそろい、候補バスケットがS&amp;P500/TOPIXへ+1%以上優位</td><td class="">35%</td><td class="bad">840,000円</td><td class="bad">1,560,000円</td><td class="warn">初回35%上限。中心候補を厚め、条件付き候補は小口</td><td class="">個別株を選ぶ説明が成立しやすい</td></tr><tr><td class="warn">黄</td><td class="warn">優位が0〜+1%未満、またはイベントに注意判定が残る</td><td class="">15%</td><td class="bad">360,000円</td><td class="bad">2,040,000円</td><td class="warn">初回15%上限。高リスク銘柄はさらに半分</td><td class="">勝ち筋はあるが、指数を明確に上回る根拠が弱い</td></tr><tr><td class="">橙</td><td class="">候補バスケットがS&amp;P500/TOPIXへ-1%以上劣後</td><td class="">0%</td><td class="bad">0円</td><td class="bad">2,400,000円</td><td class="">初回買付を延期。高リスク銘柄を候補から外す</td><td class="">個別株を選ぶ理由が薄い</td></tr><tr><td class="bad">赤</td><td class="">候補バスケットが-3%以上劣後、または主要銘柄が下方修正</td><td class="">0%</td><td class="bad">0円</td><td class="bad">2,400,000円</td><td class="bad">個別株追加停止。現金または指数投信を比較候補にする</td><td class="ok">S&amp;P500/TOPIX +1%目標から外れる可能性が高い</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>銘柄別の上限</h2>
+    <p class="notice">黄判定では高リスク銘柄をさらに抑えます。これは売買指示ではなく、6月イベント結果と口座確認が完了した後に使う上限表です。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:180px">銘柄</th><th>役割</th><th>予定比率</th><th>リスク</th><th>緑判定上限</th><th>黄判定上限</th><th>劣後時</th><th style="width:300px">比率を下げる意味</th></tr></thead><tbody><tr><td class="">8053.T 住友商事</td><td class="">中心候補</td><td class="">18.75%</td><td class="">中</td><td class="bad">157,500円</td><td class="bad">67,500円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">8316.T 三井住友FG</td><td class="">中心候補</td><td class="">18.75%</td><td class="">中</td><td class="bad">157,500円</td><td class="bad">67,500円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">6501.T 日立製作所</td><td class="">中心候補</td><td class="">18.75%</td><td class="">中高</td><td class="bad">157,500円</td><td class="bad">47,250円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">6503.T 三菱電機</td><td class="">条件付き候補</td><td class="">6.25%</td><td class="">中</td><td class="bad">52,500円</td><td class="bad">22,500円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">6857.T アドバンテスト</td><td class="">条件付き候補</td><td class="">6.25%</td><td class="">中高</td><td class="bad">52,500円</td><td class="bad">15,750円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">8035.T 東京エレクトロン</td><td class="">条件付き候補</td><td class="">6.25%</td><td class="">高</td><td class="bad">52,500円</td><td class="bad">11,250円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">7011.T 三菱重工業</td><td class="">条件付き候補</td><td class="">6.25%</td><td class="">高</td><td class="bad">52,500円</td><td class="bad">11,250円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">6762.T TDK</td><td class="">条件付き候補</td><td class="">6.25%</td><td class="">中高</td><td class="bad">52,500円</td><td class="bad">15,750円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">6146.T ディスコ</td><td class="">条件付き候補</td><td class="">6.25%</td><td class="">高</td><td class="bad">52,500円</td><td class="bad">11,250円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr><tr><td class="">5803.T フジクラ</td><td class="">条件付き候補</td><td class="">6.25%</td><td class="">高</td><td class="bad">52,500円</td><td class="bad">11,250円</td><td class="bad">0円・追加停止</td><td class="">予定していた個別株予算を使わず、現金または指数比較へ戻す</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>用語の意味</h2>
+    <div class="table-wrap"><table><thead><tr><th>用語</th><th>意味</th><th>例</th></tr></thead><tbody><tr><td class="bad">個別株比率を下げる</td><td class="">予定していた個別株の買付金額を減らし、未使用分を現金または指数投信の比較枠に戻すこと</td><td class="">35%予定なら84万円、15%なら36万円、0%なら買付なし</td></tr><tr><td class="ok">+1%以上優位</td><td class="">候補10社の合成リターンが、S&amp;P500/TOPIXなどの比較対象を1%以上上回ること</td><td class="">候補10社+3%、比較指数+1.5%なら差は+1.5%</td></tr><tr><td class="">劣後</td><td class="">候補10社が比較指数より悪い成績になること</td><td class="">候補10社-1%、比較指数+1%なら差は-2%</td></tr><tr><td class="">指数退避</td><td class="">個別株で無理に買わず、S&amp;P500/TOPIX連動投信や現金待機を比較すること</td><td class="">個別株が-3%以上劣後なら、追加資金は個別株に入れない</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <ul>
+      <li><a href="practical_action_cockpit_20260614.html">実用判断コックピット</a></li>
+      <li><a href="ticker_trade_rule_matrix_20260614.html">候補10社 上値・下値・途中決済ルール</a></li>
+      <li><a href="benchmark_plus1_trade_gate_20260613.html">S&P500/TOPIX +1%目標 接続ゲート</a></li>
+      <li><a href="nisa_account_execution_gate_20260614.html">NISA口座・本人操作 実行ゲート</a></li>
+    </ul>
+  </section>
+  <footer>作成: 2026/06/14 04:45 / 本画面は投資助言ではなく、指数比較に応じた資金配分の確認表です。</footer>
+</main>
+</body>
+</html>
