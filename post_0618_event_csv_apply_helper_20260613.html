@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月イベントCSV 正本反映補助</title>
+  <style>
+    :root { --ink:#061a2f; --blue:#0b4b78; --line:#c7d9ea; --soft:#f4f8fc; --red:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",Arial,sans-serif; color:var(--ink); background:#edf4fa; font-size:18px; line-height:1.75; }
+    header { background:#0d3f66; color:#fff; padding:32px 44px; }
+    h1 { margin:0 0 10px; font-size:34px; }
+    main { max-width:1180px; margin:0 auto; padding:28px 24px 56px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:10px; padding:24px; margin:0 0 22px; page-break-inside:avoid; break-inside:avoid; }
+    h2 { margin:0 0 14px; font-size:25px; border-left:8px solid var(--blue); padding-left:12px; }
+    .box { border:2px solid var(--line); border-radius:12px; background:var(--soft); padding:16px; font-weight:800; }
+    .box.error { border-color:#f1a7a0; background:#fff5f5; color:#7a1f16; }
+    .links { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .links a { color:#06436d; text-decoration:none; font-weight:800; border:1px solid #78acd2; border-radius:9px; padding:9px 14px; background:#fff; }
+    .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+    table { border-collapse:collapse; width:100%; min-width:820px; background:#fff; }
+    th,td { border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:11px 12px; text-align:left; vertical-align:top; overflow-wrap:anywhere; }
+    th { background:#e2f0fb; font-weight:800; }
+    tr:last-child td { border-bottom:0; }
+    th:last-child,td:last-child { border-right:0; }
+    code { display:block; padding:10px 12px; border:1px solid #d8e6f1; border-radius:8px; background:#f7fafc; overflow-wrap:anywhere; white-space:normal; }
+    @media(max-width:860px){ body{font-size:16px;} header{padding:24px 20px;} main{padding:18px 12px 40px;} }
+  </style>
+</head>
+<body>
+<header>
+  <h1>6月イベントCSV 正本反映補助</h1>
+  <p>ブラウザで出力した判定CSVを、正本の 102_june_event_result_input.csv へ反映するための実務ページです。反映時は既存CSVをバックアップしてから更新します。</p>
+</header>
+<main>
+  <section>
+    <h2>前回実行結果</h2>
+    <div class="box ">反映完了: 102_june_event_result_input_to_apply.csv を正本CSVへ反映しました。</div>
+    <div class="links">
+      <a href="912_june_event_actual_input_sheet_20260606.html">イベント実数入力</a>
+      <a href="post_0618_event_update_runbook_20260613.html">CSV反映ランブック</a>
+      <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
+      <a href="post_0618_event_csv_apply_helper_20260613.csv">実行ログCSV</a>
+    </div>
+  </section>
+  <section>
+    <h2>使い方</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:24%">項目</th><th style="">内容</th></tr></thead><tbody><tr><td>現在の正本CSV</td><td>102_june_event_result_input.csv</td></tr><tr><td>貼り付け用CSV</td><td>102_june_event_result_input_to_apply.csv</td></tr><tr><td>反映コマンド</td><td>node tools/apply_event_result_csv_20260613.mjs 102_june_event_result_input_to_apply.csv</td></tr><tr><td>現在の状態</td><td>未入力3件 / 注意1件 / 悪化0件 / 通過0件</td></tr></tbody></table></div>
+    <p><code>node tools/apply_event_result_csv_20260613.mjs 102_june_event_result_input_to_apply.csv</code></p>
+    <p>このコマンドは、貼り付け用CSVを検査し、問題がなければ正本CSVをバックアップしてから更新します。その後、資金配分、当日運用ボード、反映ワークフロー、ランブックを再生成します。</p>
+  </section>
+  <section>
+    <h2>現在の正本CSVの状態</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:18%">分類</th><th style="width:18%">件数</th><th style="">扱い</th></tr></thead><tbody><tr><td>未入力</td><td>3件</td><td>購入金額を確定しない</td></tr><tr><td>注意</td><td>1件</td><td>小比率または保留</td></tr><tr><td>悪化</td><td>0件</td><td>新規購入停止</td></tr><tr><td>通過</td><td>0件</td><td>次のゲートへ進める</td></tr></tbody></table></div>
+  </section>
+  <section>
+    <h2>検査結果</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:16%">区分</th><th style="">内容</th><th style="">対応</th></tr></thead><tbody><tr><td>OK</td><td>前回検査で重大な不備はありません。</td><td>通常手順で確認</td></tr></tbody></table></div>
+  </section>
+</main>
+</body>
+</html>

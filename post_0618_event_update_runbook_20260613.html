@@ -77,6 +77,7 @@
     <div class="links">
       <a href="912_june_event_actual_input_sheet_20260606.html">イベント実数入力</a>
       <a href="post_0618_event_reflection_workflow_20260613.html">反映ワークフロー</a>
+      <a href="post_0618_event_csv_apply_helper_20260613.html">CSV正本反映補助</a>
       <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
       <a href="post_0618_event_update_runbook_20260613.csv">CSV</a>
     </div>
@@ -100,7 +101,7 @@
 
   <section>
     <h2>再生成コマンド</h2>
-    <div class="table-wrap"><table><thead><tr><th style="width:24%">目的</th><th style="width:38%">コマンド</th><th style="">注意</th></tr></thead><tbody><tr><td>このページを再生成</td><td>node tools/build_event_update_runbook_20260613.mjs</td><td>CSVを上書きせず、状態確認ページだけ作ります。</td></tr><tr><td>イベント結果を候補・資金配分へ反映</td><td>node tools/recalculate_event_outputs_from_102_20260613.mjs</td><td>102を読み、106/108/109と資金配分ページを更新します。102自体は上書きしません。</td></tr><tr><td>当日運用ボードを再生成</td><td>node tools/build_post_0618_operation_board_20260613.mjs</td><td>102/106/108/109 CSVを読んで、当日ボードを更新します。</td></tr><tr><td>イベント反映ワークフローを再生成</td><td>node tools/build_event_reflection_workflow_20260613.mjs</td><td>102から108/109/当日ボードへの反映状況を更新します。</td></tr><tr><td>リンク切れ確認</td><td>node tools/check_critical_links_20260613.mjs</td><td>主要ページのリンク切れを検査します。</td></tr></tbody></table></div>
+    <div class="table-wrap"><table><thead><tr><th style="width:24%">目的</th><th style="width:38%">コマンド</th><th style="">注意</th></tr></thead><tbody><tr><td>このページを再生成</td><td>node tools/build_event_update_runbook_20260613.mjs</td><td>CSVを上書きせず、状態確認ページだけ作ります。</td></tr><tr><td>イベント結果を候補・資金配分へ反映</td><td>node tools/recalculate_event_outputs_from_102_20260613.mjs</td><td>102を読み、106/108/109と資金配分ページを更新します。102自体は上書きしません。</td></tr><tr><td>判定CSVを正本へ反映</td><td>node tools/apply_event_result_csv_20260613.mjs 102_june_event_result_input_to_apply.csv</td><td>検査OKなら102をバックアップしてから更新し、関連CSV・関連ページを再生成します。</td></tr><tr><td>当日運用ボードを再生成</td><td>node tools/build_post_0618_operation_board_20260613.mjs</td><td>102/106/108/109 CSVを読んで、当日ボードを更新します。</td></tr><tr><td>イベント反映ワークフローを再生成</td><td>node tools/build_event_reflection_workflow_20260613.mjs</td><td>102から108/109/当日ボードへの反映状況を更新します。</td></tr><tr><td>リンク切れ確認</td><td>node tools/check_critical_links_20260613.mjs</td><td>主要ページのリンク切れを検査します。</td></tr></tbody></table></div>
     <p class="note">一括再構築系の処理は、入力CSVを初期値で上書きする可能性があるため、イベント実数入力後はこの表の対象ページだけを再生成します。</p>
   </section>
 </main>

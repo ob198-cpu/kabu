@@ -14,6 +14,8 @@ const generatedAt = new Intl.DateTimeFormat("ja-JP", {
 const RESULT_FILE = "102_june_event_result_input.csv";
 const RUNBOOK_HTML = "post_0618_event_update_runbook_20260613.html";
 const RUNBOOK_CSV = "post_0618_event_update_runbook_20260613.csv";
+const APPLY_HELPER_HTML = "post_0618_event_csv_apply_helper_20260613.html";
+const APPLY_INPUT_CSV = "102_june_event_result_input_to_apply.csv";
 const REQUIRED_HEADERS = [
   "event_id",
   "planned_date",
@@ -277,6 +279,11 @@ const commands = [
     "注意": "102を読み、106/108/109と資金配分ページを更新します。102自体は上書きしません。",
   },
   {
+    "目的": "判定CSVを正本へ反映",
+    "コマンド": `node tools/apply_event_result_csv_20260613.mjs ${APPLY_INPUT_CSV}`,
+    "注意": "検査OKなら102をバックアップしてから更新し、関連CSV・関連ページを再生成します。",
+  },
+  {
     "目的": "当日運用ボードを再生成",
     "コマンド": "node tools/build_post_0618_operation_board_20260613.mjs",
     "注意": "102/106/108/109 CSVを読んで、当日ボードを更新します。",
@@ -396,6 +403,7 @@ const html = `<!doctype html>
     <div class="links">
       <a href="912_june_event_actual_input_sheet_20260606.html">イベント実数入力</a>
       <a href="post_0618_event_reflection_workflow_20260613.html">反映ワークフロー</a>
+      <a href="${APPLY_HELPER_HTML}">CSV正本反映補助</a>
       <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
       <a href="${RUNBOOK_CSV}">CSV</a>
     </div>

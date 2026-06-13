@@ -1,0 +1,5 @@
+﻿section,item,value,note
+summary,canonical_file,102_june_event_result_input.csv,
+summary,default_input_file,102_june_event_result_input_to_apply.csv,
+summary,last_result,反映完了,102_june_event_result_input_to_apply.csv を正本CSVへ反映しました。
+apply,backup,_event_result_backups/102_june_event_result_input_20260613120913.csv,反映前の102バックアップ
