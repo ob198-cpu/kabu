@@ -1,0 +1,11 @@
+﻿section,item,value,note
+summary,status,購入判断前,未入力イベントが3件あります。現時点では注文金額を確定しません。
+summary,current_allocation_yen,0,E02/E03/E04が未入力の間は注文金額を確定しない
+summary,green_initial_yen,840000,初回35%上限。中心候補を厚め、条件付き候補を小比率。
+summary,yellow_initial_yen,360000,初回15%上限。半導体・高PER・高ボラは保留または小比率。
+summary,red_initial_yen,0,新規購入停止。監視と記録のみ。
+daily_task,1. 市場データ更新,朝,日経平均/TOPIX、S&P500、NASDAQ、SOX、米10年金利、ドル円、VIX / 停止: 指数急落、米金利急騰、急な円高、VIX急騰
+daily_task,2. E02/E03/E04の入力,イベント後,日銀会合、FOMC、最終購入前確認を102 CSVへ入力 / 停止: イベント結果が未入力、または赤条件が残る
+daily_task,3. 候補10社の扱いを確認,候補確認,保留、確認、買い可、急騰、下落、停止条件 / 停止: 未確認値を点数に混ぜている、または説明できない急騰がある
+daily_task,4. NISA・本人操作確認,購入前,本人名義口座、本人ログイン、NISA口座区分、残枠、注文金額 / 停止: 本人操作、NISA区分、残枠、入金のいずれかが未確認
+daily_task,5. 記録,発注後,購入価格、数量、理由、買わない条件、比較指数、次回確認日 / 停止: 記録できない

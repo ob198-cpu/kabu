@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6月18日以降 当日運用ボード</title>
+<style>
+:root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818;--green:#116b4f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7;font-size:17px}
+header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+header h1{margin:0 0 8px;font-size:clamp(30px,4vw,44px);letter-spacing:0;line-height:1.2}
+header p{margin:0;color:white;font-weight:900}
+main{max-width:1440px;margin:0 auto;padding:22px}
+section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+.notice{border-left:8px solid var(--amber);background:#fff7e7;padding:14px 16px;border-radius:10px;font-weight:900;color:#111}
+.stopbox{border-left:8px solid var(--red);background:#fff1f1}
+.okbox{border-left:8px solid var(--green);background:#effaf5}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.card,.metric{background:#fbfdff;border:1px solid var(--line);border-radius:10px;padding:14px}
+.card b,.metric b{display:block;color:var(--navy);font-size:15px}
+.card strong,.metric strong{display:block;font-size:28px;color:var(--blue);line-height:1.2;margin-top:4px}
+.metric span{font-weight:900}
+.links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:10px 13px;font-weight:900}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:white}
+table{width:100%;border-collapse:collapse;min-width:1180px;table-layout:fixed}
+th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{background:#e5f1fa;color:#073b62;font-weight:900}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.flow .card{position:relative}
+.flow .card strong{font-size:20px}
+.small{font-size:14px;color:#38516a;font-weight:800}
+@media(max-width:1000px){main{padding:12px}.cards,.flow{grid-template-columns:1fr}table{min-width:980px}body{font-size:16px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>6月18日以降 当日運用ボード</h1>
+  <p>作成: 2026/06/13 19:20 / 実際に買う前に、今日見る項目、止める条件、使える上限額を一画面で確認します。</p>
+</header>
+<main>
+  <section class="notice">
+    <h2>現在の結論</h2>
+    <p>未入力イベントが3件あります。現時点では注文金額を確定しません。</p>
+    <div class="links">
+      <a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
+      <a href="june_gate_operation.html">6月ゲート運用表</a>
+      <a href="capital_allocation_plan.html">資金配分ゲート</a>
+      <a href="june_event_gate_engine.html">銘柄別イベント判定</a>
+      <a href="post_0618_operation_board_20260613.csv">CSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>1. 今日の状態</h2>
+    <div class="cards">
+      <div class="card"><b>状態</b><strong>購入判断前</strong><span>3件のイベントが未入力</span></div>
+      <div class="card"><b>現時点の注文上限</b><strong>0円</strong><span>E02/E03/E04未入力中</span></div>
+      <div class="card"><b>緑判定の初回上限</b><strong>840,000円</strong><span>全イベント確認後</span></div>
+      <div class="card"><b>黄判定の初回上限</b><strong>360,000円</strong><span>注意が残る場合</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 18日以降の作業順</h2>
+    <div class="flow">
+      <div class="card"><b>朝</b><strong>1. 市場データ更新</strong><span>市場ゲートを緑・黄・赤で仮判定</span></div><div class="card"><b>イベント後</b><strong>2. E02/E03/E04の入力</strong><span>6月ゲート運用表と資金配分を再生成</span></div><div class="card"><b>候補確認</b><strong>3. 候補10社の扱いを確認</strong><span>中心候補、条件付き候補、保留に分類</span></div><div class="card"><b>購入前</b><strong>4. NISA・本人操作確認</strong><span>本人別注文票に進む</span></div><div class="card"><b>発注後</b><strong>5. 記録</strong><span>1週、1か月、3か月、12か月で検証</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 入力が必要なイベント</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:160px">event</th><th style="width:150px">date</th><th style="width:90px">status</th><th style="">needed</th><th style="">pass_condition</th><th style="">action</th></tr></thead><tbody><tr><td>E01 米5月CPI</td><td>2026-06-10</td><td>注意</td><td>CPI前年比・前月比、米10年金利、NASDAQ、SOX、VIX、ドル円</td><td>インフレ再加速と米金利急騰が同時に起きず、NASDAQ/SOXが大崩れしない</td><td>半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td></tr><tr><td>E02 日銀会合</td><td>2026-06-15〜2026-06-16</td><td>未入力</td><td>政策変更、ドル円、日経平均/TOPIX、銀行・商社・輸出株反応</td><td>急な円高ショックと日本株指数の大幅下落が同時に出ない</td><td>入力後に再判定</td></tr><tr><td>E03 FOMC</td><td>2026-06-16〜2026-06-17</td><td>未入力</td><td>政策金利見通し、米10年金利、NASDAQ、SOX、ドル円</td><td>米長期金利が急騰せず、ハイテク株のリスク許容度が崩れない</td><td>入力後に再判定</td></tr><tr><td>E04 最終購入前確認</td><td>2026-06-18以降</td><td>未入力</td><td>候補別株価、PER/PBR/ROE、直近下落率、未確認データ、証券会社画面</td><td>停止条件なし、未確認データを点数に混ぜない、本人操作とNISA口座区分を確認</td><td>入力後に再判定</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>4. 候補10社の現時点扱い</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:95px">ticker</th><th style="width:140px">name</th><th style="width:110px">role</th><th style="width:90px">market_signal</th><th style="width:90px">one_day_change_pct</th><th style="width:90px">current_status</th><th style="">risk_tags</th><th style="">current_allocation_yen</th><th style="">stop_condition</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>中心候補</td><td>買い可</td><td>1.18</td><td>保留</td><td>商社/資源/円安/還元</td><td>0</td><td>資源価格急落、円高急進、決算で利益見通しが弱い場合は保留。</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>中心候補</td><td>確認</td><td>3.27</td><td>保留</td><td>銀行/金利/金融</td><td>0</td><td>日銀後に銀行株全体が急落、または信用コスト懸念が強まる場合は保留。</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>中心候補</td><td>買い可</td><td>0.04</td><td>保留</td><td>AIインフラ/電力/データセンター/総合電機</td><td>0</td><td>大型株指数が弱く、同社が指数より弱い場合は保留。</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>条件付き候補</td><td>買い可</td><td>1.82</td><td>保留</td><td>FA/電力/防衛/総合電機</td><td>0</td><td>FA関連や設備投資関連が弱い場合は小比率または保留。</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>条件付き候補</td><td>確認</td><td>8.54</td><td>保留</td><td>半導体/高PER/高ボラ/AI</td><td>0</td><td>米金利急騰、SOX急落、株価急騰後の反落リスクが強い場合は買わない。</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>確認</td><td>7.26</td><td>保留</td><td>半導体/高PER/高ボラ/製造装置</td><td>0</td><td>SOX/NASDAQが弱い、または高PER株売りが強い場合は保留。</td></tr><tr><td>7011.T</td><td>三菱重工業</td><td>条件付き候補</td><td>買い可</td><td>1.32</td><td>保留</td><td>防衛/電力/エネルギー</td><td>0</td><td>短期過熱後の反落、受注材料の織り込み過多が見える場合は保留。</td></tr><tr><td>6762.T</td><td>TDK</td><td>条件付き候補</td><td>買い可</td><td>-1.60</td><td>保留</td><td>電子部品/AI端末/電池/フィジカルAI</td><td>0</td><td>電子部品株が指数より弱い、または為替悪化時は保留。</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>条件付き候補</td><td>確認</td><td>14.09</td><td>保留</td><td>半導体/高PER/高ボラ/精密加工</td><td>0</td><td>急騰後、出来高を伴わない上昇、SOX弱化時は保留。</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>条件付き候補</td><td>買い可</td><td>2.75</td><td>保留</td><td>電線/データセンター/高ボラ/AIインフラ</td><td>0</td><td>データセンター関連が反落、または短期過熱が強い場合は保留。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>5. 判定別の注文上限</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:95px">ticker</th><th style="width:140px">name</th><th style="width:120px">role</th><th style="width:100px">green_yen</th><th style="width:100px">yellow_yen</th><th style="width:90px">red_yen</th><th style="">condition</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>中心候補</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>中心候補</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>中心候補</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>条件付き候補</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>条件付き候補</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T</td><td>三菱重工業</td><td>条件付き候補</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T</td><td>TDK</td><td>条件付き候補</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>条件付き候補</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>条件付き候補</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>6. 最新市場データ</h2>
+    <p class="small">更新: 2026-06-13 19:00 JST / 確認判定が4銘柄あります。高PER・金利・急変動の条件を確認してから買います。</p>
+    <div class="cards"><div class="metric"><b>日経平均</b><strong>66,020.04</strong><span>+2.81%</span></div><div class="metric"><b>TOPIX ETF</b><strong>412.2</strong><span>+1.45%</span></div><div class="metric"><b>S&amp;P500</b><strong>7,431.46</strong><span>+0.50%</span></div><div class="metric"><b>NASDAQ</b><strong>25,888.844</strong><span>+0.31%</span></div><div class="metric"><b>ドル円</b><strong>160.185</strong><span>+0.03%</span></div><div class="metric"><b>米10年金利</b><strong>4.487</strong><span>+0.54%</span></div><div class="metric"><b>ドル指数DXY</b><strong>99.807</strong><span>-0.05%</span></div><div class="metric"><b>金先物</b><strong>4,238.8</strong><span>+3.63%</span></div></div>
+  </section>
+
+  <section class="notice stopbox">
+    <h2>買わない条件</h2>
+    <p>赤判定、イベント未入力、本人操作未確認、NISA口座区分未確認、証券会社画面未確認、説明できない急騰、候補別停止条件の該当がある場合は、注文金額を確定しません。</p>
+  </section>
+</main>
+</body>
+</html>
