@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>6月イベント実数 反映ワークフロー</title>
+  <style>
+    :root {
+      --ink: #001f3f;
+      --muted: #34495e;
+      --line: #c9d9ea;
+      --soft: #eef6ff;
+      --brand: #005f99;
+      --warn: #b46a00;
+      --bad: #b42318;
+      --ok: #147a3d;
+      --pending: #4b5563;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f4f8fc;
+      color: var(--ink);
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #073763, #005f99);
+      color: #fff;
+      padding: 28px clamp(18px, 4vw, 54px);
+    }
+    header h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); letter-spacing: 0; }
+    header p { margin: 0; max-width: 1180px; }
+    main { max-width: 1500px; margin: 0 auto; padding: 24px; }
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .nav a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 16px;
+      border: 1px solid #78aad0;
+      border-radius: 8px;
+      background: #fff;
+      color: #004b7a;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0, 31, 63, 0.06);
+      break-inside: avoid;
+    }
+    h2 { margin: 0 0 12px; border-left: 8px solid var(--brand); padding-left: 12px; color: var(--ink); font-size: 25px; }
+    .decision {
+      border-left: 9px solid var(--pending);
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 16px;
+      font-weight: 800;
+      font-size: 19px;
+    }
+    .decision.ok { border-color: var(--ok); background: #effaf5; }
+    .decision.warn { border-color: var(--warn); background: #fff7e7; }
+    .decision.bad { border-color: var(--bad); background: #fff1f1; }
+    .decision.pending { border-color: var(--pending); background: #f3f4f6; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--soft);
+      padding: 14px;
+    }
+    .metric b { display: block; font-size: 28px; line-height: 1.2; }
+    .metric span { display: block; color: var(--muted); font-weight: 700; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .flow-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfdff;
+      padding: 14px;
+    }
+    .flow-card b {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand);
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .flow-card h3 { margin: 0 0 8px; font-size: 18px; color: var(--ink); }
+    .flow-card p { margin: 0 0 8px; font-size: 15px; }
+    .flow-card span { display: block; color: var(--muted); font-size: 13px; font-weight: 700; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 1000px; }
+    th, td { border: 1px solid var(--line); padding: 10px; vertical-align: top; word-break: break-word; }
+    th { background: #e5f1fb; text-align: left; font-size: 15px; }
+    .note {
+      border-left: 7px solid var(--warn);
+      background: #fff7e7;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-weight: 800;
+    }
+    @media (max-width: 1000px) {
+      main { padding: 14px; }
+      .flow { grid-template-columns: 1fr; }
+      table { min-width: 900px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 13px; }
+      header { padding: 16px 22px; }
+      main { max-width: none; padding: 12px; }
+      .nav { display: none; }
+      section { box-shadow: none; break-inside: avoid; }
+      tr { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>6月イベント実数 反映ワークフロー</h1>
+    <p>イベント実数を入れた後、候補10社の扱い・初回投入上限・当日運用ボードへどう反映されるかを確認する実務ページです。</p>
+  </header>
+  <main>
+    <nav class="nav" aria-label="関連ページ">
+      <a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
+      <a href="912_june_event_actual_input_sheet_20260606.html">6月イベント実数入力</a>
+      <a href="june_event_gate_engine.html">銘柄別イベント判定</a>
+      <a href="capital_allocation_plan.html">資金配分プラン</a>
+      <a href="post_0618_operation_board_20260613.html">当日運用ボード</a>
+    </nav>
+
+    <section>
+      <h2>現在の反映結果</h2>
+      <div class="decision pending">
+        未入力あり。イベント実数が不足しているため、注文金額を確定しない。
+      </div>
+      <div class="metrics">
+        <div class="metric"><b>3</b><span>未入力イベント</span></div>
+        <div class="metric"><b>1</b><span>注意イベント</span></div>
+        <div class="metric"><b>0</b><span>悪化イベント</span></div>
+        <div class="metric"><b>0円</b><span>現時点の初回投入上限</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>反映の流れ</h2>
+      <div class="flow">
+  <article class="flow-card">
+    <b>1</b>
+    <h3>イベント実数を入力</h3>
+    <p>CPI、日銀、FOMC、最終購入前確認を、未入力・通過・注意・悪化に分ける。</p>
+    <span>912_june_event_actual_input_sheet_20260606.html</span>
+  </article>
+  <article class="flow-card">
+    <b>2</b>
+    <h3>正本CSVへ反映</h3>
+    <p>以後の画面と判定は、このCSVを根拠にする。未入力や仮説を点数に混ぜない。</p>
+    <span>102_june_event_result_input.csv</span>
+  </article>
+  <article class="flow-card">
+    <b>3</b>
+    <h3>銘柄別判定へ反映</h3>
+    <p>各銘柄がイベント悪化の影響を受けるかを確認する。</p>
+    <span>106_june_event_engine_output.csv / june_event_gate_engine.html</span>
+  </article>
+  <article class="flow-card">
+    <b>4</b>
+    <h3>資金配分へ反映</h3>
+    <p>緑なら84万円上限、黄なら36万円上限、赤または未入力なら0円にする。</p>
+    <span>108_capital_allocation_by_ticker.csv / 109_capital_scenario_plan.csv</span>
+  </article>
+  <article class="flow-card">
+    <b>5</b>
+    <h3>当日運用ボードで確認</h3>
+    <p>買う前に、止める条件、候補10社、NISA本人操作、証券会社画面をまとめて確認する。</p>
+    <span>post_0618_operation_board_20260613.html</span>
+  </article></div>
+    </section>
+
+    <section>
+      <h2>イベント入力の状態</h2>
+      
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:80px">id</th><th style="width:145px">date</th><th style="">event</th><th style="width:90px">status</th><th style="">actual</th><th style="">reaction</th><th style="">action</th></tr></thead>
+      <tbody><tr><td>E01</td><td>2026-06-10</td><td>米5月CPI</td><td>注意</td><td>入力済み/確認中</td><td>注意</td><td>半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td></tr><tr><td>E02</td><td>2026-06-15〜2026-06-16</td><td>日銀会合</td><td>未入力</td><td>未入力</td><td>未入力</td><td>日本株の予定買付を延期、または比率を下げる</td></tr><tr><td>E03</td><td>2026-06-16〜2026-06-17</td><td>FOMC</td><td>未入力</td><td>未入力</td><td>未入力</td><td>半導体・高PER・高ボラ候補を延期</td></tr><tr><td>E04</td><td>2026-06-18以降</td><td>最終購入前確認</td><td>未入力</td><td>未入力</td><td>未入力</td><td>監視継続または初回除外</td></tr></tbody>
+    </table>
+  </div>
+    </section>
+
+    <section>
+      <h2>資金配分への反映</h2>
+      
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:190px">scenario</th><th style="width:150px">stock_investment_yen</th><th style="width:150px">cash_yen</th><th style="">action</th></tr></thead>
+      <tbody><tr><td>緑: 全イベント確認後</td><td>840,000円</td><td>1,560,000円</td><td>初回35%上限。中心候補を厚め、条件付き候補を小比率。</td></tr><tr><td>黄: 注意あり</td><td>360,000円</td><td>2,040,000円</td><td>初回15%上限。半導体・高PER・高ボラは保留または小比率。</td></tr><tr><td>赤: 悪化</td><td>0円</td><td>2,400,000円</td><td>新規購入停止。監視と記録のみ。</td></tr><tr><td>第2回</td><td>480,000円</td><td>-</td><td>初回後の実績、指数比較、決算後反応を確認して追加上限20%。</td></tr><tr><td>第3回</td><td>360,000円</td><td>-</td><td>さらに確認後の追加上限15%。最低30%は現金待機。</td></tr></tbody>
+    </table>
+  </div>
+    </section>
+
+    <section>
+      <h2>銘柄別の投入上限</h2>
+      
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:95px">ticker</th><th style="">name</th><th style="width:120px">role</th><th style="">signal</th><th style="width:95px">current</th><th style="width:95px">green</th><th style="width:95px">yellow</th><th style="width:80px">red</th><th style="">condition</th></tr></thead>
+      <tbody><tr><td>8053.T</td><td>住友商事</td><td>中心候補</td><td>買い可</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>中心候補</td><td>確認</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>中心候補</td><td>買い可</td><td>0円</td><td>157,500円</td><td>67,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>条件付き候補</td><td>確認</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>確認</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T</td><td>三菱重工業</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T</td><td>TDK</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>条件付き候補</td><td>確認</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>条件付き候補</td><td>買い可</td><td>0円</td><td>52,500円</td><td>22,500円</td><td>0円</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody>
+    </table>
+  </div>
+    </section>
+
+    <section>
+      <h2>CSVと画面の対応</h2>
+      
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:210px">source</th><th style="width:240px">target</th><th style="">rule</th><th style="">result</th></tr></thead>
+      <tbody><tr><td>102_june_event_result_input.csv</td><td>106_june_event_engine_output.csv</td><td>イベント状態が未入力なら全銘柄の購入判断を保留。悪化なら新規購入停止。</td><td>候補10社の現時点扱いを作る。</td></tr><tr><td>106_june_event_engine_output.csv</td><td>june_event_gate_engine.html</td><td>銘柄ごとのリスクタグ、イベント感応度、停止条件を表示。</td><td>なぜ買い可・確認・保留なのかを画面で確認する。</td></tr><tr><td>102_june_event_result_input.csv</td><td>108_capital_allocation_by_ticker.csv</td><td>緑・黄・赤・未入力に応じて初回投入額を切り替える。</td><td>銘柄ごとの投入上限を作る。</td></tr><tr><td>108/109 CSV</td><td>capital_allocation_plan.html</td><td>全体上限と銘柄別上限を表示。</td><td>240万円のうち、いくらまで入れるかを確認する。</td></tr><tr><td>102/106/108/109 CSV</td><td>post_0618_operation_board_20260613.html</td><td>イベント・候補・資金配分を1画面へ集約。</td><td>18日以降に見る最終実務画面にする。</td></tr></tbody>
+    </table>
+  </div>
+      <p class="note">ブラウザ上の入力だけでは、GitHub上のCSVは自動保存されません。判定用CSVを出力し、正本CSVへ反映してから再生成する運用にします。</p>
+    </section>
+
+    <section>
+      <h2>18日以降の操作順</h2>
+      <ol>
+        <li>日銀・FOMC・最終購入前確認の実数を入力する。</li>
+        <li>状態を「通過」「注意」「悪化」のいずれかにする。未入力のまま買付金額を確定しない。</li>
+        <li>判定用CSVを作成し、102の正本CSVへ反映する。</li>
+        <li>銘柄別判定、資金配分、当日運用ボードを再確認する。</li>
+        <li>本人操作、NISA口座区分、証券会社画面、買わない条件を確認する。</li>
+        <li>条件がそろった場合のみ、本人別注文票へ進む。</li>
+      </ol>
+    </section>
+  </main>
+  <!-- generated: 2026/06/13 20:41 / total capital: 2400000 -->
+</body>
+</html>

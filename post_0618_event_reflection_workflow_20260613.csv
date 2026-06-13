@@ -1,0 +1,7 @@
+﻿section,item,source,target,rule,result
+summary,current_scenario,102_june_event_result_input.csv,post_0618_operation_board_20260613.html,3件未入力 / 1件注意 / 0件悪化 / 0件通過,未入力あり: イベント実数が不足しているため、注文金額を確定しない。
+mapping,M1,102_june_event_result_input.csv,106_june_event_engine_output.csv,イベント状態が未入力なら全銘柄の購入判断を保留。悪化なら新規購入停止。,候補10社の現時点扱いを作る。
+mapping,M2,106_june_event_engine_output.csv,june_event_gate_engine.html,銘柄ごとのリスクタグ、イベント感応度、停止条件を表示。,なぜ買い可・確認・保留なのかを画面で確認する。
+mapping,M3,102_june_event_result_input.csv,108_capital_allocation_by_ticker.csv,緑・黄・赤・未入力に応じて初回投入額を切り替える。,銘柄ごとの投入上限を作る。
+mapping,M4,108/109 CSV,capital_allocation_plan.html,全体上限と銘柄別上限を表示。,240万円のうち、いくらまで入れるかを確認する。
+mapping,M5,102/106/108/109 CSV,post_0618_operation_board_20260613.html,イベント・候補・資金配分を1画面へ集約。,18日以降に見る最終実務画面にする。

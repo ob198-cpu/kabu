@@ -317,6 +317,7 @@ const html = `<!doctype html>
   <main>
     <nav class="nav" aria-label="関連ページ">
       <a href="post_0618_operation_board_20260613.html">6月18日以降 当日運用ボード</a>
+      <a href="post_0618_event_reflection_workflow_20260613.html">イベント反映ワークフロー</a>
       <a href="june_gate_operation.html">6月購入前ゲート</a>
       <a href="june_event_gate_engine.html">6月イベント判定エンジン</a>
       <a href="capital_allocation_plan.html">資金配分プラン</a>

@@ -28,6 +28,7 @@ const sections = [
       ["購入準備 判定ボード", "916_purchase_readiness_board_20260606.html", "市場、候補、配分、NISA口座、税制、記録がそろっているかを一画面で判定。"],
       ["240万円×1〜10口座 過去実績ベース複利", "historical_return_compound_simulation_20260609.html", "現10社の5年CAGR、10年CAGR、直近1年、最大下落を使った資産推移。"],
       ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "手順1: CPI・日銀・FOMC後の実数と判定を入力し、判定用CSVを出力する。"],
+      ["6月イベント実数 反映ワークフロー", "post_0618_event_reflection_workflow_20260613.html", "手順1の入力が、候補10社・資金配分・当日運用ボードへどう反映されるか確認する。"],
       ["銘柄別イベント判定エンジン", "june_event_gate_engine.html", "手順2: イベント結果CSVに連動して、銘柄別の延期・保留・候補復帰を判定する。"],
       ["6月イベント 市場全体ゲート", "893_june_event_gate_engine_20260606.html", "手順3: 金利、SOX、NASDAQ、VIXで市場全体を緑・黄・赤で照合する。"],
       ["240万円 資金配分ゲート", "capital_allocation_plan.html", "手順4: 判定結果に応じた段階投入(初回35%・第2回20%・第3回15%)の上限を確認する。"],
