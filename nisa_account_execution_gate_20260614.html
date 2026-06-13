@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NISA口座・本人操作 実行ゲート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1580px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .okbox{border-left-color:var(--green);background:#eefaf5}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{font-weight:800;color:#263e55}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;table-layout:auto;background:#fff}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:13px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+<header><h1>NISA口座・本人操作 実行ゲート</h1><p>本人別のNISA口座、本人スマホ、本人ログイン、銀行口座、二段階認証、NISA残枠を購入上限へ接続します。未確認の口座は注文候補を0円にします。</p></header>
+<main>
+<section><h2>現在の結論</h2><p class="notice danger">現時点では、口座別の購入上限は合計 0円 です。イベント未入力または本人別確認が未完了のため、本人ごとの注文票には進みません。</p><div class="cards"><div class="card"><b>口座数</b><strong>10</strong><span>本人別に確認する枠</span></div><div class="card"><b>購入準備OK</b><strong>0/10</strong><span>本人操作・NISA残枠まで通った口座</span></div><div class="card"><b>現在の口座別上限</b><strong>0円</strong><span>未入力イベントまたは口座未確認があるため現状は0円</span></div><div class="card"><b>イベント状態</b><strong>未入力あり</strong><span>日銀・FOMC・最終購入前確認が未入力なら買付不可</span></div></div></section>
+<section><h2>本人別 実行ゲート</h2><div class="table-wrap"><table><thead><tr><th>口座</th><th>本人</th><th>証券会社</th><th>NISA</th><th>本人スマホ</th><th>銀行口座</th><th>二段階認証</th><th>NISA残枠</th><th>イベント</th><th>判定</th><th>口座別上限</th><th>未確認</th><th>次の作業</th><th>操作ルール</th></tr></thead><tbody><tr><td class="">口座1</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座2</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座3</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座4</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座5</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座6</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座7</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座8</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座9</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr><tr><td class="">口座10</td><td class="bad">未入力</td><td class="bad">未入力</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未確認</td><td class="bad">未入力</td><td class="bad">未入力あり</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠</td><td class="">本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠を確認</td><td class="">本人名義スマホ・本人ログイン・本人操作。第三者がID/PWを預からない</td></tr></tbody></table></div></section>
+<section><h2>注文票テンプレートへの接続</h2><p>本人別ゲートが通過した口座だけ、候補10社の比率に応じた注文上限を出します。現時点では全口座0円です。</p><p><a href="nisa_account_order_ticket_template_20260614.csv">本人別注文票CSVを開く</a></p></section>
+<section><h2>関連</h2><ul><li><a href="practical_action_cockpit_20260614.html">6/18以降 実用判断コックピット</a></li><li><a href="nisa_account_linkage_template_20260613.html">NISA口座・本人操作 連動テンプレート</a></li><li><a href="nisa_account_execution_gate_20260614.csv">口座ゲートCSVを開く</a></li></ul></section>
+<footer>作成: 2026/06/14 01:05 / 本画面は口座状態と本人操作の確認表であり、代理操作や自動売買を行うものではありません。</footer>
+</main>
+</body>
+</html>
