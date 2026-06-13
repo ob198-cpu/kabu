@@ -103,10 +103,11 @@ export function pct(value) {
 
 export function table(headers, rows, options = {}) {
   const widths = options.widths ?? options;
+  const htmlColumns = new Set(options.htmlColumns ?? []);
   return `<div class="table-wrap"><table><thead><tr>${headers
     .map((header) => `<th style="${widths[header] ? `width:${widths[header]}` : ""}">${esc(header)}</th>`)
     .join("")}</tr></thead><tbody>${rows
-    .map((row) => `<tr>${headers.map((header) => `<td>${esc(row[header])}</td>`).join("")}</tr>`)
+    .map((row) => `<tr>${headers.map((header) => `<td>${htmlColumns.has(header) ? (row[header] ?? "") : esc(row[header])}</td>`).join("")}</tr>`)
     .join("")}</tbody></table></div>`;
 }
 

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 決算後反応 再計算</title>
+  <style>
+    :root { --ink:#061a33; --line:#cbdceb; --soft:#eef6ff; --blue:#0b66a0; --ok:#087f5b; --warn:#a15c00; --bad:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Yu Gothic","Meiryo",system-ui,sans-serif; color:var(--ink); background:#f6f9fc; line-height:1.7; }
+    header { background:#123d63; color:#fff; padding:28px max(24px, calc((100vw - 1180px)/2)); }
+    main { width:min(1180px, calc(100% - 32px)); margin:0 auto; padding:22px 0 48px; }
+    h1 { margin:0 0 8px; font-size:32px; }
+    h2 { border-left:8px solid var(--blue); padding-left:12px; margin:0 0 14px; }
+    section { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; margin:16px 0; page-break-inside:avoid; break-inside:avoid; }
+    .summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .card { background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:14px; }
+    .card strong { display:block; font-size:28px; color:var(--blue); }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; min-width:1040px; table-layout:fixed; }
+    th,td { border:1px solid var(--line); padding:9px 10px; vertical-align:top; overflow-wrap:anywhere; }
+    th { background:#e5f1fb; }
+    .ok { color:var(--ok); font-weight:900; }
+    .warn { color:var(--warn); font-weight:900; }
+    .bad { color:var(--bad); font-weight:900; }
+    .note { border-left:6px solid var(--warn); background:#fff8ec; padding:12px; border-radius:10px; }
+    .links { display:flex; flex-wrap:wrap; gap:10px; }
+    .links a { color:#fff; background:var(--blue); border-radius:10px; padding:9px 12px; text-decoration:none; font-weight:900; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>候補10社 決算後反応 再計算</h1>
+  <p>作成: 2026/06/13 22:19 / 公式決算日が確認できる範囲で、決算後1日・5日・20営業日の対日経平均超過リターンを再計算した画面です。</p>
+</header>
+<main>
+  <section>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="candidate_selection_health_check_20260613.html">候補10社 選定ロジック検査</a>
+      <a href="candidate10_reaction_backfill_20260613.csv">CSV</a>
+    </div>
+  </section>
+  <section>
+    <h2>概要</h2>
+    <div class="summary">
+      <div class="card"><b>対象</b><strong>10社</strong><span>現行候補10社を対象に決算後反応を再計算。</span></div><div class="card"><b>20営業日到達</b><strong>10社</strong><span>採点接続候補。過信せず、価格・指数と併用。</span></div><div class="card"><b>未到達/未取得</b><strong>0社</strong><span>購入判断では補完待ちとして扱う。</span></div><div class="card"><b>現在の使い方</b><strong>補助</strong><span>決算後反応だけで買いを決めない。</span></div>
+    </div>
+    <p class="note">この表は「決算後に実際に買われたか」を見る補助材料です。1日・5日だけでは過信せず、20営業日反応がそろったものだけを採点接続候補にします。</p>
+  </section>
+  <section>
+    <h2>10社の決算後反応</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:16%">銘柄</th><th style="">役割</th><th style="">決算日</th><th style="">出所</th><th style="">1日超過</th><th style="">5日超過</th><th style="">20日超過</th><th style="">反応点</th><th style="">状態</th><th style="">扱い</th><th style="width:8%">根拠</th></tr></thead><tbody><tr><td>8053.T 住友商事</td><td>中心候補</td><td>2026-05-01</td><td>既存反応CSV</td><td>2.61%</td><td>6.24%</td><td>-14.91%</td><td>43.7</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.sumitomocorp.com/ja/jp/ir/financial">出所</a></td></tr><tr><td>8316.T 三井住友FG</td><td>中心候補</td><td>2026-05-13</td><td>既存反応CSV</td><td>-2.05%</td><td>5.99%</td><td>4.97%</td><td>57.1</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.smfg.co.jp/investor/financial/latest_statement/">出所</a></td></tr><tr><td>6501.T 日立製作所</td><td>中心候補</td><td>2026-04-27</td><td>公式IRページ</td><td>-4.75%</td><td>-11.4%</td><td>-13.12%</td><td>29.1</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.hitachi.com/ja-jp/ir/library/fr/">出所</a></td></tr><tr><td>6503.T 三菱電機</td><td>条件付き候補</td><td>2026-04-28</td><td>既存反応CSV</td><td>3.57%</td><td>1.9%</td><td>-11.55%</td><td>43.9</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf">出所</a></td></tr><tr><td>6857.T アドバンテスト</td><td>条件付き候補</td><td>2026-04-27</td><td>公式PDF</td><td>-4.53%</td><td>-8.72%</td><td>-26.49%</td><td>20.4</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.advantest.com/document/ja/investors/ir-library/result/J_FR_FY2025_FN.pdf">出所</a></td></tr><tr><td>8035.T 東京エレクトロン</td><td>条件付き候補</td><td>2026-04-30</td><td>公式決算短信PDF</td><td>6.51%</td><td>11.67%</td><td>8.43%</td><td>68.2</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf">出所</a></td></tr><tr><td>7011.T 三菱重工業</td><td>条件付き候補</td><td>2026-05-12</td><td>既存短期反応CSV</td><td>1.62%</td><td>-0.55%</td><td>-19.87%</td><td>34.5</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://finance.yahoo.co.jp/quote/7011.T/disclosure">出所</a></td></tr><tr><td>6762.T TDK</td><td>条件付き候補</td><td>2026-04-28</td><td>公式PDF</td><td>9.03%</td><td>5.5%</td><td>41.6%</td><td>91.6</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.tdk.com/system/files/2026042800_0mqf56xw_ja.pdf">出所</a></td></tr><tr><td>6146.T ディスコ</td><td>条件付き候補</td><td>2026-04-22</td><td>公式PDF</td><td>-3.03%</td><td>-0.59%</td><td>-19.66%</td><td>32.3</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www.disco.co.jp/jp/ir/library/doc/fr/fr20260422.pdf">出所</a></td></tr><tr><td>5803.T フジクラ</td><td>条件付き候補</td><td>2026-05-14</td><td>TDnet PDF</td><td>-6.45%</td><td>-27.63%</td><td>-37.32%</td><td>0</td><td><span class="ok">20営業日到達</span></td><td>採点接続候補</td><td><a href="https://www2.jpx.co.jp/disc/58030/140120260514532598.pdf">出所</a></td></tr></tbody></table></div>
+  </section>
+  <section>
+    <h2>取得ログ</h2>
+    <div class="table-wrap"><table><thead><tr><th style="">ticker</th><th style="">status</th><th style="">detail</th></tr></thead><tbody><tr><td>8053.T</td><td>OK</td><td>120日分</td></tr><tr><td>8316.T</td><td>OK</td><td>120日分</td></tr><tr><td>6501.T</td><td>OK</td><td>120日分</td></tr><tr><td>6503.T</td><td>OK</td><td>120日分</td></tr><tr><td>6857.T</td><td>OK</td><td>120日分</td></tr><tr><td>8035.T</td><td>OK</td><td>120日分</td></tr><tr><td>7011.T</td><td>OK</td><td>120日分</td></tr><tr><td>6762.T</td><td>OK</td><td>120日分</td></tr><tr><td>6146.T</td><td>OK</td><td>120日分</td></tr><tr><td>5803.T</td><td>OK</td><td>120日分</td></tr><tr><td>^N225</td><td>OK</td><td>120日分</td></tr></tbody></table></div>
+  </section>
+</main>
+</body>
+</html>

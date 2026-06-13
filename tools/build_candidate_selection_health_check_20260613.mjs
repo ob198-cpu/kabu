@@ -24,6 +24,7 @@ const FILES = {
   snapshot: "909_final10_current_snapshot_20260606.csv",
   channels: "889_cross_channel_candidate_comparison_20260605.csv",
   universe: "780_universe100_reselection_metrics_20260528.csv",
+  reactionBackfill: "candidate10_reaction_backfill_20260613.csv",
   reaction: "869_candidate10_earnings_reaction_rebuild_20260604.csv",
   reactionFocus: "656_focus10_reaction_metrics.csv",
   reactionDue: "517_candidate_10_reaction_due_for_closure.csv",
@@ -89,6 +90,7 @@ const snapshot = exists(FILES.snapshot) ? readCsv(FILES.snapshot) : [];
 const channels = exists(FILES.channels) ? readCsv(FILES.channels) : [];
 const logic = exists(FILES.finalLogic) ? readCsv(FILES.finalLogic) : [];
 const universe = exists(FILES.universe) ? readCsv(FILES.universe) : [];
+const reactionBackfill = exists(FILES.reactionBackfill) ? readCsv(FILES.reactionBackfill) : [];
 const reaction = exists(FILES.reaction) ? readCsv(FILES.reaction) : [];
 const reactionFocus = exists(FILES.reactionFocus) ? readCsv(FILES.reactionFocus) : [];
 const reactionDue = exists(FILES.reactionDue) ? readCsv(FILES.reactionDue) : [];
@@ -96,7 +98,7 @@ const events = exists(FILES.eventInput) ? readCsv(FILES.eventInput) : [];
 const scenario = exists(FILES.scenario) ? readCsv(FILES.scenario) : [];
 
 const reactionByTicker = new Map();
-for (const row of [...reaction, ...reactionDue, ...reactionFocus]) {
+for (const row of [...reactionBackfill, ...reaction, ...reactionDue, ...reactionFocus]) {
   if (row.ticker && !reactionByTicker.has(row.ticker)) reactionByTicker.set(row.ticker, row);
 }
 
