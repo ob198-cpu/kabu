@@ -77,9 +77,9 @@ function selected(results, marketGate) {
     .slice(0, 10);
 }
 
-function allocationRows(rows, marketGate, budget = 2000000) {
-  const stockRate = marketGate === "green" ? 0.70 : marketGate === "yellow" ? 0.45 : 0;
-  const stockBudget = budget * stockRate;
+function allocationRows(rows, marketGate, budget = 2_400_000) {
+  const trancheRatio = marketGate === "green" ? 0.35 : marketGate === "yellow" ? 0.15 : 0;
+  const stockBudget = budget * trancheRatio;
   const totalWeight = rows.reduce((sum, row) => sum + classWeight[row.cls], 0) || 1;
   return rows.map((row, index) => ({
     ...row,
@@ -165,7 +165,7 @@ const html = `<!doctype html>
 
   <section>
     <h2>2. 保守判定: 市場ゲート黄</h2>
-    <p>市場に警戒が残る場合の見え方です。個別株上限は45%、攻め枠は縮小します。</p>
+    <p>市場に警戒が残る場合の見え方です。配分目安は<strong>初回投入枠15%(36万円上限)</strong>内の銘柄別配分です。</p>
     <table>
       <thead><tr><th style="width:55px">順</th><th style="width:150px">銘柄</th><th style="width:190px">枠</th><th style="width:70px">点</th><th style="width:120px">分類</th><th style="width:120px">配分目安</th><th>理由</th><th style="width:150px">扱い</th></tr></thead>
       <tbody>${rowsHtml(yellowSelected)}</tbody>
@@ -174,7 +174,7 @@ const html = `<!doctype html>
 
   <section>
     <h2>3. 仮判定: 市場ゲート緑</h2>
-    <p>6月イベント後に市場が崩れていない場合の見え方です。個別株上限は70%ですが、未確認データが残る銘柄は中心候補にはしません。</p>
+    <p>6月イベント後に市場が崩れていない場合の見え方です。配分目安は<strong>初回投入枠35%(84万円上限)</strong>内の銘柄別配分です。第2回(20%)・第3回(15%)は別途。</p>
     <table>
       <thead><tr><th style="width:55px">順</th><th style="width:150px">銘柄</th><th style="width:190px">枠</th><th style="width:70px">点</th><th style="width:120px">分類</th><th style="width:120px">配分目安</th><th>理由</th><th style="width:150px">扱い</th></tr></thead>
       <tbody>${rowsHtml(greenSelected)}</tbody>

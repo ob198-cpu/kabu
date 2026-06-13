@@ -3,41 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>100万円 資金配分ゲート</title>
+<title>240万円 資金配分ゲート</title>
 <style>
 :root{--navy:#123b5d;--blue:#0f6f9e;--green:#16805d;--amber:#d88700;--red:#b43c3c;--line:#d9e4ef;--bg:#f5f8fb}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.65}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:"Yu Gothic","Meiryo",Arial,sans-serif;line-height:1.7}
 header{background:linear-gradient(135deg,#123b5d,#0f6f9e);color:#fff;padding:30px 22px}main{max-width:1320px;margin:auto;padding:22px}
-h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px}.lead{max-width:980px;color:#e8f6ff}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}h2{margin:28px 0 10px;border-left:8px solid var(--blue);padding-left:12px;color:#083a5b}.lead{max-width:980px;color:#e8f6ff;font-weight:800}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.card,.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:0 3px 12px rgba(20,50,80,.05)}
-.card b{display:block;font-size:30px;color:var(--blue)}.warn{border-left:8px solid var(--amber);background:#fff8ea}.ok{border-left:8px solid var(--green);background:#effaf5}
+.card b{display:block;font-size:30px;color:var(--blue)}.warn{border-left:8px solid var(--amber);background:#fff8ea}.bad{border-left:8px solid var(--red);background:#fff1f1}.ok{border-left:8px solid var(--green);background:#effaf5}
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin:12px 0 24px}
-table{border-collapse:collapse;width:100%;min-width:1220px}th,td{border-bottom:1px solid #e7eef6;padding:8px 9px;font-size:12px;vertical-align:top;text-align:left}
-th{background:#eaf2f9;color:#1d405f}.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.step{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+table{border-collapse:collapse;width:100%;min-width:980px;table-layout:fixed}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;overflow-wrap:anywhere;word-break:break-word}th{background:#e8f3fb;color:#083a5b}
+.links a{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border-radius:8px;padding:9px 12px;font-weight:900}
+.pill{display:inline-block;border-radius:999px;color:#fff;padding:4px 10px;font-weight:900}.hold{background:var(--amber)}.go{background:var(--green)}.stop{background:var(--red)}
+@media(max-width:860px){main{padding:12px}table{min-width:900px}}
 </style>
 </head>
 <body>
-<header>
-  <h1>100万円 資金配分ゲート</h1>
-  <p class="lead">6月イベント判定を通過した場合だけ、100万円のうちいくらをテスト投入し、いくらを現金待機に残すかを決める表です。現時点ではイベント未入力のため投入0円です。</p>
-  <p>更新: 2026/05/20 10:51</p>
-</header>
+<header><h1>240万円 資金配分ゲート</h1><p class="lead">作成: 2026/06/13 19:08 / 6月イベント後の判定に応じて、1口座240万円の初回投入上限を切り替える表です。</p></header>
 <main>
-  <section class="grid">
-    <div class="card"><b>0円</b>現時点の投入額</div>
-    <div class="card"><b>1000000円</b>現時点の現金</div>
-    <div class="card"><b>260000円</b>全通過時の6月上限</div>
-    <div class="card"><b>150,000円</b>最低待機現金</div>
-  </section>
-  <div class="box warn">この表は資金配分のシミュレーションです。イベント前に買い進める設計ではありません。</div>
-  <h2>資金配分シナリオ</h2>
-  <div class="table-wrap"><table><thead><tr><th>scenario</th><th>event_condition</th><th>invest_yen</th><th>cash_yen</th><th>invest_pct</th><th>action</th></tr></thead><tbody><tr><td>現時点</td><td>イベント未入力</td><td>0</td><td>1000000</td><td>0</td><td>投入しない。未解消項目とイベント結果を待つ</td></tr><tr><td>通過</td><td>米CPI・日銀・FOMC・最終確認が通過</td><td>260000</td><td>740000</td><td>26</td><td>6月テスト上限35万円。ただし現在の候補では表の合計を上限にする</td></tr><tr><td>注意</td><td>イベントに注意判定あり</td><td>130000</td><td>870000</td><td>13</td><td>上限15万円まで縮小。候補を低PER・相対的に安定したものへ絞る</td></tr><tr><td>悪化</td><td>金利急騰、指数急落、円高ショックなど</td><td>0</td><td>1000000</td><td>0</td><td>新規投入なし。予定買い延期</td></tr><tr><td>8月再判定</td><td>4〜6月期決算を確認</td><td>250000</td><td>150000</td><td>25</td><td>6月通過後に投資済みがある場合だけ追加検討。現金15万円は調整用に残す</td></tr></tbody></table></div>
-  <h2>銘柄別 配分上限</h2>
-  <div class="table-wrap"><table><thead><tr><th>ticker</th><th>name</th><th>engine_status_now</th><th>reference_score</th><th>data_coverage_points</th><th>per</th><th>current_allocation_yen</th><th>all_pass_allocation_yen</th><th>attention_allocation_yen</th><th>bad_event_allocation_yen</th><th>condition_to_use</th></tr></thead><tbody><tr><td>2802.T</td><td>味の素</td><td>イベント未入力</td><td>66.7</td><td>93</td><td>42.08</td><td>0</td><td>80000</td><td>50000</td><td>0</td><td>イベント通過、未確認項目解消、証券会社画面で最終確認</td></tr><tr><td>8306.T</td><td>三菱UFJ</td><td>イベント未入力</td><td>64.1</td><td>75</td><td></td><td>0</td><td>0</td><td>0</td><td>0</td><td>条件未達または初回除外</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>イベント未入力</td><td>60.6</td><td>93</td><td>19.47</td><td>0</td><td>120000</td><td>80000</td><td>0</td><td>イベント通過、未確認項目解消、証券会社画面で最終確認</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>イベント未入力</td><td>59.1</td><td>85</td><td></td><td>0</td><td>60000</td><td>0</td><td>0</td><td>イベント通過、未確認項目解消、証券会社画面で最終確認</td></tr><tr><td>7974.T</td><td>任天堂</td><td>初回除外</td><td>58.2</td><td>83</td><td>26.59</td><td>0</td><td>0</td><td>0</td><td>0</td><td>条件未達または初回除外</td></tr><tr><td>9433.T</td><td>KDDI</td><td>イベント未入力</td><td>57.7</td><td>72</td><td></td><td>0</td><td>0</td><td>0</td><td>0</td><td>条件未達または初回除外</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>初回除外</td><td>55.4</td><td>67</td><td>41.08</td><td>0</td><td>0</td><td>0</td><td>0</td><td>条件未達または初回除外</td></tr><tr><td>4519.T</td><td>中外製薬</td><td>初回除外</td><td>33.4</td><td>49</td><td></td><td>0</td><td>0</td><td>0</td><td>0</td><td>条件未達または初回除外</td></tr></tbody></table></div>
-  <h2>資金配分ルール</h2>
-  <div class="table-wrap"><table><thead><tr><th>rule_id</th><th>rule_name</th><th>condition</th><th>allocation_rule</th><th>reason</th></tr></thead><tbody><tr><td>A01</td><td>イベント未入力</td><td>米CPI・日銀・FOMC・最終確認が未入力</td><td>新規投入0円。100万円を現金待機</td><td>イベント前に買い急がないため</td></tr><tr><td>A02</td><td>全イベント通過</td><td>イベントが通過、停止条件なし、未確認データなし</td><td>6月テスト上限35万円。ただし銘柄別上限を超えない</td><td>6月はテスト開始であり、全額投入ではないため</td></tr><tr><td>A03</td><td>注意イベントあり</td><td>イベントが注意判定、または高PER・半導体・外需に警戒が残る</td><td>6月テスト上限15万円。候補をさらに絞る</td><td>悪化ではないが、想定よりリスクが高いため</td></tr><tr><td>A04</td><td>悪化イベントあり</td><td>金利急騰、指数急落、円高ショックなど</td><td>新規投入0円。予定買い延期</td><td>NISA枠で急落直後の無理な初回投入を避けるため</td></tr><tr><td>A05</td><td>個別停止条件</td><td>停止条件、データ不足、深い下落、PER説明不足</td><td>該当銘柄は0円</td><td>候補全体が良くても個別リスクが残る銘柄は買わないため</td></tr></tbody></table></div>
-  <h2>リスク時の資金移動</h2>
-  <div class="table-wrap"><table><thead><tr><th>trigger</th><th>action</th><th>cash_action</th><th>reason</th></tr></thead><tbody><tr><td>個別株 -5%</td><td>即売りではなく、原因確認。会社固有の悪材料なら新規買い停止</td><td>追加投入しない</td><td>短期ノイズと決算悪化を分けるため</td></tr><tr><td>個別株 -8% かつ会社固有悪材料</td><td>候補から一時除外。NISA投入前なら購入停止</td><td>該当分は現金待機へ戻す</td><td>ストップ安につながる材料を避けるため</td></tr><tr><td>日経平均または関連指数 -10%</td><td>予定買いを半分以下に縮小</td><td>最低70%を現金待機</td><td>市場全体の調整局面で初回投入を急がないため</td></tr><tr><td>ストップ安</td><td>当日中に成行で追いかけない。材料を確認し、翌営業日以降に流動性を見て判断</td><td>同銘柄の追加購入は停止</td><td>流動性が薄い局面で不利な約定を避けるため</td></tr><tr><td>イベント悪化</td><td>6月テストを延期</td><td>100万円を現金待機</td><td>イベント起点の急落に巻き込まれないため</td></tr></tbody></table></div>
+<div class="links">
+  <a href="index.html">ホーム</a>
+  <a href="914_daily_operation_flow_20260606.html">実用フロー</a>
+  <a href="june_event_gate_engine.html">銘柄別イベント判定</a>
+  <a href="capital_allocation_plan.html">資金配分</a>
+</div>
+<section class="box warn"><h2>現在の扱い</h2><p>現時点ではE02・E03・E04が未入力のため、現在の購入額は0円です。6/18以降にイベント結果、候補別反応、本人操作、NISA口座区分、証券会社画面を確認してから上限を使います。</p></section>
+  <section class="box"><h2>1. シナリオ別配分</h2><div class="table-wrap"><table><thead><tr><th>scenario</th><th>stock_investment_yen</th><th>cash_yen</th><th>action</th></tr></thead><tbody><tr><td>緑: 全イベント確認後</td><td>840000</td><td>1560000</td><td>初回35%上限。中心候補を厚め、条件付き候補を小比率。</td></tr><tr><td>黄: 注意あり</td><td>360000</td><td>2040000</td><td>初回15%上限。半導体・高PER・高ボラは保留または小比率。</td></tr><tr><td>赤: 悪化</td><td>0</td><td>2400000</td><td>新規購入停止。監視と記録のみ。</td></tr><tr><td>第2回</td><td>480000</td><td></td><td>初回後の実績、指数比較、決算後反応を確認して追加上限20%。</td></tr><tr><td>第3回</td><td>360000</td><td></td><td>さらに確認後の追加上限15%。最低30%は現金待機。</td></tr></tbody></table></div></section>
+  <section class="box"><h2>2. 銘柄別配分上限</h2><div class="table-wrap"><table><thead><tr><th>ticker</th><th>name</th><th>role</th><th>target_weight_pct</th><th>market_signal</th><th>current_allocation_yen</th><th>all_pass_allocation_yen</th><th>attention_allocation_yen</th><th>bad_event_allocation_yen</th><th>condition_to_use</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>中心候補</td><td>18.75</td><td>買い可</td><td>0</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>中心候補</td><td>18.75</td><td>確認</td><td>0</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>中心候補</td><td>18.75</td><td>買い可</td><td>0</td><td>157500</td><td>67500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>条件付き候補</td><td>6.25</td><td>確認</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>条件付き候補</td><td>6.25</td><td>確認</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>7011.T</td><td>三菱重工業</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6762.T</td><td>TDK</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>6146.T</td><td>ディスコ</td><td>条件付き候補</td><td>6.25</td><td>確認</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>条件付き候補</td><td>6.25</td><td>買い可</td><td>0</td><td>52500</td><td>22500</td><td>0</td><td>E02/E03/E04入力、本人操作、NISA口座区分、証券会社画面確認</td></tr></tbody></table></div></section>
+  <section class="box"><h2>3. 比率引き下げ・途中停止ルール</h2><div class="table-wrap"><table><thead><tr><th>trigger</th><th>action</th><th>note</th></tr></thead><tbody><tr><td>個別株がS&amp;P500/TOPIXに1か月で2%以上劣後</td><td>追加購入を止める</td><td>原因を指数・業種・個別決算に分解</td></tr><tr><td>個別株が3か月でS&amp;P500/TOPIXに5%以上劣後</td><td>個別株比率を下げる</td><td>候補10社の入替または投信比率増加を検討</td></tr><tr><td>候補銘柄が購入後-5%</td><td>理由確認</td><td>指数連動なら保留、個別悪材料なら縮小</td></tr><tr><td>候補銘柄が購入後-10%</td><td>追加停止</td><td>決算・下方修正・テーマ崩れを確認</td></tr><tr><td>ストップ安または重大悪材料</td><td>新規買付停止</td><td>成行売却は避け、寄付き後の流動性と開示を確認</td></tr></tbody></table></div></section>
 </main>
 </body>
 </html>

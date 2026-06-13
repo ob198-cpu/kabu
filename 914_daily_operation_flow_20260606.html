@@ -33,7 +33,7 @@
 <body>
 <header>
   <h1>実用パート 運用フロー</h1>
-  <p>作成: 2026/06/07 00:29 / ページが多い状態を、毎日使う順番に整理した入口です。</p>
+  <p>作成: 2026/06/12 21:41 / ページが多い状態を、毎日使う順番に整理した入口です。</p>
 </header>
 <main>
   <p class="notice">迷ったらこの順番で確認します。今日見る、イベント後に見る、購入前に見る、記録する、の4段階に分けています。</p>
@@ -80,19 +80,29 @@
     </div>
     <div class="cols">
       <div class="explain">
-        <p><b>目的:</b> CPI・日銀・FOMC後の実数を入れて、緑・黄・赤を判定する。</p>
-        <p><b>作業:</b> 実数入力シートに数値と判断理由を入れ、イベント判定エンジンと照合する。</p>
+        <p><b>目的:</b> CPI・日銀・FOMC後の実数を入れ、イベント結果CSVを更新して銘柄別判定と資金配分を再生成する。</p>
+        <p><b>作業:</b> 実数入力シートで入力→判定用CSVを出力→reports/102_june_event_result_input.csvに貼付→銘柄別判定と資金配分を再生成→市場全体ゲートと照合。</p>
         <p class="stop"><b>止める条件:</b> CPI悪化、米金利急騰、急な円高、NASDAQ/SOX急落が重なる場合は停止。</p>
       </div>
       <div class="cards">
   <a class="card" href="912_june_event_actual_input_sheet_20260606.html">
     <b>6月イベント 実数入力シート</b>
-    <span>CPI・日銀・FOMC後の実数と理由を入力する。</span>
+    <span>手順1: 実数と判定を入力し、判定用CSVを出力する。</span>
+  </a>
+
+  <a class="card" href="june_event_gate_engine.html">
+    <b>銘柄別イベント判定エンジン</b>
+    <span>手順2: イベント結果CSVに連動して銘柄別の延期・保留・候補復帰を確認する。</span>
   </a>
 
   <a class="card" href="893_june_event_gate_engine_20260606.html">
-    <b>6月イベント判定エンジン</b>
-    <span>市場ゲートを緑・黄・赤に整理する。</span>
+    <b>6月イベント 市場全体ゲート</b>
+    <span>手順3: 市場全体を緑・黄・赤で照合する(手動)。</span>
+  </a>
+
+  <a class="card" href="capital_allocation_plan.html">
+    <b>240万円 資金配分ゲート</b>
+    <span>手順4: 判定結果に連動した段階投入上限を確認する。</span>
   </a>
 
   <a class="card" href="895_june_execution_cockpit_20260606.html">

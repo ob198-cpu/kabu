@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 
 const marketItems = [
   { symbol: "^N225", name: "日経平均", digits: 0 },
@@ -9,22 +10,27 @@ const marketItems = [
   { symbol: "^TNX", name: "米10年金利", digits: 2 },
   { symbol: "DX-Y.NYB", name: "ドル指数DXY", digits: 2 },
   { symbol: "GC=F", name: "金先物", digits: 1 },
-  { symbol: "^VIX", name: "VIX", digits: 2 }
+  // VIXは1日±30%超の変動が正常に起こる指数のため、分割検出(系列切り詰め)の対象外。
+  { symbol: "^VIX", name: "VIX", digits: 2, volatile: true }
 ];
 
+// 現行のNISA候補10社(複利シミュレーション・購入計画と同一リスト)。
+// PERはローカルに信頼できる値がないため null とし、判定では PER が数値の場合のみ高PERゲートを適用する。
 const stockItems = [
-  { code: "8035", symbol: "8035.T", name: "東京エレクトロン", per: 34.0, theme: "semiconductor" },
-  { code: "6857", symbol: "6857.T", name: "アドバンテスト", per: 58.0, theme: "semiconductor" },
-  { code: "4519", symbol: "4519.T", name: "中外製薬", per: 31.0, theme: "growth" },
-  { code: "8306", symbol: "8306.T", name: "三菱UFJ", per: 12.0, theme: "rate" },
-  { code: "8058", symbol: "8058.T", name: "三菱商事", per: 11.0, theme: "value" },
-  { code: "7974", symbol: "7974.T", name: "任天堂", per: 32.0, theme: "cycle" },
-  { code: "9433", symbol: "9433.T", name: "KDDI", per: 14.0, theme: "defensive" },
-  { code: "2802", symbol: "2802.T", name: "味の素", per: 34.0, theme: "quality" }
+  { code: "8053", symbol: "8053.T", name: "住友商事", per: null, theme: "value" },
+  { code: "8316", symbol: "8316.T", name: "三井住友FG", per: null, theme: "rate" },
+  { code: "6501", symbol: "6501.T", name: "日立製作所", per: null, theme: "infra" },
+  { code: "6503", symbol: "6503.T", name: "三菱電機", per: null, theme: "infra" },
+  { code: "6857", symbol: "6857.T", name: "アドバンテスト", per: null, theme: "semiconductor" },
+  { code: "8035", symbol: "8035.T", name: "東京エレクトロン", per: null, theme: "semiconductor" },
+  { code: "7011", symbol: "7011.T", name: "三菱重工業", per: null, theme: "infra" },
+  { code: "6762", symbol: "6762.T", name: "TDK", per: null, theme: "physical_ai" },
+  { code: "6146", symbol: "6146.T", name: "ディスコ", per: null, theme: "semiconductor" },
+  { code: "5803", symbol: "5803.T", name: "フジクラ", per: null, theme: "infra" }
 ];
 
-const endpoint = (symbol) =>
-  `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=3mo&interval=1d`;
+const endpoint = (symbol, range = "6mo") =>
+  `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=${range}&interval=1d`;
 
 const toTokyoTime = () =>
   new Intl.DateTimeFormat("ja-JP", {
@@ -36,6 +42,36 @@ const toTokyoTime = () =>
     minute: "2-digit",
     hour12: false
   }).format(new Date()).replaceAll("/", "-");
+
+// Yahooのチャート系列は株式分割が未調整のことがある(例: 1306.Tの約1:10分割)。
+// 前日比±30%超の不連続を分割とみなし、不連続より後の系列だけを統計に使う。
+function trailingContiguous(closes, maxDailyJump = 0.30) {
+  let start = 0;
+  for (let i = 1; i < closes.length; i += 1) {
+    const prev = closes[i - 1];
+    if (!Number.isFinite(prev) || prev === 0) continue;
+    if (Math.abs(closes[i] / prev - 1) > maxDailyJump) start = i;
+  }
+  return { series: closes.slice(start), truncated: start > 0 };
+}
+
+async function fetchHigh52w(item) {
+  const response = await fetch(endpoint(item.symbol, "1y"), {
+    headers: { "user-agent": "kabu-report-updater/1.0" }
+  });
+  if (!response.ok) throw new Error(`${item.symbol}: HTTP ${response.status}`);
+  const json = await response.json();
+  const quote = json.chart?.result?.[0]?.indicators?.quote?.[0];
+  const closes = (quote?.close || []).filter((value) => Number.isFinite(value));
+  const { series, truncated } = item.volatile
+    ? { series: closes, truncated: false }
+    : trailingContiguous(closes);
+  return {
+    high: series.length ? Math.max(...series) : null,
+    truncated,
+    days: series.length,
+  };
+}
 
 async function fetchQuote(item) {
   const response = await fetch(endpoint(item.symbol), {
@@ -50,13 +86,20 @@ async function fetchQuote(item) {
   const price = Number.isFinite(meta?.regularMarketPrice)
     ? meta.regularMarketPrice
     : closes.at(-1);
-  const prev = Number.isFinite(meta?.chartPreviousClose)
-    ? meta.chartPreviousClose
-    : closes.at(-2);
+  // chartPreviousClose はチャート範囲(3mo)開始直前の終値であり前日終値ではない。
+  // 前日比には regularMarketPreviousClose を優先し、無ければ日足の直近2本目を使う。
+  const prev = Number.isFinite(meta?.regularMarketPreviousClose)
+    ? meta.regularMarketPreviousClose
+    : Number.isFinite(meta?.previousClose)
+      ? meta.previousClose
+      : closes.length >= 2 ? closes.at(-2) : null;
   const changePct = Number.isFinite(price) && Number.isFinite(prev) && prev !== 0
     ? ((price - prev) / prev) * 100
     : null;
-  const closeFromEnd = (daysBack) => closes.length > daysBack ? closes.at(-(daysBack + 1)) : null;
+  const { series: contiguous, truncated: seriesTruncated } = item.volatile
+    ? { series: closes, truncated: false }
+    : trailingContiguous(closes);
+  const closeFromEnd = (daysBack) => contiguous.length > daysBack ? contiguous.at(-(daysBack + 1)) : null;
   const fiveDayBase = closeFromEnd(5);
   const twentyDayBase = closeFromEnd(20);
   const change5dPct = Number.isFinite(price) && Number.isFinite(fiveDayBase) && fiveDayBase !== 0
@@ -66,7 +109,17 @@ async function fetchQuote(item) {
     ? ((price - twentyDayBase) / twentyDayBase) * 100
     : null;
 
-  return { ...item, value: price ?? null, price: price ?? null, changePct, change5dPct, change20dPct };
+  return {
+    ...item,
+    value: price ?? null,
+    price: price ?? null,
+    prevClose: Number.isFinite(prev) ? prev : null,
+    changePct,
+    change5dPct,
+    change20dPct,
+    sma75: contiguous.length >= 75 ? contiguous.slice(-75).reduce((sum, v) => sum + v, 0) / 75 : null,
+    seriesTruncated,
+  };
 }
 
 function marketValue(markets, symbol, key = "value") {
@@ -111,9 +164,9 @@ function buildDollarRisk(markets) {
 
   const level = score >= 6 ? "危険" : score >= 3 ? "警戒" : "通常";
   const action = score >= 6
-    ? "新規買いを停止。半導体・任天堂・味の素など高PER/海外比率の高い銘柄は追加せず、現金15万円を維持します。"
+    ? "新規買いを停止。半導体など高PER・海外比率の高い銘柄は追加せず、現金待機72万円(1口座240万円の30%)を維持します。"
     : score >= 3
-      ? "予定買いを半分に縮小。6月18日以降の35万円追加は、DXY反発とVIX低下を確認してから実行します。"
+      ? "予定買いを半分に縮小。6月18日以降の初回投入(1口座84万円=元本の35%)は、DXY反発とVIX低下を確認してから実行します。"
       : "予定通り監視継続。ドル急落シグナルが弱ければ、他の条件と合わせて段階投資を検討します。";
 
   return { score: Math.min(score, 10), level, action, signals };
@@ -125,7 +178,7 @@ function decideSignal(stock, markets) {
   if (stock.changePct !== null && stock.changePct <= -5) return "停止";
   if (stock.theme === "semiconductor" && Number.isFinite(us10y) && us10y >= 4.70) return "確認";
   if (stock.theme === "semiconductor" && Number.isFinite(nasdaq) && nasdaq <= -3) return "確認";
-  if (stock.per >= 45) return "確認";
+  if (Number.isFinite(stock.per) && stock.per >= 45) return "確認";
   if (stock.changePct !== null && Math.abs(stock.changePct) >= 3) return "確認";
   return "買い可";
 }
@@ -143,11 +196,25 @@ const errors = [];
 
 async function safeFetch(item) {
   try {
-    return await fetchQuote(item);
+    const quote = await fetchQuote(item);
+    let high = { high: null, truncated: false, days: 0 };
+    try {
+      high = await fetchHigh52w(item);
+    } catch (highError) {
+      errors.push(String(highError.message || highError));
+      const old = [...(previous.markets || []), ...(previous.stocks || [])].find((x) => x.symbol === item.symbol);
+      high = { high: old?.high52w ?? null, truncated: false, days: 0 };
+    }
+    return {
+      ...quote,
+      high52w: high.high ?? quote.value ?? null,
+      high52wTruncated: high.truncated,
+      high52wDays: high.days,
+    };
   } catch (error) {
     errors.push(String(error.message || error));
     const old = [...(previous.markets || []), ...(previous.stocks || [])].find((x) => x.symbol === item.symbol);
-    return { ...item, value: old?.value ?? null, price: old?.price ?? null, changePct: old?.changePct ?? null };
+    return { ...item, value: old?.value ?? null, price: old?.price ?? null, changePct: old?.changePct ?? null, high52w: old?.high52w ?? null };
   }
 }
 
@@ -158,10 +225,22 @@ const stocks = stocksRaw.map((stock) => ({
   symbol: stock.symbol,
   name: stock.name,
   price: stock.price,
+  prevClose: stock.prevClose ?? null,
   changePct: stock.changePct,
   per: stock.per,
   signal: decideSignal(stock, markets)
 }));
+
+// 検算: 系列の不連続(分割未調整)と、現在値・75日線の異常乖離を記録する。
+const dataChecks = [];
+for (const item of [...markets, ...stocksRaw]) {
+  if (item.seriesTruncated || item.high52wTruncated) {
+    dataChecks.push(`${item.symbol}: 前日比±30%超の不連続(分割未調整の疑い)を検出。75日線・52週高値は不連続以降の系列(直近${item.high52wDays ?? "?"}営業日)のみで計算`);
+  }
+  if (Number.isFinite(item.value) && Number.isFinite(item.sma75) && Math.abs(item.value / item.sma75 - 1) > 0.5) {
+    dataChecks.push(`${item.symbol}: 現在値(${item.value})と75日線(${Math.round(item.sma75)})の乖離が50%超。価格系列の確認が必要`);
+  }
+}
 
 const stopCount = stocks.filter((stock) => stock.signal === "停止").length;
 const watchCount = stocks.filter((stock) => stock.signal === "確認").length;
@@ -176,10 +255,24 @@ const output = {
   source: "Yahoo Finance chart API via GitHub Actions",
   summary,
   errors,
+  dataChecks,
   dollarRisk: buildDollarRisk(markets),
-  markets: markets.map(({ symbol, name, value, changePct, change5dPct, change20dPct, digits }) => ({ symbol, name, value, changePct, change5dPct, change20dPct, digits })),
+  markets: markets.map(({ symbol, name, value, prevClose, changePct, change5dPct, change20dPct, sma75, high52w, high52wDays, digits }) => ({
+    symbol, name, value, prevClose: prevClose ?? null, changePct, change5dPct, change20dPct, sma75, high52w, high52wDays: high52wDays ?? null, digits,
+  })),
   stocks
 };
 
 await mkdir("data", { recursive: true });
 await writeFile("data/market_update.json", `${JSON.stringify(output, null, 2)}\n`, "utf8");
+
+// stock_analyzer 用 market_context.csv を同期(サンプル値のまま使わない)。
+const n225 = markets.find((market) => market.symbol === "^N225");
+if (n225?.value != null) {
+  const drawdown = n225.high52w ? Math.round(((n225.value - n225.high52w) / n225.high52w) * 1000) / 10 : "";
+  const contextCsv = [
+    "metric,value,sma75,drawdown_from_high_pct,notes",
+    `nikkei225,${Math.round(n225.value * 100) / 100},${n225.sma75 != null ? Math.round(n225.sma75 * 100) / 100 : ""},${drawdown},52週高値(1y chart)ベース / synced from market_update.json ${output.updatedAt}`,
+  ].join("\n");
+  await writeFile(path.join(process.cwd(), "..", "data", "market_context.csv"), `${contextCsv}\n`, "utf8");
+}

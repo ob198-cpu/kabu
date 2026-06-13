@@ -60,6 +60,16 @@ const reviewRules = [
   },
 ];
 
+// 「+1%」「-3%劣後」等の判定が人によってぶれないよう、測定方法を固定する。
+const measurementDefs = [
+  ["測定期間", "初回投入日(2026/06/18)から判定日までの同一期間で、ポートフォリオと指数を比較する。期間をずらした比較はしない。"],
+  ["ポートフォリオリターン", "(判定日の評価額合計+期間中の受取配当-投入元本累計)÷投入元本累計。段階投入分も投入後は元本に含める。"],
+  ["指数リターン", "同一期間の終値ベース騰落率。S&P500は円換算(期首・期末のドル円で換算)し、TOPIX・日経平均は円のまま使う。"],
+  ["比較対象", "S&P500(円換算)・TOPIX・日経平均のうち、同一期間で最も騰落率が高い指数(最強指数)を基準にする。"],
+  ["評価タイミング", "判定日の終値で評価する。日中値・気配値では判定しない。"],
+  ["配当の扱い", "ポートフォリオ側は受取配当を含める。指数側は価格指数のままとし、その分ポートフォリオに有利なことを認識して判定する。"],
+];
+
 const actionLevels = [
   ["達成", "個別株が最強指数+1%以上", "継続。ただし過熱銘柄は利確・比率調整を検討。"],
   ["注意", "最強指数との差が0〜+1%未満", "個別株を選ぶ優位性が薄い。追加購入は慎重にする。"],
@@ -86,8 +96,16 @@ const levelRows = actionLevels.map((row) => `
   </tr>
 `).join("");
 
+const measurementRows = measurementDefs.map((row) => `
+  <tr>
+    <td><b>${esc(row[0])}</b></td>
+    <td>${esc(row[1])}</td>
+  </tr>
+`).join("");
+
 const csvRows = [
   ["type", "timing_or_level", "compare_or_condition", "trigger", "action", "reason"],
+  ...measurementDefs.map((row) => ["measurement_def", row[0], row[1], "", "", ""]),
   ...reviewRules.map((row) => ["review_rule", row.timing, row.compare, row.condition, row.action, row.reason]),
   ...actionLevels.map((row) => ["action_level", row[0], row[1], "", row[2], ""]),
 ];
@@ -140,7 +158,16 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>2. 確認タイミング別ルール</h2>
+    <h2>2. 測定の定義</h2>
+    <p class="notice">以下の定義で測定したリターン同士のみを比較します。期間・換算・配当の扱いを変えた比較は無効とします。</p>
+    <table>
+      <thead><tr><th style="width:170px">項目</th><th>定義</th></tr></thead>
+      <tbody>${measurementRows}</tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 確認タイミング別ルール</h2>
     <table>
       <thead><tr><th style="width:105px">時点</th><th>比較すること</th><th>発動条件</th><th>対応</th><th>理由</th></tr></thead>
       <tbody>${ruleRows}</tbody>
@@ -148,7 +175,7 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>3. 判定レベル</h2>
+    <h2>4. 判定レベル</h2>
     <table>
       <thead><tr><th style="width:100px">判定</th><th>条件</th><th>扱い</th></tr></thead>
       <tbody>${levelRows}</tbody>
@@ -156,7 +183,8 @@ const html = `<!doctype html>
   </section>
 
   <section>
-    <h2>4. 簡易判定 calculator</h2>
+    <h2>5. 簡易判定 calculator</h2>
+    <p class="notice">入力する数値は「2. 測定の定義」に従って算出した同一期間のリターン(%)です。</p>
     <div class="calc">
       <div><label>個別株%</label><input id="portfolio" type="number" step="0.1" value="0"></div>
       <div><label>S&P500%</label><input id="sp" type="number" step="0.1" value="0"></div>

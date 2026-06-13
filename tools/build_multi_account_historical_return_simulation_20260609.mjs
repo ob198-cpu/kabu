@@ -28,10 +28,11 @@ const candidateWeights = [
   ["5803.T", "フジクラ", 0.0625],
 ];
 
+// 第5要素は初回投入日(2026/06/18)から各回投入日までの経過年数。複利計算で投入時期を反映する。
 const phases = [
-  ["2026/06/18〜06/24", "初回", 0.35, "CPI、日銀、FOMC後の市場ゲートが緑の場合"],
-  ["2026/07/15前後", "第2回", 0.20, "初回後に指数・金利・為替が崩れていない場合"],
-  ["2026/08/17〜08/21", "第3回", 0.15, "4〜6月期決算と決算後反応を確認できた場合"],
+  ["2026/06/18〜06/24", "初回", 0.35, "CPI、日銀、FOMC後の市場ゲートが緑の場合", 0],
+  ["2026/07/15前後", "第2回", 0.20, "初回後に指数・金利・為替が崩れていない場合", 27 / 365],
+  ["2026/08/17〜08/21", "第3回", 0.15, "4〜6月期決算と決算後反応を確認できた場合", 60 / 365],
 ];
 
 const esc = (value) => String(value ?? "")
@@ -101,15 +102,18 @@ function calculateHypothesis(m) {
     return { conservative: null, note: "必要な過去指標が不足" };
   }
 
-  const conservative = Math.min(cagr5, cagr10, ret1y);
+  // 年率(CAGR)同士のみを比較する。直近1年騰落率は1年間のトータルリターンで
+  // 年率と単位が異なるため、利回り仮説には混ぜず参考表示・警戒理由に使う。
+  const conservative = Math.min(cagr5, cagr10);
   const reasons = [];
   if (dd5 > 45) reasons.push("5年最大下落が深い");
   if (dd1 > 25) reasons.push("直近1年の下落幅が大きい");
   if (ret60d !== null && ret60d < -10) reasons.push("直近60日が弱い");
-  if (win !== null && win >= 65) reasons.push("月次勝率が高い");
+  if (win !== null && win < 55) reasons.push("月次勝率が低い");
+  if (ret1y !== null && ret1y < conservative) reasons.push("直近1年が長期ペースを下回る");
   return {
     conservative,
-    note: reasons.length ? reasons.join(" / ") : "大きな警戒条件なし",
+    note: reasons.length ? reasons.join(" / ") : "本表の警戒条件(5年最大下落・直近1年下落幅・直近60日・月次勝率・対長期ペース)に該当なし",
   };
 }
 
@@ -140,10 +144,16 @@ const p5 = portfolioReturn("cagr5");
 const p10 = portfolioReturn("cagr10");
 const pConservative = portfolioReturn("conservative");
 
+// 段階投入を反映した資産推移。years は初回投入日(2026/06/18)起点の経過年数。
+// 各回の資金は投入日以降のみ複利運用され、未投入期間と現金30%は利回り0とする。
 function projected(totalCapital, annualPct, years) {
-  const stock = totalCapital * stockRatio;
   const cash = totalCapital * cashRatio;
-  return cash + stock * Math.pow(1 + annualPct / 100, years);
+  let stockValue = 0;
+  for (const [, , ratio, , delayYears] of phases) {
+    const investedYears = Math.max(0, years - delayYears);
+    stockValue += totalCapital * ratio * Math.pow(1 + annualPct / 100, investedYears);
+  }
+  return cash + stockValue;
 }
 
 function csvEscape(value) {
@@ -364,7 +374,8 @@ const html = `<!doctype html>
       </div>
       <div class="hypothesis-card">
         <h3>仮説の置き方</h3>
-        <p>強気に見せないため、保守実績仮説は「5年CAGR・10年CAGR・直近1年騰落率のうち一番低い値」を採用します。</p>
+        <p>強気に見せないため、保守実績仮説は「5年CAGRと10年CAGRのうち低い方」を採用します。直近1年騰落率は年率と単位が異なるため利回りには使わず、参考表示と警戒理由に使います。</p>
+        <p>なお、旧版は直近1年騰落率も保守値の比較に含めていたため、直近1年が弱い銘柄(例: 三菱重工)は本版のほうが保守値が高く表示されます。これは計算定義を「年率同士の比較」に統一した結果であり、直近1年の弱さ自体は消えていません。「警戒理由」列で別途表示します。</p>
       </div>
       <div class="hypothesis-card">
         <h3>限界</h3>
@@ -389,8 +400,9 @@ const html = `<!doctype html>
     <div class="formula">
       5年CAGR継続 = 過去5年の年平均ペースが続く場合<br>
       10年CAGR継続 = 過去10年の年平均ペースが続く場合<br>
-      保守実績仮説利回り = min(5年CAGR, 10年CAGR, 直近1年騰落率)<br>
-      最大下落率、60日騰落率、月次勝率は利回りに混ぜず、警戒理由として横に表示する
+      保守実績仮説利回り = min(5年CAGR, 10年CAGR) ※年率同士のみ比較。直近1年騰落率は単位が異なるため参考表示<br>
+      最大下落率、60日騰落率、月次勝率、直近1年騰落率は利回りに混ぜず、警戒理由として横に表示する<br>
+      資産推移 = 段階投入を反映し、各回の資金は投入日(6/18、7/15、8/17)以降のみ複利運用。現金30%は利回り0
     </div>
   </section>
 
@@ -424,7 +436,7 @@ const html = `<!doctype html>
 
   <section>
     <h2>8. 口座数別の資産推移</h2>
-    <p class="note">5年CAGR継続は「過去5年と同じ勢いが1年続いた場合」、10年CAGR継続は「長期平均に戻した場合」、保守実績仮説は「5年・10年・直近1年のうち一番低い実績値を使った場合」です。</p>
+    <p class="note">5年CAGR継続は「過去5年と同じ勢いが1年続いた場合」、10年CAGR継続は「長期平均に戻した場合」、保守実績仮説は「5年・10年CAGRのうち低い方を使った場合」です。いずれも段階投入の時期を反映しており、第2回・第3回の資金は投入日以降のみ運用される計算です。過去実績の外挿であり、将来の利回りを保証するものではありません。</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>口座数</th><th>元本合計</th><th>6/18〜24</th><th>7/15前後</th><th>8/17〜21</th><th>株式投入</th><th>現金</th><th>1年後 5年CAGR継続</th><th>1年後 10年CAGR継続</th><th>1年後 保守実績仮説</th><th>5年後 保守実績仮説</th><th>10年後 保守実績仮説</th></tr></thead>

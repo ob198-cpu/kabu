@@ -316,13 +316,8 @@ const html = `<!doctype html>
 </body>
 </html>`;
 
-for (const file of [
-  "nisa_account_plan.html",
-  "nisa_account_alternative_plan_20260604.html",
-  "nisa_account_alternative_plan_20260608.html",
-]) {
-  fs.writeFileSync(path.join(root, file), html, "utf8");
-}
+// 正本は nisa_account_plan.html の1ファイルのみ。日付付き複製は作らない。
+fs.writeFileSync(path.join(root, "nisa_account_plan.html"), html, "utf8");
 
 const chromeCandidates = [
   "C:/Program Files/Google/Chrome/Application/chrome.exe",
@@ -339,8 +334,6 @@ if (!chrome) {
 
 for (const [htmlFile, pdfFile] of [
   ["nisa_account_plan.html", "nisa_account_plan.pdf"],
-  ["nisa_account_alternative_plan_20260604.html", "nisa_account_alternative_plan_20260604.pdf"],
-  ["nisa_account_alternative_plan_20260608.html", "nisa_account_alternative_plan_20260608.pdf"],
 ]) {
   const inputUrl = `file:///${path.join(root, htmlFile).replace(/\\/g, "/")}`;
   const output = path.join(root, pdfFile);

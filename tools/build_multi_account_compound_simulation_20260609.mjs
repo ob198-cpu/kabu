@@ -15,10 +15,12 @@ const generatedAt = new Intl.DateTimeFormat("ja-JP", {
 const baseCapital = 2_400_000;
 const finalStockRatio = 0.70;
 const cashRatio = 0.30;
+// delayYears: 初回投入日(2026/06/18)から各トランシェ投入日までの経過年数。
+// 資産推移の複利計算は、各トランシェが実際に投入された日以降のみ運用される前提で行う。
 const phases = [
-  { id: "phase1", date: "2026/06/18〜06/24", label: "初回", capitalRatio: 0.35, condition: "6月CPI、日銀、FOMC後に市場ゲートが緑の場合" },
-  { id: "phase2", date: "2026/07/15前後", label: "第2回", capitalRatio: 0.20, condition: "初回後に指数・金利・為替が崩れていない場合" },
-  { id: "phase3", date: "2026/08/17〜08/21", label: "第3回", capitalRatio: 0.15, condition: "4〜6月期決算と決算後反応を確認できた場合" },
+  { id: "phase1", date: "2026/06/18〜06/24", label: "初回", capitalRatio: 0.35, delayYears: 0, condition: "6月CPI、日銀、FOMC後に市場ゲートが緑の場合" },
+  { id: "phase2", date: "2026/07/15前後", label: "第2回", capitalRatio: 0.20, delayYears: 27 / 365, condition: "初回後に指数・金利・為替が崩れていない場合" },
+  { id: "phase3", date: "2026/08/17〜08/21", label: "第3回", capitalRatio: 0.15, delayYears: 60 / 365, condition: "4〜6月期決算と決算後反応を確認できた場合" },
 ];
 
 const candidates = [
@@ -48,10 +50,17 @@ const esc = (value) => String(value ?? "")
   .replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;");
 
+// 段階投入を反映した資産推移。years は初回投入日(2026/06/18)起点の経過年数。
+// 各トランシェは自身の投入日以降のみ複利運用され、未投入期間と現金30%は利回り0とする。
 function projectedValue(totalCapital, annualReturn, years) {
-  const stock = totalCapital * finalStockRatio;
   const cash = totalCapital * cashRatio;
-  return cash + stock * Math.pow(1 + annualReturn, years);
+  let stockValue = 0;
+  for (const p of phases) {
+    const tranche = totalCapital * p.capitalRatio;
+    const investedYears = Math.max(0, years - p.delayYears);
+    stockValue += tranche * Math.pow(1 + annualReturn, investedYears);
+  }
+  return cash + stockValue;
 }
 
 function csvEscape(value) {
@@ -184,22 +193,22 @@ const html = `<!doctype html>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>240万円×1〜10口座 複利シミュレーション サンプル</title>
   <style>
-    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--soft:#eef6fc;--amber:#a85b00;--red:#a01818;--green:#00725a}
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--panel:#f8fbfe;--inner:#fff;--inner-line:#abcce3;--bg:#f4f8fb;--soft:#eef6fc;--amber:#a85b00;--red:#a01818;--green:#00725a}
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.65}
     header{background:var(--navy);color:white;padding:28px 34px}
     h1{margin:0 0 8px;font-size:30px;letter-spacing:0}
     header p{margin:0;font-weight:800;color:white}
     main{max-width:1380px;margin:0 auto;padding:22px}
-    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    section{background:var(--panel);border:1px solid #b7d2e5;border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 10px 24px rgba(20,60,90,.10)}
     h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:22px}
     .lead{font-weight:900;color:#122f47;margin:0 0 12px}
     .note{background:#fff7e7;border-left:7px solid var(--amber);padding:12px;border-radius:8px;font-weight:900;color:#111;margin:0 0 12px}
     .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-    .metric{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px}
+    .metric{background:var(--inner);border:1px solid var(--inner-line);border-radius:10px;padding:12px;box-shadow:0 2px 8px rgba(20,60,90,.07)}
     .metric b{display:block;color:var(--navy);font-size:13px}
     .metric strong{display:block;font-size:22px;margin-top:4px}
-    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    .table-wrap{overflow-x:auto;background:var(--inner);border:1px solid var(--inner-line);border-radius:10px;box-shadow:0 2px 8px rgba(20,60,90,.06)}
     table{width:100%;border-collapse:collapse;background:white}
     th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;color:#061827}
     th{background:#e2f0fb;color:#053b63;font-weight:900;white-space:nowrap}
@@ -260,7 +269,7 @@ const html = `<!doctype html>
 
   <section>
     <h2>4. 口座数別の資産推移</h2>
-    <p class="lead">株式部分だけが8〜12%動く前提です。30%の現金は増減しないため、全体の増加率は株式利回りより低く見えます。</p>
+    <p class="lead">株式部分だけが8〜12%動く前提です。30%の現金は増減しないため、全体の増加率は株式利回りより低く見えます。試算は段階投入の時期を反映しており、第2回・第3回の資金は投入日以降のみ運用される計算です。</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>口座数</th><th>元本合計</th><th>初回投入</th><th>第2回</th><th>第3回</th><th>最終株式投入</th><th>現金</th><th>1年弱め8%</th><th>1年基準10%</th><th>1年強め12%</th><th>5年基準10%</th><th>10年基準10%</th></tr></thead>
@@ -278,7 +287,7 @@ const html = `<!doctype html>
         <tbody>${scenarioRows}</tbody>
       </table>
     </div>
-    <p class="small">例: 基準10%の場合、株式70%だけが10%上がるため、全体では約7%増です。1口座240万円なら約16.8万円、10口座2,400万円なら約168万円の利益イメージです。</p>
+    <p class="small">例: 基準10%の場合、株式70%が段階投入されるため、初年度の全体増加率は約${((projectedValue(baseCapital, 0.10, 1) / baseCapital - 1) * 100).toFixed(1)}%です。1口座240万円なら約${fmtYen(projectedValue(baseCapital, 0.10, 1) - baseCapital)}、10口座2,400万円なら約${fmtYen(projectedValue(baseCapital * 10, 0.10, 1) - baseCapital * 10)}の利益イメージです(2年目以降は株式70%全額が複利運用)。</p>
   </section>
 
   <section>

@@ -16,7 +16,13 @@ const sections = [
     title: "まず見る画面",
     purpose: "6月の作業を始める入口。ここから実データ入力、判定、候補別アクションへ進みます。",
     links: [
+      ["実用パート 運用フロー", "914_daily_operation_flow_20260606.html", "今日見る、イベント後に見る、購入前に見る、記録する、の4段階で確認する。"],
       ["6月実行コックピット", "895_june_execution_cockpit_20260606.html", "6月イベント後に、何を見るか、何なら止めるか、次に何をするかを1画面で確認する。"],
+      ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "CPI、日銀、FOMC後の実数と判定を入力し、判定用CSVを出力する。"],
+      ["銘柄別イベント判定エンジン", "june_event_gate_engine.html", "イベント結果CSVに連動して、銘柄別の延期・保留・候補復帰を確認する。"],
+      ["6月ゲート運用表", "june_gate_operation.html", "18日以降に、イベント入力状況、候補10社、停止条件を一画面で確認する。"],
+      ["240万円 資金配分ゲート", "capital_allocation_plan.html", "緑・黄・赤の判定に応じた初回投入上限と現金待機額を確認する。"],
+      ["購入前 最終ゲートチェック", "910_prebuy_final_gate_checklist_20260606.html", "市場、候補、NISA口座、税制、記録がそろっているか確認する。"],
       ["6月イベント判定エンジン", "893_june_event_gate_engine_20260606.html", "CPI、金利、SOX、NASDAQ、VIXなどを緑・黄・赤で判定する。"],
       ["6月候補別アクション分岐表", "894_june_candidate_action_after_gate_20260606.html", "市場ゲート後に、アドバンテスト、ディスコ、日立、フジクラ、TDKなどをどう扱うか確認する。"],
       ["6月イベント後 実データ入力・入替記録", "892_june_event_actual_input_and_replacement_log_20260606.html", "イベント後の実数と、候補を入れ替えた理由を記録する。"],
@@ -114,9 +120,9 @@ const html = `<!doctype html>
 <main>
   <p class="notice">最初は「6月実行コックピット」を見ます。詳細が必要な時だけ、判定エンジン、候補別分岐表、NISA準備画面へ進みます。購入確定や自動売買の画面ではありません。</p>
   <div class="top-actions">
-    <a href="895_june_execution_cockpit_20260606.html">6月実行コックピット</a>
-    <a class="secondary" href="893_june_event_gate_engine_20260606.html">イベント判定エンジン</a>
-    <a class="secondary" href="894_june_candidate_action_after_gate_20260606.html">候補別アクション分岐</a>
+    <a href="914_daily_operation_flow_20260606.html">実用フロー</a>
+    <a class="secondary" href="june_gate_operation.html">6月ゲート運用表</a>
+    <a class="secondary" href="capital_allocation_plan.html">資金配分</a>
   </div>
   ${sectionHtml}
   <footer>未確認データ、公式決算、証券会社画面の確認が残る場合は、購入判断に進めません。</footer>

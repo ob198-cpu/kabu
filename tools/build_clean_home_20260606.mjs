@@ -27,11 +27,13 @@ const sections = [
       ["購入前 最終ゲートチェック", "910_prebuy_final_gate_checklist_20260606.html", "候補、市場、NISA口座、税制、記録がそろっているかを購入前に確認する最終ゲート。"],
       ["購入準備 判定ボード", "916_purchase_readiness_board_20260606.html", "市場、候補、配分、NISA口座、税制、記録がそろっているかを一画面で判定。"],
       ["240万円×1〜10口座 過去実績ベース複利", "historical_return_compound_simulation_20260609.html", "現10社の5年CAGR、10年CAGR、直近1年、最大下落を使った資産推移。"],
+      ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "手順1: CPI・日銀・FOMC後の実数と判定を入力し、判定用CSVを出力する。"],
+      ["銘柄別イベント判定エンジン", "june_event_gate_engine.html", "手順2: イベント結果CSVに連動して、銘柄別の延期・保留・候補復帰を判定する。"],
+      ["6月イベント 市場全体ゲート", "893_june_event_gate_engine_20260606.html", "手順3: 金利、SOX、NASDAQ、VIXで市場全体を緑・黄・赤で照合する。"],
+      ["240万円 資金配分ゲート", "capital_allocation_plan.html", "手順4: 判定結果に応じた段階投入(初回35%・第2回20%・第3回15%)の上限を確認する。"],
       ["候補10社 銘柄別アクション票", "911_ticker_action_tickets_20260606.html", "緑・黄判定時の扱い、停止条件、利確条件、追加確認を銘柄別に確認。"],
-      ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "CPI・日銀・FOMC後の実数と判定理由を入力し、購入前ゲートへつなげる。"],
-      ["指数劣後時の比率引き下げルール", "915_benchmark_underperformance_rules_20260606.html", "S&P500・TOPIX・日経平均に劣後した場合の個別株比率調整を確認。"],
+      ["指数劣後時の比率引き下げルール", "915_benchmark_underperformance_rules_20260606.html", "12か月でS&P500・TOPIX・日経平均に+1%劣後した場合の個別株比率調整。"],
       ["6月実行コックピット", "895_june_execution_cockpit_20260606.html", "6月イベント後に何を見るか、何なら止めるか、次に何をするかを見る。"],
-      ["6月イベント判定エンジン", "893_june_event_gate_engine_20260606.html", "CPI、金利、SOX、NASDAQ、VIXなどを緑・黄・赤で判定する。"],
       ["6月候補別アクション分岐表", "894_june_candidate_action_after_gate_20260606.html", "市場ゲート後に銘柄ごとの扱いを確認する。"],
     ],
   },
@@ -61,6 +63,7 @@ const sections = [
     lead: "判断理由、予想と実績、税制確認、注意事項を残すための資料です。",
     links: [
       ["6月イベント後 実データ入力・入替記録", "892_june_event_actual_input_and_replacement_log_20260606.html", "イベント後の実数と、候補を入れ替えた理由を記録。"],
+      ["240万円×1〜10口座 固定年率複利(サンプル)", "multi_account_compound_simulation_20260609.html", "年8%・10%・12%の固定年率サンプル試算。利回りの根拠は過去実績ベース版を優先。"],
       ["運用記録CSV", "https://raw.githubusercontent.com/ob198-cpu/kabu/main/operation_record_template_20260529.csv", "判断理由、予想、実績、差分を記録するテンプレート。"],
       ["税制レイヤー Phase 1", "842_tax_aware_operation_layer_phase1_20260602.html", "NISA、課税口座、損益通算などの確認補助。"],
       ["NISA口座操作時の注意 PDF", "nisa_multi_account_pc_ip_risk_report_20260531.pdf", "本人操作、別名義口座の注意点、誤解を避ける運用方法。"],
@@ -121,8 +124,13 @@ const html = `<!doctype html>
     .card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
     .card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
     .card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    .market-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+    .market-card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
+    .market-card b{display:block;color:var(--navy);font-size:13px}
+    .market-card strong{display:block;font-size:20px;margin-top:4px}
+    .market-card span{font-size:12px;color:#526b82;font-weight:800}
     footer{font-size:13px;color:#526b82;margin:20px 0}
-    @media(max-width:860px){main{padding:12px}.grid,.hero-actions{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}}
+    @media(max-width:860px){main{padding:12px}.grid,.hero-actions,.market-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}}
   </style>
 </head>
 <body>
@@ -134,12 +142,53 @@ const html = `<!doctype html>
   <p class="notice">このシステムは投資助言、自動売買、税務判断を行いません。購入前には、証券会社画面、公式決算、イベント後の実データを確認します。</p>
   <div class="hero-actions">
     <a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
-    <a class="secondary" href="895_june_execution_cockpit_20260606.html">6月実行コックピット</a>
-    <a class="secondary" href="893_june_event_gate_engine_20260606.html">イベント判定エンジン</a>
+    <a class="secondary" href="june_event_gate_engine.html">6月イベント判定(銘柄別)</a>
+    <a class="secondary" href="capital_allocation_plan.html">240万円 資金配分</a>
   </div>
   ${sectionHtml}
+  <section>
+    <div class="section-head">
+      <h2>最新市場データ</h2>
+    </div>
+    <p class="lead">GitHub Actionsが平日更新する <code>data/market_update.json</code> を読み込みます。ベンチマーク+1%の12か月目標(915)とは別に、短期の市場環境を確認する欄です。</p>
+    <div id="marketSummary" class="notice">読み込み中...</div>
+    <div id="marketGrid" class="market-grid"></div>
+    <div id="marketStocks" style="margin-top:12px"></div>
+  </section>
   <footer>公開URL: https://ob198-cpu.github.io/kabu/ / 作成: ${esc(generatedAt)}</footer>
 </main>
+<script>
+async function loadMarketUpdate(){
+  const summary = document.getElementById("marketSummary");
+  const grid = document.getElementById("marketGrid");
+  const stocks = document.getElementById("marketStocks");
+  try {
+    const res = await fetch("data/market_update.json?_=" + Date.now());
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    summary.textContent = (data.summary || "サマリーなし") + " / 更新: " + (data.updatedAt || "");
+    const issues = [...(data.errors || []), ...(data.dataChecks || [])];
+    if (issues.length) {
+      summary.textContent += " / データ注意: " + issues.join(" / ");
+      summary.style.borderLeftColor = "#a01818";
+    }
+    grid.innerHTML = (data.markets || []).slice(0, 8).map(function(m){
+      const ch = m.changePct == null ? "—" : (m.changePct >= 0 ? "+" : "") + Number(m.changePct).toFixed(2) + "%";
+      return '<div class="market-card"><b>' + m.name + '</b><strong>' + (m.value == null ? "—" : Number(m.value).toLocaleString("ja-JP")) + '</strong><span>1日 ' + ch + '</span></div>';
+    }).join("");
+    stocks.innerHTML = '<div class="table-wrap"><table><thead><tr><th>コード</th><th>銘柄</th><th>株価</th><th>1日</th><th>判定</th></tr></thead><tbody>' +
+      (data.stocks || []).map(function(s){
+        const ch = s.changePct == null ? "—" : (s.changePct >= 0 ? "+" : "") + Number(s.changePct).toFixed(2) + "%";
+        return '<tr><td>' + s.code + '</td><td>' + s.name + '</td><td>' + (s.price == null ? "—" : Number(s.price).toLocaleString("ja-JP")) + '</td><td>' + ch + '</td><td>' + s.signal + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  } catch (err) {
+    summary.textContent = "market_update.json を読み込めませんでした: " + err.message;
+    grid.innerHTML = "";
+    stocks.innerHTML = "";
+  }
+}
+loadMarketUpdate();
+</script>
 </body>
 </html>`;
 

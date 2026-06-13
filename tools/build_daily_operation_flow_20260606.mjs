@@ -36,11 +36,13 @@ const blocks = [
   },
   {
     title: "イベント後に見る",
-    purpose: "CPI・日銀・FOMC後の実数を入れて、緑・黄・赤を判定する。",
-    action: "実数入力シートに数値と判断理由を入れ、イベント判定エンジンと照合する。",
+    purpose: "CPI・日銀・FOMC後の実数を入れ、イベント結果CSVを更新して銘柄別判定と資金配分を再生成する。",
+    action: "実数入力シートで入力→判定用CSVを出力→reports/102_june_event_result_input.csvに貼付→銘柄別判定と資金配分を再生成→市場全体ゲートと照合。",
     pages: [
-      ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "CPI・日銀・FOMC後の実数と理由を入力する。"],
-      ["6月イベント判定エンジン", "893_june_event_gate_engine_20260606.html", "市場ゲートを緑・黄・赤に整理する。"],
+      ["6月イベント 実数入力シート", "912_june_event_actual_input_sheet_20260606.html", "手順1: 実数と判定を入力し、判定用CSVを出力する。"],
+      ["銘柄別イベント判定エンジン", "june_event_gate_engine.html", "手順2: イベント結果CSVに連動して銘柄別の延期・保留・候補復帰を確認する。"],
+      ["6月イベント 市場全体ゲート", "893_june_event_gate_engine_20260606.html", "手順3: 市場全体を緑・黄・赤で照合する(手動)。"],
+      ["240万円 資金配分ゲート", "capital_allocation_plan.html", "手順4: 判定結果に連動した段階投入上限を確認する。"],
       ["6月実行コックピット", "895_june_execution_cockpit_20260606.html", "イベント後に見る指標と停止条件を確認する。"],
     ],
     stop: "CPI悪化、米金利急騰、急な円高、NASDAQ/SOX急落が重なる場合は停止。",

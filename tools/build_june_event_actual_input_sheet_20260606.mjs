@@ -29,6 +29,15 @@ const rows = [
   ["6/18以降", "総合再判定", "CPI、日銀、FOMC後の3点をまとめた市場ゲート", "3イベント後に緑・黄・赤のどれで扱うか", "候補10社全体、配分、購入可否"],
 ];
 
+const eventMeta = [
+  { event_id: "E01", planned_date: "2026-06-10", event: "米5月CPI", input_required: "CPI前年比、前月比、米10年金利反応、NASDAQ/SOX反応", pass_condition: "インフレ再加速と金利急騰が同時に起きない", action_if_fail: "影響タグに該当する候補を保留" },
+  { event_id: "E02", planned_date: "2026-06-15〜2026-06-16", event: "日銀会合", input_required: "政策変更、円高ショック、日経平均反応、銀行株反応", pass_condition: "急な円高ショックと日経平均急落がない", action_if_fail: "日本株候補の予定買いを縮小または延期" },
+  { event_id: "E03", planned_date: "2026-06-16〜2026-06-17", event: "FOMC", input_required: "政策金利見通し、米10年金利、NASDAQ/SOX、ドル円", pass_condition: "米長期金利急騰とハイテク急落がない", action_if_fail: "影響タグに該当する候補を延期" },
+  { event_id: "E04", planned_date: "2026-06-18以降", event: "最終購入前確認", input_required: "候補分類、PER、下落率、未確認データ、イベント結果", pass_condition: "停止条件なし、未確認データなし、イベント悪化なし", action_if_fail: "監視継続または初回除外" },
+];
+
+const statusTo102 = { "緑": "通過", "黄": "注意", "赤": "悪化", "未入力": "未入力" };
+
 const rowHtml = rows.map((row, index) => `
   <tr data-row="${index}">
     <td><b>${esc(row[0])}</b></td>
@@ -94,13 +103,15 @@ const html = `<!doctype html>
 <main>
   <section>
     <h2>1. 使い方</h2>
-    <p class="notice">ここでは実数と判断理由を記録します。未入力のまま購入判断に進まないためのページです。入力内容はブラウザ内の確認用であり、保存する場合はCSV出力を使います。</p>
+    <p class="notice">ここで緑/黄/赤を入力し、「判定用CSVを出力」で reports/102_june_event_result_input.csv に貼り付けます。銘柄別イベント判定と資金配分は、このCSVを正本として再生成されます。このシートは実数の記録用、市場全体ゲートは手動照合用です。</p>
     <div class="links">
+      <a href="june_event_gate_engine.html">銘柄別イベント判定エンジン</a>
+      <a href="893_june_event_gate_engine_20260606.html">市場全体ゲート</a>
+      <a href="capital_allocation_plan.html">240万円 資金配分</a>
       <a href="910_prebuy_final_gate_checklist_20260606.html">購入前 最終ゲート</a>
       <a href="911_ticker_action_tickets_20260606.html">銘柄別アクション票</a>
-      <a href="893_june_event_gate_engine_20260606.html">イベント判定エンジン</a>
-      <a href="912_june_event_actual_input_sheet_20260606.csv">初期CSV</a>
-      <button class="btn" id="copyCsv" type="button">入力内容をCSV化</button>
+      <button class="btn" id="copyCsv" type="button">記録用CSVを出力</button>
+      <button class="btn" id="copy102Csv" type="button">判定用CSVを出力</button>
     </div>
     <div class="summary">
       <div class="box"><span>緑</span><b id="greenCount" class="green">0</b></div>
@@ -120,23 +131,54 @@ const html = `<!doctype html>
 
   <section>
     <h2>3. CSV出力</h2>
+    <p><b>記録用CSV</b>（このシートの実数・判定・理由をそのまま保存する形式）</p>
     <pre id="csvOutput">未出力</pre>
+    <p><b>判定用CSV</b>（reports/102_june_event_result_input.csv へ貼り付ける形式。緑→通過、黄→注意、赤→悪化）</p>
+    <pre id="csv102Output">未出力</pre>
   </section>
 </main>
 <script>
 const rows = ${JSON.stringify(rows)};
+const eventMeta = ${JSON.stringify(eventMeta)};
+const statusTo102 = ${JSON.stringify(statusTo102)};
 function csvCell(value){
   const text = String(value ?? "");
   return /[",\\n\\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
 }
-function collect(){
-  const result = [["date","event","watch_items","risk_question","affected_area","actual_input","status","memo"]];
-  document.querySelectorAll("tbody tr[data-row]").forEach((tr) => {
+function collectRows(){
+  return [...document.querySelectorAll("tbody tr[data-row]")].map((tr) => {
     const index = Number(tr.dataset.row);
-    const actual = tr.querySelector('[data-field="actual"]').value;
-    const status = tr.querySelector('[data-field="status"]').value;
-    const memo = tr.querySelector('[data-field="memo"]').value;
-    result.push([...rows[index], actual, status, memo]);
+    return {
+      index,
+      actual: tr.querySelector('[data-field="actual"]').value,
+      status: tr.querySelector('[data-field="status"]').value,
+      memo: tr.querySelector('[data-field="memo"]').value,
+    };
+  });
+}
+function collect912(){
+  const result = [["date","event","watch_items","risk_question","affected_area","actual_input","status","memo"]];
+  collectRows().forEach((entry) => {
+    result.push([...rows[entry.index], entry.actual, entry.status, entry.memo]);
+  });
+  return result;
+}
+function collect102(){
+  const header = ["event_id","planned_date","event","input_required","actual_value","market_reaction","pass_condition","current_status","action_if_fail"];
+  const result = [header];
+  collectRows().forEach((entry) => {
+    const meta = eventMeta[entry.index];
+    result.push([
+      meta.event_id,
+      meta.planned_date,
+      meta.event,
+      meta.input_required,
+      entry.actual,
+      entry.memo,
+      meta.pass_condition,
+      statusTo102[entry.status] || "未入力",
+      meta.action_if_fail,
+    ]);
   });
   return result;
 }
@@ -149,13 +191,19 @@ function updateCounts(){
   document.getElementById("blankCount").textContent = count("未入力");
 }
 function outputCsv(){
-  const text = collect().map((row) => row.map(csvCell).join(",")).join("\\n");
+  const text = collect912().map((row) => row.map(csvCell).join(",")).join("\\n");
   document.getElementById("csvOutput").textContent = text;
+  navigator.clipboard?.writeText(text).catch(() => {});
+}
+function output102Csv(){
+  const text = collect102().map((row) => row.map(csvCell).join(",")).join("\\n");
+  document.getElementById("csv102Output").textContent = text;
   navigator.clipboard?.writeText(text).catch(() => {});
 }
 document.addEventListener("input", updateCounts);
 document.addEventListener("change", updateCounts);
 document.getElementById("copyCsv").addEventListener("click", outputCsv);
+document.getElementById("copy102Csv").addEventListener("click", output102Csv);
 updateCounts();
 </script>
 </body>

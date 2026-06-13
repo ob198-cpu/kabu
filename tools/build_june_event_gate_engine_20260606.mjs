@@ -27,30 +27,30 @@ const gateInputs = [
     metric: "米10年金利 変化幅",
     beforeInput: "イベント前の米10年金利",
     afterInput: "イベント後の米10年金利",
-    green: "+10bp未満",
-    yellow: "+10bp以上 +20bp未満",
-    red: "+20bp以上",
-    reason: "高PER・半導体・AI関連は金利急騰に弱いため、攻め枠の停止条件に使う。",
+    green: "+8bp未満",
+    yellow: "+8bp以上 +15bp未満",
+    red: "+15bp以上",
+    reason: "104ルール(E01/E03)と同一。高PER・半導体・AI関連は金利急騰に弱いため、攻め枠の停止条件に使う。",
   },
   {
     block: "半導体指数",
-    metric: "SOX指数 イベント後下落率",
+    metric: "SOX指数 日次変化率(前日比%)",
     beforeInput: "イベント前終値",
-    afterInput: "イベント後終値",
-    green: "-3%以内",
-    yellow: "-3%超 -5%以内",
-    red: "-5%超",
-    reason: "半導体テーマを入れるかどうかの直接ゲート。",
+    afterInput: "イベント当日終値",
+    green: "-1.5%以内",
+    yellow: "-1.5%超 -3%以内",
+    red: "-3%超",
+    reason: "104ルール(E01/E03)と同一の日次閾値。半導体テーマを入れるかどうかの直接ゲート。",
   },
   {
     block: "米ハイテク",
-    metric: "NASDAQ イベント後下落率",
+    metric: "NASDAQ 日次変化率(前日比%)",
     beforeInput: "イベント前終値",
-    afterInput: "イベント後終値",
-    green: "-2%以内",
-    yellow: "-2%超 -4%以内",
-    red: "-4%超",
-    reason: "AI・半導体・フィジカルAIのリスク許容度を見る。",
+    afterInput: "イベント当日終値",
+    green: "-1.5%以内",
+    yellow: "-1.5%超 -3%以内",
+    red: "-3%超",
+    reason: "104ルール(E01/E03)と同一の日次閾値。AI・半導体・フィジカルAIのリスク許容度を見る。",
   },
   {
     block: "恐怖指数",
@@ -314,13 +314,16 @@ const html = `<!doctype html>
 <main>
   <section>
     <h2>1. 目的</h2>
-    <p class="lead">このページは、利回りを予測するものではありません。6月の大きなイベント後に、個別株比率やテーマ枠を上げてよい環境かを判定するための停止ゲートです。未検証の固定係数で期待利回りを作るのではなく、実データで危険条件を確認します。</p>
+    <p class="lead">このページは、利回りを予測するものではありません。6月の大きなイベント後に、個別株比率やテーマ枠を上げてよい環境かを判定するための<strong>市場全体ゲート</strong>です。銘柄別の延期・保留判定は <a href="june_event_gate_engine.html" style="color:white">銘柄別イベント判定エンジン</a> がイベント結果CSVを正本として担当します。SOX/NASDAQの閾値は銘柄別判定ルールと同一の<strong>日次変化率</strong>です。</p>
     <div class="cards">
       <div class="card"><b>入力</b><strong>実データ</strong><span>CPI、金利、指数、為替、VIX</span></div>
       <div class="card"><b>判定</b><strong>緑・黄・赤</strong><span>進む、保留、停止</span></div>
       <div class="card"><b>出力</b><strong>アクション</strong><span>入替検討、保留、比率抑制</span></div>
     </div>
     <div class="links">
+      <a href="912_june_event_actual_input_sheet_20260606.html">イベント実数入力シート</a>
+      <a href="june_event_gate_engine.html">銘柄別イベント判定エンジン</a>
+      <a href="capital_allocation_plan.html">240万円 資金配分</a>
       <a href="893_june_event_gate_engine_20260606.csv">CSVを開く</a>
       <a href="892_june_event_actual_input_and_replacement_log_20260606.html">6月イベント後 実データ入力・入替記録</a>
       <a href="891_june_theme_execution_matrix_20260605.html">6月テーマ候補 実行判定表</a>
