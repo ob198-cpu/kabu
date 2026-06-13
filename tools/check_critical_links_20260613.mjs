@@ -13,6 +13,7 @@ const pages = [
   "post_0618_event_update_runbook_20260613.html",
   "post_0618_event_csv_apply_helper_20260613.html",
   "system_health_check_20260613.html",
+  "candidate_selection_health_check_20260613.html",
   "june_gate_operation.html",
   "capital_allocation_plan.html",
   "june_event_gate_engine.html",

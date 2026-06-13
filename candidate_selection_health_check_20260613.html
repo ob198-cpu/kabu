@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>候補10社 選定ロジック検査</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--red:#a01818;--amber:#a85b00;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7;font-size:18px}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:900}
+    main{max-width:1480px;margin:0 auto;padding:22px}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--green);background:#effaf5;padding:14px 16px;border-radius:10px;font-weight:900;margin:0 0 14px}
+    .notice.warn{border-left-color:var(--amber);background:#fff7e7}
+    .notice.bad{border-left-color:var(--red);background:#fff1f1}
+    .summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
+    .card strong{display:block;font-size:28px;color:var(--blue);line-height:1.2}
+    .table-wrap{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{border-collapse:collapse;width:100%;min-width:1100px;background:#fff}
+    th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:10px 11px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e5f1fb;color:var(--navy);font-weight:900}
+    tr:last-child td{border-bottom:0}
+    th:last-child,td:last-child{border-right:0}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .links a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;border:1px solid #78acd2;color:#06436d;background:#fff;border-radius:9px;padding:9px 15px;font-weight:900}
+    @media(max-width:900px){main{padding:12px}.summary{grid-template-columns:1fr}body{font-size:16px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>候補10社 選定ロジック検査</h1>
+  <p>作成: 2026/06/13 22:02 / 現行10社が、最終ロジック・チャンネル比較・決算反応・資金配分に整合しているかを確認する画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>総合判定</h2>
+    <p class="notice warn">注意あり。OK 22件、注意 3件、NG 0件。注意は「購入不可」ではなく、6/18以降の最終確認で説明を残すべき項目です。</p>
+    <div class="summary">
+      <div class="card"><b>現行候補</b><strong>10社</strong></div>
+      <div class="card"><b>比率合計</b><strong>100%</strong></div>
+      <div class="card"><b>中心候補</b><strong>3社</strong></div>
+      <div class="card"><b>条件付き候補</b><strong>7社</strong></div>
+      <div class="card"><b>現在上限</b><strong>0円</strong></div>
+    </div>
+    <div class="links">
+      <a href="898_final_candidate_selection_logic_20260606.html">最終選定ロジック</a>
+      <a href="908_final10_decision_workbench_20260606.html">最終10社ワークベンチ</a>
+      <a href="909_final10_current_snapshot_20260606.html">現時点スナップショット</a>
+      <a href="889_cross_channel_candidate_comparison_20260605.html">チャンネル比較</a>
+      <a href="candidate_selection_health_check_20260613.csv">検査CSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>未解決・注意点</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:30%">確認項目</th><th style="width:10%">状態</th><th style="">結果</th><th style="">対応</th></tr></thead><tbody><tr><td>現行10社の接続: reaction</td><td>注意</td><td>未接続: 6501.T / 6857.T / 8035.T / 7011.T / 6762.T / 6146.T / 5803.T</td><td>該当CSVへ候補を追加、または未接続理由を明記する</td></tr><tr><td>必須データの補完状況</td><td>注意</td><td>10社にpartialまたはmissingあり</td><td>6/18の最終確認までに、partialの内訳を注文票に明記する</td></tr><tr><td>チャンネル分類の整合性</td><td>注意</td><td>8035.T 東京エレクトロン: 扱い: 条件付き候補 / チャンネル表は補欠</td><td>差分は理由を明記し、無説明で中心候補へ昇格しない</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>現行10社の接続状況</h2>
+    <div class="table-wrap"><table><thead><tr><th style="width:15%">銘柄</th><th style="width:15%">チャンネル</th><th style="">役割</th><th style="">比率</th><th style="">現在上限</th><th style="">緑通過時</th><th style="">スコア</th><th style="">データ</th><th style="">決算反応</th><th style="">チャンネル上の扱い</th><th style="width:22%">停止条件</th></tr></thead><tbody><tr><td>8053.T 住友商事</td><td>総合候補</td><td>中心候補</td><td>18.75%</td><td>0円</td><td>157,500円</td><td>9</td><td>pass 3/6・partial 3/6</td><td>20営業日到達</td><td>主候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>8316.T 三井住友FG</td><td>総合候補</td><td>中心候補</td><td>18.75%</td><td>0円</td><td>157,500円</td><td>9</td><td>pass 3/6・partial 3/6</td><td>1日/5日到達・20営業日未到達</td><td>主候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>6501.T 日立製作所</td><td>データセンター・電力・冷却・電線</td><td>中心候補</td><td>18.75%</td><td>0円</td><td>157,500円</td><td>9</td><td>pass 3/6・partial 3/6</td><td>未接続</td><td>主候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>6503.T 三菱電機</td><td>総合候補</td><td>条件付き候補</td><td>6.25%</td><td>0円</td><td>52,500円</td><td>7</td><td>pass 2/6・partial 4/6</td><td>20営業日到達</td><td>複合候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>6857.T アドバンテスト</td><td>半導体製造装置・材料</td><td>条件付き候補</td><td>6.25%</td><td>0円</td><td>52,500円</td><td>7</td><td>pass 2/6・partial 4/6</td><td>未接続</td><td>条件付き候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>8035.T 東京エレクトロン</td><td>半導体製造装置・材料</td><td>条件付き候補</td><td>6.25%</td><td>0円</td><td>52,500円</td><td>7</td><td>pass 2/6・partial 4/6</td><td>未接続</td><td>補欠候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>7011.T 三菱重工業</td><td>データセンター・電力・冷却・電線</td><td>条件付き候補</td><td>6.25%</td><td>0円</td><td>52,500円</td><td>7</td><td>pass 2/6・partial 4/6</td><td>未接続</td><td>条件付き候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>6762.T TDK</td><td>フィジカルAI</td><td>条件付き候補</td><td>6.25%</td><td>0円</td><td>52,500円</td><td>7</td><td>pass 2/6・partial 4/6</td><td>未接続</td><td>数値確認済み</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>6146.T ディスコ</td><td>半導体製造装置・材料</td><td>条件付き候補</td><td>6.25%</td><td>0円</td><td>52,500円</td><td>7</td><td>pass 1/6・partial 5/6</td><td>未接続</td><td>条件付き候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr><tr><td>5803.T フジクラ</td><td>データセンター・電力・冷却・電線</td><td>条件付き候補</td><td>6.25%</td><td>0円</td><td>52,500円</td><td>7</td><td>pass 1/6・partial 5/6</td><td>未接続</td><td>条件付き候補</td><td>全イベント確認後のみ初回35%上限。注意時は15%上限。赤判定または未入力時は0円。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>必須データの補完状況</h2>
+    <p class="notice warn">partial は購入候補から即除外する意味ではありません。ただし、partial が残る項目は6/18以降の注文票で「何を確認したか」を明記する必要があります。未取得値を推測で点数に混ぜる扱いはしません。</p>
+    <div class="table-wrap"><table><thead><tr><th style="width:18%">銘柄</th><th style="width:8%">pass</th><th style="width:8%">partial</th><th style="width:8%">missing</th><th style="">内訳</th></tr></thead><tbody><tr><td>8053.T 住友商事</td><td>3</td><td>3</td><td>0</td><td>default_data:pass / default_financial:pass / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>8316.T 三井住友FG</td><td>3</td><td>3</td><td>0</td><td>default_data:pass / default_financial:pass / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>6501.T 日立製作所</td><td>3</td><td>3</td><td>0</td><td>default_data:pass / default_financial:pass / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>6503.T 三菱電機</td><td>2</td><td>4</td><td>0</td><td>default_data:pass / default_financial:partial / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>6857.T アドバンテスト</td><td>2</td><td>4</td><td>0</td><td>default_data:pass / default_financial:partial / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>8035.T 東京エレクトロン</td><td>2</td><td>4</td><td>0</td><td>default_data:pass / default_financial:partial / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>7011.T 三菱重工業</td><td>2</td><td>4</td><td>0</td><td>default_data:pass / default_financial:partial / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>6762.T TDK</td><td>2</td><td>4</td><td>0</td><td>default_data:pass / default_financial:partial / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>6146.T ディスコ</td><td>1</td><td>5</td><td>0</td><td>default_data:partial / default_financial:partial / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr><tr><td>5803.T フジクラ</td><td>1</td><td>5</td><td>0</td><td>default_data:partial / default_financial:partial / default_reaction:partial / default_theme:pass / default_risk:partial / default_tax:partial</td></tr></tbody></table></div>
+  </section>
+</main>
+</body>
+</html>
