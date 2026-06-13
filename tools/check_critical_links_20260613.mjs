@@ -7,6 +7,7 @@ const pages = [
   "896_practical_entry_hub_20260606.html",
   "914_daily_operation_flow_20260606.html",
   "post_0618_operation_board_20260613.html",
+  "912_june_event_actual_input_sheet_20260606.html",
   "june_gate_operation.html",
   "capital_allocation_plan.html",
   "june_event_gate_engine.html",

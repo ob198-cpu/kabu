@@ -282,6 +282,7 @@ th{background:#e5f1fa;color:#073b62;font-weight:900}
     <p>${esc(boardMessage)}</p>
     <div class="links">
       <a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
+      <a href="912_june_event_actual_input_sheet_20260606.html">6月イベント実数入力</a>
       <a href="june_gate_operation.html">6月ゲート運用表</a>
       <a href="capital_allocation_plan.html">資金配分ゲート</a>
       <a href="june_event_gate_engine.html">銘柄別イベント判定</a>

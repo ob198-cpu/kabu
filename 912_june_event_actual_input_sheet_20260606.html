@@ -3,215 +3,384 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>6月イベント 実数入力シート</title>
+  <title>6月イベント実数入力シート</title>
   <style>
-    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818;--green:#0b6b4f}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.6}
-    header{background:var(--navy);color:white;padding:30px}
-    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
-    header p{margin:0;color:white;font-weight:800}
-    main{max-width:1540px;margin:0 auto;padding:22px}
-    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
-    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
-    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:0 0 14px;font-weight:900;border-radius:8px}
-    .links a,.btn{display:inline-block;margin:6px 8px 0 0;background:var(--blue);color:white;text-decoration:none;border:0;border-radius:8px;padding:9px 12px;font-weight:900;cursor:pointer}
-    table{width:100%;border-collapse:collapse;table-layout:fixed}
-    th,td{border:1px solid var(--line);padding:9px;vertical-align:top;overflow-wrap:anywhere;color:#111}
-    th{background:#e5f1fb;color:var(--navy);text-align:left;font-weight:900}
-    tr{break-inside:avoid}
-    textarea{width:100%;min-height:86px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit}
-    select{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-weight:900;background:white}
-    .summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
-    .box{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
-    .box b{display:block;color:var(--navy);font-size:22px}
-    .green{color:var(--green)}.yellow{color:#a85b00}.red{color:var(--red)}
-    pre{white-space:pre-wrap;background:#061827;color:white;border-radius:10px;padding:12px;max-height:260px;overflow:auto}
-    @media(max-width:980px){main{padding:12px}table{font-size:14px}.summary{grid-template-columns:1fr}}
+    :root {
+      --ink: #001f3f;
+      --muted: #34495e;
+      --line: #c9d9ea;
+      --soft: #eef6ff;
+      --brand: #005f99;
+      --warn: #b46a00;
+      --bad: #b42318;
+      --ok: #147a3d;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f4f8fc;
+      color: var(--ink);
+      font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+    header {
+      background: linear-gradient(135deg, #073763, #005f99);
+      color: #fff;
+      padding: 28px clamp(18px, 4vw, 54px);
+    }
+    header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: 0;
+    }
+    header p { margin: 0; max-width: 1100px; }
+    main { max-width: 1500px; margin: 0 auto; padding: 24px; }
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .nav a, button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 16px;
+      border: 1px solid #78aad0;
+      border-radius: 8px;
+      background: #fff;
+      color: #004b7a;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    button.primary { background: #005f99; color: #fff; }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0, 31, 63, 0.06);
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      background: var(--soft);
+    }
+    .metric b { display: block; font-size: 28px; line-height: 1.2; }
+    .metric span { color: var(--muted); }
+    .metric.ok b { color: var(--ok); }
+    .metric.warn b { color: var(--warn); }
+    .metric.bad b { color: var(--bad); }
+    .decision {
+      border-left: 8px solid #78aad0;
+      padding: 12px 14px;
+      background: #f7fbff;
+      font-size: 19px;
+      font-weight: 700;
+    }
+    .decision.ok { border-color: var(--ok); }
+    .decision.warn { border-color: var(--warn); }
+    .decision.bad { border-color: var(--bad); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px;
+      vertical-align: top;
+      word-break: break-word;
+    }
+    th {
+      background: #e5f1fb;
+      text-align: left;
+      font-size: 15px;
+    }
+    td.id b { display: block; font-size: 20px; }
+    td.id span, td:nth-child(2) span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    textarea, select {
+      width: 100%;
+      border: 1px solid #9bbad6;
+      border-radius: 7px;
+      padding: 9px;
+      font: inherit;
+      background: #fff;
+      color: var(--ink);
+    }
+    textarea { min-height: 96px; resize: vertical; }
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #001f3f;
+      color: #fff;
+      padding: 16px;
+      border-radius: 10px;
+      overflow: auto;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .note {
+      color: var(--muted);
+      font-size: 15px;
+    }
+    @media (max-width: 900px) {
+      main { padding: 14px; }
+      table { min-width: 1100px; }
+      .table-wrap { overflow-x: auto; }
+    }
+    @media print {
+      body { background: #fff; font-size: 13px; }
+      header { padding: 16px 22px; }
+      main { max-width: none; padding: 12px; }
+      .nav, .actions, pre { display: none; }
+      .panel { box-shadow: none; break-inside: avoid; }
+      tr { break-inside: avoid; }
+      textarea, select { border: 0; padding: 0; }
+    }
   </style>
 </head>
 <body>
-<header>
-  <h1>6月イベント 実数入力シート</h1>
-  <p>作成: 2026/06/12 21:41 / CPI・日銀・FOMC後の実数を記録し、購入前ゲートへつなげるページです。</p>
-</header>
-<main>
-  <section>
-    <h2>1. 使い方</h2>
-    <p class="notice">ここで緑/黄/赤を入力し、「判定用CSVを出力」で reports/102_june_event_result_input.csv に貼り付けます。銘柄別イベント判定と資金配分は、このCSVを正本として再生成されます。このシートは実数の記録用、市場全体ゲートは手動照合用です。</p>
-    <div class="links">
-      <a href="june_event_gate_engine.html">銘柄別イベント判定エンジン</a>
-      <a href="893_june_event_gate_engine_20260606.html">市場全体ゲート</a>
-      <a href="capital_allocation_plan.html">240万円 資金配分</a>
-      <a href="910_prebuy_final_gate_checklist_20260606.html">購入前 最終ゲート</a>
-      <a href="911_ticker_action_tickets_20260606.html">銘柄別アクション票</a>
-      <button class="btn" id="copyCsv" type="button">記録用CSVを出力</button>
-      <button class="btn" id="copy102Csv" type="button">判定用CSVを出力</button>
-    </div>
-    <div class="summary">
-      <div class="box"><span>緑</span><b id="greenCount" class="green">0</b></div>
-      <div class="box"><span>黄</span><b id="yellowCount" class="yellow">0</b></div>
-      <div class="box"><span>赤</span><b id="redCount" class="red">0</b></div>
-      <div class="box"><span>未入力</span><b id="blankCount">4</b></div>
-    </div>
-  </section>
+  <header>
+    <h1>6月イベント実数入力シート</h1>
+    <p>6月18日以降の購入判断で使う、CPI・日銀・FOMC・最終購入前確認の実数入力欄です。未入力や悪化を点数に混ぜず、購入前ゲートへ明確につなげます。</p>
+  </header>
+  <main>
+    <nav class="nav" aria-label="関連ページ">
+      <a href="post_0618_operation_board_20260613.html">6月18日以降 当日運用ボード</a>
+      <a href="june_gate_operation.html">6月購入前ゲート</a>
+      <a href="june_event_gate_engine.html">6月イベント判定エンジン</a>
+      <a href="capital_allocation_plan.html">資金配分プラン</a>
+    </nav>
 
-  <section>
-    <h2>2. 実数入力表</h2>
-    <table>
-      <thead><tr><th style="width:105px">日程</th><th style="width:130px">イベント</th><th>見る数値</th><th>確認するリスク</th><th>影響しやすい枠</th><th>実数・確認結果</th><th style="width:96px">判定</th><th>判断理由</th></tr></thead>
-      <tbody>
-  <tr data-row="0">
-    <td><b>6/10</b></td>
-    <td>米CPI</td>
-    <td>米CPI実績、市場予想との差、米10年金利、NASDAQ/SOX、VIX</td>
-    <td>インフレ再加速と金利急騰が同時に出るか</td>
-    <td>半導体、AIインフラ、グロース寄り候補</td>
-    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
-    <td>
-      <select data-field="status">
-        <option value="未入力">未入力</option>
-        <option value="緑">緑</option>
-        <option value="黄">黄</option>
-        <option value="赤">赤</option>
-      </select>
-    </td>
-    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
-  </tr>
+    <section class="panel">
+      <h2>現在の判定</h2>
+      <div class="summary">
+        <div class="metric warn"><b id="countPending">0</b><span>未入力イベント</span></div>
+        <div class="metric warn"><b id="countAttention">0</b><span>注意イベント</span></div>
+        <div class="metric bad"><b id="countBad">0</b><span>悪化イベント</span></div>
+        <div class="metric ok"><b id="countPass">0</b><span>通過イベント</span></div>
+      </div>
+      <p id="decision" class="decision warn">入力状況を確認中</p>
+      <p class="note">この画面は入力補助です。証券会社の注文画面を操作する前に、本人操作、NISA口座区分、購入金額、停止条件を別途確認します。</p>
+    </section>
 
-  <tr data-row="1">
-    <td><b>6/15〜6/16</b></td>
-    <td>日銀会合</td>
-    <td>政策金利、声明文、ドル円、日本10年金利、日経平均/TOPIX</td>
-    <td>急な円高、国内金利急騰、日本株全体の下落が出るか</td>
-    <td>銀行、商社、輸出・半導体、内需</td>
-    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
-    <td>
-      <select data-field="status">
-        <option value="未入力">未入力</option>
-        <option value="緑">緑</option>
-        <option value="黄">黄</option>
-        <option value="赤">赤</option>
-      </select>
-    </td>
-    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
-  </tr>
+    <section class="panel">
+      <h2>実数入力</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 9%">ID/日付</th>
+              <th style="width: 12%">イベント</th>
+              <th style="width: 16%">入力する数値</th>
+              <th style="width: 14%">実数</th>
+              <th style="width: 14%">市場反応</th>
+              <th style="width: 8%">状態</th>
+              <th style="width: 18%">判定基準</th>
+              <th style="width: 9%">悪化時対応</th>
+            </tr>
+          </thead>
+          <tbody id="eventRows">
+            
+    <tr data-index="0">
+      <td class="id"><b>E01</b><span>2026-06-10</span></td>
+      <td><b>米5月CPI</b><span>半導体、高PER、高ボラ、AIインフラ</span></td>
+      <td>CPI前年比・前月比、米10年金利、NASDAQ、SOX、VIX、ドル円</td>
+      <td>
+        <textarea data-field="actual_value" rows="3" placeholder="例: 米10年金利 +6bp、SOX -0.8%、ドル円横ばい">入力済み/確認中</textarea>
+      </td>
+      <td>
+        <textarea data-field="market_reaction" rows="3" placeholder="指数・為替・候補銘柄の反応を記録">注意</textarea>
+      </td>
+      <td>
+        <select data-field="current_status">
+          <option value="未入力" >未入力</option><option value="通過" >通過</option><option value="注意" selected>注意</option><option value="悪化" >悪化</option>
+        </select>
+      </td>
+      <td>
+        <b>通過:</b> インフレ再加速と米金利急騰が同時に起きず、NASDAQ/SOXが大崩れしない<br>
+        <b>注意:</b> 米10年金利+8bp以上、またはNASDAQ/SOX日次-1.5%以上<br>
+        <b>悪化:</b> 米10年金利+15bp以上、またはNASDAQ/SOX日次-3%以上
+      </td>
+      <td>半導体・高PER・高ボラ候補の買付前ゲートを厳格化</td>
+    </tr>
+  
+    <tr data-index="1">
+      <td class="id"><b>E02</b><span>2026-06-15〜2026-06-16</span></td>
+      <td><b>日銀会合</b><span>日本株、銀行、商社、輸出、内需</span></td>
+      <td>政策変更、ドル円、日経平均/TOPIX、銀行・商社・輸出株反応</td>
+      <td>
+        <textarea data-field="actual_value" rows="3" placeholder="例: 米10年金利 +6bp、SOX -0.8%、ドル円横ばい"></textarea>
+      </td>
+      <td>
+        <textarea data-field="market_reaction" rows="3" placeholder="指数・為替・候補銘柄の反応を記録"></textarea>
+      </td>
+      <td>
+        <select data-field="current_status">
+          <option value="未入力" selected>未入力</option><option value="通過" >通過</option><option value="注意" >注意</option><option value="悪化" >悪化</option>
+        </select>
+      </td>
+      <td>
+        <b>通過:</b> 急な円高ショックと日本株指数の大幅下落が同時に出ない<br>
+        <b>注意:</b> 円高方向だが指数下落は限定的<br>
+        <b>悪化:</b> 急な円高と日経平均/TOPIX急落が同時発生
+      </td>
+      <td>日本株の予定買付を延期、または比率を下げる</td>
+    </tr>
+  
+    <tr data-index="2">
+      <td class="id"><b>E03</b><span>2026-06-16〜2026-06-17</span></td>
+      <td><b>FOMC</b><span>半導体、高PER、高ボラ、輸出、AIインフラ</span></td>
+      <td>政策金利見通し、米10年金利、NASDAQ、SOX、ドル円</td>
+      <td>
+        <textarea data-field="actual_value" rows="3" placeholder="例: 米10年金利 +6bp、SOX -0.8%、ドル円横ばい"></textarea>
+      </td>
+      <td>
+        <textarea data-field="market_reaction" rows="3" placeholder="指数・為替・候補銘柄の反応を記録"></textarea>
+      </td>
+      <td>
+        <select data-field="current_status">
+          <option value="未入力" selected>未入力</option><option value="通過" >通過</option><option value="注意" >注意</option><option value="悪化" >悪化</option>
+        </select>
+      </td>
+      <td>
+        <b>通過:</b> 米長期金利が急騰せず、ハイテク株のリスク許容度が崩れない<br>
+        <b>注意:</b> 米10年金利+8bp以上、またはNASDAQ/SOX日次-1.5%以上<br>
+        <b>悪化:</b> 米10年金利+15bp以上、またはNASDAQ/SOX日次-3%以上
+      </td>
+      <td>半導体・高PER・高ボラ候補を延期</td>
+    </tr>
+  
+    <tr data-index="3">
+      <td class="id"><b>E04</b><span>2026-06-18以降</span></td>
+      <td><b>最終購入前確認</b><span>候補10社全体、NISA口座、本人操作、資金配分</span></td>
+      <td>候補別株価、PER/PBR/ROE、直近下落率、未確認データ、証券会社画面</td>
+      <td>
+        <textarea data-field="actual_value" rows="3" placeholder="例: 米10年金利 +6bp、SOX -0.8%、ドル円横ばい"></textarea>
+      </td>
+      <td>
+        <textarea data-field="market_reaction" rows="3" placeholder="指数・為替・候補銘柄の反応を記録"></textarea>
+      </td>
+      <td>
+        <select data-field="current_status">
+          <option value="未入力" selected>未入力</option><option value="通過" >通過</option><option value="注意" >注意</option><option value="悪化" >悪化</option>
+        </select>
+      </td>
+      <td>
+        <b>通過:</b> 停止条件なし。未確認データを点数に混ぜない。本人操作とNISA口座区分を確認<br>
+        <b>注意:</b> 中重要度の未確認項目が残る<br>
+        <b>悪化:</b> 停止条件1件以上、または未確認データが重要項目に残る
+      </td>
+      <td>監視継続、または初回金額を縮小</td>
+    </tr>
+  
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-  <tr data-row="2">
-    <td><b>6/16〜6/17</b></td>
-    <td>FOMC</td>
-    <td>政策金利、ドットプロット、議長会見、米10年金利、NASDAQ/SOX、VIX</td>
-    <td>米金利上昇とリスク資産売りが同時に出るか</td>
-    <td>半導体、AI、データセンター、フィジカルAI</td>
-    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
-    <td>
-      <select data-field="status">
-        <option value="未入力">未入力</option>
-        <option value="緑">緑</option>
-        <option value="黄">黄</option>
-        <option value="赤">赤</option>
-      </select>
-    </td>
-    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
-  </tr>
+    <section class="panel actions">
+      <h2>判定用CSV</h2>
+      <p>下のボタンで、現在の入力内容をCSV形式にします。内容は <b>102_june_event_result_input.csv</b> と同じ列構成です。</p>
+      <div class="nav">
+        <button class="primary" type="button" id="makeCsv">判定用CSVを作成</button>
+        <button type="button" id="copyCsv">CSVをコピー</button>
+      </div>
+      <pre id="csvOutput"></pre>
+    </section>
+  </main>
 
-  <tr data-row="3">
-    <td><b>6/18以降</b></td>
-    <td>総合再判定</td>
-    <td>CPI、日銀、FOMC後の3点をまとめた市場ゲート</td>
-    <td>3イベント後に緑・黄・赤のどれで扱うか</td>
-    <td>候補10社全体、配分、購入可否</td>
-    <td><textarea data-field="actual" placeholder="実数・確認結果を入力"></textarea></td>
-    <td>
-      <select data-field="status">
-        <option value="未入力">未入力</option>
-        <option value="緑">緑</option>
-        <option value="黄">黄</option>
-        <option value="赤">赤</option>
-      </select>
-    </td>
-    <td><textarea data-field="memo" placeholder="判断理由・次の作業"></textarea></td>
-  </tr>
-</tbody>
-    </table>
-  </section>
+  <script>
+    const initialRows = [{"event_id":"E01","planned_date":"2026-06-10","event":"米5月CPI","input_required":"CPI前年比・前月比、米10年金利、NASDAQ、SOX、VIX、ドル円","actual_value":"入力済み/確認中","market_reaction":"注意","pass_condition":"インフレ再加速と米金利急騰が同時に起きず、NASDAQ/SOXが大崩れしない","current_status":"注意","action_if_fail":"半導体・高PER・高ボラ候補の買付前ゲートを厳格化"},{"event_id":"E02","planned_date":"2026-06-15〜2026-06-16","event":"日銀会合","input_required":"政策変更、ドル円、日経平均/TOPIX、銀行・商社・輸出株反応","actual_value":"","market_reaction":"","pass_condition":"急な円高ショックと日本株指数の大幅下落が同時に出ない","current_status":"未入力","action_if_fail":"日本株の予定買付を延期、または比率を下げる"},{"event_id":"E03","planned_date":"2026-06-16〜2026-06-17","event":"FOMC","input_required":"政策金利見通し、米10年金利、NASDAQ、SOX、ドル円","actual_value":"","market_reaction":"","pass_condition":"米長期金利が急騰せず、ハイテク株のリスク許容度が崩れない","current_status":"未入力","action_if_fail":"半導体・高PER・高ボラ候補を延期"},{"event_id":"E04","planned_date":"2026-06-18以降","event":"最終購入前確認","input_required":"候補別株価、PER/PBR/ROE、直近下落率、未確認データ、証券会社画面","actual_value":"","market_reaction":"","pass_condition":"停止条件なし。未確認データを点数に混ぜない。本人操作とNISA口座区分を確認","current_status":"未入力","action_if_fail":"監視継続、または初回金額を縮小"}];
+    const headers = ["event_id","planned_date","event","input_required","actual_value","market_reaction","pass_condition","current_status","action_if_fail"];
 
-  <section>
-    <h2>3. CSV出力</h2>
-    <p><b>記録用CSV</b>（このシートの実数・判定・理由をそのまま保存する形式）</p>
-    <pre id="csvOutput">未出力</pre>
-    <p><b>判定用CSV</b>（reports/102_june_event_result_input.csv へ貼り付ける形式。緑→通過、黄→注意、赤→悪化）</p>
-    <pre id="csv102Output">未出力</pre>
-  </section>
-</main>
-<script>
-const rows = [["6/10","米CPI","米CPI実績、市場予想との差、米10年金利、NASDAQ/SOX、VIX","インフレ再加速と金利急騰が同時に出るか","半導体、AIインフラ、グロース寄り候補"],["6/15〜6/16","日銀会合","政策金利、声明文、ドル円、日本10年金利、日経平均/TOPIX","急な円高、国内金利急騰、日本株全体の下落が出るか","銀行、商社、輸出・半導体、内需"],["6/16〜6/17","FOMC","政策金利、ドットプロット、議長会見、米10年金利、NASDAQ/SOX、VIX","米金利上昇とリスク資産売りが同時に出るか","半導体、AI、データセンター、フィジカルAI"],["6/18以降","総合再判定","CPI、日銀、FOMC後の3点をまとめた市場ゲート","3イベント後に緑・黄・赤のどれで扱うか","候補10社全体、配分、購入可否"]];
-const eventMeta = [{"event_id":"E01","planned_date":"2026-06-10","event":"米5月CPI","input_required":"CPI前年比、前月比、米10年金利反応、NASDAQ/SOX反応","pass_condition":"インフレ再加速と金利急騰が同時に起きない","action_if_fail":"影響タグに該当する候補を保留"},{"event_id":"E02","planned_date":"2026-06-15〜2026-06-16","event":"日銀会合","input_required":"政策変更、円高ショック、日経平均反応、銀行株反応","pass_condition":"急な円高ショックと日経平均急落がない","action_if_fail":"日本株候補の予定買いを縮小または延期"},{"event_id":"E03","planned_date":"2026-06-16〜2026-06-17","event":"FOMC","input_required":"政策金利見通し、米10年金利、NASDAQ/SOX、ドル円","pass_condition":"米長期金利急騰とハイテク急落がない","action_if_fail":"影響タグに該当する候補を延期"},{"event_id":"E04","planned_date":"2026-06-18以降","event":"最終購入前確認","input_required":"候補分類、PER、下落率、未確認データ、イベント結果","pass_condition":"停止条件なし、未確認データなし、イベント悪化なし","action_if_fail":"監視継続または初回除外"}];
-const statusTo102 = {"緑":"通過","黄":"注意","赤":"悪化","未入力":"未入力"};
-function csvCell(value){
-  const text = String(value ?? "");
-  return /[",\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
-}
-function collectRows(){
-  return [...document.querySelectorAll("tbody tr[data-row]")].map((tr) => {
-    const index = Number(tr.dataset.row);
-    return {
-      index,
-      actual: tr.querySelector('[data-field="actual"]').value,
-      status: tr.querySelector('[data-field="status"]').value,
-      memo: tr.querySelector('[data-field="memo"]').value,
-    };
-  });
-}
-function collect912(){
-  const result = [["date","event","watch_items","risk_question","affected_area","actual_input","status","memo"]];
-  collectRows().forEach((entry) => {
-    result.push([...rows[entry.index], entry.actual, entry.status, entry.memo]);
-  });
-  return result;
-}
-function collect102(){
-  const header = ["event_id","planned_date","event","input_required","actual_value","market_reaction","pass_condition","current_status","action_if_fail"];
-  const result = [header];
-  collectRows().forEach((entry) => {
-    const meta = eventMeta[entry.index];
-    result.push([
-      meta.event_id,
-      meta.planned_date,
-      meta.event,
-      meta.input_required,
-      entry.actual,
-      entry.memo,
-      meta.pass_condition,
-      statusTo102[entry.status] || "未入力",
-      meta.action_if_fail,
-    ]);
-  });
-  return result;
-}
-function updateCounts(){
-  const statuses = [...document.querySelectorAll('[data-field="status"]')].map((el) => el.value);
-  const count = (name) => statuses.filter((value) => value === name).length;
-  document.getElementById("greenCount").textContent = count("緑");
-  document.getElementById("yellowCount").textContent = count("黄");
-  document.getElementById("redCount").textContent = count("赤");
-  document.getElementById("blankCount").textContent = count("未入力");
-}
-function outputCsv(){
-  const text = collect912().map((row) => row.map(csvCell).join(",")).join("\n");
-  document.getElementById("csvOutput").textContent = text;
-  navigator.clipboard?.writeText(text).catch(() => {});
-}
-function output102Csv(){
-  const text = collect102().map((row) => row.map(csvCell).join(",")).join("\n");
-  document.getElementById("csv102Output").textContent = text;
-  navigator.clipboard?.writeText(text).catch(() => {});
-}
-document.addEventListener("input", updateCounts);
-document.addEventListener("change", updateCounts);
-document.getElementById("copyCsv").addEventListener("click", outputCsv);
-document.getElementById("copy102Csv").addEventListener("click", output102Csv);
-updateCounts();
-</script>
+    function csvCell(value) {
+      const text = String(value ?? "");
+      return /[",\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+    }
+
+    function getRows() {
+      return Array.from(document.querySelectorAll("tbody tr")).map((tr, index) => {
+        const base = { ...initialRows[index] };
+        tr.querySelectorAll("[data-field]").forEach((field) => {
+          base[field.dataset.field] = field.value;
+        });
+        return base;
+      });
+    }
+
+    function renderSummary() {
+      const rows = getRows();
+      const pending = rows.filter((row) => row.current_status === "未入力").length;
+      const attention = rows.filter((row) => row.current_status === "注意").length;
+      const bad = rows.filter((row) => row.current_status === "悪化").length;
+      const pass = rows.filter((row) => row.current_status === "通過").length;
+      document.getElementById("countPending").textContent = pending;
+      document.getElementById("countAttention").textContent = attention;
+      document.getElementById("countBad").textContent = bad;
+      document.getElementById("countPass").textContent = pass;
+      const decision = document.getElementById("decision");
+      decision.className = "decision";
+      if (bad > 0) {
+        decision.classList.add("bad");
+        decision.textContent = "新規購入停止: 悪化イベントがあります。初回購入は行わず、再判定します。";
+      } else if (pending > 0) {
+        decision.classList.add("warn");
+        decision.textContent = "金額未確定: 未入力イベントがあります。買付比率は確定しません。";
+      } else if (attention > 0) {
+        decision.classList.add("warn");
+        decision.textContent = "慎重実行: 注意イベントがあります。高PER・高ボラ・半導体偏重は小さくします。";
+      } else {
+        decision.classList.add("ok");
+        decision.textContent = "購入前確認へ進む: 主要イベントは通過扱いです。本人操作と口座区分を確認します。";
+      }
+    }
+
+    function buildCsv() {
+      const rows = getRows();
+      return [
+        headers.join(","),
+        ...rows.map((row) => headers.map((header) => csvCell(row[header])).join(",")),
+      ].join("\n");
+    }
+
+    function renderCsv() {
+      const csv = buildCsv();
+      document.getElementById("csvOutput").textContent = csv;
+      return csv;
+    }
+
+    document.querySelectorAll("textarea, select").forEach((field) => {
+      field.addEventListener("input", renderSummary);
+      field.addEventListener("change", renderSummary);
+    });
+    document.getElementById("makeCsv").addEventListener("click", renderCsv);
+    document.getElementById("copyCsv").addEventListener("click", async () => {
+      const csv = renderCsv();
+      await navigator.clipboard.writeText(csv);
+      alert("CSVをコピーしました。");
+    });
+    renderSummary();
+    renderCsv();
+  </script>
+  <!-- generated: 2026/06/13 19:28 -->
 </body>
 </html>
