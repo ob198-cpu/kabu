@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 受注・セグメント寄与 証拠候補</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:850;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 受注・セグメント寄与 証拠候補</h1>
+  <p>三菱電機・東京エレクトロンについて、テーマ性が売上・利益・受注・市場見通しに接続しているかを公式資料から整理した画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>結論</h2>
+    <p class="notice">事業寄与の証拠候補は取れました。ただし、まだ入力CSVへは反映せず、P1復帰可能0社・買付上限0円を維持します。</p>
+    <div class="cards">
+      <div class="card ok"><b>証拠候補</b><strong>6件</strong><span>公式決算説明資料から整理</span></div>
+      <div class="card bad"><b>入力反映</b><strong>0件</strong><span>目視確認・転記前</span></div>
+      <div class="card bad"><b>P1復帰</b><strong>0社</strong><span>まだ不可</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>維持</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>確認導線</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">最新 実用パート入口</a>
+      <a href="p1_segment_order_queue_20260615.html">受注・セグメント確認キュー</a>
+      <a href="p1_financial_per_pbr_basis_20260615.html">PER/PBR計算候補</a>
+      <a href="p1_financial_input_validator_20260614.html">入力バリデーター</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>全体サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>値</th><th>判定</th><th>メモ</th></tr></thead><tbody><tr><td class="warn">公式資料確認</td><td class="">2社</td><td class="warn">証拠候補あり</td><td class="warn">三菱電機、東京エレクトロンの決算説明資料で事業寄与の候補を確認。</td></tr><tr><td class="warn">証拠候補</td><td class="">6件</td><td class="ok">作成済み</td><td class="">実績、会社予想、市場見通し、製品別成長ドライバーに分類。</td></tr><tr><td class="">入力CSV反映</td><td class="">0件</td><td class="bad">反映しない</td><td class="warn">目視確認と入力フォーム更新前のため。</td></tr><tr><td class="">P1復帰可能</td><td class="">0社</td><td class="bad">不可</td><td class="warn">この段階では証拠候補。公式確認済み入力とイベント後判定が必要。</td></tr><tr><td class="">買付上限</td><td class="bad">0円</td><td class="">維持</td><td class="bad">事業寄与の候補が取れても、購入判断にはまだ進めない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>証拠候補一覧</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>根拠分類</th><th>テーマ</th><th>数値根拠</th><th>文章根拠要約</th><th>判定</th><th>入力CSV反映</th><th>反映しない理由</th><th>次作業</th><th>公式資料</th><th>資料日付</th><th>URL</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">実績</td><td class="">エネルギーシステム・データセンター周辺</td><td class="">エネルギーシステム: 売上高 4,733億円（+771億円）、営業利益 453億円（+178億円）、営業利益率 9.6%（+2.7pt）</td><td class="">再生可能エネルギーの拡大やデータセンター増設を背景に需要が堅調。受注高は国内外の発電事業増加などで前年度を上回り、売上高は電力流通事業増加などで前年度を上回った。</td><td class="warn">補強候補A</td><td class="bad">反映しない</td><td class="warn">公式資料の該当ページを目視確認し、入力フォームへ資料日付・URLと一緒に転記するまでは公式確認済みにしない。</td><td class="">受注またはセグメント寄与欄へ、データセンター増設と電力流通事業増加を要約入力する。</td><td class="">2026年3月期 決算説明会資料</td><td class="">2026/04/28</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf</a></td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">実績</td><td class="">FAシステム・AI関連半導体投資</td><td class="">FAシステム: 売上高 7,982億円（+726億円）、営業利益 766億円（+298億円）、営業利益率 9.6%（+3.2pt）</td><td class="">中国のスマートフォン・工作機械関連需要、日本・中国などのAI関連半導体設備投資需要が増加。スマートフォン、AI関連設備投資、工作機械関連需要の増加で受注高・売上高ともに前年度を上回った。</td><td class="warn">補強候補A</td><td class="bad">反映しない</td><td class="warn">テーマ性と実績が接続している候補だが、入力状態はまだ候補値。</td><td class="warn">FAシステムの受注・売上増加を、候補復帰の補強材料として入力候補にする。</td><td class="">2026年3月期 決算説明会資料</td><td class="">2026/04/28</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf</a></td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">会社予想</td><td class="">26年度見通し</td><td class="">26年度業績見通し: 売上高 6兆2,000億円（前年度比 +3,052億円）、調整後営業利益 5,900億円（前年度比 +887億円）</td><td class="">防衛システム事業、FAシステム事業、ライフ部門の拡大により、売上高・調整後営業利益とも過去最高を更新する見通し。中東情勢影響は原材料・物流費高騰として織り込み。</td><td class="warn">補強候補B</td><td class="bad">反映しない</td><td class="warn">会社予想は有用だが、全社見通しであり個別テーマ寄与をさらに分ける必要がある。</td><td class="">会社予想の裏付け欄へ、FA・防衛・ライフの拡大と中東コスト織り込みを記録する。</td><td class="">2026年3月期 決算説明会資料</td><td class="">2026/04/28</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf</a></td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">市場見通し</td><td class="">WFE市場・先端半導体投資</td><td class="">CY2026〜2027 WFE市場見通し: 1500〜1700億ドル/年、CY2025比 +20%以上。先端デバイス向けは +30%以上。</td><td class="bad">WFE市場は2026〜2027年に拡大想定。ただし地政学的リスクは要注視。</td><td class="warn">補強候補A</td><td class="bad">反映しない</td><td class="warn">市場見通しは補強材料だが、株価基準日・高PER説明・6月イベント後の半導体指数確認が必要。</td><td class="warn">受注または市場見通し欄へ、WFE市場と先端デバイス需要の数値を転記候補にする。</td><td class="">2026年3月期 決算説明会資料</td><td class="">2026/04/30</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf</a></td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">製品別成長ドライバー</td><td class="">塗布現像・エッチング・先端パッケージング</td><td class="">塗布・現像はマーケットシェア90%以上、FY2027売上 YoY +50%以上。エッチングは絶縁膜エッチングでシェア50%以上、FY2027売上 YoY +25%以上。先端パッケージングはFY2026売上実績 約2,000億円、FY2027売上 YoY +60%以上。</td><td class="">DRAM、先端ロジック、HBM、アドバンストパッケージングなどの投資機会を捉える説明がある。</td><td class="warn">補強候補A</td><td class="bad">反映しない</td><td class="warn">高PERを説明する材料候補だが、入力前に該当ページの目視確認と要約が必要。</td><td class="warn">高PER説明欄へ、製品別シェアとFY2027成長見通しを要約入力候補にする。</td><td class="">2026年3月期 決算説明会資料</td><td class="">2026/04/30</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf</a></td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">会社予想</td><td class="">AIサーバー需要・FY2027上期</td><td class="">FY2027上期予想: 売上高 1兆5,700億円、営業利益 4,310億円、営業利益率 27.5%。SPE新規売上は前年同期比 +41%。</td><td class="bad">AIサーバー向け需要が牽引し、過去最高の売上高・売上総利益・営業利益を見込む。2026年後半にかけてDRAM・先端ロジック中心に出荷増加。ただしホルムズ海峡封鎖の影響は要注視。</td><td class="bad">補強候補A-リスク付き</td><td class="bad">反映しない</td><td class="bad">強い根拠候補だが、地政学リスクと高PERのため、小口候補化は6月イベント後の指数確認が必要。</td><td class="bad">高PER説明・市場見通し欄へ、AIサーバー需要とホルムズ海峡リスクをセットで記録する。</td><td class="">2026年3月期 決算説明会資料</td><td class="">2026/04/30</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf</a></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>次の扱い</h2>
+    <ul>
+      <li>この画面の数値は、候補復帰の材料候補であり、まだ購入判断ではない。</li>
+      <li>入力フォームへ反映する場合は、資料日付、URL、対象ページ、入力状態をそろえる。</li>
+      <li>東京エレクトロンは根拠が強い一方、高PER・高PBR・地政学リスクがあるため、6月イベント後の指数確認を必須にする。</li>
+      <li>三菱電機はエネルギー・FAの事業寄与が見えるが、最終的にはPER/PBR、口座、イベントゲートと合わせて判定する。</li>
+    </ul>
+  </section>
+
+  <footer>generated: 2026/06/15 01:35</footer>
+</main>
+</body>
+</html>
