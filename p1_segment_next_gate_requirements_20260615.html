@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 事業寄与 次ゲート必要データ</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:850;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .step{border:1px solid var(--line);border-radius:10px;padding:13px;background:#fbfdff}
+    .step b{display:block;color:var(--blue)}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards,.steps{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 事業寄与 次ゲート必要データ</h1>
+  <p>事業寄与の根拠候補を、財務・価格・イベント後反応へ進める前の確認表です。ここを通過するまでP1復帰、購入金額、買付日は出しません。</p>
+</header>
+<main>
+  <section>
+    <h2>結論</h2>
+    <p class="notice">次ゲート候補は 2 銘柄あります。ただし、財務・価格・イベント後反応・説明可能性が未完了のため、本反映0件、P1復帰0社、買付上限0円を維持します。</p>
+    <div class="cards">
+      <div class="card warn"><b>次ゲート対象</b><strong>2銘柄</strong><span>仮反映後に確認する候補</span></div>
+      <div class="card bad"><b>本反映</b><strong>0件</strong><span>入力CSV・スコアは変えない</span></div>
+      <div class="card bad"><b>P1復帰</b><strong>0社</strong><span>まだ戻さない</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>購入判断に使わない</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>確認順序</h2>
+    <div class="steps">
+      <div class="step"><b>1. 財務</b><span>公式資料のPER/PBR/ROE、利益率、受注、事業寄与を確認する。</span></div>
+      <div class="step"><b>2. 価格</b><span>直近価格、CAGR、最大下落、指数差を同じ計算日で確認する。</span></div>
+      <div class="step"><b>3. イベント後</b><span>CPI、日銀、FOMC後の金利・為替・指数・個別反応を入れる。</span></div>
+      <div class="step"><b>4. 説明可能性</b><span>残す理由と落とす条件を文章で説明できる銘柄だけ次へ進める。</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ページ</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">実用パート入口</a>
+      <a href="p1_segment_reflection_preview_20260615.html">仮反映プレビュー</a>
+      <a href="p1_financial_input_validator_20260614.html">財務入力バリデーター</a>
+      <a href="practical_action_cockpit_20260614.html">実用判断コックピット</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>値</th><th>判定</th><th>説明</th></tr></thead><tbody><tr><td class="warn">次ゲート対象</td><td class="">2銘柄</td><td class="warn">候補あり</td><td class="warn">事業寄与の仮反映プレビューで次ゲート候補になった銘柄だけを対象にする。</td></tr><tr><td class="bad">未完了ゲート</td><td class="">8/8件</td><td class="bad">保留</td><td class="bad">財務・価格・イベント後・説明可能性の各ゲートが未完了のため、購入判断へ進めない。</td></tr><tr><td class="">P1復帰</td><td class="bad">0社</td><td class="bad">不可</td><td class="warn">公式確認後も、次ゲートをすべて通るまではP1へ戻さない。</td></tr><tr><td class="">買付上限</td><td class="bad">0円</td><td class="">維持</td><td class="">購入金額を出す前段階。候補整理と不足データの可視化が目的。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>銘柄別 次ゲート必要データ</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>ゲート</th><th>確認すること</th><th>必要データ</th><th>状態</th><th>次の作業</th><th>判定</th><th>P1復帰</th><th>買付上限</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">財務ゲート</td><td class="">PER/PBR/ROE、営業利益率、受注・事業寄与の入力値が公式資料ベースでそろっているか</td><td class="">公式決算短信・決算説明資料・有価証券報告書等のページ、年度、単位、数値、注記</td><td class="bad">未完了</td><td class="">公式確認済みの入力CSVに転記する。未確認値は点数に混ぜない。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">価格ゲート</td><td class="">直近価格、60日騰落、1年騰落、5年CAGR、10年CAGR、最大下落、S&amp;P500差が更新済みか</td><td class="">株価時系列、指数比較、計算日、計算式、欠損の有無</td><td class="bad">未完了</td><td class="">同じ計算日で再計算し、過熱・急落・指数劣後を分けて表示する。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">イベント後ゲート</td><td class="">6月CPI、日銀、FOMC後の金利・為替・指数・候補銘柄反応を入力したか</td><td class="">イベント日、発表結果、米10年金利、ドル円、日経平均/TOPIX/S&amp;P500/SOX、個別株反応</td><td class="bad">未到来/未入力</td><td class="">イベント後の実データを入れるまで、P1復帰・買付上限を出さない。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">説明可能性ゲート</td><td class="">なぜこの銘柄を残すのかを、事業寄与・財務・価格・イベント後反応に分けて説明できるか</td><td class="">1行理由、残す条件、落とす条件、未確認事項</td><td class="bad">未完了</td><td class="bad">説明不能な銘柄は保留に戻す。テーマ名だけでは通さない。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">財務ゲート</td><td class="">PER/PBR/ROE、営業利益率、受注・事業寄与の入力値が公式資料ベースでそろっているか</td><td class="">公式決算短信・決算説明資料・有価証券報告書等のページ、年度、単位、数値、注記</td><td class="bad">未完了</td><td class="">公式確認済みの入力CSVに転記する。未確認値は点数に混ぜない。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">価格ゲート</td><td class="">直近価格、60日騰落、1年騰落、5年CAGR、10年CAGR、最大下落、S&amp;P500差が更新済みか</td><td class="">株価時系列、指数比較、計算日、計算式、欠損の有無</td><td class="bad">未完了</td><td class="">同じ計算日で再計算し、過熱・急落・指数劣後を分けて表示する。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">イベント後ゲート</td><td class="">6月CPI、日銀、FOMC後の金利・為替・指数・候補銘柄反応を入力したか</td><td class="">イベント日、発表結果、米10年金利、ドル円、日経平均/TOPIX/S&amp;P500/SOX、個別株反応</td><td class="bad">未到来/未入力</td><td class="">イベント後の実データを入れるまで、P1復帰・買付上限を出さない。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">説明可能性ゲート</td><td class="">なぜこの銘柄を残すのかを、事業寄与・財務・価格・イベント後反応に分けて説明できるか</td><td class="">1行理由、残す条件、落とす条件、未確認事項</td><td class="bad">未完了</td><td class="bad">説明不能な銘柄は保留に戻す。テーマ名だけでは通さない。</td><td class="bad">保留</td><td class="bad">0社</td><td class="bad">0円</td></tr></tbody></table></div>
+  </section>
+
+  <footer>generated: 2026/06/15 05:05 / source: p1_segment_reflection_preview_20260615.csv / 本ページは不足データの管理用であり、投資助言・自動売買・購入指示ではありません。</footer>
+</main>
+</body>
+</html>
