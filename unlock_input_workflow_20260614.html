@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>買付ロック解除 入力ワークフロー</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#a01818;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1580px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .danger{border-left-color:var(--red);background:#fff1f1}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;color:#263e55;font-weight:800}
+    .card.bad strong{color:var(--red)}
+    .card.warn strong{color:var(--warn)}
+    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .step{border:2px solid var(--line);border-radius:10px;padding:14px;background:#fbfdff;position:relative}
+    .step b{display:block;color:var(--navy);font-size:18px}
+    .step span{display:block;font-weight:800;color:#263e55}
+    .step:after{content:"→";position:absolute;right:-18px;top:35%;font-size:28px;color:var(--blue);font-weight:900}
+    .step:last-child:after{content:""}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    a{color:#005f99;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;border:1px solid #7bb6dd;border-radius:999px;padding:8px 13px;background:#f7fbff;color:#06395f}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:1000px){main{padding:12px}.cards,.flow{grid-template-columns:1fr}.step:after{content:"";}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}.cards{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+<header><h1>買付ロック解除 入力ワークフロー</h1><p>どの未入力データを、どの表に入れると、どの購入前ロックの解除条件に関係するかを1枚で確認する画面です。</p></header>
+<main>
+<section>
+    <h2>現在の結論</h2>
+    <p class="notice danger">現在は、候補10社すべて購入不可・買付上限0円です。解除に必要な入力は、イベント、本人別口座、公式財務補完の3つです。</p>
+    <div class="cards">
+      <div class="card bad"><b>現在の注文反映</b><strong>0件</strong><span>全銘柄、注文票には反映しない</span></div>
+      <div class="card warn"><b>イベント入力</b><strong>4件</strong><span>CPI、日銀、FOMC、最終確認</span></div>
+      <div class="card bad"><b>本人別口座</b><strong>10口座</strong><span>本人スマホ・本人ログイン・残枠確認</span></div>
+      <div class="card bad"><b>財務補完</b><strong>7銘柄</strong><span>partialは比率引上げ禁止</span></div>
+    </div>
+  </section>
+<section>
+    <h2>作業の順番</h2>
+    <div class="flow">
+      <div class="step"><b>1. イベント入力</b><span>日銀、FOMC、最終確認の結果と市場反応を入れる。</span></div>
+      <div class="step"><b>2. 本人別口座入力</b><span>本人スマホ、本人ログイン、NISA残枠、二段階認証を確認する。</span></div>
+      <div class="step"><b>3. 財務補完</b><span>partial銘柄の公式PER/PBR/ROE、利益率、受注等を入れる。</span></div>
+      <div class="step"><b>4. 再判定</b><span>統合エンジンで、買う/待つ/除外と参考上限を再計算する。</span></div>
+    </div>
+  </section>
+<section>
+    <h2>入力先と解除条件</h2>
+    <div class="table-wrap"><table><thead><tr><th>順番</th><th>区分</th><th>対象</th><th>入力ファイル</th><th>入力する項目</th><th>現状</th><th>合格条件</th><th>ロック解除への影響</th></tr></thead><tbody><tr><td class="">1</td><td class="">6月イベント</td><td class="">2026-06-10 米5月CPI</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="warn">注意</td><td class="">インフレ再加速と米金利急騰が同時に起きず、NASDAQ/SOXが大崩れしない</td><td class="bad">赤または未入力が残る間は全銘柄0円。黄・注意は比率抑制。</td></tr><tr><td class="">1</td><td class="">6月イベント</td><td class="">2026-06-15〜2026-06-16 日銀会合</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="bad">未入力</td><td class="">急な円高ショックと日本株指数の大幅下落が同時に出ない</td><td class="bad">赤または未入力が残る間は全銘柄0円。黄・注意は比率抑制。</td></tr><tr><td class="">1</td><td class="">6月イベント</td><td class="">2026-06-16〜2026-06-17 FOMC</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="bad">未入力</td><td class="">米長期金利が急騰せず、ハイテク株のリスク許容度が崩れない</td><td class="bad">赤または未入力が残る間は全銘柄0円。黄・注意は比率抑制。</td></tr><tr><td class="">1</td><td class="">6月イベント</td><td class="warn">2026-06-18以降 最終購入前確認</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="bad">未入力</td><td class="bad">停止条件なし、未確認データを点数に混ぜない、本人操作とNISA口座区分を確認</td><td class="bad">赤または未入力が残る間は全銘柄0円。黄・注意は比率抑制。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座1</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座2</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座3</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座4</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座5</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座6</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座7</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座8</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座9</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">2</td><td class="">本人別口座</td><td class="">口座10</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未入力</td><td class="warn">本人名義・本人ログイン・NISA口座区分・残枠・二段階認証が確認済み</td><td class="bad">1口座でも未確認なら、その本人分は注文票へ反映しない。</td></tr><tr><td class="">3</td><td class="warn">公式財務補完</td><td class="">6503.T 三菱電機</td><td class="bad">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td><td class="bad">未確認</td><td class="bad">公式IR・決算短信・決算説明資料で確認。未確認値はスコアに混ぜない。</td><td class="warn">B: 財務補完後に確認。反映しない</td></tr><tr><td class="">3</td><td class="warn">公式財務補完</td><td class="">6857.T アドバンテスト</td><td class="bad">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class="bad">未確認</td><td class="bad">公式IR・決算短信・決算説明資料で確認。未確認値はスコアに混ぜない。</td><td class="">C: 監視継続。反映しない</td></tr><tr><td class="">3</td><td class="warn">公式財務補完</td><td class="">8035.T 東京エレクトロン</td><td class="bad">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class="bad">未確認</td><td class="bad">公式IR・決算短信・決算説明資料で確認。未確認値はスコアに混ぜない。</td><td class="">C: 監視継続。反映しない</td></tr><tr><td class="">3</td><td class="warn">公式財務補完</td><td class="">7011.T 三菱重工業</td><td class="bad">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td><td class="bad">未確認</td><td class="bad">公式IR・決算短信・決算説明資料で確認。未確認値はスコアに混ぜない。</td><td class="">C: 除外継続。反映しない</td></tr><tr><td class="">3</td><td class="warn">公式財務補完</td><td class="">6762.T TDK</td><td class="bad">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td><td class="bad">未確認</td><td class="bad">公式IR・決算短信・決算説明資料で確認。未確認値はスコアに混ぜない。</td><td class="warn">B: 財務補完後に確認。反映しない</td></tr><tr><td class="">3</td><td class="warn">公式財務補完</td><td class="">6146.T ディスコ</td><td class="bad">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class="bad">未確認</td><td class="bad">公式IR・決算短信・決算説明資料で確認。未確認値はスコアに混ぜない。</td><td class="">C: 除外継続。反映しない</td></tr><tr><td class="">3</td><td class="warn">公式財務補完</td><td class="">5803.T フジクラ</td><td class="bad">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td><td class="bad">未確認</td><td class="bad">公式IR・決算短信・決算説明資料で確認。未確認値はスコアに混ぜない。</td><td class="">C: 除外継続。反映しない</td></tr><tr><td class="">4</td><td class="">税制・保有ロット</td><td class="">NISA残枠・課税口座・取得単価・年間損益</td><td class="">tax_account_position_link_template_20260614.csv</td><td class="">口座区分 / NISA残枠 / 保有数量 / 取得単価 / 含み損益 / 年間確定損益 / 配当 / 外国源泉税</td><td class="">任意入力・未連動</td><td class="warn">購入前はNISA残枠と口座区分を確認。年末レビューは保有ロット入力後に使用。</td><td class="warn">初回買付の主ロックではないが、NISA枠消費と税制確認に使う。</td></tr><tr><td class="">5</td><td class="">再判定</td><td class="">統合購入可否エンジン</td><td class="">integrated_purchase_decision_engine_20260614.csv / redecision_output_preview_by_ticker_20260614.csv</td><td class="warn">イベント判定 / 口座確認 / 財務pass / 指数比較 / 解除理由</td><td class="bad">購入不可・全銘柄0円</td><td class="bad">停止条件なし。未確認データを点数に混ぜない。本人操作で注文確認。</td><td class="">ここを通過して初めて参考上限を注文票候補に反映する。</td></tr></tbody></table></div>
+  </section>
+<section>
+    <h2>サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>件数</th><th>状態</th><th>意味</th></tr></thead><tbody><tr><td class="">現在の買付状態</td><td class="">10/10銘柄</td><td class="bad">購入不可・買付上限0円</td><td class="warn">イベント、本人別口座、財務補完が未完了のため、注文票へ進めない。</td></tr><tr><td class="">6月イベント</td><td class="warn">4/4件確認対象</td><td class="warn">CPIは注意扱い、日銀・FOMC・最終確認は入力待ち</td><td class="">イベント結果と市場反応を入れるまで全体ロックを解除しない。</td></tr><tr><td class="">本人別口座</td><td class="">10口座</td><td class="bad">未入力</td><td class="warn">本人スマホ、本人ログイン、NISA残枠、二段階認証の確認が必要。</td></tr><tr><td class="warn">公式財務補完</td><td class="">7銘柄</td><td class="bad">partial</td><td class="bad">未確認のPER/PBR/ROE・利益率・受注等は点数に混ぜず、比率引上げを止める。</td></tr><tr><td class="">注文票反映</td><td class="">0件</td><td class="">反映しない</td><td class="">再判定を通るまでは、参考上限があっても買付金額として扱わない。</td></tr></tbody></table></div>
+  </section>
+<section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="daily_practical_compact_board_20260614.html">実用日次ボード</a>
+      <a href="ticker_unlock_checklist_20260614.html">銘柄別ロック解除チェックリスト</a>
+      <a href="redecision_input_workbench_20260614.html">再判定入力作業台</a>
+      <a href="redecision_readiness_validator_20260614.html">再判定準備バリデーター</a>
+      <a href="redecision_output_preview_20260614.html">再判定出力プレビュー</a>
+      <a href="purchase_zero_lock_audit_20260614.html">0円ロック監査</a>
+    </div>
+  </section>
+<footer>作成: 2026/06/14 20:25 / 本画面は買付指示ではなく、未入力データを買付判断に混ぜないための実務整理です。</footer>
+</main>
+</body>
+</html>

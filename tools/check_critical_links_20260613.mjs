@@ -20,6 +20,10 @@ const pages = [
   "june_gate_operation.html",
   "capital_allocation_plan.html",
   "june_event_gate_engine.html",
+  "latest_practical_start_20260614.html",
+  "daily_practical_compact_board_20260614.html",
+  "ticker_unlock_checklist_20260614.html",
+  "unlock_input_workflow_20260614.html",
 ];
 
 const missing = [];
