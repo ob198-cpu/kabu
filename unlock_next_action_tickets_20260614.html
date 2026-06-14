@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>買付ロック解除 次アクションチケット</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#a01818;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1600px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;color:#263e55;font-weight:800}
+    .card.bad strong{color:var(--red)}
+    .card.warn strong{color:var(--warn)}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;border:1px solid #7bb6dd;border-radius:999px;padding:8px 13px;background:#f7fbff;color:#06395f}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>買付ロック解除 次アクションチケット</h1>
+  <p>再判定に進むために、何をどの順番で埋めるべきかを作業チケット化した画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">現時点では、購入不可・買付上限0円です。P0が残る限り、候補銘柄の良し悪しに関係なく注文票へ進めません。</p>
+    <div class="cards">
+      <div class="card bad"><b>P0 全体停止</b><strong>14件</strong><span>イベント・本人別口座。最優先</span></div>
+      <div class="card warn"><b>P1 候補復帰</b><strong>2件</strong><span>6503/6762等の財務補完・抑制確認</span></div>
+      <div class="card "><b>P2 監視補完</b><strong>5件</strong><span>監視・除外継続銘柄の補助確認</span></div>
+      <div class="card bad"><b>注文反映</b><strong>0件</strong><span>再判定完了まで反映しない</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>最優先で見るチケット</h2>
+    <div class="table-wrap"><table><thead><tr><th>優先度</th><th>番号</th><th>作業</th><th>対象</th><th>欠けているもの</th><th>完了条件</th><th>期限目安</th></tr></thead><tbody><tr><td class="bad">P0</td><td class="bad">P0-01</td><td class="">6月イベント</td><td class="">E01 米5月CPI</td><td class="">入力する実数</td><td class="bad">実数、市場反応、判定入力が入り、赤停止でないこと。</td><td class="">イベント当日から翌営業日</td></tr><tr><td class="bad">P0</td><td class="bad">P0-02</td><td class="">6月イベント</td><td class="">E02 日銀会合</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="bad">実数、市場反応、判定入力が入り、赤停止でないこと。</td><td class="">イベント当日から翌営業日</td></tr><tr><td class="bad">P0</td><td class="bad">P0-03</td><td class="">6月イベント</td><td class="">E03 FOMC</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="bad">実数、市場反応、判定入力が入り、赤停止でないこと。</td><td class="">イベント当日から翌営業日</td></tr><tr><td class="bad">P0</td><td class="bad">P0-04</td><td class="">6月イベント</td><td class="warn">E04 最終購入前確認</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="bad">実数、市場反応、判定入力が入り、赤停止でないこと。</td><td class="">イベント当日から翌営業日</td></tr><tr><td class="bad">P0</td><td class="bad">P0-05</td><td class="">本人別NISA口座</td><td class="">口座1</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr><tr><td class="bad">P0</td><td class="bad">P0-06</td><td class="">本人別NISA口座</td><td class="">口座2</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr><tr><td class="bad">P0</td><td class="bad">P0-07</td><td class="">本人別NISA口座</td><td class="">口座3</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr><tr><td class="bad">P0</td><td class="bad">P0-08</td><td class="">本人別NISA口座</td><td class="">口座4</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr><tr><td class="bad">P0</td><td class="bad">P0-09</td><td class="">本人別NISA口座</td><td class="">口座5</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr><tr><td class="bad">P0</td><td class="bad">P0-10</td><td class="">本人別NISA口座</td><td class="">口座6</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr><tr><td class="bad">P0</td><td class="bad">P0-11</td><td class="">本人別NISA口座</td><td class="">口座7</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr><tr><td class="bad">P0</td><td class="bad">P0-12</td><td class="">本人別NISA口座</td><td class="">口座8</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名、証券会社、NISA口座、本人スマホ、本人銀行、二段階認証、残枠が確認済み。</td><td class="">購入検討日の前日まで</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>全チケット</h2>
+    <div class="table-wrap"><table><thead><tr><th>優先度</th><th>番号</th><th>対象</th><th>入力先</th><th>欠けているもの</th><th>完了後の扱い</th><th>優先理由</th><th>次アクション</th></tr></thead><tbody><tr><td class="bad">P0</td><td class="bad">P0-01</td><td class="">E01 米5月CPI</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数</td><td class="">全体ゲートを緑・黄・赤に分類</td><td class="bad">未入力が残ると全銘柄0円のまま。最初に確認する全体停止条件。</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-02</td><td class="">E02 日銀会合</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="">全体ゲートを緑・黄・赤に分類</td><td class="bad">未入力が残ると全銘柄0円のまま。最初に確認する全体停止条件。</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-03</td><td class="">E03 FOMC</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="">全体ゲートを緑・黄・赤に分類</td><td class="bad">未入力が残ると全銘柄0円のまま。最初に確認する全体停止条件。</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-04</td><td class="warn">E04 最終購入前確認</td><td class="">redecision_event_input_template_20260614.csv / 102_june_event_result_input.csv</td><td class="">入力する実数 / 市場反応 / 判定入力</td><td class="">全体ゲートを緑・黄・赤に分類</td><td class="bad">未入力が残ると全銘柄0円のまま。最初に確認する全体停止条件。</td><td class="">実数、反応、判定を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-05</td><td class="">口座1</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-06</td><td class="">口座2</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-07</td><td class="">口座3</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-08</td><td class="">口座4</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-09</td><td class="">口座5</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-10</td><td class="">口座6</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-11</td><td class="">口座7</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-12</td><td class="">口座8</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-13</td><td class="">口座9</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="bad">P0</td><td class="bad">P0-14</td><td class="">口座10</td><td class="">redecision_account_input_template_20260614.csv / nisa_account_execution_gate_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="">本人別注文票の作成可否を判定</td><td class="warn">本人確認、NISA口座区分、残枠がなければ、その本人分は注文票に進めない。</td><td class="">本人別の口座状態と残枠を入力</td></tr><tr><td class="warn">P1</td><td class="warn">P1-15</td><td class="">6503.T 三菱電機</td><td class="warn">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">銘柄別比率引上げ可否を再判定</td><td class="warn">財務を埋めると、最短確認候補の次に候補復帰を判断できる。</td><td class="warn">公式IRで不足項目を補完</td></tr><tr><td class="warn">P1</td><td class="warn">P1-19</td><td class="">6762.T TDK</td><td class="warn">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">銘柄別比率引上げ可否を再判定</td><td class="warn">財務を埋めると、最短確認候補の次に候補復帰を判断できる。</td><td class="warn">公式IRで不足項目を補完</td></tr><tr><td class="">P2</td><td class="">P2-16</td><td class="">6857.T アドバンテスト</td><td class="warn">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">銘柄別比率引上げ可否を再判定</td><td class="warn">監視・除外継続のため、初回買付よりも解除根拠の確認が主目的。</td><td class="warn">公式IRで不足項目を補完</td></tr><tr><td class="">P2</td><td class="">P2-17</td><td class="">8035.T 東京エレクトロン</td><td class="warn">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">銘柄別比率引上げ可否を再判定</td><td class="warn">監視・除外継続のため、初回買付よりも解除根拠の確認が主目的。</td><td class="warn">公式IRで不足項目を補完</td></tr><tr><td class="">P2</td><td class="">P2-18</td><td class="">7011.T 三菱重工業</td><td class="warn">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">銘柄別比率引上げ可否を再判定</td><td class="warn">監視・除外継続のため、初回買付よりも解除根拠の確認が主目的。</td><td class="warn">公式IRで不足項目を補完</td></tr><tr><td class="">P2</td><td class="">P2-20</td><td class="">6146.T ディスコ</td><td class="warn">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">銘柄別比率引上げ可否を再判定</td><td class="warn">監視・除外継続のため、初回買付よりも解除根拠の確認が主目的。</td><td class="warn">公式IRで不足項目を補完</td></tr><tr><td class="">P2</td><td class="">P2-21</td><td class="">5803.T フジクラ</td><td class="warn">redecision_financial_partial_input_template_20260614.csv / candidate10_financial_confirmation_gate_20260614.csv</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="">銘柄別比率引上げ可否を再判定</td><td class="warn">監視・除外継続のため、初回買付よりも解除根拠の確認が主目的。</td><td class="warn">公式IRで不足項目を補完</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>件数</th><th>内容</th></tr></thead><tbody><tr><td class="bad">全体停止</td><td class="">14件</td><td class="bad">イベント入力と本人別口座確認。ここが未完了なら全体または本人別で0円継続。</td></tr><tr><td class="warn">候補復帰に近い作業</td><td class="">2件</td><td class="warn">財務補完後に確認できる候補、または抑制理由の確認。</td></tr><tr><td class="warn">監視・除外の補完</td><td class="">5件</td><td class="">初回買付より後順位。解除根拠がない限り注文票へ入れない。</td></tr><tr><td class="">現在の注文反映</td><td class="">0件</td><td class="ok">作業チケット完了後に再判定するまで、参考上限は買付金額として扱わない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="daily_practical_compact_board_20260614.html">実用日次ボード</a>
+      <a href="unlock_input_workflow_20260614.html">買付ロック解除 入力ワークフロー</a>
+      <a href="redecision_readiness_validator_20260614.html">再判定準備バリデーター</a>
+      <a href="ticker_unlock_checklist_20260614.html">銘柄別ロック解除チェックリスト</a>
+      <a href="redecision_input_workbench_20260614.html">再判定入力作業台</a>
+      <a href="redecision_output_preview_20260614.html">再判定出力プレビュー</a>
+    </div>
+  </section>
+
+  <footer>作成: 2026/06/14 20:45 / 本画面は買付指示ではなく、未入力データを買付判断に混ぜないための作業順整理です。</footer>
+</main>
+</body>
+</html>

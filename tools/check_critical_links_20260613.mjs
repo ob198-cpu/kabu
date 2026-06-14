@@ -24,6 +24,7 @@ const pages = [
   "daily_practical_compact_board_20260614.html",
   "ticker_unlock_checklist_20260614.html",
   "unlock_input_workflow_20260614.html",
+  "unlock_next_action_tickets_20260614.html",
 ];
 
 const missing = [];
