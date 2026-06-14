@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 財務 PDF→入力レビュー</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:850;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 財務 PDF→入力レビュー</h1>
+  <p>PDF抽出候補を入力CSVへ転記する前に、候補値、未反映理由、次作業を分けて確認する画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>結論</h2>
+    <p class="notice">PDFから数値候補は取れていますが、公式確認済みにはしていません。現時点ではP1復帰可能銘柄0社、買付上限0円です。</p>
+    <div class="cards">
+      <div class="card ok"><b>入力レビュー行</b><strong>19行</strong><span>候補値と未反映理由を分離</span></div>
+      <div class="card warn"><b>転記候補</b><strong>10項目</strong><span>6503/8035の一部項目</span></div>
+      <div class="card bad"><b>公式確認済み</b><strong>0項目</strong><span>目視確認前のため未完了</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>入力だけでは購入判断に進めない</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>確認導線</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">最新 実用パート入口</a>
+      <a href="daily_practical_compact_board_20260614.html">実用日次ボード</a>
+      <a href="p1_financial_pdf_extraction_trial_20260614.html">PDF抽出テスト</a>
+      <a href="p1_financial_input_validator_20260614.html">入力バリデーター</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>全体サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>値</th><th>判定</th><th>メモ</th></tr></thead><tbody><tr><td class="">PDF抽出資料</td><td class="">2資料</td><td class="warn">抽出候補あり</td><td class="">6503 三菱電機、8035 東京エレクトロン</td></tr><tr><td class="warn">PDF抽出候補値</td><td class="">20項目</td><td class="warn">候補値</td><td class="">抽出CSVから確認。入力CSVへは未反映。</td></tr><tr><td class="">入力レビュー行</td><td class="">19行</td><td class="ok">作成済み</td><td class="warn">候補値、未反映理由、次作業を分離。</td></tr><tr><td class="warn">転記候補項目</td><td class="">10項目</td><td class="warn">要目視確認</td><td class="bad">公式確認済みにしない。</td></tr><tr><td class="">公式確認済み項目</td><td class="">0項目</td><td class="bad">未完了</td><td class="">入力値、出所、資料日付、公式確認済みの4条件が未充足。</td></tr><tr><td class="">入力フォーム全体</td><td class="">67項目</td><td class="bad">未完了</td><td class="ok">現行バリデーターでは完了銘柄0。</td></tr><tr><td class="">P1復帰可能銘柄</td><td class="">0社</td><td class="bad">不可</td><td class="bad">PDF候補値だけでは復帰不可。</td></tr><tr><td class="">買付上限</td><td class="bad">0円</td><td class="">維持</td><td class="bad">公式確認・イベント・口座確認がそろうまで0円。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>銘柄別の状態</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>入力対象項目数</th><th>PDF転記候補</th><th>反映不可/追加確認</th><th>公式確認済み</th><th>入力完了判定</th><th>P1復帰判定</th><th>買付反映</th><th>主な未解決</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">9</td><td class="">5</td><td class="">3</td><td class="">0</td><td class="">0/9</td><td class="bad">不可</td><td class="bad">0円</td><td class="">PER/PBRの株価基準日、セグメント寄与の確認</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">10</td><td class="">5</td><td class="">4</td><td class="">0</td><td class="">0/10</td><td class="bad">不可</td><td class="bad">0円</td><td class="">PER/PBRの株価基準日、通期予想、受注・高PER説明の確認</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>反映候補項目と止める理由</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>入力項目</th><th>PDF抽出候補値</th><th>単位</th><th>転記レビュー</th><th>公式確認扱い</th><th>反映可否</th><th>未反映理由</th><th>次作業</th><th>参照資料</th><th>参照URL</th><th>資料日付</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">PER</td><td class="warn">未計算</td><td class="">倍</td><td class="bad">反映不可</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="bad">PDFだけでは計算不可。株価基準日とEPS基準を指定する必要がある。</td><td class="">株価基準日を決め、EPS基準を実績か会社予想かに分けて計算する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">PBR</td><td class="warn">未計算</td><td class="">倍</td><td class="bad">反映不可</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="bad">PDFだけでは計算不可。株価基準日とBPS基準を指定する必要がある。</td><td class="">株価基準日を決め、BPS 2191.26円を使うかを目視確認する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">ROE_pct</td><td class="">9.7</td><td class="">%</td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">PDF抽出候補。入力には目視確認と資料欄の記録が必要。</td><td class="">決算短信の該当表を目視確認し、正しければ入力状態を公式確認済みに変更する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">営業利益率_pct</td><td class="">7.3</td><td class="">%</td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">PDF抽出候補。入力には目視確認と資料欄の記録が必要。</td><td class="">決算短信の連結経営成績欄で営業利益率を確認する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">今期会社予想_前期比</td><td class="">売上高 +5.2%、営業利益 +17.7%、税引前当期純利益 +21.7%、親会社株主帰属当期純利益 +16.5%、予想EPS 231.01円</td><td class=""></td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">PDFの通期予想欄から整理した候補。文章として入力する前に表の年度を確認する。</td><td class="warn">通期予想の対象期間と前期比を確認し、入力欄へ要約する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">参照URLまたは資料名</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版 / https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</td><td class=""></td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">公式PDF候補のURL。資料自体は取得済みだが、値の目視照合前。</td><td class="">入力フォームの出所欄に転記し、該当値を確認する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">資料日付</td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td><td class=""></td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">資料日付候補。訂正開示日と原開示日を区別して記録する。</td><td class="">資料表紙または会社IRページで日付を確認する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">入力状態</td><td class="warn">候補値・要目視確認</td><td class=""></td><td class="warn">確認状態指定</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="bad">公式確認済みではないため、検算上は未完了に残す。</td><td class="">目視確認が終わるまでは公式確認済みに変更しない。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">受注またはセグメント寄与</td><td class="warn">未抽出</td><td class=""></td><td class="bad">反映不可</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">決算短信の自動抽出だけでは、候補選定に必要なセグメント寄与の説明が不足。</td><td class="">決算説明資料またはセグメント情報ページから、成長事業・利益寄与を別途確認する。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="">2026/06/11（訂正開示日。原開示2026/04/28）</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">PER</td><td class="warn">未計算</td><td class="">倍</td><td class="bad">反映不可</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="bad">PDFだけでは計算不可。株価基準日とEPS基準を指定する必要がある。</td><td class="">株価基準日を決め、実績EPSまたは予想EPSを分けて計算する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">PBR</td><td class="warn">未計算</td><td class="">倍</td><td class="bad">反映不可</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="bad">PDFだけでは計算不可。株価基準日とBPS基準を指定する必要がある。</td><td class="">株価基準日を決め、BPS 4498.85円を使うかを目視確認する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">ROE_pct</td><td class="">29.6</td><td class="">%</td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">PDF抽出候補。入力には目視確認と資料欄の記録が必要。</td><td class="">決算短信の該当表を目視確認し、正しければ入力状態を公式確認済みに変更する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">営業利益率_pct</td><td class="">25.6</td><td class="">%</td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">PDF抽出候補。入力には目視確認と資料欄の記録が必要。</td><td class="">決算短信の連結経営成績欄で営業利益率を確認する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">今期会社予想_前期比</td><td class="">第2四半期累計予想: 売上高 +33.1%、営業利益 +42.2%、経常利益 +42.4%、親会社株主帰属四半期純利益 +35.7%、予想EPS 721.12円（通期予想ではない）</td><td class=""></td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="">第2四半期累計予想であり、通期予想ではない。誤って通期扱いにしない。</td><td class="">入力時は第2四半期累計予想と明記し、通期予想は追加開示待ちにする。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">参照URLまたは資料名</td><td class="">2026年3月期 決算短信〔日本基準〕 / https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</td><td class=""></td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">公式PDF候補のURL。資料自体は取得済みだが、値の目視照合前。</td><td class="">入力フォームの出所欄に転記し、該当値を確認する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">資料日付</td><td class="">2026/04/30</td><td class=""></td><td class="warn">転記候補</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">資料日付候補。入力前にPDF表紙の日付と一致するか確認する。</td><td class="">資料表紙または会社IRページで日付を確認する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">入力状態</td><td class="warn">候補値・要目視確認</td><td class=""></td><td class="warn">確認状態指定</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="bad">公式確認済みではないため、検算上は未完了に残す。</td><td class="">目視確認が終わるまでは公式確認済みに変更しない。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">受注またはセグメント寄与</td><td class="warn">未抽出</td><td class=""></td><td class="bad">反映不可</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="warn">決算短信の自動抽出だけでは、候補選定に必要な受注・セグメント寄与の説明が不足。</td><td class="warn">決算説明資料で半導体製造装置需要、地域別・装置別の寄与を確認する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">高PER説明</td><td class="warn">未抽出</td><td class=""></td><td class="bad">反映不可</td><td class="bad">公式確認済みにしない</td><td class="bad">反映しない</td><td class="">PERが高い場合に説明できる受注・利益率・市場見通しの根拠が未整理。</td><td class="">PER計算後に、利益成長・受注・粗利率・市場サイクルで説明可能か確認する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="">2026/04/30</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>このレビューで守ること</h2>
+    <ul>
+      <li>PDFから取れた値は、目視確認が終わるまで公式確認済みにしない。</li>
+      <li>PER/PBRは、株価基準日が決まるまで未計算のままにする。</li>
+      <li>第2四半期累計予想を通期予想として扱わない。</li>
+      <li>セグメント寄与、受注、高PER説明が不足する銘柄は、購入判断に進めない。</li>
+      <li>入力CSV、再判定、注文票への反映は、公式確認済みになってから行う。</li>
+    </ul>
+  </section>
+
+  <footer>generated: 2026/06/15 00:35 / source: p1_financial_pdf_metric_candidates_20260614.csv, p1_financial_input_form_20260614.csv</footer>
+</main>
+</body>
+</html>
