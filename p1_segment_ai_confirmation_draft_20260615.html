@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 事業寄与 AI確認下書き</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:850;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 事業寄与 AI確認下書き</h1>
+  <p>公式資料から確認できた箇所・数値・注意点を下書き化した画面です。人間の最終確認前なので、公式確認済みにはしません。</p>
+</header>
+<main>
+  <section>
+    <h2>結論</h2>
+    <p class="notice">AI確認下書きは作成済みです。ただし official_confirmed=false、score_reflect=false、P1復帰0社、買付上限0円を維持します。</p>
+    <div class="cards">
+      <div class="card warn"><b>AI確認下書き</b><strong>6件</strong><span>公式資料の箇所つき</span></div>
+      <div class="card bad"><b>人間確認必要</b><strong>6件</strong><span>最終確認前</span></div>
+      <div class="card bad"><b>スコア反映</b><strong>0件</strong><span>false維持</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>継続</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>確認導線</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">実用パート入口</a>
+      <a href="p1_segment_confirmation_work_order_20260615.html">公式確認 作業票</a>
+      <a href="p1_segment_confirmation_validator_20260615.html">公式確認バリデーター</a>
+      <a href="p1_segment_evidence_reflection_gate_20260615.html">反映ゲート</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>値</th><th>判定</th><th>説明</th></tr></thead><tbody><tr><td class="warn">AI確認下書き</td><td class="">6件</td><td class="warn">作成済み</td><td class="warn">公式資料内の確認箇所・数値・注意点を下書き化した。</td></tr><tr><td class="bad">人間確認必要</td><td class="">6件</td><td class="bad">必要</td><td class="warn">最終的な公式確認済み化は人間の目視確認後に行う。</td></tr><tr><td class="">official_confirmed</td><td class="bad">0件</td><td class="bad">false維持</td><td class="warn">AI確認候補の段階では true にしない。</td></tr><tr><td class="">score_reflect</td><td class="bad">0件</td><td class="bad">false維持</td><td class="">まだ点数へ混ぜない。</td></tr><tr><td class="">P1復帰</td><td class="bad">0社</td><td class="bad">不可</td><td class="bad">人間確認・財務・価格・イベント後判定が必要。</td></tr><tr><td class="">買付上限</td><td class="bad">0円</td><td class="">維持</td><td class="">購入判断に使える段階ではない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>AI確認下書き</h2>
+    <div class="table-wrap"><table><thead><tr><th>evidence_id</th><th>ticker</th><th>銘柄</th><th>公式資料</th><th>資料日付</th><th>URL</th><th>確認箇所</th><th>対象年度</th><th>単位</th><th>確認した数値</th><th>確認した文章</th><th>注意点</th><th>AI確認候補</th><th>人間確認必要</th><th>official_confirmed</th><th>score_reflect</th><th>buy_limit</th></tr></thead><tbody><tr><td class="">6503-energy</td><td class="">6503.T</td><td class="">三菱電機</td><td class="">三菱電機 2026年3月期 決算説明会資料</td><td class="">2026/04/28</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf</a></td><td class="">P9 / lines 127-134</td><td class="">2025年度実績</td><td class="">億円、%、pt</td><td class="">エネルギーシステム: 売上高4,733億円（+771）、営業利益453億円（+178）、営業利益率9.6%（+2.7pt）。</td><td class="">再生可能エネルギー拡大、データセンター増設を背景に需要が堅調。受注高は国内外の発電事業増加、売上高は電力流通事業増加で前年度を上回る。</td><td class="">データセンター一般論ではなく、エネルギーシステムの実績・受注・売上増とセットで扱う。</td><td class="ok">true</td><td class="">yes</td><td class="bad">false</td><td class="bad">false</td><td class="bad">0円</td></tr><tr><td class="">6503-fa</td><td class="">6503.T</td><td class="">三菱電機</td><td class="">三菱電機 2026年3月期 決算説明会資料</td><td class="">2026/04/28</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf</a></td><td class="">P10 / lines 150-157</td><td class="">2025年度実績</td><td class="">億円、%、pt</td><td class="">FAシステム: 売上高7,982億円（+726）、営業利益766億円（+298）、営業利益率9.6%（+3.2pt）。</td><td class="">中国スマートフォン・工作機械関連需要、日本・中国などのAI関連半導体設備投資需要が増加。受注高・売上高ともに前年度を上回る。</td><td class="warn">AIという単語だけではなく、FAシステムの受注高・売上高増加要因として確認する。</td><td class="ok">true</td><td class="">yes</td><td class="bad">false</td><td class="bad">false</td><td class="bad">0円</td></tr><tr><td class="">6503-guidance</td><td class="">6503.T</td><td class="">三菱電機</td><td class="">三菱電機 2026年3月期 決算説明会資料</td><td class="">2026/04/28</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co2.pdf</a></td><td class="">P3 lines 24-26 / P15 lines 243-250</td><td class="">2026年度業績見通し</td><td class="">億円、%、pt</td><td class="">売上高6兆2,000億円（前年度比+3,052億円）、調整後営業利益5,900億円（前年度比+887億円）。P15では売上高62,000億円、調整後営業利益5,900億円。</td><td class="">防衛システム、FAシステム、ライフ部門の拡大で過去最高更新見通し。中東情勢影響は原材料・物流費高騰として織り込み。</td><td class="">全社見通しであり、個別テーマ寄与として断定しない。中東コストリスクを同じ行に残す。</td><td class="ok">true</td><td class="">yes</td><td class="bad">false</td><td class="bad">false</td><td class="bad">0円</td></tr><tr><td class="">8035-wfe</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">東京エレクトロン 2026年3月期 決算説明会資料</td><td class="">2026/04/30</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf</a></td><td class="">P14 / lines 349-359</td><td class="">CY2026〜2027市場見通し</td><td class="">十億ドル、%</td><td class="">CY2026〜2027 WFE市場は150〜170Bドル/年、CY2025比+20%以上。先端デバイス向けは+30%以上。</td><td class="">WFE市場見通しと同時に、地政学的リスクは要注視と記載。</td><td class="bad">市場全体の見通しだけで東京エレクトロンの購入候補化を確定しない。SOX指数と6月イベント後反応が別途必要。</td><td class="ok">true</td><td class="">yes</td><td class="bad">false</td><td class="bad">false</td><td class="bad">0円</td></tr><tr><td class="">8035-product-share</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">東京エレクトロン 2026年3月期 決算説明会資料</td><td class="">2026/04/30</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf</a></td><td class="">P15 / lines 361-372</td><td class="">2027年3月期売上成長ドライバー</td><td class="">%、億円</td><td class="">塗布・現像シェア90%以上、FY2027売上YoY+50%以上。絶縁膜エッチングシェア50%以上、FY2027売上YoY+25%以上。先端パッケージングFY2026売上約2,000億円、FY2027売上YoY+60%以上。</td><td class="">DRAM・先端ロジック投資機会、HARC・配線・GAA、先端ロジック向けプローバやHBM向けボンディング装置に言及。</td><td class="">シェアが高いことだけで株価上昇を断定しない。利益率・受注・指数反応と併用する。</td><td class="ok">true</td><td class="">yes</td><td class="bad">false</td><td class="bad">false</td><td class="bad">0円</td></tr><tr><td class="">8035-ai-server</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">東京エレクトロン 2026年3月期 決算説明会資料</td><td class="">2026/04/30</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4presentations-j.pdf</a></td><td class="">P16 / lines 373-425</td><td class="">FY2027上期予想</td><td class="">億円、%</td><td class="">FY2027上期予想: 売上高15,700億円、売上総利益7,150億円、営業利益4,310億円、営業利益率27.5%。</td><td class="">AIサーバー向け需要が牽引し、過去最高の売上高・売上総利益・営業利益を見込む。2026年後半はDRAM・先端ロジック中心に出荷増加。ホルムズ海峡封鎖影響は要注視。</td><td class="">強い会社予想だけを採用しない。高PERとホルムズ海峡リスクを同じ行に残す。</td><td class="ok">true</td><td class="">yes</td><td class="bad">false</td><td class="bad">false</td><td class="bad">0円</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>次の扱い</h2>
+    <ul>
+      <li>この下書きを見て、人間が公式資料の該当箇所を確認する。</li>
+      <li>確認できた根拠だけ、公式確認チェックシートの該当項目を「済」にする。</li>
+      <li>official_confirmed を true にするのは、人間確認後だけにする。</li>
+      <li>この下書き単独では、スコアにも購入判断にも使わない。</li>
+    </ul>
+  </section>
+
+  <footer>generated: 2026/06/15 03:58</footer>
+</main>
+</body>
+</html>
