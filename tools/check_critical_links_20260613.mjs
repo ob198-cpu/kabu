@@ -25,6 +25,7 @@ const pages = [
   "ticker_unlock_checklist_20260614.html",
   "unlock_input_workflow_20260614.html",
   "unlock_next_action_tickets_20260614.html",
+  "p0_unlock_required_sheet_20260614.html",
 ];
 
 const missing = [];

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P0 買付ロック解除 必須入力シート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#a01818;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1600px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .sub{border-left-color:var(--blue);background:#eef7ff}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;color:#263e55;font-weight:800}
+    .card.bad strong{color:var(--red)}
+    .card.warn strong{color:var(--warn)}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;border:1px solid #7bb6dd;border-radius:999px;padding:8px 13px;background:#f7fbff;color:#06395f}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P0 買付ロック解除 必須入力シート</h1>
+  <p>最初に埋めるべき全体停止条件だけを切り出した画面です。ここでは銘柄評価ではなく、買付判断に進める前提条件を確認します。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">P0が残っているため、現在は購入不可・買付上限0円です。銘柄のスコアが高くても、イベントと本人別口座が未確認なら注文票へ進めません。</p>
+    <div class="cards">
+      <div class="card bad"><b>P0合計</b><strong>14件</strong><span>イベント4件 + 口座10件</span></div>
+      <div class="card bad"><b>未完了</b><strong>14件</strong><span>確認済みになるまで0円維持</span></div>
+      <div class="card warn"><b>イベント</b><strong>4件</strong><span>日銀・FOMC・最終確認を含む</span></div>
+      <div class="card bad"><b>本人別口座</b><strong>10口座</strong><span>本人操作・NISA残枠確認</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+    <p class="notice sub">この画面の入力対象を埋めたあと、再判定準備バリデーターと統合購入可否エンジンを確認します。P0完了は買付決定ではなく、ようやく再判定へ進める状態です。</p>
+  </section>
+
+  <section>
+    <h2>6月イベント入力</h2>
+    <div class="table-wrap"><table><thead><tr><th>優先</th><th>対象</th><th>入力先</th><th>必須入力</th><th>現在</th><th>不足</th><th>合格条件</th><th>赤なら何をするか</th></tr></thead><tbody><tr><td class="">P0-01</td><td class="">E01 2026-06-10 米5月CPI</td><td class="">redecision_event_input_template_20260614.csv</td><td class="">実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="warn">注意</td><td class="">実数確定</td><td class="">インフレ再加速と米金利急騰が同時に起きず、NASDAQ/SOXが大崩れしない</td><td class="">半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td></tr><tr><td class="">P0-02</td><td class="">E02 2026-06-15〜2026-06-16 日銀会合</td><td class="">redecision_event_input_template_20260614.csv</td><td class="">実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="bad">未入力</td><td class="">実数確定 / 市場反応 / 判定入力</td><td class="">急な円高ショックと日本株指数の大幅下落が同時に出ない</td><td class="">日本株の予定買付を延期、または比率を下げる</td></tr><tr><td class="">P0-03</td><td class="">E03 2026-06-16〜2026-06-17 FOMC</td><td class="">redecision_event_input_template_20260614.csv</td><td class="">実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="bad">未入力</td><td class="">実数確定 / 市場反応 / 判定入力</td><td class="">米長期金利が急騰せず、ハイテク株のリスク許容度が崩れない</td><td class="">半導体・高PER・高ボラ候補を延期</td></tr><tr><td class="">P0-04</td><td class="warn">E04 2026-06-18以降 最終購入前確認</td><td class="">redecision_event_input_template_20260614.csv</td><td class="">実数 / 市場反応 / 判定入力 / 入力メモ</td><td class="bad">未入力</td><td class="">実数確定 / 市場反応 / 判定入力</td><td class="bad">停止条件なし、未確認データを点数に混ぜない、本人操作とNISA口座区分を確認</td><td class="">監視継続または初回除外</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>本人別NISA口座入力</h2>
+    <div class="table-wrap"><table><thead><tr><th>優先</th><th>対象</th><th>入力先</th><th>必須入力</th><th>現在</th><th>不足</th><th>合格条件</th><th>未完了なら何をするか</th></tr></thead><tbody><tr><td class="">P0-05</td><td class="">口座1</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-06</td><td class="">口座2</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-07</td><td class="">口座3</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-08</td><td class="">口座4</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-09</td><td class="">口座5</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-10</td><td class="">口座6</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-11</td><td class="">口座7</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-12</td><td class="">口座8</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-13</td><td class="">口座9</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr><tr><td class="">P0-14</td><td class="">口座10</td><td class="">redecision_account_input_template_20260614.csv</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="bad">未確認</td><td class="">本人名 / 証券会社 / NISA口座 / 本人スマホ / 本人銀行口座 / 二段階認証 / NISA残枠円</td><td class="warn">本人名義、本人スマホ、本人ログイン、NISA口座区分、二段階認証、NISA残枠を確認</td><td class="">該当本人分は買付不可。注文票へ反映しない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>件数</th><th>現状</th><th>意味</th></tr></thead><tbody><tr><td class="">P0合計</td><td class="">14件</td><td class="ok">14件が未完了</td><td class="bad">P0が残る限り、候補銘柄の評価に関係なく買付上限0円。</td></tr><tr><td class="">6月イベント</td><td class="">4件</td><td class="ok">4件が未完了</td><td class="">市場全体の買付可否、半導体・高PERの抑制条件を決める。</td></tr><tr><td class="">本人別口座</td><td class="">10口座</td><td class="bad">10口座が未確認</td><td class="">本人別に注文票へ反映できるかを決める。</td></tr><tr><td class="">現在の買付上限</td><td class="bad">0円</td><td class="bad">購入不可</td><td class="ok">P0完了後に再判定するまで、金額は出さない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="daily_practical_compact_board_20260614.html">実用日次ボード</a>
+      <a href="unlock_next_action_tickets_20260614.html">買付ロック解除 次アクションチケット</a>
+      <a href="unlock_input_workflow_20260614.html">買付ロック解除 入力ワークフロー</a>
+      <a href="redecision_readiness_validator_20260614.html">再判定準備バリデーター</a>
+      <a href="june_event_input_decision_board_20260614.html">6月イベント入力判断</a>
+      <a href="nisa_account_execution_gate_20260614.html">NISA口座実行ゲート</a>
+    </div>
+  </section>
+
+  <footer>作成: 2026/06/14 21:05 / 本画面は買付指示ではなく、買付判断前の必須前提を確認するための作業表です。</footer>
+</main>
+</body>
+</html>
