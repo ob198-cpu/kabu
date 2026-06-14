@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 事業寄与 公式確認バリデーター</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:850;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 事業寄与 公式確認バリデーター</h1>
+  <p>公式確認チェックシートの不足を検出し、未確認の候補値が点数へ混ざることを防ぐ画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>結論</h2>
+    <p class="notice">反映ゲートへ送れる根拠は 0 件です。現段階ではP1復帰0社、買付上限0円を維持します。</p>
+    <div class="cards">
+      <div class="card warn"><b>確認対象</b><strong>6件</strong><span>根拠ID単位</span></div>
+      <div class="card bad"><b>反映ゲートへ送れる</b><strong>0件</strong><span>必須確認完了分</span></div>
+      <div class="card bad"><b>P1復帰</b><strong>0社</strong><span>不可</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>継続</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>確認導線</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">実用パート入口</a>
+      <a href="p1_segment_official_confirmation_sheet_20260615.html">公式確認チェックシート</a>
+      <a href="p1_segment_evidence_reflection_gate_20260615.html">反映ゲート</a>
+      <a href="p1_financial_input_validator_20260614.html">財務入力バリデーター</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>値</th><th>判定</th><th>説明</th></tr></thead><tbody><tr><td class="warn">確認対象</td><td class="">6件</td><td class="warn">作成済み</td><td class="warn">根拠ID単位で公式確認の必須項目を検査した。</td></tr><tr><td class="ok">反映ゲートへ送れる</td><td class="">0件</td><td class="bad">なし</td><td class="warn">必須確認が全て埋まり、公式確認済み true の件数。</td></tr><tr><td class="bad">反映不可</td><td class="">6件</td><td class="bad">停止</td><td class="warn">未確認のまま点数へ混ざらないように止めた件数。</td></tr><tr><td class="">P1復帰</td><td class="bad">0社</td><td class="bad">不可</td><td class="warn">このバリデーターは公式確認だけを見る。復帰には財務・価格・イベント後判定が必要。</td></tr><tr><td class="">買付上限</td><td class="bad">0円</td><td class="">維持</td><td class="">購入判断に使える段階ではない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>検査結果</h2>
+    <div class="table-wrap"><table><thead><tr><th>evidence_id</th><th>ticker</th><th>銘柄</th><th>根拠分類</th><th>必須確認完了数</th><th>不足項目</th><th>公式確認済み入力</th><th>バリデーション判定</th><th>スコア反映可否</th><th>P1復帰判定</th><th>買付上限</th><th>理由</th><th>次作業</th></tr></thead><tbody><tr><td class="">6503-energy</td><td class="">6503.T</td><td class="">三菱電機</td><td class="">実績</td><td class="">0/6</td><td class="warn">確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td><td class="bad">false</td><td class="bad">反映不可</td><td class="bad">不可</td><td class="bad">不可</td><td class="bad">0円</td><td class="bad">必須確認が未完了、または公式確認済み入力が true ではないため、点数にも候補復帰にも使わない。</td><td class="bad">未完了項目を埋める: 確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td></tr><tr><td class="">6503-fa</td><td class="">6503.T</td><td class="">三菱電機</td><td class="">実績</td><td class="">0/6</td><td class="warn">確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td><td class="bad">false</td><td class="bad">反映不可</td><td class="bad">不可</td><td class="bad">不可</td><td class="bad">0円</td><td class="bad">必須確認が未完了、または公式確認済み入力が true ではないため、点数にも候補復帰にも使わない。</td><td class="bad">未完了項目を埋める: 確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td></tr><tr><td class="">6503-guidance</td><td class="">6503.T</td><td class="">三菱電機</td><td class="">会社予想</td><td class="">0/6</td><td class="warn">確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td><td class="bad">false</td><td class="bad">反映不可</td><td class="bad">不可</td><td class="bad">不可</td><td class="bad">0円</td><td class="bad">必須確認が未完了、または公式確認済み入力が true ではないため、点数にも候補復帰にも使わない。</td><td class="bad">未完了項目を埋める: 確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td></tr><tr><td class="">8035-wfe</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">市場見通し</td><td class="">0/6</td><td class="warn">確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td><td class="bad">false</td><td class="bad">反映不可</td><td class="bad">不可</td><td class="bad">不可</td><td class="bad">0円</td><td class="bad">必須確認が未完了、または公式確認済み入力が true ではないため、点数にも候補復帰にも使わない。</td><td class="bad">未完了項目を埋める: 確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td></tr><tr><td class="">8035-product-share</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">製品別成長ドライバー</td><td class="">0/6</td><td class="warn">確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td><td class="bad">false</td><td class="bad">反映不可</td><td class="bad">不可</td><td class="bad">不可</td><td class="bad">0円</td><td class="bad">必須確認が未完了、または公式確認済み入力が true ではないため、点数にも候補復帰にも使わない。</td><td class="bad">未完了項目を埋める: 確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td></tr><tr><td class="">8035-ai-server</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">会社予想</td><td class="">0/6</td><td class="warn">確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td><td class="bad">false</td><td class="bad">反映不可</td><td class="bad">不可</td><td class="bad">不可</td><td class="bad">0円</td><td class="bad">必須確認が未完了、または公式確認済み入力が true ではないため、点数にも候補復帰にも使わない。</td><td class="bad">未完了項目を埋める: 確認ページまたは箇所 / 対象年度確認 / 単位確認 / 前年比確認 / 数値一致確認 / 注意点併記確認</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>検査ルール</h2>
+    <ul>
+      <li>確認ページまたは箇所が空欄なら不可。</li>
+      <li>対象年度、単位、前年比、数値一致、注意点併記が「済」または true でなければ不可。</li>
+      <li>公式確認済みが true でなければ不可。</li>
+      <li>この検査を通っても、買付判断は別の購入前ゲートで止める。</li>
+    </ul>
+  </section>
+
+  <footer>generated: 2026/06/15 03:18 / source: p1_segment_official_confirmation_sheet_20260615.csv</footer>
+</main>
+</body>
+</html>
