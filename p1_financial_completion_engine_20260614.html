@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 財務補完 判定エンジン</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#a01818;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1600px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--warn);background:#fff7e7;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;color:#263e55;font-weight:800}
+    .card.bad strong{color:var(--red)}
+    .card.warn strong{color:var(--warn)}
+    .card.ok strong{color:var(--green)}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;border:1px solid #7bb6dd;border-radius:999px;padding:8px 13px;background:#f7fbff;color:#06395f}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 財務補完 判定エンジン</h1>
+  <p>公式IR・決算短信・決算説明資料で確認した数値だけを使い、候補復帰に近い銘柄と監視・除外継続銘柄を分ける画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">現時点では財務補完が未完了です。未確認のPER/PBR/ROE・利益率・受注などは点数に混ぜず、注文票にも反映しません。</p>
+    <div class="cards">
+      <div class="card warn"><b>P1候補復帰確認</b><strong>2銘柄</strong><span>6503・6762など</span></div>
+      <div class="card bad"><b>P2監視補完</b><strong>5銘柄</strong><span>監視・除外継続</span></div>
+      <div class="card bad"><b>完了</b><strong>0/7</strong><span>公式資料で確認済み</span></div>
+      <div class="card bad"><b>注文反映</b><strong>0件</strong><span>P0/P1通過まで反映しない</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>P1候補復帰確認</h2>
+    <div class="table-wrap"><table><thead><tr><th>優先区分</th><th>ticker</th><th>銘柄</th><th>不足数</th><th>不足項目</th><th>確認元</th><th>判定</th><th>完了後の扱い</th></tr></thead><tbody><tr><td class="warn">P1: 候補復帰確認</td><td class="">6503.T</td><td class="">三菱電機</td><td class="">9/9</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">三菱電機IR/決算短信・説明資料</td><td class="bad">未確認: 比率引上げ禁止</td><td class="bad">未確認値を点数に混ぜない。参考上限を買付金額として扱わない。</td></tr><tr><td class="warn">P1: 候補復帰確認</td><td class="">6762.T</td><td class="">TDK</td><td class="">9/9</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="">TDK IR/決算短信</td><td class="bad">未確認: 比率引上げ禁止</td><td class="bad">未確認値を点数に混ぜない。参考上限を買付金額として扱わない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>P2監視・除外補完</h2>
+    <div class="table-wrap"><table><thead><tr><th>優先区分</th><th>ticker</th><th>銘柄</th><th>現在扱い</th><th>不足数</th><th>不足項目</th><th>判定</th><th>完了後の扱い</th></tr></thead><tbody><tr><td class="bad">P2: 監視・除外補完</td><td class="">5803.T</td><td class="">フジクラ</td><td class="bad">C: 除外継続</td><td class="">10/10</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="bad">未確認: 比率引上げ禁止</td><td class="bad">未確認値を点数に混ぜない。参考上限を買付金額として扱わない。</td></tr><tr><td class="bad">P2: 監視・除外補完</td><td class="">6146.T</td><td class="">ディスコ</td><td class="bad">C: 除外継続</td><td class="">10/10</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="bad">未確認: 比率引上げ禁止</td><td class="bad">未確認値を点数に混ぜない。参考上限を買付金額として扱わない。</td></tr><tr><td class="bad">P2: 監視・除外補完</td><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">C: 監視継続</td><td class="">10/10</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="bad">未確認: 比率引上げ禁止</td><td class="bad">未確認値を点数に混ぜない。参考上限を買付金額として扱わない。</td></tr><tr><td class="bad">P2: 監視・除外補完</td><td class="">7011.T</td><td class="">三菱重工業</td><td class="bad">C: 除外継続</td><td class="">9/9</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td><td class="bad">未確認: 比率引上げ禁止</td><td class="bad">未確認値を点数に混ぜない。参考上限を買付金額として扱わない。</td></tr><tr><td class="bad">P2: 監視・除外補完</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">C: 監視継続</td><td class="">10/10</td><td class="">PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明</td><td class="bad">未確認: 比率引上げ禁止</td><td class="bad">未確認値を点数に混ぜない。参考上限を買付金額として扱わない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>全体サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>件数</th><th>状態</th><th>意味</th></tr></thead><tbody><tr><td class="warn">P1候補復帰確認</td><td class="">2銘柄</td><td class="bad">2銘柄が未完了</td><td class="ok">6503・6762など、財務が埋まれば候補復帰を再判定できる層。</td></tr><tr><td class="bad">P2監視・除外補完</td><td class="">5銘柄</td><td class="bad">5銘柄が未完了</td><td class="">初回買付より後順位。解除根拠がない限り注文票へ入れない層。</td></tr><tr><td class="warn">財務補完完了</td><td class="">0/7銘柄</td><td class="bad">未完了</td><td class="bad">未確認値を点数に混ぜないための確認状況。</td></tr><tr><td class="">現在の注文票反映</td><td class="">0件</td><td class="bad">反映しない</td><td class="warn">P0とP1を通過するまで買付金額として扱わない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="p0_unlock_judgement_engine_20260614.html">P0 判定エンジン</a>
+      <a href="p0_unlock_required_sheet_20260614.html">P0 必須入力シート</a>
+      <a href="ticker_unlock_checklist_20260614.html">銘柄別ロック解除チェックリスト</a>
+      <a href="candidate10_financial_confirmation_gate_20260614.html">候補10社 財務確認ゲート</a>
+      <a href="redecision_input_workbench_20260614.html">再判定入力作業台</a>
+      <a href="daily_practical_compact_board_20260614.html">実用日次ボード</a>
+    </div>
+  </section>
+
+  <footer>作成: 2026/06/14 21:45 / 本画面は買付指示ではなく、未確認財務を点数に混ぜないための判定画面です。</footer>
+</main>
+</body>
+</html>
