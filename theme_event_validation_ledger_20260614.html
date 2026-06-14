@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>質的テーマ 検証台帳</title>
+  <style>
+  :root{--ink:#071927;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--warn:#9a5b00;--green:#116b4f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+  header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+  header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+  header p{margin:0;font-weight:800;max-width:1200px}
+  main{max-width:1500px;margin:0 auto;padding:22px}
+  section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+  h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+  .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+  .card b{display:block;color:var(--navy);font-size:15px}
+  .card strong{display:block;font-size:26px;line-height:1.25;color:var(--blue)}
+  .card span{font-weight:800;color:#263e55}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+  table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+  th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+  th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+  td.ok{color:var(--green);font-weight:900}
+  td.warn{color:var(--warn);font-weight:900}
+  td.bad{color:var(--red);font-weight:900}
+  .links{display:flex;flex-wrap:wrap;gap:10px}
+  .links a{display:inline-block;text-decoration:none;background:#0b67a3;color:#fff;border-radius:9px;padding:10px 13px;font-weight:900}
+  footer{font-size:13px;color:#526b82;margin:20px 0}
+  @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+  @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>質的テーマ 検証台帳</h1>
+  <p>テーマの思いつきをそのまま点数に入れず、仮説データ層と実績データ層に分けて確認する台帳です。</p>
+</header>
+<main>
+  <section><h2>基本方針</h2><p class="notice">質的テーマは候補探索には使いますが、証拠が不足する間は購入スコアへ加点しません。</p></section>
+<section><h2>テーマ別検証</h2><div class="table-wrap"><table><thead><tr><th>テーマ</th><th style="width:390px">仮説データ層</th><th style="width:390px">実績データ層</th><th style="width:360px">採点扱い</th><th>現在の扱い</th></tr></thead><tbody><tr><td class="">半導体製造装置・材料</td><td class="">AI投資が継続するなら、GPU本体だけでなく検査・前工程・研削・材料へ需要が波及する</td><td class="">SOX/NASDAQ、装置受注、会社の受注・粗利率、決算後1/5/20営業日反応を確認</td><td class="">証拠2種類以上まで購入スコアへ加点しない。候補探索の入口に限定</td><td class="warn">監視・補助評価</td></tr><tr><td class="">AIインフラ・データセンター・電力・冷却・電線</td><td class="">AI利用増で電力、冷却、電線、光通信、制御機器の需要が増える</td><td class="">電力需要統計、データセンター投資、企業受注、関連銘柄の指数超過を確認</td><td class="">受注・売上寄与が確認できるまで質的補助にとどめる</td><td class="warn">監視・補助評価</td></tr><tr><td class="">フィジカルAI</td><td class="">AIが工場・ロボット・現場へ広がるとFA、センサー、電源、モーター周辺に需要が出る</td><td class="">FA受注、設備投資、会社説明資料、過去決算後反応を確認</td><td class="">量的スコアを通るまでNISA購入候補にしない</td><td class="">探索枠</td></tr><tr><td class="">量子コンピューター</td><td class="">政策・研究・大手提携で期待は出るが、短期売上接続が弱い場合が多い</td><td class="">公式受注、売上寄与、政府予算、株価反応の継続性を確認</td><td class="warn">原則監視。売上寄与が薄い場合は購入スコアへ入れない</td><td class="">探索枠</td></tr><tr><td class="">金利・銀行</td><td class="">金利上昇で利ざや改善が期待される</td><td class="">日銀政策、長期金利、銀行株指数、利ざや、信用コストを確認</td><td class="bad">量的スコアと接続しやすいため中心候補へ接続。ただし信用コスト悪化なら停止</td><td class="ok">候補接続済み</td></tr></tbody></table></div></section>
+  <footer>作成: 2026/06/14 19:40 / 本画面は購入指示ではなく、未完成点を購入判断に混ぜないための実用整理です。</footer>
+</main>
+</body>
+</html>

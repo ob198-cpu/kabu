@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>指数+1%目標と買付・撤退ルール</title>
+  <style>
+  :root{--ink:#071927;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--warn:#9a5b00;--green:#116b4f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+  header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+  header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+  header p{margin:0;font-weight:800;max-width:1200px}
+  main{max-width:1500px;margin:0 auto;padding:22px}
+  section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+  h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+  .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+  .card b{display:block;color:var(--navy);font-size:15px}
+  .card strong{display:block;font-size:26px;line-height:1.25;color:var(--blue)}
+  .card span{font-weight:800;color:#263e55}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+  table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+  th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+  th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+  td.ok{color:var(--green);font-weight:900}
+  td.warn{color:var(--warn);font-weight:900}
+  td.bad{color:var(--red);font-weight:900}
+  .links{display:flex;flex-wrap:wrap;gap:10px}
+  .links a{display:inline-block;text-decoration:none;background:#0b67a3;color:#fff;border-radius:9px;padding:10px 13px;font-weight:900}
+  footer{font-size:13px;color:#526b82;margin:20px 0}
+  @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+  @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>指数+1%目標と買付・撤退ルール</h1>
+  <p>S&amp;P500/TOPIXを+1%以上上回る目的を、買付比率と縮小条件へ接続した実務ルールです。</p>
+</header>
+<main>
+  <section><h2>現在の扱い</h2><p class="notice">現在は0%・0円です。緑や黄の比率は、イベント・口座・財務確認後にだけ使います。</p></section>
+<section><h2>比率・撤退ルール</h2><div class="table-wrap"><table><thead><tr><th>判定</th><th style="width:430px">条件</th><th>個別株比率</th><th style="width:420px">実務アクション</th><th style="width:420px">撤退・縮小ルール</th></tr></thead><tbody><tr><td class="">現在</td><td class="bad">イベント、本人操作、NISA区分、残枠、財務partialのいずれか未完了</td><td class="">0%</td><td class="">注文票へ金額を出さない</td><td class="">なし。買付前なので現金待機</td></tr><tr><td class="">緑</td><td class="">候補バスケットがS&amp;P500/TOPIXへ+1%以上優位、かつ主要イベントに赤なし</td><td class="">最大35%</td><td class="warn">中心候補を厚め、条件付き候補は小口。高リスク銘柄は銘柄別上限を優先</td><td class="bad">購入後4週で指数に1%以上劣後なら追加停止。8週で2%以上劣後なら個別株比率を15%へ下げる</td></tr><tr><td class="">黄</td><td class="">優位が0〜+1%未満、またはイベント注意が残る</td><td class="">最大15%</td><td class="bad">中心候補だけ小口。高PER・高ボラ・監視銘柄は0円または半分</td><td class="bad">購入後2週で指数劣後なら追加停止。4週で-1%以上劣後なら0%へ戻す</td></tr><tr><td class="">橙</td><td class="">候補バスケットがS&amp;P500/TOPIXへ-1%以上劣後</td><td class="">0%</td><td class="">初回買付延期。指数投信や現金待機と比較</td><td class="">買わない。再判定まで候補入替</td></tr><tr><td class="">赤</td><td class="">候補バスケット-3%以上劣後、主要銘柄下方修正、急落イベント</td><td class="">0%</td><td class="bad">個別株追加停止。既存保有があれば銘柄別ルールで縮小検討</td><td class="bad">新規買付停止。イベント再確認後まで注文票0円</td></tr></tbody></table></div></section>
+  <footer>作成: 2026/06/14 19:40 / 本画面は購入指示ではなく、未完成点を購入判断に混ぜないための実用整理です。</footer>
+</main>
+</body>
+</html>

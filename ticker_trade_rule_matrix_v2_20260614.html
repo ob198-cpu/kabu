@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>銘柄別リスク・売買ルール v2</title>
+  <style>
+  :root{--ink:#071927;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--warn:#9a5b00;--green:#116b4f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+  header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+  header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+  header p{margin:0;font-weight:800;max-width:1200px}
+  main{max-width:1500px;margin:0 auto;padding:22px}
+  section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+  h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+  .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+  .card b{display:block;color:var(--navy);font-size:15px}
+  .card strong{display:block;font-size:26px;line-height:1.25;color:var(--blue)}
+  .card span{font-weight:800;color:#263e55}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+  table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+  th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+  th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+  td.ok{color:var(--green);font-weight:900}
+  td.warn{color:var(--warn);font-weight:900}
+  td.bad{color:var(--red);font-weight:900}
+  .links{display:flex;flex-wrap:wrap;gap:10px}
+  .links a{display:inline-block;text-decoration:none;background:#0b67a3;color:#fff;border-radius:9px;padding:10px 13px;font-weight:900}
+  footer{font-size:13px;color:#526b82;margin:20px 0}
+  @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+  @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>銘柄別リスク・売買ルール v2</h1>
+  <p>最大下落、1年下落、決算後反応、リスク階層を使い、銘柄ごとの下値・上値・急落時対応を分けました。</p>
+</header>
+<main>
+  <section><h2>現在の扱い</h2><p class="notice">全銘柄は現時点で購入不可です。以下は、イベント・口座・公式財務がそろった後に使うためのルールです。</p></section>
+<section><h2>銘柄別ルール</h2><div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>リスク階層</th><th>5年最大下落</th><th>1年最大下落</th><th>現在の扱い</th><th>初回比率上限</th><th>下値ルール1</th><th style="width:360px">下値ルール2</th><th style="width:360px">上値ルール</th><th style="width:380px">ストップ安対応</th><th>使う条件</th></tr></thead><tbody><tr><td class="">8053.T</td><td class="">住友商事</td><td class="">中</td><td class="">-35.8%</td><td class="">-18.8%</td><td class="bad">購入不可</td><td class="">中心候補は18.75%枠まで。ただしイベント後</td><td class="bad">買付後-7%で追加買付停止</td><td class="">買付後-12%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+20%超で目標比率超過なら一部利確確認。以後、高値から-12%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">中</td><td class="">-29.4%</td><td class="">-19.3%</td><td class="bad">購入不可</td><td class="">中心候補は18.75%枠まで。ただしイベント後</td><td class="bad">買付後-7%で追加買付停止</td><td class="">買付後-12%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+20%超で目標比率超過なら一部利確確認。以後、高値から-12%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">6501.T</td><td class="">日立製作所</td><td class="">中高</td><td class="">-38.7%</td><td class="">-22.8%</td><td class="bad">購入不可</td><td class="">初回は6.25%上限</td><td class="bad">買付後-5%で追加買付停止</td><td class="">買付後-10%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+15%超で目標比率超過なら一部利確確認。以後、高値から-10%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">中</td><td class="">-34%</td><td class="">-16.3%</td><td class="bad">購入不可</td><td class="">中心候補は18.75%枠まで。ただしイベント後</td><td class="bad">買付後-7%で追加買付停止</td><td class="">買付後-12%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+20%超で目標比率超過なら一部利確確認。以後、高値から-12%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="">中高</td><td class="">-51.4%</td><td class="">-28.9%</td><td class="bad">購入不可</td><td class="">初回は6.25%上限</td><td class="bad">買付後-5%で追加買付停止</td><td class="">買付後-10%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+15%超で目標比率超過なら一部利確確認。以後、高値から-10%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">高</td><td class="">-55.8%</td><td class="">-28.8%</td><td class="bad">購入不可</td><td class="">初回は3%上限</td><td class="bad">買付後-4%で追加買付停止</td><td class="">買付後-8%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+12%超で目標比率超過なら一部利確確認。以後、高値から-8%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="">高</td><td class="">-35.8%</td><td class="">-26.6%</td><td class="bad">購入不可</td><td class="">初回は3%上限</td><td class="bad">買付後-4%で追加買付停止</td><td class="">買付後-8%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+12%超で目標比率超過なら一部利確確認。以後、高値から-8%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="">中高</td><td class="">-46.3%</td><td class="">-28.2%</td><td class="bad">購入不可</td><td class="">初回は6.25%上限</td><td class="bad">買付後-5%で追加買付停止</td><td class="">買付後-10%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+15%超で目標比率超過なら一部利確確認。以後、高値から-10%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="">高</td><td class="">-65.2%</td><td class="">-24.7%</td><td class="bad">購入不可</td><td class="">初回は3%上限</td><td class="bad">買付後-4%で追加買付停止</td><td class="">買付後-8%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+12%超で目標比率超過なら一部利確確認。以後、高値から-8%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="">高</td><td class="">-50.7%</td><td class="">-45.3%</td><td class="bad">購入不可</td><td class="">初回は3%上限</td><td class="bad">買付後-4%で追加買付停止</td><td class="">買付後-8%で保有理由を再確認。指数劣後または悪材料ありなら一部縮小候補</td><td class="">買付後+12%超で目標比率超過なら一部利確確認。以後、高値から-8%で利益保全確認</td><td class="bad">当日買い増し禁止。翌営業日に材料、出来高、指数、気配、決算影響を確認して再判定</td><td class="">イベント・口座・公式財務のゲートが通るまで注文票へ反映しない</td></tr></tbody></table></div></section>
+<section><h2>関連画面</h2><div class="links"><a href="gap_resolution_board_20260614.html">未完成点 改善ボード</a><a href="stop_limit_stress_protocol_20260614.html">ストップ安・急落対策</a><a href="integrated_purchase_decision_engine_20260614.html">統合購入可否エンジン</a></div></section>
+  <footer>作成: 2026/06/14 19:40 / 本画面は購入指示ではなく、未完成点を購入判断に混ぜないための実用整理です。</footer>
+</main>
+</body>
+</html>

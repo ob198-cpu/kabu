@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>実用日次ボード</title>
+  <style>
+  :root{--ink:#071927;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--warn:#9a5b00;--green:#116b4f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+  header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+  header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+  header p{margin:0;font-weight:800;max-width:1200px}
+  main{max-width:1500px;margin:0 auto;padding:22px}
+  section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+  h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+  .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+  .card b{display:block;color:var(--navy);font-size:15px}
+  .card strong{display:block;font-size:26px;line-height:1.25;color:var(--blue)}
+  .card span{font-weight:800;color:#263e55}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+  table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+  th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+  th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+  td.ok{color:var(--green);font-weight:900}
+  td.warn{color:var(--warn);font-weight:900}
+  td.bad{color:var(--red);font-weight:900}
+  .links{display:flex;flex-wrap:wrap;gap:10px}
+  .links a{display:inline-block;text-decoration:none;background:#0b67a3;color:#fff;border-radius:9px;padding:10px 13px;font-weight:900}
+  footer{font-size:13px;color:#526b82;margin:20px 0}
+  @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+  @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>実用日次ボード</h1>
+  <p>毎日見る項目だけを、購入判断に直結する順番で並べた画面です。</p>
+</header>
+<main>
+  <section><h2>今日の結論</h2><p class="notice">現在は購入不可・買付上限0円です。次に進むには、イベント、本人別口座、公式財務partialの入力が必要です。</p></section>
+<section><h2>今日見る項目</h2><div class="table-wrap"><table><thead><tr><th>順番</th><th>見る項目</th><th>現在</th><th style="width:460px">判断</th><th style="width:360px">次作業</th></tr></thead><tbody><tr><td class="">1</td><td class="">今日の結論</td><td class="bad">購入不可・買付上限0円</td><td class="bad">イベント、口座、財務が未完了のため注文票へ進めない</td><td class="bad">入力作業台、再判定準備、0円ロック監査の順に確認</td></tr><tr><td class="">2</td><td class="">イベント</td><td class="">日銀・FOMC・最終確認が未入力</td><td class="bad">未入力がある間は全銘柄0円</td><td class="">イベント結果と市場反応を入力</td></tr><tr><td class="">3</td><td class="">本人別口座</td><td class="">確認済み0/10口座</td><td class="bad">本人スマホ、本人銀行、二段階認証、NISA残枠が未確認</td><td class="">口座別入力テンプレートを埋める</td></tr><tr><td class="">4</td><td class="">銘柄別財務</td><td class="warn">7銘柄partial</td><td class="bad">partialは比率引上げ禁止</td><td class="">公式IR、決算短信、受注・利益率を入力</td></tr><tr><td class="">5</td><td class="">指数+1%目標</td><td class="">現在は0%</td><td class="">優位性が確認できるまで個別株比率を出さない</td><td class="">イベント後にS&amp;P500/TOPIX比較で緑・黄・橙・赤を決める</td></tr></tbody></table></div></section>
+<section><h2>主要リンク</h2><div class="links"><a href="redecision_input_workbench_20260614.html">入力作業台</a><a href="redecision_readiness_validator_20260614.html">再判定準備バリデーター</a><a href="redecision_output_preview_20260614.html">再判定出力プレビュー</a><a href="purchase_zero_lock_audit_20260614.html">0円ロック整合性監査</a><a href="gap_resolution_board_20260614.html">未完成点 改善ボード</a></div></section>
+  <footer>作成: 2026/06/14 19:40 / 本画面は購入指示ではなく、未完成点を購入判断に混ぜないための実用整理です。</footer>
+</main>
+</body>
+</html>
