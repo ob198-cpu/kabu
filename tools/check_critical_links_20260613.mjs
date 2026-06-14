@@ -28,6 +28,7 @@ const pages = [
   "p0_unlock_required_sheet_20260614.html",
   "p0_unlock_judgement_engine_20260614.html",
   "p1_financial_completion_engine_20260614.html",
+  "gap_improvement_closure_board_20260614.html",
 ];
 
 const missing = [];

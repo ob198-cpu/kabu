@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>未完成点 改善v2 実用ボード</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#a85b00;--red:#a01818;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.72}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1600px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .sub{border-left-color:var(--blue);background:#eef7ff}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;color:#263e55;font-weight:800}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;border:1px solid #7bb6dd;border-radius:999px;padding:8px 13px;background:#f7fbff;color:#06395f;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    td.ok{color:var(--green);font-weight:900}
+    td.warn{color:var(--warn);font-weight:900}
+    td.bad{color:var(--red);font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{box-shadow:none;break-inside:avoid}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>未完成点 改善v2 実用ボード</h1>
+  <p>財務、リスク、質的テーマ、ストップ安対策、100社母集団の5項目を、買付判断へ混ぜてよいものと、まだ混ぜてはいけないものに分けた実用画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">現時点では購入不可・買付上限0円です。今回の改善は「買えるようにした」ものではなく、未確認データを買付判断へ混ぜないための安全装置を強化したものです。</p>
+    <div class="cards">
+      <div class="card"><b>財務pass</b><strong>3/10</strong><span>残りは公式数値待ち</span></div>
+      <div class="card"><b>P1未完了</b><strong>7件</strong><span>買付金額に反映しない</span></div>
+      <div class="card"><b>銘柄別リスク</b><strong>10社</strong><span>下値・上値ルールを接続</span></div>
+      <div class="card"><b>母集団</b><strong>固定条件化</strong><span>手動追加は監視枠から</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>改善対象の整理</h2>
+    <div class="table-wrap"><table><thead><tr><th>改善対象</th><th>改善内容</th><th>現在の状態</th><th>買付への扱い</th><th>次に必要な入力</th></tr></thead><tbody><tr><td class="">財務データ</td><td class="bad">未確認のPER/PBR/ROE、営業利益率、受注・セグメント寄与をP1で分離。未確認値は点数にも注文票にも混ぜない。</td><td class="bad">財務pass 3/10、partial 7/10、P1未完了 7件</td><td class="bad">未確認が残る銘柄は比率引上げ禁止。現時点は購入不可・買付上限0円。</td><td class="">公式IR、決算短信、決算説明資料の日付・URL・対象数値・入力状態</td></tr><tr><td class="">リスク評価</td><td class="">最大下落、1年/5年の下落、決算後反応、既存の下値・上値ルールを銘柄別に並べ、同じ損切り幅で扱わない形にした。</td><td class="">銘柄別ルール表を作成済み。ただし買付価格が未入力なので実運用値は未確定。</td><td class="warn">買付価格が入るまで実損益ラインは確定しない。購入前はルール確認だけに使う。</td><td class="">実際の買付価格、数量、買付日、ベンチマーク開始値</td></tr><tr><td class="">質的テーマ</td><td class="warn">AI、半導体、電力、フィジカルAI、量子などを仮説層と実績層に分離。テーマ名だけでは加点しない。</td><td class="">テーマ証拠ゲートを作成済み。受注、売上寄与、指数超過、イベント後反応がそろうまで補助評価。</td><td class="">質的テーマ単独では購入候補へ昇格しない。量的スコア通過後の補助説明に限定。</td><td class="">イベント日、ニュース出所、関連銘柄、過去反応、業績寄与の有無</td></tr><tr><td class="">ストップ安・急落対策</td><td class="ok">予防、当日、翌営業日、復帰、売却検討の順で対応を分離。急落当日は買い増ししない原則を明文化。</td><td class="ok">共通ルールと銘柄別補正を接続済み。急落時の行動順序を表にした。</td><td class="bad">ストップ安、前日比-10%以上、指数同時急落、材料不明の急落では追加買付停止。</td><td class="">当日の値幅、出来高、指数差、会社発表、テーマ崩れ有無</td></tr><tr><td class="">100社母集団</td><td class="bad">100社ぴったりではなく80〜120社を許容し、時価総額・流動性・成長・除外条件・手動追加理由を固定条件化。</td><td class="ok">母集団ルールを固定表に整理済み。次は抽出日と対象一覧の保存を強化する段階。</td><td class="warn">母集団外からの手動追加は監視枠。共通ゲートを通るまで購入候補にしない。</td><td class="bad">抽出日、対象銘柄一覧、除外理由、手動追加理由、データ欠損一覧</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>銘柄別 リスク・上値下値ルール</h2>
+    <p class="notice sub">買付価格が未入力のため、ここでは実損益額ではなくルールの骨格を確認します。実際の買付価格が入るまで、全銘柄の買付額は0円です。</p>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>現在扱い</th><th>リスク区分</th><th>現在買付額</th><th>最大下落</th><th>下値ルール</th><th>上値ルール</th><th>急落時ルール</th><th>買付反映</th></tr></thead><tbody><tr><td class="">8053.T</td><td class="">住友商事</td><td class="">再選定候補</td><td class="">中</td><td class="bad">0円</td><td class="">-35.8%</td><td class="bad">買値から-7%で追加停止、-12%で保有理由を再点検、-18%で縮小候補</td><td class="warn">+20%以上で目標比率超過なら一部利確を確認</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">再選定候補</td><td class="">中</td><td class="bad">0円</td><td class="">-29.4%</td><td class="bad">買値から-7%で追加停止、-12%で保有理由を再点検、-18%で縮小候補</td><td class="warn">+20%以上で目標比率超過なら一部利確を確認</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">6501.T</td><td class="">日立製作所</td><td class="">再選定候補</td><td class="">中高</td><td class="bad">0円</td><td class="">-38.7%</td><td class="bad">買値から-6%で追加停止、-11%で保有理由を再点検、-15%で縮小候補</td><td class="warn">+18%以上で目標比率超過なら一部利確を確認</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">再選定候補</td><td class="">中</td><td class="bad">0円</td><td class="">-34.0%</td><td class="bad">買値から-7%で追加停止、-12%で保有理由を再点検、-18%で縮小候補</td><td class="warn">+20%以上で目標比率超過なら一部利確を確認</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">監視</td><td class="">中高</td><td class="bad">0円</td><td class="">-51.4%</td><td class="bad">買値から-6%で追加停止、-11%で保有理由を再点検、-15%で縮小候補</td><td class="warn">+18%以上で目標比率超過なら一部利確を確認</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">監視</td><td class="">高</td><td class="bad">0円</td><td class="">-55.8%</td><td class="bad">買値から-5%で追加停止、-10%で保有理由を再点検、-15%で縮小候補</td><td class="warn">+15%以上かつ出来高急増なら、目標比率超過分の利確を確認</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="bad">除外</td><td class="">高</td><td class="bad">0円</td><td class="">-35.8%</td><td class="warn">購入対象に戻す前に、直近60日・決算後20営業日・最大下落理由を再確認</td><td class="warn">購入対象外のため利確ルールではなく監視ルールで扱う</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="">再選定候補</td><td class="">中高</td><td class="bad">0円</td><td class="">-46.3%</td><td class="bad">買値から-6%で追加停止、-11%で保有理由を再点検、-15%で縮小候補</td><td class="warn">+18%以上で目標比率超過なら一部利確を確認</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="bad">除外</td><td class="">高</td><td class="bad">0円</td><td class="">-65.2%</td><td class="warn">購入対象に戻す前に、直近60日・決算後20営業日・最大下落理由を再確認</td><td class="warn">購入対象外のため利確ルールではなく監視ルールで扱う</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="bad">除外</td><td class="">高</td><td class="bad">0円</td><td class="">-50.7%</td><td class="warn">購入対象に戻す前に、直近60日・決算後20営業日・最大下落理由を再確認</td><td class="warn">購入対象外のため利確ルールではなく監視ルールで扱う</td><td class="bad">ストップ安または前日比-10%以上は当日買い増し停止。翌営業日に出来高、指数差、会社発表、テーマ崩れを確認。</td><td class="bad">0円維持</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>質的テーマ 実証ゲート</h2>
+    <div class="table-wrap"><table><thead><tr><th>テーマ</th><th>仮説層</th><th>実績層で必要な証拠</th><th>加点条件</th><th>現在の扱い</th><th>買付への扱い</th></tr></thead><tbody><tr><td class="">半導体製造装置・材料</td><td class="">AI投資が続くなら、GPUそのものだけでなく検査、前工程、切断・研削、材料へ資金が回る</td><td class="">SOX/NASDAQ、半導体装置受注、決算の受注・粗利率、決算後株価反応</td><td class="">証拠2種類以上、うち1つは会社業績または受注に接続。株価反応だけでは不可。</td><td class="warn">一部確認済み。過去イベントとの定量照合は継続</td><td class="">証拠が2種類以上そろうまで加点しない。候補探索の入口に限定</td></tr><tr><td class="">AIインフラ・データセンター・電力</td><td class="">AI利用増で電力、冷却、電線、光通信、制御機器の需要が増える</td><td class="">電力需要統計、データセンター投資発表、企業受注、関連銘柄の指数超過</td><td class="">証拠2種類以上、うち1つは会社業績または受注に接続。株価反応だけでは不可。</td><td class="ok">テーマ整理済み。売上寄与・受注の銘柄別接続は不足</td><td class="warn">テーマ名だけで買わない。受注・売上寄与が確認できた銘柄だけ補助評価</td></tr><tr><td class="">フィジカルAI</td><td class="">AIが現場・工場・ロボットへ広がると、FA、センサー、電源、モーター周辺に需要が出る</td><td class="">設備投資統計、FA受注、会社説明資料、過去決算後反応</td><td class="">証拠2種類以上、うち1つは会社業績または受注に接続。株価反応だけでは不可。</td><td class="warn">探索枠。購入候補ではなく監視</td><td class="warn">監視枠。1年NISA候補にするには量的スコア通過が必要</td></tr><tr><td class="">量子コンピューター</td><td class="">研究・政策・大手提携で期待は出るが、短期売上との接続が弱い場合が多い</td><td class="">公式受注、売上寄与、政府予算、株価反応の継続性</td><td class="">証拠2種類以上、うち1つは会社業績または受注に接続。株価反応だけでは不可。</td><td class="">探索枠。購入候補ではない</td><td class="warn">原則監視。売上寄与が薄い場合は購入スコアへ入れない</td></tr><tr><td class="">金利・銀行</td><td class="">金利上昇で利ざや改善が期待される一方、信用コストと政策変更がリスク</td><td class="">日銀政策、長期金利、銀行株指数、決算の利ざや・信用コスト</td><td class="">証拠2種類以上、うち1つは会社業績または受注に接続。株価反応だけでは不可。</td><td class="ok">中心候補に接続済み</td><td class="">量的データと相性が良いテーマ。指数比較を必ず見る</td></tr><tr><td class="">資源・商社</td><td class="">資源価格、円安、株主還元で買われるが、資源価格急落時は逆回転しやすい</td><td class="">資源価格、為替、還元方針、セグメント利益、配当・自社株買い</td><td class="">証拠2種類以上、うち1つは会社業績または受注に接続。株価反応だけでは不可。</td><td class="ok">中心候補に接続済み</td><td class="">財務・還元・指数比較を主、テーマは補助</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>ストップ安・急落時の行動順序</h2>
+    <div class="table-wrap"><table><thead><tr><th>段階</th><th>トリガー</th><th>行動</th><th>理由</th></tr></thead><tbody><tr><td class="">予防</td><td class="bad">6月イベント未入力、本人別口座未確認、財務partial、注文票0円</td><td class="bad">購入不可を維持。候補は監視・検証だけに使う。</td><td class="bad">未確認情報を買付金額に混ぜないため。</td></tr><tr><td class="">当日</td><td class="">ストップ安、前日比-10%以上、指数同時急落、材料不明の急落</td><td class="bad">当日買い増し停止。成行売りも避け、会社発表と指数差を確認。</td><td class="">流動性が薄い場面で不利な価格をつかまないため。</td></tr><tr><td class="">翌営業日</td><td class="">急落後の寄付き、出来高急増、リバウンド、追加悪材料</td><td class="warn">出来高、寄付き気配、指数差、会社発表、テーマ崩れを確認して再判定。</td><td class="">一時的な市場全体の下落か、個別理由の崩れかを分けるため。</td></tr><tr><td class="">復帰</td><td class="">指数が戻り、会社発表に悪材料がなく、テーマ根拠が残る</td><td class="">元比率へ一気に戻さず、半分以下の小口から再開候補。</td><td class="">急落直後の反発を過信しないため。</td></tr><tr><td class="">売却検討</td><td class="">下方修正、不祥事、資金繰り悪化、テーマ根拠消滅、指数に継続劣後</td><td class="">NISAでも売却または縮小候補。非課税メリットより元本毀損リスクを優先。</td><td class="">非課税枠を理由に悪化銘柄を放置しないため。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>100社母集団 固定条件</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>固定条件</th><th>理由</th><th>出力</th></tr></thead><tbody><tr><td class="">母集団</td><td class="">国内上場の大型・中型中心。80〜120社程度を許容</td><td class="">100社ぴったりに合わせるための恣意的選定を避ける</td><td class="">universe_reproducible_policy と lineage に残す</td></tr><tr><td class="">最低価格データ</td><td class="">株価、出来高、5年CAGR、10年CAGR、S&amp;P差、最大下落、月次勝率</td><td class="">直近だけでなく継続性と下落耐性を見る</td><td class="">100社比較表</td></tr><tr><td class="">最低財務データ</td><td class="">PER/PBR/ROE、営業利益率、会社予想、受注またはセグメント寄与</td><td class="">価格だけで選ばず、公式決算との整合性を取る</td><td class="warn">財務partialゲート</td></tr><tr><td class="bad">除外・監視</td><td class="bad">指数劣後、決算後反応弱い、最大下落大、財務未確認、テーマ根拠不足</td><td class="">高騰済み銘柄や説明不能銘柄を購入スコアへ混ぜない</td><td class="bad">監視・除外理由</td></tr><tr><td class="ok">抽出日固定</td><td class="">候補抽出日、株価取得日、決算参照日を保存する</td><td class="">後から都合よく銘柄を入れ替えたように見えないようにする</td><td class="">母集団 lineage CSV</td></tr><tr><td class="">手動追加の扱い</td><td class="warn">ニュースやテーマで追加した銘柄は、まず監視枠に入れる</td><td class="">質的テーマだけで購入候補に昇格させないため</td><td class="warn">監視枠・購入候補の分離</td></tr><tr><td class="">再現可能性</td><td class="bad">時価総額、流動性、業績成長、除外条件、データ欠損を同じ表に残す</td><td class="">同じ条件で再実行したとき近い母集団を再現するため</td><td class="">universe_fixed_rule_v3</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連CSV</h2>
+    <div class="links">
+      <a href="gap_improvement_closure_board_20260614.csv">改善サマリーCSV</a>
+      <a href="ticker_risk_rule_matrix_v2_20260614.csv">銘柄別リスクv2 CSV</a>
+      <a href="theme_evidence_gate_v2_20260614.csv">質的テーマv2 CSV</a>
+      <a href="stop_limit_action_plan_v2_20260614.csv">急落対策v2 CSV</a>
+      <a href="universe_fixed_rule_v3_20260614.csv">母集団固定v3 CSV</a>
+      <a href="p1_financial_completion_engine_20260614.html">P1財務補完</a>
+      <a href="daily_practical_compact_board_20260614.html">実用日次ボード</a>
+    </div>
+  </section>
+  <footer>作成: 2026/06/14 22:35 / 本画面は買付指示ではなく、未確認データを購入判断へ混ぜないための改善状況確認です。</footer>
+</main>
+</body>
+</html>
