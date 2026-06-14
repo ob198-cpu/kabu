@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 財務 PER/PBR計算候補</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9a5b00;--red:#b42318;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:850;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#005f99;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:12px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 財務 PER/PBR計算候補</h1>
+  <p>PDF抽出値と記録済み株価を使い、PER/PBRを基準日つきで試算します。入力CSVへはまだ反映しません。</p>
+</header>
+<main>
+  <section>
+    <h2>結論</h2>
+    <p class="notice">PER/PBRの計算候補は作成しましたが、公式確認済みにはしていません。株価基準日とPDF原文の確認が終わるまで、P1復帰可能0社・買付上限0円です。</p>
+    <div class="cards">
+      <div class="card ok"><b>対象</b><strong>2社</strong><span>6503/8035</span></div>
+      <div class="card warn"><b>計算候補</b><strong>6行</strong><span>実績PER・予想PER・PBR</span></div>
+      <div class="card bad"><b>公式確認済み</b><strong>0項目</strong><span>入力反映前</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>維持</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>確認導線</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">最新 実用パート入口</a>
+      <a href="daily_practical_compact_board_20260614.html">実用日次ボード</a>
+      <a href="p1_financial_pdf_to_input_review_20260615.html">PDF→入力レビュー</a>
+      <a href="p1_financial_input_validator_20260614.html">入力バリデーター</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>全体サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>値</th><th>判定</th><th>メモ</th></tr></thead><tbody><tr><td class="">対象銘柄</td><td class="">2社</td><td class="warn">計算候補作成</td><td class="">6503 三菱電機、8035 東京エレクトロン</td></tr><tr><td class="warn">計算候補</td><td class="">6行</td><td class="warn">候補値</td><td class="">実績PER、予想PER、PBRを分離。</td></tr><tr><td class="">公式確認済み</td><td class="">0項目</td><td class="bad">未完了</td><td class="warn">株価基準日とPDF原文の目視確認前。</td></tr><tr><td class="">入力CSV反映</td><td class="">0件</td><td class="bad">反映しない</td><td class="">入力フォームにはまだ書き込まない。</td></tr><tr><td class="">P1復帰可能</td><td class="">0社</td><td class="bad">不可</td><td class="bad">PER/PBR候補だけでは復帰不可。受注・セグメント寄与も必要。</td></tr><tr><td class="">買付上限</td><td class="bad">0円</td><td class="">維持</td><td class="bad">イベント、口座、公式財務のゲートがそろうまで0円。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>PER/PBR計算候補</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>計算項目</th><th>計算候補値</th><th>株価</th><th>株価基準</th><th>分母</th><th>計算式</th><th>反映可否</th><th>公式確認扱い</th><th>注意</th><th>参照資料</th><th>参照URL</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">実績PER</td><td class="">27.96倍</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">実績EPS 198.31円</td><td class="">5545 ÷ 198.31</td><td class="bad">反映しない</td><td class="bad">公式確認済みにしない</td><td class="warn">株価が既存JSON基準。PDF値と株価基準日の目視確認後に入力候補。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">予想PER</td><td class="">24倍</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">通期会社予想 EPS 231.01円</td><td class="">5545 ÷ 231.01</td><td class="bad">反映しない</td><td class="bad">公式確認済みにしない</td><td class="warn">会社予想EPSが通期のため、実績PERと予想PERを分けて候補化できる。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">PBR</td><td class="">2.53倍</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">BPS 2191.26円</td><td class="">5545 ÷ 2191.26</td><td class="bad">反映しない</td><td class="bad">公式確認済みにしない</td><td class="warn">BPSはPDF抽出候補。株価基準日とBPSの原文確認後に入力候補。</td><td class="">2026年3月期 決算短信〔IFRS〕一部訂正版</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">実績PER</td><td class="">54.2倍</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">実績EPS 1254.57円</td><td class="">68000 ÷ 1254.57</td><td class="bad">反映しない</td><td class="bad">公式確認済みにしない</td><td class="warn">株価が既存JSON基準。PDF値と株価基準日の目視確認後に入力候補。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">予想PER</td><td class="bad">参考外</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">第2四半期累計予想 EPS 721.12円</td><td class="warn">通期予想ではないため計算値を採用しない</td><td class="bad">反映しない</td><td class="bad">公式確認済みにしない</td><td class="warn">会社予想EPSは第2四半期累計であり、通期PERとして使わない。実績PERとPBRだけ候補化する。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">PBR</td><td class="">15.11倍</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">BPS 4498.85円</td><td class="">68000 ÷ 4498.85</td><td class="bad">反映しない</td><td class="bad">公式確認済みにしない</td><td class="warn">BPSはPDF抽出候補。株価基準日とBPSの原文確認後に入力候補。</td><td class="">2026年3月期 決算短信〔日本基準〕</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>次に必要な確認</h2>
+    <ul>
+      <li>株価基準日を、6月再判定に使う日付へ統一する。</li>
+      <li>PDFから抽出したEPS/BPSが原文と一致するか目視確認する。</li>
+      <li>東京エレクトロンの第2四半期累計予想を、通期PERとして使わない。</li>
+      <li>PER/PBRだけで候補復帰させず、受注・セグメント寄与・高PER説明とセットで確認する。</li>
+    </ul>
+  </section>
+
+  <footer>generated: 2026/06/15 00:55 / source: data/market_update.json, p1_financial_pdf_metric_candidates_20260614.csv</footer>
+</main>
+</body>
+</html>
