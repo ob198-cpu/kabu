@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>再判定出力プレビュー</title>
+  <style>
+  :root{--ink:#071927;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--warn:#9a5b00;--green:#116b4f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.7}
+  header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+  header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);letter-spacing:0;line-height:1.2}
+  header p{margin:0;font-weight:800;max-width:1180px}
+  main{max-width:1480px;margin:0 auto;padding:22px}
+  section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+  h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+  .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+  .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+  .card b{display:block;color:var(--navy);font-size:15px}
+  .card strong{display:block;font-size:26px;line-height:1.25;color:var(--blue)}
+  .card span{font-weight:800;color:#263e55}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+  table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+  th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+  th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+  td.ok{color:var(--green);font-weight:900}
+  td.warn{color:var(--warn);font-weight:900}
+  td.bad{color:var(--red);font-weight:900}
+  .links{display:flex;flex-wrap:wrap;gap:10px}
+  .links a{display:inline-block;text-decoration:none;background:#0b67a3;color:#fff;border-radius:9px;padding:10px 13px;font-weight:900}
+  footer{font-size:13px;color:#526b82;margin:20px 0}
+  @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+  @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>再判定出力プレビュー</h1>
+  <p>イベント・本人別NISA口座・公式財務入力をもとに、注文票へ金額を出せるかを仮計算します。未入力がある場合は0円を維持します。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">この画面は購入指示ではありません。入力ゲートを満たさない限り、注文票への金額反映は行いません。</p>
+    <div class="cards">
+      <div class="card"><b>総合</b><strong>全銘柄0円</strong><span>0銘柄 / 10銘柄</span></div>
+      <div class="card"><b>イベント</b><strong>イベント未入力</strong><span>E02 日銀会合 / E03 FOMC / E04 最終購入前確認</span></div>
+      <div class="card"><b>口座</b><strong>0/10</strong><span>本人別NISA口座</span></div>
+      <div class="card"><b>出力</b><strong>0円</strong><span>注文票反映</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>再判定サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>内容</th><th>数値</th><th style="width:640px">次の扱い</th></tr></thead><tbody><tr><td class="">総合結果</td><td class="bad">全銘柄0円</td><td class="">0銘柄 / 10銘柄</td><td class="">注文票へ金額を出さない</td></tr><tr><td class="">イベント入力</td><td class="bad">イベント未入力</td><td class="">3件要対応</td><td class="bad">イベント入力を完了するまで全銘柄0円</td></tr><tr><td class="">本人別口座</td><td class="bad">確認済み口座なし</td><td class="bad">0 / 10口座</td><td class="">本人スマホ・本人銀行・二段階認証・NISA残枠を入力</td></tr><tr><td class="warn">公式財務partial</td><td class="bad">7銘柄が未確認</td><td class="bad">partialは比率引上げ不可</td><td class="">公式IR・決算短信の入力後に再生成</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>銘柄別 出力プレビュー</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>役割</th><th>イベント判定</th><th>口座確認</th><th>財務判定</th><th>100社扱い</th><th style="width:150px">再判定結果</th><th style="width:120px">出力金額</th><th>注文票反映</th><th style="width:520px">止める理由</th></tr></thead><tbody><tr><td class="">8053.T</td><td class="">住友商事</td><td class="">中心候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="ok">公式財務pass</td><td class="">再選定候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認</td></tr><tr><td class="">8316.T</td><td class="">三井住友FG</td><td class="">中心候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="ok">公式財務pass</td><td class="">再選定候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認</td></tr><tr><td class="">6501.T</td><td class="">日立製作所</td><td class="">中心候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="ok">公式財務pass</td><td class="">再選定候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / 期待仮説信頼度Cのため抑制 / 決算後反応が弱い</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="warn">条件付き候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="bad">財務未確認</td><td class="">再選定候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td></tr><tr><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">条件付き候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="bad">財務未確認</td><td class="warn">監視継続</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明 / 監視扱い。初回買付では0円または小口再審査 / 期待仮説信頼度Cのため抑制 / 決算後反応が弱い</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">条件付き候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="bad">財務未確認</td><td class="warn">監視継続</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明 / 監視扱い。初回買付では0円または小口再審査</td></tr><tr><td class="">7011.T</td><td class="">三菱重工業</td><td class="warn">条件付き候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="bad">財務未確認</td><td class="bad">除外継続</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 100社再選定で除外。解除根拠の入力が必要 / 期待仮説信頼度Cのため抑制 / 決算後反応が弱い</td></tr><tr><td class="">6762.T</td><td class="">TDK</td><td class="warn">条件付き候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="bad">財務未確認</td><td class="">再選定候補</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与</td></tr><tr><td class="">6146.T</td><td class="">ディスコ</td><td class="warn">条件付き候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="bad">財務未確認</td><td class="bad">除外継続</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明 / 100社再選定で除外。解除根拠の入力が必要 / 期待仮説信頼度Cのため抑制 / 決算後反応が弱い</td></tr><tr><td class="">5803.T</td><td class="">フジクラ</td><td class="warn">条件付き候補</td><td class="bad">イベント未入力</td><td class="bad">0口座</td><td class="bad">財務未確認</td><td class="bad">除外継続</td><td class="bad">購入不可</td><td class="bad">0円</td><td class="bad">反映しない</td><td class="bad">6月イベント未入力 / 本人別NISA口座未確認 / PER / PBR / ROE_pct / 営業利益率_pct / 今期会社予想_前期比 / 参照URLまたは資料名 / 資料日付 / 入力状態 / 受注またはセグメント寄与 / 高PER説明 / 100社再選定で除外。解除根拠の入力が必要 / 期待仮説信頼度Cのため抑制 / 決算後反応が弱い</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="redecision_readiness_validator_20260614.html">再判定準備バリデーター</a>
+      <a href="redecision_input_workbench_20260614.html">6/18再判定 入力作業台</a>
+      <a href="integrated_purchase_decision_engine_20260614.html">統合購入可否エンジン</a>
+      <a href="purchase_unlock_input_queue_20260614.html">購入ロック解除 入力キュー</a>
+      <a href="latest_practical_start_20260614.html">最新 実用パート入口</a>
+    </div>
+  </section>
+
+  <footer>作成: 2026/06/14 05:55 / 入力未完了時は0円を維持する安全側の出力です。</footer>
+</main>
+</body>
+</html>
