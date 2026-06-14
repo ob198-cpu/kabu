@@ -31,6 +31,7 @@ const pages = [
   "p1_financial_official_input_queue_20260614.html",
   "p1_financial_input_validator_20260614.html",
   "p1_financial_source_navigator_20260614.html",
+  "p1_financial_direct_document_candidates_20260614.html",
   "gap_improvement_closure_board_20260614.html",
 ];
 

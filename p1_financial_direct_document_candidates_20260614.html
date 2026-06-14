@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 財務 直接資料候補</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--warn:#9d5b00;--red:#a01818;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;max-width:1100px;font-size:19px}
+    main{max-width:1280px;margin:auto;padding:24px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin:18px 0;padding:22px;break-inside:avoid;page-break-inside:avoid}
+    h2{font-size:26px;margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;line-height:1.35}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+    .card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#f9fcff;min-height:124px}
+    .card b{display:block;font-size:17px}
+    .card strong{display:block;font-size:31px;line-height:1.2;margin:8px 0;color:var(--navy)}
+    .card span{display:block;font-size:15px}
+    .bad strong,.bad{color:var(--red);font-weight:700}
+    .warn strong,.warn{color:var(--warn);font-weight:700}
+    .ok strong,.ok{color:var(--green);font-weight:700}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:white}
+    th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:9px 10px;vertical-align:top;text-align:left;overflow-wrap:anywhere}
+    th{background:#e7f2fb;color:#07395f;font-weight:800;white-space:nowrap}
+    tr:last-child td{border-bottom:0}
+    a{color:#064f86;font-weight:800}
+    .note{border-left:6px solid var(--warn);background:#fff7e8;padding:14px;margin-top:12px;border-radius:10px}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;padding:10px 14px;border:1px solid #87bce0;border-radius:999px;background:#eef8ff;color:#07395f;text-decoration:none;font-weight:800}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>P1 財務 直接資料候補</h1>
+    <p>公式IR入口から一段進み、決算短信・決算説明資料として使えそうなPDF候補とHTMLページ候補を分けた画面です。PDF候補はまだ中身の数値確認前なので、買付判断には反映しません。</p>
+  </header>
+  <main>
+    <section>
+      <h2>現在の結論</h2>
+      <div class="cards">
+        <div class="card ok"><b>PDF候補</b><strong>2件</strong><span>三菱電機・東京エレクトロンでPDF候補を確認</span></div>
+        <div class="card warn"><b>PDF候補の銘柄</b><strong>2/7</strong><span>直接PDF候補がある銘柄数</span></div>
+        <div class="card warn"><b>HTML候補</b><strong>6件</strong><span>IR/決算資料ページとして取得済み</span></div>
+        <div class="card bad"><b>買付反映</b><strong>0件</strong><span>PDF候補の中身確認前は反映しない</span></div>
+      </div>
+      <p class="note">PDFが取得できたことと、必要な財務数値が確認できたことは別です。表紙・対象期・数値位置・資料日付を確認してから入力CSVへ転記します。</p>
+      <div class="links">
+        <a href="p1_financial_direct_document_candidates_20260614.csv">CSV</a>
+        <a href="p1_financial_source_navigator_20260614.html">公式資料ナビ</a>
+        <a href="p1_financial_input_validator_20260614.html">入力バリデーター</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>直接資料候補一覧</h2>
+      <div class="table-wrap"><table><thead><tr><th>優先</th><th>ticker</th><th>銘柄</th><th>候補区分</th><th>URL</th><th>HTTP確認</th><th>資料扱い</th><th>入力へ使う条件</th><th>買付反映</th></tr></thead><tbody><tr><td class="warn">P1</td><td class="">6503.T</td><td class="">三菱電機</td><td class="warn">PDF候補</td><td class=""><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td><td class="ok">200 application/pdf</td><td class="warn">直接資料候補。表紙・対象期・数値位置は未確認</td><td class="">資料名、資料日付、対象期、該当数値を確認してから入力</td><td class="bad">反映しない</td></tr><tr><td class="warn">P1</td><td class="">6503.T</td><td class="">三菱電機</td><td class="warn">HTMLページ候補</td><td class=""><a href="https://www.mitsubishielectric.co.jp/investors/data/financial-result/" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/investors/data/financial-result/</a></td><td class="ok">200 text/html</td><td class="warn">決算資料ページ候補</td><td class="">ページ内で最新決算短信・説明資料PDFを特定する</td><td class="bad">反映しない</td></tr><tr><td class="warn">P1</td><td class="">6762.T</td><td class="">TDK</td><td class="warn">HTMLページ候補</td><td class=""><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td><td class="ok">200 text/html</td><td class="warn">決算資料ページ候補</td><td class="">ページ内で最新決算短信・説明会資料PDFを特定する</td><td class="bad">反映しない</td></tr><tr><td class="warn">P2</td><td class="">5803.T</td><td class="">フジクラ</td><td class="warn">HTMLページ候補</td><td class=""><a href="https://www.fujikura.co.jp/ir/" target="_blank" rel="noopener">https://www.fujikura.co.jp/ir/</a></td><td class="ok">200 text/html</td><td class="bad">IR入口候補。決算PDF未特定</td><td class="">決算情報ページへ進み、PDFを特定する</td><td class="bad">反映しない</td></tr><tr><td class="warn">P2</td><td class="">6146.T</td><td class="">ディスコ</td><td class="warn">HTMLページ候補</td><td class=""><a href="https://www.disco.co.jp/jp/ir/library/fr.html" target="_blank" rel="noopener">https://www.disco.co.jp/jp/ir/library/fr.html</a></td><td class="ok">200 text/html</td><td class="bad">決算関連ページ候補。PDF未特定</td><td class="">最新決算短信・説明資料をページ内で特定する</td><td class="bad">反映しない</td></tr><tr><td class="warn">P2</td><td class="">6857.T</td><td class="">アドバンテスト</td><td class="warn">HTMLページ候補</td><td class=""><a href="https://www.advantest.com/ja/investors/" target="_blank" rel="noopener">https://www.advantest.com/ja/investors/</a></td><td class="ok">200 text/html</td><td class="bad">IR入口候補。決算PDF未特定</td><td class="">決算資料ページへ進み、受注・会社予想・利益率の資料を特定する</td><td class="bad">反映しない</td></tr><tr><td class="warn">P2</td><td class="">7011.T</td><td class="">三菱重工業</td><td class="warn">HTMLページ候補</td><td class=""><a href="https://www.mhi.com/jp/finance/" target="_blank" rel="noopener">https://www.mhi.com/jp/finance/</a></td><td class="ok">200 text/html</td><td class="bad">決算・財務情報ページ候補。PDF未特定</td><td class="">決算説明資料・決算短信を特定し、受注残とセグメント寄与を確認する</td><td class="bad">反映しない</td></tr><tr><td class="warn">P2</td><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="warn">PDF候補</td><td class=""><a href="https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf" target="_blank" rel="noopener">https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf</a></td><td class="ok">200 application/pdf</td><td class="warn">直接資料候補。表紙・対象期・数値位置は未確認</td><td class="">資料名、資料日付、対象期、該当数値を確認してから入力</td><td class="bad">反映しない</td></tr></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>次の手順</h2>
+      <div class="table-wrap"><table><thead><tr><th>順番</th><th>作業</th><th>合格条件</th></tr></thead><tbody>
+        <tr><td>1</td><td>PDF候補を開き、表紙・対象期・資料日付を確認</td><td class="warn">資料名と資料日付を入力CSVに残す</td></tr>
+        <tr><td>2</td><td>PER/PBR/ROE、営業利益率、会社予想、受注・セグメント寄与の場所を確認</td><td class="warn">該当ページまたは計算根拠をメモに残す</td></tr>
+        <tr><td>3</td><td>入力バリデーターで項目完了を確認</td><td class="ok">入力値・出所・資料日付・公式確認済みがそろう</td></tr>
+        <tr><td>4</td><td>P1のみ候補復帰の再判定へ進める</td><td class="bad">P2は資料確認後も監視・除外理由の解除が必要</td></tr>
+      </tbody></table></div>
+    </section>
+  </main>
+</body>
+</html>

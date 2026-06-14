@@ -1,0 +1,9 @@
+﻿優先区分,ticker,銘柄,候補区分,URL,HTTP確認,資料扱い,入力へ使う条件,買付反映
+P1,6503.T,三菱電機,PDF候補,https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,200 application/pdf,直接資料候補。表紙・対象期・数値位置は未確認,資料名、資料日付、対象期、該当数値を確認してから入力,反映しない
+P1,6503.T,三菱電機,HTMLページ候補,https://www.mitsubishielectric.co.jp/investors/data/financial-result/,200 text/html,決算資料ページ候補,ページ内で最新決算短信・説明資料PDFを特定する,反映しない
+P1,6762.T,TDK,HTMLページ候補,https://www.tdk.com/en/ir/ir_library/financial/index.html,200 text/html,決算資料ページ候補,ページ内で最新決算短信・説明会資料PDFを特定する,反映しない
+P2,5803.T,フジクラ,HTMLページ候補,https://www.fujikura.co.jp/ir/,200 text/html,IR入口候補。決算PDF未特定,決算情報ページへ進み、PDFを特定する,反映しない
+P2,6146.T,ディスコ,HTMLページ候補,https://www.disco.co.jp/jp/ir/library/fr.html,200 text/html,決算関連ページ候補。PDF未特定,最新決算短信・説明資料をページ内で特定する,反映しない
+P2,6857.T,アドバンテスト,HTMLページ候補,https://www.advantest.com/ja/investors/,200 text/html,IR入口候補。決算PDF未特定,決算資料ページへ進み、受注・会社予想・利益率の資料を特定する,反映しない
+P2,7011.T,三菱重工業,HTMLページ候補,https://www.mhi.com/jp/finance/,200 text/html,決算・財務情報ページ候補。PDF未特定,決算説明資料・決算短信を特定し、受注残とセグメント寄与を確認する,反映しない
+P2,8035.T,東京エレクトロン,PDF候補,https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,200 application/pdf,直接資料候補。表紙・対象期・数値位置は未確認,資料名、資料日付、対象期、該当数値を確認してから入力,反映しない
