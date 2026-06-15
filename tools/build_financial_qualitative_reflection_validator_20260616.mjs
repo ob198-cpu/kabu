@@ -1,0 +1,269 @@
+import fs from 'node:fs';
+
+const inputCsv = 'financial_qualitative_high_priority_input_template_20260616.csv';
+const outCsv = 'financial_qualitative_reflection_validator_20260616.csv';
+const outHtml = 'financial_qualitative_reflection_validator_20260616.html';
+const generatedAt = new Date().toLocaleString('ja-JP', {
+  timeZone: 'Asia/Tokyo',
+  hour12: false,
+});
+
+function parseCsv(text) {
+  const clean = String(text ?? '').replace(/^\uFEFF/, '');
+  const rows = [];
+  let row = [];
+  let cell = '';
+  let quote = false;
+  for (let i = 0; i < clean.length; i += 1) {
+    const ch = clean[i];
+    const next = clean[i + 1];
+    if (quote) {
+      if (ch === '"' && next === '"') {
+        cell += '"';
+        i += 1;
+      } else if (ch === '"') {
+        quote = false;
+      } else {
+        cell += ch;
+      }
+      continue;
+    }
+    if (ch === '"') quote = true;
+    else if (ch === ',') {
+      row.push(cell);
+      cell = '';
+    } else if (ch === '\n') {
+      row.push(cell.replace(/\r$/, ''));
+      rows.push(row);
+      row = [];
+      cell = '';
+    } else {
+      cell += ch;
+    }
+  }
+  if (cell.length || row.length) {
+    row.push(cell.replace(/\r$/, ''));
+    rows.push(row);
+  }
+  const headers = rows.shift() ?? [];
+  return rows
+    .filter((values) => values.some((value) => String(value ?? '').trim() !== ''))
+    .map((values) => Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ''])));
+}
+
+function csvCell(value) {
+  const text = String(value ?? '');
+  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function writeCsv(file, headers, rows) {
+  fs.writeFileSync(
+    file,
+    `\uFEFF${[headers, ...rows.map((row) => headers.map((header) => row[header] ?? ''))]
+      .map((row) => row.map(csvCell).join(','))
+      .join('\n')}\n`,
+    'utf8',
+  );
+}
+
+function h(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function isFilled(value) {
+  return String(value ?? '').trim() !== '';
+}
+
+function validate(row) {
+  const missing = [];
+  if (!isFilled(row['入力値'])) missing.push('入力値');
+  if (!isFilled(row['資料名'])) missing.push('資料名');
+  if (!isFilled(row['資料日付'])) missing.push('資料日付');
+  if (!isFilled(row.URL)) missing.push('URL');
+  if (!isFilled(row['確認者'])) missing.push('確認者');
+  if (!isFilled(row['対象期間'])) missing.push('対象期間');
+
+  const notes = [];
+  if (row['キュー種別'] === '財務入力') {
+    notes.push('公式資料または計算式で確認できる財務値のみ反映');
+    if (['PER', 'PBR'].includes(row['入力項目'])) {
+      notes.push('株価基準日とEPS/BPSの期間を分けて記録');
+    }
+    if (row['入力項目'].includes('セグメント')) {
+      notes.push('テーマが全社業績へ効く比率を確認');
+    }
+  } else {
+    notes.push('仮説だけでは不可。イベント後反応または業績接続が必要');
+    notes.push('単独で買付候補化しない');
+  }
+
+  const canReflect = missing.length === 0 && row['確認区分'] !== '未確認';
+  return {
+    作成時刻: generatedAt,
+    入力ID: row['入力ID'],
+    キュー種別: row['キュー種別'],
+    優先度: row['優先度'],
+    ticker: row.ticker,
+    銘柄またはテーマ: row['銘柄またはテーマ'],
+    入力項目: row['入力項目'],
+    入力状況: canReflect ? '入力済み' : '未完了',
+    不足項目: missing.length ? missing.join(' / ') : 'なし',
+    反映判定: canReflect ? '反映候補' : '反映禁止',
+    スコア反映: canReflect ? '次段階の検算へ進める' : 'ランキング・比率・買付上限へ反映しない',
+    注意: notes.join(' / '),
+  };
+}
+
+if (!fs.existsSync(inputCsv)) {
+  throw new Error(`${inputCsv} が見つかりません。先に高優先入力ワークベンチを作成してください。`);
+}
+
+const rows = parseCsv(fs.readFileSync(inputCsv, 'utf8'));
+const validated = rows.map(validate);
+const headers = [
+  '作成時刻',
+  '入力ID',
+  'キュー種別',
+  '優先度',
+  'ticker',
+  '銘柄またはテーマ',
+  '入力項目',
+  '入力状況',
+  '不足項目',
+  '反映判定',
+  'スコア反映',
+  '注意',
+];
+writeCsv(outCsv, headers, validated);
+
+const total = validated.length;
+const reflectable = validated.filter((row) => row['反映判定'] === '反映候補').length;
+const blocked = total - reflectable;
+const financeTotal = validated.filter((row) => row['キュー種別'] === '財務入力').length;
+const financeReflect = validated.filter((row) => row['キュー種別'] === '財務入力' && row['反映判定'] === '反映候補').length;
+const qualitativeTotal = validated.filter((row) => row['キュー種別'] === '質的テーマ検証').length;
+const qualitativeReflect = validated.filter((row) => row['キュー種別'] === '質的テーマ検証' && row['反映判定'] === '反映候補').length;
+
+function table(sectionRows) {
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>入力ID</th>
+            <th>区分</th>
+            <th>対象</th>
+            <th>項目</th>
+            <th>入力状況</th>
+            <th>不足項目</th>
+            <th>反映判定</th>
+            <th>スコア反映</th>
+            <th>注意</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${sectionRows.map((row) => `
+            <tr>
+              <td>${h(row['入力ID'])}</td>
+              <td>${h(row['キュー種別'])}</td>
+              <td><b>${h(row.ticker)}</b><br>${h(row['銘柄またはテーマ'])}</td>
+              <td>${h(row['入力項目'])}</td>
+              <td class="${row['入力状況'] === '入力済み' ? 'ok' : 'bad'}">${h(row['入力状況'])}</td>
+              <td>${h(row['不足項目'])}</td>
+              <td class="${row['反映判定'] === '反映候補' ? 'ok' : 'bad'}">${h(row['反映判定'])}</td>
+              <td>${h(row['スコア反映'])}</td>
+              <td>${h(row['注意'])}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+const html = `<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>財務・質的テーマ 反映判定ゲート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:34px}
+    header h1{margin:0 0 10px;font-size:clamp(34px,4vw,50px);line-height:1.18;letter-spacing:0}
+    header p{margin:0;font-size:19px;font-weight:900;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:28px}
+    p{margin:0 0 10px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:16px}
+    .card strong{display:block;font-size:32px;color:var(--blue);line-height:1.25}
+    .card span{display:block;font-weight:900;color:#263e55}
+    .notice{border:2px solid var(--red);background:#fff1f1;color:#8a0000;border-radius:10px;padding:14px 16px;font-weight:900;margin:0}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:9px 10px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    .bad{color:var(--red)!important;font-weight:900}
+    .ok{color:var(--green)!important;font-weight:900}
+    a{color:#004f86;font-weight:900}
+    @media(max-width:980px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:17px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>財務・質的テーマ 反映判定ゲート</h1>
+  <p>高優先入力CSVを読み、どの項目をスコアへ進めてよいかを判定します。未入力・出所なし・確認者なしの項目は反映禁止にします。</p>
+</header>
+<main>
+  <section>
+    <h2>判定結果</h2>
+    <div class="cards">
+      <div class="card"><b>全体</b><strong>${reflectable}/${total}</strong><span>反映候補</span></div>
+      <div class="card"><b>財務</b><strong>${financeReflect}/${financeTotal}</strong><span>公式確認が必要</span></div>
+      <div class="card"><b>質的テーマ</b><strong>${qualitativeReflect}/${qualitativeTotal}</strong><span>実績または業績接続が必要</span></div>
+      <div class="card"><b>現在の買付上限</b><strong class="bad">0円</strong><span>このゲートだけでは解除しない</span></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="notice">現在は反映候補 ${reflectable} 件、反映禁止 ${blocked} 件です。反映禁止の項目は、候補順位・買付比率・購入可否へ使いません。</p>
+    <p>入力元: <a href="${h(inputCsv)}">${h(inputCsv)}</a> / 判定CSV: <a href="${h(outCsv)}">${h(outCsv)}</a></p>
+  </section>
+
+  <section>
+    <h2>財務データ 判定</h2>
+    ${table(validated.filter((row) => row['キュー種別'] === '財務入力'))}
+  </section>
+
+  <section>
+    <h2>質的テーマ 判定</h2>
+    ${table(validated.filter((row) => row['キュー種別'] === '質的テーマ検証'))}
+  </section>
+</main>
+</body>
+</html>
+`;
+
+fs.writeFileSync(outHtml, html, 'utf8');
+
+console.log(JSON.stringify({
+  outHtml,
+  outCsv,
+  total,
+  reflectable,
+  blocked,
+  financeReflect,
+  financeTotal,
+  qualitativeReflect,
+  qualitativeTotal,
+}, null, 2));
