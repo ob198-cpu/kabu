@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>財務・質的テーマ 次入力キュー</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:32px}
+    header h1{margin:0 0 8px;font-size:clamp(34px,4vw,48px);line-height:1.18;letter-spacing:0}
+    header p{margin:0;font-weight:900;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}
+    .notice{border:2px solid var(--red);background:#fff1f1;color:#8a0000;border-radius:10px;padding:14px 16px;font-weight:900;margin:0}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:16px}.card strong{display:block;font-size:30px;color:var(--blue);line-height:1.25}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:9px 10px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    .bad{color:var(--red);font-weight:900}.warn{color:var(--amber);font-weight:900}.ok{color:var(--green);font-weight:900}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:17px}}
+    @media print{body{background:#fff}section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:9px;padding:4px 5px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>財務・質的テーマ 次入力キュー</h1>
+  <p>財務partialを項目単位へ分解し、質的テーマは仮説・実績・反証を同じ表で検証するための作業リストです。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の作業量</h2>
+    <div class="cards">
+      <div class="card"><b>財務入力キュー</b><strong>53</strong></div>
+      <div class="card"><b>質的検証キュー</b><strong>6</strong></div>
+      <div class="card"><b>高優先</b><strong>17</strong></div>
+      <div class="card"><b>買付上限</b><strong>0円</strong></div>
+    </div>
+  </section>
+  <section>
+    <p class="notice">このキューは、未確認データを買付判断に混ぜないための作業表です。入力が完了しても、6月イベント、指数反応、候補銘柄反応、NISA口座確認が未通過なら買付上限は0円です。</p>
+  </section>
+  <section>
+    <h2>財務入力キュー</h2>
+    <div class="table-wrap"><table>
+    <thead><tr><th>優先度</th><th>ticker</th><th>銘柄/テーマ</th><th>入力項目</th><th>確認先</th><th>合格条件</th><th>反映条件</th><th>スコア反映</th><th>禁止事項</th></tr></thead>
+    <tbody><tr>
+      <td class="bad">高</td>
+      <td>6503.T</td>
+      <td><b>三菱電機</b></td>
+      <td>PER</td>
+      <td>三菱電機IR/決算短信・説明資料</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6503.T</td>
+      <td><b>三菱電機</b></td>
+      <td>PBR</td>
+      <td>三菱電機IR/決算短信・説明資料</td>
+      <td>BPSまたは自己資本、株価基準日、計算式、出所を揃える。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6503.T</td>
+      <td><b>三菱電機</b></td>
+      <td>ROE</td>
+      <td>三菱電機IR/決算短信・説明資料</td>
+      <td>親会社株主に帰属する利益と自己資本、または会社公表ROEの出所を記録する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6503.T</td>
+      <td><b>三菱電機</b></td>
+      <td>営業利益率</td>
+      <td>三菱電機IR/決算短信・説明資料</td>
+      <td>売上収益と営業利益を同じ期間で確認し、営業利益率の計算式を残す。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6503.T</td>
+      <td><b>三菱電機</b></td>
+      <td>今期会社予想</td>
+      <td>三菱電機IR/決算短信・説明資料</td>
+      <td>今期会社予想の売上・営業利益・純利益・EPSの有無を確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6503.T</td>
+      <td><b>三菱電機</b></td>
+      <td>前期比増減</td>
+      <td>三菱電機IR/決算短信・説明資料</td>
+      <td>売上・営業利益・EPSの前年比を、同じ会計基準で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6503.T</td>
+      <td><b>三菱電機</b></td>
+      <td>受注またはセグメント寄与</td>
+      <td>三菱電機IR/決算短信・説明資料</td>
+      <td>候補テーマが全社業績へどれだけ効くか、受注・セグメント売上・利益で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>PER</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>PBR</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>BPSまたは自己資本、株価基準日、計算式、出所を揃える。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>ROE</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>親会社株主に帰属する利益と自己資本、または会社公表ROEの出所を記録する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>営業利益率</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>売上収益と営業利益を同じ期間で確認し、営業利益率の計算式を残す。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>今期会社予想</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>今期会社予想の売上・営業利益・純利益・EPSの有無を確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>前期比増減</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>売上・営業利益・EPSの前年比を、同じ会計基準で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>受注またはセグメント寄与</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>候補テーマが全社業績へどれだけ効くか、受注・セグメント売上・利益で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>6857.T</td>
+      <td><b>アドバンテスト</b></td>
+      <td>高PER・高PBRを説明できる成長根拠</td>
+      <td>アドバンテストIR/決算資料</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>PER</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>PBR</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>BPSまたは自己資本、株価基準日、計算式、出所を揃える。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>ROE</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>親会社株主に帰属する利益と自己資本、または会社公表ROEの出所を記録する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>営業利益率</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>売上収益と営業利益を同じ期間で確認し、営業利益率の計算式を残す。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>今期会社予想</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>今期会社予想の売上・営業利益・純利益・EPSの有無を確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>前期比増減</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>売上・営業利益・EPSの前年比を、同じ会計基準で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>受注またはセグメント寄与</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>候補テーマが全社業績へどれだけ効くか、受注・セグメント売上・利益で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>8035.T</td>
+      <td><b>東京エレクトロン</b></td>
+      <td>高PER・高PBRを説明できる成長根拠</td>
+      <td>東京エレクトロンIR/決算短信</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>7011.T</td>
+      <td><b>三菱重工業</b></td>
+      <td>PER</td>
+      <td>三菱重工IR/決算資料</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>7011.T</td>
+      <td><b>三菱重工業</b></td>
+      <td>PBR</td>
+      <td>三菱重工IR/決算資料</td>
+      <td>BPSまたは自己資本、株価基準日、計算式、出所を揃える。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>7011.T</td>
+      <td><b>三菱重工業</b></td>
+      <td>ROE</td>
+      <td>三菱重工IR/決算資料</td>
+      <td>親会社株主に帰属する利益と自己資本、または会社公表ROEの出所を記録する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>7011.T</td>
+      <td><b>三菱重工業</b></td>
+      <td>営業利益率</td>
+      <td>三菱重工IR/決算資料</td>
+      <td>売上収益と営業利益を同じ期間で確認し、営業利益率の計算式を残す。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>7011.T</td>
+      <td><b>三菱重工業</b></td>
+      <td>今期会社予想</td>
+      <td>三菱重工IR/決算資料</td>
+      <td>今期会社予想の売上・営業利益・純利益・EPSの有無を確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>7011.T</td>
+      <td><b>三菱重工業</b></td>
+      <td>前期比増減</td>
+      <td>三菱重工IR/決算資料</td>
+      <td>売上・営業利益・EPSの前年比を、同じ会計基準で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>7011.T</td>
+      <td><b>三菱重工業</b></td>
+      <td>受注またはセグメント寄与</td>
+      <td>三菱重工IR/決算資料</td>
+      <td>候補テーマが全社業績へどれだけ効くか、受注・セグメント売上・利益で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6762.T</td>
+      <td><b>TDK</b></td>
+      <td>PER</td>
+      <td>TDK IR/決算短信</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6762.T</td>
+      <td><b>TDK</b></td>
+      <td>PBR</td>
+      <td>TDK IR/決算短信</td>
+      <td>BPSまたは自己資本、株価基準日、計算式、出所を揃える。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6762.T</td>
+      <td><b>TDK</b></td>
+      <td>ROE</td>
+      <td>TDK IR/決算短信</td>
+      <td>親会社株主に帰属する利益と自己資本、または会社公表ROEの出所を記録する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6762.T</td>
+      <td><b>TDK</b></td>
+      <td>営業利益率</td>
+      <td>TDK IR/決算短信</td>
+      <td>売上収益と営業利益を同じ期間で確認し、営業利益率の計算式を残す。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6762.T</td>
+      <td><b>TDK</b></td>
+      <td>今期会社予想</td>
+      <td>TDK IR/決算短信</td>
+      <td>今期会社予想の売上・営業利益・純利益・EPSの有無を確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6762.T</td>
+      <td><b>TDK</b></td>
+      <td>前期比増減</td>
+      <td>TDK IR/決算短信</td>
+      <td>売上・営業利益・EPSの前年比を、同じ会計基準で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>6762.T</td>
+      <td><b>TDK</b></td>
+      <td>受注またはセグメント寄与</td>
+      <td>TDK IR/決算短信</td>
+      <td>候補テーマが全社業績へどれだけ効くか、受注・セグメント売上・利益で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>P1復帰再判定へ接続</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>PER</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>PBR</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>BPSまたは自己資本、株価基準日、計算式、出所を揃える。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>ROE</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>親会社株主に帰属する利益と自己資本、または会社公表ROEの出所を記録する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>営業利益率</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>売上収益と営業利益を同じ期間で確認し、営業利益率の計算式を残す。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>今期会社予想</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>今期会社予想の売上・営業利益・純利益・EPSの有無を確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>前期比増減</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>売上・営業利益・EPSの前年比を、同じ会計基準で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>受注またはセグメント寄与</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>候補テーマが全社業績へどれだけ効くか、受注・セグメント売上・利益で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>6146.T</td>
+      <td><b>ディスコ</b></td>
+      <td>高PER・高PBRを説明できる成長根拠</td>
+      <td>ディスコIR/決算説明資料</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>PER</td>
+      <td>フジクラIR/決算短信</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>PBR</td>
+      <td>フジクラIR/決算短信</td>
+      <td>BPSまたは自己資本、株価基準日、計算式、出所を揃える。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>ROE</td>
+      <td>フジクラIR/決算短信</td>
+      <td>親会社株主に帰属する利益と自己資本、または会社公表ROEの出所を記録する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>営業利益率</td>
+      <td>フジクラIR/決算短信</td>
+      <td>売上収益と営業利益を同じ期間で確認し、営業利益率の計算式を残す。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>今期会社予想</td>
+      <td>フジクラIR/決算短信</td>
+      <td>今期会社予想の売上・営業利益・純利益・EPSの有無を確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>前期比増減</td>
+      <td>フジクラIR/決算短信</td>
+      <td>売上・営業利益・EPSの前年比を、同じ会計基準で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>受注またはセグメント寄与</td>
+      <td>フジクラIR/決算短信</td>
+      <td>候補テーマが全社業績へどれだけ効くか、受注・セグメント売上・利益で確認する。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr><tr>
+      <td class="warn">低</td>
+      <td>5803.T</td>
+      <td><b>フジクラ</b></td>
+      <td>高PER・高PBRを説明できる成長根拠</td>
+      <td>フジクラIR/決算短信</td>
+      <td>EPSまたは会社予想EPS、株価基準日、計算式、出所を揃える。実績PERと予想PERを混同しない。</td>
+      <td>公式値・出所・資料日付・確認区分が揃った場合のみ反映</td>
+      <td>監視・除外解除の検討材料</td>
+      <td>推定値、説明不能な転記値、出所のないPER/PBR/ROEをスコアに混ぜない</td>
+    </tr></tbody>
+  </table></div>
+  </section>
+  <section>
+    <h2>質的テーマ検証キュー</h2>
+    <div class="table-wrap"><table>
+    <thead><tr><th>優先度</th><th>ticker</th><th>銘柄/テーマ</th><th>入力項目</th><th>確認先</th><th>合格条件</th><th>反映条件</th><th>スコア反映</th><th>禁止事項</th></tr></thead>
+    <tbody><tr>
+      <td class="bad">高</td>
+      <td>複数</td>
+      <td><b>半導体製造装置・材料</b></td>
+      <td>仮説・実績・反証</td>
+      <td>SOX指数、WFE/半導体設備投資、受注・セグメント利益、候補銘柄の1日/5日/20日反応</td>
+      <td>テーマニュース後に候補銘柄が指数を上回り、かつ受注または利益率に接続している</td>
+      <td>仮説だけでは不可。実績データまたはイベント後反応がある場合のみ補助評価</td>
+      <td>補助係数。単独で買付候補化しない</td>
+      <td>株価だけ上がり、受注・利益・ガイダンスで説明できない</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>複数</td>
+      <td><b>AIインフラ・データセンター</b></td>
+      <td>仮説・実績・反証</td>
+      <td>電力需要、データセンター投資、電線・重電・冷却関連受注、候補銘柄の指数超過</td>
+      <td>需要増が受注・利益・会社コメントに接続し、イベント後反応も強い</td>
+      <td>仮説だけでは不可。実績データまたはイベント後反応がある場合のみ補助評価</td>
+      <td>補助係数。単独で買付候補化しない</td>
+      <td>テーマは強いが、対象企業の売上寄与が小さい、または高値掴みリスクが大きい</td>
+    </tr><tr>
+      <td class="bad">高</td>
+      <td>複数</td>
+      <td><b>金利・金融</b></td>
+      <td>仮説・実績・反証</td>
+      <td>日銀結果、長期金利、銀行株指数、利ざや、与信費用、保険運用益</td>
+      <td>金利環境が利ざや・運用益にプラスで、信用コスト悪化が限定的</td>
+      <td>仮説だけでは不可。実績データまたはイベント後反応がある場合のみ補助評価</td>
+      <td>補助係数。単独で買付候補化しない</td>
+      <td>金利上昇より信用不安・円高・景気悪化の影響が大きい</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>複数</td>
+      <td><b>防衛・重工</b></td>
+      <td>仮説・実績・反証</td>
+      <td>防衛予算、受注残、セグメント売上・利益、過去急騰後の反落率</td>
+      <td>政策・受注・利益化がつながり、過熱調整後も指数に対して強い</td>
+      <td>仮説だけでは不可。実績データまたはイベント後反応がある場合のみ補助評価</td>
+      <td>補助係数。単独で買付候補化しない</td>
+      <td>受注はあるが利益化が遅い、または株価が先に織り込み済み</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>複数</td>
+      <td><b>量子コンピューター</b></td>
+      <td>仮説・実績・反証</td>
+      <td>関連売上、提携、受注、研究開発費、テーマイベント後の株価反応</td>
+      <td>1年以内の業績寄与または大型契約が確認できる</td>
+      <td>仮説だけでは不可。実績データまたはイベント後反応がある場合のみ補助評価</td>
+      <td>補助係数。単独で買付候補化しない</td>
+      <td>ニュース性だけで売上寄与が見えない</td>
+    </tr><tr>
+      <td class="warn">中</td>
+      <td>複数</td>
+      <td><b>フィジカルAI・ロボティクス</b></td>
+      <td>仮説・実績・反証</td>
+      <td>FA売上、設備投資統計、制御・センサー・ロボット関連利益、候補銘柄反応</td>
+      <td>人手不足・自動化需要が受注と利益率に接続している</td>
+      <td>仮説だけでは不可。実績データまたはイベント後反応がある場合のみ補助評価</td>
+      <td>補助係数。単独で買付候補化しない</td>
+      <td>中国・設備投資サイクル悪化、在庫調整、セグメント利益鈍化</td>
+    </tr></tbody>
+  </table></div>
+  </section>
+</main>
+</body>
+</html>
