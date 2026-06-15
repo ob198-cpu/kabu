@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>購入前 統合ゲート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(32px,4vw,44px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;font-weight:800;max-width:1180px}
+    main{max-width:1320px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:16px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .notice{border:2px solid var(--red);background:#fff1f1;color:#8a0000;border-radius:10px;padding:14px 16px;font-weight:900;margin:0}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 11px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    .ok{color:var(--green);font-weight:900}.warn{color:var(--amber);font-weight:900}.bad{color:var(--red);font-weight:900}
+    .links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .links a{display:block;text-decoration:none;background:#0b67a3;color:#fff;border-radius:9px;padding:12px 14px;font-weight:900;text-align:center}
+    @media(max-width:900px){main{padding:12px}.cards,.links{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>購入前 統合ゲート</h1>
+  <p>イベント、P1銘柄ゲート、NISA口座・本人操作をまとめて確認し、購入判断へ進めるかを判定します。</p>
+</header>
+<main>
+  <section>
+    <h2>総合判定</h2>
+    <div class="cards">
+      <div class="card"><b>現在の結論</b><strong class="bad">購入判断不可</strong></div>
+      <div class="card"><b>買付上限</b><strong>0円</strong></div>
+      <div class="card"><b>未通過ゲート</b><strong>4/4</strong></div>
+      <div class="card"><b>口座確認</b><strong>0/10</strong></div>
+    </div>
+  </section>
+  <section>
+    <p class="notice">この画面で全ゲートが通過するまで、P1復帰、買付金額、注文票には進みません。現在はイベント入力・反映、P1復帰、NISA本人操作確認が未完了のため、買付上限0円です。</p>
+  </section>
+  <section>
+    <h2>止まっている理由</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>No.</th><th>ゲート</th><th>理由</th><th>次アクション</th></tr></thead>
+        <tbody><tr>
+  <td>1</td>
+  <td>6月イベント入力</td>
+  <td>日銀、FOMC、指数反応、個別反応、本人別確認のいずれかが未完了</td>
+  <td>結果入力台帳に公式結果、出所、取得日時、反映状況を入れる</td>
+</tr><tr>
+  <td>2</td>
+  <td>6月イベント反映</td>
+  <td>未入力または根拠不足のため、P1や買付判定へ反映できない行がある</td>
+  <td>反映可能になった行だけ対象ゲートへ転記し、検証画面で再判定する</td>
+</tr><tr>
+  <td>3</td>
+  <td>P1入力・銘柄ゲート</td>
+  <td>購入判断に使える段階ではない。</td>
+  <td>イベント後の指数反応と個別反応を入れて、P1復帰可否を再判定する</td>
+</tr><tr>
+  <td>4</td>
+  <td>NISA口座・本人操作</td>
+  <td>本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠が未確認</td>
+  <td>本人別に口座情報を入力し、注文画面のNISA区分を確認する</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+  <section>
+    <h2>ゲート別詳細</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ゲート</th><th>状態</th><th>数値</th><th>止まっている理由</th><th>次アクション</th><th>参照元</th></tr></thead>
+        <tbody><tr>
+  <td>6月イベント入力</td>
+  <td class="bad">未通過</td>
+  <td>0/5完了、未完了5、注意0、停止候補0</td>
+  <td>日銀、FOMC、指数反応、個別反応、本人別確認のいずれかが未完了</td>
+  <td>結果入力台帳に公式結果、出所、取得日時、反映状況を入れる</td>
+  <td>june_event_ticket_validator_20260615.csv</td>
+</tr><tr>
+  <td>6月イベント反映</td>
+  <td class="bad">未通過</td>
+  <td>0/5反映可能、反映禁止5、保留0、停止0</td>
+  <td>未入力または根拠不足のため、P1や買付判定へ反映できない行がある</td>
+  <td>反映可能になった行だけ対象ゲートへ転記し、検証画面で再判定する</td>
+  <td>june_event_reflection_preview_20260615.csv</td>
+</tr><tr>
+  <td>P1入力・銘柄ゲート</td>
+  <td class="bad">未通過</td>
+  <td>36/44項目 / 6/8ゲート / 0社 / 0円</td>
+  <td>購入判断に使える段階ではない。</td>
+  <td>イベント後の指数反応と個別反応を入れて、P1復帰可否を再判定する</td>
+  <td>p1_segment_next_gate_input_validator_summary_20260615.csv</td>
+</tr><tr>
+  <td>NISA口座・本人操作</td>
+  <td class="bad">未通過</td>
+  <td>0/10口座確認済、合計買付上限0円</td>
+  <td>本人名、証券会社、NISA口座、本人スマホ、本人銀行口座、二段階認証、NISA残枠が未確認</td>
+  <td>本人別に口座情報を入力し、注文画面のNISA区分を確認する</td>
+  <td>nisa_account_execution_gate_20260614.csv</td>
+</tr></tbody>
+      </table>
+    </div>
+  </section>
+  <section>
+    <h2>関連画面</h2>
+    <div class="links">
+      <a href="june_event_result_entry_20260615.html">結果入力台帳</a>
+      <a href="june_event_ticket_validator_20260615.html">イベント入力検証</a>
+      <a href="june_event_reflection_preview_20260615.html">反映プレビュー</a>
+      <a href="p1_segment_next_gate_input_validator_20260615.html">P1入力検証</a>
+      <a href="nisa_account_execution_gate_20260614.html">NISA口座ゲート</a>
+      <a href="june_event_operation_calendar_20260615.html">6月運用表</a>
+      <a href="event_post_reaction_workbench_20260615.html">反応判定</a>
+      <a href="index.html">ホーム</a>
+    </div>
+  </section>
+  <section>
+    <h2>既存サマリーとの整合</h2>
+    <p>現在の総合判定: 購入不可 / 口座準備: 0/10口座確認済み / イベント準備: 現在 / 銘柄ゲート: 3/10 財務pass</p>
+  </section>
+</main>
+</body>
+</html>
