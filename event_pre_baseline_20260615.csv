@@ -1,0 +1,10 @@
+﻿取得時刻,区分,シンボル,名称,基準値,基準値日時,状態,出所,備考
+2026/6/15 20:04:24,日銀前の日本株・為替基準値,^N225,日経平均,"69,317.5",2026/6/15 9:00:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/%5EN225?range=5d&interval=1d,イベント前の比較基準値として記録。
+2026/6/15 20:04:24,日銀前の日本株・為替基準値,1306.T,TOPIX連動ETF(代替),424.5,2026/6/15 9:00:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/1306.T?range=5d&interval=1d,TOPIX指数の直接データが取得できないため、TOPIX連動ETFを地合い確認用の代替値として記録。
+2026/6/15 20:04:24,日銀前の日本株・為替基準値,JPY=X,ドル円,160.127,2026/6/15 20:04:24,取得済,https://query1.finance.yahoo.com/v8/finance/chart/JPY%3DX?range=5d&interval=1d,イベント前の比較基準値として記録。
+2026/6/15 20:04:24,候補銘柄のイベント前基準値,6503.T,三菱電機,"5,858",2026/6/15 9:00:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/6503.T?range=5d&interval=1d,イベント前の比較基準値として記録。
+2026/6/15 20:04:24,候補銘柄のイベント前基準値,8035.T,東京エレクトロン,"72,760",2026/6/15 9:00:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/8035.T?range=5d&interval=1d,イベント前の比較基準値として記録。
+2026/6/15 20:04:24,FOMC前の米国・半導体基準値,^TNX,米10年金利,4.487%,2026/6/12 21:20:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/%5ETNX?range=5d&interval=1d,Yahoo ^TNXは米10年金利の値として取得。単位を確認して記録。
+2026/6/15 20:04:24,FOMC前の米国・半導体基準値,^IXIC,NASDAQ,"25,888.84",2026/6/12 22:30:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=5d&interval=1d,イベント前の比較基準値として記録。
+2026/6/15 20:04:24,FOMC前の米国・半導体基準値,^SOX,SOX指数,"13,371.47",2026/6/12 22:30:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?range=5d&interval=1d,イベント前の比較基準値として記録。
+2026/6/15 20:04:24,FOMC前の米国・半導体基準値,^VIX,VIX,16.77,2026/6/15 16:00:00,取得済,https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?range=5d&interval=1d,イベント前の比較基準値として記録。
