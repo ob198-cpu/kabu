@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本日の確認事項 2026年6月16日</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:19px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:32px}
+    header h1{margin:0 0 8px;font-size:clamp(34px,4vw,48px);line-height:1.18;letter-spacing:0}
+    header p{margin:0;font-weight:900;max-width:1180px}
+    main{max-width:1320px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:16px}.card strong{display:block;font-size:30px;color:var(--blue);line-height:1.25}
+    .notice{border:2px solid var(--red);background:#fff1f1;color:#8a0000;border-radius:10px;padding:14px 16px;font-weight:900;margin:0}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 11px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    .id{font-weight:900;color:var(--navy);white-space:nowrap}
+    .warn{color:var(--amber);font-weight:900}.bad{color:var(--red);font-weight:900}.muted{color:#52677a;font-weight:900}
+    a{color:#075c94;font-weight:900}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:17px}}
+    @media print{body{background:#fff}section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:11px;padding:6px 7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>本日の確認事項 2026年6月16日</h1>
+  <p>6月イベント対応のうち、今日見るものと、まだ触らないものを分けた実務用画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の扱い</h2>
+    <div class="cards">
+      <div class="card"><b>本日確認</b><strong>1</strong></div>
+      <div class="card"><b>待機・購入前</b><strong>4</strong></div>
+      <div class="card"><b>総合判定</b><strong>購入判断不可</strong></div>
+      <div class="card"><b>買付上限</b><strong>0円</strong></div>
+    </div>
+  </section>
+  <section>
+    <p class="notice">今日の作業は日銀会合結果の公式確認と、確認後の市場反応入力です。FOMC、指数総合反応、候補銘柄個別反応、本人別NISA確認が揃うまでは、購入判断には進めません。</p>
+  </section>
+  <section>
+    <h2>今日確認する項目</h2>
+    <div class="table-wrap"><table>
+    <thead><tr><th>ID</th><th>イベント</th><th>扱い</th><th>今日の作業</th><th>入力する数値</th><th>停止条件</th><th>見るページ</th></tr></thead>
+    <tbody><tr>
+      <td class="id">T01</td>
+      <td>日銀会合結果</td>
+      <td class="warn">本日確認</td>
+      <td>日銀の公式結果が公表されたら、政策内容、ドル円、日経平均、TOPIX代替ETFを同じ基準で確認する。</td>
+      <td>ドル円、日経平均、TOPIX代替ETFのイベント前後変化</td>
+      <td>ドル円-3.5%以上、日経/TOPIX代替ETF-5%以上なら買付停止候補</td>
+      <td>june_event_source_checklist_20260615.html → june_event_manual_input_form_20260615.html</td>
+    </tr></tbody>
+  </table></div>
+  </section>
+  <section>
+    <h2>今日はまだ買付判断に使わない項目</h2>
+    <div class="table-wrap"><table>
+    <thead><tr><th>ID</th><th>イベント</th><th>扱い</th><th>今日の作業</th><th>入力する数値</th><th>停止条件</th><th>見るページ</th></tr></thead>
+    <tbody><tr>
+      <td class="id">T02</td>
+      <td>FOMC結果</td>
+      <td class="muted">翌日以降</td>
+      <td>まだ入力しない。確認時期になってから公式結果と市場反応を記録する。</td>
+      <td>米10年金利、NASDAQ、SOX、VIXのイベント前後変化</td>
+      <td>米10年金利+25bp以上、NASDAQ/SOX-5%以上、VIX+35%以上なら買付停止候補</td>
+      <td>june_event_execution_flow_20260615.html</td>
+    </tr><tr>
+      <td class="id">T03</td>
+      <td>指数の総合反応</td>
+      <td class="muted">6/18以降</td>
+      <td>まだ入力しない。確認時期になってから公式結果と市場反応を記録する。</td>
+      <td>日経平均、TOPIX代替ETF、S&amp;P500、NASDAQ、SOX、VIXの変化率</td>
+      <td>指数が弱い場合は個別株比率を下げ、現金比率を上げる</td>
+      <td>june_event_execution_flow_20260615.html</td>
+    </tr><tr>
+      <td class="id">T04</td>
+      <td>候補銘柄の個別反応</td>
+      <td class="muted">6/18以降</td>
+      <td>まだ入力しない。確認時期になってから公式結果と市場反応を記録する。</td>
+      <td>候補銘柄の下落率、指数との差、出来高変化</td>
+      <td>候補銘柄-7%以上、または指数に明確に劣後した場合はP1復帰見送り</td>
+      <td>june_event_execution_flow_20260615.html</td>
+    </tr><tr>
+      <td class="id">T05</td>
+      <td>本人別NISA・注文前確認</td>
+      <td class="muted">購入直前</td>
+      <td>本人別のNISA口座、本人スマホ、本人ログイン、NISA区分、入金、注文画面を確認する。</td>
+      <td>本人別のNISA残枠、口座別買付上限、注文金額</td>
+      <td>本人操作未確認、NISA口座区分不明、証券会社画面未確認なら買付上限0円</td>
+      <td>june_event_execution_flow_20260615.html</td>
+    </tr></tbody>
+  </table></div>
+  </section>
+</main>
+</body>
+</html>
