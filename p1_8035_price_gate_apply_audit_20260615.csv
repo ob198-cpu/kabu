@@ -1,0 +1,3 @@
+﻿入力ID,処理,値,出所,理由
+8035_price_date,反映,2026-06-15,https://query1.finance.yahoo.com/v8/finance/chart/8035.T?range=5d&interval=1d,8035.Tの直近株価取得時刻を価格ゲートの基準日に反映。財務・イベントゲートには反映しない。
+8035_current_price,反映,"72,760円",https://query1.finance.yahoo.com/v8/finance/chart/8035.T?range=5d&interval=1d,8035.Tの直近株価を取得元と時刻つきで反映。PER/PBR確定値ではなく価格ゲート用の入力値として扱う。
