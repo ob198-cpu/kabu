@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>6月イベント入力検証</title>
+  <title>6月イベント反映プレビュー</title>
   <style>
     :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
     *{box-sizing:border-box}
@@ -33,83 +33,73 @@
 </head>
 <body>
 <header>
-  <h1>6月イベント入力検証</h1>
-  <p>イベント結果入力台帳を読み込み、買付判定へ進めるだけの根拠が揃っているかを確認します。</p>
+  <h1>6月イベント反映プレビュー</h1>
+  <p>入力台帳の結果を、P1ゲート・反応判定・口座確認へ反映できるかを事前確認します。</p>
 </header>
 <main>
   <section>
-    <h2>現在の判定</h2>
+    <h2>現在の反映判定</h2>
     <div class="cards">
-      <div class="card"><b>完了</b><strong>0/5</strong></div>
-      <div class="card"><b>注意</b><strong>0</strong></div>
-      <div class="card"><b>停止候補</b><strong>0</strong></div>
-      <div class="card"><b>未完了</b><strong>5</strong></div>
+      <div class="card"><b>反映可能</b><strong>0/5</strong></div>
+      <div class="card"><b>反映保留</b><strong>0</strong></div>
+      <div class="card"><b>反映停止</b><strong>0</strong></div>
+      <div class="card"><b>反映禁止</b><strong>5</strong></div>
       <div class="card"><b>買付上限</b><strong>0円</strong></div>
     </div>
   </section>
   <section>
-    <p class="notice">判定: 買付不可。イベント結果、出所、取得日時、反映状況が揃わない項目がある間は、P1復帰・買付金額・注文票へ進めません。</p>
+    <p class="notice">未入力・根拠不足のイベントは、スコア、P1復帰、買付金額へ反映しません。反映可能になっても、次ゲートで停止条件・口座条件を再確認します。</p>
   </section>
   <section>
-    <h2>チケット別検証</h2>
+    <h2>反映プレビュー</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>ID</th><th>確認時期</th><th>チケット</th><th>判定</th><th>不足項目</th><th>次アクション</th><th>結果値</th><th>市場反応</th><th>出所URL</th><th>反映状況</th></tr></thead>
+        <thead><tr><th>ID</th><th>イベント</th><th>入力状態</th><th>反映判定</th><th>不足項目</th><th>反映先</th><th>反映目的</th><th>次アクション</th></tr></thead>
         <tbody><tr>
   <td class="id">T01</td>
-  <td>2026-06-16以降</td>
   <td>日銀会合結果</td>
-  <td class="bad">未完了</td>
-  <td>結果値、市場反応、出所URL、取得日時、反映状況</td>
-  <td>日銀会合結果の結果値、出所、取得日時、反映状況を入力する</td>
   <td>未入力</td>
-  <td>未入力</td>
-  <td>未入力</td>
-  <td>未反映</td>
+  <td class="bad">反映禁止</td>
+  <td>結果値、市場反応、出所URL、取得日時</td>
+  <td>6503_event_boj_result / 8035_event_boj_result / event_post_reaction_workbench</td>
+  <td>日銀後の円高ショック、日本株急落、銀行・輸出・半導体候補への影響を確認する</td>
+  <td>公式結果、出所、取得日時、反映状況を先に埋める</td>
 </tr><tr>
   <td class="id">T02</td>
-  <td>2026-06-17以降</td>
   <td>FOMC結果</td>
-  <td class="bad">未完了</td>
-  <td>結果値、市場反応、出所URL、取得日時、反映状況</td>
-  <td>FOMC結果の結果値、出所、取得日時、反映状況を入力する</td>
   <td>未入力</td>
-  <td>未入力</td>
-  <td>未入力</td>
-  <td>未反映</td>
+  <td class="bad">反映禁止</td>
+  <td>結果値、市場反応、出所URL、取得日時</td>
+  <td>6503_event_fomc_result / 8035_event_fomc_result / event_post_reaction_workbench</td>
+  <td>FOMC後の米10年金利、NASDAQ、SOX、VIXを確認し、高PER・半導体候補を保留すべきか判定する</td>
+  <td>公式結果、出所、取得日時、反映状況を先に埋める</td>
 </tr><tr>
   <td class="id">T03</td>
-  <td>2026-06-18以降</td>
   <td>指数の総合反応</td>
-  <td class="bad">未完了</td>
-  <td>結果値、市場反応、出所URL、取得日時、反映状況</td>
-  <td>指数の総合反応の結果値、出所、取得日時、反映状況を入力する</td>
   <td>未入力</td>
-  <td>未入力</td>
-  <td>未入力</td>
-  <td>未反映</td>
+  <td class="bad">反映禁止</td>
+  <td>結果値、市場反応、出所URL、取得日時</td>
+  <td>6503_post_event_index_reaction / 8035_post_event_index_reaction / p1_event_gate_remaining</td>
+  <td>6月イベント後の地合いを指数で確認し、個別株比率を上げるか下げるか判定する</td>
+  <td>公式結果、出所、取得日時、反映状況を先に埋める</td>
 </tr><tr>
   <td class="id">T04</td>
-  <td>2026-06-18以降</td>
   <td>候補銘柄の個別反応</td>
-  <td class="bad">未完了</td>
-  <td>結果値、市場反応、出所URL、取得日時、反映状況</td>
-  <td>候補銘柄の個別反応の結果値、出所、取得日時、反映状況を入力する</td>
   <td>未入力</td>
-  <td>未入力</td>
-  <td>未入力</td>
-  <td>未反映</td>
+  <td class="bad">反映禁止</td>
+  <td>結果値、市場反応、出所URL、取得日時</td>
+  <td>6503_post_event_ticker_reaction / 8035_post_event_ticker_reaction / p1_segment_next_gate_input_validator</td>
+  <td>候補銘柄が指数に対して強いか弱いかを確認し、P1復帰候補に戻せるか判定する</td>
+  <td>公式結果、出所、取得日時、反映状況を先に埋める</td>
 </tr><tr>
   <td class="id">T05</td>
-  <td>購入前</td>
   <td>本人別NISA・注文前確認</td>
-  <td class="bad">未完了</td>
-  <td>結果値、市場反応、出所URL、取得日時、反映状況</td>
-  <td>本人別NISA・注文前確認の結果値、出所、取得日時、反映状況を入力する</td>
   <td>未入力</td>
-  <td>未入力</td>
-  <td>未入力</td>
-  <td>未反映</td>
+  <td class="bad">反映禁止</td>
+  <td>結果値、市場反応、出所URL、取得日時</td>
+  <td>nisa_account_execution_gate_20260614 / 購入前チェック / 注文票</td>
+  <td>本人操作、NISA口座区分、NISA残枠、入金、注文画面を確認し、買付上限0円を解除できるか判定する</td>
+  <td>公式結果、出所、取得日時、反映状況を先に埋める</td>
 </tr></tbody>
       </table>
     </div>
@@ -118,9 +108,8 @@
     <h2>関連画面</h2>
     <div class="links">
       <a href="june_event_result_entry_20260615.html">結果入力台帳</a>
-      <a href="june_event_reflection_preview_20260615.html">反映プレビュー</a>
-      <a href="june_event_input_tickets_20260615.html">入力チケット</a>
-      <a href="june_event_operation_calendar_20260615.html">運用カレンダー</a>
+      <a href="june_event_ticket_validator_20260615.html">入力検証</a>
+      <a href="p1_event_gate_remaining_20260615.html">P1イベント後ゲート</a>
       <a href="event_post_reaction_workbench_20260615.html">反応判定</a>
     </div>
   </section>

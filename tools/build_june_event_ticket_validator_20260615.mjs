@@ -245,6 +245,7 @@ const html = `<!doctype html>
     <h2>関連画面</h2>
     <div class="links">
       <a href="june_event_result_entry_20260615.html">結果入力台帳</a>
+      <a href="june_event_reflection_preview_20260615.html">反映プレビュー</a>
       <a href="june_event_input_tickets_20260615.html">入力チケット</a>
       <a href="june_event_operation_calendar_20260615.html">運用カレンダー</a>
       <a href="event_post_reaction_workbench_20260615.html">反応判定</a>

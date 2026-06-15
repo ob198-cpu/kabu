@@ -75,6 +75,7 @@ const html = `<!doctype html>
       <a href="june_event_operation_calendar_20260615.html"><b>6月イベント運用表</b><span>いつ、何を確認し、どの条件で止めるかを見る画面です。</span></a>
       <a href="june_event_result_entry_20260615.html"><b>6月イベント結果入力台帳</b><span>日銀・FOMC・指数反応・候補銘柄反応を出所付きで入れる台帳です。</span></a>
       <a href="june_event_ticket_validator_20260615.html"><b>6月イベント入力検証</b><span>入力台帳を読み、買付判定へ進めるかを検証します。</span></a>
+      <a href="june_event_reflection_preview_20260615.html"><b>6月イベント反映プレビュー</b><span>入力した結果を、どの判定画面へ反映できるかを確認します。</span></a>
       <a href="event_post_reaction_workbench_20260615.html"><b>イベント後反応判定</b><span>基準値と現在値を比較し、注意・停止候補を判定します。</span></a>
       <a href="p1_event_gate_remaining_20260615.html"><b>P1イベント後ゲート</b><span>CPI、日銀、FOMC、指数、個別株反応の残り項目です。</span></a>
       <a href="p1_segment_next_gate_input_validator_20260615.html"><b>P1入力検証</b><span>入力値・出所・取得日時・反映先が揃ったかを確認します。</span></a>
