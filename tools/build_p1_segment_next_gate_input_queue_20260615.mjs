@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const generatedAt = "2026/06/15 05:25";
+const generatedAt = "2026/06/15 06:25";
 const sourceCsv = "p1_segment_next_gate_requirements_20260615.csv";
 const htmlFile = "p1_segment_next_gate_input_queue_20260615.html";
 const detailCsv = "p1_segment_next_gate_input_queue_20260615.csv";
@@ -157,12 +157,13 @@ function buildSummary(rows) {
   const tickers = new Set(rows.map((row) => row.ticker));
   const gates = new Set(rows.map((row) => row.ゲート));
   const unfilled = rows.filter((row) => !row.入力値).length;
+  const filled = rows.length - unfilled;
   return [
     {
       項目: "入力キュー",
       値: `${rows.length}項目`,
-      判定: "未入力",
-      説明: `${tickers.size}銘柄、${gates.size}ゲートの必要入力を分解した。`,
+      判定: filled > 0 ? "一部入力済み" : "未入力",
+      説明: `${tickers.size}銘柄、${gates.size}ゲートの必要入力を分解した。現在は${filled}項目を入力済み。`,
     },
     {
       項目: "未入力",
@@ -187,7 +188,7 @@ function buildSummary(rows) {
 
 function statusClass(value) {
   const text = String(value ?? "");
-  if (/0円|0社|禁止|未|保留/.test(text)) return "bad";
+  if (/^(0円|0社|禁止|未|保留)$/.test(text)) return "bad";
   if (/未入力|入力キュー/.test(text)) return "warn";
   if (/完了|済/.test(text)) return "ok";
   return "";
@@ -353,8 +354,17 @@ function updateNav() {
   fs.writeFileSync(boardPath, board, "utf8");
 }
 
-const requirementRows = readCsv(sourceCsv);
-const rows = buildRows(requirementRows);
+function loadCurrentRows() {
+  if (fs.existsSync(p(detailCsv))) {
+    const currentRows = readCsv(detailCsv);
+    if (currentRows.length && currentRows.every((row) => row.入力ID)) {
+      return currentRows;
+    }
+  }
+  return buildRows(readCsv(sourceCsv));
+}
+
+const rows = loadCurrentRows();
 const summaryRows = buildSummary(rows);
 
 writeCsv(detailCsv, rows);

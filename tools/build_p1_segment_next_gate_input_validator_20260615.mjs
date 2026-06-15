@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const generatedAt = "2026/06/15 05:45";
+const generatedAt = "2026/06/15 06:20";
 const sourceCsv = "p1_segment_next_gate_input_queue_20260615.csv";
 const htmlFile = "p1_segment_next_gate_input_validator_20260615.html";
 const detailCsv = "p1_segment_next_gate_input_validator_20260615.csv";
@@ -73,9 +73,11 @@ function readCsv(file) {
   return parseCsv(fs.readFileSync(p(file), "utf8"));
 }
 
-function writeCsv(file, rows) {
-  const headers = Object.keys(rows[0] ?? { empty: "" });
-  const body = [headers.join(","), ...rows.map((row) => headers.map((header) => csvCell(row[header])).join(","))].join("\n");
+function writeCsv(file, rows, headers = Object.keys(rows[0] ?? { empty: "" })) {
+  const body = [
+    headers.join(","),
+    ...rows.map((row) => headers.map((header) => csvCell(row[header])).join(",")),
+  ].join("\n");
   fs.writeFileSync(p(file), `\uFEFF${body}\n`, "utf8");
 }
 
@@ -83,8 +85,21 @@ function isFilled(value) {
   return String(value ?? "").trim() !== "";
 }
 
-function isConfirmed(value) {
-  return /^(済|OK|完了|確認済)$/.test(String(value ?? "").trim());
+function confirmationOk(row) {
+  const value = String(row.公式確認 ?? "").trim();
+  if (row.ゲート === "価格ゲート") return value === "計算確認済";
+  if (row.ゲート === "説明可能性ゲート") return value === "運用確認済";
+  if (row.ゲート === "イベント後ゲート") return value === "イベント確認済" || value === "済";
+  if (row.ゲート === "財務ゲート") return value === "済";
+  return value === "済";
+}
+
+function expectedConfirmation(row) {
+  if (row.ゲート === "価格ゲート") return "計算確認済";
+  if (row.ゲート === "説明可能性ゲート") return "運用確認済";
+  if (row.ゲート === "イベント後ゲート") return "イベント確認済または済";
+  if (row.ゲート === "財務ゲート") return "済";
+  return "済";
 }
 
 function validateRow(row) {
@@ -92,7 +107,8 @@ function validateRow(row) {
   if (!isFilled(row.入力値)) missing.push("入力値");
   if (!isFilled(row.出所URLまたは資料名)) missing.push("出所URLまたは資料名");
   if (!isFilled(row.ページまたは取得日時)) missing.push("ページまたは取得日時");
-  if (!isConfirmed(row.公式確認)) missing.push("公式確認");
+  if (!confirmationOk(row)) missing.push(`公式確認(${expectedConfirmation(row)})`);
+
   const pass = missing.length === 0;
   return {
     ticker: row.ticker,
@@ -110,43 +126,38 @@ function validateRow(row) {
     P1復帰: "0社",
     買付上限: "0円",
     理由: pass
-      ? "入力値、出所、取得位置、公式確認がそろった。なお、全ゲート通過まではP1復帰しない。"
+      ? "入力値、出所、取得位置、確認区分がそろった。ただし全ゲート通過まではP1復帰しない。"
       : "必要項目が不足しているため、次ゲートへ進めない。",
   };
 }
 
-function groupBy(rows, key) {
+function groupBy(rows, makeKey) {
   const map = new Map();
   for (const row of rows) {
-    const value = row[key] ?? "";
-    if (!map.has(value)) map.set(value, []);
-    map.get(value).push(row);
+    const key = makeKey(row);
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(row);
   }
   return map;
 }
 
 function buildGateSummary(rows) {
-  const grouped = groupBy(rows, "ticker");
-  const result = [];
-  for (const [ticker, tickerRows] of grouped.entries()) {
-    const gateGrouped = groupBy(tickerRows, "ゲート");
-    for (const [gate, gateRows] of gateGrouped.entries()) {
-      const passed = gateRows.filter((row) => row.判定 === "通過").length;
-      const total = gateRows.length;
-      const pass = passed === total;
-      result.push({
-        ticker,
-        銘柄: gateRows[0]?.銘柄 ?? "",
-        ゲート: gate,
-        入力通過: `${passed}/${total}`,
-        ゲート判定: pass ? "通過" : "未通過",
-        P1復帰: "0社",
-        買付上限: "0円",
-        次の作業: pass ? "他ゲートの通過を確認する。" : "不足項目を入力し、出所と公式確認をそろえる。",
-      });
-    }
-  }
-  return result;
+  const grouped = groupBy(rows, (row) => `${row.ticker}__${row.ゲート}`);
+  return [...grouped.values()].map((gateRows) => {
+    const passed = gateRows.filter((row) => row.判定 === "通過").length;
+    const total = gateRows.length;
+    const pass = passed === total;
+    return {
+      ticker: gateRows[0]?.ticker ?? "",
+      銘柄: gateRows[0]?.銘柄 ?? "",
+      ゲート: gateRows[0]?.ゲート ?? "",
+      入力通過: `${passed}/${total}`,
+      ゲート判定: pass ? "通過" : "未通過",
+      P1復帰: "0社",
+      買付上限: "0円",
+      次の作業: pass ? "他ゲートの通過を確認する。" : "不足項目を入力し、出所と確認区分をそろえる。",
+    };
+  });
 }
 
 function buildSummary(rows, gateRows) {
@@ -157,7 +168,7 @@ function buildSummary(rows, gateRows) {
       項目: "入力項目通過",
       値: `${passedRows}/${rows.length}項目`,
       判定: passedRows === rows.length ? "通過" : "未通過",
-      説明: "入力値、出所、ページまたは取得日時、公式確認の4条件で判定。",
+      説明: "入力値、出所、ページまたは取得日時、確認区分の4条件で判定。",
     },
     {
       項目: "ゲート通過",
@@ -191,8 +202,7 @@ function statusClass(value) {
 function table(data, columns) {
   return `<div class="table-wrap"><table><thead><tr>${columns.map((column) => `<th>${h(column.label)}</th>`).join("")}</tr></thead><tbody>${data.map((row) => `<tr>${columns.map((column) => {
     const value = row[column.key];
-    const cls = statusClass(value);
-    return `<td class="${cls}">${h(value)}</td>`;
+    return `<td class="${statusClass(value)}">${h(value)}</td>`;
   }).join("")}</tr>`).join("")}</tbody></table></div>`;
 }
 
@@ -201,7 +211,8 @@ function card(title, value, note, className = "") {
 }
 
 function writeHtml(rows, gateRows, summaryRows) {
-  const passed = rows.filter((row) => row.判定 === "通過").length;
+  const passedRows = rows.filter((row) => row.判定 === "通過").length;
+  const passedGates = gateRows.filter((row) => row.ゲート判定 === "通過").length;
   const html = `<!doctype html>
 <html lang="ja">
 <head>
@@ -241,15 +252,15 @@ function writeHtml(rows, gateRows, summaryRows) {
 <body>
 <header>
   <h1>P1 事業寄与 次ゲート入力バリデーター</h1>
-  <p>入力キューの各項目について、入力値・出所・取得位置・公式確認がそろっているかを判定します。未通過ならスコア反映とP1復帰は止めます。</p>
+  <p>財務ゲートは公式確認、価格ゲートは計算確認、説明可能性ゲートは運用確認として分けて検査します。未通過が残る限り、スコア反映・P1復帰・買付は止めます。</p>
 </header>
 <main>
   <section>
     <h2>結論</h2>
-    <p class="notice">入力項目の通過は ${h(passed)}/${h(rows.length)} 項目です。未通過が残るため、スコア反映0項目、P1復帰0社、買付上限0円を維持します。</p>
+    <p class="notice">入力項目の通過は ${h(passedRows)}/${h(rows.length)} 項目、ゲート通過は ${h(passedGates)}/${h(gateRows.length)} ゲートです。未通過が残るため、スコア反映0項目、P1復帰0社、買付上限0円を維持します。</p>
     <div class="cards">
-      ${card("入力項目通過", `${passed}/${rows.length}`, "4条件で判定", passed === rows.length ? "ok" : "bad")}
-      ${card("ゲート通過", "0/8", "銘柄別4ゲート", "bad")}
+      ${card("入力項目通過", `${passedRows}/${rows.length}`, "4条件で判定", passedRows === rows.length ? "ok" : "bad")}
+      ${card("ゲート通過", `${passedGates}/${gateRows.length}`, "銘柄別4ゲート", passedGates === gateRows.length ? "ok" : "bad")}
       ${card("P1復帰", "0社", "まだ戻さない", "bad")}
       ${card("買付上限", "0円", "購入判断に使わない", "bad")}
     </div>
@@ -261,8 +272,8 @@ function writeHtml(rows, gateRows, summaryRows) {
       <a href="index.html">ホーム</a>
       <a href="latest_practical_start_20260614.html">実用パート入口</a>
       <a href="p1_segment_next_gate_input_queue_20260615.html">次ゲート入力キュー</a>
-      <a href="p1_segment_next_gate_requirements_20260615.html">次ゲート必要データ</a>
-      <a href="p1_segment_reflection_preview_20260615.html">仮反映プレビュー</a>
+      <a href="p1_price_explanation_prefill_apply_audit_20260615.html">価格・説明ゲート反映監査</a>
+      <a href="p1_price_basis_official_promotion_workbench_20260615.html">PER/PBR基準日作業台</a>
     </div>
   </section>
 
@@ -314,49 +325,6 @@ function writeHtml(rows, gateRows, summaryRows) {
   fs.writeFileSync(p(htmlFile), html, "utf8");
 }
 
-function insertAfter(content, marker, addition) {
-  if (content.includes(addition.trim())) return content;
-  const index = content.indexOf(marker);
-  if (index === -1) return content;
-  const end = index + marker.length;
-  return `${content.slice(0, end)}\n${addition}\n${content.slice(end)}`;
-}
-
-function updateNav() {
-  const homeCard = `<a class="card" href="${htmlFile}">
-          <b>P1 事業寄与 次ゲート入力バリデーター</b>
-          <span>入力値・出所・取得位置・公式確認がそろっているかを検査し、未通過なら反映禁止で止める。</span>
-        </a>`;
-  const latestStep = `<a class="step" href="${htmlFile}">
-        <b>6-12v. P1 事業寄与 次ゲート入力バリデーター</b>
-        <span>次ゲート入力キューの不足を検査し、未完了ならP1復帰0社・買付上限0円を維持する。</span>
-        <em>入力検査</em>
-      </a>`;
-  const boardLink = `<a href="${htmlFile}">P1 事業寄与 次ゲート入力バリデーター</a>`;
-
-  const indexPath = p("index.html");
-  let index = fs.readFileSync(indexPath, "utf8");
-  index = insertAfter(index, `<a class="card" href="p1_segment_next_gate_input_queue_20260615.html">
-          <b>P1 事業寄与 次ゲート入力キュー</b>
-          <span>次ゲートを通すために、実際に埋める財務・価格・イベント後反応・説明欄を一覧化する。</span>
-        </a>`, homeCard);
-  fs.writeFileSync(indexPath, index, "utf8");
-
-  const latestPath = p("latest_practical_start_20260614.html");
-  let latest = fs.readFileSync(latestPath, "utf8");
-  latest = insertAfter(latest, `<a class="step" href="p1_segment_next_gate_input_queue_20260615.html">
-        <b>6-12u. P1 事業寄与 次ゲート入力キュー</b>
-        <span>財務・価格・イベント後反応・説明可能性の入力欄を分解し、未入力なら反映禁止のまま止める。</span>
-        <em>入力キュー</em>
-      </a>`, latestStep);
-  fs.writeFileSync(latestPath, latest, "utf8");
-
-  const boardPath = p("daily_practical_compact_board_20260614.html");
-  let board = fs.readFileSync(boardPath, "utf8");
-  board = insertAfter(board, `<a href="p1_segment_next_gate_input_queue_20260615.html">P1 事業寄与 次ゲート入力キュー</a>`, boardLink);
-  fs.writeFileSync(boardPath, board, "utf8");
-}
-
 const sourceRows = readCsv(sourceCsv);
 const rows = sourceRows.map(validateRow);
 const gateRows = buildGateSummary(rows);
@@ -365,6 +333,14 @@ const summaryRows = buildSummary(rows, gateRows);
 writeCsv(detailCsv, rows);
 writeCsv(summaryCsv, summaryRows);
 writeHtml(rows, gateRows, summaryRows);
-updateNav();
 
-console.log(JSON.stringify({ htmlFile, detailCsv, summaryCsv, rows: rows.length, passed: rows.filter((row) => row.判定 === "通過").length, buyLimit: "0円" }, null, 2));
+console.log(JSON.stringify({
+  htmlFile,
+  detailCsv,
+  summaryCsv,
+  rows: rows.length,
+  passedRows: rows.filter((row) => row.判定 === "通過").length,
+  passedGates: gateRows.filter((row) => row.ゲート判定 === "通過").length,
+  totalGates: gateRows.length,
+  buyLimit: "0円",
+}, null, 2));
