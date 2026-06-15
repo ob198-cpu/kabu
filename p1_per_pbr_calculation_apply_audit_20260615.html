@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PER/PBR計算入力 反映監査</title>
+  <style>
+    body{font-family:Arial,"Yu Gothic",Meiryo,sans-serif;margin:0;background:#f5f8fc;color:#071f3a;line-height:1.7;font-size:17px}
+    main{max-width:1200px;margin:0 auto;padding:28px}
+    h1{font-size:30px;margin:0 0 12px;border-left:8px solid #0068a9;padding-left:14px}
+    section{background:#fff;border:1px solid #c9d9e8;border-radius:12px;padding:20px;margin:18px 0;break-inside:avoid}
+    .notice{border:2px solid #b30000;background:#fff5f5;color:#8a0000;font-weight:700;padding:14px;border-radius:10px}
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;table-layout:auto}
+    th,td{border:1px solid #c9d9e8;padding:10px;vertical-align:top;overflow-wrap:break-word}
+    th{background:#e6f0f8;text-align:left}
+    .ok{color:#007a3d;font-weight:700}.warn{color:#b66a00;font-weight:700}
+    @media print{body{background:#fff}main{padding:16mm}section{page-break-inside:avoid}.table-wrap{overflow:visible}}
+  </style>
+</head>
+<body>
+<main>
+  <h1>PER/PBR計算入力 反映監査</h1>
+  <p>6503.T 三菱電機、8035.T 東京エレクトロンについて、公式EPS/BPSと同一基準日の株価を使い、計算式付きでPER/PBRを入力しました。</p>
+  <section>
+    <p class="notice">これは購入判断ではありません。事業寄与と6月イベント後反応が未通過のため、スコア反映0項目、P1復帰0社、買付上限0円を維持します。</p>
+  </section>
+  <section>
+    <h2>反映内容</h2>
+    <div class="table-wrap"><table><thead><tr><th>入力ID</th><th>処理</th><th>値</th><th>根拠</th><th>計算式</th><th>注意</th></tr></thead><tbody><tr><td class="">6503_per_official</td><td class="ok">反映</td><td class="">予想PER 25.36倍 / 実績PER 29.54倍</td><td class="">会社予想EPS 231.01円、実績EPS 198.31円、株価5,858円、株価取得時刻 2026-06-15 15:30 JST</td><td class="">予想PER=5,858÷231.01=25.36倍、実績PER=5,858÷198.31=29.54倍</td><td class="warn">公式EPSと同一基準日の株価で計算。公式PERそのものではなく、計算根拠つきPERとして財務ゲートに入力。</td></tr><tr><td class="">6503_pbr_official</td><td class="ok">反映</td><td class="">PBR 2.67倍</td><td class="">BPS 2,191.26円、株価5,858円、株価取得時刻 2026-06-15 15:30 JST</td><td class="">PBR=5,858÷2,191.26=2.67倍</td><td class="warn">公式BPSと同一基準日の株価で計算。公式PBRそのものではなく、計算根拠つきPBRとして財務ゲートに入力。</td></tr><tr><td class="">8035_per_official</td><td class="ok">反映</td><td class="">実績PER 58.00倍</td><td class="">実績EPS 1,254.57円、株価72,760円、株価取得時刻 2026-06-15 15:30 JST</td><td class="">実績PER=72,760÷1,254.57=58.00倍。第2四半期累計予想EPSは通期PER計算に使わない。</td><td class="warn">公式EPSと同一基準日の株価で計算。通期予想PERは作らず、実績PERだけを計算根拠つきで入力。</td></tr><tr><td class="">8035_pbr_official</td><td class="ok">反映</td><td class="">PBR 16.17倍</td><td class="">BPS 4,498.85円、株価72,760円、株価取得時刻 2026-06-15 15:30 JST</td><td class="">PBR=72,760÷4,498.85=16.17倍</td><td class="warn">公式BPSと同一基準日の株価で計算。高PBR銘柄として、後続の事業寄与・イベント反応確認を必須にする。</td></tr></tbody></table></div>
+  </section>
+</main>
+</body>
+</html>
