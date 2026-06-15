@@ -1,0 +1,101 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1未解決10項目 改善ボード</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--warn:#9a5b00;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;max-width:1180px;font-weight:850}
+    main{max-width:1580px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#064f86;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px 6px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1未解決10項目 改善ボード</h1>
+  <p>公式値、株価基準日、イベント後反応、事業寄与、質的テーマ、買付比率を分けて管理し、未確認値がスコアや購入判断へ混ざらないようにするための改善版です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">改善したのは「未確認値を安全に閉じるための仕組み」です。現時点では、スコア反映0項目、P1復帰0社、買付上限0円を維持します。</p>
+    <div class="cards">
+      <div class="card warn"><b>改善対象</b><strong>10項目</strong><span>すべて追跡表へ接続</span></div>
+      <div class="card bad"><b>スコア反映</b><strong>0項目</strong><span>未確認値は混ぜない</span></div>
+      <div class="card bad"><b>P1復帰</b><strong>0社</strong><span>候補復帰はまだしない</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>購入判断には使わない</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ページ</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">実用パート入口</a>
+      <a href="p1_segment_pdf_official_check_result_20260615.html">PDF公式確認結果</a>
+      <a href="p1_segment_official_input_queue_draft_20260615.html">公式入力下書き</a>
+      <a href="p1_segment_next_gate_input_validator_20260615.html">入力バリデーター</a>
+      <a href="102_june_event_result_input.csv">イベント入力CSV</a>
+      <a href="p1_issue_resolution_board_20260615.csv">改善ボードCSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>サマリー</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>数値</th><th>状態</th><th>意味</th></tr></thead><tbody><tr><td class="">改善対象</td><td class="bad">10項目</td><td class="">全項目を改善ボード化</td><td class="">未確認値をスコアや買付に混ぜないための追跡表を作成</td></tr><tr><td class="">PER/PBR</td><td class="">6件</td><td class="bad">候補値のみ</td><td class="">株価基準日確認まで正式値にしない</td></tr><tr><td class="warn">公式転記候補</td><td class="">4項目</td><td class="warn">昇格ゲート化</td><td class="">原本キュー上書き前に検査する</td></tr><tr><td class="">スコア反映</td><td class="bad">0項目</td><td class="">ロック維持</td><td class="">不十分な値で点数を動かさない</td></tr><tr><td class="">P1復帰</td><td class="bad">0社</td><td class="">ロック維持</td><td class="bad">購入候補へ戻す判断はまだ行わない</td></tr><tr><td class="">買付上限</td><td class="bad">0円</td><td class="">ロック維持</td><td class="">購入可否と比率はイベント後・公式確認後に再判定</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>10項目の改善状況</h2>
+    <div class="table-wrap"><table><thead><tr><th>No</th><th>不備</th><th>改善内容</th><th>現在状態</th><th>残作業</th><th>閉じる条件</th><th>関連ファイル</th><th>スコア反映</th></tr></thead><tbody><tr><td class="">1</td><td class="bad">PER/PBRがまだ確定値ではない</td><td class="warn">EPS/BPSの公式確認と株価基準日を分離し、PER/PBRは候補値のまま止める専用チェック表を作成</td><td class="warn">改善済み: 候補値と正式値の境界を表示</td><td class="">株価取得元・取得日時・同一基準日を確認して再計算</td><td class="">全対象で株価基準日、EPS/BPS、計算式、出所がそろう</td><td class="">p1_price_basis_per_pbr_check_20260615.csv</td><td class="bad">禁止</td></tr><tr><td class="">2</td><td class="bad">公式値の転記はまだ下書き段階</td><td class="warn">ROE・営業利益率4項目を、原本上書き前の昇格ゲートとして別CSVに分離</td><td class="warn">改善済み: 転記候補 4項目</td><td class="ok">入力バリデーター通過後に原本キューへ反映</td><td class="">値、出所、確認位置、公式確認がそろう</td><td class="">p1_official_transfer_promotion_gate_20260615.csv</td><td class="bad">禁止</td></tr><tr><td class="">3</td><td class="bad">スコアにはまだ反映していない</td><td class="bad">スコア反映ゲートを作り、未通過項目がある限り0項目のままにする</td><td class="warn">改善済み: 反映解除条件を明文化</td><td class="ok">財務・価格・イベント・説明可能性の全通過</td><td class="ok">スコア反映ゲートの全行が通過</td><td class="">p1_score_reflection_unlock_gate_20260615.csv</td><td class="bad">0項目</td></tr><tr><td class="">4</td><td class="bad">P1復帰はまだ0社</td><td class="ok">P1復帰は、公式値が増えただけではなく、買付前ゲート通過後にだけ解除する扱いへ固定</td><td class="bad">改善済み: P1復帰0社を明示</td><td class="ok">6503・8035の各ゲート通過後に再判定</td><td class="">P1復帰理由、落とす条件、買付上限が銘柄別にそろう</td><td class="">p1_segment_next_gate_input_validator_20260615.csv</td><td class="bad">禁止</td></tr><tr><td class="">5</td><td class="bad">イベント後データが未入力</td><td class="bad">102のイベント入力状況を改善ボードに接続し、未入力件数と影響を表示</td><td class="bad">改善済み: 未入力 3/4</td><td class="">日銀、FOMC、最終購入前確認を入力</td><td class="">各イベントの実数、市場反応、現在状態、失敗時アクションが埋まる</td><td class="">102_june_event_result_input.csv</td><td class="bad">禁止</td></tr><tr><td class="">6</td><td class="">株価指標の再計算が必要</td><td class="warn">既存値を候補値として残し、正式反映には同一基準日の再現計算が必要と明記</td><td class="warn">改善済み: 補完候補 27/44</td><td class="">株価時系列からCAGR、S&amp;P差、最大下落率を再計算</td><td class="">計算日、式、対象期間、欠損有無がCSVで再現可能</td><td class="">p1_segment_existing_data_prefill_candidates_20260615.csv</td><td class="bad">禁止</td></tr><tr><td class="">7</td><td class="">1年最大下落率の一部に期間ズレがあった</td><td class="bad">20日最大下落率など期間違いは正式転記禁止に固定</td><td class="warn">改善済み: 6503の20日値は1年値として使わない扱い</td><td class="">1年最大下落率を同一式で再計算</td><td class="">20日、60日、1年の列名と値が混ざらない</td><td class="">p1_segment_existing_data_prefill_candidates_20260615.csv</td><td class="bad">禁止</td></tr><tr><td class="">8</td><td class="bad">事業寄与の確認がまだ弱い</td><td class="">FA・電力制御、WFE・半導体需要を、全社売上・利益へ接続できるか確認する行を維持</td><td class="warn">改善済み: テーマ名だけでは通さない設計</td><td class="">セグメント売上、営業利益、受注、会社見通しを入力</td><td class="">テーマが全社業績へどの程度効くか、数値または会社資料で説明できる</td><td class="">p1_segment_order_evidence_candidates_20260615.csv</td><td class="bad">禁止</td></tr><tr><td class="">9</td><td class="bad">質的テーマの実証がまだ途中</td><td class="">AI、半導体、電力、データセンターは、仮説層と実績層を分けて表示</td><td class="warn">改善済み: テーマ検証行 5件</td><td class="">過去イベントと株価反応の結合を増やす</td><td class="">質的テーマが、受注・売上寄与・過去反応のうち2種類以上で確認される</td><td class="">theme_event_validation_ledger_20260614.csv</td><td class="">直接加点しない</td></tr><tr><td class="">10</td><td class="">買付比率・購入可否への接続が未完成</td><td class="ok">買付比率はイベント後・公式値・再計算通過後だけ再開する設計に固定</td><td class="bad">改善済み: 全銘柄の現時点買付上限0円を維持</td><td class="ok">全ゲート通過後に初回比率、縮小条件、見送り条件へ接続</td><td class="">指数+1%目標、劣後時縮小、銘柄別上限が同じ画面で確認できる</td><td class="">106_june_event_engine_output.csv / 108_capital_allocation_by_ticker.csv</td><td class="bad">禁止</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>PER/PBR正式化ゲート</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>指標</th><th>候補値</th><th>公式側</th><th>株価</th><th>株価基準</th><th>計算式</th><th>正式値にする条件</th><th>スコア反映</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">実績PER</td><td class="">27.96倍</td><td class="ok">EPSは公式PDF確認済み</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">5545 ÷ 198.31</td><td class="">株価取得元・取得日時・同一基準日を確認し、EPS/BPSの原文確認と組み合わせて再計算する</td><td class="bad">禁止</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">予想PER</td><td class="">24倍</td><td class="ok">EPSは公式PDF確認済み</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">5545 ÷ 231.01</td><td class="">株価取得元・取得日時・同一基準日を確認し、EPS/BPSの原文確認と組み合わせて再計算する</td><td class="bad">禁止</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">PBR</td><td class="">2.53倍</td><td class="ok">BPSは公式PDF確認済み</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">5545 ÷ 2191.26</td><td class="">株価取得元・取得日時・同一基準日を確認し、EPS/BPSの原文確認と組み合わせて再計算する</td><td class="bad">禁止</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">実績PER</td><td class="">54.2倍</td><td class="ok">EPSは公式PDF確認済み</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">68000 ÷ 1254.57</td><td class="">株価取得元・取得日時・同一基準日を確認し、EPS/BPSの原文確認と組み合わせて再計算する</td><td class="bad">禁止</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">予想PER</td><td class="">参考外</td><td class="ok">EPSは公式PDF確認済み</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">通期予想ではないため計算値を採用しない</td><td class="">株価取得元・取得日時・同一基準日を確認し、EPS/BPSの原文確認と組み合わせて再計算する</td><td class="bad">禁止</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">PBR</td><td class="">15.11倍</td><td class="ok">BPSは公式PDF確認済み</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST / Yahoo Finance chart API via GitHub Actions</td><td class="">68000 ÷ 4498.85</td><td class="">株価取得元・取得日時・同一基準日を確認し、EPS/BPSの原文確認と組み合わせて再計算する</td><td class="bad">禁止</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>公式値の原本キュー昇格ゲート</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>入力ID</th><th>入力項目</th><th>下書き値</th><th>出所</th><th>確認位置</th><th>現在状態</th><th>原本キューへの扱い</th><th>上書き条件</th><th>スコア反映</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">6503_roe_official</td><td class="">ROE</td><td class="">9.7%</td><td class="">三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版</td><td class="">P1 L69-L78 / 2026-06-15確認</td><td class="warn">転記候補</td><td class="bad">まだ上書きしない</td><td class="">入力バリデーターで、値・出所・確認位置・公式確認がそろうこと</td><td class="bad">禁止</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">6503_operating_margin</td><td class="">営業利益率</td><td class="">7.3%</td><td class="">三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版</td><td class="">P1 L74-L78 / 2026-06-15確認</td><td class="warn">転記候補</td><td class="bad">まだ上書きしない</td><td class="">入力バリデーターで、値・出所・確認位置・公式確認がそろうこと</td><td class="bad">禁止</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">8035_roe_official</td><td class="">ROE</td><td class="">29.6%</td><td class="">東京エレクトロン 2026年3月期 決算短信〔日本基準〕</td><td class="">P0 L19-L25 / 2026-06-15確認</td><td class="warn">転記候補</td><td class="bad">まだ上書きしない</td><td class="">入力バリデーターで、値・出所・確認位置・公式確認がそろうこと</td><td class="bad">禁止</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">8035_operating_margin</td><td class="">営業利益率</td><td class="">25.6%</td><td class="">東京エレクトロン 2026年3月期 決算短信〔日本基準〕</td><td class="">P0 L21-L25 / 2026-06-15確認</td><td class="warn">転記候補</td><td class="bad">まだ上書きしない</td><td class="">入力バリデーターで、値・出所・確認位置・公式確認がそろうこと</td><td class="bad">禁止</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>スコア反映・P1復帰・買付解除ゲート</h2>
+    <div class="table-wrap"><table><thead><tr><th>ゲート</th><th>必須条件</th><th>現在</th><th>判定</th><th>スコア反映</th><th>P1復帰</th><th>買付上限</th></tr></thead><tbody><tr><td class="">公式財務値</td><td class="">PER/PBR/ROE・営業利益率・受注またはセグメント寄与が、公式資料または計算根拠付きでそろう</td><td class="bad">ROE・営業利益率の転記候補 4項目。PER/PBRは候補値のみ</td><td class="bad">未通過</td><td class="bad">0項目</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">株価・指数再計算</td><td class="">5年CAGR、10年CAGR、S&amp;P差、最大下落率を同一基準日・同一式で再計算する</td><td class="warn">既存計算値は候補値として保持。正式反映には再現計算が必要</td><td class="bad">未通過</td><td class="bad">0項目</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">6月イベント後入力</td><td class="warn">CPI、日銀、FOMC、指数反応、個別株反応を入力し、注意/悪化を判定する</td><td class="bad">3/4イベントが未入力</td><td class="bad">未通過</td><td class="bad">0項目</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">説明可能性</td><td class="">テーマ名だけでなく、財務、価格、事業寄与、イベント後反応を1行理由・残す条件・落とす条件へ接続する</td><td class="warn">説明候補は作成済みだが、公式数値とイベント後反応の接続待ち</td><td class="bad">未通過</td><td class="bad">0項目</td><td class="bad">0社</td><td class="bad">0円</td></tr><tr><td class="">購入可否・比率</td><td class="ok">上記ゲート通過後に、指数+1%目標、買わない条件、縮小条件、銘柄別上限を再計算する</td><td class="bad">0/10銘柄が買付上限0円超</td><td class="bad">未通過</td><td class="bad">0項目</td><td class="bad">0社</td><td class="bad">0円</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>6月イベント入力状況</h2>
+    <div class="table-wrap"><table><thead><tr><th>ID</th><th>日付</th><th>イベント</th><th>実数</th><th>市場反応</th><th>状態</th><th>失敗時アクション</th></tr></thead><tbody><tr><td class="">E01</td><td class="">2026-06-10</td><td class="">米5月CPI</td><td class="ok">入力済み/確認中</td><td class="warn">注意</td><td class="warn">注意</td><td class="warn">半導体・高PER・高ボラ候補は買付前ゲートを厳格化</td></tr><tr><td class="">E02</td><td class="">2026-06-15〜2026-06-16</td><td class="">日銀会合</td><td class=""></td><td class=""></td><td class="bad">未入力</td><td class="">日本株の予定買付を延期、または比率を下げる</td></tr><tr><td class="">E03</td><td class="">2026-06-16〜2026-06-17</td><td class="">FOMC</td><td class=""></td><td class=""></td><td class="bad">未入力</td><td class="warn">半導体・高PER・高ボラ候補を延期</td></tr><tr><td class="">E04</td><td class="">2026-06-18以降</td><td class="">最終購入前確認</td><td class=""></td><td class=""></td><td class="bad">未入力</td><td class="">監視継続または初回除外</td></tr></tbody></table></div>
+  </section>
+
+  <footer>generated: 2026/06/15 19:25 / source: P1 input queue, PDF official check, PER/PBR basis, event input, theme ledger. 本ページは判断補助の検査表であり、投資助言・自動売買・購入指示ではありません。</footer>
+</main>
+</body>
+</html>
