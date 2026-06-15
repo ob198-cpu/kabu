@@ -30,7 +30,7 @@
     .step{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px;min-height:118px}
     .step b{display:block;color:var(--navy);font-size:16px;margin-bottom:6px}
     .step span{font-weight:800;color:#263e55;font-size:14px}
-    .ok{color:var(--green);font-weight:900}.warn{color:var(--amber);font-weight:900}.bad{color:var(--red);font-weight:900}
+    .bad{color:var(--red);font-weight:900}
     footer{font-size:13px;color:#526b82;margin:20px 0}
     @media(max-width:980px){main{padding:12px}.cards,.links,.flow{grid-template-columns:1fr}body{font-size:17px}}
     @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}}
@@ -39,61 +39,61 @@
 <body>
 <header>
   <h1>株式購入判断補助システム</h1>
-  <p>NISA 1年保有テストに向けて、候補銘柄、6月イベント、購入停止条件、口座確認を数字と記録で管理するための入口です。</p>
+  <p>NISA 1年保有テストに向けて、候補銘柄、6月イベント、買わない条件、口座確認を数値と記録で管理する入口です。</p>
 </header>
 <main>
   <section>
     <h2>現在の状態</h2>
     <div class="cards">
       <div class="card"><b>購入判断</b><strong class="bad">不可</strong><span>日銀・FOMC後データが未完了</span></div>
-      <div class="card"><b>P1復帰</b><strong>0社</strong><span>候補復帰はまだしない</span></div>
-      <div class="card"><b>買付上限</b><strong>0円</strong><span>注文票に進めない</span></div>
+      <div class="card"><b>P1復帰</b><strong>0社</strong><span>個別株復帰はまだしない</span></div>
+      <div class="card"><b>買付上限</b><strong>0円</strong><span>注文票へ進めない</span></div>
       <div class="card"><b>次の確認</b><strong>6/16以降</strong><span>日銀・FOMC後に再判定</span></div>
     </div>
   </section>
 
   <section>
-    <p class="notice">未発表の結果、未取得データ、本人操作・NISA口座区分未確認の状態では、買付金額を出しません。購入判断に進む前に、イベント後ゲートと口座確認を通します。</p>
+    <p class="notice">未発表の結果、未取得データ、本人操作・NISA口座区分未確認の状態では、買付金額を出しません。購入判断に進む前に、イベント後データと口座確認を通します。</p>
   </section>
 
   <section>
     <h2>実用パート</h2>
     <div class="links">
-      <a href="june_event_operation_calendar_20260615.html"><b>6月イベント運用表</b><span>いつ何を入力し、どの条件で止めるかを一枚で確認します。</span></a>
-      <a href="june_event_input_tickets_20260615.html"><b>6月イベント後 入力チケット</b><span>日銀・FOMC後に埋める項目、反映先、停止条件を固定しています。</span></a>
-      <a href="june_event_ticket_validator_20260615.html"><b>6月イベントチケット 検証画面</b><span>入力チケットの完了数と、買付判断へ進めない理由を確認します。</span></a>
-      <a href="event_post_reaction_workbench_20260615.html"><b>イベント後反応 判定ワークベンチ</b><span>基準値と現在値を比較し、注意・停止候補を出します。</span></a>
-      <a href="p1_event_gate_remaining_20260615.html"><b>P1イベント後ゲート 残項目</b><span>CPI、日銀、FOMC、指数、個別株反応の残りを確認します。</span></a>
-      <a href="p1_segment_next_gate_input_validator_20260615.html"><b>P1入力バリデーター</b><span>入力値・出所・取得日時・確認区分が揃ったかを確認します。</span></a>
+      <a href="june_event_operation_calendar_20260615.html"><b>6月イベント運用表</b><span>いつ、何を確認し、どの条件で止めるかを見る画面です。</span></a>
+      <a href="june_event_result_entry_20260615.html"><b>6月イベント結果入力台帳</b><span>日銀・FOMC・指数反応・候補銘柄反応を出所付きで入れる台帳です。</span></a>
+      <a href="june_event_ticket_validator_20260615.html"><b>6月イベント入力検証</b><span>入力台帳を読み、買付判定へ進めるかを検証します。</span></a>
+      <a href="event_post_reaction_workbench_20260615.html"><b>イベント後反応判定</b><span>基準値と現在値を比較し、注意・停止候補を判定します。</span></a>
+      <a href="p1_event_gate_remaining_20260615.html"><b>P1イベント後ゲート</b><span>CPI、日銀、FOMC、指数、個別株反応の残り項目です。</span></a>
+      <a href="p1_segment_next_gate_input_validator_20260615.html"><b>P1入力検証</b><span>入力値・出所・取得日時・反映先が揃ったかを確認します。</span></a>
       <a href="p1_segment_next_gate_input_queue_20260615.html"><b>P1入力キュー</b><span>6503・8035の財務、価格、イベント、説明可能性の入力欄です。</span></a>
       <a href="nisa_account_execution_gate_20260614.html"><b>NISA口座・本人操作ゲート</b><span>本人別口座、本人操作、NISA区分、証券会社画面の確認用です。</span></a>
     </div>
   </section>
 
   <section>
-    <h2>確認資料</h2>
+    <h2>資料パート</h2>
     <div class="links">
       <a href="event_pre_baseline_20260615.html"><b>イベント前基準値</b><span>日銀・FOMC後に比較するための基準値です。</span></a>
-      <a href="p1_cpi_market_reaction_apply_audit_20260615.html"><b>CPI市場反応 確認ログ</b><span>CPI公式値と発表後の金利・指数・為替反応です。</span></a>
+      <a href="p1_cpi_market_reaction_apply_audit_20260615.html"><b>CPI市場反応確認ログ</b><span>CPI公式値と発表後の金利・指数・為替反応です。</span></a>
       <a href="p1_per_pbr_calculation_apply_audit_20260615.html"><b>PER/PBR計算ログ</b><span>公式EPS/BPSと株価から計算したPER/PBRの確認ログです。</span></a>
       <a href="p1_segment_growth_apply_audit_20260615.html"><b>事業寄与確認ログ</b><span>三菱電機・東京エレクトロンのセグメント、受注、成長見通しです。</span></a>
-      <a href="102_june_event_result_input.csv"><b>6月イベント入力CSV</b><span>CPI、日銀、FOMC、最終確認の入力元CSVです。</span></a>
-      <a href="legacy_index_archive_20260615.html"><b>旧トップページ</b><span>過去のリンク一覧を残したアーカイブです。</span></a>
+      <a href="102_june_event_result_input.csv"><b>既存6月イベント入力CSV</b><span>過去に作成した6月イベント結果入力用CSVです。</span></a>
+      <a href="legacy_index_archive_20260615.html"><b>旧トップページ</b><span>過去リンク一覧を残したアーカイブです。</span></a>
     </div>
   </section>
 
   <section>
     <h2>判定の流れ</h2>
     <div class="flow">
-      <div class="step"><b>1. 基準値</b><span>イベント前の指数・金利・為替・候補株を固定。</span></div>
-      <div class="step"><b>2. イベント後</b><span>日銀・FOMC後に同じ項目を再取得。</span></div>
-      <div class="step"><b>3. 停止条件</b><span>円高、金利急騰、SOX急落、候補株急落を確認。</span></div>
-      <div class="step"><b>4. 入力検証</b><span>出所、取得日時、確認区分が揃うまでスコアに反映しない。</span></div>
-      <div class="step"><b>5. 再判定</b><span>全ゲート通過後だけ、候補復帰と資金配分の検討へ進む。</span></div>
+      <div class="step"><b>1. 基準値</b><span>イベント前の指数、金利、為替、候補株を固定します。</span></div>
+      <div class="step"><b>2. イベント後</b><span>日銀・FOMC後に同じ項目を取得します。</span></div>
+      <div class="step"><b>3. 停止条件</b><span>円高、金利急騰、VIX急上昇、個別株急落を確認します。</span></div>
+      <div class="step"><b>4. 入力検証</b><span>出所、取得日時、反映先が揃うまでスコアに反映しません。</span></div>
+      <div class="step"><b>5. 再判定</b><span>全ゲート通過後だけ、個別株復帰と資金配分の検討へ進みます。</span></div>
     </div>
   </section>
 
-  <footer>更新: 2026/6/15 22:04:23 / このシステムは投資助言、自動売買、利益保証を行いません。実売買前には証券会社画面、公式決算、本人操作、NISA口座区分を確認します。</footer>
+  <footer>更新: 2026/6/15 22:13:41 / このシステムは投資助言、自動売買、利益保証を行いません。実売買前には証券会社画面、公式決算、本人操作、NISA口座区分を確認します。</footer>
 </main>
 </body>
 </html>
