@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>財務・質的テーマ 改善ゲート</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:32px}
+    header h1{margin:0 0 8px;font-size:clamp(34px,4vw,48px);line-height:1.18;letter-spacing:0}
+    header p{margin:0;font-weight:900;max-width:1180px}
+    main{max-width:1400px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}
+    .notice{border:2px solid var(--red);background:#fff1f1;color:#8a0000;border-radius:10px;padding:14px 16px;font-weight:900;margin:0}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:16px}.card strong{display:block;font-size:30px;color:var(--blue);line-height:1.25}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 11px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    .bad{color:var(--red);font-weight:900}.warn{color:var(--amber);font-weight:900}.ok{color:var(--green);font-weight:900}
+    a{color:#075c94;font-weight:900}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:17px}}
+    @media print{body{background:#fff}section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px 6px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>財務・質的テーマ 改善ゲート</h1>
+  <p>「一部あり」「枠はあり」の曖昧な状態をやめ、買付判断へ使えるデータ、使えないデータ、次に埋めるデータを分ける画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の判定</h2>
+    <div class="cards">
+      <div class="card"><b>財務pass</b><strong>3/10</strong></div>
+      <div class="card"><b>財務partial</b><strong>7/10</strong></div>
+      <div class="card"><b>P1復帰/買付</b><strong>0社 / 0円</strong></div>
+      <div class="card"><b>質的テーマ</b><strong>補助のみ</strong></div>
+    </div>
+  </section>
+  <section>
+    <p class="notice">partial財務値と未検証の質的テーマは、候補順位・買付比率・買付上限に混ぜません。公式値、出所、取得日時、イベント後反応が揃ったものだけを反映対象にします。</p>
+  </section>
+  <section>
+    <h2>総括</h2>
+    <div class="table-wrap"><table>
+    <thead><tr><th>分類</th><th>対象</th><th>現状</th><th>揃っているもの</th><th>不足しているもの</th><th>改善後の扱い</th><th>スコア反映</th><th>次アクション</th></tr></thead>
+    <tbody><tr>
+      <td>総括</td>
+      <td><b>財務データ</b></td>
+      <td>3/10銘柄がpass、7/10銘柄がpartial</td>
+      <td>既存の財務確認ゲート、公式確認ルート、入力候補</td>
+      <td>67項目が公式確認待ち。完了銘柄は0銘柄</td>
+      <td>passとpartialを分け、partialはスコア・比率へ混ぜない</td>
+      <td class="warn">passのみ財務ゲート内で使用可</td>
+      <td>partial銘柄の公式値と出所を埋める</td>
+    </tr><tr>
+      <td>総括</td>
+      <td><b>P1ゲート</b></td>
+      <td>36/44項目 / 6/8ゲート / 0社 / 0円</td>
+      <td>入力・ゲート・復帰可否を分ける仕組み</td>
+      <td>6月イベント後の指数反応、個別反応、説明可能性</td>
+      <td>全ゲート通過まで候補順位と買付上限を動かさない</td>
+      <td class="bad">禁止</td>
+      <td>6月イベント入力後にP1復帰可否を再判定</td>
+    </tr></tbody>
+  </table></div>
+  </section>
+  <section>
+    <h2>財務データ</h2>
+    <div class="table-wrap"><table>
+    <thead><tr><th>分類</th><th>対象</th><th>現状</th><th>揃っているもの</th><th>不足しているもの</th><th>改善後の扱い</th><th>スコア反映</th><th>次アクション</th></tr></thead>
+    <tbody><tr>
+      <td>財務データ</td>
+      <td><b>8053.T 住友商事</b></td>
+      <td>公式確認済み扱い</td>
+      <td>財務確認ゲートを通過済み</td>
+      <td>6月イベント、指数反応、口座確認は別ゲートで未完了</td>
+      <td>財務面は候補比較に使える。ただし買付はイベント・口座ゲート通過後</td>
+      <td class="warn">財務ゲート内で使用可</td>
+      <td>6月イベント後にP1復帰可否を再判定</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>8316.T 三井住友FG</b></td>
+      <td>公式確認済み扱い</td>
+      <td>財務確認ゲートを通過済み</td>
+      <td>6月イベント、指数反応、口座確認は別ゲートで未完了</td>
+      <td>財務面は候補比較に使える。ただし買付はイベント・口座ゲート通過後</td>
+      <td class="warn">財務ゲート内で使用可</td>
+      <td>6月イベント後にP1復帰可否を再判定</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>6501.T 日立製作所</b></td>
+      <td>公式確認済み扱い</td>
+      <td>財務確認ゲートを通過済み</td>
+      <td>6月イベント、指数反応、口座確認は別ゲートで未完了</td>
+      <td>財務面は候補比較に使える。ただし買付はイベント・口座ゲート通過後</td>
+      <td class="warn">財務ゲート内で使用可</td>
+      <td>6月イベント後にP1復帰可否を再判定</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>6503.T 三菱電機</b></td>
+      <td>partial</td>
+      <td>一部数値・確認ルート・入力候補</td>
+      <td>PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td>
+      <td>未確認値をスコアに混ぜない。公式値・出所・資料日付が揃うまで比率を上げない</td>
+      <td class="bad">禁止</td>
+      <td>三菱電機IR/決算短信・説明資料でPER/PBR/ROE/EPS/BPS、営業利益率、会社予想、還元方針を確認</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>6857.T アドバンテスト</b></td>
+      <td>partial</td>
+      <td>一部数値・確認ルート・入力候補</td>
+      <td>PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td>
+      <td>未確認値をスコアに混ぜない。公式値・出所・資料日付が揃うまで比率を上げない</td>
+      <td class="bad">禁止</td>
+      <td>アドバンテストIR/決算資料でPER/PBR/ROE/EPS/BPS、営業利益率、会社予想、還元方針を確認</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>8035.T 東京エレクトロン</b></td>
+      <td>partial</td>
+      <td>一部数値・確認ルート・入力候補</td>
+      <td>PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td>
+      <td>未確認値をスコアに混ぜない。公式値・出所・資料日付が揃うまで比率を上げない</td>
+      <td class="bad">禁止</td>
+      <td>東京エレクトロンIR/決算短信でPER/PBR/ROE/EPS/BPS、営業利益率、会社予想、還元方針を確認</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>7011.T 三菱重工業</b></td>
+      <td>partial</td>
+      <td>一部数値・確認ルート・入力候補</td>
+      <td>PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td>
+      <td>未確認値をスコアに混ぜない。公式値・出所・資料日付が揃うまで比率を上げない</td>
+      <td class="bad">禁止</td>
+      <td>三菱重工IR/決算資料でPER/PBR/ROE/EPS/BPS、営業利益率、会社予想、還元方針を確認</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>6762.T TDK</b></td>
+      <td>partial</td>
+      <td>一部数値・確認ルート・入力候補</td>
+      <td>PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与</td>
+      <td>未確認値をスコアに混ぜない。公式値・出所・資料日付が揃うまで比率を上げない</td>
+      <td class="bad">禁止</td>
+      <td>TDK IR/決算短信でPER/PBR/ROE/EPS/BPS、営業利益率、会社予想、還元方針を確認</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>6146.T ディスコ</b></td>
+      <td>partial</td>
+      <td>一部数値・確認ルート・入力候補</td>
+      <td>PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td>
+      <td>未確認値をスコアに混ぜない。公式値・出所・資料日付が揃うまで比率を上げない</td>
+      <td class="bad">禁止</td>
+      <td>ディスコIR/決算説明資料でPER/PBR/ROE/EPS/BPS、営業利益率、会社予想、還元方針を確認</td>
+    </tr><tr>
+      <td>財務データ</td>
+      <td><b>5803.T フジクラ</b></td>
+      <td>partial</td>
+      <td>一部数値・確認ルート・入力候補</td>
+      <td>PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減 / 受注またはセグメント寄与 / 高PER・高PBRを説明できる成長根拠</td>
+      <td>未確認値をスコアに混ぜない。公式値・出所・資料日付が揃うまで比率を上げない</td>
+      <td class="bad">禁止</td>
+      <td>フジクラIR/決算短信でPER/PBR/ROE/EPS/BPS、営業利益率、会社予想、還元方針を確認</td>
+    </tr></tbody>
+  </table></div>
+  </section>
+  <section>
+    <h2>質的テーマ</h2>
+    <div class="table-wrap"><table>
+    <thead><tr><th>分類</th><th>対象</th><th>現状</th><th>揃っているもの</th><th>不足しているもの</th><th>改善後の扱い</th><th>スコア反映</th><th>次アクション</th></tr></thead>
+    <tbody><tr>
+      <td>質的テーマ</td>
+      <td><b>半導体製造装置・材料</b></td>
+      <td>仮説層は整理済み・実績層は未完了</td>
+      <td>AI・データセンター需要が続くと、製造装置、検査、材料、消耗品に二次需要が出る。</td>
+      <td>候補銘柄の決算後反応、SOX指数、受注・セグメント利益、指数差で検証する。 反証条件: SOX下落、受注鈍化、高PER説明不可、候補銘柄が指数に明確劣後。</td>
+      <td>仮説だけでは加点しない。実績層または公式数値で裏取りできた場合だけ補助評価に使う</td>
+      <td class="bad">原則禁止。検証済みイベント反応がある場合のみ補助係数</td>
+      <td>ニュース、公式IR、業界統計、イベント後リターンを同じ表へ入れて、仮説・実績・反証を分ける</td>
+    </tr><tr>
+      <td>質的テーマ</td>
+      <td><b>AIインフラ・データセンター</b></td>
+      <td>仮説層は整理済み・実績層は未完了</td>
+      <td>AI計算需要が増えると、電力、冷却、電線、重電、制御機器へ資金が回る。</td>
+      <td>電力投資、設備受注、データセンター関連売上、候補銘柄の指数超過で検証する。 反証条件: 設備投資鈍化、金利上昇でインフラ投資が遅れる、株価だけ先行し業績寄与が弱い。</td>
+      <td>仮説だけでは加点しない。実績層または公式数値で裏取りできた場合だけ補助評価に使う</td>
+      <td class="bad">原則禁止。検証済みイベント反応がある場合のみ補助係数</td>
+      <td>ニュース、公式IR、業界統計、イベント後リターンを同じ表へ入れて、仮説・実績・反証を分ける</td>
+    </tr><tr>
+      <td>質的テーマ</td>
+      <td><b>金利・金融</b></td>
+      <td>仮説層は整理済み・実績層は未完了</td>
+      <td>日銀・米金利が銀行利ざやや保険運用益に影響する。</td>
+      <td>日銀結果、長期金利、銀行株反応、決算の利ざや・与信費用で検証する。 反証条件: 急な円高、信用コスト悪化、日銀方針が市場予想と逆に動く。</td>
+      <td>仮説だけでは加点しない。実績層または公式数値で裏取りできた場合だけ補助評価に使う</td>
+      <td class="bad">原則禁止。検証済みイベント反応がある場合のみ補助係数</td>
+      <td>ニュース、公式IR、業界統計、イベント後リターンを同じ表へ入れて、仮説・実績・反証を分ける</td>
+    </tr><tr>
+      <td>質的テーマ</td>
+      <td><b>防衛・重工</b></td>
+      <td>仮説層は整理済み・実績層は未完了</td>
+      <td>国策・防衛費・安全保障需要が長期テーマになる。</td>
+      <td>受注残、予算、セグメント利益、過去上昇後の反落率で検証する。 反証条件: 過熱後の大幅下落、受注が利益化しない、指数に劣後。</td>
+      <td>仮説だけでは加点しない。実績層または公式数値で裏取りできた場合だけ補助評価に使う</td>
+      <td class="bad">原則禁止。検証済みイベント反応がある場合のみ補助係数</td>
+      <td>ニュース、公式IR、業界統計、イベント後リターンを同じ表へ入れて、仮説・実績・反証を分ける</td>
+    </tr><tr>
+      <td>質的テーマ</td>
+      <td><b>量子コンピューター</b></td>
+      <td>仮説層は整理済み・実績層は未完了</td>
+      <td>将来テーマとしては大きいが、1年NISAテストでは業績寄与が見えにくい。</td>
+      <td>売上寄与、受注、提携、株価反応が確認できるまで監視枠。 反証条件: ニュースだけで業績影響が薄い、関連売上が小さい、出来高だけの短期材料。</td>
+      <td>仮説だけでは加点しない。実績層または公式数値で裏取りできた場合だけ補助評価に使う</td>
+      <td class="bad">原則禁止。検証済みイベント反応がある場合のみ補助係数</td>
+      <td>ニュース、公式IR、業界統計、イベント後リターンを同じ表へ入れて、仮説・実績・反証を分ける</td>
+    </tr><tr>
+      <td>質的テーマ</td>
+      <td><b>フィジカルAI・ロボティクス</b></td>
+      <td>仮説層は整理済み・実績層は未完了</td>
+      <td>人手不足、工場自動化、制御、センサー、FA需要とつながる。</td>
+      <td>FA売上、受注、利益率、設備投資統計、候補銘柄の指数超過で検証する。 反証条件: 中国・設備投資の鈍化、在庫調整、セグメント利益が伸びない。</td>
+      <td>仮説だけでは加点しない。実績層または公式数値で裏取りできた場合だけ補助評価に使う</td>
+      <td class="bad">原則禁止。検証済みイベント反応がある場合のみ補助係数</td>
+      <td>ニュース、公式IR、業界統計、イベント後リターンを同じ表へ入れて、仮説・実績・反証を分ける</td>
+    </tr></tbody>
+  </table></div>
+  </section>
+</main>
+</body>
+</html>

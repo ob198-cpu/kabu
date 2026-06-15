@@ -73,6 +73,7 @@ const html = `<!doctype html>
     <h2>実用パート</h2>
     <div class="links">
       <a href="prebuy_master_gate_20260615.html"><b>購入前 統合ゲート</b><span>イベント、P1、NISA口座をまとめて見て、買付へ進めるかを確認します。</span></a>
+      <a href="financial_qualitative_improvement_gate_20260616.html"><b>財務・質的テーマ 改善ゲート</b><span>partial財務と未検証テーマを候補順位へ混ぜないための確認画面です。</span></a>
       <a href="today_action_20260616.html"><b>本日の確認事項 6/16</b><span>今日見る項目と、まだ買付判断に使わない項目を分けます。</span></a>
       <a href="official_source_check_log_20260616.html"><b>公式確認ログ 6/16</b><span>公式ページの確認状況と、未確定項目を分けて記録します。</span></a>
       <a href="boj_publication_status_20260616.html"><b>T01 日銀公表確認ステータス</b><span>日銀の個別公表文URLと市場反応が確定したかを確認します。</span></a>
