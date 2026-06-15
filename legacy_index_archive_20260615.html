@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>株式購入判断補助システム</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--amber:#a85b00;--red:#a01818}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7}
+    header{background:var(--navy);color:white;padding:32px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,44px);letter-spacing:0;line-height:1.2}
+    header p{margin:0;color:white;font-weight:800;max-width:1100px}
+    main{max-width:1380px;margin:0 auto;padding:22px}
+    .notice{border-left:7px solid var(--amber);background:#fff7e7;color:#111;padding:12px 14px;margin:0 0 18px;font-weight:900;border-radius:8px}
+    .hero-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .hero-actions a{display:block;text-decoration:none;text-align:center;background:var(--blue);color:white;border-radius:10px;padding:14px;font-weight:900}
+    .hero-actions a.secondary{background:white;color:var(--blue);border:1px solid var(--blue)}
+    section{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    .primary-section{border-color:#7bb6dd;box-shadow:0 0 0 2px rgba(11,103,163,.08),0 8px 20px rgba(20,60,90,.08)}
+    .section-head{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}
+    h2{margin:0;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:24px}
+    .badge{display:inline-block;background:var(--red);color:white;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900;white-space:nowrap}
+    .lead{margin:0 0 12px;font-weight:800;color:#1b3349}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card:hover{border-color:var(--blue);box-shadow:0 0 0 2px rgba(11,103,163,.08) inset}
+    .card b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+    .card span{display:block;color:#263e55;font-size:14px;font-weight:800}
+    .market-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+    .market-card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
+    .market-card b{display:block;color:var(--navy);font-size:13px}
+    .market-card strong{display:block;font-size:20px;margin-top:4px}
+    .market-card span{font-size:12px;color:#526b82;font-weight:800}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:860px){main{padding:12px}.grid,.hero-actions,.market-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>株式購入判断補助システム</h1>
+  <p>NISA 1年保有テストに向けて、候補選定、6月イベント判定、NISA準備、記録を分けて確認するための入口です。</p>
+</header>
+<main>
+  <p class="notice">このシステムは投資助言、自動売買、税務判断を行いません。購入前には、証券会社画面、公式決算、イベント後の実データを確認します。</p>
+  <div class="hero-actions">
+            <a class="card" href="latest_practical_start_20260614.html">
+          <b>最新 実用パート入口</b>
+          <span>日々見る画面を11個に整理。まずここから未完了、0円理由、次の作業を確認。</span>
+        </a>
+
+<a href="896_practical_entry_hub_20260606.html">実用パート入口</a>
+        <a class="card" href="practical_action_cockpit_20260614.html">
+          <b>6/18以降 実用判断コックピット</b>
+          <span>買う・待つ・止める条件、6月イベント入力、候補10社の現時点の扱いを1画面で確認。</span>
+        </a>
+
+        <a class="card" href="integrated_purchase_decision_engine_20260614.html">
+          <b>統合購入可否エンジン</b>
+          <span>イベント、口座、財務、100社扱い、期待仮説をまとめて、各銘柄の0円理由と解除条件を表示。</span>
+        </a>
+
+        <a class="card" href="purchase_unlock_input_queue_20260614.html">
+          <b>購入ロック解除 入力キュー</b>
+          <span>現在0円の理由を、どのCSV・どの項目を埋めれば再判定できるかまで整理。</span>
+        </a>
+
+      <a class="card" href="daily_practical_compact_board_20260614.html">
+          <b>実用日次ボード</b>
+          <span>今日見る項目、買わない理由、次の入力作業だけを確認する。</span>
+        </a>
+
+      <a class="card" href="p1_financial_completion_engine_20260614.html">
+          <b>P1 財務補完 判定エンジン</b>
+          <span>公式PER/PBR/ROE、利益率、受注などの不足を判定する。</span>
+        </a>
+<a class="card" href="p1_financial_official_input_queue_20260614.html">
+          <b>P1 財務公式入力キュー</b>
+          <span>PER/PBR/ROE、営業利益率、会社予想、受注などを項目単位で入力する。</span>
+        </a>
+
+<a class="card" href="p1_financial_input_validator_20260614.html">
+          <b>P1 財務入力バリデーター</b>
+          <span>公式入力値・出所・資料日付がそろったか検算し、候補復帰に進めるか判定する。</span>
+        </a>
+<a class="card" href="p1_financial_source_navigator_20260614.html">
+          <b>P1 財務公式資料ナビ</b>
+          <span>財務partial銘柄の公式IR入口、直接資料の特定状況、入力項目を確認する。</span>
+        </a>
+<a class="card" href="p1_financial_direct_document_candidates_20260614.html">
+          <b>P1 財務 直接資料候補</b>
+          <span>公式IRから一段進めたPDF候補・HTML候補を分け、数値入力前の状態を確認する。</span>
+        </a>
+<a class="card" href="p1_financial_pdf_extraction_trial_20260614.html">
+          <b>P1 財務 PDF抽出テスト</b>
+          <span>直接PDF候補から売上高、営業利益、EPS、ROEなどを抽出候補化する。</span>
+        </a>
+<a class="card" href="p1_financial_pdf_to_input_review_20260615.html">
+          <b>P1 財務 PDF→入力レビュー</b>
+          <span>PDF抽出候補を入力CSVへ転記する前に、候補値、未確認理由、反映不可項目を確認する。</span>
+        </a>
+<a class="card" href="p1_financial_per_pbr_basis_20260615.html">
+          <b>P1 財務 PER/PBR計算候補</b>
+          <span>PDFのEPS/BPSと記録済み株価からPER/PBRを基準日つきで試算し、入力前に確認する。</span>
+        </a>
+<a class="card" href="p1_segment_order_queue_20260615.html">
+          <b>P1 受注・セグメント寄与 確認キュー</b>
+          <span>テーマ性を売上・利益・受注に接続できるかを確認し、未確認なら買付判断へ混ぜない。</span>
+        </a>
+<a class="card" href="p1_segment_order_evidence_candidates_20260615.html">
+          <b>P1 受注・セグメント寄与 証拠候補</b>
+          <span>公式決算説明資料から、テーマが売上・利益・受注・市場見通しに接続しているかを整理する。</span>
+        </a>
+<a class="card" href="p1_segment_evidence_input_mapping_20260615.html">
+          <b>P1 事業寄与証拠 入力反映マップ</b>
+          <span>公式資料から取れた証拠候補を、入力欄・反映条件・反映禁止条件に分解する。</span>
+        </a>
+<a class="card" href="p1_segment_evidence_input_queue_20260615.html">
+          <b>P1 事業寄与証拠 入力キュー</b>
+          <span>証拠候補を入力欄単位の候補行へ分解し、公式確認済み前の誤反映を止める。</span>
+        </a>
+<a class="card" href="p1_segment_evidence_reflection_gate_20260615.html">
+          <b>P1 事業寄与証拠 反映ゲート</b>
+          <span>候補値が点数・候補復帰・買付金額へ誤って混ざらないように、公式確認済み行数で止める。</span>
+        </a>
+<a class="card" href="p1_segment_official_confirmation_sheet_20260615.html">
+          <b>P1 事業寄与 公式確認チェックシート</b>
+          <span>候補入力文を公式確認済みにする前に、ページ・年度・単位・前年比・注意点を確認する。</span>
+        </a>
+<a class="card" href="p1_segment_confirmation_validator_20260615.html">
+          <b>P1 事業寄与 公式確認バリデーター</b>
+          <span>公式確認チェックシートの不足を検出し、未確認候補が点数へ混ざることを防ぐ。</span>
+        </a>
+<a class="card" href="p1_segment_confirmation_work_order_20260615.html">
+          <b>P1 事業寄与 公式確認 作業票</b>
+          <span>公式確認バリデーターで止まった6件について、何を見て何を埋めるか整理する。</span>
+        </a>
+<a class="card" href="p1_segment_ai_confirmation_draft_20260615.html">
+          <b>P1 事業寄与 AI確認下書き</b>
+          <span>公式資料から確認できた箇所・数値・注意点を下書き化し、人間確認前の誤反映を止める。</span>
+        </a>
+<a class="card" href="p1_segment_human_apply_template_20260615.html">
+          <b>P1 事業寄与 人間確認用 反映テンプレート</b>
+          <span>AI確認下書きを、人間が公式資料確認後にチェックシートへ転記する形に整える。</span>
+        </a>
+<a class="card" href="p1_segment_reflection_preview_20260615.html">
+          <b>P1 事業寄与 仮反映プレビュー</b>
+          <span>人間確認後に公式確認済みへ進めた場合、どの銘柄が次ゲート候補になるかだけ確認する。</span>
+        </a>
+<a class="card" href="p1_segment_next_gate_requirements_20260615.html">
+          <b>P1 事業寄与 次ゲート必要データ</b>
+          <span>事業寄与候補をP1へ戻す前に必要な、財務・価格・イベント後反応・説明可能性の不足を確認する。</span>
+        </a>
+<a class="card" href="p1_segment_next_gate_input_queue_20260615.html">
+          <b>P1 事業寄与 次ゲート入力キュー</b>
+          <span>次ゲートを通すために、実際に埋める財務・価格・イベント後反応・説明欄を一覧化する。</span>
+        </a>
+<a class="card" href="p1_segment_next_gate_input_validator_20260615.html">
+          <b>P1 事業寄与 次ゲート入力バリデーター</b>
+          <span>入力値・出所・取得位置・公式確認がそろっているかを検査し、未通過なら反映禁止で止める。</span>
+        </a>
+<a class="card" href="p1_price_explanation_prefill_apply_audit_20260615.html">
+          <b>P1 価格・説明ゲート反映監査</b>
+          <span>株価計算値と説明ルールだけを別確認で入力し、財務・イベント未確認は止めたままにする。</span>
+        </a>
+<a class="card" href="p1_remaining_safe_input_apply_audit_20260615.html">
+          <b>P1 残項目 安全補完監査</b>
+          <span>6503の1年最大下落率と米5月CPI公式値を補完。ただしイベントゲートと買付は止める。</span>
+        </a>
+<a class="card" href="p1_8035_price_gate_apply_audit_20260615.html">
+          <b>P1 8035価格ゲート反映監査</b>
+          <span>東京エレクトロンの株価基準日と直近株価を、取得元・時刻付きで反映した記録です。</span>
+        </a>
+<a class="card" href="p1_per_pbr_calculation_apply_audit_20260615.html">
+          <b>P1 PER/PBR計算入力監査</b>
+          <span>公式EPS/BPSと同一基準日の株価を使い、計算式付きでPER/PBRを入力した記録です。</span>
+        </a>
+<a class="card" href="p1_segment_growth_apply_audit_20260615.html">
+          <b>P1 事業寄与入力監査</b>
+          <span>三菱電機と東京エレクトロンについて、受注・市場見通し・製品別成長を公式資料で確認した記録です。</span>
+        </a>
+<a class="card" href="p1_event_gate_remaining_20260615.html">
+          <b>P1イベント後ゲート残項目</b>
+          <span>残っている6月イベント後確認、最短確認日、買付を止める理由を一覧化しています。</span>
+        </a>
+<a class="card" href="p1_segment_next_gate_work_order_20260615.html">
+          <b>P1 事業寄与 次ゲート作業票</b>
+          <span>未通過項目を取得ルートと作業順に整理し、今すぐ進める項目とイベント後入力を分ける。</span>
+        </a>
+<a class="card" href="p1_segment_existing_data_prefill_candidates_20260615.html">
+          <b>P1 事業寄与 既存データ補完候補</b>
+          <span>既存CSVから拾えるPER/PBR・株価・CAGR等の候補値を一覧化。公式確認前はスコア反映禁止で止める。</span>
+        </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="card" href="gap_improvement_closure_board_20260614.html">
+          <b>未完成点 改善v2 実用ボード</b>
+          <span>財務、リスク、質的テーマ、急落対策、100社母集団を買付判断へ混ぜてよい状態か確認する。</span>
+        </a>
+
+
+      <a class="card" href="p0_unlock_judgement_engine_20260614.html">
+          <b>P0 買付ロック解除 判定エンジン</b>
+          <span>イベントと本人別口座の入力結果から、0円継続か再判定候補か確認する。</span>
+        </a>
+
+      <a class="card" href="p0_unlock_required_sheet_20260614.html">
+          <b>P0 買付ロック解除 必須入力シート</b>
+          <span>最初に埋めるイベント4件と本人別口座10件だけを確認する。</span>
+        </a>
+
+      <a class="card" href="unlock_next_action_tickets_20260614.html">
+          <b>買付ロック解除 次アクションチケット</b>
+          <span>イベント、口座、財務補完の不足を優先順位付きで確認する。</span>
+        </a>
+
+      <a class="card" href="unlock_input_workflow_20260614.html">
+          <b>買付ロック解除 入力ワークフロー</b>
+          <span>イベント、本人別口座、財務補完を、どのCSVへ入れるか確認する。</span>
+        </a>
+
+      <a class="card" href="ticker_unlock_checklist_20260614.html">
+          <b>銘柄別ロック解除チェックリスト</b>
+          <span>10社それぞれの停止理由、解除条件、財務不足、参考上限を確認する。</span>
+        </a>
+
+        <a class="card" href="gap_resolution_board_20260614.html">
+          <b>未完成点 改善ボード</b>
+          <span>残っていた課題を、ゲート・入力欄・監査画面へ落とした一覧。</span>
+        </a>
+
+        <a class="card" href="purchase_zero_lock_audit_20260614.html">
+          <b>0円ロック整合性監査</b>
+          <span>購入不可の状態で、画面やCSVに買付金額が残っていないか確認する。</span>
+        </a>
+
+        <a class="card" href="redecision_output_preview_20260614.html">
+          <b>再判定出力プレビュー</b>
+          <span>入力後に、銘柄別の出力金額と注文票反映可否を0円維持ルール込みで確認する。</span>
+        </a>
+
+        <a class="card" href="redecision_readiness_validator_20260614.html">
+          <b>再判定準備バリデーター</b>
+          <span>イベント、本人別口座、公式財務の入力が足りているかを検査し、再判定できない状態を止める。</span>
+        </a>
+
+
+        <a class="card" href="candidate10_financial_confirmation_gate_20260614.html">
+          <b>候補10社 財務確認ゲート</b>
+          <span>PER/PBR/ROE・利益率・受注/セグメント寄与・高PER説明可否を購入前確認に接続。</span>
+        </a>
+
+        <a class="card" href="remaining_gap_hardening_board_20260614.html">
+          <b>未完了改善・購入ロック一覧</b>
+          <span>財務未確認、質的テーマ未検証、税制・口座未連動などを購入判断へ混ぜないための実用ゲート。</span>
+        </a>
+
+        <a class="card" href="stop_limit_stress_protocol_20260614.html">
+          <b>ストップ安・急落対策プロトコル</b>
+          <span>急落警戒度、当日買い増し禁止、翌営業日確認、追加停止、売却検討条件を銘柄別に整理。</span>
+        </a>
+        <a class="card" href="nisa_account_execution_gate_20260614.html">
+          <b>NISA口座・本人操作 実行ゲート</b>
+          <span>本人別のNISA口座、本人スマホ、銀行口座、二段階認証、残枠を購入上限へ接続。</span>
+        </a>
+      
+      
+      
+      
+            <a class="card" href="ticker_trade_rule_matrix_20260614.html">
+          <b>候補10社 上値・下値・途中決済ルール</b>
+          <span>買付後の追加停止、縮小候補、利確確認、ストップ安級対応を銘柄別に整理。</span>
+        </a>
+
+        <a class="card" href="benchmark_allocation_switchboard_20260614.html">
+          <b>S&P500/TOPIX +1%目標 資金配分スイッチ</b>
+          <span>指数比較に応じて、個別株を84万円・36万円・0円へ切り替える実務表。</span>
+        </a>
+
+        <a class="card" href="june_event_input_decision_board_20260614.html">
+          <b>6月イベント入力・判定ボード</b>
+          <span>CPI、日銀、FOMC、最終購入前確認を、緑・黄・赤と買付上限へ接続。</span>
+        </a>
+
+        <a class="card" href="prebuy_readiness_closure_board_20260614.html">
+          <b>6/18前 実行準備クロージングボード</b>
+          <span>イベント、口座、候補10社、指数比較、注文票、記録の未完了項目を1枚で確認。</span>
+        </a>
+
+        <a class="card" href="postbuy_operation_record_board_20260614.html">
+          <b>購入後 運用記録・予実管理ボード</b>
+          <span>買付根拠、指数比較、超過リターン、途中決済理由、予測誤差を記録。</span>
+        </a>
+
+<a class="secondary" href="june_event_gate_engine.html">6月イベント判定(銘柄別)</a>
+    <a class="secondary" href="capital_allocation_plan.html">240万円 資金配分</a>
+  </div>
+<a class="card" href="p1_issue_resolution_board_20260615.html">
+          <b>P1未解決10項目 改善ボード</b>
+          <span>PER/PBR、公式転記、イベント、事業寄与、質的テーマ、買付比率を分けて検査。スコア反映0項目、P1復帰0社、買付上限0円を維持。</span>
+        </a>
+<a class="card" href="p1_price_basis_official_promotion_workbench_20260615.html">
+          <b>P1 PER/PBR基準日・公式値昇格 作業台</b>
+          <span>PER/PBRの株価基準日、再計算、公式PDF値の昇格候補を同じ画面で検算。スコア反映0項目、P1復帰0社、買付上限0円を維持。</span>
+        </a>
+
+
+<a class="card" href="p1_segment_official_input_queue_draft_20260615.html">
+          <b>P1 事業寄与 公式値入力キュー転記案</b>
+          <span>公式PDFで確認したROE・営業利益率4項目だけを入力キューへ移す下書き。PER/PBRはまだ除外。</span>
+        </a>
+
+<a class="card" href="p1_segment_pdf_official_check_result_20260615.html">
+          <b>P1 事業寄与 PDF原文確認結果</b>
+          <span>三菱電機・東京エレクトロンのEPS/BPS/ROE/営業利益率を公式PDFで確認。株価基準日は別途確認。</span>
+        </a>
+
+<a class="card" href="p1_segment_official_transfer_workbench_20260615.html">
+          <b>P1 事業寄与 公式確認・転記作業台</b>
+          <span>候補値を、公式確認後に転記できるもの、参考止まり、転記禁止、未補完に分ける。</span>
+        </a>
+
+  
+  <section class="primary-section">
+    <div class="section-head">
+      <h2>1. 実用パート</h2>
+      <span class="badge">最初に見る</span>
+    </div>
+    <p class="lead">日々の確認、6月イベント後の判定、候補別アクションを見る入口です。</p>
+    <div class="grid">
+      
+        <a class="card" href="896_practical_entry_hub_20260606.html">
+          <b>実用パート入口</b>
+          <span>迷ったらここから。実用画面、候補判断、NISA準備、補足資料に分けた入口。</span>
+        </a>
+      
+        <a class="card" href="914_daily_operation_flow_20260606.html">
+          <b>実用パート 運用フロー</b>
+          <span>今日見る、イベント後に見る、購入前に見る、記録する、の4段階で確認。</span>
+        </a>
+        <a class="card" href="post_0618_operation_board_20260613.html">
+          <b>6月18日以降 当日運用ボード</b>
+          <span>18日以降に、今日見る項目、止める条件、注文上限を確認する実務画面。</span>
+        </a>
+      <a class="card" href="post_0618_prebuy_final_verification_20260613.html">
+          <b>6月18日以降 購入前・最終検査ボード</b>
+          <span>イベント、候補10社、資金配分、本人操作、NISA区分、記録がそろうまで止める直前検査。</span>
+        </a>
+      <a class="card" href="system_health_check_20260613.html">
+          <b>システムヘルスチェック</b>
+          <span>6/18以降に使うイベント更新、CSV反映、購入前最終確認、リンク、重要文言、候補数、投入上限をまとめて検査する画面。</span>
+        </a>
+      <a class="card" href="candidate_selection_health_check_20260613.html">
+          <b>候補10社 選定ロジック検査</b>
+          <span>現行10社が、最終ロジック、チャンネル比較、決算反応、資金配分、未補完データに整合しているかを確認する画面。</span>
+        </a>
+      <a class="card" href="candidate10_partial_resolution_20260613.html">
+          <b>候補10社 注文前未解決項目</b>
+          <span>残るpartialを銘柄別の注文前確認項目に変換した実務画面。</span>
+        </a>
+      <a class="card" href="post0618_prebuy_ticket_20260613.html">
+          <b>6/18以降 注文前確認票</b>
+          <span>イベント分岐、銘柄別上限、本人操作確認、買わない条件をまとめた実務票。</span>
+        </a>
+        <a class="card" href="decision_improvement_pack_20260613.html">
+          <b>実用判断 改善パック</b>
+          <span>未確認ゲート、指数+1%目標、銘柄別リスク、質的テーマ、NISA口座状態を6/18以降の実用判断へ接続。</span>
+        </a>
+      
+      
+      <a class="card" href="candidate10_reaction_backfill_20260613.html">
+          <b>候補10社 決算後反応 再計算</b>
+          <span>公式決算日を確認できる範囲で、決算後1日・5日・20営業日の対日経平均超過リターンを再計算する画面。</span>
+        </a>
+      
+      
+      <a class="card" href="candidate10_reaction_backfill_20260613.html">
+          <b>候補10社 決算後反応 再計算</b>
+          <span>公式決算日を確認できる範囲で、決算後1日・5日・20営業日の対日経平均超過リターンを再計算する画面。</span>
+        </a>
+      
+      
+        <a class="card" href="898_final_candidate_selection_logic_20260606.html">
+          <b>候補10社 最終確定ロジック</b>
+          <span>約100社から最大10社へ絞る固定ルール。採点、除外条件、6月イベント後の分類を確認。</span>
+        </a>
+      
+        <a class="card" href="899_gap_resolution_execution_20260606.html">
+          <b>不足点10項目 回収実装</b>
+          <span>不足点を、必須データ、配分、売買、指数比較、税制、実用画面のゲートへ落とした版。</span>
+        </a>
+      
+        <a class="card" href="913_gap_closure_tracker_20260606.html">
+          <b>不足点10項目 回収トラッカー</b>
+          <span>残っている不足点、次にやること、購入判断への影響を一覧で確認。</span>
+        </a>
+      
+        <a class="card" href="908_final10_decision_workbench_20260606.html">
+          <b>最終10社 判定ワークベンチ</b>
+          <span>6月イベント後の確認状況を入力し、中心候補・条件付き・補欠・監視・除外へ分類する。</span>
+        </a>
+      
+        <a class="card" href="909_final10_current_snapshot_20260606.html">
+          <b>現時点 判定スナップショット</b>
+          <span>ワークベンチの初期値をもとに、保守判定と緑通過後の仮判定を固定表示。</span>
+        </a>
+      
+        <a class="card" href="910_prebuy_final_gate_checklist_20260606.html">
+          <b>購入前 最終ゲートチェック</b>
+          <span>候補、市場、NISA口座、税制、記録がそろっているかを購入前に確認する最終ゲート。</span>
+        </a>
+      
+        <a class="card" href="916_purchase_readiness_board_20260606.html">
+          <b>購入準備 判定ボード</b>
+          <span>市場、候補、配分、NISA口座、税制、記録がそろっているかを一画面で判定。</span>
+        </a>
+      
+        <a class="card" href="historical_return_compound_simulation_20260609.html">
+          <b>240万円×1〜10口座 過去実績ベース複利</b>
+          <span>現10社の5年CAGR、10年CAGR、直近1年、最大下落を使った資産推移。</span>
+        </a>
+      
+        <a class="card" href="912_june_event_actual_input_sheet_20260606.html">
+          <b>6月イベント 実数入力シート</b>
+          <span>手順1: CPI・日銀・FOMC後の実数と判定を入力し、判定用CSVを出力する。</span>
+        </a>
+      
+        <a class="card" href="post_0618_event_reflection_workflow_20260613.html">
+          <b>6月イベント実数 反映ワークフロー</b>
+          <span>手順1の入力が、候補10社・資金配分・当日運用ボードへどう反映されるか確認する。</span>
+        </a>
+      <a class="card" href="post_0618_event_update_runbook_20260613.html">
+          <b>6月イベントCSV 反映・再生成ランブック</b>
+          <span>イベント実数CSVを反映した後、未入力・注意・悪化の件数、初回投入上限、再生成手順を確認する。</span>
+        </a>
+      
+        <a class="card" href="june_event_gate_engine.html">
+          <b>銘柄別イベント判定エンジン</b>
+          <span>手順2: イベント結果CSVに連動して、銘柄別の延期・保留・候補復帰を判定する。</span>
+        </a>
+      
+        <a class="card" href="893_june_event_gate_engine_20260606.html">
+          <b>6月イベント 市場全体ゲート</b>
+          <span>手順3: 金利、SOX、NASDAQ、VIXで市場全体を緑・黄・赤で照合する。</span>
+        </a>
+      
+        <a class="card" href="capital_allocation_plan.html">
+          <b>240万円 資金配分ゲート</b>
+          <span>手順4: 判定結果に応じた段階投入(初回35%・第2回20%・第3回15%)の上限を確認する。</span>
+        </a>
+      
+        <a class="card" href="911_ticker_action_tickets_20260606.html">
+          <b>候補10社 銘柄別アクション票</b>
+          <span>緑・黄判定時の扱い、停止条件、利確条件、追加確認を銘柄別に確認。</span>
+        </a>
+      
+        <a class="card" href="915_benchmark_underperformance_rules_20260606.html">
+          <b>指数劣後時の比率引き下げルール</b>
+          <span>12か月でS&amp;P500・TOPIX・日経平均に+1%劣後した場合の個別株比率調整。</span>
+        </a>
+      
+        <a class="card" href="895_june_execution_cockpit_20260606.html">
+          <b>6月実行コックピット</b>
+          <span>6月イベント後に何を見るか、何なら止めるか、次に何をするかを見る。</span>
+        </a>
+      
+        <a class="card" href="894_june_candidate_action_after_gate_20260606.html">
+          <b>6月候補別アクション分岐表</b>
+          <span>市場ゲート後に銘柄ごとの扱いを確認する。</span>
+        </a>
+      
+    </div>
+  </section>
+
+  <section class="">
+    <div class="section-head">
+      <h2>2. テーマ候補・選定根拠</h2>
+      
+    </div>
+    <p class="lead">既存10社、半導体、データセンター、フィジカルAI、量子を混同せずに確認します。</p>
+    <div class="grid">
+      
+        <a class="card" href="898_final_candidate_selection_logic_20260606.html">
+          <b>候補10社 最終確定ロジック 固定版</b>
+          <span>選定の手順、スコア構造、ハード除外、最終分類を確認。</span>
+        </a>
+      
+        <a class="card" href="891_june_theme_execution_matrix_20260605.html">
+          <b>6月テーマ候補 実行判定表</b>
+          <span>テーマ候補ごとの必要データ、通過条件、停止条件。</span>
+        </a>
+      
+        <a class="card" href="890_june_theme_integration_gate_20260605.html">
+          <b>6月テーマ候補 統合ゲート</b>
+          <span>既存10社を基準に、テーマ枠を入れる条件を確認。</span>
+        </a>
+      
+        <a class="card" href="889_cross_channel_candidate_comparison_20260605.html">
+          <b>テーマ別候補 横並び比較</b>
+          <span>総合、半導体、データセンター、フィジカルAI、量子を横並び比較。</span>
+        </a>
+      
+        <a class="card" href="888_quantum_physical_ai_promotion_queue_20260605.html">
+          <b>フィジカルAI・量子 昇格作業キュー</b>
+          <span>購入候補に近いもの、補完後候補、長期探索を分ける。</span>
+        </a>
+      
+    </div>
+  </section>
+
+  <section class="">
+    <div class="section-head">
+      <h2>3. NISA準備・口座運用</h2>
+      
+    </div>
+    <p class="lead">実際の購入前に、本人操作、証券会社確認、注文票、進捗を整理します。</p>
+    <div class="grid">
+      
+        <a class="card" href="882_nisa_account_operation_hub_20260605.html">
+          <b>NISA口座運用ハブ</b>
+          <span>本人操作、証券会社確認、提案資料、注文票の入口。</span>
+        </a>
+      
+        <a class="card" href="883_nisa_readiness_dashboard_20260605.html">
+          <b>NISA購入準備 進捗ダッシュボード</b>
+          <span>本人別の口座準備、スマホ準備、入金、注文票の進捗。</span>
+        </a>
+      
+        <a class="card" href="884_nisa_broker_contact_templates_20260605.html">
+          <b>NISA証券会社 確認依頼テンプレート</b>
+          <span>証券会社へ確認する内容を整理。</span>
+        </a>
+      
+        <a class="card" href="879_nisa_person_order_ticket_20260605.html">
+          <b>NISA本人別 注文票テンプレート</b>
+          <span>本人が確認して発注するための注文票。</span>
+        </a>
+      
+    </div>
+  </section>
+
+  <section class="">
+    <div class="section-head">
+      <h2>4. 記録・補足資料</h2>
+      
+    </div>
+    <p class="lead">判断理由、予想と実績、税制確認、注意事項を残すための資料です。</p>
+    <div class="grid">
+      
+        <a class="card" href="892_june_event_actual_input_and_replacement_log_20260606.html">
+          <b>6月イベント後 実データ入力・入替記録</b>
+          <span>イベント後の実数と、候補を入れ替えた理由を記録。</span>
+        </a>
+      
+        <a class="card" href="multi_account_compound_simulation_20260609.html">
+          <b>240万円×1〜10口座 固定年率複利(サンプル)</b>
+          <span>年8%・10%・12%の固定年率サンプル試算。利回りの根拠は過去実績ベース版を優先。</span>
+        </a>
+      
+        <a class="card" href="https://raw.githubusercontent.com/ob198-cpu/kabu/main/operation_record_template_20260529.csv">
+          <b>運用記録CSV</b>
+          <span>判断理由、予想、実績、差分を記録するテンプレート。</span>
+        </a>
+      
+        <a class="card" href="842_tax_aware_operation_layer_phase1_20260602.html">
+          <b>税制レイヤー Phase 1</b>
+          <span>NISA、課税口座、損益通算などの確認補助。</span>
+        </a>
+      
+        <a class="card" href="nisa_multi_account_pc_ip_risk_report_20260531.pdf">
+          <b>NISA口座操作時の注意 PDF</b>
+          <span>本人操作、別名義口座の注意点、誤解を避ける運用方法。</span>
+        </a>
+      
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>最新市場データ</h2>
+    </div>
+    <p class="lead">GitHub Actionsが平日更新する <code>data/market_update.json</code> を読み込みます。ベンチマーク+1%の12か月目標(915)とは別に、短期の市場環境を確認する欄です。</p>
+    <div id="marketSummary" class="notice">読み込み中...</div>
+    <div id="marketGrid" class="market-grid"></div>
+    <div id="marketStocks" style="margin-top:12px"></div>
+  </section>
+  <footer>公開URL: https://ob198-cpu.github.io/kabu/ / 作成: 2026/06/13 20:43</footer>
+</main>
+<script>
+async function loadMarketUpdate(){
+  const summary = document.getElementById("marketSummary");
+  const grid = document.getElementById("marketGrid");
+  const stocks = document.getElementById("marketStocks");
+  try {
+    const res = await fetch("data/market_update.json?_=" + Date.now());
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    summary.textContent = (data.summary || "サマリーなし") + " / 更新: " + (data.updatedAt || "");
+    const issues = [...(data.errors || []), ...(data.dataChecks || [])];
+    if (issues.length) {
+      summary.textContent += " / データ注意: " + issues.join(" / ");
+      summary.style.borderLeftColor = "#a01818";
+    }
+    grid.innerHTML = (data.markets || []).slice(0, 8).map(function(m){
+      const ch = m.changePct == null ? "—" : (m.changePct >= 0 ? "+" : "") + Number(m.changePct).toFixed(2) + "%";
+      return '<div class="market-card"><b>' + m.name + '</b><strong>' + (m.value == null ? "—" : Number(m.value).toLocaleString("ja-JP")) + '</strong><span>1日 ' + ch + '</span></div>';
+    }).join("");
+    stocks.innerHTML = '<div class="table-wrap"><table><thead><tr><th>コード</th><th>銘柄</th><th>株価</th><th>1日</th><th>判定</th></tr></thead><tbody>' +
+      (data.stocks || []).map(function(s){
+        const ch = s.changePct == null ? "—" : (s.changePct >= 0 ? "+" : "") + Number(s.changePct).toFixed(2) + "%";
+        return '<tr><td>' + s.code + '</td><td>' + s.name + '</td><td>' + (s.price == null ? "—" : Number(s.price).toLocaleString("ja-JP")) + '</td><td>' + ch + '</td><td>' + s.signal + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  } catch (err) {
+    summary.textContent = "market_update.json を読み込めませんでした: " + err.message;
+    grid.innerHTML = "";
+    stocks.innerHTML = "";
+  }
+}
+loadMarketUpdate();
+</script>
+</body>
+</html>

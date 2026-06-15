@@ -1,4 +1,17 @@
-<!doctype html>
+import fs from 'node:fs';
+
+const indexFile = 'index.html';
+const legacyFile = 'legacy_index_archive_20260615.html';
+const generatedAt = new Date().toLocaleString('ja-JP', {
+  timeZone: 'Asia/Tokyo',
+  hour12: false,
+});
+
+if (fs.existsSync(indexFile) && !fs.existsSync(legacyFile)) {
+  fs.copyFileSync(indexFile, legacyFile);
+}
+
+const html = `<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
@@ -76,7 +89,7 @@
       <a href="p1_per_pbr_calculation_apply_audit_20260615.html"><b>PER/PBR計算ログ</b><span>公式EPS/BPSと株価から計算したPER/PBRの確認ログです。</span></a>
       <a href="p1_segment_growth_apply_audit_20260615.html"><b>事業寄与確認ログ</b><span>三菱電機・東京エレクトロンのセグメント、受注、成長見通しです。</span></a>
       <a href="102_june_event_result_input.csv"><b>6月イベント入力CSV</b><span>CPI、日銀、FOMC、最終確認の入力元CSVです。</span></a>
-      <a href="legacy_index_archive_20260615.html"><b>旧トップページ</b><span>過去のリンク一覧を残したアーカイブです。</span></a>
+      <a href="${legacyFile}"><b>旧トップページ</b><span>過去のリンク一覧を残したアーカイブです。</span></a>
     </div>
   </section>
 
@@ -91,7 +104,16 @@
     </div>
   </section>
 
-  <footer>更新: 2026/6/15 21:56:44 / このシステムは投資助言、自動売買、利益保証を行いません。実売買前には証券会社画面、公式決算、本人操作、NISA口座区分を確認します。</footer>
+  <footer>更新: ${generatedAt} / このシステムは投資助言、自動売買、利益保証を行いません。実売買前には証券会社画面、公式決算、本人操作、NISA口座区分を確認します。</footer>
 </main>
 </body>
-</html>
+</html>`;
+
+fs.writeFileSync(indexFile, html, 'utf8');
+
+console.log(JSON.stringify({
+  indexFile,
+  legacyFile,
+  archived: fs.existsSync(legacyFile),
+  generatedAt,
+}, null, 2));
