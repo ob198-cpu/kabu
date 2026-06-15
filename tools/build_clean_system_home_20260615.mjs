@@ -73,6 +73,7 @@ const html = `<!doctype html>
     <h2>実用パート</h2>
     <div class="links">
       <a href="june_event_operation_calendar_20260615.html"><b>6月イベント運用表</b><span>いつ何を入力し、どの条件で止めるかを一枚で確認します。</span></a>
+      <a href="june_event_input_tickets_20260615.html"><b>6月イベント後 入力チケット</b><span>日銀・FOMC後に埋める項目、反映先、停止条件を固定しています。</span></a>
       <a href="event_post_reaction_workbench_20260615.html"><b>イベント後反応 判定ワークベンチ</b><span>基準値と現在値を比較し、注意・停止候補を出します。</span></a>
       <a href="p1_event_gate_remaining_20260615.html"><b>P1イベント後ゲート 残項目</b><span>CPI、日銀、FOMC、指数、個別株反応の残りを確認します。</span></a>
       <a href="p1_segment_next_gate_input_validator_20260615.html"><b>P1入力バリデーター</b><span>入力値・出所・取得日時・確認区分が揃ったかを確認します。</span></a>
