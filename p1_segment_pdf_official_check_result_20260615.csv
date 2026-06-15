@@ -1,0 +1,13 @@
+﻿ticker,銘柄,確認項目,PDF原文値,PDF確認,計算候補,計算式,反映可否,スコア反映,P1復帰,買付上限,根拠,参照URL,注意
+6503.T,三菱電機,実績EPS,198.31円,確認済み,,,財務値のみ確認済み,禁止,0社,0円,三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版 P1 L63-L78,https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,PER計算の分母として使えるが、株価基準日は別途確認が必要。
+6503.T,三菱電機,BPS,"2,191.26円",確認済み,,,財務値のみ確認済み,禁止,0社,0円,三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版 P1 L80-L90,https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,PBR計算の分母として使えるが、株価基準日は別途確認が必要。
+6503.T,三菱電機,ROE,9.7%,確認済み,,,公式財務値として入力候補,禁止,0社,0円,三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版 P1 L69-L78,https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,Yahoo参照値9.67%は使わず、PDF原文値9.7%へ置換する候補。
+6503.T,三菱電機,営業利益率,7.3%,確認済み,,,公式財務値として入力候補,禁止,0社,0円,三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版 P1 L74-L78,https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,収益性の公式確認値。スコア反映は入力キュー転記後のバリデーション後。
+6503.T,三菱電機,PER候補,EPS 198.31円,PDF側確認済み,27.96倍,"株価5,545円 ÷ EPS198.31円",株価基準日確認後に可,禁止,0社,0円,"EPSは公式PDF確認済み。株価5,545円は既存JSON基準。",https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,株価が公式PDF値ではないため、まだ公式確認済みPERにはしない。
+6503.T,三菱電機,PBR候補,"BPS 2,191.26円",PDF側確認済み,2.53倍,"株価5,545円 ÷ BPS2,191.26円",株価基準日確認後に可,禁止,0社,0円,"BPSは公式PDF確認済み。株価5,545円は既存JSON基準。",https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,株価が公式PDF値ではないため、まだ公式確認済みPBRにはしない。
+8035.T,東京エレクトロン,実績EPS,"1,254.57円",確認済み,,,財務値のみ確認済み,禁止,0社,0円,東京エレクトロン 2026年3月期 決算短信〔日本基準〕 P0 L19-L25,https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,PER計算の分母として使えるが、株価基準日は別途確認が必要。
+8035.T,東京エレクトロン,BPS,"4,498.85円",確認済み,,,財務値のみ確認済み,禁止,0社,0円,東京エレクトロン 2026年3月期 決算短信〔日本基準〕 P0 L27-L31,https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,PBR計算の分母として使えるが、株価基準日は別途確認が必要。
+8035.T,東京エレクトロン,ROE,29.6%,確認済み,,,公式財務値として入力候補,禁止,0社,0円,東京エレクトロン 2026年3月期 決算短信〔日本基準〕 P0 L19-L25,https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,公式PDFで確認できたROE。入力キュー転記後にバリデーションする。
+8035.T,東京エレクトロン,営業利益率,25.6%,確認済み,,,公式財務値として入力候補,禁止,0社,0円,東京エレクトロン 2026年3月期 決算短信〔日本基準〕 P0 L21-L25,https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,収益性の公式確認値。スコア反映は入力キュー転記後のバリデーション後。
+8035.T,東京エレクトロン,PER候補,"EPS 1,254.57円",PDF側確認済み,54.20倍,"株価68,000円 ÷ EPS1,254.57円",株価基準日確認後に可,禁止,0社,0円,"EPSは公式PDF確認済み。株価68,000円は既存JSON基準。",https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,株価が公式PDF値ではないため、まだ公式確認済みPERにはしない。
+8035.T,東京エレクトロン,PBR候補,"BPS 4,498.85円",PDF側確認済み,15.11倍,"株価68,000円 ÷ BPS4,498.85円",株価基準日確認後に可,禁止,0社,0円,"BPSは公式PDF確認済み。株価68,000円は既存JSON基準。",https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,株価が公式PDF値ではないため、まだ公式確認済みPBRにはしない。
