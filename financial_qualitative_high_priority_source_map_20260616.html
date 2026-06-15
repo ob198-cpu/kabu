@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>高優先 公式確認先マップ</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:34px}
+    header h1{margin:0 0 10px;font-size:clamp(34px,4vw,50px);line-height:1.18;letter-spacing:0}
+    header p{margin:0;font-size:19px;font-weight:900;max-width:1180px}
+    main{max-width:1440px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:28px}
+    p{margin:0 0 10px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:16px}
+    .card strong{display:block;font-size:32px;color:var(--blue);line-height:1.25}
+    .card span{display:block;font-weight:900;color:#263e55}
+    .notice{border:2px solid var(--red);background:#fff1f1;color:#8a0000;border-radius:10px;padding:14px 16px;font-weight:900;margin:0}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:9px 10px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#004f86;font-weight:900}
+    .bad{color:var(--red)!important;font-weight:900}
+    @media(max-width:980px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:17px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>高優先 公式確認先マップ</h1>
+  <p>高優先17件について、どの公式資料・既存検証台帳を見て、何を入力条件にするかを固定します。確認先があっても、数値入力までは反映禁止です。</p>
+</header>
+<main>
+  <section>
+    <h2>確認対象</h2>
+    <div class="cards">
+      <div class="card"><b>高優先</b><strong>17件</strong><span>公式確認先を接続</span></div>
+      <div class="card"><b>財務</b><strong>14件</strong><span>三菱電機・TDK</span></div>
+      <div class="card"><b>質的テーマ</b><strong>3件</strong><span>半導体、AIインフラ、金利</span></div>
+      <div class="card"><b>現在の扱い</b><strong class="bad">反映禁止</strong><span>入力完了前は買付判断へ使わない</span></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="notice">このページは「見る場所」を固定するためのページです。数値の入力、資料日付、対象期間、確認者がそろうまで、候補順位・比率・買付上限には反映しません。</p>
+    <p>CSV: <a href="financial_qualitative_high_priority_source_map_20260616.csv">financial_qualitative_high_priority_source_map_20260616.csv</a></p>
+  </section>
+
+  <section>
+    <h2>財務データ 公式確認先</h2>
+    
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>入力ID</th>
+            <th>対象</th>
+            <th>項目</th>
+            <th>公式確認先</th>
+            <th>資料扱い</th>
+            <th>入力へ使う条件</th>
+            <th>反映前確認</th>
+            <th>現在の扱い</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>HQ-01-6503.T-PER</td>
+              <td><b>6503.T</b><br>三菱電機</td>
+              <td>PER</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td>
+              <td>直接資料候補。表紙・対象期・数値位置は未確認</td>
+              <td>資料名、資料日付、対象期、該当数値を確認してから入力</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-02-6503.T-PBR</td>
+              <td><b>6503.T</b><br>三菱電機</td>
+              <td>PBR</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td>
+              <td>直接資料候補。表紙・対象期・数値位置は未確認</td>
+              <td>資料名、資料日付、対象期、該当数値を確認してから入力</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-03-6503.T-ROE</td>
+              <td><b>6503.T</b><br>三菱電機</td>
+              <td>ROE</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td>
+              <td>直接資料候補。表紙・対象期・数値位置は未確認</td>
+              <td>資料名、資料日付、対象期、該当数値を確認してから入力</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-04-6503.T-_</td>
+              <td><b>6503.T</b><br>三菱電機</td>
+              <td>営業利益率</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td>
+              <td>直接資料候補。表紙・対象期・数値位置は未確認</td>
+              <td>資料名、資料日付、対象期、該当数値を確認してから入力</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-05-6503.T-_</td>
+              <td><b>6503.T</b><br>三菱電機</td>
+              <td>今期会社予想</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td>
+              <td>直接資料候補。表紙・対象期・数値位置は未確認</td>
+              <td>資料名、資料日付、対象期、該当数値を確認してから入力</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-06-6503.T-_</td>
+              <td><b>6503.T</b><br>三菱電機</td>
+              <td>前期比増減</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td>
+              <td>直接資料候補。表紙・対象期・数値位置は未確認</td>
+              <td>資料名、資料日付、対象期、該当数値を確認してから入力</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-07-6503.T-_</td>
+              <td><b>6503.T</b><br>三菱電機</td>
+              <td>受注またはセグメント寄与</td>
+              <td><a href="https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf" target="_blank" rel="noopener">https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf</a></td>
+              <td>直接資料候補。表紙・対象期・数値位置は未確認</td>
+              <td>資料名、資料日付、対象期、該当数値を確認してから入力</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-08-6762.T-PER</td>
+              <td><b>6762.T</b><br>TDK</td>
+              <td>PER</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td>
+              <td>決算資料ページ候補</td>
+              <td>ページ内で最新決算短信・説明会資料PDFを特定する</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-09-6762.T-PBR</td>
+              <td><b>6762.T</b><br>TDK</td>
+              <td>PBR</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td>
+              <td>決算資料ページ候補</td>
+              <td>ページ内で最新決算短信・説明会資料PDFを特定する</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-10-6762.T-ROE</td>
+              <td><b>6762.T</b><br>TDK</td>
+              <td>ROE</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td>
+              <td>決算資料ページ候補</td>
+              <td>ページ内で最新決算短信・説明会資料PDFを特定する</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-11-6762.T-_</td>
+              <td><b>6762.T</b><br>TDK</td>
+              <td>営業利益率</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td>
+              <td>決算資料ページ候補</td>
+              <td>ページ内で最新決算短信・説明会資料PDFを特定する</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-12-6762.T-_</td>
+              <td><b>6762.T</b><br>TDK</td>
+              <td>今期会社予想</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td>
+              <td>決算資料ページ候補</td>
+              <td>ページ内で最新決算短信・説明会資料PDFを特定する</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-13-6762.T-_</td>
+              <td><b>6762.T</b><br>TDK</td>
+              <td>前期比増減</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td>
+              <td>決算資料ページ候補</td>
+              <td>ページ内で最新決算短信・説明会資料PDFを特定する</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-14-6762.T-_</td>
+              <td><b>6762.T</b><br>TDK</td>
+              <td>受注またはセグメント寄与</td>
+              <td><a href="https://www.tdk.com/en/ir/ir_library/financial/index.html" target="_blank" rel="noopener">https://www.tdk.com/en/ir/ir_library/financial/index.html</a></td>
+              <td>決算資料ページ候補</td>
+              <td>ページ内で最新決算短信・説明会資料PDFを特定する</td>
+              <td>資料名・資料日付・対象期間・入力値・計算式を残す。PER/PBRは株価基準日を必ず分ける。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  
+  </section>
+
+  <section>
+    <h2>質的テーマ 確認先</h2>
+    
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>入力ID</th>
+            <th>対象</th>
+            <th>項目</th>
+            <th>公式確認先</th>
+            <th>資料扱い</th>
+            <th>入力へ使う条件</th>
+            <th>反映前確認</th>
+            <th>現在の扱い</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>HQ-15-_-_</td>
+              <td><b>複数</b><br>半導体製造装置・材料</td>
+              <td>仮説・実績・反証</td>
+              <td><a href="theme_event_validation_ledger_20260614.html" target="_blank" rel="noopener">theme_event_validation_ledger_20260614.html</a></td>
+              <td>既存テーマ検証台帳と、SOX・WFE・候補銘柄反応の確認</td>
+              <td>テーマ後の指数超過、受注・利益率・会社コメントのいずれかで接続できること</td>
+              <td>仮説だけでは反映しない。過去反応または業績接続を記録する。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-16-_-_</td>
+              <td><b>複数</b><br>AIインフラ・データセンター</td>
+              <td>仮説・実績・反証</td>
+              <td><a href="theme_event_validation_ledger_20260614.html" target="_blank" rel="noopener">theme_event_validation_ledger_20260614.html</a></td>
+              <td>AIインフラ・データセンター需要の検証台帳</td>
+              <td>データセンター投資、電力需要、電線・重電・冷却関連の受注または利益寄与が確認できること</td>
+              <td>仮説だけでは反映しない。過去反応または業績接続を記録する。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+            <tr>
+              <td>HQ-17-_-_</td>
+              <td><b>複数</b><br>金利・金融</td>
+              <td>仮説・実績・反証</td>
+              <td><a href="june_event_execution_flow_20260615.html" target="_blank" rel="noopener">june_event_execution_flow_20260615.html</a></td>
+              <td>日銀・FOMC・長期金利・銀行株反応の確認</td>
+              <td>金利上昇が利ざや・運用益へ効く一方、信用コスト悪化が限定的であること</td>
+              <td>仮説だけでは反映しない。過去反応または業績接続を記録する。</td>
+              <td class="bad">反映禁止</td>
+            </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  
+  </section>
+</main>
+</body>
+</html>
