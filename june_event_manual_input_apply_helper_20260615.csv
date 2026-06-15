@@ -1,0 +1,4 @@
+﻿区分,内容,詳細,次アクション
+現在の状態,準備完了,手入力フォームでCSVを作成し、ファイル名を指定して反映します。,フォームでCSVを作成し、このヘルパーで反映する
+入力フォーム,june_event_manual_input_form_20260615.html,公式結果と市場反応を入力し、CSVをダウンロードする,CSV名を指定して反映コマンドを実行する
+反映コマンド,node tools/apply_june_event_manual_input_csv_20260615.mjs june_event_result_entry_20260615_filled.csv,CSVを検証し、問題がなければ正本へ反映して関連画面を再生成する,エラーが出た場合は不足列、ID、出所、取得日時を修正する
