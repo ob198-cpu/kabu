@@ -155,6 +155,11 @@ const perPbrRows = perPbrBasis.map((row) => {
 const promotionRows = officialRows.map((row) => {
   const id = `${row.ticker.replace(".T", "")}_${row["確認項目"] === "ROE" ? "roe_official" : "operating_margin"}`;
   const originalQueue = queueById.get(id);
+  const applied =
+    originalQueue?.["公式確認"] === "済" &&
+    originalQueue?.["入力値"] === row["PDF原文値"] &&
+    originalQueue?.["出所URLまたは資料名"] === row["参照URL"] &&
+    originalQueue?.["ページまたは取得日時"] === row["根拠"];
   return {
     ticker: row.ticker,
     銘柄: row["銘柄"],
@@ -163,15 +168,19 @@ const promotionRows = officialRows.map((row) => {
     公式確認値: row["PDF原文値"],
     参照資料: row["根拠"],
     参照URL: row["参照URL"],
-    元キュー状態: originalQueue?.["公式確認"] === "済" ? "原本反映済み" : "原本未反映",
-    昇格候補判定: "候補化可",
-    原本上書き: "まだ",
+    元キュー状態: applied ? "原本反映済み" : "原本未反映",
+    昇格候補判定: applied ? "反映済み" : "候補化可",
+    原本上書き: applied ? "完了" : "まだ",
     スコア反映: "禁止",
     P1復帰: "0社",
     買付上限: "0円",
-    理由: "公式PDFで確認済みだが、入力キューへ上書きする前に値・出所・年度・単位の検算を残す。",
+    理由: applied
+      ? "公式PDF確認値を原本入力キューへ反映済み。ただし、この反映だけでスコア・P1復帰・買付上限は動かさない。"
+      : "公式PDFで確認済みだが、入力キューへ上書きする前に値・出所・年度・単位の検算を残す。",
   };
 });
+
+const appliedPromotionCount = promotionRows.filter((row) => row["元キュー状態"] === "原本反映済み").length;
 
 const summaryRows = [
   {
@@ -189,8 +198,8 @@ const summaryRows = [
   {
     項目: "公式値昇格候補",
     件数: `${promotionRows.length}件`,
-    現在の扱い: "原本上書き前",
-    理由: "ROE・営業利益率は公式PDFで確認済み。原本キューへ移す前に検算履歴を残す。",
+    現在の扱い: appliedPromotionCount === promotionRows.length ? "原本反映済み" : "原本上書き前",
+    理由: `ROE・営業利益率は公式PDFで確認済み。原本キュー反映は${appliedPromotionCount}/${promotionRows.length}件。`,
   },
   {
     項目: "スコア反映",

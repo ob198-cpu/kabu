@@ -1,0 +1,5 @@
+﻿ticker,銘柄,入力ID,入力項目,反映可否,反映値,出所URL,確認位置,スコア反映,P1復帰,買付上限,理由
+6503.T,三菱電機,6503_roe_official,ROE,反映,9.7%,https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版 P1 L69-L78,禁止,0社,0円,公式PDFで値・出所・確認位置がそろったROE/営業利益率のみ入力キューへ反映。PER/PBRは対象外。
+6503.T,三菱電機,6503_operating_margin,営業利益率,反映,7.3%,https://www.mitsubishielectric.co.jp/ja/pr/2026/pdf/0428_co1.pdf,三菱電機 2026年3月期 決算短信〔IFRS〕 一部訂正版 P1 L74-L78,禁止,0社,0円,公式PDFで値・出所・確認位置がそろったROE/営業利益率のみ入力キューへ反映。PER/PBRは対象外。
+8035.T,東京エレクトロン,8035_roe_official,ROE,反映,29.6%,https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,東京エレクトロン 2026年3月期 決算短信〔日本基準〕 P0 L19-L25,禁止,0社,0円,公式PDFで値・出所・確認位置がそろったROE/営業利益率のみ入力キューへ反映。PER/PBRは対象外。
+8035.T,東京エレクトロン,8035_operating_margin,営業利益率,反映,25.6%,https://www.tel.co.jp/ir/library/report/jngpc500000000l6-att/fy26q4tanshin-j.pdf,東京エレクトロン 2026年3月期 決算短信〔日本基準〕 P0 L21-L25,禁止,0社,0円,公式PDFで値・出所・確認位置がそろったROE/営業利益率のみ入力キューへ反映。PER/PBRは対象外。
