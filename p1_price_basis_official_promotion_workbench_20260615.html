@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 PER/PBR基準日・公式値昇格 作業台</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--warn:#9a5b00;--green:#116b4f}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:white;padding:30px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,42px);line-height:1.2;letter-spacing:0}
+    header p{margin:0;max-width:1180px;font-weight:850}
+    main{max-width:1540px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:25px}
+    .notice{border-left:8px solid var(--red);background:#fff1f1;border-radius:10px;padding:14px 16px;font-weight:900;margin:0 0 14px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;line-height:1.25;color:var(--blue)}
+    .card span{display:block;font-weight:800;color:#263e55;margin-top:4px}
+    .bad strong,.bad{color:var(--red)!important;font-weight:900}
+    .warn strong,.warn{color:var(--warn)!important;font-weight:900}
+    .ok strong,.ok{color:var(--green)!important;font-weight:900}
+    .links{display:flex;flex-wrap:wrap;gap:10px}
+    .links a{display:inline-block;text-decoration:none;color:#fff;background:var(--blue);border-radius:999px;padding:8px 13px;font-weight:900}
+    .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff;table-layout:auto}
+    th,td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+    th{background:#e7f2fb;color:#06395f;text-align:left;font-weight:900}
+    a{color:#064f86;font-weight:900}
+    footer{font-size:13px;color:#526b82;margin:20px 0}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:16px}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}.table-wrap{overflow:visible}th,td{font-size:10px;padding:5px 6px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>P1 PER/PBR基準日・公式値昇格 作業台</h1>
+  <p>PER/PBRの計算候補と、公式PDFで確認できたROE・営業利益率を分けて検算する画面です。ここではスコア反映、P1復帰、買付金額の解除は行いません。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="notice">PER/PBRは再計算できますが、まだ正式スコアには入れません。株価基準日の確認と原本キューへの反映が終わるまで、スコア反映0項目、P1復帰0社、買付上限0円を維持します。</p>
+    <div class="cards">
+      <div class="card warn"><b>PER/PBR候補</b><strong>6件</strong><span>計算式と取得ログを検算</span></div>
+      <div class="card warn"><b>公式値昇格候補</b><strong>4件</strong><span>ROE・営業利益率のみ候補化</span></div>
+      <div class="card bad"><b>スコア反映</b><strong>0項目</strong><span>未確認値を混ぜない</span></div>
+      <div class="card bad"><b>買付上限</b><strong>0円</strong><span>購入判断には未接続</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>関連ページ</h2>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="latest_practical_start_20260614.html">実用パート入口</a>
+      <a href="p1_issue_resolution_board_20260615.html">P1未解決10項目 改善ボード</a>
+      <a href="p1_financial_per_pbr_basis_20260615.html">PER/PBR計算候補</a>
+      <a href="p1_segment_pdf_official_check_result_20260615.html">PDF原文確認結果</a>
+      <a href="p1_segment_next_gate_input_queue_20260615.html">次ゲート入力キュー</a>
+      <a href="p1_price_basis_official_promotion_workbench_20260615.csv">検算CSV</a>
+      <a href="p1_official_value_promotion_candidates_20260615.csv">昇格候補CSV</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>要約</h2>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>件数</th><th>現在の扱い</th><th>理由</th></tr></thead><tbody><tr><td class="warn">PER/PBR計算候補</td><td class="">6件</td><td class="bad">正式スコア反映なし</td><td class="ok">EPS/BPSは公式PDFで確認済みだが、株価は取得ログ由来のため、基準日確認を分ける。</td></tr><tr><td class="warn">株価ログ一致</td><td class="">6/6件</td><td class="warn">取得ログ上は一致</td><td class="warn">既存PER/PBR候補の株価と、market_update.jsonの株価は一致。ただし公式PER/PBR扱いにはしない。</td></tr><tr><td class="warn">公式値昇格候補</td><td class="">4件</td><td class="warn">原本上書き前</td><td class="ok">ROE・営業利益率は公式PDFで確認済み。原本キューへ移す前に検算履歴を残す。</td></tr><tr><td class="">スコア反映</td><td class="">0項目</td><td class="bad">禁止</td><td class="">PER/PBRの正式値化、原本キュー反映、イベント後データ、購入前ゲートが未通過のため。</td></tr><tr><td class="">P1復帰 / 買付上限</td><td class="bad">0社 / 0円</td><td class="">維持</td><td class="warn">検算作業のページであり、購入候補や買付金額を増やすページではない。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>PER/PBR基準日・再計算チェック</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>計算項目</th><th>PDF側の根拠</th><th>株価候補</th><th>株価取得日時</th><th>JSON株価との差</th><th>再計算値</th><th>既存候補値</th><th>現時点の扱い</th><th>スコア反映</th><th>次に必要なこと</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">実績PER</td><td class="">実績EPS 198.31円</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST</td><td class="warn">一致</td><td class="">27.96倍</td><td class="">27.96倍</td><td class="bad">まだ正式値にしない</td><td class="bad">禁止</td><td class="">証券会社画面または同一基準日の株価取得ログを確認し、EPS/BPSの公式値と同じ行で再計算する。</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">予想PER</td><td class="">通期会社予想 EPS 231.01円</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST</td><td class="warn">一致</td><td class="">24倍</td><td class="">24倍</td><td class="bad">まだ正式値にしない</td><td class="bad">禁止</td><td class="">証券会社画面または同一基準日の株価取得ログを確認し、EPS/BPSの公式値と同じ行で再計算する。</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">PBR</td><td class="">BPS 2191.26円</td><td class="">5545円</td><td class="">2026-06-13 19:00 JST</td><td class="warn">一致</td><td class="">2.53倍</td><td class="">2.53倍</td><td class="bad">まだ正式値にしない</td><td class="bad">禁止</td><td class="">証券会社画面または同一基準日の株価取得ログを確認し、EPS/BPSの公式値と同じ行で再計算する。</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">実績PER</td><td class="">実績EPS 1254.57円</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST</td><td class="warn">一致</td><td class="">54.2倍</td><td class="">54.2倍</td><td class="bad">まだ正式値にしない</td><td class="bad">禁止</td><td class="">証券会社画面または同一基準日の株価取得ログを確認し、EPS/BPSの公式値と同じ行で再計算する。</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">予想PER</td><td class="">第2四半期累計予想 EPS 721.12円</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST</td><td class="warn">一致</td><td class="">参考外</td><td class="">参考外</td><td class="bad">まだ正式値にしない</td><td class="bad">禁止</td><td class="">証券会社画面または同一基準日の株価取得ログを確認し、EPS/BPSの公式値と同じ行で再計算する。</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">PBR</td><td class="">BPS 4498.85円</td><td class="bad">68000円</td><td class="">2026-06-13 19:00 JST</td><td class="warn">一致</td><td class="">15.11倍</td><td class="">15.11倍</td><td class="bad">まだ正式値にしない</td><td class="bad">禁止</td><td class="">証券会社画面または同一基準日の株価取得ログを確認し、EPS/BPSの公式値と同じ行で再計算する。</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2>公式値昇格候補</h2>
+    <div class="table-wrap"><table><thead><tr><th>ticker</th><th>銘柄</th><th>入力ID</th><th>入力項目</th><th>公式確認値</th><th>元キュー状態</th><th>昇格候補判定</th><th>原本上書き</th><th>スコア反映</th><th>P1復帰</th><th>買付上限</th><th>理由</th></tr></thead><tbody><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">6503_roe_official</td><td class="">ROE</td><td class="">9.7%</td><td class="bad">原本未反映</td><td class="warn">候補化可</td><td class="bad">まだ</td><td class="bad">禁止</td><td class="bad">0社</td><td class="bad">0円</td><td class="ok">公式PDFで確認済みだが、入力キューへ上書きする前に値・出所・年度・単位の検算を残す。</td></tr><tr><td class="">6503.T</td><td class="">三菱電機</td><td class="">6503_operating_margin</td><td class="">営業利益率</td><td class="">7.3%</td><td class="bad">原本未反映</td><td class="warn">候補化可</td><td class="bad">まだ</td><td class="bad">禁止</td><td class="bad">0社</td><td class="bad">0円</td><td class="ok">公式PDFで確認済みだが、入力キューへ上書きする前に値・出所・年度・単位の検算を残す。</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">8035_roe_official</td><td class="">ROE</td><td class="">29.6%</td><td class="bad">原本未反映</td><td class="warn">候補化可</td><td class="bad">まだ</td><td class="bad">禁止</td><td class="bad">0社</td><td class="bad">0円</td><td class="ok">公式PDFで確認済みだが、入力キューへ上書きする前に値・出所・年度・単位の検算を残す。</td></tr><tr><td class="">8035.T</td><td class="">東京エレクトロン</td><td class="">8035_operating_margin</td><td class="">営業利益率</td><td class="">25.6%</td><td class="bad">原本未反映</td><td class="warn">候補化可</td><td class="bad">まだ</td><td class="bad">禁止</td><td class="bad">0社</td><td class="bad">0円</td><td class="ok">公式PDFで確認済みだが、入力キューへ上書きする前に値・出所・年度・単位の検算を残す。</td></tr></tbody></table></div>
+  </section>
+
+  <footer>generated: 2026/06/15 20:15 / source: market_update.json, p1_financial_per_pbr_basis_20260615.csv, p1_segment_pdf_official_check_result_20260615.csv. 本ページは検算用であり、投資助言、自動売買、購入指示ではありません。</footer>
+</main>
+</body>
+</html>
