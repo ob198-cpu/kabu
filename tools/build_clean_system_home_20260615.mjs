@@ -74,6 +74,7 @@ const html = `<!doctype html>
     <div class="links">
       <a href="prebuy_master_gate_20260615.html"><b>購入前 統合ゲート</b><span>イベント、P1、NISA口座をまとめて見て、買付へ進めるかを確認します。</span></a>
       <a href="today_action_20260616.html"><b>本日の確認事項 6/16</b><span>今日見る項目と、まだ買付判断に使わない項目を分けます。</span></a>
+      <a href="official_source_check_log_20260616.html"><b>公式確認ログ 6/16</b><span>公式ページの確認状況と、未確定項目を分けて記録します。</span></a>
       <a href="june_event_execution_flow_20260615.html"><b>6月イベント 実務フロー</b><span>公式確認、手入力、CSV反映、購入前ゲートの見る順番を一本化します。</span></a>
       <a href="june_event_source_checklist_20260615.html"><b>6月イベント公式ソース確認表</b><span>結果公表後に、どこを見て何を入力するかを確認します。</span></a>
       <a href="june_event_manual_input_form_20260615.html"><b>6月イベント手入力フォーム</b><span>公式結果と市場反応を入力し、CSVとして出力します。</span></a>
