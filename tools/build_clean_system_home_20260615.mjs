@@ -58,15 +58,15 @@ const html = `<!doctype html>
   <section>
     <h2>現在の状態</h2>
     <div class="cards">
-      <div class="card"><b>購入判断</b><strong class="bad">不可</strong><span>日銀・FOMC後データが未完了</span></div>
+      <div class="card"><b>購入判断</b><strong class="bad">不可</strong><span>日銀確認済み・FOMC待ち</span></div>
       <div class="card"><b>P1復帰</b><strong>0社</strong><span>個別株復帰はまだしない</span></div>
       <div class="card"><b>買付上限</b><strong>0円</strong><span>注文票へ進めない</span></div>
-      <div class="card"><b>次の確認</b><strong>6/16以降</strong><span>日銀・FOMC後に再判定</span></div>
+      <div class="card"><b>次の確認</b><strong>FOMC公表後</strong><span>FOMC・指数反応・本人別確認後に再判定</span></div>
     </div>
   </section>
 
   <section>
-    <p class="notice">未発表の結果、未取得データ、本人操作・NISA口座区分未確認の状態では、買付金額を出しません。購入判断に進む前に、イベント後データと口座確認を通します。</p>
+    <p class="notice">日銀の公式結果は確認済みですが、FOMC結果、指数反応、候補銘柄反応、本人操作・NISA口座区分未確認の状態では買付金額を出しません。購入判断に進む前に、残りのイベント後データと口座確認を通します。</p>
   </section>
 
   <section>
@@ -75,7 +75,7 @@ const html = `<!doctype html>
       <a href="prebuy_master_gate_20260615.html"><b>購入前 統合ゲート</b><span>イベント、P1、NISA口座をまとめて見て、買付へ進めるかを確認します。</span></a>
       <a href="financial_qualitative_improvement_gate_20260616.html"><b>財務・質的テーマ 改善ゲート</b><span>partial財務と未検証テーマを候補順位へ混ぜないための確認画面です。</span></a>
       <a href="financial_qualitative_next_input_queue_20260616.html"><b>財務・質的テーマ 次入力キュー</b><span>財務partialと質的テーマ検証を、次に埋める項目単位へ分解します。</span></a>
-      <a href="today_action_20260616.html"><b>本日の確認事項 6/16</b><span>今日見る項目と、まだ買付判断に使わない項目を分けます。</span></a>
+      <a href="today_action_20260617.html"><b>本日の確認事項 6/17</b><span>日銀確認済み・FOMC待ちの状態で、今日見る項目を分けます。</span></a>
       <a href="official_source_check_log_20260616.html"><b>公式確認ログ 6/16</b><span>公式ページの確認状況と、未確定項目を分けて記録します。</span></a>
       <a href="boj_publication_status_20260616.html"><b>T01 日銀公表確認ステータス</b><span>日銀の個別公表文URLと市場反応が確定したかを確認します。</span></a>
       <a href="boj_result_input_sheet_20260616.html"><b>T01 日銀結果入力シート</b><span>日銀結果が出た後に入力する数値、出所、停止条件を確認します。</span></a>
