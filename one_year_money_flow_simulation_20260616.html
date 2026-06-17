@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>1年間のお金の動き シミュレーション</title>
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Yu Gothic", "Meiryo", sans-serif;
+      color: #102033;
+      background: #ffffff;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .page {
+      page-break-after: always;
+      min-height: 186mm;
+      padding: 2mm 3mm 0;
+    }
+    .page:last-child {
+      page-break-after: auto;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      color: #143f75;
+      line-height: 1.3;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      color: #143f75;
+      border-left: 10px solid #1e71cf;
+      padding-left: 12px;
+    }
+    p, li {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+    .hero {
+      border: 4px solid #b8d7ff;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #eef6ff 0%, #dcecff 100%);
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    .note {
+      border: 3px solid #efc63d;
+      background: #fff6cc;
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-size: 23px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .big {
+      font-size: 46px;
+      font-weight: 800;
+      color: #0d4e95;
+      line-height: 1.2;
+      margin: 6px 0;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .card {
+      border: 3px solid #d8e7fb;
+      border-radius: 20px;
+      background: #f8fbff;
+      padding: 16px;
+      page-break-inside: avoid;
+    }
+    .card-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: #174f8e;
+      margin-bottom: 8px;
+    }
+    .rule-box {
+      border-radius: 20px;
+      padding: 16px;
+      color: #fff;
+      min-height: 182px;
+    }
+    .green { background: #1f7e56; }
+    .yellow { background: #c97b00; }
+    .red { background: #a63f3f; }
+    .blue { background: #1559ad; }
+    .rule-box .label {
+      font-size: 19px;
+      font-weight: 800;
+      opacity: 0.95;
+    }
+    .rule-box .value {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 10px 0 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 2px solid #d8e7fb;
+      padding: 10px 10px;
+      vertical-align: top;
+      font-size: 16px;
+      word-break: break-word;
+    }
+    th {
+      background: #eaf4ff;
+      color: #143f75;
+      font-weight: 800;
+    }
+    .small {
+      font-size: 17px;
+      color: #49627c;
+    }
+    .result {
+      border: 4px solid #94d0a6;
+      border-radius: 22px;
+      background: #eff9f1;
+      padding: 16px 18px;
+      margin-top: 14px;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .result-card {
+      border: 2px solid #cde5d4;
+      border-radius: 18px;
+      background: #ffffff;
+      text-align: center;
+      padding: 14px;
+    }
+    .result-card .mini {
+      font-size: 16px;
+      color: #4a6651;
+      font-weight: 700;
+    }
+    .result-card .num {
+      font-size: 34px;
+      font-weight: 800;
+      color: #14603a;
+      line-height: 1.25;
+      margin-top: 6px;
+    }
+    .footer-note {
+      font-size: 16px;
+      color: #5b6f85;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <div class="note">この版では、通常運転の 10.8% だけでなく、景気が良い時だけ発動する「攻めモード」を追加しました。</div>
+    <div class="hero">
+      <h1>1年間のお金の動き<br>景気が良い時は攻める版</h1>
+      <p>元手は <strong>240.0万円</strong>。ただ持つだけではなく、<strong>景気が良い時だけ個別株を増やす</strong> ルールを入れています。</p>
+      <div class="big">通常 10.8% → 攻めモード 13.0%前後を狙う</div>
+      <p>通常運転の例は <strong>240.0万円 → 266.0万円</strong>。攻めモードの例は <strong>240.0万円 → 271.2万円</strong> です。</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">通常運転</div>
+        <p>まずは <strong>84.0万円</strong> で開始し、守りを重視します。</p>
+        <p class="big" style="font-size:38px;">+ 26.0万円 / 10.8%</p>
+      </div>
+      <div class="card">
+        <div class="card-title">攻めモード</div>
+        <p>景気が良い時だけ、追加で <strong>24.0万円</strong> を攻め枠へ入れます。</p>
+        <p class="big" style="font-size:38px;">+ 31.2万円 / 13.0%</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">今回使う10社</div>
+        <p>8053 住友商事 / 8316 三井住友FG / 6501 日立製作所 / 6503 三菱電機 / 6857 アドバンテスト</p>
+        <p>8035 東京エレクトロン / 7011 三菱重工業 / 6762 TDK / 6146 ディスコ / 5803 フジクラ</p>
+      </div>
+      <div class="card">
+        <div class="card-title">攻め枠にする5社</div>
+        <p>6857 アドバンテスト / 8035 東京エレクトロン / 6762 TDK / 6146 ディスコ / 5803 フジクラ</p>
+        <p class="small">景気が良い時に伸びやすい、半導体・AIインフラ・電線系を攻め枠とします。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>景気が良い時だけ攻める 5つの条件</h2>
+    <div class="grid-5">
+      
+        <div class="card">
+          <div class="card-title">金利</div>
+          <p><strong>FOMC後の米10年金利上昇が +10bp以内</strong></p>
+          <p class="small">金利急騰で高PER株が崩れる局面を避ける</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">不安指数</div>
+          <p><strong>VIXが 18以下</strong></p>
+          <p class="small">市場が落ち着いている時だけ攻める</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">米ハイテク</div>
+          <p><strong>NASDAQとSOXの5営業日騰落率が両方プラス</strong></p>
+          <p class="small">半導体・AIの追い風を確認する</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">日本株</div>
+          <p><strong>日経平均とTOPIX代替ETFがイベント前水準以上</strong></p>
+          <p class="small">日本側でも地合い悪化が起きていない</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">候補10社</div>
+          <p><strong>10社のうち6社以上がTOPIX代替ETFに対して5営業日で優位</strong></p>
+          <p class="small">個別株側の相対強さを確認する</p>
+        </div>
+        
+    </div>
+    <div class="note" style="margin-top:14px;">5つの条件が <strong>全部そろった時だけ</strong> 攻めモードに入ります。1つでも外れたら、通常運転のままです。</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">攻める時にやること</div>
+        <ul>
+          <li>初回買付のあと、さらに <strong>24.0万円</strong> を追加する</li>
+          <li>追加先は攻め枠5社にしぼる</li>
+          <li>8月の第2回も、最大 <strong>48.0万円</strong> まで広げる</li>
+          <li>現金は最低でも <strong>48.0万円</strong> は残す</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">攻めモードをやめる条件</div>
+        <ul>
+          <li>SOXかNASDAQが 5営業日で <strong>-5%</strong> 以下</li>
+          <li>VIXが <strong>20超</strong></li>
+          <li>10社のうちTOPIX代替ETFに勝つ銘柄が <strong>5社未満</strong></li>
+          <li>個別の悪材料で <strong>-10%</strong> に到達</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>10社への入れ方</h2>
+    <p>下の表は、通常運転の初回金額と、攻めモードで追加する金額です。</p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:8%;">コード</th>
+          <th style="width:16%;">銘柄</th>
+          <th style="width:16%;">役割</th>
+          <th style="width:14%;">通常の初回</th>
+          <th style="width:14%;">攻め追加</th>
+          <th style="width:16%;">攻め時の初回合計</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>8053</td>
+          <td>住友商事</td>
+          <td>中心候補</td>
+          <td>15.8万円</td>
+          <td>0.0万円</td>
+          <td>15.8万円</td>
+        </tr>
+        
+        <tr>
+          <td>8316</td>
+          <td>三井住友FG</td>
+          <td>中心候補</td>
+          <td>15.8万円</td>
+          <td>0.0万円</td>
+          <td>15.8万円</td>
+        </tr>
+        
+        <tr>
+          <td>6501</td>
+          <td>日立製作所</td>
+          <td>中心候補</td>
+          <td>15.8万円</td>
+          <td>0.0万円</td>
+          <td>15.8万円</td>
+        </tr>
+        
+        <tr>
+          <td>6503</td>
+          <td>三菱電機</td>
+          <td>条件付き候補</td>
+          <td>5.2万円</td>
+          <td>0.0万円</td>
+          <td>5.2万円</td>
+        </tr>
+        
+        <tr>
+          <td>6857</td>
+          <td>アドバンテスト</td>
+          <td>条件付き候補</td>
+          <td>5.2万円</td>
+          <td>4.8万円</td>
+          <td>10.1万円</td>
+        </tr>
+        
+        <tr>
+          <td>8035</td>
+          <td>東京エレクトロン</td>
+          <td>条件付き候補</td>
+          <td>5.2万円</td>
+          <td>4.8万円</td>
+          <td>10.1万円</td>
+        </tr>
+        
+        <tr>
+          <td>7011</td>
+          <td>三菱重工業</td>
+          <td>条件付き候補</td>
+          <td>5.2万円</td>
+          <td>0.0万円</td>
+          <td>5.2万円</td>
+        </tr>
+        
+        <tr>
+          <td>6762</td>
+          <td>TDK</td>
+          <td>条件付き候補</td>
+          <td>5.2万円</td>
+          <td>4.8万円</td>
+          <td>10.1万円</td>
+        </tr>
+        
+        <tr>
+          <td>6146</td>
+          <td>ディスコ</td>
+          <td>条件付き候補</td>
+          <td>5.2万円</td>
+          <td>4.8万円</td>
+          <td>10.1万円</td>
+        </tr>
+        
+        <tr>
+          <td>5803</td>
+          <td>フジクラ</td>
+          <td>条件付き候補</td>
+          <td>5.2万円</td>
+          <td>4.8万円</td>
+          <td>10.1万円</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <p class="footer-note">攻め追加は、攻め枠5社だけに各 <strong>4.8万円</strong> を上乗せします。中心候補3社は土台として維持し、攻める時だけ高感応度の5社を増やします。</p>
+
+    <h2 style="margin-top:20px;">売買ルール</h2>
+    <div class="grid-3">
+      <div class="rule-box green">
+        <div class="label">通常の緑</div>
+        <div class="value">84.0万円</div>
+        <div class="sub">6月イベント通過後の通常スタート金額です。</div>
+      </div>
+      <div class="rule-box blue">
+        <div class="label">景気が良い時の攻め追加</div>
+        <div class="value">24.0万円</div>
+        <div class="sub">5条件を全部通った時だけ、攻め枠5社へ追加します。</div>
+      </div>
+      <div class="rule-box red">
+        <div class="label">赤の時</div>
+        <div class="value">0円</div>
+        <div class="sub">買いません。本人確認未了、NISA区分不明でも同じです。</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">守りの共通ルール</div>
+        <ul>
+          <li><strong>-5%</strong> で追加買い停止</li>
+          <li><strong>-10%</strong> かつ悪材料ありで半分に縮小候補</li>
+          <li>ストップ安や急落日は、その日に買い増ししない</li>
+          <li>3か月で指数に 1%以上負けたら追加停止</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">攻め枠だけの上値ルール</div>
+        <ul>
+          <li>通常は <strong>+20%</strong> で一部利確候補</li>
+          <li>攻めモード中の5社は、まず <strong>+25%</strong> まで引っ張る</li>
+          <li>ただし VIX悪化、SOX/NASDAQ失速なら先に戻す</li>
+          <li>利益を残しつつ、過熱で全部降りない設計</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="page">
+    <h2>1年間のお金の動き 攻めモードの例</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:7%;">時点</th>
+          <th style="width:15%;">できごと</th>
+          <th style="width:19%;">その時の条件</th>
+          <th style="width:15%;">やること</th>
+          <th style="width:9%;">株</th>
+          <th style="width:9%;">現金</th>
+          <th style="width:9%;">合計</th>
+          <th style="width:17%;">ひとこと</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>6/19</td>
+          <td>初回買付</td>
+          <td>日銀・FOMC・指数反応が緑</td>
+          <td>まず 84.0万円 を入れる</td>
+          <td>84.0万円</td>
+          <td>156.0万円</td>
+          <td>240.0万円</td>
+          <td>ここまでは通常運転と同じ。</td>
+        </tr>
+        
+        <tr>
+          <td>6/26</td>
+          <td>景気良好の攻めモード判定</td>
+          <td>上の5条件をすべて通過</td>
+          <td>攻め枠 24.0万円 を追加</td>
+          <td>108.0万円</td>
+          <td>132.0万円</td>
+          <td>243.0万円</td>
+          <td>半導体・AIインフラ・電線へ上乗せ。</td>
+        </tr>
+        
+        <tr>
+          <td>8/20</td>
+          <td>1Q決算後の第2回</td>
+          <td>10社平均がTOPIX代替ETFより +1%以上優位</td>
+          <td>さらに 48.0万円 を追加</td>
+          <td>156.0万円</td>
+          <td>84.0万円</td>
+          <td>252.0万円</td>
+          <td>攻めモード継続時だけ増やす。</td>
+        </tr>
+        
+        <tr>
+          <td>10月</td>
+          <td>上がりすぎ銘柄の調整</td>
+          <td>攻め枠銘柄が +25%超、かつ指数優位が続く</td>
+          <td>その銘柄だけ4分の1を利確候補</td>
+          <td>169.0万円</td>
+          <td>87.0万円</td>
+          <td>256.0万円</td>
+          <td>全部は売らず、勝ち筋を残す。</td>
+        </tr>
+        
+        <tr>
+          <td>12月</td>
+          <td>攻めモード解除の確認</td>
+          <td>SOX/NASDAQが5営業日で-5%以下、またはVIXが20超</td>
+          <td>攻め枠だけ半分に縮小候補</td>
+          <td>162.0万円</td>
+          <td>93.0万円</td>
+          <td>255.0万円</td>
+          <td>地合いが崩れたら元の守り比率へ戻す。</td>
+        </tr>
+        
+        <tr>
+          <td>翌6月</td>
+          <td>1年終了時点</td>
+          <td>攻めモードが大崩れせず継続した例</td>
+          <td>最終の見かけ上の評価額</td>
+          <td>187.2万円</td>
+          <td>84.0万円</td>
+          <td>271.2万円</td>
+          <td>攻めモードでは 13.0% を狙う設計。</td>
+        </tr>
+        
+      </tbody>
+    </table>
+
+    <div class="result">
+      <div class="card-title">この設計の見え方</div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="mini">通常運転</div>
+          <div class="num">266.0万円<br>10.8%</div>
+        </div>
+        <div class="result-card">
+          <div class="mini">攻めモード</div>
+          <div class="num">271.2万円<br>13.0%</div>
+        </div>
+        <div class="result-card">
+          <div class="mini">差</div>
+          <div class="num">5.2万円<br>+2.2%</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-note">この版の考え方は、「いつでも強気」ではなく、「景気が良いと数字で確認できた時だけ、攻め枠5社を増やして 13%前後を狙う」です。</p>
+  </section>
+</body>
+</html>
