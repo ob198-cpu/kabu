@@ -48,6 +48,7 @@ OUT_ULTIMATE_REQUIREMENT_MATRIX = ROOT / "ultimate_selection_requirement_matrix_
 OUT_PURCHASE_READINESS_GATE = ROOT / "ultimate_selection_purchase_readiness_gate_20260619.csv"
 OUT_UNIVERSE_RULES = ROOT / "ultimate_selection_universe_rules_20260619.csv"
 OUT_UNIVERSE_AUDIT = ROOT / "ultimate_selection_universe_audit_20260619.csv"
+OUT_EXPECTED_VALUE_AUDIT = ROOT / "ultimate_selection_expected_value_audit_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1554,6 +1555,40 @@ def build_universe_audit(rows: list[dict[str, object]], portfolio: list[dict[str
     return out
 
 
+def build_expected_value_audit(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    portfolio_tickers = {str(r.get("ticker", "")) for r in portfolio}
+    out: list[dict[str, object]] = []
+    for idx, row in enumerate(rows, start=1):
+        pu = to_float(row.get("up_probability"))
+        pd = round(100.0 - pu, 1) if pu else ""
+        upside = to_float(row.get("upside_pct"))
+        downside = to_float(row.get("downside_pct"))
+        cost = 0.4
+        ev = to_float(row.get("expected_value_pct"))
+        status = "配分対象" if str(row.get("ticker", "")) in portfolio_tickers else "非配分"
+        if str(row.get("action", "")) in ["雋ｷ莉倅ｸ榊庄", "買付不可"]:
+            status = "除外"
+        out.append(
+            {
+                "rank": idx,
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "portfolio_status": status,
+                "expected_value_pct": round(ev, 2),
+                "up_probability_pct": pu,
+                "upside_pct": upside,
+                "down_probability_pct": pd,
+                "downside_pct": downside,
+                "cost_pct": cost,
+                "formula": "EV = 上昇確率×上昇幅 - 下落確率×下落幅 - コスト",
+                "inputs": f"5年CAGR {row.get('cagr5','')} / 10年CAGR {row.get('cagr10','')} / 直近1年 {row.get('one_year','')} / 最大下落 {row.get('max_dd1','')}",
+                "calculation_note": "相対比較用の仮説値。利益予測の確約ではなく、候補間の優先順位と買付比率の検討に使う。",
+                "data_gate": "公式財務・価格・イベント・質的根拠が不足する場合は、EVが高くても買付候補にしない。",
+            }
+        )
+    return out
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -2301,6 +2336,7 @@ def build_html(
     purchase_readiness_rows: list[dict[str, object]],
     universe_rules_rows: list[dict[str, object]],
     universe_audit_rows: list[dict[str, object]],
+    expected_value_audit_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -2455,6 +2491,22 @@ def build_html(
         ("missing_gate", "不足ゲート"),
         ("reason", "理由"),
         ("next_action", "次アクション"),
+    ]
+    expected_value_audit_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("portfolio_status", "配分扱い"),
+        ("expected_value_pct", "EV%"),
+        ("up_probability_pct", "上昇確率%"),
+        ("upside_pct", "上昇幅%"),
+        ("down_probability_pct", "下落確率%"),
+        ("downside_pct", "下落幅%"),
+        ("cost_pct", "コスト%"),
+        ("formula", "式"),
+        ("inputs", "入力"),
+        ("calculation_note", "注意"),
+        ("data_gate", "ゲート"),
     ]
     constraint_fields = [
         ("check_item", "確認項目"),
@@ -2777,6 +2829,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>期待値分解監査</h2>
+    <p class="note">期待値は、単なる雰囲気の加点ではなく「上昇確率×上昇幅 - 下落確率×下落幅 - コスト」で分解して確認します。EVが高くても、財務・価格・イベント・質的根拠のゲートが不足する銘柄は買付候補へ進めない扱いを明示します。</p>
+    {html_table(expected_value_audit_rows, expected_value_audit_fields, 100)}
+  </section>
+
+  <section>
     <h2>実績入力テンプレート</h2>
     <p class="note">購入後の検証に必要な入力欄です。約定価格、確認日の株価、比較指数の開始値と確認日値を入れると、実績%、指数%、指数差を計算できます。実績未入力の間は、次回買付判断に進めない扱いにします。</p>
     {html_table(review_input_rows, review_input_fields, 45)}
@@ -2883,6 +2941,7 @@ def build_html(
       <a href="ultimate_selection_purchase_readiness_gate_20260619.csv">購入レディネスゲートCSV</a>
       <a href="ultimate_selection_universe_rules_20260619.csv">母集団固定ルールCSV</a>
       <a href="ultimate_selection_universe_audit_20260619.csv">100社母集団監査CSV</a>
+      <a href="ultimate_selection_expected_value_audit_20260619.csv">期待値分解監査CSV</a>
       <a href="ultimate_selection_architecture_audit_20260618.csv">7層構造監査CSV</a>
       <a href="ultimate_selection_constraints_20260618.csv">配分制約チェックCSV</a>
       <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
@@ -2926,6 +2985,7 @@ def main() -> None:
     purchase_readiness_rows = build_purchase_readiness_gate(rows, portfolio)
     universe_rules_rows = build_universe_rules(rows, portfolio)
     universe_audit_rows = build_universe_audit(rows, portfolio)
+    expected_value_audit_rows = build_expected_value_audit(rows, portfolio)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -2948,6 +3008,7 @@ def main() -> None:
     write_csv(OUT_PURCHASE_READINESS_GATE, purchase_readiness_rows)
     write_csv(OUT_UNIVERSE_RULES, universe_rules_rows)
     write_csv(OUT_UNIVERSE_AUDIT, universe_audit_rows)
+    write_csv(OUT_EXPECTED_VALUE_AUDIT, expected_value_audit_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2972,6 +3033,7 @@ def main() -> None:
             purchase_readiness_rows,
             universe_rules_rows,
             universe_audit_rows,
+            expected_value_audit_rows,
         ),
         encoding="utf-8",
     )
@@ -2997,6 +3059,7 @@ def main() -> None:
     print(f"Purchase readiness gate: {OUT_PURCHASE_READINESS_GATE}")
     print(f"Universe rules: {OUT_UNIVERSE_RULES}")
     print(f"Universe audit: {OUT_UNIVERSE_AUDIT}")
+    print(f"Expected value audit: {OUT_EXPECTED_VALUE_AUDIT}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
