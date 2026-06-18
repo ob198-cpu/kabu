@@ -17,10 +17,18 @@ FINANCIAL_CSV = ROOT / "candidate10_financial_confirmation_gate_20260614.csv"
 QUAL_CSV = ROOT / "889_cross_channel_candidate_comparison_20260605.csv"
 THEME_GATE_CSV = ROOT / "890_june_theme_integration_gate_20260605.csv"
 PRICE_CSV = DATA_ROOT / "data" / "intraday_snapshots.csv"
+PRICE_PATCH_CSV = ROOT / "ultimate_selection_price_patch_20260618.csv"
+SUPPLEMENT_CSV = ROOT / "276_candidate_supplement_screening.csv"
+TOP20_CSV = ROOT / "274_top20_completion_recalculated_candidates.csv"
+QUAL_EXPLORE_CSV = ROOT / "254_qualitative_trend_exploration_score.csv"
+REACTION_CSV = ROOT / "273_top20_earnings_reaction_completed.csv"
+EVENT_VALIDATION_CSV = ROOT / "306_event_reaction_validation.csv"
+CANDIDATE_DISCOVERY_CSV = ROOT / "142_candidate_discovery_funnel_score.csv"
 
 OUT_SCORE = ROOT / "ultimate_selection_scores_20260618.csv"
 OUT_PORTFOLIO = ROOT / "ultimate_selection_portfolio_20260618.csv"
 OUT_MISSING = ROOT / "ultimate_selection_missing_data_20260618.csv"
+OUT_EXECUTION = ROOT / "ultimate_selection_execution_plan_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -104,10 +112,43 @@ def load_latest_prices() -> dict[str, dict[str, str]]:
                 "volume": row[9],
                 "source": row[10],
             }
+    for row in read_csv(PRICE_PATCH_CSV):
+        code = row.get("code", "").strip()
+        price = to_float(row.get("price"), 0)
+        if not code or not price:
+            continue
+        latest[f"{code}.T"] = {
+            "date": row.get("date", ""),
+            "time": row.get("time", ""),
+            "code": code,
+            "name": row.get("name", ""),
+            "price": row.get("price", ""),
+            "change_pct": row.get("change_pct", ""),
+            "high": row.get("high", ""),
+            "low": row.get("low", ""),
+            "volume": row.get("volume", ""),
+            "source": row.get("source", ""),
+        }
     return latest
 
 
-def build_maps() -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]], dict[str, list[dict[str, str]]], dict[str, dict[str, str]], dict[str, dict[str, str]]]:
+def by_ticker(path: Path) -> dict[str, dict[str, str]]:
+    return {r.get("ticker", ""): r for r in read_csv(path) if r.get("ticker", "")}
+
+
+def build_maps() -> tuple[
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, list[dict[str, str]]],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+]:
     event = {r.get("ticker", ""): r for r in read_csv(EVENT_CSV)}
     financial = {r.get("ticker", ""): r for r in read_csv(FINANCIAL_CSV)}
     qualitative: dict[str, list[dict[str, str]]] = defaultdict(list)
@@ -115,17 +156,85 @@ def build_maps() -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]], 
         qualitative[row.get("ticker", "")].append(row)
     theme_gate = {r.get("target", ""): r for r in read_csv(THEME_GATE_CSV)}
     prices = load_latest_prices()
-    return event, financial, qualitative, theme_gate, prices
+    supplement = by_ticker(SUPPLEMENT_CSV)
+    top20 = by_ticker(TOP20_CSV)
+    qual_explore = by_ticker(QUAL_EXPLORE_CSV)
+    reaction = by_ticker(REACTION_CSV)
+    validation = by_ticker(EVENT_VALIDATION_CSV)
+    discovery = by_ticker(CANDIDATE_DISCOVERY_CSV)
+    return event, financial, qualitative, theme_gate, prices, supplement, top20, qual_explore, reaction, validation, discovery
 
 
-def financial_score(row: dict[str, str] | None) -> tuple[float, str, list[str]]:
+def first_value(*values: object) -> str:
+    for value in values:
+        text = str(value or "").strip()
+        if text:
+            return text
+    return ""
+
+
+def supplemental_financial_score(row: dict[str, str]) -> tuple[float, str, list[str]]:
+    per = to_float(row.get("per"))
+    pbr = to_float(row.get("pbr"))
+    roe = to_float(row.get("roe_pct"))
+    revenue = to_float(row.get("revenue_yoy_pct"))
+    profit = to_float(row.get("profit_yoy_pct"))
+    confidence = to_float(row.get("data_confidence"), 50)
+    hard_gate = row.get("hard_gate") or row.get("hard_gates_after") or ""
+
+    score = 55.0
+    if per:
+        score += 8 if per <= 15 else 4 if per <= 25 else -8 if per >= 35 else 0
+    if pbr:
+        score += 6 if pbr <= 1.5 else 3 if pbr <= 3 else -8 if pbr >= 6 else 0
+    if roe:
+        score += 8 if roe >= 15 else 4 if roe >= 10 else -4 if roe < 8 else 0
+    if revenue:
+        score += 3 if revenue >= 5 else -3 if revenue < 0 else 0
+    if profit:
+        score += 6 if profit >= 20 else 3 if profit > 0 else -8 if profit < 0 else 0
+    if confidence >= 90:
+        score += 4
+    elif confidence < 70:
+        score -= 6
+    if "なし" in hard_gate:
+        score += 3
+    elif any(x in hard_gate for x in ["利益減少", "売上減少", "決算後20営業日未到達", "要確認"]):
+        score -= 6
+
+    missing = ["公式決算原本照合"]
+    if not per:
+        missing.append("PER")
+    if not pbr:
+        missing.append("PBR")
+    if not roe:
+        missing.append("ROE")
+    if not revenue:
+        missing.append("売上前年比")
+    if not profit:
+        missing.append("利益前年比")
+    status = "補助" if confidence >= 70 and not any(x in hard_gate for x in ["利益減少", "売上減少"]) else "補助/注意"
+    return clamp(score), status, missing
+
+
+def financial_score(
+    row: dict[str, str] | None,
+    supplement: dict[str, str] | None = None,
+    top20: dict[str, str] | None = None,
+    trial: dict[str, str] | None = None,
+    discovery: dict[str, str] | None = None,
+) -> tuple[float, str, list[str]]:
     if not row:
+        for candidate in (top20, supplement, trial, discovery):
+            if candidate:
+                return supplemental_financial_score(candidate)
         return 55.0, "未取得", ["PER/PBR/ROE/EPS/BPS/営業利益率/FCF/自己資本比率"]
     status = row.get("financial_status", "")
     confidence = row.get("confidence", "")
     missing = [x.strip() for x in row.get("required_items", "").split("/") if x.strip()]
     if status == "pass":
         base = 78.0
+        missing = []
     elif status == "partial":
         base = 48.0
     else:
@@ -139,8 +248,16 @@ def financial_score(row: dict[str, str] | None) -> tuple[float, str, list[str]]:
     return clamp(base), status or "未取得", missing
 
 
-def qualitative_score(rows: list[dict[str, str]]) -> tuple[float, str]:
+def qualitative_score(rows: list[dict[str, str]], explore: dict[str, str] | None = None) -> tuple[float, str]:
     if not rows:
+        if explore:
+            score = to_float(explore.get("qualitative_score"), 50)
+            theme = explore.get("theme_name", "")
+            status = explore.get("purchase_score_status", "")
+            note = f"{theme}/補助質的スコア"
+            if status and "購入スコアではない" in status:
+                note += "（購入スコアではない）"
+            return clamp(score), note
         return 50.0, "質的データ未接続"
     scores = []
     labels = []
@@ -166,8 +283,24 @@ def qualitative_score(rows: list[dict[str, str]]) -> tuple[float, str]:
     return sum(scores) / len(scores), "、".join(labels[:2])
 
 
-def event_score(row: dict[str, str] | None) -> tuple[float, str]:
+def event_score(
+    row: dict[str, str] | None,
+    reaction: dict[str, str] | None = None,
+    validation: dict[str, str] | None = None,
+) -> tuple[float, str]:
     if not row:
+        if reaction:
+            score = to_float(reaction.get("earnings_reaction_score"), 50)
+            status = reaction.get("reaction_status", "")
+            excess = first_value(reaction.get("excess_20d_pct"), reaction.get("excess_5d_pct"), reaction.get("excess_1d_pct"))
+            return clamp(score), f"決算反応補助 / {status} / 超過{excess}%"
+        if validation:
+            avg20 = to_float(validation.get("avg_excess_20d_pct"))
+            avg5 = to_float(validation.get("avg_excess_5d_pct"))
+            strong = to_float(validation.get("strong_event_count"))
+            weak = to_float(validation.get("weak_event_count"))
+            score = 50 + avg20 * 2.0 + avg5 * 1.0 + strong * 3.0 - weak * 3.0
+            return clamp(score), f"過去イベント反応 / 20日超過{avg20:.2f}%"
         return 50.0, "イベント未接続"
     change = to_float(row.get("one_day_change_pct", "0"))
     market_signal = row.get("market_signal", "")
@@ -199,6 +332,16 @@ def gate_penalty(final_status: str, universe_reason: str, financial_status: str,
         penalties.append("財務partial")
         if action == "購入候補":
             action = "小口"
+    elif financial_status == "補助":
+        penalty += 3
+        penalties.append("財務は補助データ")
+        if action == "購入候補":
+            action = "調査優先"
+    elif financial_status == "補助/注意":
+        penalty += 7
+        penalties.append("財務補助データに注意")
+        if action == "購入候補":
+            action = "監視"
     elif financial_status == "未取得":
         penalty += 4
         penalties.append("財務未取得")
@@ -244,7 +387,19 @@ def sector_bucket(name: str, ticker: str, qual_note: str) -> str:
 
 
 def build_scores() -> list[dict[str, object]]:
-    event_map, financial_map, qual_map, _theme_gate, price_map = build_maps()
+    (
+        event_map,
+        financial_map,
+        qual_map,
+        _theme_gate,
+        price_map,
+        supplement_map,
+        top20_map,
+        qual_explore_map,
+        reaction_map,
+        validation_map,
+        discovery_map,
+    ) = build_maps()
     rows: list[dict[str, object]] = []
     for r in read_csv(UNIVERSE_CSV):
         ticker = r.get("コード", "")
@@ -267,13 +422,19 @@ def build_scores() -> list[dict[str, object]]:
         risk_s = clamp(0.55 * risk_from_drawdown(dd5) + 0.45 * risk_from_drawdown(dd1))
         quant_s = clamp(0.34 * growth_s + 0.25 * momentum_s + 0.22 * benchmark_s + 0.19 * risk_s)
 
-        financial_s, financial_status, missing_items = financial_score(financial_map.get(ticker))
-        qual_s, qual_note = qualitative_score(qual_map.get(ticker, []))
-        event_s, event_note = event_score(event_map.get(ticker))
+        financial_s, financial_status, missing_items = financial_score(
+            financial_map.get(ticker),
+            supplement_map.get(ticker),
+            top20_map.get(ticker),
+            qual_explore_map.get(ticker),
+            discovery_map.get(ticker),
+        )
+        qual_s, qual_note = qualitative_score(qual_map.get(ticker, []), qual_explore_map.get(ticker))
+        event_s, event_note = event_score(event_map.get(ticker), reaction_map.get(ticker), validation_map.get(ticker))
         reliability = 45.0
-        reliability += 20 if ticker in financial_map and financial_status == "pass" else 8 if financial_status == "partial" else 0
-        reliability += 12 if ticker in event_map else 0
-        reliability += 12 if ticker in qual_map else 0
+        reliability += 20 if ticker in financial_map and financial_status == "pass" else 8 if financial_status == "partial" else 6 if financial_status.startswith("補助") else 0
+        reliability += 12 if ticker in event_map else 8 if ticker in reaction_map or ticker in validation_map else 0
+        reliability += 12 if ticker in qual_map else 8 if ticker in qual_explore_map else 0
         reliability += 8 if ticker in price_map else 0
         reliability += 3 if base_reselect else 0
         reliability = clamp(reliability)
@@ -298,6 +459,21 @@ def build_scores() -> list[dict[str, object]]:
         price_row = price_map.get(ticker, {})
         price = to_float(price_row.get("price"), 0.0)
         sector = sector_bucket(name, ticker, qual_note)
+        data_sources = []
+        if ticker in financial_map:
+            data_sources.append("公式財務確認")
+        elif ticker in top20_map or ticker in supplement_map or ticker in qual_explore_map or ticker in discovery_map:
+            data_sources.append("補助財務")
+        if ticker in event_map:
+            data_sources.append("6月イベント")
+        elif ticker in reaction_map or ticker in validation_map:
+            data_sources.append("補助イベント反応")
+        if ticker in qual_map:
+            data_sources.append("チャンネル質的")
+        elif ticker in qual_explore_map:
+            data_sources.append("補助質的")
+        if ticker in price_map:
+            data_sources.append("価格")
         rows.append(
             {
                 "ticker": ticker,
@@ -333,6 +509,7 @@ def build_scores() -> list[dict[str, object]]:
                 "max_dd1": round(dd1, 1),
                 "price": round(price, 2) if price else "",
                 "price_time": (price_row.get("date", "") + " " + price_row.get("time", "")).strip(),
+                "data_sources": " / ".join(data_sources),
                 "gate_notes": " / ".join(penalties),
                 "missing_items": " / ".join(missing_items[:6]),
             }
@@ -422,6 +599,50 @@ def optimize_portfolio(rows: list[dict[str, object]]) -> list[dict[str, object]]
     return portfolio
 
 
+def execution_status(row: dict[str, object]) -> tuple[str, str]:
+    action = str(row.get("action", ""))
+    financial = str(row.get("financial_status", ""))
+    missing = str(row.get("missing_items", ""))
+    if action == "購入候補" and financial == "pass" and not missing:
+        return "初回候補", "価格・口座・全体ゲートを確認して小さく開始"
+    if action == "小口":
+        return "小口候補", "財務partialのため、初回は小口。未確認項目が残る間は追加しない"
+    if action == "調査優先":
+        return "確認後候補", "公式照合または未確認項目の解消後に実行。未解消なら現金待機"
+    return "監視", "買付対象にしない。条件改善まで監視"
+
+
+def build_execution_plan(portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for row in portfolio:
+        status, rule = execution_status(row)
+        price = float(row.get("price") or 0)
+        buy_limit = round(price * 0.995, 1) if price else ""
+        chase_stop = round(price * 1.03, 1) if price else ""
+        drawdown = abs(float(row.get("max_dd1") or 0))
+        stop_line = round(price * (1 - min(max(drawdown * 0.35, 5), 12) / 100), 1) if price else ""
+        profit_line = round(price * 1.12, 1) if price else ""
+        out.append(
+            {
+                "rank": row.get("portfolio_rank", ""),
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "execution_status": status,
+                "initial_shares": row.get("initial_shares", ""),
+                "initial_buy_yen": row.get("initial_buy_yen", ""),
+                "limit_price_yen": buy_limit,
+                "do_not_chase_price_yen": chase_stop,
+                "temporary_stop_line_yen": stop_line,
+                "profit_review_line_yen": profit_line,
+                "rule": rule,
+                "no_buy_conditions": "寄付き成行は避ける / 前日比+3%以上は追わない / 日経平均またはTOPIXが当日-2%以上なら停止 / 未確認項目が残る銘柄は追加しない",
+                "increase_conditions": "6月イベント後に指数を上回り、決算・財務確認が崩れず、出来高を伴う上昇なら追加検討",
+                "reduce_conditions": "指数に5営業日連続で劣後 / 決算失望 / テーマ前提崩れ / 急落時は半分以下へ減額または停止",
+            }
+        )
+    return out
+
+
 def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     if not rows:
         return
@@ -438,6 +659,8 @@ def build_missing(rows: list[dict[str, object]]) -> list[dict[str, object]]:
         issues = []
         if r["financial_status"] in ["未取得", "partial"]:
             issues.append("財務")
+        elif str(r["financial_status"]).startswith("補助"):
+            issues.append("公式照合")
         if r["event_note"] == "イベント未接続":
             issues.append("イベント")
         if r["qualitative_note"] == "質的データ未接続":
@@ -452,6 +675,7 @@ def build_missing(rows: list[dict[str, object]]) -> list[dict[str, object]]:
                     "priority": "高" if float(r["final_score"]) >= 60 else "中",
                     "missing_area": " / ".join(issues),
                     "missing_items": missing,
+                    "data_sources": r.get("data_sources", ""),
                     "impact": "購入比率・期待値の信頼度に影響" if float(r["final_score"]) >= 60 else "監視精度に影響",
                 }
             )
@@ -468,7 +692,12 @@ def html_table(rows: list[dict[str, object]], fields: list[tuple[str, str]], lim
     return f"<table><thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table>"
 
 
-def build_html(rows: list[dict[str, object]], portfolio: list[dict[str, object]], missing: list[dict[str, object]]) -> str:
+def build_html(
+    rows: list[dict[str, object]],
+    portfolio: list[dict[str, object]],
+    missing: list[dict[str, object]],
+    execution: list[dict[str, object]],
+) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
     score_fields = [
@@ -483,6 +712,7 @@ def build_html(rows: list[dict[str, object]], portfolio: list[dict[str, object]]
         ("event_score", "イベント"),
         ("expected_value_pct", "EV%"),
         ("reliability", "信頼度"),
+        ("data_sources", "使用データ"),
         ("gate_notes", "注意"),
     ]
     port_fields = [
@@ -497,13 +727,42 @@ def build_html(rows: list[dict[str, object]], portfolio: list[dict[str, object]]
         ("expected_value_pct", "EV%"),
         ("action", "扱い"),
     ]
+    port_tickers = {str(r.get("ticker", "")) for r in portfolio}
+    not_allocated_top = [r for r in top if str(r.get("ticker", "")) not in port_tickers]
+    not_allocated_fields = [
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("final_score", "統合"),
+        ("action", "扱い"),
+        ("financial_status", "財務"),
+        ("event_note", "イベント"),
+        ("gate_notes", "注意"),
+        ("missing_items", "残る確認"),
+    ]
     missing_fields = [
         ("ticker", "銘柄"),
         ("name", "名称"),
         ("priority", "優先"),
         ("missing_area", "不足領域"),
+        ("data_sources", "使用済み"),
         ("impact", "影響"),
     ]
+    execution_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("execution_status", "実行扱い"),
+        ("initial_shares", "初回株数"),
+        ("initial_buy_yen", "初回金額"),
+        ("limit_price_yen", "指値目安"),
+        ("do_not_chase_price_yen", "追わない価格"),
+        ("temporary_stop_line_yen", "下値確認"),
+        ("profit_review_line_yen", "上値確認"),
+        ("rule", "実行条件"),
+    ]
+    immediate_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") in ["初回候補", "小口候補"])
+    conditional_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") == "確認後候補")
+    reserve_total = max(INITIAL_BUY_CAP_YEN - immediate_total - conditional_total, 0)
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -566,6 +825,24 @@ def build_html(rows: list[dict[str, object]], portfolio: list[dict[str, object]]
   </section>
 
   <section>
+    <h2>使用している数式</h2>
+    <table>
+      <thead><tr><th>項目</th><th>式</th><th>意味</th></tr></thead>
+      <tbody>
+        <tr><td>成長</td><td>5年CAGR 42% + 10年CAGR 35% + 直近1年 23%</td><td>短期だけでなく、5年・10年で継続して伸びたかを見る。</td></tr>
+        <tr><td>勢い</td><td>60日騰落 40% + 直近1年S&P差 30% + 直近1年騰落 30%</td><td>今も市場に買われているかを見る。</td></tr>
+        <tr><td>指数比較</td><td>5年S&P差 55% + 直近1年S&P差 45%</td><td>個別株を選ぶ意味があるかを見る。</td></tr>
+        <tr><td>下落耐性</td><td>5年最大下落 55% + 直近1年最大下落 45%</td><td>上昇だけでなく、大きく崩れた履歴も見る。</td></tr>
+        <tr><td>量的スコア</td><td>成長34% + 勢い25% + 指数比較22% + 下落耐性19%</td><td>株価データ中心の基礎点。</td></tr>
+        <tr><td>事前スコア</td><td>量的31% + 財務17% + 質的15% + イベント14% + 指数10% + 下落耐性8% + 信頼度5%</td><td>数値、財務、時流、イベント、データ信頼度を同時に見る。</td></tr>
+        <tr><td>期待値</td><td>上昇確率 × 上昇幅 - 下落確率 × 下落幅 - コスト</td><td>上がりそうという雰囲気ではなく、上昇と下落を同じ表で比較する。</td></tr>
+        <tr><td>最終スコア</td><td>事前スコア86% + 期待値スコア14% - 買わない条件の減点</td><td>未確認・過熱・監視扱いを最後に落とす。</td></tr>
+      </tbody>
+    </table>
+    <p class="note">質的テーマは単純加点しません。公式資料、ニュース、過去反応が弱い場合は信頼度を下げ、購入候補ではなく監視・確認後候補に回します。</p>
+  </section>
+
+  <section>
     <h2>統合スコア 上位10社</h2>
     {html_table(top, score_fields)}
   </section>
@@ -574,6 +851,40 @@ def build_html(rows: list[dict[str, object]], portfolio: list[dict[str, object]]
     <h2>ポートフォリオ最適化案</h2>
     <p class="note">これは「同じ審査で通したうえで、価格があり、業種集中を抑え、初回36万円枠に落とせる候補」です。最終注文は証券会社画面で価格・NISA区分・買付余力を確認してからです。</p>
     {html_table(portfolio, port_fields)}
+  </section>
+
+  <section>
+    <h2>19日以降の実行ゲート</h2>
+    <div class="cards">
+      <div class="card"><b>初回候補・小口候補</b><strong>{yen(immediate_total)}</strong><span>条件通過時に使う上限</span></div>
+      <div class="card"><b>確認後候補</b><strong>{yen(conditional_total)}</strong><span>未確認が消えるまで保留</span></div>
+      <div class="card"><b>初回枠の残り</b><strong>{yen(reserve_total)}</strong><span>急落・未約定・確認待ち用</span></div>
+      <div class="card"><b>買わない条件</b><strong>3つ</strong><span>指数急落・追い買い・未確認</span></div>
+      <div class="card"><b>追加条件</b><strong>確認後</strong><span>指数超過と決算維持</span></div>
+    </div>
+    <p class="note">実行は「候補を全部買う」ではありません。初回は小さく、寄付き成行を避け、価格・市場・未確認項目の3条件を通ったものだけを使います。</p>
+    {html_table(execution, execution_fields)}
+  </section>
+
+  <section>
+    <h2>共通売買ルール</h2>
+    <table>
+      <thead><tr><th>場面</th><th>条件</th><th>行動</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>買付開始</td><td>9:00直後の成行は避け、価格が落ち着いてから確認</td><td>指値または小口で開始</td><td>寄付きの一時的な過熱・急落を避けるため</td></tr>
+        <tr><td>全体停止</td><td>日経平均またはTOPIXが当日-2%以上、または米金利・為替が急変</td><td>当日の新規買付を止める</td><td>個別要因ではなく市場全体の売りに巻き込まれるため</td></tr>
+        <tr><td>追い買い禁止</td><td>候補銘柄が前日比+3%以上で始まる</td><td>買わずに翌営業日以降へ回す</td><td>好材料を追いかけて高値をつかむリスクを避けるため</td></tr>
+        <tr><td>追加買い</td><td>5営業日で指数を上回り、決算・財務・テーマ前提が崩れていない</td><td>次の分割枠を検討</td><td>上がっている理由が残っているかを確認してから増やすため</td></tr>
+        <tr><td>減額</td><td>指数に5営業日連続で劣後、または決算失望・テーマ前提崩れ</td><td>追加停止、必要なら半分以下へ縮小</td><td>個別株を選ぶ根拠が薄れた時点で比率を落とすため</td></tr>
+        <tr><td>急落・ストップ安警戒</td><td>出来高急増を伴う-7%以上、またはストップ安気配</td><td>新規買付停止。翌営業日に材料と流動性を確認</td><td>落ちたから買うのではなく、理由が消化されたかを見るため</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>上位10社のうち配分しない銘柄</h2>
+    <p class="note">10社に無理やりそろえることはしません。点数が近くても、公式照合・イベント反応・PER確認が弱い場合は、買付ではなく監視に残します。</p>
+    {html_table(not_allocated_top, not_allocated_fields) if not_allocated_top else '<p class="ok">上位10社すべてが配分候補です。</p>'}
   </section>
 
   <section>
@@ -586,6 +897,7 @@ def build_html(rows: list[dict[str, object]], portfolio: list[dict[str, object]]
     <div class="links">
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
+      <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -600,14 +912,17 @@ def main() -> None:
     rows = build_scores()
     portfolio = optimize_portfolio(rows)
     missing = build_missing(rows)
+    execution = build_execution_plan(portfolio)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
-    OUT_HTML.write_text(build_html(rows, portfolio, missing), encoding="utf-8")
+    write_csv(OUT_EXECUTION, execution)
+    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution), encoding="utf-8")
     print(f"HTML: {OUT_HTML}")
     print(f"Scores: {OUT_SCORE}")
     print(f"Portfolio: {OUT_PORTFOLIO}")
     print(f"Missing: {OUT_MISSING}")
+    print(f"Execution: {OUT_EXECUTION}")
     print("Top 10:")
     for r in rows[:10]:
         print(r["ticker"], r["name"], r["final_score"], r["action"])
