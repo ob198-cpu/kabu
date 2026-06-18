@@ -44,6 +44,8 @@ OUT_PREDICTION_REVIEW = ROOT / "ultimate_selection_prediction_review_20260619.cs
 OUT_MODEL_REVISION_QUEUE = ROOT / "ultimate_selection_model_revision_queue_20260619.csv"
 OUT_REVIEW_INPUT_TEMPLATE = ROOT / "ultimate_selection_review_input_template_20260619.csv"
 OUT_REVIEW_RESULT = ROOT / "ultimate_selection_review_result_20260619.csv"
+OUT_ULTIMATE_REQUIREMENT_MATRIX = ROOT / "ultimate_selection_requirement_matrix_20260619.csv"
+OUT_PURCHASE_READINESS_GATE = ROOT / "ultimate_selection_purchase_readiness_gate_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1270,6 +1272,161 @@ def build_review_results(
     return results
 
 
+def count_rows(path: Path) -> int:
+    return len(read_csv(path))
+
+
+def build_ultimate_requirement_matrix(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    total = len(rows)
+    portfolio_count = len(portfolio)
+    price_count = sum(1 for r in rows if r.get("price") != "")
+    financial_pass = sum(1 for r in rows if r.get("financial_status") == "pass")
+    financial_partial = sum(1 for r in rows if r.get("financial_status") == "partial")
+    financial_supplement = sum(1 for r in rows if str(r.get("financial_status", "")).startswith("補助"))
+    qualitative_connected = sum(1 for r in rows if "質的データ未接続" not in str(r.get("qualitative_note", "")))
+    event_connected = sum(1 for r in rows if "イベント未接続" not in str(r.get("event_note", "")))
+    rows_out = [
+        {
+            "layer": "候補母集団",
+            "requirement": "業績成長、流動性、時価総額、テーマ適合で100社前後を作る",
+            "current_status": "一部実装",
+            "current_data": f"{total}社。再選定CSV={UNIVERSE_CSV.name}",
+            "score_usage": "母集団の入口。final_scoreの前提。",
+            "purchase_gate": "母集団外、除外、監視は購入候補へ上げない。",
+            "gap": "時価総額・流動性の完全再現条件は追加固定が必要。",
+            "next_action": "母集団作成条件を別CSVで固定し、入替履歴を残す。",
+        },
+        {
+            "layer": "量的スコア",
+            "requirement": "株価モメンタム、下落率、指数差、出来高を見る",
+            "current_status": "一部実装",
+            "current_data": f"価格あり {price_count}/{total}社。5年/10年CAGR、1年、60日、S&P差、最大下落を使用。",
+            "score_usage": "quant_score、benchmark_score、risk_scoreに使用。",
+            "purchase_gate": "価格未取得は配分対象外。",
+            "gap": "出来高倍率は一部データに限定。全社統一の日次出来高DBは追加余地あり。",
+            "next_action": "出来高20日平均、出来高急増下落を全社で定期計算する。",
+        },
+        {
+            "layer": "量的スコア",
+            "requirement": "売上成長、利益成長、EPS、ROE、PER/PBR、FCF、営業利益率、自己資本比率",
+            "current_status": "一部実装",
+            "current_data": f"公式pass {financial_pass}社、partial {financial_partial}社、補助 {financial_supplement}社。",
+            "score_usage": "financial_scoreに使用。ただし補助値・未確認値は信頼度とgate_notesへ分離。",
+            "purchase_gate": "pass以外は初回候補ではなく、小口・確認後候補・調査優先へ落とす。",
+            "gap": "FCF、自己資本比率、営業利益率は全社統一の数値入力が未完成。",
+            "next_action": "公式決算PDF/短信からEPS、BPS、ROE、営業利益率、FCF、自己資本比率の入力表を埋める。",
+        },
+        {
+            "layer": "質的スコア",
+            "requirement": "AI、半導体、電力、防衛、金利、資源、政策、新商品、業界シェア、構造優位を評価",
+            "current_status": "一部実装",
+            "current_data": f"質的接続 {qualitative_connected}/{total}社。チャンネル比較、探索スコア、テーマ証拠台帳を使用。",
+            "score_usage": "qualitative_scoreに使用。ただしニュース未検証は購入確定に使わず補助扱い。",
+            "purchase_gate": "仮説層だけの銘柄は監視・調査優先。実績層がない場合は比率を上げない。",
+            "gap": "ニュース本文の定期取得、業界シェアの公式確認、過去反応DBが未完成。",
+            "next_action": "仮説層、実績層、公式資料、過去反応を分けた質的イベント台帳を増やす。",
+        },
+        {
+            "layer": "イベント検証",
+            "requirement": "決算、上方修正、TOB、新製品、政策、金利、為替、戦争、商品市況後の株価反応を見る",
+            "current_status": "一部実装",
+            "current_data": f"イベント接続 {event_connected}/{total}社。決算後反応、6月イベント、イベント反応検証CSVを使用。",
+            "score_usage": "event_scoreと買わない・減額条件に使用。",
+            "purchase_gate": "イベント未接続または悪化は追加入金停止・確認後候補へ落とす。",
+            "gap": "TOB、新製品、政策、戦争、商品市況の長期履歴DBは未完成。",
+            "next_action": "イベント種別、発生日、対象銘柄、D+1/D+5/D+20超過リターンを蓄積する。",
+        },
+        {
+            "layer": "期待値",
+            "requirement": "期待値 = 上昇確率 × 上昇幅 - 下落確率 × 下落幅 - コスト",
+            "current_status": "実装済み",
+            "current_data": "expected_value_pct、up_probability、upside_pct、downside_pctを各銘柄に出力。",
+            "score_usage": "ev_scoreと配分ウェイトに使用。",
+            "purchase_gate": "期待値が高くても、財務・イベント・価格ゲートを通らなければ購入確定にしない。",
+            "gap": "確率は検証用仮説であり、過去検証による校正が必要。",
+            "next_action": "予実差レビュー結果で上昇確率と上下幅を更新する。",
+        },
+        {
+            "layer": "ポートフォリオ最適化",
+            "requirement": "相関、業種偏り、最大下落、1銘柄比率、現金比率で配分する",
+            "current_status": "実装済み",
+            "current_data": f"配分 {portfolio_count}社。株式85%、現金15%、1銘柄上限{MAX_SINGLE_STOCK_SLEEVE_PCT}%、業種上限{MAX_SECTOR_COUNT}社。",
+            "score_usage": "portfolio CSV、constraints CSV、correlation risk CSVに出力。",
+            "purchase_gate": "業種集中・相関集中・現金不足は減額または監視。",
+            "gap": "相関は実測とproxyが混在。全社日次相関DBは追加余地あり。",
+            "next_action": "日次/週次リターンを蓄積し、相関と最大下落を再計算する。",
+        },
+        {
+            "layer": "買わない・減額条件",
+            "requirement": "市場急落、指数劣後、テーマ崩れ、決算失望、円高、金利急騰、出来高急増下落",
+            "current_status": "実装済み",
+            "current_data": "no-buy gate、execution plan、trade rules、review resultに接続。",
+            "score_usage": "購入停止、追加停止、減額、再審査の判定に使用。",
+            "purchase_gate": "実績未入力、指数劣後、市場急落、未確認財務は買付停止または減額。",
+            "gap": "当日の実績入力が入るまで、ルールが実運用で効いたかは検証中。",
+            "next_action": "D+1/D+5/D+20/1年レビューで、ルールの効き方を記録する。",
+        },
+    ]
+    return rows_out
+
+
+def build_purchase_readiness_gate(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    portfolio_tickers = {str(r.get("ticker", "")) for r in portfolio}
+    candidates = [r for r in rows[:20] if str(r.get("ticker", "")) in portfolio_tickers or str(r.get("action", "")) != "監視"]
+    out: list[dict[str, object]] = []
+    for r in candidates[:20]:
+        financial_status = str(r.get("financial_status", ""))
+        event_note = str(r.get("event_note", ""))
+        qualitative_note = str(r.get("qualitative_note", ""))
+        action = str(r.get("action", ""))
+        official_financial = financial_status == "pass"
+        price_ready = r.get("price") != ""
+        event_ready = "未接続" not in event_note
+        qualitative_ready = "未接続" not in qualitative_note
+        in_portfolio = str(r.get("ticker", "")) in portfolio_tickers
+        hard_stops = []
+        if not price_ready:
+            hard_stops.append("価格未取得")
+        if not official_financial:
+            hard_stops.append("公式財務未完了")
+        if not event_ready:
+            hard_stops.append("イベント未接続")
+        if not qualitative_ready:
+            hard_stops.append("質的根拠未接続")
+        if action in ["買付不可", "監視"]:
+            hard_stops.append("スコア上の購入対象外")
+
+        if official_financial and price_ready and event_ready and qualitative_ready and action == "購入候補":
+            readiness = "初回買付候補"
+            next_action = "証券会社画面でNISA区分、余力、指値、本人操作を確認して小口実行候補。"
+        elif in_portfolio and price_ready and action in ["小口", "調査優先", "購入候補"]:
+            readiness = "条件付き候補"
+            next_action = "不足項目を確認し、初回は小口または確認後候補として扱う。未確認なら増額しない。"
+        else:
+            readiness = "買付停止"
+            next_action = "不足項目を解消するまで購入候補へ戻さない。"
+
+        out.append(
+            {
+                "ticker": r.get("ticker", ""),
+                "name": r.get("name", ""),
+                "in_current_portfolio": "YES" if in_portfolio else "NO",
+                "final_score": r.get("final_score", ""),
+                "action": action,
+                "financial_status": financial_status,
+                "official_financial_ready": "YES" if official_financial else "NO",
+                "price_ready": "YES" if price_ready else "NO",
+                "event_ready": "YES" if event_ready else "NO",
+                "qualitative_ready": "YES" if qualitative_ready else "NO",
+                "nisa_account_ready": "証券会社画面で当日確認",
+                "purchase_readiness": readiness,
+                "hard_stop_reasons": " / ".join(hard_stops) if hard_stops else "なし",
+                "next_action": next_action,
+            }
+        )
+    return out
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -2013,6 +2170,8 @@ def build_html(
     model_revision_rows: list[dict[str, object]],
     review_input_rows: list[dict[str, object]],
     review_result_rows: list[dict[str, object]],
+    requirement_matrix_rows: list[dict[str, object]],
+    purchase_readiness_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -2114,6 +2273,31 @@ def build_html(
         ("formula_or_rule", "数式・ルール"),
         ("output_file", "出力"),
         ("remaining_gap", "残る課題"),
+    ]
+    requirement_matrix_fields = [
+        ("layer", "層"),
+        ("requirement", "必要な構造"),
+        ("current_status", "現状"),
+        ("current_data", "現在使えるデータ"),
+        ("score_usage", "点数への使い方"),
+        ("purchase_gate", "購入判断での扱い"),
+        ("gap", "残る不足"),
+        ("next_action", "次アクション"),
+    ]
+    purchase_readiness_fields = [
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("in_current_portfolio", "現配分"),
+        ("final_score", "総合点"),
+        ("action", "スコア扱い"),
+        ("official_financial_ready", "公式財務"),
+        ("price_ready", "価格"),
+        ("event_ready", "イベント"),
+        ("qualitative_ready", "質的根拠"),
+        ("nisa_account_ready", "NISA/口座"),
+        ("purchase_readiness", "買付可否"),
+        ("hard_stop_reasons", "停止理由"),
+        ("next_action", "次アクション"),
     ]
     constraint_fields = [
         ("check_item", "確認項目"),
@@ -2326,6 +2510,18 @@ def build_html(
   </section>
 
   <section>
+    <h2>究極システム 要件チェック</h2>
+    <p class="note">提示された「本当にやるべき構造」を、現行システムでどこまで実装できているかを対応表にしました。未取得・未実装の項目は、点数に混ぜず、残る不足と次アクションに分けています。</p>
+    {html_table(requirement_matrix_rows, requirement_matrix_fields)}
+  </section>
+
+  <section>
+    <h2>購入レディネスゲート</h2>
+    <p class="note">ランキングと実際の買付判断を分けるためのゲートです。公式財務、価格、イベント、質的根拠、NISA/口座確認が揃わないものは、スコアが高くても初回買付候補にしません。</p>
+    {html_table(purchase_readiness_rows, purchase_readiness_fields, 20)}
+  </section>
+
+  <section>
     <h2>7層構造 実装監査</h2>
     <p class="note">この表は、要望された「母集団、量的、質的、イベント、期待値、最適化、買わない条件」が、実際にどこまで実装されているかを分けて示します。未完成部分を点数に混ぜず、残る課題として表示します。</p>
     {html_table(architecture_rows, architecture_fields)}
@@ -2514,6 +2710,8 @@ def build_html(
       <a href="ultimate_selection_trade_rules_20260618.csv">銘柄別売買ルールCSV</a>
       <a href="ultimate_selection_day_checklist_20260618.csv">19日当日チェックCSV</a>
       <a href="ultimate_selection_order_log_template_20260618.csv">当日記録テンプレートCSV</a>
+      <a href="ultimate_selection_requirement_matrix_20260619.csv">究極要件チェックCSV</a>
+      <a href="ultimate_selection_purchase_readiness_gate_20260619.csv">購入レディネスゲートCSV</a>
       <a href="ultimate_selection_architecture_audit_20260618.csv">7層構造監査CSV</a>
       <a href="ultimate_selection_constraints_20260618.csv">配分制約チェックCSV</a>
       <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
@@ -2553,6 +2751,8 @@ def main() -> None:
     model_revision_rows = build_model_revision_queue(portfolio, prediction_review_rows)
     review_input_rows = merge_existing_review_input(build_review_input_template(portfolio, execution))
     review_result_rows = build_review_results(review_input_rows, execution)
+    requirement_matrix_rows = build_ultimate_requirement_matrix(rows, portfolio)
+    purchase_readiness_rows = build_purchase_readiness_gate(rows, portfolio)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -2571,6 +2771,8 @@ def main() -> None:
     write_csv(OUT_MODEL_REVISION_QUEUE, model_revision_rows)
     write_csv(OUT_REVIEW_INPUT_TEMPLATE, review_input_rows)
     write_csv(OUT_REVIEW_RESULT, review_result_rows)
+    write_csv(OUT_ULTIMATE_REQUIREMENT_MATRIX, requirement_matrix_rows)
+    write_csv(OUT_PURCHASE_READINESS_GATE, purchase_readiness_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2591,6 +2793,8 @@ def main() -> None:
             model_revision_rows,
             review_input_rows,
             review_result_rows,
+            requirement_matrix_rows,
+            purchase_readiness_rows,
         ),
         encoding="utf-8",
     )
@@ -2612,6 +2816,8 @@ def main() -> None:
     print(f"Model revision queue: {OUT_MODEL_REVISION_QUEUE}")
     print(f"Review input template: {OUT_REVIEW_INPUT_TEMPLATE}")
     print(f"Review result: {OUT_REVIEW_RESULT}")
+    print(f"Requirement matrix: {OUT_ULTIMATE_REQUIREMENT_MATRIX}")
+    print(f"Purchase readiness gate: {OUT_PURCHASE_READINESS_GATE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
