@@ -42,6 +42,7 @@ OUT_NO_BUY_GATE = ROOT / "ultimate_selection_no_buy_reduce_gate_20260618.csv"
 OUT_BENCHMARK_ALLOCATION_GATE = ROOT / "ultimate_selection_benchmark_allocation_gate_20260618.csv"
 OUT_PREDICTION_REVIEW = ROOT / "ultimate_selection_prediction_review_20260619.csv"
 OUT_MODEL_REVISION_QUEUE = ROOT / "ultimate_selection_model_revision_queue_20260619.csv"
+OUT_REVIEW_INPUT_TEMPLATE = ROOT / "ultimate_selection_review_input_template_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1057,6 +1058,63 @@ def build_model_revision_queue(
     ]
 
 
+def build_review_input_template(
+    portfolio: list[dict[str, object]],
+    execution: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    execution_by_ticker = {str(row.get("ticker", "")): row for row in execution}
+    review_dates = [
+        ("D+1営業日", "2026-06-22"),
+        ("D+5営業日", "2026-06-26"),
+        ("D+20営業日", "2026-07-17"),
+        ("1年", "2027-06-19"),
+    ]
+    rows: list[dict[str, object]] = []
+    for point, review_date in review_dates:
+        rows.append(
+            {
+                "review_point": point,
+                "review_date": review_date,
+                "ticker": "PORTFOLIO",
+                "name": "全体",
+                "actual_buy_price_yen": "",
+                "review_price_yen": "",
+                "actual_return_formula": "各銘柄の実績%を購入金額で加重平均",
+                "benchmark_name": "TOPIXまたはS&P500",
+                "benchmark_start_level": "",
+                "benchmark_review_level": "",
+                "benchmark_return_formula": "(benchmark_review_level / benchmark_start_level - 1) * 100",
+                "excess_return_formula": "actual_return_pct - benchmark_return_pct",
+                "input_required": "実績%、指数%、指数差、ニュース要因",
+                "decision_output": "継続 / 追加停止 / 減額 / 再審査",
+                "memo": "全体の勝ち負けを指数比で確認する。",
+            }
+        )
+        for row in portfolio:
+            ticker = str(row.get("ticker", ""))
+            planned = execution_by_ticker.get(ticker, {})
+            rows.append(
+                {
+                    "review_point": point,
+                    "review_date": review_date,
+                    "ticker": ticker,
+                    "name": row.get("name", ""),
+                    "actual_buy_price_yen": "",
+                    "review_price_yen": "",
+                    "actual_return_formula": "(review_price_yen / actual_buy_price_yen - 1) * 100",
+                    "benchmark_name": "TOPIXまたは同業指数",
+                    "benchmark_start_level": "",
+                    "benchmark_review_level": "",
+                    "benchmark_return_formula": "(benchmark_review_level / benchmark_start_level - 1) * 100",
+                    "excess_return_formula": "actual_return_pct - benchmark_return_pct",
+                    "input_required": "約定価格、確認日終値、比較指数の開始値と確認日値",
+                    "decision_output": "継続 / 追加停止 / 減額 / 再審査",
+                    "memo": f"予定金額 {planned.get('initial_buy_yen', '')} 円。実績未入力なら次回買付へ進めない。",
+                }
+            )
+    return rows
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -1798,6 +1856,7 @@ def build_html(
     benchmark_allocation_rows: list[dict[str, object]],
     prediction_review_rows: list[dict[str, object]],
     model_revision_rows: list[dict[str, object]],
+    review_input_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -1971,6 +2030,21 @@ def build_html(
         ("do_not_do", "禁止事項"),
         ("evidence_required", "必要証拠"),
         ("target_rows", "対象"),
+    ]
+    review_input_fields = [
+        ("review_point", "確認時点"),
+        ("review_date", "確認日"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("actual_buy_price_yen", "約定価格"),
+        ("review_price_yen", "確認日価格"),
+        ("actual_return_formula", "実績%の式"),
+        ("benchmark_name", "比較指数"),
+        ("benchmark_start_level", "指数開始値"),
+        ("benchmark_review_level", "指数確認値"),
+        ("benchmark_return_formula", "指数%の式"),
+        ("excess_return_formula", "指数差の式"),
+        ("decision_output", "出力判断"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -2169,6 +2243,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>実績入力テンプレート</h2>
+    <p class="note">購入後の検証に必要な入力欄です。約定価格、確認日の株価、比較指数の開始値と確認日値を入れると、実績%、指数%、指数差を計算できます。実績未入力の間は、次回買付判断に進めない扱いにします。</p>
+    {html_table(review_input_rows, review_input_fields, 45)}
+  </section>
+
+  <section>
     <h2>予実差レビュー</h2>
     <p class="note">買付後に、D+1営業日、D+5営業日、D+20営業日、1年で、事前の期待値と実績、指数との差を記録します。外れた場合は、量的スコア、質的テーマ、イベント仮説、リスク条件のどこが原因だったかを残し、次回の候補選定に戻します。</p>
     {html_table(prediction_review_rows, prediction_review_fields, 45)}
@@ -2265,6 +2345,7 @@ def build_html(
       <a href="ultimate_selection_theme_evidence_20260618.csv">質的テーマ証拠台帳CSV</a>
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
+      <a href="ultimate_selection_review_input_template_20260619.csv">実績入力テンプレートCSV</a>
       <a href="ultimate_selection_prediction_review_20260619.csv">予実差レビューCSV</a>
       <a href="ultimate_selection_model_revision_queue_20260619.csv">モデル改善キューCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
@@ -2294,6 +2375,7 @@ def main() -> None:
     order_log_template = build_order_log_template(execution)
     prediction_review_rows = build_prediction_review(portfolio, execution)
     model_revision_rows = build_model_revision_queue(portfolio, prediction_review_rows)
+    review_input_rows = build_review_input_template(portfolio, execution)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -2310,6 +2392,7 @@ def main() -> None:
     write_csv(OUT_BENCHMARK_ALLOCATION_GATE, benchmark_allocation_rows)
     write_csv(OUT_PREDICTION_REVIEW, prediction_review_rows)
     write_csv(OUT_MODEL_REVISION_QUEUE, model_revision_rows)
+    write_csv(OUT_REVIEW_INPUT_TEMPLATE, review_input_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2328,6 +2411,7 @@ def main() -> None:
             benchmark_allocation_rows,
             prediction_review_rows,
             model_revision_rows,
+            review_input_rows,
         ),
         encoding="utf-8",
     )
@@ -2347,6 +2431,7 @@ def main() -> None:
     print(f"Benchmark allocation gate: {OUT_BENCHMARK_ALLOCATION_GATE}")
     print(f"Prediction review: {OUT_PREDICTION_REVIEW}")
     print(f"Model revision queue: {OUT_MODEL_REVISION_QUEUE}")
+    print(f"Review input template: {OUT_REVIEW_INPUT_TEMPLATE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
