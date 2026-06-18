@@ -742,14 +742,28 @@ def build_execution_plan(portfolio: list[dict[str, object]]) -> list[dict[str, o
         drawdown = abs(float(row.get("max_dd1") or 0))
         stop_line = round(price * (1 - min(max(drawdown * 0.35, 5), 12) / 100), 1) if price else ""
         profit_line = round(price * 1.12, 1) if price else ""
+        initial_yen = float(row.get("initial_buy_yen") or 0)
+        executable_today_yen = initial_yen if status in ["初回候補", "小口候補"] else 0
+        hold_yen = 0 if executable_today_yen else initial_yen
+        if status == "初回候補":
+            execution_bucket = "本日小口実行枠"
+        elif status == "小口候補":
+            execution_bucket = "条件付き小口実行枠"
+        elif status == "確認後候補":
+            execution_bucket = "確認後まで保留"
+        else:
+            execution_bucket = "監視のみ"
         out.append(
             {
                 "rank": row.get("portfolio_rank", ""),
                 "ticker": row.get("ticker", ""),
                 "name": row.get("name", ""),
                 "execution_status": status,
+                "execution_bucket": execution_bucket,
                 "initial_shares": row.get("initial_shares", ""),
                 "initial_buy_yen": row.get("initial_buy_yen", ""),
+                "executable_today_yen": round(executable_today_yen),
+                "hold_until_confirmed_yen": round(hold_yen),
                 "limit_price_yen": buy_limit,
                 "do_not_chase_price_yen": chase_stop,
                 "temporary_stop_line_yen": stop_line,
@@ -847,8 +861,11 @@ def build_order_log_template(execution: list[dict[str, object]]) -> list[dict[st
                 "ticker": row.get("ticker", ""),
                 "name": row.get("name", ""),
                 "planned_status": row.get("execution_status", ""),
+                "execution_bucket": row.get("execution_bucket", ""),
                 "planned_shares": row.get("initial_shares", ""),
-                "planned_yen": row.get("initial_buy_yen", ""),
+                "candidate_yen": row.get("initial_buy_yen", ""),
+                "planned_yen": row.get("executable_today_yen", ""),
+                "hold_until_confirmed_yen": row.get("hold_until_confirmed_yen", ""),
                 "limit_price_yen": row.get("limit_price_yen", ""),
                 "do_not_chase_price_yen": row.get("do_not_chase_price_yen", ""),
                 "actual_action": "未入力",
@@ -871,8 +888,11 @@ def build_order_log_template(execution: list[dict[str, object]]) -> list[dict[st
             "ticker": "全体",
             "name": "当日総括",
             "planned_status": "記録",
+            "execution_bucket": "",
             "planned_shares": "",
+            "candidate_yen": "",
             "planned_yen": "",
+            "hold_until_confirmed_yen": "",
             "limit_price_yen": "",
             "do_not_chase_price_yen": "",
             "actual_action": "未入力",
@@ -2650,8 +2670,11 @@ def build_html(
         ("ticker", "銘柄"),
         ("name", "名称"),
         ("planned_status", "予定扱い"),
+        ("execution_bucket", "実行枠"),
         ("planned_shares", "予定株数"),
-        ("planned_yen", "予定金額"),
+        ("candidate_yen", "候補金額"),
+        ("planned_yen", "本日実行額"),
+        ("hold_until_confirmed_yen", "確認後保留額"),
         ("limit_price_yen", "指値目安"),
         ("do_not_chase_price_yen", "追わない価格"),
         ("actual_action", "実際の扱い"),
@@ -2848,8 +2871,11 @@ def build_html(
         ("ticker", "銘柄"),
         ("name", "名称"),
         ("execution_status", "実行扱い"),
+        ("execution_bucket", "実行枠"),
         ("initial_shares", "初回株数"),
-        ("initial_buy_yen", "初回金額"),
+        ("initial_buy_yen", "候補金額"),
+        ("executable_today_yen", "本日実行額"),
+        ("hold_until_confirmed_yen", "確認後保留額"),
         ("limit_price_yen", "指値目安"),
         ("do_not_chase_price_yen", "追わない価格"),
         ("temporary_stop_line_yen", "下値確認"),
