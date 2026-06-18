@@ -42,7 +42,7 @@
       <div class="card"><b>戦略上位</b><strong>10社</strong><span>統合スコア順</span></div>
       <div class="card"><b>配分候補</b><strong>9社</strong><span>価格あり・制約通過</span></div>
       <div class="card"><b>初回枠</b><strong>360,000円</strong><span>イベント注意時15%</span></div>
-      <div class="card"><b>生成時刻</b><strong>2026/06/19 00:08</strong><span>ローカル計算</span></div>
+      <div class="card"><b>生成時刻</b><strong>2026/06/19 00:12</strong><span>ローカル計算</span></div>
     </div>
   </section>
 
@@ -167,6 +167,12 @@
   </section>
 
   <section>
+    <h2>モデル改善キュー</h2>
+    <p class="note">予実差レビューで外れが出た場合に、どの層を疑い、どの証拠を確認し、何をしてはいけないかを固定した表です。実績が未入力のまま次の買付へ進まないための運用ゲートとして使います。</p>
+    <table><thead><tr><th>優先度</th><th>確認時点</th><th>発動条件</th><th>確認式</th><th>見直す層</th><th>修正アクション</th><th>禁止事項</th><th>必要証拠</th><th>対象</th></tr></thead><tbody><tr><td>最重要</td><td>D+1営業日</td><td>全体または主要銘柄が指数比-2%以上劣後</td><td>excess_return_pct = actual_return_pct - benchmark_return_pct</td><td>リスク / イベント / 需給</td><td>追加買付を止め、寄付き過熱・市場急落・出来高急増下落のゲートが効いたか確認する。</td><td>1日だけの下落で長期スコアを自動で大幅変更しない。</td><td>実績%、指数%、当日ニュース、出来高、為替、金利</td><td>全体 + 初回候補</td></tr><tr><td>高</td><td>D+5営業日</td><td>指数比-3%以上劣後、または上位候補の半数以上が劣後</td><td>winner_rate = excess_return_pct &gt; 0 の銘柄数 / 保有銘柄数</td><td>量的 / 質的 / イベント</td><td>テーマ仮説、決算後反応、直近モメンタムが実際の需給と合っていたかを再分類する。</td><td>テーマが強いという理由だけで買い増ししない。</td><td>5営業日株価、TOPIX/S&amp;P比較、同業比較、関連ニュース</td><td>8053.T, 8316.T, 8058.T, 6501.T, 6503.T, 8031.T, 8411.T, 6762.T, 8750.T</td></tr><tr><td>高</td><td>D+20営業日</td><td>指数比-5%以上劣後、または期待値上位が継続して弱い</td><td>model_error_pct = expected_value_pct - actual_return_pct</td><td>期待値 / ポートフォリオ配分 / 銘柄別上限</td><td>期待値の上昇確率・上昇幅・下落幅を見直し、次回の配分上限を下げる。</td><td>期待値の外れを放置して同じ比率で次回投入しない。</td><td>20営業日リターン、最大下落、ボラティリティ、指数差、セクター差</td><td>全銘柄</td></tr><tr><td>中</td><td>D+20営業日</td><td>指数比+3%以上で上回り、悪材料が出ていない</td><td>excess_return_pct &gt;= 3 and no_negative_event</td><td>質的テーマ / イベント実績</td><td>仮説層を実績層へ昇格候補にし、次回の監視優先度を上げる。ただし自動増額はしない。</td><td>短期勝ちだけで1年期待値を過大評価しない。</td><td>上昇理由、出来高、同業反応、決算・IRとの接続</td><td>勝ち銘柄</td></tr><tr><td>最重要</td><td>1年</td><td>ポートフォリオがS&amp;P500/TOPIXを+1%以上上回らない</td><td>portfolio_excess_return_pct &lt; 1</td><td>全体配分 / 母集団 / 指標重み</td><td>個別株比率を下げ、指数・現金比率を上げる。母集団条件と重みを再検証する。</td><td>負けたモデルを同じ説明で翌年継続しない。</td><td>1年実績、指数比較、売買記録、コスト、税引後結果</td><td>PORTFOLIO</td></tr><tr><td>最重要</td><td>各レビュー日</td><td>実績値が未入力</td><td>actual_return_pct is blank</td><td>データ運用</td><td>未入力の間は次回買付判断へ進めない。データ取得・転記・検算を先に行う。</td><td>記録なしで、感覚的に成功/失敗を判断しない。</td><td>約定価格、評価額、指数、為替、金利、更新日時</td><td>40レビュー行</td></tr></tbody></table>
+  </section>
+
+  <section>
     <h2>19日以降の実行ゲート</h2>
     <div class="cards">
       <div class="card"><b>初回候補・小口候補</b><strong>218,055円</strong><span>条件通過時に使う上限</span></div>
@@ -252,6 +258,7 @@
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
       <a href="ultimate_selection_prediction_review_20260619.csv">予実差レビューCSV</a>
+      <a href="ultimate_selection_model_revision_queue_20260619.csv">モデル改善キューCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>

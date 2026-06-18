@@ -41,6 +41,7 @@ OUT_THEME_EVIDENCE = ROOT / "ultimate_selection_theme_evidence_20260618.csv"
 OUT_NO_BUY_GATE = ROOT / "ultimate_selection_no_buy_reduce_gate_20260618.csv"
 OUT_BENCHMARK_ALLOCATION_GATE = ROOT / "ultimate_selection_benchmark_allocation_gate_20260618.csv"
 OUT_PREDICTION_REVIEW = ROOT / "ultimate_selection_prediction_review_20260619.csv"
+OUT_MODEL_REVISION_QUEUE = ROOT / "ultimate_selection_model_revision_queue_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -981,6 +982,81 @@ def build_prediction_review(
     return rows
 
 
+def build_model_revision_queue(
+    portfolio: list[dict[str, object]],
+    prediction_review_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    portfolio_tickers = ", ".join(str(r.get("ticker", "")) for r in portfolio)
+    return [
+        {
+            "priority": "最重要",
+            "review_timing": "D+1営業日",
+            "trigger": "全体または主要銘柄が指数比-2%以上劣後",
+            "check_formula": "excess_return_pct = actual_return_pct - benchmark_return_pct",
+            "score_layer_to_review": "リスク / イベント / 需給",
+            "revision_action": "追加買付を止め、寄付き過熱・市場急落・出来高急増下落のゲートが効いたか確認する。",
+            "do_not_do": "1日だけの下落で長期スコアを自動で大幅変更しない。",
+            "evidence_required": "実績%、指数%、当日ニュース、出来高、為替、金利",
+            "target_rows": "全体 + 初回候補",
+        },
+        {
+            "priority": "高",
+            "review_timing": "D+5営業日",
+            "trigger": "指数比-3%以上劣後、または上位候補の半数以上が劣後",
+            "check_formula": "winner_rate = excess_return_pct > 0 の銘柄数 / 保有銘柄数",
+            "score_layer_to_review": "量的 / 質的 / イベント",
+            "revision_action": "テーマ仮説、決算後反応、直近モメンタムが実際の需給と合っていたかを再分類する。",
+            "do_not_do": "テーマが強いという理由だけで買い増ししない。",
+            "evidence_required": "5営業日株価、TOPIX/S&P比較、同業比較、関連ニュース",
+            "target_rows": portfolio_tickers,
+        },
+        {
+            "priority": "高",
+            "review_timing": "D+20営業日",
+            "trigger": "指数比-5%以上劣後、または期待値上位が継続して弱い",
+            "check_formula": "model_error_pct = expected_value_pct - actual_return_pct",
+            "score_layer_to_review": "期待値 / ポートフォリオ配分 / 銘柄別上限",
+            "revision_action": "期待値の上昇確率・上昇幅・下落幅を見直し、次回の配分上限を下げる。",
+            "do_not_do": "期待値の外れを放置して同じ比率で次回投入しない。",
+            "evidence_required": "20営業日リターン、最大下落、ボラティリティ、指数差、セクター差",
+            "target_rows": "全銘柄",
+        },
+        {
+            "priority": "中",
+            "review_timing": "D+20営業日",
+            "trigger": "指数比+3%以上で上回り、悪材料が出ていない",
+            "check_formula": "excess_return_pct >= 3 and no_negative_event",
+            "score_layer_to_review": "質的テーマ / イベント実績",
+            "revision_action": "仮説層を実績層へ昇格候補にし、次回の監視優先度を上げる。ただし自動増額はしない。",
+            "do_not_do": "短期勝ちだけで1年期待値を過大評価しない。",
+            "evidence_required": "上昇理由、出来高、同業反応、決算・IRとの接続",
+            "target_rows": "勝ち銘柄",
+        },
+        {
+            "priority": "最重要",
+            "review_timing": "1年",
+            "trigger": "ポートフォリオがS&P500/TOPIXを+1%以上上回らない",
+            "check_formula": "portfolio_excess_return_pct < 1",
+            "score_layer_to_review": "全体配分 / 母集団 / 指標重み",
+            "revision_action": "個別株比率を下げ、指数・現金比率を上げる。母集団条件と重みを再検証する。",
+            "do_not_do": "負けたモデルを同じ説明で翌年継続しない。",
+            "evidence_required": "1年実績、指数比較、売買記録、コスト、税引後結果",
+            "target_rows": "PORTFOLIO",
+        },
+        {
+            "priority": "最重要",
+            "review_timing": "各レビュー日",
+            "trigger": "実績値が未入力",
+            "check_formula": "actual_return_pct is blank",
+            "score_layer_to_review": "データ運用",
+            "revision_action": "未入力の間は次回買付判断へ進めない。データ取得・転記・検算を先に行う。",
+            "do_not_do": "記録なしで、感覚的に成功/失敗を判断しない。",
+            "evidence_required": "約定価格、評価額、指数、為替、金利、更新日時",
+            "target_rows": f"{len(prediction_review_rows)}レビュー行",
+        },
+    ]
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -1721,6 +1797,7 @@ def build_html(
     no_buy_gate_rows: list[dict[str, object]],
     benchmark_allocation_rows: list[dict[str, object]],
     prediction_review_rows: list[dict[str, object]],
+    model_revision_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -1883,6 +1960,17 @@ def build_html(
         ("excess_return_pct", "指数差%"),
         ("judgement_rule", "判定ルール"),
         ("model_feedback", "モデル修正先"),
+    ]
+    model_revision_fields = [
+        ("priority", "優先度"),
+        ("review_timing", "確認時点"),
+        ("trigger", "発動条件"),
+        ("check_formula", "確認式"),
+        ("score_layer_to_review", "見直す層"),
+        ("revision_action", "修正アクション"),
+        ("do_not_do", "禁止事項"),
+        ("evidence_required", "必要証拠"),
+        ("target_rows", "対象"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -2087,6 +2175,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>モデル改善キュー</h2>
+    <p class="note">予実差レビューで外れが出た場合に、どの層を疑い、どの証拠を確認し、何をしてはいけないかを固定した表です。実績が未入力のまま次の買付へ進まないための運用ゲートとして使います。</p>
+    {html_table(model_revision_rows, model_revision_fields)}
+  </section>
+
+  <section>
     <h2>19日以降の実行ゲート</h2>
     <div class="cards">
       <div class="card"><b>初回候補・小口候補</b><strong>{yen(immediate_total)}</strong><span>条件通過時に使う上限</span></div>
@@ -2172,6 +2266,7 @@ def build_html(
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
       <a href="ultimate_selection_prediction_review_20260619.csv">予実差レビューCSV</a>
+      <a href="ultimate_selection_model_revision_queue_20260619.csv">モデル改善キューCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -2198,6 +2293,7 @@ def main() -> None:
     day_checklist = build_day_checklist(execution)
     order_log_template = build_order_log_template(execution)
     prediction_review_rows = build_prediction_review(portfolio, execution)
+    model_revision_rows = build_model_revision_queue(portfolio, prediction_review_rows)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -2213,6 +2309,7 @@ def main() -> None:
     write_csv(OUT_NO_BUY_GATE, no_buy_gate_rows)
     write_csv(OUT_BENCHMARK_ALLOCATION_GATE, benchmark_allocation_rows)
     write_csv(OUT_PREDICTION_REVIEW, prediction_review_rows)
+    write_csv(OUT_MODEL_REVISION_QUEUE, model_revision_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2230,6 +2327,7 @@ def main() -> None:
             no_buy_gate_rows,
             benchmark_allocation_rows,
             prediction_review_rows,
+            model_revision_rows,
         ),
         encoding="utf-8",
     )
@@ -2248,6 +2346,7 @@ def main() -> None:
     print(f"No-buy gate: {OUT_NO_BUY_GATE}")
     print(f"Benchmark allocation gate: {OUT_BENCHMARK_ALLOCATION_GATE}")
     print(f"Prediction review: {OUT_PREDICTION_REVIEW}")
+    print(f"Model revision queue: {OUT_MODEL_REVISION_QUEUE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
