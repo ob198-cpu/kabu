@@ -30,6 +30,7 @@ OUT_PORTFOLIO = ROOT / "ultimate_selection_portfolio_20260618.csv"
 OUT_MISSING = ROOT / "ultimate_selection_missing_data_20260618.csv"
 OUT_EXECUTION = ROOT / "ultimate_selection_execution_plan_20260618.csv"
 OUT_RISK = ROOT / "ultimate_selection_risk_scenarios_20260618.csv"
+OUT_TRADE_RULES = ROOT / "ultimate_selection_trade_rules_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -693,6 +694,58 @@ def build_risk_scenarios(portfolio: list[dict[str, object]], execution: list[dic
     ]
 
 
+def build_trade_rules(portfolio: list[dict[str, object]], execution: list[dict[str, object]]) -> list[dict[str, object]]:
+    exec_map = {r.get("ticker"): r for r in execution}
+    rows: list[dict[str, object]] = []
+    for row in portfolio:
+        ex = exec_map.get(row.get("ticker"), {})
+        status = ex.get("execution_status", "")
+        price = float(row.get("price") or 0)
+        stop_line = ex.get("temporary_stop_line_yen", "")
+        profit_line = ex.get("profit_review_line_yen", "")
+        no_chase = ex.get("do_not_chase_price_yen", "")
+        max_dd1 = abs(float(row.get("max_dd1") or 0))
+        ev = float(row.get("expected_value_pct") or 0)
+        reliability = float(row.get("reliability") or 0)
+
+        if status == "初回候補":
+            buy_rule = "価格が落ち着いた後、指値目安以下なら初回候補"
+            add_rule = "5営業日で指数を上回り、決算・財務前提が崩れなければ追加検討"
+        elif status == "小口候補":
+            buy_rule = "財務partialのため、初回のみ小口。追加は未確認解消後"
+            add_rule = "PER/PBR/ROE等の未確認が消え、指数超過が続く場合だけ追加"
+        else:
+            buy_rule = "公式照合・未確認項目が残る間は買わない"
+            add_rule = "確認後に再スコア。確認前の追加買いはしない"
+
+        if max_dd1 >= 20:
+            stop_rule = f"{stop_line}円付近で理由確認。直近下落が大きいため、追加停止を優先"
+        else:
+            stop_rule = f"{stop_line}円付近で一時停止。指数連動か個別悪材料か確認"
+
+        if ev >= 13 and reliability >= 80:
+            profit_rule = f"{profit_line}円付近で一部利益確保を検討。上昇理由が残れば保有継続"
+        else:
+            profit_rule = f"{profit_line}円付近で過熱確認。根拠が弱ければ利益確保を優先"
+
+        rows.append(
+            {
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "status": status,
+                "current_price_yen": yen(float(row.get("price") or 0)) if row.get("price") != "" else "",
+                "initial_buy_yen": yen(float(row.get("initial_buy_yen") or 0)),
+                "buy_rule": buy_rule,
+                "do_not_chase": f"{no_chase}円以上は追わない",
+                "add_rule": add_rule,
+                "profit_rule": profit_rule,
+                "stop_rule": stop_rule,
+                "reduce_rule": "指数に5営業日連続で劣後、決算失望、テーマ前提崩れなら追加停止・減額",
+            }
+        )
+    return rows
+
+
 def short_reason(row: dict[str, object]) -> str:
     strengths: list[str] = []
     if float(row.get("financial_score") or 0) >= 75:
@@ -816,6 +869,7 @@ def build_html(
     missing: list[dict[str, object]],
     execution: list[dict[str, object]],
     risk_scenarios: list[dict[str, object]],
+    trade_rules: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -877,6 +931,18 @@ def build_html(
         ("initial_36m_profit_yen", "初回36万円損益"),
         ("basis", "根拠"),
         ("action", "行動"),
+    ]
+    trade_rule_fields = [
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("status", "扱い"),
+        ("current_price_yen", "現在値"),
+        ("initial_buy_yen", "初回金額"),
+        ("buy_rule", "買付ルール"),
+        ("do_not_chase", "追わない価格"),
+        ("add_rule", "追加ルール"),
+        ("profit_rule", "上値ルール"),
+        ("stop_rule", "下値ルール"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1064,6 +1130,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>銘柄別 売買ルール</h2>
+    <p class="note">共通ルールだけでなく、各銘柄の扱い、下値確認ライン、上値確認ライン、未確認項目の有無に応じて行動を分けます。</p>
+    {html_table(trade_rules, trade_rule_fields)}
+  </section>
+
+  <section>
     <h2>共通売買ルール</h2>
     <table>
       <thead><tr><th>場面</th><th>条件</th><th>行動</th><th>理由</th></tr></thead>
@@ -1096,6 +1168,7 @@ def build_html(
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
       <a href="ultimate_selection_risk_scenarios_20260618.csv">リスクシナリオCSV</a>
+      <a href="ultimate_selection_trade_rules_20260618.csv">銘柄別売買ルールCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -1112,18 +1185,21 @@ def main() -> None:
     missing = build_missing(rows)
     execution = build_execution_plan(portfolio)
     risk_scenarios = build_risk_scenarios(portfolio, execution)
+    trade_rules = build_trade_rules(portfolio, execution)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
     write_csv(OUT_EXECUTION, execution)
     write_csv(OUT_RISK, risk_scenarios)
-    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution, risk_scenarios), encoding="utf-8")
+    write_csv(OUT_TRADE_RULES, trade_rules)
+    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution, risk_scenarios, trade_rules), encoding="utf-8")
     print(f"HTML: {OUT_HTML}")
     print(f"Scores: {OUT_SCORE}")
     print(f"Portfolio: {OUT_PORTFOLIO}")
     print(f"Missing: {OUT_MISSING}")
     print(f"Execution: {OUT_EXECUTION}")
     print(f"Risk: {OUT_RISK}")
+    print(f"Trade rules: {OUT_TRADE_RULES}")
     print("Top 10:")
     for r in rows[:10]:
         print(r["ticker"], r["name"], r["final_score"], r["action"])
