@@ -46,6 +46,8 @@ OUT_REVIEW_INPUT_TEMPLATE = ROOT / "ultimate_selection_review_input_template_202
 OUT_REVIEW_RESULT = ROOT / "ultimate_selection_review_result_20260619.csv"
 OUT_ULTIMATE_REQUIREMENT_MATRIX = ROOT / "ultimate_selection_requirement_matrix_20260619.csv"
 OUT_PURCHASE_READINESS_GATE = ROOT / "ultimate_selection_purchase_readiness_gate_20260619.csv"
+OUT_UNIVERSE_RULES = ROOT / "ultimate_selection_universe_rules_20260619.csv"
+OUT_UNIVERSE_AUDIT = ROOT / "ultimate_selection_universe_audit_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1427,6 +1429,131 @@ def build_purchase_readiness_gate(rows: list[dict[str, object]], portfolio: list
     return out
 
 
+def build_universe_rules(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    total = len(rows)
+    price_count = sum(1 for r in rows if r.get("price") != "")
+    pass_count = sum(1 for r in rows if r.get("financial_status") == "pass")
+    portfolio_count = len(portfolio)
+    return [
+        {
+            "step": "1",
+            "stage": "母集団ソース",
+            "rule": "100社前後の再選定CSVを読み込み、全銘柄を同じ列で評価する。",
+            "current_implementation": f"{UNIVERSE_CSV.name} から {total}社を読み込み。",
+            "used_for_score": "YES",
+            "hard_gate": "母集団外の銘柄はこのシステムのランキング対象外。",
+            "remaining_gap": "母集団を作った元の検索条件の履歴はさらに固定化が必要。",
+        },
+        {
+            "step": "2",
+            "stage": "一次数値条件",
+            "rule": "5年CAGR、10年CAGR、直近1年、60日、S&P差、最大下落率を同じ式で評価する。",
+            "current_implementation": "growth_score、momentum_score、benchmark_score、risk_scoreとして実装。",
+            "used_for_score": "YES",
+            "hard_gate": "価格データがない銘柄は配分対象外。",
+            "remaining_gap": "出来高倍率、時価総額、流動性条件は全社統一では未完成。",
+        },
+        {
+            "step": "3",
+            "stage": "財務条件",
+            "rule": "PER/PBR/ROE、売上成長、利益成長、EPS、営業利益率、FCF、自己資本を確認する。",
+            "current_implementation": f"公式pass {pass_count}社。partial/補助は信頼度とゲートで分離。",
+            "used_for_score": "YES。ただし補助値は購入確定ではなく条件付き扱い。",
+            "hard_gate": "公式財務passでない銘柄は初回買付候補にしない。",
+            "remaining_gap": "FCF、自己資本、営業利益率の全社公式入力が未完成。",
+        },
+        {
+            "step": "4",
+            "stage": "質的テーマ条件",
+            "rule": "AI、半導体、電力、防衛、金利、資源、政策、新商品、業界シェア、構造優位を仮説層と実績層に分ける。",
+            "current_implementation": "チャンネル質的、探索スコア、テーマ証拠台帳に接続。",
+            "used_for_score": "YES。ただし未検証ニュースは補助扱い。",
+            "hard_gate": "仮説層だけでは買付確定にしない。",
+            "remaining_gap": "ニュース本文、公式資料、過去反応の長期DBが未完成。",
+        },
+        {
+            "step": "5",
+            "stage": "イベント条件",
+            "rule": "決算、上方修正、TOB、新製品、政策、金利、為替、商品市況後の反応を見る。",
+            "current_implementation": "決算後反応、6月イベント、イベント反応検証CSVを接続。",
+            "used_for_score": "YES",
+            "hard_gate": "イベント未接続または悪化は、追加停止・確認後候補へ落とす。",
+            "remaining_gap": "TOB、新製品、政策、商品市況の長期履歴は未完成。",
+        },
+        {
+            "step": "6",
+            "stage": "購入候補化",
+            "rule": "スコア上位をそのまま買わず、価格・公式財務・イベント・質的根拠・NISA口座を通す。",
+            "current_implementation": f"価格あり {price_count}/{total}社。配分候補 {portfolio_count}社。購入レディネスゲートで分離。",
+            "used_for_score": "YES",
+            "hard_gate": "NISA/口座/本人操作が未確認なら買付しない。",
+            "remaining_gap": "当日証券会社画面との自動連動は未実装。",
+        },
+        {
+            "step": "7",
+            "stage": "ポートフォリオ化",
+            "rule": "10社を無理に埋めず、相関、業種偏り、最大下落、1銘柄上限、現金比率で配分する。",
+            "current_implementation": f"現在は {portfolio_count}社配分。株式85%、現金15%。",
+            "used_for_score": "YES",
+            "hard_gate": "条件を満たす銘柄が不足する場合、10社に水増ししない。",
+            "remaining_gap": "全社日次相関と出来高リスクの継続取得が必要。",
+        },
+    ]
+
+
+def build_universe_audit(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    portfolio_tickers = {str(r.get("ticker", "")) for r in portfolio}
+    out: list[dict[str, object]] = []
+    for idx, row in enumerate(rows, start=1):
+        ticker = str(row.get("ticker", ""))
+        price_ready = row.get("price") != ""
+        financial_status = str(row.get("financial_status", ""))
+        official_financial = financial_status == "pass"
+        qualitative_ready = "質的データ未接続" not in str(row.get("qualitative_note", ""))
+        event_ready = "イベント未接続" not in str(row.get("event_note", ""))
+        in_portfolio = ticker in portfolio_tickers
+        action = str(row.get("action", ""))
+        if official_financial and price_ready and event_ready and qualitative_ready and action == "購入候補":
+            audit_status = "初回買付候補"
+        elif in_portfolio:
+            audit_status = "条件付き配分候補"
+        elif action in ["監視", "買付不可"]:
+            audit_status = "監視/除外"
+        else:
+            audit_status = "候補外"
+        missing = []
+        if not price_ready:
+            missing.append("価格")
+        if not official_financial:
+            missing.append("公式財務")
+        if not event_ready:
+            missing.append("イベント")
+        if not qualitative_ready:
+            missing.append("質的根拠")
+        out.append(
+            {
+                "audit_rank": idx,
+                "ticker": ticker,
+                "name": row.get("name", ""),
+                "sector": row.get("sector", ""),
+                "universe_status": row.get("universe_status", ""),
+                "reselect_score": row.get("reselect_score", ""),
+                "final_score": row.get("final_score", ""),
+                "action": action,
+                "audit_status": audit_status,
+                "in_portfolio": "YES" if in_portfolio else "NO",
+                "price_ready": "YES" if price_ready else "NO",
+                "official_financial_ready": "YES" if official_financial else "NO",
+                "event_ready": "YES" if event_ready else "NO",
+                "qualitative_ready": "YES" if qualitative_ready else "NO",
+                "missing_gate": " / ".join(missing) if missing else "なし",
+                "reason": row.get("gate_notes", "") or row.get("missing_items", "") or "主要ゲート上は大きな停止理由なし",
+                "next_action": "初回小口候補" if audit_status == "初回買付候補" else "不足確認後に再判定" if in_portfolio else "監視または候補外",
+            }
+        )
+    return out
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -2172,6 +2299,8 @@ def build_html(
     review_result_rows: list[dict[str, object]],
     requirement_matrix_rows: list[dict[str, object]],
     purchase_readiness_rows: list[dict[str, object]],
+    universe_rules_rows: list[dict[str, object]],
+    universe_audit_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -2297,6 +2426,34 @@ def build_html(
         ("nisa_account_ready", "NISA/口座"),
         ("purchase_readiness", "買付可否"),
         ("hard_stop_reasons", "停止理由"),
+        ("next_action", "次アクション"),
+    ]
+    universe_rule_fields = [
+        ("step", "ルール"),
+        ("stage", "段階"),
+        ("rule", "固定条件"),
+        ("current_implementation", "現状の実装"),
+        ("used_for_score", "スコア利用"),
+        ("hard_gate", "買付ゲート"),
+        ("remaining_gap", "残る課題"),
+    ]
+    universe_audit_fields = [
+        ("audit_rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("sector", "業種"),
+        ("universe_status", "母集団上の扱い"),
+        ("reselect_score", "元スコア"),
+        ("final_score", "総合"),
+        ("action", "判定"),
+        ("audit_status", "監査判定"),
+        ("in_portfolio", "配分"),
+        ("price_ready", "価格"),
+        ("official_financial_ready", "公式財務"),
+        ("event_ready", "イベント"),
+        ("qualitative_ready", "質的根拠"),
+        ("missing_gate", "不足ゲート"),
+        ("reason", "理由"),
         ("next_action", "次アクション"),
     ]
     constraint_fields = [
@@ -2522,6 +2679,18 @@ def build_html(
   </section>
 
   <section>
+    <h2>母集団固定ルール</h2>
+    <p class="note">「100社前後から選んだ」と説明できるよう、母集団を作る条件、スコアへ使う条件、買付候補へ進める条件を分けて固定します。未確認データは点数に混ぜず、ゲートまたは不足項目として残します。</p>
+    {html_table(universe_rules_rows, universe_rule_fields)}
+  </section>
+
+  <section>
+    <h2>100社母集団監査</h2>
+    <p class="note">各銘柄が、初回買付候補、条件付き候補、監視、候補外のどこにいるかを一覧化します。候補に残らない理由も残すため、後から恣意的に選んだように見えないようにします。</p>
+    {html_table(universe_audit_rows, universe_audit_fields, 100)}
+  </section>
+
+  <section>
     <h2>7層構造 実装監査</h2>
     <p class="note">この表は、要望された「母集団、量的、質的、イベント、期待値、最適化、買わない条件」が、実際にどこまで実装されているかを分けて示します。未完成部分を点数に混ぜず、残る課題として表示します。</p>
     {html_table(architecture_rows, architecture_fields)}
@@ -2712,6 +2881,8 @@ def build_html(
       <a href="ultimate_selection_order_log_template_20260618.csv">当日記録テンプレートCSV</a>
       <a href="ultimate_selection_requirement_matrix_20260619.csv">究極要件チェックCSV</a>
       <a href="ultimate_selection_purchase_readiness_gate_20260619.csv">購入レディネスゲートCSV</a>
+      <a href="ultimate_selection_universe_rules_20260619.csv">母集団固定ルールCSV</a>
+      <a href="ultimate_selection_universe_audit_20260619.csv">100社母集団監査CSV</a>
       <a href="ultimate_selection_architecture_audit_20260618.csv">7層構造監査CSV</a>
       <a href="ultimate_selection_constraints_20260618.csv">配分制約チェックCSV</a>
       <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
@@ -2753,6 +2924,8 @@ def main() -> None:
     review_result_rows = build_review_results(review_input_rows, execution)
     requirement_matrix_rows = build_ultimate_requirement_matrix(rows, portfolio)
     purchase_readiness_rows = build_purchase_readiness_gate(rows, portfolio)
+    universe_rules_rows = build_universe_rules(rows, portfolio)
+    universe_audit_rows = build_universe_audit(rows, portfolio)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -2773,6 +2946,8 @@ def main() -> None:
     write_csv(OUT_REVIEW_RESULT, review_result_rows)
     write_csv(OUT_ULTIMATE_REQUIREMENT_MATRIX, requirement_matrix_rows)
     write_csv(OUT_PURCHASE_READINESS_GATE, purchase_readiness_rows)
+    write_csv(OUT_UNIVERSE_RULES, universe_rules_rows)
+    write_csv(OUT_UNIVERSE_AUDIT, universe_audit_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2795,6 +2970,8 @@ def main() -> None:
             review_result_rows,
             requirement_matrix_rows,
             purchase_readiness_rows,
+            universe_rules_rows,
+            universe_audit_rows,
         ),
         encoding="utf-8",
     )
@@ -2818,6 +2995,8 @@ def main() -> None:
     print(f"Review result: {OUT_REVIEW_RESULT}")
     print(f"Requirement matrix: {OUT_ULTIMATE_REQUIREMENT_MATRIX}")
     print(f"Purchase readiness gate: {OUT_PURCHASE_READINESS_GATE}")
+    print(f"Universe rules: {OUT_UNIVERSE_RULES}")
+    print(f"Universe audit: {OUT_UNIVERSE_AUDIT}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
