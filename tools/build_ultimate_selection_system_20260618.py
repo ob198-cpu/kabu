@@ -650,6 +650,74 @@ def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> fl
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
 
 
+def short_reason(row: dict[str, object]) -> str:
+    strengths: list[str] = []
+    if float(row.get("financial_score") or 0) >= 75:
+        strengths.append("財務確認が強い")
+    if float(row.get("quant_score") or 0) >= 60:
+        strengths.append("株価実績が強い")
+    if float(row.get("benchmark_score") or 0) >= 55:
+        strengths.append("指数比較で優位")
+    if float(row.get("event_score") or 0) >= 60:
+        strengths.append("イベント後反応が良い")
+    if float(row.get("qualitative_score") or 0) >= 70:
+        strengths.append("テーマ適合が強い")
+    if not strengths:
+        strengths.append("総合点で上位に残る")
+    return " / ".join(strengths[:3])
+
+
+def risk_reason(row: dict[str, object]) -> str:
+    risks: list[str] = []
+    financial_status = str(row.get("financial_status", ""))
+    if financial_status == "partial":
+        risks.append("財務partial")
+    elif financial_status.startswith("補助"):
+        risks.append("財務は補助データ")
+    missing = str(row.get("missing_items", ""))
+    if missing:
+        risks.append(f"未確認: {missing}")
+    if abs(float(row.get("max_dd1") or 0)) >= 20:
+        risks.append("直近最大下落が大きい")
+    if float(row.get("sixty_day") or 0) >= 20:
+        risks.append("短期上昇後の反動注意")
+    if str(row.get("event_note", "")) == "イベント未接続":
+        risks.append("イベント未接続")
+    if not risks:
+        risks.append("大きな未確認なし")
+    return " / ".join(risks[:3])
+
+
+def build_ticker_explanations(portfolio: list[dict[str, object]], not_allocated: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for row in portfolio:
+        status, rule = execution_status(row)
+        rows.append(
+            {
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "status": status,
+                "score": row.get("final_score", ""),
+                "reason": short_reason(row),
+                "risk": risk_reason(row),
+                "action": rule,
+            }
+        )
+    for row in not_allocated:
+        rows.append(
+            {
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "status": "監視",
+                "score": row.get("final_score", ""),
+                "reason": short_reason(row),
+                "risk": risk_reason(row),
+                "action": "確認が弱い間は買付表に混ぜない",
+            }
+        )
+    return rows
+
+
 def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     if not rows:
         return
@@ -745,6 +813,16 @@ def build_html(
         ("event_note", "イベント"),
         ("gate_notes", "注意"),
         ("missing_items", "残る確認"),
+    ]
+    explanation_rows = build_ticker_explanations(portfolio, not_allocated_top)
+    explanation_fields = [
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("status", "扱い"),
+        ("score", "統合点"),
+        ("reason", "残した理由"),
+        ("risk", "警戒点"),
+        ("action", "実行方針"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -917,6 +995,12 @@ def build_html(
     </div>
     <p class="note">実行は「候補を全部買う」ではありません。初回は小さく、寄付き成行を避け、価格・市場・未確認項目の3条件を通ったものだけを使います。</p>
     {html_table(execution, execution_fields)}
+  </section>
+
+  <section>
+    <h2>銘柄別の判断理由</h2>
+    <p class="note">ここは説明用の文章を固定で書くのではなく、スコア・財務確認状況・イベント接続・不足項目から自動生成しています。</p>
+    {html_table(explanation_rows, explanation_fields)}
   </section>
 
   <section>
