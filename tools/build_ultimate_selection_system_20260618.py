@@ -24,6 +24,7 @@ QUAL_EXPLORE_CSV = ROOT / "254_qualitative_trend_exploration_score.csv"
 REACTION_CSV = ROOT / "273_top20_earnings_reaction_completed.csv"
 EVENT_VALIDATION_CSV = ROOT / "306_event_reaction_validation.csv"
 CANDIDATE_DISCOVERY_CSV = ROOT / "142_candidate_discovery_funnel_score.csv"
+WEEKLY_PRICE_CSV = ROOT / "152_trend_candidate_weekly_prices.csv"
 
 OUT_SCORE = ROOT / "ultimate_selection_scores_20260618.csv"
 OUT_PORTFOLIO = ROOT / "ultimate_selection_portfolio_20260618.csv"
@@ -33,12 +34,19 @@ OUT_RISK = ROOT / "ultimate_selection_risk_scenarios_20260618.csv"
 OUT_TRADE_RULES = ROOT / "ultimate_selection_trade_rules_20260618.csv"
 OUT_DAY_CHECKLIST = ROOT / "ultimate_selection_day_checklist_20260618.csv"
 OUT_ORDER_LOG_TEMPLATE = ROOT / "ultimate_selection_order_log_template_20260618.csv"
+OUT_CORRELATION = ROOT / "ultimate_selection_correlation_risk_20260618.csv"
+OUT_CONSTRAINTS = ROOT / "ultimate_selection_constraints_20260618.csv"
+OUT_ARCHITECTURE_AUDIT = ROOT / "ultimate_selection_architecture_audit_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
 INITIAL_BUY_CAP_YEN = 360_000
 TARGET_EXCESS_PCT = 1.0
 STRONG_EXCESS_PCT = 5.0
+TARGET_STOCK_EXPOSURE_PCT = 85.0
+CASH_RESERVE_PCT = 100.0 - TARGET_STOCK_EXPOSURE_PCT
+MAX_SINGLE_STOCK_SLEEVE_PCT = 18.0
+MAX_SECTOR_COUNT = 3
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -605,6 +613,97 @@ def optimize_portfolio(rows: list[dict[str, object]]) -> list[dict[str, object]]
     return portfolio
 
 
+def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    eligible = [
+        r
+        for r in rows
+        if r["action"] in ["購入候補", "小口", "小口または監視", "調査優先"]
+        and r["price"] != ""
+        and float(r["final_score"]) >= 50
+    ]
+    selected: list[dict[str, object]] = []
+    sector_counts: dict[str, int] = defaultdict(int)
+    for r in eligible:
+        sector = str(r["sector"])
+        if len(selected) >= 10:
+            break
+        if sector_counts[sector] >= MAX_SECTOR_COUNT:
+            continue
+        selected.append(r.copy())
+        sector_counts[sector] += 1
+
+    raw_weights = []
+    for r in selected:
+        score = float(r["final_score"])
+        ev = max(float(r["expected_value_pct"]), 0.0)
+        raw = max(score - 45, 1) * (1 + ev / 30)
+        if r["action"] == "小口または監視":
+            raw *= 0.55
+        if r["action"] == "小口":
+            raw *= 0.70
+        if r["action"] == "調査優先":
+            raw *= 0.65
+        raw_weights.append(raw)
+    total_raw = sum(raw_weights) or 1
+
+    capped = []
+    for r, raw in zip(selected, raw_weights):
+        cap = MAX_SINGLE_STOCK_SLEEVE_PCT / 100
+        if r["action"] in ["小口", "小口または監視"]:
+            cap = 0.08
+        if r["action"] == "調査優先":
+            cap = 0.10
+        capped.append(min(raw / total_raw, cap))
+
+    for _ in range(8):
+        total = sum(capped)
+        if total >= 0.999:
+            break
+        room_indices = []
+        for i, r in enumerate(selected):
+            cap = MAX_SINGLE_STOCK_SLEEVE_PCT / 100
+            if r["action"] in ["小口", "小口または監視"]:
+                cap = 0.08
+            if r["action"] == "調査優先":
+                cap = 0.10
+            if capped[i] + 0.0001 < cap:
+                room_indices.append(i)
+        if not room_indices:
+            break
+        add_each = (1.0 - total) / len(room_indices)
+        for i in room_indices:
+            cap = MAX_SINGLE_STOCK_SLEEVE_PCT / 100
+            if selected[i]["action"] in ["小口", "小口または監視"]:
+                cap = 0.08
+            if selected[i]["action"] == "調査優先":
+                cap = 0.10
+            capped[i] = min(cap, capped[i] + add_each)
+
+    total = sum(capped) or 1
+    portfolio: list[dict[str, object]] = []
+    for rank, (r, w) in enumerate(zip(selected, capped), start=1):
+        sleeve_weight = w / total
+        total_weight = sleeve_weight * (TARGET_STOCK_EXPOSURE_PCT / 100)
+        full_amount = CAPITAL_YEN * total_weight
+        initial_amount = INITIAL_BUY_CAP_YEN * sleeve_weight
+        price = float(r["price"])
+        initial_shares = math.floor(initial_amount / price) if price else 0
+        initial_yen = initial_shares * price
+        portfolio.append(
+            {
+                **r,
+                "portfolio_rank": rank,
+                "stock_sleeve_weight_pct": round(sleeve_weight * 100, 1),
+                "target_weight_pct": round(total_weight * 100, 1),
+                "target_full_amount_yen": round(full_amount),
+                "initial_buy_budget_yen": round(initial_amount),
+                "initial_shares": initial_shares,
+                "initial_buy_yen": round(initial_yen),
+            }
+        )
+    return portfolio
+
+
 def execution_status(row: dict[str, object]) -> tuple[str, str]:
     action = str(row.get("action", ""))
     financial = str(row.get("financial_status", ""))
@@ -783,7 +882,8 @@ def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> fl
 
 
 def scenario_row(name: str, pct_value: float, basis: str, action: str) -> dict[str, object]:
-    full_profit = CAPITAL_YEN * pct_value / 100
+    stock_capital = CAPITAL_YEN * (TARGET_STOCK_EXPOSURE_PCT / 100)
+    full_profit = stock_capital * pct_value / 100
     initial_profit = INITIAL_BUY_CAP_YEN * pct_value / 100
     return {
         "scenario": name,
@@ -821,6 +921,246 @@ def build_risk_scenarios(portfolio: list[dict[str, object]], execution: list[dic
         scenario_row("直近1年最大下落級", -dd1, "各銘柄の直近1年最大下落を比率加重", "想定外ではなくストレスとして扱い、追加停止・減額"),
         scenario_row("5年最大下落級", -dd5, "各銘柄の5年最大下落を比率加重", "短期テストの範囲を超える。購入計画を再設計"),
         scenario_row("一律-10%機械ストレス", -10.0, "全銘柄が同時に-10%下落する仮定", "ストップ安相当ではなく、急落時の資金ダメージ確認用"),
+    ]
+
+
+def load_weekly_returns() -> dict[str, list[tuple[str, float]]]:
+    prices: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    for row in read_csv(WEEKLY_PRICE_CSV):
+        ticker = row.get("ticker", "").strip()
+        week_end = row.get("week_end", "").strip()
+        close = to_float(row.get("close"), 0.0)
+        if ticker and week_end and close:
+            prices[ticker].append((week_end, close))
+
+    returns: dict[str, list[tuple[str, float]]] = {}
+    for ticker, points in prices.items():
+        points = sorted(points, key=lambda x: x[0])
+        ticker_returns: list[tuple[str, float]] = []
+        for (prev_date, prev_close), (date, close) in zip(points, points[1:]):
+            if prev_close:
+                ticker_returns.append((date, (close / prev_close - 1.0) * 100.0))
+        if ticker_returns:
+            returns[ticker] = ticker_returns
+    return returns
+
+
+def pearson_from_returns(a: list[tuple[str, float]], b: list[tuple[str, float]]) -> tuple[float | None, int]:
+    a_map = {date: value for date, value in a}
+    b_map = {date: value for date, value in b}
+    dates = sorted(set(a_map) & set(b_map))
+    if len(dates) < 8:
+        return None, len(dates)
+    xs = [a_map[d] for d in dates]
+    ys = [b_map[d] for d in dates]
+    mx = sum(xs) / len(xs)
+    my = sum(ys) / len(ys)
+    vx = sum((x - mx) ** 2 for x in xs)
+    vy = sum((y - my) ** 2 for y in ys)
+    if vx <= 0 or vy <= 0:
+        return None, len(dates)
+    cov = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+    return cov / math.sqrt(vx * vy), len(dates)
+
+
+def proxy_correlation(a: dict[str, object], b: dict[str, object]) -> tuple[float, str]:
+    sector_a = str(a.get("sector", ""))
+    sector_b = str(b.get("sector", ""))
+    name_a = str(a.get("name", ""))
+    name_b = str(b.get("name", ""))
+    text = f"{sector_a} {sector_b} {name_a} {name_b}"
+    if sector_a and sector_a == sector_b:
+        return 0.78, "業種proxy: 同業のため高めに仮置き"
+    if any(x in text for x in ["金融", "銀行", "保険"]) and any(x in text for x in ["金融", "銀行", "保険"]):
+        return 0.62, "業種proxy: 金利・信用サイクル連動"
+    if any(x in text for x in ["半導体", "電機", "電子", "AI", "データセンター"]):
+        return 0.58, "テーマproxy: AI・半導体・電力周辺の同時連動"
+    if any(x in text for x in ["商社", "資源", "エネルギー"]):
+        return 0.56, "業種proxy: 資源・景気・為替連動"
+    return 0.35, "保守proxy: 実リターン相関未取得"
+
+
+def build_correlation_risk(portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    weekly_returns = load_weekly_returns()
+    rows: list[dict[str, object]] = []
+    for i, a in enumerate(portfolio):
+        for b in portfolio[i + 1:]:
+            ticker_a = str(a.get("ticker", ""))
+            ticker_b = str(b.get("ticker", ""))
+            corr_value: float | None = None
+            method = ""
+            observations = 0
+            if ticker_a in weekly_returns and ticker_b in weekly_returns:
+                corr_value, observations = pearson_from_returns(weekly_returns[ticker_a], weekly_returns[ticker_b])
+                if corr_value is not None:
+                    method = f"実測: 週次リターン{observations}本"
+            if corr_value is None:
+                corr_value, method = proxy_correlation(a, b)
+                observations = 0
+            if corr_value >= 0.75:
+                risk = "高: 同時下落時は片方または両方を減額候補"
+            elif corr_value >= 0.55:
+                risk = "中: 同テーマ・同業の連動を監視"
+            else:
+                risk = "低〜中: 分散効果を期待。ただし市場急落時は連動"
+            rows.append(
+                {
+                    "ticker_a": ticker_a,
+                    "name_a": a.get("name", ""),
+                    "sector_a": a.get("sector", ""),
+                    "ticker_b": ticker_b,
+                    "name_b": b.get("name", ""),
+                    "sector_b": b.get("sector", ""),
+                    "correlation_value": round(corr_value, 2),
+                    "method": method,
+                    "observations": observations,
+                    "risk_comment": risk,
+                }
+            )
+    return rows
+
+
+def build_constraints(
+    rows: list[dict[str, object]],
+    portfolio: list[dict[str, object]],
+    correlation_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    sector_counts: dict[str, int] = defaultdict(int)
+    for row in portfolio:
+        sector_counts[str(row.get("sector", ""))] += 1
+    max_sector = max(sector_counts.values(), default=0)
+    max_sleeve = max((float(r.get("stock_sleeve_weight_pct") or r.get("target_weight_pct") or 0) for r in portfolio), default=0.0)
+    max_total = max((float(r.get("target_weight_pct") or 0) for r in portfolio), default=0.0)
+    initial_total = sum(float(r.get("initial_buy_yen") or 0) for r in portfolio)
+    stock_total = sum(float(r.get("target_full_amount_yen") or 0) for r in portfolio)
+    cash_total = CAPITAL_YEN - stock_total
+    max_corr = max((float(r.get("correlation_value") or 0) for r in correlation_rows), default=0.0)
+    dd1 = abs(weighted_portfolio_value(portfolio, "max_dd1"))
+    dd5 = abs(weighted_portfolio_value(portfolio, "max_dd5"))
+
+    return [
+        {
+            "check_item": "母集団",
+            "rule": "業績成長・流動性・時価総額・テーマ適合で100社前後を作る",
+            "current_value": f"{len(rows)}社",
+            "status": "OK" if len(rows) >= 80 else "要補強",
+            "action": "母集団CSVを固定し、追加・除外条件を記録する",
+        },
+        {
+            "check_item": "候補数",
+            "rule": "購入候補は無理に10社へ埋めず、条件通過銘柄だけ採用",
+            "current_value": f"{len(portfolio)}社",
+            "status": "OK" if 6 <= len(portfolio) <= 10 else "要確認",
+            "action": "10社に満たない場合は現金待機または指数へ戻す",
+        },
+        {
+            "check_item": "1銘柄比率",
+            "rule": f"株式枠内で1銘柄最大{MAX_SINGLE_STOCK_SLEEVE_PCT:.0f}%、総資金ではその85%まで",
+            "current_value": f"株式枠最大{max_sleeve:.1f}% / 総資金最大{max_total:.1f}%",
+            "status": "OK" if max_sleeve <= MAX_SINGLE_STOCK_SLEEVE_PCT + 0.1 else "減額",
+            "action": "上限超過時は次点候補または現金へ配分",
+        },
+        {
+            "check_item": "現金比率",
+            "rule": f"初期設計では株式{TARGET_STOCK_EXPOSURE_PCT:.0f}%、現金{CASH_RESERVE_PCT:.0f}%を残す",
+            "current_value": f"株式{yen(stock_total)} / 現金{yen(cash_total)}",
+            "status": "OK" if cash_total >= CAPITAL_YEN * 0.10 else "現金不足",
+            "action": "6月イベント後も不安定なら現金比率を引き上げる",
+        },
+        {
+            "check_item": "業種偏り",
+            "rule": f"同一業種は原則{MAX_SECTOR_COUNT}社まで",
+            "current_value": f"最大{max_sector}社",
+            "status": "OK" if max_sector <= MAX_SECTOR_COUNT else "偏り",
+            "action": "同業集中時は相関と下落率を見て片方を減額",
+        },
+        {
+            "check_item": "相関・集中",
+            "rule": "高相関の組み合わせは同時下落リスクとして扱う",
+            "current_value": f"最大相関/proxy {max_corr:.2f}",
+            "status": "注意" if max_corr >= 0.75 else "OK",
+            "action": "高相関ペアは両方を同時に増額しない",
+        },
+        {
+            "check_item": "最大下落",
+            "rule": "過去の最大下落をストレスとして買付額に反映",
+            "current_value": f"1年加重{dd1:.1f}% / 5年加重{dd5:.1f}%",
+            "status": "注意" if dd1 >= 20 or dd5 >= 35 else "OK",
+            "action": "急落時は追加停止、理由確認後に再判定",
+        },
+        {
+            "check_item": "初回買付枠",
+            "rule": f"初回は最大{yen(INITIAL_BUY_CAP_YEN)}まで",
+            "current_value": f"予定{yen(initial_total)}",
+            "status": "OK" if initial_total <= INITIAL_BUY_CAP_YEN + 1 else "超過",
+            "action": "超過時は指値優先順位で後順位を削る",
+        },
+    ]
+
+
+def build_architecture_audit(
+    rows: list[dict[str, object]],
+    portfolio: list[dict[str, object]],
+    correlation_rows: list[dict[str, object]],
+    constraint_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    return [
+        {
+            "layer": "1. 候補母集団",
+            "status": "実装済み",
+            "data_used": "100社前後の再選定CSV、株価、テーマ候補、財務補完候補",
+            "formula_or_rule": "業績成長、流動性、時価総額、テーマ適合、除外条件で母集団化",
+            "output_file": OUT_SCORE.name,
+            "remaining_gap": "母集団の入替履歴と除外理由はさらに固定化する余地あり",
+        },
+        {
+            "layer": "2. 量的スコア",
+            "status": "実装済み",
+            "data_used": "CAGR、直近騰落、S&P差、最大下落、PER/PBR/ROE等",
+            "formula_or_rule": "成長、勢い、指数比較、下落耐性、財務を0〜100点化",
+            "output_file": OUT_SCORE.name,
+            "remaining_gap": "PER/PBRは株価基準日と公式EPS/BPSの整合確認が必要",
+        },
+        {
+            "layer": "3. 質的スコア",
+            "status": "部分実装",
+            "data_used": "半導体、AIインフラ、電力、防衛、金利、資源、政策、構造優位",
+            "formula_or_rule": "公式資料・ニュース・過去反応の有無で信頼度を分け、未検証は買付確定に使わない",
+            "output_file": OUT_SCORE.name,
+            "remaining_gap": "個別ニュース本文の定期取得と過去イベント反応DBは追加余地あり",
+        },
+        {
+            "layer": "4. イベント検証",
+            "status": "部分実装",
+            "data_used": "決算後反応、6月イベント、イベント反応検証CSV",
+            "formula_or_rule": "イベント後の指数超過、個別反応、未接続イベントを分ける",
+            "output_file": OUT_SCORE.name,
+            "remaining_gap": "TOB、新製品、政策、商品市況などの長期イベント履歴は未完成",
+        },
+        {
+            "layer": "5. 期待値",
+            "status": "実装済み",
+            "data_used": "上昇確率、上昇幅、下落確率、下落幅、コスト",
+            "formula_or_rule": "期待値 = 上昇確率 × 上昇幅 - 下落確率 × 下落幅 - コスト",
+            "output_file": OUT_RISK.name,
+            "remaining_gap": "確率は検証用仮説であり、勝率保証ではない",
+        },
+        {
+            "layer": "6. ポートフォリオ最適化",
+            "status": "実装済み",
+            "data_used": "最終スコア、期待値、業種、相関/proxy、現金比率",
+            "formula_or_rule": "株式85%・現金15%、1銘柄上限、業種上限、相関警告で配分",
+            "output_file": f"{OUT_PORTFOLIO.name} / {OUT_CONSTRAINTS.name}",
+            "remaining_gap": "相関は一部実測、一部proxy。完全な日次相関DBは追加余地あり",
+        },
+        {
+            "layer": "7. 買わない・減額条件",
+            "status": "実装済み",
+            "data_used": "市場急落、指数劣後、テーマ崩れ、決算失望、円高、金利急騰、出来高急増下落",
+            "formula_or_rule": "初回停止、追加停止、減額、現金待機を実行計画・売買ルールへ接続",
+            "output_file": f"{OUT_EXECUTION.name} / {OUT_TRADE_RULES.name}",
+            "remaining_gap": "当日の実売買ログ入力後に、ルールの効き方を検証する",
+        },
     ]
 
 
@@ -1002,6 +1342,9 @@ def build_html(
     trade_rules: list[dict[str, object]],
     day_checklist: list[dict[str, object]],
     order_log_template: list[dict[str, object]],
+    correlation_rows: list[dict[str, object]],
+    constraint_rows: list[dict[str, object]],
+    architecture_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -1095,6 +1438,30 @@ def build_html(
         ("actual_action", "実際の扱い"),
         ("not_bought_reason", "買わなかった理由"),
         ("memo", "メモ"),
+    ]
+    architecture_fields = [
+        ("layer", "層"),
+        ("status", "実装状況"),
+        ("data_used", "使用データ"),
+        ("formula_or_rule", "数式・ルール"),
+        ("output_file", "出力"),
+        ("remaining_gap", "残る課題"),
+    ]
+    constraint_fields = [
+        ("check_item", "確認項目"),
+        ("rule", "制約・ルール"),
+        ("current_value", "現在値"),
+        ("status", "判定"),
+        ("action", "対応"),
+    ]
+    correlation_fields = [
+        ("ticker_a", "銘柄A"),
+        ("name_a", "社名A"),
+        ("ticker_b", "銘柄B"),
+        ("name_b", "社名B"),
+        ("correlation_value", "相関"),
+        ("method", "計算方法"),
+        ("risk_comment", "扱い"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1204,6 +1571,24 @@ def build_html(
       <div class="step"><b>6. 期待値</b>上昇幅・下落幅・確率の仮説で相対比較。</div>
       <div class="step"><b>7. 配分</b>1銘柄比率、業種集中、小口制約で金額化。</div>
     </div>
+  </section>
+
+  <section>
+    <h2>7層構造 実装監査</h2>
+    <p class="note">この表は、要望された「母集団、量的、質的、イベント、期待値、最適化、買わない条件」が、実際にどこまで実装されているかを分けて示します。未完成部分を点数に混ぜず、残る課題として表示します。</p>
+    {html_table(architecture_rows, architecture_fields)}
+  </section>
+
+  <section>
+    <h2>ポートフォリオ制約チェック</h2>
+    <p class="note">10社をただ並べるのではなく、1銘柄比率、業種偏り、現金比率、初回買付枠、最大下落を制約として確認します。条件に合わない場合は、買付額を減らすか現金待機に戻します。</p>
+    {html_table(constraint_rows, constraint_fields)}
+  </section>
+
+  <section>
+    <h2>相関・集中リスク</h2>
+    <p class="note">実測できる銘柄は週次リターンで相関を計算し、未取得銘柄は業種・テーマのproxyとして明示します。proxyは実測ではないため、購入確定の根拠ではなく、集中リスクの注意表示として使います。</p>
+    {html_table(correlation_rows, correlation_fields, 30)}
   </section>
 
   <section>
@@ -1335,6 +1720,9 @@ def build_html(
       <a href="ultimate_selection_trade_rules_20260618.csv">銘柄別売買ルールCSV</a>
       <a href="ultimate_selection_day_checklist_20260618.csv">19日当日チェックCSV</a>
       <a href="ultimate_selection_order_log_template_20260618.csv">当日記録テンプレートCSV</a>
+      <a href="ultimate_selection_architecture_audit_20260618.csv">7層構造監査CSV</a>
+      <a href="ultimate_selection_constraints_20260618.csv">配分制約チェックCSV</a>
+      <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -1347,9 +1735,12 @@ def build_html(
 
 def main() -> None:
     rows = build_scores()
-    portfolio = optimize_portfolio(rows)
+    portfolio = optimize_portfolio_v2(rows)
     missing = build_missing(rows)
     execution = build_execution_plan(portfolio)
+    correlation_rows = build_correlation_risk(portfolio)
+    constraint_rows = build_constraints(rows, portfolio, correlation_rows)
+    architecture_rows = build_architecture_audit(rows, portfolio, correlation_rows, constraint_rows)
     risk_scenarios = build_risk_scenarios(portfolio, execution)
     trade_rules = build_trade_rules(portfolio, execution)
     day_checklist = build_day_checklist(execution)
@@ -1362,8 +1753,23 @@ def main() -> None:
     write_csv(OUT_TRADE_RULES, trade_rules)
     write_csv(OUT_DAY_CHECKLIST, day_checklist)
     write_csv(OUT_ORDER_LOG_TEMPLATE, order_log_template)
+    write_csv(OUT_CORRELATION, correlation_rows)
+    write_csv(OUT_CONSTRAINTS, constraint_rows)
+    write_csv(OUT_ARCHITECTURE_AUDIT, architecture_rows)
     OUT_HTML.write_text(
-        build_html(rows, portfolio, missing, execution, risk_scenarios, trade_rules, day_checklist, order_log_template),
+        build_html(
+            rows,
+            portfolio,
+            missing,
+            execution,
+            risk_scenarios,
+            trade_rules,
+            day_checklist,
+            order_log_template,
+            correlation_rows,
+            constraint_rows,
+            architecture_rows,
+        ),
         encoding="utf-8",
     )
     print(f"HTML: {OUT_HTML}")
@@ -1374,6 +1780,9 @@ def main() -> None:
     print(f"Risk: {OUT_RISK}")
     print(f"Trade rules: {OUT_TRADE_RULES}")
     print(f"Day checklist: {OUT_DAY_CHECKLIST}")
+    print(f"Correlation risk: {OUT_CORRELATION}")
+    print(f"Constraints: {OUT_CONSTRAINTS}")
+    print(f"Architecture audit: {OUT_ARCHITECTURE_AUDIT}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:

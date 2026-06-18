@@ -1,0 +1,8 @@
+﻿layer,status,data_used,formula_or_rule,output_file,remaining_gap
+1. 候補母集団,実装済み,100社前後の再選定CSV、株価、テーマ候補、財務補完候補,業績成長、流動性、時価総額、テーマ適合、除外条件で母集団化,ultimate_selection_scores_20260618.csv,母集団の入替履歴と除外理由はさらに固定化する余地あり
+2. 量的スコア,実装済み,CAGR、直近騰落、S&P差、最大下落、PER/PBR/ROE等,成長、勢い、指数比較、下落耐性、財務を0〜100点化,ultimate_selection_scores_20260618.csv,PER/PBRは株価基準日と公式EPS/BPSの整合確認が必要
+3. 質的スコア,部分実装,半導体、AIインフラ、電力、防衛、金利、資源、政策、構造優位,公式資料・ニュース・過去反応の有無で信頼度を分け、未検証は買付確定に使わない,ultimate_selection_scores_20260618.csv,個別ニュース本文の定期取得と過去イベント反応DBは追加余地あり
+4. イベント検証,部分実装,決算後反応、6月イベント、イベント反応検証CSV,イベント後の指数超過、個別反応、未接続イベントを分ける,ultimate_selection_scores_20260618.csv,TOB、新製品、政策、商品市況などの長期イベント履歴は未完成
+5. 期待値,実装済み,上昇確率、上昇幅、下落確率、下落幅、コスト,期待値 = 上昇確率 × 上昇幅 - 下落確率 × 下落幅 - コスト,ultimate_selection_risk_scenarios_20260618.csv,確率は検証用仮説であり、勝率保証ではない
+6. ポートフォリオ最適化,実装済み,最終スコア、期待値、業種、相関/proxy、現金比率,株式85%・現金15%、1銘柄上限、業種上限、相関警告で配分,ultimate_selection_portfolio_20260618.csv / ultimate_selection_constraints_20260618.csv,相関は一部実測、一部proxy。完全な日次相関DBは追加余地あり
+7. 買わない・減額条件,実装済み,市場急落、指数劣後、テーマ崩れ、決算失望、円高、金利急騰、出来高急増下落,初回停止、追加停止、減額、現金待機を実行計画・売買ルールへ接続,ultimate_selection_execution_plan_20260618.csv / ultimate_selection_trade_rules_20260618.csv,当日の実売買ログ入力後に、ルールの効き方を検証する
