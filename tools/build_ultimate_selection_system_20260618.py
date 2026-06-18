@@ -49,6 +49,7 @@ OUT_PURCHASE_READINESS_GATE = ROOT / "ultimate_selection_purchase_readiness_gate
 OUT_UNIVERSE_RULES = ROOT / "ultimate_selection_universe_rules_20260619.csv"
 OUT_UNIVERSE_AUDIT = ROOT / "ultimate_selection_universe_audit_20260619.csv"
 OUT_EXPECTED_VALUE_AUDIT = ROOT / "ultimate_selection_expected_value_audit_20260619.csv"
+OUT_SCORE_TRACE = ROOT / "ultimate_selection_score_trace_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1589,6 +1590,41 @@ def build_expected_value_audit(rows: list[dict[str, object]], portfolio: list[di
     return out
 
 
+def build_score_trace(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for idx, row in enumerate(rows, start=1):
+        pre_score = to_float(row.get("pre_score"))
+        ev_score = to_float(row.get("ev_score"))
+        final_score = to_float(row.get("final_score"))
+        implied_penalty = round(max(0.0, 0.86 * pre_score + 0.14 * ev_score - final_score), 1)
+        out.append(
+            {
+                "rank": idx,
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "action": row.get("action", ""),
+                "final_score": row.get("final_score", ""),
+                "pre_score": row.get("pre_score", ""),
+                "quant_score": row.get("quant_score", ""),
+                "financial_score": row.get("financial_score", ""),
+                "qualitative_score": row.get("qualitative_score", ""),
+                "event_score": row.get("event_score", ""),
+                "benchmark_score": row.get("benchmark_score", ""),
+                "risk_score": row.get("risk_score", ""),
+                "reliability": row.get("reliability", ""),
+                "ev_score": row.get("ev_score", ""),
+                "implied_gate_penalty": implied_penalty,
+                "pre_score_formula": "事前スコア = 量的31% + 財務17% + 質的15% + イベント14% + 指数10% + リスク8% + 信頼度5%",
+                "final_score_formula": "総合点 = 事前スコア86% + EVスコア14% - ゲート減点",
+                "gate_notes": row.get("gate_notes", ""),
+                "missing_items": row.get("missing_items", ""),
+                "data_sources": row.get("data_sources", ""),
+                "audit_note": "点数は候補比較用。ゲート減点や未確認項目がある場合、総合点が高くても買付対象とは限らない。",
+            }
+        )
+    return out
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -2337,6 +2373,7 @@ def build_html(
     universe_rules_rows: list[dict[str, object]],
     universe_audit_rows: list[dict[str, object]],
     expected_value_audit_rows: list[dict[str, object]],
+    score_trace_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -2354,6 +2391,29 @@ def build_html(
         ("reliability", "信頼度"),
         ("data_sources", "使用データ"),
         ("gate_notes", "注意"),
+    ]
+    score_trace_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("action", "判定"),
+        ("final_score", "総合点"),
+        ("pre_score", "事前"),
+        ("quant_score", "量的"),
+        ("financial_score", "財務"),
+        ("qualitative_score", "質的"),
+        ("event_score", "イベント"),
+        ("benchmark_score", "指数"),
+        ("risk_score", "リスク"),
+        ("reliability", "信頼度"),
+        ("ev_score", "EV"),
+        ("implied_gate_penalty", "ゲート減点"),
+        ("pre_score_formula", "事前式"),
+        ("final_score_formula", "総合式"),
+        ("gate_notes", "減点理由"),
+        ("missing_items", "不足"),
+        ("data_sources", "データ源"),
+        ("audit_note", "注意"),
     ]
     port_fields = [
         ("portfolio_rank", "順位"),
@@ -2796,6 +2856,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>スコア分解監査</h2>
+    <p class="note">総合点が、どの層から来ているかを分解します。量的、財務、質的、イベント、指数、リスク、信頼度、EV、ゲート減点を同じ表で確認し、未確認データを点数に混ぜたように見えない形にします。</p>
+    {html_table(score_trace_rows, score_trace_fields, 100)}
+  </section>
+
+  <section>
     <h2>ポートフォリオ最適化案</h2>
     <p class="note">これは「同じ審査で通したうえで、価格があり、業種集中を抑え、初回36万円枠に落とせる候補」です。最終注文は証券会社画面で価格・NISA区分・買付余力を確認してからです。</p>
     {html_table(portfolio, port_fields)}
@@ -2931,6 +2997,7 @@ def build_html(
     <h2>出力ファイル</h2>
     <div class="links">
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
+      <a href="ultimate_selection_score_trace_20260619.csv">スコア分解監査CSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
       <a href="ultimate_selection_risk_scenarios_20260618.csv">リスクシナリオCSV</a>
@@ -2986,6 +3053,7 @@ def main() -> None:
     universe_rules_rows = build_universe_rules(rows, portfolio)
     universe_audit_rows = build_universe_audit(rows, portfolio)
     expected_value_audit_rows = build_expected_value_audit(rows, portfolio)
+    score_trace_rows = build_score_trace(rows)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -3009,6 +3077,7 @@ def main() -> None:
     write_csv(OUT_UNIVERSE_RULES, universe_rules_rows)
     write_csv(OUT_UNIVERSE_AUDIT, universe_audit_rows)
     write_csv(OUT_EXPECTED_VALUE_AUDIT, expected_value_audit_rows)
+    write_csv(OUT_SCORE_TRACE, score_trace_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -3034,6 +3103,7 @@ def main() -> None:
             universe_rules_rows,
             universe_audit_rows,
             expected_value_audit_rows,
+            score_trace_rows,
         ),
         encoding="utf-8",
     )
@@ -3060,6 +3130,7 @@ def main() -> None:
     print(f"Universe rules: {OUT_UNIVERSE_RULES}")
     print(f"Universe audit: {OUT_UNIVERSE_AUDIT}")
     print(f"Expected value audit: {OUT_EXPECTED_VALUE_AUDIT}")
+    print(f"Score trace: {OUT_SCORE_TRACE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
