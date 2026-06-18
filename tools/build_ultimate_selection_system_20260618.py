@@ -39,6 +39,7 @@ OUT_CONSTRAINTS = ROOT / "ultimate_selection_constraints_20260618.csv"
 OUT_ARCHITECTURE_AUDIT = ROOT / "ultimate_selection_architecture_audit_20260618.csv"
 OUT_THEME_EVIDENCE = ROOT / "ultimate_selection_theme_evidence_20260618.csv"
 OUT_NO_BUY_GATE = ROOT / "ultimate_selection_no_buy_reduce_gate_20260618.csv"
+OUT_BENCHMARK_ALLOCATION_GATE = ROOT / "ultimate_selection_benchmark_allocation_gate_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1358,6 +1359,81 @@ def build_no_buy_reduce_gate(
     ]
 
 
+def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    portfolio_ev = weighted_portfolio_value(portfolio, "expected_value_pct")
+    plus1_limit = portfolio_ev - TARGET_EXCESS_PCT
+    plus5_limit = portfolio_ev - STRONG_EXCESS_PCT
+    current_stock_yen = sum(float(r.get("target_full_amount_yen") or 0) for r in portfolio)
+    current_stock_pct = current_stock_yen / CAPITAL_YEN * 100 if CAPITAL_YEN else 0
+    current_cash_yen = CAPITAL_YEN - current_stock_yen
+    rows = [
+        {
+            "case": "強気個別株",
+            "benchmark_outlook_condition": f"S&P500/TOPIXの1年見通しが{plus5_limit:.1f}%以下",
+            "stock_allocation_pct": 85,
+            "index_or_cash_pct": 15,
+            "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN),
+            "action": "現行の最大株式枠まで検討。ただし初回は小口で開始",
+            "reason": "個別株EV仮説が指数を+5%以上上回る説明が成立するため",
+        },
+        {
+            "case": "+1%目標は説明可能",
+            "benchmark_outlook_condition": f"指数見通しが{plus5_limit:.1f}%超〜{plus1_limit:.1f}%以下",
+            "stock_allocation_pct": 70,
+            "index_or_cash_pct": 30,
+            "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN * 0.8),
+            "action": "個別株テストは継続。ただし確認後候補を急いで増やさない",
+            "reason": "+1%目標は説明できるが、強気配分にするほどの差ではないため",
+        },
+        {
+            "case": "優位が薄い",
+            "benchmark_outlook_condition": f"指数見通しが{plus1_limit:.1f}%超〜{portfolio_ev:.1f}%未満",
+            "stock_allocation_pct": 50,
+            "index_or_cash_pct": 50,
+            "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN * 0.5),
+            "action": "初回候補だけ検証。残りは現金または指数候補へ待機",
+            "reason": "個別株を選ぶ説明は残るが、手間とリスクに対する上乗せが薄いため",
+        },
+        {
+            "case": "個別株優位なし",
+            "benchmark_outlook_condition": f"指数見通しが{portfolio_ev:.1f}%以上",
+            "stock_allocation_pct": 15,
+            "index_or_cash_pct": 85,
+            "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN * 0.25),
+            "action": "個別株は観察のみ。実買付は原則見送り",
+            "reason": "指数と同等以下なら、個別株を選ぶ合理性が弱いため",
+        },
+        {
+            "case": "当日市場急落",
+            "benchmark_outlook_condition": "日経平均/TOPIXが当日-2%以上、または米金利・為替が急変",
+            "stock_allocation_pct": 0,
+            "index_or_cash_pct": 100,
+            "initial_buy_cap_yen": yen(0),
+            "action": "当日の新規買付を停止。翌営業日以降に再判定",
+            "reason": "個別要因ではなく市場全体の売りに巻き込まれるため",
+        },
+        {
+            "case": "保有後に指数劣後",
+            "benchmark_outlook_condition": "保有後5営業日連続でTOPIX/日経平均に劣後",
+            "stock_allocation_pct": "次回予定の50%以下",
+            "index_or_cash_pct": "減額分を現金または指数へ",
+            "initial_buy_cap_yen": "次回分を半減",
+            "action": "追加買付を停止し、劣後理由を記録",
+            "reason": "期待値仮説が実績で崩れ始めた可能性があるため",
+        },
+        {
+            "case": "現行設定",
+            "benchmark_outlook_condition": "指数見通し未入力。現時点は検証用の上限設定",
+            "stock_allocation_pct": round(current_stock_pct, 1),
+            "index_or_cash_pct": round(100 - current_stock_pct, 1),
+            "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN),
+            "action": f"株式{yen(current_stock_yen)}、現金{yen(current_cash_yen)}を上限として表示",
+            "reason": "指数見通し入力前なので、買付確定ではなく上限計画として扱う",
+        },
+    ]
+    return rows
+
+
 def build_trade_rules(portfolio: list[dict[str, object]], execution: list[dict[str, object]]) -> list[dict[str, object]]:
     exec_map = {r.get("ticker"): r for r in execution}
     rows: list[dict[str, object]] = []
@@ -1541,6 +1617,7 @@ def build_html(
     architecture_rows: list[dict[str, object]],
     theme_evidence_rows: list[dict[str, object]],
     no_buy_gate_rows: list[dict[str, object]],
+    benchmark_allocation_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -1677,6 +1754,15 @@ def build_html(
         ("action", "実行内容"),
         ("status_now", "現状"),
         ("evidence_needed", "確認データ"),
+    ]
+    benchmark_allocation_fields = [
+        ("case", "ケース"),
+        ("benchmark_outlook_condition", "指数側の条件"),
+        ("stock_allocation_pct", "個別株比率"),
+        ("index_or_cash_pct", "現金・指数比率"),
+        ("initial_buy_cap_yen", "初回上限"),
+        ("action", "実行"),
+        ("reason", "理由"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1869,6 +1955,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>指数比較から買付比率への分岐</h2>
+    <p class="note">S&P500/TOPIXを上回る説明が強い時だけ個別株比率を上げます。説明が弱い場合は、無理に個別株へ寄せず、現金または指数へ戻します。</p>
+    {html_table(benchmark_allocation_rows, benchmark_allocation_fields)}
+  </section>
+
+  <section>
     <h2>19日以降の実行ゲート</h2>
     <div class="cards">
       <div class="card"><b>初回候補・小口候補</b><strong>{yen(immediate_total)}</strong><span>条件通過時に使う上限</span></div>
@@ -1952,6 +2044,7 @@ def build_html(
       <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
       <a href="ultimate_selection_theme_evidence_20260618.csv">質的テーマ証拠台帳CSV</a>
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
+      <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -1972,6 +2065,7 @@ def main() -> None:
     architecture_rows = build_architecture_audit(rows, portfolio, correlation_rows, constraint_rows)
     theme_evidence_rows = build_theme_evidence(rows, portfolio)
     no_buy_gate_rows = build_no_buy_reduce_gate(portfolio, correlation_rows)
+    benchmark_allocation_rows = build_benchmark_allocation_gate(portfolio)
     risk_scenarios = build_risk_scenarios(portfolio, execution)
     trade_rules = build_trade_rules(portfolio, execution)
     day_checklist = build_day_checklist(execution)
@@ -1989,6 +2083,7 @@ def main() -> None:
     write_csv(OUT_ARCHITECTURE_AUDIT, architecture_rows)
     write_csv(OUT_THEME_EVIDENCE, theme_evidence_rows)
     write_csv(OUT_NO_BUY_GATE, no_buy_gate_rows)
+    write_csv(OUT_BENCHMARK_ALLOCATION_GATE, benchmark_allocation_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2004,6 +2099,7 @@ def main() -> None:
             architecture_rows,
             theme_evidence_rows,
             no_buy_gate_rows,
+            benchmark_allocation_rows,
         ),
         encoding="utf-8",
     )
@@ -2020,6 +2116,7 @@ def main() -> None:
     print(f"Architecture audit: {OUT_ARCHITECTURE_AUDIT}")
     print(f"Theme evidence: {OUT_THEME_EVIDENCE}")
     print(f"No-buy gate: {OUT_NO_BUY_GATE}")
+    print(f"Benchmark allocation gate: {OUT_BENCHMARK_ALLOCATION_GATE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
