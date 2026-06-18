@@ -2842,7 +2842,7 @@ def build_html(
     </div>
   </section>
 
-  <section>
+  <section id="action-cockpit">
     <h2>実用コックピット</h2>
     <p class="note">毎日見る前提の要約です。候補名、初回上限、保留理由、現金待機、止める条件を1枚にまとめます。ここで止まる条件が出た場合は、ランキングが高くても買付に進みません。</p>
     {html_table(action_cockpit_rows, action_cockpit_fields)}
