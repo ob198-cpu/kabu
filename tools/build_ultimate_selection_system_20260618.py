@@ -770,6 +770,9 @@ def build_html(
     immediate_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") in ["初回候補", "小口候補"])
     conditional_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") == "確認後候補")
     reserve_total = max(INITIAL_BUY_CAP_YEN - immediate_total - conditional_total, 0)
+    immediate_names = " / ".join(str(r.get("name")) for r in execution if r.get("execution_status") in ["初回候補", "小口候補"])
+    conditional_names = " / ".join(str(r.get("name")) for r in execution if r.get("execution_status") == "確認後候補")
+    watch_names = " / ".join(str(r.get("name")) for r in not_allocated_top) or "なし"
     portfolio_ev = weighted_portfolio_value(portfolio, "expected_value_pct")
     portfolio_score = weighted_portfolio_value(portfolio, "final_score")
     portfolio_reliability = weighted_portfolio_value(portfolio, "reliability")
@@ -823,6 +826,21 @@ def build_html(
       <div class="card"><b>初回枠</b><strong>{yen(INITIAL_BUY_CAP_YEN)}</strong><span>イベント注意時15%</span></div>
       <div class="card"><b>生成時刻</b><strong>{esc(generated_at)}</strong><span>ローカル計算</span></div>
     </div>
+  </section>
+
+  <section>
+    <h2>実行サマリー</h2>
+    <table>
+      <thead><tr><th>確認順</th><th>見るもの</th><th>現在の扱い</th><th>次の行動</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>本人NISA・買付余力・注文口座区分</td><td>証券会社画面で最終確認</td><td>NISA区分、残枠、入金、本人操作を確認。未確認なら注文しない。</td></tr>
+        <tr><td>2</td><td>市場全体</td><td>急落時は停止</td><td>日経平均またはTOPIXが当日-2%以上なら、その日の新規買付を止める。</td></tr>
+        <tr><td>3</td><td>初回候補・小口候補</td><td>{esc(immediate_names)}</td><td>合計上限 {yen(immediate_total)}。前日比+3%以上で始まる銘柄は追わない。</td></tr>
+        <tr><td>4</td><td>確認後候補</td><td>{esc(conditional_names)}</td><td>合計 {yen(conditional_total)} は、公式照合・未確認項目が解消するまで追加しない。</td></tr>
+        <tr><td>5</td><td>監視</td><td>{esc(watch_names)}</td><td>点数が近くても、確認が弱い間は買付表に混ぜない。</td></tr>
+      </tbody>
+    </table>
+    <p class="note">この画面の結論は「候補を全部買う」ではありません。初回は、条件を通った銘柄だけを小さく開始し、確認が弱い銘柄は現金待機に回す設計です。</p>
   </section>
 
   <section>
