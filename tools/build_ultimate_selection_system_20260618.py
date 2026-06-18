@@ -32,6 +32,7 @@ OUT_EXECUTION = ROOT / "ultimate_selection_execution_plan_20260618.csv"
 OUT_RISK = ROOT / "ultimate_selection_risk_scenarios_20260618.csv"
 OUT_TRADE_RULES = ROOT / "ultimate_selection_trade_rules_20260618.csv"
 OUT_DAY_CHECKLIST = ROOT / "ultimate_selection_day_checklist_20260618.csv"
+OUT_ORDER_LOG_TEMPLATE = ROOT / "ultimate_selection_order_log_template_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -722,6 +723,60 @@ def build_day_checklist(execution: list[dict[str, object]]) -> list[dict[str, ob
     ]
 
 
+def build_order_log_template(execution: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for row in execution:
+        rows.append(
+            {
+                "trade_date": "2026-06-19",
+                "check_time": "",
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "planned_status": row.get("execution_status", ""),
+                "planned_shares": row.get("initial_shares", ""),
+                "planned_yen": row.get("initial_buy_yen", ""),
+                "limit_price_yen": row.get("limit_price_yen", ""),
+                "do_not_chase_price_yen": row.get("do_not_chase_price_yen", ""),
+                "actual_action": "未入力",
+                "actual_shares": "",
+                "actual_price_yen": "",
+                "actual_yen": "",
+                "not_bought_reason": "",
+                "market_condition": "",
+                "index_change_pct": "",
+                "usdjpy": "",
+                "us10y": "",
+                "vix": "",
+                "memo": "",
+            }
+        )
+    rows.append(
+        {
+            "trade_date": "2026-06-19",
+            "check_time": "15:00以降",
+            "ticker": "全体",
+            "name": "当日総括",
+            "planned_status": "記録",
+            "planned_shares": "",
+            "planned_yen": "",
+            "limit_price_yen": "",
+            "do_not_chase_price_yen": "",
+            "actual_action": "未入力",
+            "actual_shares": "",
+            "actual_price_yen": "",
+            "actual_yen": "",
+            "not_bought_reason": "",
+            "market_condition": "指数、為替、金利、VIX、ニュースの総括",
+            "index_change_pct": "",
+            "usdjpy": "",
+            "us10y": "",
+            "vix": "",
+            "memo": "買った理由、買わなかった理由、翌営業日に見る項目を記録。",
+        }
+    )
+    return rows
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -946,6 +1001,7 @@ def build_html(
     risk_scenarios: list[dict[str, object]],
     trade_rules: list[dict[str, object]],
     day_checklist: list[dict[str, object]],
+    order_log_template: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -1026,6 +1082,19 @@ def build_html(
         ("action", "行うこと"),
         ("stop_condition", "止める条件"),
         ("record", "記録すること"),
+    ]
+    order_log_fields = [
+        ("trade_date", "日付"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("planned_status", "予定扱い"),
+        ("planned_shares", "予定株数"),
+        ("planned_yen", "予定金額"),
+        ("limit_price_yen", "指値目安"),
+        ("do_not_chase_price_yen", "追わない価格"),
+        ("actual_action", "実際の扱い"),
+        ("not_bought_reason", "買わなかった理由"),
+        ("memo", "メモ"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1207,6 +1276,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>当日記録テンプレート</h2>
+    <p class="note">実際に買ったか、買わなかったか、なぜそうしたかを残す欄です。未入力のまま次回判断へ進むと検証できないため、約定・未約定・見送り理由を必ず残します。</p>
+    {html_table(order_log_template, order_log_fields)}
+  </section>
+
+  <section>
     <h2>銘柄別の判断理由</h2>
     <p class="note">ここは説明用の文章を固定で書くのではなく、スコア・財務確認状況・イベント接続・不足項目から自動生成しています。</p>
     {html_table(explanation_rows, explanation_fields)}
@@ -1259,6 +1334,7 @@ def build_html(
       <a href="ultimate_selection_risk_scenarios_20260618.csv">リスクシナリオCSV</a>
       <a href="ultimate_selection_trade_rules_20260618.csv">銘柄別売買ルールCSV</a>
       <a href="ultimate_selection_day_checklist_20260618.csv">19日当日チェックCSV</a>
+      <a href="ultimate_selection_order_log_template_20260618.csv">当日記録テンプレートCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -1277,6 +1353,7 @@ def main() -> None:
     risk_scenarios = build_risk_scenarios(portfolio, execution)
     trade_rules = build_trade_rules(portfolio, execution)
     day_checklist = build_day_checklist(execution)
+    order_log_template = build_order_log_template(execution)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -1284,7 +1361,11 @@ def main() -> None:
     write_csv(OUT_RISK, risk_scenarios)
     write_csv(OUT_TRADE_RULES, trade_rules)
     write_csv(OUT_DAY_CHECKLIST, day_checklist)
-    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution, risk_scenarios, trade_rules, day_checklist), encoding="utf-8")
+    write_csv(OUT_ORDER_LOG_TEMPLATE, order_log_template)
+    OUT_HTML.write_text(
+        build_html(rows, portfolio, missing, execution, risk_scenarios, trade_rules, day_checklist, order_log_template),
+        encoding="utf-8",
+    )
     print(f"HTML: {OUT_HTML}")
     print(f"Scores: {OUT_SCORE}")
     print(f"Portfolio: {OUT_PORTFOLIO}")
@@ -1293,6 +1374,7 @@ def main() -> None:
     print(f"Risk: {OUT_RISK}")
     print(f"Trade rules: {OUT_TRADE_RULES}")
     print(f"Day checklist: {OUT_DAY_CHECKLIST}")
+    print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
         print(r["ticker"], r["name"], r["final_score"], r["action"])
