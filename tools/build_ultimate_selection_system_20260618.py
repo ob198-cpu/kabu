@@ -4,7 +4,7 @@ import csv
 import html
 import math
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 
@@ -40,6 +40,7 @@ OUT_ARCHITECTURE_AUDIT = ROOT / "ultimate_selection_architecture_audit_20260618.
 OUT_THEME_EVIDENCE = ROOT / "ultimate_selection_theme_evidence_20260618.csv"
 OUT_NO_BUY_GATE = ROOT / "ultimate_selection_no_buy_reduce_gate_20260618.csv"
 OUT_BENCHMARK_ALLOCATION_GATE = ROOT / "ultimate_selection_benchmark_allocation_gate_20260618.csv"
+OUT_PREDICTION_REVIEW = ROOT / "ultimate_selection_prediction_review_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -879,6 +880,107 @@ def build_order_log_template(execution: list[dict[str, object]]) -> list[dict[st
     return rows
 
 
+def add_business_days(start: str, days: int) -> str:
+    current = datetime.strptime(start, "%Y-%m-%d")
+    added = 0
+    while added < days:
+        current += timedelta(days=1)
+        if current.weekday() < 5:
+            added += 1
+    return current.strftime("%Y-%m-%d")
+
+
+def build_prediction_review(
+    portfolio: list[dict[str, object]],
+    execution: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    trade_date = "2026-06-19"
+    execution_by_ticker = {str(row.get("ticker", "")): row for row in execution}
+    review_points = [
+        {
+            "review_point": "D+1営業日",
+            "review_date": add_business_days(trade_date, 1),
+            "judgement_rule": "指数比で-1%以内なら継続観察。-2%以上劣後、または悪材料発生なら追加停止。",
+            "action_if_good": "記録のみ。追い買いはしない。",
+            "action_if_bad": "理由を記録し、次回買付候補から一時除外。",
+        },
+        {
+            "review_point": "D+5営業日",
+            "review_date": add_business_days(trade_date, 5),
+            "judgement_rule": "指数比+1%以上なら候補維持。-3%以上劣後なら次回買付を半分以下に減額。",
+            "action_if_good": "追加候補として残す。",
+            "action_if_bad": "テーマ・決算・需給の仮説を見直す。",
+        },
+        {
+            "review_point": "D+20営業日",
+            "review_date": add_business_days(trade_date, 20),
+            "judgement_rule": "指数比+3%以上なら仮説有効候補。-5%以上劣後なら購入候補から外す方向で再審査。",
+            "action_if_good": "追加買付または保有継続を検討。",
+            "action_if_bad": "モデルの該当スコアを減点候補にする。",
+        },
+        {
+            "review_point": "1年",
+            "review_date": "2027-06-19",
+            "judgement_rule": "S&P500/TOPIXを+1%以上上回ればモデル有効候補。劣後なら個別株比率を下げる。",
+            "action_if_good": "翌年も同系統の選定条件を継続検証。",
+            "action_if_bad": "個別株比率を下げ、指数・現金比率を上げる。",
+        },
+    ]
+    rows: list[dict[str, object]] = []
+    portfolio_ev = weighted_portfolio_value(portfolio, "expected_value_pct")
+    portfolio_up = weighted_portfolio_value(portfolio, "up_probability")
+    initial_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution)
+    for point in review_points:
+        rows.append(
+            {
+                "trade_date": trade_date,
+                "review_point": point["review_point"],
+                "review_date": point["review_date"],
+                "ticker": "PORTFOLIO",
+                "name": "全体",
+                "planned_status": "全体検証",
+                "expected_value_pct": round(portfolio_ev, 2),
+                "up_probability_pct": round(portfolio_up, 1),
+                "target_weight_pct": TARGET_STOCK_EXPOSURE_PCT,
+                "initial_buy_yen": round(initial_total),
+                "actual_buy_yen": "",
+                "actual_return_pct": "",
+                "benchmark_return_pct": "",
+                "excess_return_pct": "",
+                "judgement_rule": point["judgement_rule"],
+                "action_if_good": point["action_if_good"],
+                "action_if_bad": point["action_if_bad"],
+                "model_feedback": "全体の個別株比率、指数比、現金比率を見直す。",
+            }
+        )
+        for row in portfolio:
+            ticker = str(row.get("ticker", ""))
+            planned = execution_by_ticker.get(ticker, {})
+            rows.append(
+                {
+                    "trade_date": trade_date,
+                    "review_point": point["review_point"],
+                    "review_date": point["review_date"],
+                    "ticker": ticker,
+                    "name": row.get("name", ""),
+                    "planned_status": planned.get("execution_status", ""),
+                    "expected_value_pct": row.get("expected_value_pct", ""),
+                    "up_probability_pct": row.get("up_probability", ""),
+                    "target_weight_pct": row.get("target_weight_pct", ""),
+                    "initial_buy_yen": planned.get("initial_buy_yen", ""),
+                    "actual_buy_yen": "",
+                    "actual_return_pct": "",
+                    "benchmark_return_pct": "",
+                    "excess_return_pct": "",
+                    "judgement_rule": point["judgement_rule"],
+                    "action_if_good": point["action_if_good"],
+                    "action_if_bad": point["action_if_bad"],
+                    "model_feedback": "予想との差を記録し、量的・質的・イベント・リスクのどこが外れたか分類する。",
+                }
+            )
+    return rows
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -1618,6 +1720,7 @@ def build_html(
     theme_evidence_rows: list[dict[str, object]],
     no_buy_gate_rows: list[dict[str, object]],
     benchmark_allocation_rows: list[dict[str, object]],
+    prediction_review_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -1763,6 +1866,23 @@ def build_html(
         ("initial_buy_cap_yen", "初回上限"),
         ("action", "実行"),
         ("reason", "理由"),
+    ]
+    prediction_review_fields = [
+        ("trade_date", "購入日"),
+        ("review_point", "確認時点"),
+        ("review_date", "確認日"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("planned_status", "予定扱い"),
+        ("expected_value_pct", "事前EV%"),
+        ("up_probability_pct", "上昇確率%"),
+        ("target_weight_pct", "目標比率%"),
+        ("initial_buy_yen", "初回金額"),
+        ("actual_return_pct", "実績%"),
+        ("benchmark_return_pct", "指数%"),
+        ("excess_return_pct", "指数差%"),
+        ("judgement_rule", "判定ルール"),
+        ("model_feedback", "モデル修正先"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1961,6 +2081,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>予実差レビュー</h2>
+    <p class="note">買付後に、D+1営業日、D+5営業日、D+20営業日、1年で、事前の期待値と実績、指数との差を記録します。外れた場合は、量的スコア、質的テーマ、イベント仮説、リスク条件のどこが原因だったかを残し、次回の候補選定に戻します。</p>
+    {html_table(prediction_review_rows, prediction_review_fields, 45)}
+  </section>
+
+  <section>
     <h2>19日以降の実行ゲート</h2>
     <div class="cards">
       <div class="card"><b>初回候補・小口候補</b><strong>{yen(immediate_total)}</strong><span>条件通過時に使う上限</span></div>
@@ -2045,6 +2171,7 @@ def build_html(
       <a href="ultimate_selection_theme_evidence_20260618.csv">質的テーマ証拠台帳CSV</a>
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
+      <a href="ultimate_selection_prediction_review_20260619.csv">予実差レビューCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -2070,6 +2197,7 @@ def main() -> None:
     trade_rules = build_trade_rules(portfolio, execution)
     day_checklist = build_day_checklist(execution)
     order_log_template = build_order_log_template(execution)
+    prediction_review_rows = build_prediction_review(portfolio, execution)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -2084,6 +2212,7 @@ def main() -> None:
     write_csv(OUT_THEME_EVIDENCE, theme_evidence_rows)
     write_csv(OUT_NO_BUY_GATE, no_buy_gate_rows)
     write_csv(OUT_BENCHMARK_ALLOCATION_GATE, benchmark_allocation_rows)
+    write_csv(OUT_PREDICTION_REVIEW, prediction_review_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2100,6 +2229,7 @@ def main() -> None:
             theme_evidence_rows,
             no_buy_gate_rows,
             benchmark_allocation_rows,
+            prediction_review_rows,
         ),
         encoding="utf-8",
     )
@@ -2117,6 +2247,7 @@ def main() -> None:
     print(f"Theme evidence: {OUT_THEME_EVIDENCE}")
     print(f"No-buy gate: {OUT_NO_BUY_GATE}")
     print(f"Benchmark allocation gate: {OUT_BENCHMARK_ALLOCATION_GATE}")
+    print(f"Prediction review: {OUT_PREDICTION_REVIEW}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
