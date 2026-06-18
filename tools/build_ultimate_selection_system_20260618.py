@@ -50,6 +50,7 @@ OUT_UNIVERSE_RULES = ROOT / "ultimate_selection_universe_rules_20260619.csv"
 OUT_UNIVERSE_AUDIT = ROOT / "ultimate_selection_universe_audit_20260619.csv"
 OUT_EXPECTED_VALUE_AUDIT = ROOT / "ultimate_selection_expected_value_audit_20260619.csv"
 OUT_SCORE_TRACE = ROOT / "ultimate_selection_score_trace_20260619.csv"
+OUT_ACTION_COCKPIT = ROOT / "ultimate_selection_action_cockpit_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1625,6 +1626,90 @@ def build_score_trace(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     return out
 
 
+def build_action_cockpit(
+    portfolio: list[dict[str, object]],
+    execution: list[dict[str, object]],
+    missing: list[dict[str, object]],
+    benchmark_allocation_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    first = [r for r in execution if r.get("execution_status") == "初回候補"]
+    small = [r for r in execution if r.get("execution_status") == "小口候補"]
+    immediate = first + small
+    conditional = [r for r in execution if r.get("execution_status") == "確認後候補"]
+    first_names = " / ".join(f"{r.get('ticker')} {r.get('name')}" for r in first) or "該当なし"
+    small_names = " / ".join(f"{r.get('ticker')} {r.get('name')}" for r in small) or "該当なし"
+    conditional_names = " / ".join(f"{r.get('ticker')} {r.get('name')}" for r in conditional) or "該当なし"
+    first_total = sum(float(r.get("initial_buy_yen") or 0) for r in first)
+    small_total = sum(float(r.get("initial_buy_yen") or 0) for r in small)
+    immediate_total = first_total + small_total
+    conditional_total = sum(float(r.get("initial_buy_yen") or 0) for r in conditional)
+    reserve_total = max(INITIAL_BUY_CAP_YEN - immediate_total - conditional_total, 0)
+    portfolio_ev = weighted_portfolio_value(portfolio, "expected_value_pct")
+    portfolio_reliability = weighted_portfolio_value(portfolio, "reliability")
+    missing_count = sum(1 for r in missing if str(r.get("missing_items", "")).strip())
+    top_missing = " / ".join(
+        f"{r.get('ticker')}:{r.get('missing_items')}" for r in missing[:5] if r.get("missing_items")
+    ) or "主要不足なし"
+    allocation_rule = next(
+        (
+            f"{r.get('stock_allocation_pct')} / {r.get('action')}"
+            for r in benchmark_allocation_rows
+            if str(r.get("case", "")).startswith("標準")
+        ),
+        "指数見通し入力後に分岐",
+    )
+    return [
+        {
+            "block": "本日の扱い",
+            "current_status": f"中心初回 {len(first)}社、小口 {len(small)}社、確認後 {len(conditional)}社。10社を無理に埋めず、条件を通った分だけ使う。",
+            "action": "本人NISA、買付余力、注文口座区分、当日市場を確認してから小口で実行。",
+            "stop_or_next": "NISA区分・本人操作・市場急落・未確認データのどれかが崩れたら停止。",
+        },
+        {
+            "block": "中心初回候補",
+            "current_status": f"{first_names} / 上限目安 {yen(first_total)}",
+            "action": "寄付き成行を避け、指値目安以下でのみ検討。",
+            "stop_or_next": "前日比+3%以上で始まる銘柄は追わず、翌営業日以降に回す。",
+        },
+        {
+            "block": "小口候補",
+            "current_status": f"{small_names} / 上限目安 {yen(small_total)}",
+            "action": "財務partialまたは確認不足が残るため、初回だけ小さく扱う。",
+            "stop_or_next": "不足確認が消えるまで追加しない。違和感があれば監視へ戻す。",
+        },
+        {
+            "block": "確認後候補",
+            "current_status": f"{conditional_names} / 予定枠 {yen(conditional_total)}",
+            "action": "公式財務、PER/PBR/ROE、イベント反応の不足が消えるまで追加しない。",
+            "stop_or_next": "未確認のまま買付表に混ぜない。",
+        },
+        {
+            "block": "現金待機",
+            "current_status": f"初回枠の残り目安 {yen(reserve_total)}。全体では現金15%を残す設計。",
+            "action": "急落時、確認後候補の再判定、指数優位時の見送りに使う。",
+            "stop_or_next": "無理に銘柄数を増やして消化しない。",
+        },
+        {
+            "block": "指数比較",
+            "current_status": f"配分EV仮説 {pct(portfolio_ev)}、加重信頼度 {portfolio_reliability:.1f}。標準分岐: {allocation_rule}",
+            "action": "S&P500/TOPIXを+1%以上上回る説明が弱い場合は、個別株比率を落とす。",
+            "stop_or_next": "指数見通しが個別株EVを上回る場合は、個別株を観察扱いに戻す。",
+        },
+        {
+            "block": "不足データ",
+            "current_status": f"不足あり {missing_count}件。上位不足: {top_missing}",
+            "action": "不足はスコアへ混ぜず、信頼度・ゲート・確認後候補として分離。",
+            "stop_or_next": "不足が購入根拠の中核にある銘柄は初回買付しない。",
+        },
+        {
+            "block": "記録",
+            "current_status": "注文ログ、実績入力、D+1/D+5/D+20/1年レビューを用意済み。",
+            "action": "買った価格、買わなかった理由、指数との差を必ず残す。",
+            "stop_or_next": "記録できない場合は、次回追加買付に進まない。",
+        },
+    ]
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -2373,6 +2458,7 @@ def build_html(
     universe_rules_rows: list[dict[str, object]],
     universe_audit_rows: list[dict[str, object]],
     expected_value_audit_rows: list[dict[str, object]],
+    action_cockpit_rows: list[dict[str, object]],
     score_trace_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
@@ -2414,6 +2500,12 @@ def build_html(
         ("missing_items", "不足"),
         ("data_sources", "データ源"),
         ("audit_note", "注意"),
+    ]
+    action_cockpit_fields = [
+        ("block", "項目"),
+        ("current_status", "現在の状態"),
+        ("action", "実行すること"),
+        ("stop_or_next", "止める条件・次の処理"),
     ]
     port_fields = [
         ("portfolio_rank", "順位"),
@@ -2751,6 +2843,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>実用コックピット</h2>
+    <p class="note">毎日見る前提の要約です。候補名、初回上限、保留理由、現金待機、止める条件を1枚にまとめます。ここで止まる条件が出た場合は、ランキングが高くても買付に進みません。</p>
+    {html_table(action_cockpit_rows, action_cockpit_fields)}
+  </section>
+
+  <section>
     <h2>実行サマリー</h2>
     <table>
       <thead><tr><th>確認順</th><th>見るもの</th><th>現在の扱い</th><th>次の行動</th></tr></thead>
@@ -2997,6 +3095,7 @@ def build_html(
     <h2>出力ファイル</h2>
     <div class="links">
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
+      <a href="ultimate_selection_action_cockpit_20260619.csv">実用コックピットCSV</a>
       <a href="ultimate_selection_score_trace_20260619.csv">スコア分解監査CSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
@@ -3054,6 +3153,7 @@ def main() -> None:
     universe_audit_rows = build_universe_audit(rows, portfolio)
     expected_value_audit_rows = build_expected_value_audit(rows, portfolio)
     score_trace_rows = build_score_trace(rows)
+    action_cockpit_rows = build_action_cockpit(portfolio, execution, missing, benchmark_allocation_rows)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -3078,6 +3178,7 @@ def main() -> None:
     write_csv(OUT_UNIVERSE_AUDIT, universe_audit_rows)
     write_csv(OUT_EXPECTED_VALUE_AUDIT, expected_value_audit_rows)
     write_csv(OUT_SCORE_TRACE, score_trace_rows)
+    write_csv(OUT_ACTION_COCKPIT, action_cockpit_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -3103,6 +3204,7 @@ def main() -> None:
             universe_rules_rows,
             universe_audit_rows,
             expected_value_audit_rows,
+            action_cockpit_rows,
             score_trace_rows,
         ),
         encoding="utf-8",
@@ -3131,6 +3233,7 @@ def main() -> None:
     print(f"Universe audit: {OUT_UNIVERSE_AUDIT}")
     print(f"Expected value audit: {OUT_EXPECTED_VALUE_AUDIT}")
     print(f"Score trace: {OUT_SCORE_TRACE}")
+    print(f"Action cockpit: {OUT_ACTION_COCKPIT}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
