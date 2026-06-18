@@ -43,6 +43,7 @@ OUT_BENCHMARK_ALLOCATION_GATE = ROOT / "ultimate_selection_benchmark_allocation_
 OUT_PREDICTION_REVIEW = ROOT / "ultimate_selection_prediction_review_20260619.csv"
 OUT_MODEL_REVISION_QUEUE = ROOT / "ultimate_selection_model_revision_queue_20260619.csv"
 OUT_REVIEW_INPUT_TEMPLATE = ROOT / "ultimate_selection_review_input_template_20260619.csv"
+OUT_REVIEW_RESULT = ROOT / "ultimate_selection_review_result_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1115,6 +1116,160 @@ def build_review_input_template(
     return rows
 
 
+def merge_existing_review_input(generated_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    existing_rows = read_csv(OUT_REVIEW_INPUT_TEMPLATE)
+    if not existing_rows:
+        return generated_rows
+    editable_fields = {
+        "actual_buy_price_yen",
+        "review_price_yen",
+        "benchmark_name",
+        "benchmark_start_level",
+        "benchmark_review_level",
+        "memo",
+    }
+    existing_by_key = {
+        (r.get("review_point", ""), r.get("review_date", ""), r.get("ticker", "")): r
+        for r in existing_rows
+    }
+    merged: list[dict[str, object]] = []
+    for row in generated_rows:
+        key = (str(row.get("review_point", "")), str(row.get("review_date", "")), str(row.get("ticker", "")))
+        old = existing_by_key.get(key, {})
+        new_row = dict(row)
+        for field in editable_fields:
+            old_value = str(old.get(field, "")).strip()
+            if old_value:
+                new_row[field] = old_value
+        merged.append(new_row)
+    return merged
+
+
+def pct_change_from_levels(start_value: object, end_value: object) -> float | None:
+    start = to_float(start_value, 0)
+    end = to_float(end_value, 0)
+    if start <= 0 or end <= 0:
+        return None
+    return (end / start - 1) * 100
+
+
+def review_decision(review_point: str, excess_pct: float | None, actual_pct: float | None) -> tuple[str, str]:
+    if actual_pct is None:
+        return "未入力", "実績価格を入力するまで次回買付判断に進まない。"
+    if excess_pct is None:
+        return "指数比較未入力", "比較指数の開始値と確認日値を入力する。"
+    if "D+1" in review_point:
+        if excess_pct <= -2:
+            return "追加停止", "当日要因、出来高、指数急落、ニュースを確認する。"
+        if excess_pct < -1:
+            return "継続観察", "翌営業日も指数差を確認する。"
+        return "記録継続", "追い買いはせず、次の確認日まで観察する。"
+    if "D+5" in review_point:
+        if excess_pct <= -3:
+            return "次回買付半減", "テーマ仮説と決算後反応を再確認する。"
+        if excess_pct >= 1:
+            return "候補維持", "追加候補として残すが、買い増しは次ゲートで判断する。"
+        return "継続観察", "D+20まで結論を急がない。"
+    if "D+20" in review_point:
+        if excess_pct <= -5:
+            return "再審査", "購入候補から外す方向で量的・質的・イベントを見直す。"
+        if excess_pct >= 3:
+            return "仮説有効候補", "仮説層を実績層へ昇格できるか確認する。"
+        return "継続観察", "追加買付は次の決算・指数比較後に判断する。"
+    if "1年" in review_point:
+        if excess_pct >= 1:
+            return "モデル有効候補", "翌年も同系統の条件を検証対象として残す。"
+        return "個別株比率引き下げ", "指数・現金比率を上げ、母集団と重みを再検証する。"
+    return "継続観察", "次のレビュー日に再確認する。"
+
+
+def build_review_results(
+    input_rows: list[dict[str, object]],
+    execution: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    amount_by_ticker = {
+        str(r.get("ticker", "")): to_float(r.get("initial_buy_yen"), 0)
+        for r in execution
+    }
+    individual_results: list[dict[str, object]] = []
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    portfolio_inputs: dict[tuple[str, str], dict[str, object]] = {}
+    for row in input_rows:
+        key = (str(row.get("review_point", "")), str(row.get("review_date", "")))
+        if str(row.get("ticker", "")) == "PORTFOLIO":
+            portfolio_inputs[key] = row
+            continue
+        actual_pct = pct_change_from_levels(row.get("actual_buy_price_yen"), row.get("review_price_yen"))
+        benchmark_pct = pct_change_from_levels(row.get("benchmark_start_level"), row.get("benchmark_review_level"))
+        excess_pct = actual_pct - benchmark_pct if actual_pct is not None and benchmark_pct is not None else None
+        decision, action = review_decision(str(row.get("review_point", "")), excess_pct, actual_pct)
+        result = {
+            "review_point": row.get("review_point", ""),
+            "review_date": row.get("review_date", ""),
+            "ticker": row.get("ticker", ""),
+            "name": row.get("name", ""),
+            "actual_return_pct": "" if actual_pct is None else round(actual_pct, 2),
+            "benchmark_return_pct": "" if benchmark_pct is None else round(benchmark_pct, 2),
+            "excess_return_pct": "" if excess_pct is None else round(excess_pct, 2),
+            "decision": decision,
+            "action": action,
+            "missing_input": "なし" if actual_pct is not None and benchmark_pct is not None else "実績価格または指数値",
+            "calculation_basis": "実績%=(確認日価格/約定価格-1)*100、指数差=実績%-指数%",
+        }
+        individual_results.append(result)
+        grouped[key].append(result)
+
+    results: list[dict[str, object]] = []
+    for key in sorted(grouped.keys(), key=lambda k: (k[1], k[0])):
+        point, date = key
+        p_input = portfolio_inputs.get(key, {})
+        weighted_actual = 0.0
+        weighted_benchmark = 0.0
+        actual_weight = 0.0
+        benchmark_weight = 0.0
+        for row in grouped[key]:
+            ticker = str(row.get("ticker", ""))
+            weight = amount_by_ticker.get(ticker, 0)
+            actual_pct = to_float(row.get("actual_return_pct"), math.nan)
+            benchmark_pct = to_float(row.get("benchmark_return_pct"), math.nan)
+            if weight and not math.isnan(actual_pct):
+                weighted_actual += actual_pct * weight
+                actual_weight += weight
+            if weight and not math.isnan(benchmark_pct):
+                weighted_benchmark += benchmark_pct * weight
+                benchmark_weight += weight
+        portfolio_actual = weighted_actual / actual_weight if actual_weight else None
+        portfolio_benchmark = pct_change_from_levels(
+            p_input.get("benchmark_start_level", ""),
+            p_input.get("benchmark_review_level", ""),
+        )
+        if portfolio_benchmark is None and benchmark_weight:
+            portfolio_benchmark = weighted_benchmark / benchmark_weight
+        portfolio_excess = (
+            portfolio_actual - portfolio_benchmark
+            if portfolio_actual is not None and portfolio_benchmark is not None
+            else None
+        )
+        decision, action = review_decision(point, portfolio_excess, portfolio_actual)
+        results.append(
+            {
+                "review_point": point,
+                "review_date": date,
+                "ticker": "PORTFOLIO",
+                "name": "全体",
+                "actual_return_pct": "" if portfolio_actual is None else round(portfolio_actual, 2),
+                "benchmark_return_pct": "" if portfolio_benchmark is None else round(portfolio_benchmark, 2),
+                "excess_return_pct": "" if portfolio_excess is None else round(portfolio_excess, 2),
+                "decision": decision,
+                "action": action,
+                "missing_input": "なし" if portfolio_actual is not None and portfolio_benchmark is not None else "銘柄実績または指数値",
+                "calculation_basis": "各銘柄実績を初回金額で加重平均。指数は全体行入力、未入力なら個別指数を加重平均。",
+            }
+        )
+        results.extend(grouped[key])
+    return results
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -1857,6 +2012,7 @@ def build_html(
     prediction_review_rows: list[dict[str, object]],
     model_revision_rows: list[dict[str, object]],
     review_input_rows: list[dict[str, object]],
+    review_result_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -2045,6 +2201,19 @@ def build_html(
         ("benchmark_return_formula", "指数%の式"),
         ("excess_return_formula", "指数差の式"),
         ("decision_output", "出力判断"),
+    ]
+    review_result_fields = [
+        ("review_point", "確認時点"),
+        ("review_date", "確認日"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("actual_return_pct", "実績%"),
+        ("benchmark_return_pct", "指数%"),
+        ("excess_return_pct", "指数差%"),
+        ("decision", "判定"),
+        ("action", "次アクション"),
+        ("missing_input", "未入力"),
+        ("calculation_basis", "計算根拠"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -2249,6 +2418,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>レビュー計算結果</h2>
+    <p class="note">実績入力テンプレートに入れた数値から、実績%、指数%、指数差を計算し、継続・追加停止・減額・再審査を出す欄です。未入力が残る行は、判定を進めず未入力として表示します。</p>
+    {html_table(review_result_rows, review_result_fields, 45)}
+  </section>
+
+  <section>
     <h2>予実差レビュー</h2>
     <p class="note">買付後に、D+1営業日、D+5営業日、D+20営業日、1年で、事前の期待値と実績、指数との差を記録します。外れた場合は、量的スコア、質的テーマ、イベント仮説、リスク条件のどこが原因だったかを残し、次回の候補選定に戻します。</p>
     {html_table(prediction_review_rows, prediction_review_fields, 45)}
@@ -2346,6 +2521,7 @@ def build_html(
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
       <a href="ultimate_selection_review_input_template_20260619.csv">実績入力テンプレートCSV</a>
+      <a href="ultimate_selection_review_result_20260619.csv">レビュー計算結果CSV</a>
       <a href="ultimate_selection_prediction_review_20260619.csv">予実差レビューCSV</a>
       <a href="ultimate_selection_model_revision_queue_20260619.csv">モデル改善キューCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
@@ -2375,7 +2551,8 @@ def main() -> None:
     order_log_template = build_order_log_template(execution)
     prediction_review_rows = build_prediction_review(portfolio, execution)
     model_revision_rows = build_model_revision_queue(portfolio, prediction_review_rows)
-    review_input_rows = build_review_input_template(portfolio, execution)
+    review_input_rows = merge_existing_review_input(build_review_input_template(portfolio, execution))
+    review_result_rows = build_review_results(review_input_rows, execution)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -2393,6 +2570,7 @@ def main() -> None:
     write_csv(OUT_PREDICTION_REVIEW, prediction_review_rows)
     write_csv(OUT_MODEL_REVISION_QUEUE, model_revision_rows)
     write_csv(OUT_REVIEW_INPUT_TEMPLATE, review_input_rows)
+    write_csv(OUT_REVIEW_RESULT, review_result_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -2412,6 +2590,7 @@ def main() -> None:
             prediction_review_rows,
             model_revision_rows,
             review_input_rows,
+            review_result_rows,
         ),
         encoding="utf-8",
     )
@@ -2432,6 +2611,7 @@ def main() -> None:
     print(f"Prediction review: {OUT_PREDICTION_REVIEW}")
     print(f"Model revision queue: {OUT_MODEL_REVISION_QUEUE}")
     print(f"Review input template: {OUT_REVIEW_INPUT_TEMPLATE}")
+    print(f"Review result: {OUT_REVIEW_RESULT}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
