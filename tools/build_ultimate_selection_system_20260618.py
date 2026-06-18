@@ -33,6 +33,8 @@ OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
 INITIAL_BUY_CAP_YEN = 360_000
+TARGET_EXCESS_PCT = 1.0
+STRONG_EXCESS_PCT = 5.0
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -643,6 +645,11 @@ def build_execution_plan(portfolio: list[dict[str, object]]) -> list[dict[str, o
     return out
 
 
+def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
+    total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
+    return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
+
+
 def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     if not rows:
         return
@@ -763,6 +770,13 @@ def build_html(
     immediate_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") in ["初回候補", "小口候補"])
     conditional_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") == "確認後候補")
     reserve_total = max(INITIAL_BUY_CAP_YEN - immediate_total - conditional_total, 0)
+    portfolio_ev = weighted_portfolio_value(portfolio, "expected_value_pct")
+    portfolio_score = weighted_portfolio_value(portfolio, "final_score")
+    portfolio_reliability = weighted_portfolio_value(portfolio, "reliability")
+    plus1_index_limit = portfolio_ev - TARGET_EXCESS_PCT
+    plus5_index_limit = portfolio_ev - STRONG_EXCESS_PCT
+    reliable_amount = sum(float(r.get("target_full_amount_yen") or 0) for r in portfolio if r.get("financial_status") == "pass")
+    conditional_amount = sum(float(r.get("target_full_amount_yen") or 0) for r in portfolio if r.get("financial_status") != "pass")
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -777,7 +791,7 @@ def build_html(
     header h1{{margin:0 0 8px;font-size:40px;letter-spacing:0}}
     header p{{margin:0;font-weight:850;max-width:1200px}}
     main{{max-width:1420px;margin:0 auto;padding:20px}}
-    section{{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 16px;box-shadow:0 8px 20px rgba(20,60,90,.08)}}
+    section{{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 16px;box-shadow:0 8px 20px rgba(20,60,90,.08);overflow-x:auto}}
     h2{{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}}
     .cards{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}}
     .card{{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}}
@@ -786,9 +800,9 @@ def build_html(
     .flow{{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}}
     .step{{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:10px;font-weight:850;min-height:120px}}
     .step b{{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}}
-    table{{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:8px}}
-    th,td{{border:1px solid var(--line);padding:7px;vertical-align:top;overflow-wrap:anywhere;font-size:13px}}
-    th{{background:#e6f1fa;color:#063b63;text-align:left;font-size:13px}}
+    table{{width:100%;min-width:1080px;border-collapse:collapse;table-layout:fixed;margin-top:8px}}
+    th,td{{border:1px solid var(--line);padding:8px;vertical-align:top;overflow-wrap:anywhere;font-size:14px}}
+    th{{background:#e6f1fa;color:#063b63;text-align:left;font-size:14px}}
     .note{{border:2px solid #d6a84d;background:#fff8e7;border-radius:10px;padding:12px;font-weight:900}}
     .bad{{color:var(--red);font-weight:900}}
     .ok{{color:var(--green);font-weight:900}}
@@ -851,6 +865,27 @@ def build_html(
     <h2>ポートフォリオ最適化案</h2>
     <p class="note">これは「同じ審査で通したうえで、価格があり、業種集中を抑え、初回36万円枠に落とせる候補」です。最終注文は証券会社画面で価格・NISA区分・買付余力を確認してからです。</p>
     {html_table(portfolio, port_fields)}
+  </section>
+
+  <section>
+    <h2>インデックス超過目標との接続</h2>
+    <div class="cards">
+      <div class="card"><b>配分EV仮説</b><strong>{pct(portfolio_ev)}</strong><span>候補9社の比率加重</span></div>
+      <div class="card"><b>+1%目標の条件</b><strong>{pct(plus1_index_limit)}以下</strong><span>指数見通しがこの水準以下なら説明可能</span></div>
+      <div class="card"><b>+5%目標の条件</b><strong>{pct(plus5_index_limit)}以下</strong><span>強気説明が成立する指数水準</span></div>
+      <div class="card"><b>加重スコア</b><strong>{portfolio_score:.1f}</strong><span>配分後の平均点</span></div>
+      <div class="card"><b>加重信頼度</b><strong>{portfolio_reliability:.1f}</strong><span>公式/補助データ混在</span></div>
+    </div>
+    <table>
+      <thead><tr><th>判定</th><th>条件</th><th>行動</th><th>説明</th></tr></thead>
+      <tbody>
+        <tr><td>S&P/TOPIX +1%以上</td><td>指数側の1年見通しが {pct(plus1_index_limit)} 以下</td><td>個別株テストを継続</td><td>個別株EV仮説から1%差を引いた水準。ここを超える指数見通しなら、個別株の優位説明が弱くなる。</td></tr>
+        <tr><td>S&P/TOPIX +5%以上</td><td>指数側の1年見通しが {pct(plus5_index_limit)} 以下</td><td>攻め配分を検討</td><td>強気目標。指数がかなり強い見通しなら、無理に個別株比率を上げない。</td></tr>
+        <tr><td>公式確認済み部分</td><td>240万円中 {yen(reliable_amount)}</td><td>中心候補として扱う</td><td>財務passの銘柄だけを中心にする。補助データ銘柄は確認後候補に落とす。</td></tr>
+        <tr><td>確認後候補部分</td><td>240万円中 {yen(conditional_amount)}</td><td>未確認が消えるまで追加しない</td><td>点数は出すが、公式照合・PER・イベント接続が弱いものは買付を急がない。</td></tr>
+      </tbody>
+    </table>
+    <p class="note">この表は利益保証ではなく、個別株を選ぶ説明責任を確認するための逆算表です。指数見通しが高すぎる場合は、個別株比率を落としてインデックス優先に戻します。</p>
   </section>
 
   <section>

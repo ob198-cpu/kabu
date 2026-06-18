@@ -12,7 +12,7 @@
     header h1{margin:0 0 8px;font-size:40px;letter-spacing:0}
     header p{margin:0;font-weight:850;max-width:1200px}
     main{max-width:1420px;margin:0 auto;padding:20px}
-    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 16px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 16px;box-shadow:0 8px 20px rgba(20,60,90,.08);overflow-x:auto}
     h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}
     .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
     .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
@@ -21,9 +21,9 @@
     .flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
     .step{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:10px;font-weight:850;min-height:120px}
     .step b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
-    table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:8px}
-    th,td{border:1px solid var(--line);padding:7px;vertical-align:top;overflow-wrap:anywhere;font-size:13px}
-    th{background:#e6f1fa;color:#063b63;text-align:left;font-size:13px}
+    table{width:100%;min-width:1080px;border-collapse:collapse;table-layout:fixed;margin-top:8px}
+    th,td{border:1px solid var(--line);padding:8px;vertical-align:top;overflow-wrap:anywhere;font-size:14px}
+    th{background:#e6f1fa;color:#063b63;text-align:left;font-size:14px}
     .note{border:2px solid #d6a84d;background:#fff8e7;border-radius:10px;padding:12px;font-weight:900}
     .bad{color:var(--red);font-weight:900}
     .ok{color:var(--green);font-weight:900}
@@ -42,7 +42,7 @@
       <div class="card"><b>戦略上位</b><strong>10社</strong><span>統合スコア順</span></div>
       <div class="card"><b>配分候補</b><strong>9社</strong><span>価格あり・制約通過</span></div>
       <div class="card"><b>初回枠</b><strong>360,000円</strong><span>イベント注意時15%</span></div>
-      <div class="card"><b>生成時刻</b><strong>2026/06/18 23:07</strong><span>ローカル計算</span></div>
+      <div class="card"><b>生成時刻</b><strong>2026/06/18 23:13</strong><span>ローカル計算</span></div>
     </div>
   </section>
 
@@ -86,6 +86,27 @@
     <h2>ポートフォリオ最適化案</h2>
     <p class="note">これは「同じ審査で通したうえで、価格があり、業種集中を抑え、初回36万円枠に落とせる候補」です。最終注文は証券会社画面で価格・NISA区分・買付余力を確認してからです。</p>
     <table><thead><tr><th>順位</th><th>銘柄</th><th>名称</th><th>比率%</th><th>240万円時</th><th>初回株数</th><th>初回金額</th><th>統合</th><th>EV%</th><th>扱い</th></tr></thead><tbody><tr><td>1</td><td>8053.T</td><td>住友商事</td><td>18.0</td><td>432000</td><td>9</td><td>58626</td><td>68.6</td><td>16.03</td><td>購入候補</td></tr><tr><td>2</td><td>8316.T</td><td>三井住友FG</td><td>18.0</td><td>432000</td><td>9</td><td>60408</td><td>67.7</td><td>15.71</td><td>購入候補</td></tr><tr><td>3</td><td>8058.T</td><td>三菱商事</td><td>10.0</td><td>240000</td><td>7</td><td>31990</td><td>60.4</td><td>15.96</td><td>調査優先</td></tr><tr><td>4</td><td>6501.T</td><td>日立製作所</td><td>14.1</td><td>338814</td><td>10</td><td>47450</td><td>59.2</td><td>11.4</td><td>購入候補</td></tr><tr><td>5</td><td>6503.T</td><td>三菱電機</td><td>8.0</td><td>192000</td><td>4</td><td>24320</td><td>58.0</td><td>12.67</td><td>小口</td></tr><tr><td>6</td><td>8031.T</td><td>三井物産</td><td>9.1</td><td>217447</td><td>6</td><td>28314</td><td>57.3</td><td>13.31</td><td>調査優先</td></tr><tr><td>7</td><td>8411.T</td><td>みずほFG</td><td>8.5</td><td>203656</td><td>3</td><td>24747</td><td>56.5</td><td>12.65</td><td>調査優先</td></tr><tr><td>8</td><td>6762.T</td><td>TDK</td><td>8.0</td><td>192000</td><td>7</td><td>27251</td><td>56.4</td><td>12.17</td><td>小口</td></tr><tr><td>9</td><td>8750.T</td><td>第一生命HD</td><td>6.3</td><td>152083</td><td>12</td><td>21846</td><td>53.5</td><td>9.12</td><td>調査優先</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>インデックス超過目標との接続</h2>
+    <div class="cards">
+      <div class="card"><b>配分EV仮説</b><strong>13.8%</strong><span>候補9社の比率加重</span></div>
+      <div class="card"><b>+1%目標の条件</b><strong>12.8%以下</strong><span>指数見通しがこの水準以下なら説明可能</span></div>
+      <div class="card"><b>+5%目標の条件</b><strong>8.8%以下</strong><span>強気説明が成立する指数水準</span></div>
+      <div class="card"><b>加重スコア</b><strong>61.5</strong><span>配分後の平均点</span></div>
+      <div class="card"><b>加重信頼度</b><strong>87.5</strong><span>公式/補助データ混在</span></div>
+    </div>
+    <table>
+      <thead><tr><th>判定</th><th>条件</th><th>行動</th><th>説明</th></tr></thead>
+      <tbody>
+        <tr><td>S&P/TOPIX +1%以上</td><td>指数側の1年見通しが 12.8% 以下</td><td>個別株テストを継続</td><td>個別株EV仮説から1%差を引いた水準。ここを超える指数見通しなら、個別株の優位説明が弱くなる。</td></tr>
+        <tr><td>S&P/TOPIX +5%以上</td><td>指数側の1年見通しが 8.8% 以下</td><td>攻め配分を検討</td><td>強気目標。指数がかなり強い見通しなら、無理に個別株比率を上げない。</td></tr>
+        <tr><td>公式確認済み部分</td><td>240万円中 1,202,814円</td><td>中心候補として扱う</td><td>財務passの銘柄だけを中心にする。補助データ銘柄は確認後候補に落とす。</td></tr>
+        <tr><td>確認後候補部分</td><td>240万円中 1,197,186円</td><td>未確認が消えるまで追加しない</td><td>点数は出すが、公式照合・PER・イベント接続が弱いものは買付を急がない。</td></tr>
+      </tbody>
+    </table>
+    <p class="note">この表は利益保証ではなく、個別株を選ぶ説明責任を確認するための逆算表です。指数見通しが高すぎる場合は、個別株比率を落としてインデックス優先に戻します。</p>
   </section>
 
   <section>
