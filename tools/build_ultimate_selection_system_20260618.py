@@ -37,6 +37,8 @@ OUT_ORDER_LOG_TEMPLATE = ROOT / "ultimate_selection_order_log_template_20260618.
 OUT_CORRELATION = ROOT / "ultimate_selection_correlation_risk_20260618.csv"
 OUT_CONSTRAINTS = ROOT / "ultimate_selection_constraints_20260618.csv"
 OUT_ARCHITECTURE_AUDIT = ROOT / "ultimate_selection_architecture_audit_20260618.csv"
+OUT_THEME_EVIDENCE = ROOT / "ultimate_selection_theme_evidence_20260618.csv"
+OUT_NO_BUY_GATE = ROOT / "ultimate_selection_no_buy_reduce_gate_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1164,6 +1166,198 @@ def build_architecture_audit(
     ]
 
 
+def qualitative_rating(row: dict[str, object], has_observed: bool) -> tuple[str, str]:
+    q = float(row.get("qualitative_score") or 0)
+    e = float(row.get("event_score") or 0)
+    reliability = float(row.get("reliability") or 0)
+    if q >= 70 and e >= 55 and reliability >= 80 and has_observed:
+        return "A", "補助根拠として使用可。単独では買付決定に使わない"
+    if q >= 65 and has_observed:
+        return "B", "比較・監視根拠として使用。量的スコアの裏付けが必要"
+    if q >= 60:
+        return "C", "仮説層。過去反応または公式数値が不足"
+    return "C", "質的根拠は弱い。購入候補の根拠にしない"
+
+
+def build_theme_evidence(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    score_map = {str(r.get("ticker", "")): r for r in rows}
+    qual_by_ticker: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for r in read_csv(QUAL_CSV):
+        qual_by_ticker[r.get("ticker", "")].append(r)
+    explore = by_ticker(QUAL_EXPLORE_CSV)
+    validation = by_ticker(EVENT_VALIDATION_CSV)
+    event = by_ticker(EVENT_CSV)
+    target_tickers = [str(r.get("ticker", "")) for r in portfolio]
+    top_tickers = [str(r.get("ticker", "")) for r in rows[:10]]
+    for ticker in top_tickers:
+        if ticker not in target_tickers:
+            target_tickers.append(ticker)
+
+    out: list[dict[str, object]] = []
+    for idx, ticker in enumerate(target_tickers, start=1):
+        base = score_map.get(ticker, {})
+        qrows = qual_by_ticker.get(ticker, [])
+        exp = explore.get(ticker)
+        val = validation.get(ticker)
+        ev = event.get(ticker)
+        has_observed = bool(val or ev)
+        rating, usage = qualitative_rating(base, has_observed)
+        observed_parts = []
+        if val:
+            observed_parts.append(
+                f"過去イベント{val.get('event_count_calculated','')}件、5日超過{val.get('avg_excess_5d_pct','')}%、20日超過{val.get('avg_excess_20d_pct','')}%、強{val.get('strong_event_count','')}件/弱{val.get('weak_event_count','')}件"
+            )
+        if ev:
+            observed_parts.append(
+                f"6月イベント後: {ev.get('market_signal','')} / {ev.get('one_day_change_pct','')} / {ev.get('event_status','')}"
+            )
+        observed_layer = " / ".join(observed_parts) if observed_parts else "未接続。点数ではなく監視メモ扱い"
+
+        if qrows:
+            for q in qrows:
+                out.append(
+                    {
+                        "rank": idx,
+                        "ticker": ticker,
+                        "name": base.get("name", q.get("name", "")),
+                        "theme_or_channel": q.get("channel", ""),
+                        "rating": rating,
+                        "qualitative_score": base.get("qualitative_score", ""),
+                        "event_score": base.get("event_score", ""),
+                        "hypothesis_layer": q.get("basis", ""),
+                        "observed_layer": observed_layer,
+                        "evidence_source": "チャンネル比較CSV / 6月イベント / 過去イベント反応",
+                        "score_usage": usage,
+                        "risks": q.get("risk", ""),
+                        "next_check": q.get("nextCheck", ""),
+                    }
+                )
+        elif exp:
+            out.append(
+                {
+                    "rank": idx,
+                    "ticker": ticker,
+                    "name": base.get("name", exp.get("company", "")),
+                    "theme_or_channel": exp.get("theme_name", ""),
+                    "rating": rating,
+                    "qualitative_score": base.get("qualitative_score", exp.get("qualitative_score", "")),
+                    "event_score": base.get("event_score", ""),
+                    "hypothesis_layer": f"材料強度{exp.get('material_strength','')} / 資金流入連鎖{exp.get('capital_chain_score','')} / 企業適合{exp.get('company_fit','')}",
+                    "observed_layer": observed_layer,
+                    "evidence_source": "質的探索CSV / 6月イベント / 過去イベント反応",
+                    "score_usage": usage,
+                    "risks": exp.get("next_gate", ""),
+                    "next_check": exp.get("purchase_score_status", ""),
+                }
+            )
+        else:
+            out.append(
+                {
+                    "rank": idx,
+                    "ticker": ticker,
+                    "name": base.get("name", ""),
+                    "theme_or_channel": base.get("sector", ""),
+                    "rating": rating,
+                    "qualitative_score": base.get("qualitative_score", ""),
+                    "event_score": base.get("event_score", ""),
+                    "hypothesis_layer": base.get("qualitative_note", "未接続"),
+                    "observed_layer": observed_layer,
+                    "evidence_source": "スコア表の質的メモのみ",
+                    "score_usage": usage,
+                    "risks": "ニュース本文・公式資料・過去反応の接続が不足",
+                    "next_check": "購入根拠に使う前に公式資料またはイベント反応を追加",
+                }
+            )
+    return out
+
+
+def build_no_buy_reduce_gate(
+    portfolio: list[dict[str, object]],
+    correlation_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    high_corr_pairs = [
+        f"{r.get('name_a')}×{r.get('name_b')}"
+        for r in correlation_rows
+        if float(r.get("correlation_value") or 0) >= 0.75
+    ]
+    semi_names = " / ".join(str(r.get("name")) for r in portfolio if any(x in str(r.get("sector", "")) + str(r.get("qualitative_note", "")) for x in ["半導体", "AI", "電機", "フィジカル"]))
+    all_names = " / ".join(str(r.get("name")) for r in portfolio)
+    return [
+        {
+            "gate": "市場急落",
+            "condition": "日経平均またはTOPIXが当日-2%以上、または先物が大きく下落",
+            "affected": all_names,
+            "action": "当日の新規買付を停止。買わなかった理由を記録",
+            "status_now": "当日確認",
+            "evidence_needed": "指数、先物、主要ニュース",
+        },
+        {
+            "gate": "指数劣後",
+            "condition": "保有後5営業日連続でTOPIXまたは日経平均に劣後",
+            "affected": all_names,
+            "action": "追加買付を停止。次回買付額を半分以下にする",
+            "status_now": "運用後に判定",
+            "evidence_needed": "約定後の銘柄リターン、TOPIX/日経平均リターン",
+        },
+        {
+            "gate": "テーマ崩れ",
+            "condition": "AI、半導体、電力、防衛、金利などの前提と逆方向の公式情報が出る",
+            "affected": all_names,
+            "action": "該当テーマ銘柄を監視へ戻し、未購入分は現金待機",
+            "status_now": "要ニュース確認",
+            "evidence_needed": "企業IR、政策発表、業界統計、主要ニュース",
+        },
+        {
+            "gate": "決算失望",
+            "condition": "会社予想下方修正、受注鈍化、営業利益率悪化、決算後5日で指数に-3%以上劣後",
+            "affected": all_names,
+            "action": "その銘柄の追加停止。既保有は半分以下への減額を検討",
+            "status_now": "決算到来時に判定",
+            "evidence_needed": "決算短信、説明資料、決算後1/5/20営業日リターン",
+        },
+        {
+            "gate": "円高ショック",
+            "condition": "ドル円が短時間で大きく円高、または輸出・海外売上比率が高い銘柄が一斉安",
+            "affected": semi_names or all_names,
+            "action": "輸出・半導体・電子部品の追加買付を停止",
+            "status_now": "当日確認",
+            "evidence_needed": "ドル円、セクター別反応、各社海外売上比率",
+        },
+        {
+            "gate": "金利急騰",
+            "condition": "米10年金利が急騰し、高PER・半導体・グロースが同時に弱い",
+            "affected": semi_names or all_names,
+            "action": "高PER・高ボラ銘柄を小口または見送りへ落とす",
+            "status_now": "当日確認",
+            "evidence_needed": "米10年金利、SOX、NASDAQ、PER",
+        },
+        {
+            "gate": "出来高急増下落",
+            "condition": "出来高が20日平均の1.8倍以上で、株価が-3%以上下落",
+            "affected": all_names,
+            "action": "その銘柄の平均取得単価を下げる買いはしない。理由確認まで停止",
+            "status_now": "運用後に判定",
+            "evidence_needed": "出来高、20日平均出来高、当日株価変化",
+        },
+        {
+            "gate": "高相関集中",
+            "condition": "相関またはproxyが0.75以上の組み合わせを同時に増額しようとしている",
+            "affected": " / ".join(high_corr_pairs[:8]) if high_corr_pairs else "該当なし",
+            "action": "片方を現金待機または低相関候補へ振替。両方同時の追加はしない",
+            "status_now": "注意" if high_corr_pairs else "OK",
+            "evidence_needed": "相関リスクCSV、業種・テーマ集中",
+        },
+        {
+            "gate": "NISA・口座未確認",
+            "condition": "NISA口座区分、本人操作、買付余力、注文パスワードが未確認",
+            "affected": all_names,
+            "action": "実注文しない。システム上の候補と実売買を分ける",
+            "status_now": "注文前確認",
+            "evidence_needed": "証券会社画面、本人スマホ、本人ログイン、買付余力",
+        },
+    ]
+
+
 def build_trade_rules(portfolio: list[dict[str, object]], execution: list[dict[str, object]]) -> list[dict[str, object]]:
     exec_map = {r.get("ticker"): r for r in execution}
     rows: list[dict[str, object]] = []
@@ -1345,6 +1539,8 @@ def build_html(
     correlation_rows: list[dict[str, object]],
     constraint_rows: list[dict[str, object]],
     architecture_rows: list[dict[str, object]],
+    theme_evidence_rows: list[dict[str, object]],
+    no_buy_gate_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -1462,6 +1658,25 @@ def build_html(
         ("correlation_value", "相関"),
         ("method", "計算方法"),
         ("risk_comment", "扱い"),
+    ]
+    theme_evidence_fields = [
+        ("ticker", "銘柄"),
+        ("name", "社名"),
+        ("theme_or_channel", "テーマ・チャンネル"),
+        ("rating", "評価"),
+        ("hypothesis_layer", "仮説層"),
+        ("observed_layer", "実績層"),
+        ("score_usage", "点数への使い方"),
+        ("risks", "注意点"),
+        ("next_check", "次確認"),
+    ]
+    no_buy_gate_fields = [
+        ("gate", "ゲート"),
+        ("condition", "条件"),
+        ("affected", "対象"),
+        ("action", "実行内容"),
+        ("status_now", "現状"),
+        ("evidence_needed", "確認データ"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1589,6 +1804,18 @@ def build_html(
     <h2>相関・集中リスク</h2>
     <p class="note">実測できる銘柄は週次リターンで相関を計算し、未取得銘柄は業種・テーマのproxyとして明示します。proxyは実測ではないため、購入確定の根拠ではなく、集中リスクの注意表示として使います。</p>
     {html_table(correlation_rows, correlation_fields, 30)}
+  </section>
+
+  <section>
+    <h2>質的テーマ証拠台帳</h2>
+    <p class="note">AI、半導体、電力、防衛、金利、資源、政策、構造優位などの質的材料を、仮説層と実績層に分けます。実績層が弱い材料は、購入決定ではなく監視・比較材料として扱います。</p>
+    {html_table(theme_evidence_rows, theme_evidence_fields, 40)}
+  </section>
+
+  <section>
+    <h2>買わない・減額ゲート</h2>
+    <p class="note">買う銘柄を選ぶだけでなく、買わない条件、減額条件、現金待機条件を先に固定します。条件に触れた場合は、点数が高くても追加買付を止めます。</p>
+    {html_table(no_buy_gate_rows, no_buy_gate_fields)}
   </section>
 
   <section>
@@ -1723,6 +1950,8 @@ def build_html(
       <a href="ultimate_selection_architecture_audit_20260618.csv">7層構造監査CSV</a>
       <a href="ultimate_selection_constraints_20260618.csv">配分制約チェックCSV</a>
       <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
+      <a href="ultimate_selection_theme_evidence_20260618.csv">質的テーマ証拠台帳CSV</a>
+      <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -1741,6 +1970,8 @@ def main() -> None:
     correlation_rows = build_correlation_risk(portfolio)
     constraint_rows = build_constraints(rows, portfolio, correlation_rows)
     architecture_rows = build_architecture_audit(rows, portfolio, correlation_rows, constraint_rows)
+    theme_evidence_rows = build_theme_evidence(rows, portfolio)
+    no_buy_gate_rows = build_no_buy_reduce_gate(portfolio, correlation_rows)
     risk_scenarios = build_risk_scenarios(portfolio, execution)
     trade_rules = build_trade_rules(portfolio, execution)
     day_checklist = build_day_checklist(execution)
@@ -1756,6 +1987,8 @@ def main() -> None:
     write_csv(OUT_CORRELATION, correlation_rows)
     write_csv(OUT_CONSTRAINTS, constraint_rows)
     write_csv(OUT_ARCHITECTURE_AUDIT, architecture_rows)
+    write_csv(OUT_THEME_EVIDENCE, theme_evidence_rows)
+    write_csv(OUT_NO_BUY_GATE, no_buy_gate_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -1769,6 +2002,8 @@ def main() -> None:
             correlation_rows,
             constraint_rows,
             architecture_rows,
+            theme_evidence_rows,
+            no_buy_gate_rows,
         ),
         encoding="utf-8",
     )
@@ -1783,6 +2018,8 @@ def main() -> None:
     print(f"Correlation risk: {OUT_CORRELATION}")
     print(f"Constraints: {OUT_CONSTRAINTS}")
     print(f"Architecture audit: {OUT_ARCHITECTURE_AUDIT}")
+    print(f"Theme evidence: {OUT_THEME_EVIDENCE}")
+    print(f"No-buy gate: {OUT_NO_BUY_GATE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
