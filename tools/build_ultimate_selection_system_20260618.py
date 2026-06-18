@@ -51,6 +51,7 @@ OUT_UNIVERSE_AUDIT = ROOT / "ultimate_selection_universe_audit_20260619.csv"
 OUT_EXPECTED_VALUE_AUDIT = ROOT / "ultimate_selection_expected_value_audit_20260619.csv"
 OUT_SCORE_TRACE = ROOT / "ultimate_selection_score_trace_20260619.csv"
 OUT_ACTION_COCKPIT = ROOT / "ultimate_selection_action_cockpit_20260619.csv"
+OUT_BUY_BLOCKER_TRIAGE = ROOT / "ultimate_selection_buy_blocker_triage_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1432,6 +1433,66 @@ def build_purchase_readiness_gate(rows: list[dict[str, object]], portfolio: list
     return out
 
 
+def build_buy_blocker_triage(
+    portfolio: list[dict[str, object]], purchase_readiness_rows: list[dict[str, object]]
+) -> list[dict[str, object]]:
+    readiness_by_ticker = {str(r.get("ticker", "")): r for r in purchase_readiness_rows}
+    out: list[dict[str, object]] = []
+    for row in portfolio:
+        ticker = str(row.get("ticker", ""))
+        readiness = readiness_by_ticker.get(ticker, {})
+        status = str(readiness.get("purchase_readiness", ""))
+        action = str(row.get("action", ""))
+        financial_status = str(row.get("financial_status", ""))
+        missing = str(row.get("missing_items", ""))
+        hard_stops = str(readiness.get("hard_stop_reasons", "")) or "なし"
+
+        if status == "初回買付候補":
+            permission = "初回小口可"
+            amount_policy = "予定初回金額まで。追加はD+1/D+5と指数差確認後。"
+            full_buy_blocker = "なし。ただしNISA区分・本人操作・当日市場ゲート未確認なら停止。"
+        elif action == "小口":
+            permission = "条件付き小口"
+            amount_policy = "予定初回金額以下。追加は公式財務不足の解消後。"
+            full_buy_blocker = hard_stops
+        elif action == "調査優先":
+            permission = "確認後まで保留"
+            amount_policy = "原則は現金待機。買う場合でも別枠の小口扱い。"
+            full_buy_blocker = hard_stops
+        else:
+            permission = "初回買付しない"
+            amount_policy = "監視のみ。"
+            full_buy_blocker = hard_stops
+
+        if financial_status == "pass":
+            financial_gap = "主要公式財務はpass"
+        elif financial_status == "partial":
+            financial_gap = "公式財務の一部が未確認"
+        elif financial_status.startswith("補助"):
+            financial_gap = "補助データ扱い。公式原本照合が必要"
+        else:
+            financial_gap = "財務未取得"
+
+        out.append(
+            {
+                "rank": row.get("portfolio_rank", ""),
+                "ticker": ticker,
+                "name": row.get("name", ""),
+                "permission": permission,
+                "initial_buy_yen": row.get("initial_buy_yen", ""),
+                "target_full_amount_yen": row.get("target_full_amount_yen", ""),
+                "financial_gap": financial_gap,
+                "event_gap": "イベント接続あり" if "未接続" not in str(row.get("event_note", "")) else "イベント未接続",
+                "qualitative_gap": "質的根拠あり" if "未接続" not in str(row.get("qualitative_note", "")) else "質的根拠未接続",
+                "critical_blocker": full_buy_blocker,
+                "noncritical_backlog": missing or "なし",
+                "amount_policy": amount_policy,
+                "next_action": readiness.get("next_action", ""),
+            }
+        )
+    return out
+
+
 def build_universe_rules(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
     total = len(rows)
     price_count = sum(1 for r in rows if r.get("price") != "")
@@ -2459,6 +2520,7 @@ def build_html(
     universe_audit_rows: list[dict[str, object]],
     expected_value_audit_rows: list[dict[str, object]],
     action_cockpit_rows: list[dict[str, object]],
+    buy_blocker_triage_rows: list[dict[str, object]],
     score_trace_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
@@ -2506,6 +2568,19 @@ def build_html(
         ("current_status", "現在の状態"),
         ("action", "実行すること"),
         ("stop_or_next", "止める条件・次の処理"),
+    ]
+    buy_blocker_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("permission", "初回扱い"),
+        ("initial_buy_yen", "初回金額"),
+        ("financial_gap", "財務確認"),
+        ("event_gap", "イベント"),
+        ("qualitative_gap", "質的根拠"),
+        ("critical_blocker", "全額を止める理由"),
+        ("amount_policy", "金額方針"),
+        ("next_action", "次アクション"),
     ]
     port_fields = [
         ("portfolio_rank", "順位"),
@@ -2849,6 +2924,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>買付不足トリアージ</h2>
+    <p class="note">「不足がある」とだけ表示すると判断できないため、現配分候補ごとに、初回小口可、条件付き小口、確認後保留へ分けます。全額投入を止める理由と、後で埋める調査項目を分離します。</p>
+    {html_table(buy_blocker_triage_rows, buy_blocker_fields)}
+  </section>
+
+  <section>
     <h2>実行サマリー</h2>
     <table>
       <thead><tr><th>確認順</th><th>見るもの</th><th>現在の扱い</th><th>次の行動</th></tr></thead>
@@ -3096,6 +3177,7 @@ def build_html(
     <div class="links">
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_action_cockpit_20260619.csv">実用コックピットCSV</a>
+      <a href="ultimate_selection_buy_blocker_triage_20260619.csv">買付不足トリアージCSV</a>
       <a href="ultimate_selection_score_trace_20260619.csv">スコア分解監査CSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
@@ -3154,6 +3236,7 @@ def main() -> None:
     expected_value_audit_rows = build_expected_value_audit(rows, portfolio)
     score_trace_rows = build_score_trace(rows)
     action_cockpit_rows = build_action_cockpit(portfolio, execution, missing, benchmark_allocation_rows)
+    buy_blocker_triage_rows = build_buy_blocker_triage(portfolio, purchase_readiness_rows)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -3179,6 +3262,7 @@ def main() -> None:
     write_csv(OUT_EXPECTED_VALUE_AUDIT, expected_value_audit_rows)
     write_csv(OUT_SCORE_TRACE, score_trace_rows)
     write_csv(OUT_ACTION_COCKPIT, action_cockpit_rows)
+    write_csv(OUT_BUY_BLOCKER_TRIAGE, buy_blocker_triage_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -3205,6 +3289,7 @@ def main() -> None:
             universe_audit_rows,
             expected_value_audit_rows,
             action_cockpit_rows,
+            buy_blocker_triage_rows,
             score_trace_rows,
         ),
         encoding="utf-8",
@@ -3234,6 +3319,7 @@ def main() -> None:
     print(f"Expected value audit: {OUT_EXPECTED_VALUE_AUDIT}")
     print(f"Score trace: {OUT_SCORE_TRACE}")
     print(f"Action cockpit: {OUT_ACTION_COCKPIT}")
+    print(f"Buy blocker triage: {OUT_BUY_BLOCKER_TRIAGE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
