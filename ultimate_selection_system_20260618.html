@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>究極版 統合銘柄選定システム</title>
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.65}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:30px}
+    header h1{margin:0 0 8px;font-size:40px;letter-spacing:0}
+    header p{margin:0;font-weight:850;max-width:1200px}
+    main{max-width:1420px;margin:0 auto;padding:20px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 16px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}
+    .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:12px}
+    .card b{display:block;color:var(--navy);font-size:15px}
+    .card strong{display:block;font-size:28px;color:var(--blue);line-height:1.2}
+    .flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+    .step{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:10px;font-weight:850;min-height:120px}
+    .step b{display:block;color:var(--navy);font-size:15px;margin-bottom:4px}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:8px}
+    th,td{border:1px solid var(--line);padding:7px;vertical-align:top;overflow-wrap:anywhere;font-size:13px}
+    th{background:#e6f1fa;color:#063b63;text-align:left;font-size:13px}
+    .note{border:2px solid #d6a84d;background:#fff8e7;border-radius:10px;padding:12px;font-weight:900}
+    .bad{color:var(--red);font-weight:900}
+    .ok{color:var(--green);font-weight:900}
+    .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--navy);font-weight:900;background:#fbfdff}
+  </style>
+</head>
+<body>
+<header>
+  <h1>究極版 統合銘柄選定システム</h1>
+  <p>100社母集団、量的スコア、財務、質的テーマ、イベント反応、期待値、ポートフォリオ制約、買わない条件を1本の計算表に統合した版です。未取得データは点数に混ぜず、信頼度と不足表に分けます。</p>
+</header>
+<main>
+  <section>
+    <div class="cards">
+      <div class="card"><b>母集団</b><strong>100社</strong><span>100社再選定表から読込</span></div>
+      <div class="card"><b>戦略上位</b><strong>10社</strong><span>統合スコア順</span></div>
+      <div class="card"><b>配分候補</b><strong>6社</strong><span>価格あり・制約通過</span></div>
+      <div class="card"><b>初回枠</b><strong>360,000円</strong><span>イベント注意時15%</span></div>
+      <div class="card"><b>生成時刻</b><strong>2026/06/18 20:07</strong><span>ローカル計算</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>計算の流れ</h2>
+    <div class="flow">
+      <div class="step"><b>1. 母集団</b>業績・流動性・指数差・下落率入りの100社表を起点にする。</div>
+      <div class="step"><b>2. 量的</b>CAGR、指数差、モメンタム、最大下落から数値化。</div>
+      <div class="step"><b>3. 財務</b>PER/PBR/ROE等の確認状況をpass/partial/未取得で分離。</div>
+      <div class="step"><b>4. 質的</b>テーマを事実・関連性・反証リスクで評価。</div>
+      <div class="step"><b>5. イベント</b>決算後・6月イベント後反応を反映。</div>
+      <div class="step"><b>6. 期待値</b>上昇幅・下落幅・確率の仮説で相対比較。</div>
+      <div class="step"><b>7. 配分</b>1銘柄比率、業種集中、小口制約で金額化。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>統合スコア 上位10社</h2>
+    <table><thead><tr><th>銘柄</th><th>名称</th><th>分類</th><th>扱い</th><th>統合</th><th>量的</th><th>財務</th><th>質的</th><th>イベント</th><th>EV%</th><th>信頼度</th><th>注意</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>商社</td><td>購入候補</td><td>68.6</td><td>59.8</td><td>81.0</td><td>78.0</td><td>52.6</td><td>16.03</td><td>100.0</td><td></td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>金融</td><td>購入候補</td><td>67.7</td><td>51.1</td><td>86.0</td><td>70.0</td><td>72.2</td><td>15.71</td><td>100.0</td><td></td></tr><tr><td>6501.T</td><td>日立製作所</td><td>AIインフラ</td><td>購入候補</td><td>59.2</td><td>41.7</td><td>73.0</td><td>70.0</td><td>63.4</td><td>11.4</td><td>100.0</td><td></td></tr><tr><td>6503.T</td><td>三菱電機</td><td>AIインフラ</td><td>小口</td><td>58.0</td><td>61.9</td><td>51.0</td><td>64.0</td><td>68.2</td><td>12.67</td><td>88.0</td><td>財務partial</td></tr><tr><td>6762.T</td><td>TDK</td><td>その他</td><td>小口</td><td>56.4</td><td>68.4</td><td>51.0</td><td>56.0</td><td>57.6</td><td>12.17</td><td>88.0</td><td>財務partial</td></tr><tr><td>8002.T</td><td>丸紅</td><td>商社</td><td>調査優先</td><td>53.5</td><td>56.9</td><td>55.0</td><td>50.0</td><td>50.0</td><td>15.63</td><td>48.0</td><td>財務未取得</td></tr><tr><td>1605.T</td><td>INPEX</td><td>資源</td><td>調査優先</td><td>53.5</td><td>57.2</td><td>55.0</td><td>50.0</td><td>50.0</td><td>13.35</td><td>56.0</td><td>財務未取得</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>商社</td><td>調査優先</td><td>52.6</td><td>54.9</td><td>55.0</td><td>50.0</td><td>50.0</td><td>14.49</td><td>48.0</td><td>財務未取得</td></tr><tr><td>8031.T</td><td>三井物産</td><td>商社</td><td>監視</td><td>50.7</td><td>52.6</td><td>55.0</td><td>50.0</td><td>50.0</td><td>12.14</td><td>48.0</td><td>財務未取得</td></tr><tr><td>8411.T</td><td>みずほFG</td><td>金融</td><td>監視</td><td>50.6</td><td>51.9</td><td>55.0</td><td>50.0</td><td>50.0</td><td>11.76</td><td>48.0</td><td>財務未取得</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>ポートフォリオ最適化案</h2>
+    <p class="note">これは「同じ審査で通したうえで、価格があり、業種集中を抑え、初回36万円枠に落とせる候補」です。最終注文は証券会社画面で価格・NISA区分・買付余力を確認してからです。</p>
+    <table><thead><tr><th>順位</th><th>銘柄</th><th>名称</th><th>比率%</th><th>240万円時</th><th>初回株数</th><th>初回金額</th><th>統合</th><th>EV%</th><th>扱い</th></tr></thead><tbody><tr><td>1</td><td>8053.T</td><td>住友商事</td><td>22.5</td><td>540000</td><td>12</td><td>78168</td><td>68.6</td><td>16.03</td><td>購入候補</td></tr><tr><td>2</td><td>8316.T</td><td>三井住友FG</td><td>22.5</td><td>540000</td><td>12</td><td>80544</td><td>67.7</td><td>15.71</td><td>購入候補</td></tr><tr><td>3</td><td>6501.T</td><td>日立製作所</td><td>22.5</td><td>540000</td><td>17</td><td>80665</td><td>59.2</td><td>11.4</td><td>購入候補</td></tr><tr><td>4</td><td>6503.T</td><td>三菱電機</td><td>10.0</td><td>240000</td><td>5</td><td>30400</td><td>58.0</td><td>12.67</td><td>小口</td></tr><tr><td>5</td><td>6762.T</td><td>TDK</td><td>10.0</td><td>240000</td><td>9</td><td>35037</td><td>56.4</td><td>12.17</td><td>小口</td></tr><tr><td>6</td><td>1605.T</td><td>INPEX</td><td>12.5</td><td>300000</td><td>13</td><td>44811</td><td>53.5</td><td>13.35</td><td>調査優先</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>不足データ 上位候補</h2>
+    <table><thead><tr><th>銘柄</th><th>名称</th><th>優先</th><th>不足領域</th><th>影響</th></tr></thead><tbody><tr><td>6503.T</td><td>三菱電機</td><td>中</td><td>財務</td><td>監視精度に影響</td></tr><tr><td>6762.T</td><td>TDK</td><td>中</td><td>財務</td><td>監視精度に影響</td></tr><tr><td>8002.T</td><td>丸紅</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>1605.T</td><td>INPEX</td><td>中</td><td>財務 / イベント / 質的</td><td>監視精度に影響</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>8031.T</td><td>三井物産</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>8411.T</td><td>みずほFG</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>8306.T</td><td>三菱UFJ FG</td><td>中</td><td>財務 / イベント / 質的</td><td>監視精度に影響</td></tr><tr><td>5020.T</td><td>ENEOS HD</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>1812.T</td><td>鹿島</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>7012.T</td><td>川崎重工業</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>8750.T</td><td>第一生命HD</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>9983.T</td><td>ファーストリテイリング</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>6971.T</td><td>京セラ</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>2802.T</td><td>味の素</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>8725.T</td><td>MS&amp;AD</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>5019.T</td><td>出光興産</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>8001.T</td><td>伊藤忠商事</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>4063.T</td><td>信越化学工業</td><td>中</td><td>財務 / イベント / 質的</td><td>監視精度に影響</td></tr><tr><td>5801.T</td><td>古河電工</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>6301.T</td><td>コマツ</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>5802.T</td><td>住友電工</td><td>中</td><td>財務 / イベント / 質的</td><td>監視精度に影響</td></tr><tr><td>6857.T</td><td>アドバンテスト</td><td>中</td><td>財務</td><td>監視精度に影響</td></tr><tr><td>8035.T</td><td>東京エレクトロン</td><td>中</td><td>財務</td><td>監視精度に影響</td></tr><tr><td>6981.T</td><td>村田製作所</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>6723.T</td><td>ルネサス</td><td>中</td><td>財務 / イベント / 質的 / 価格</td><td>監視精度に影響</td></tr><tr><td>6920.T</td><td>レーザーテック</td><td>中</td><td>財務 / イベント / 質的</td><td>監視精度に影響</td></tr><tr><td>7735.T</td><td>SCREEN HD</td><td>中</td><td>財務 / イベント / 質的</td><td>監視精度に影響</td></tr><tr><td>5803.T</td><td>フジクラ</td><td>中</td><td>財務</td><td>監視精度に影響</td></tr><tr><td>9984.T</td><td>ソフトバンクG</td><td>中</td><td>財務 / イベント / 質的</td><td>監視精度に影響</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>出力ファイル</h2>
+    <div class="links">
+      <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
+      <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
+      <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
+    </div>
+    <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
+  </section>
+</main>
+</body>
+</html>
