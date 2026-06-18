@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本日の確認事項 2026年6月18日</title>
+  
+  <style>
+    :root{--ink:#061827;--navy:#103b60;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#116b4f;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:19px;line-height:1.7}
+    header{background:linear-gradient(135deg,#103b60,#0b67a3);color:#fff;padding:32px}
+    header h1{margin:0 0 8px;font-size:clamp(34px,4vw,48px);line-height:1.15;letter-spacing:0}
+    header p{margin:0;font-weight:900;max-width:1100px}
+    main{max-width:1220px;margin:0 auto;padding:22px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08);break-inside:avoid}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:27px}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:10px}
+    .card{border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:14px}
+    .card b{display:block;color:var(--navy);font-size:16px}
+    .card strong{display:block;font-size:31px;line-height:1.2;color:var(--blue)}
+    .card span{display:block;font-weight:850;color:#263e55}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}
+    th,td{border:1px solid var(--line);padding:10px;vertical-align:top;word-break:normal;overflow-wrap:anywhere}
+    th{background:#e6f1fa;color:#063b63;text-align:left}
+    .ok{color:var(--green);font-weight:900}.warn{color:var(--amber);font-weight:900}.bad{color:var(--red);font-weight:900}
+    .notice{border:2px solid var(--amber);background:#fff8e8;color:#5d3500;border-radius:10px;padding:14px 16px;font-weight:900}
+    .small{font-size:15px;color:#2f4558;font-weight:800}
+    a{color:#075d9a;font-weight:900}
+    @media(max-width:900px){main{padding:12px}.cards{grid-template-columns:1fr}body{font-size:17px}table{table-layout:auto}}
+    @media print{body{background:#fff}header,section{break-inside:avoid;box-shadow:none}tr{break-inside:avoid}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>本日の確認事項 2026年6月18日</h1>
+  <p>6月イベント後に、今日どこまで進めるかを確認する実用画面です。</p>
+</header>
+<main>
+  <section>
+    <h2>今日の扱い</h2>
+    <div class="cards">
+      <div class="card"><b>公式イベント</b><strong class="ok">反映済み</strong><span>CPI・日銀・FOMC</span></div>
+      <div class="card"><b>市場ゲート</b><strong class="warn">注意あり</strong><span>赤停止なし</span></div>
+      <div class="card"><b>注文準備</b><strong class="bad">未完了</strong><span>本人別確認が必要</span></div>
+      <div class="card"><b>今日の実注文</b><strong class="bad">0円</strong><span>確認完了まで進めない</span></div>
+    </div>
+  </section>
+  <section>
+    <h2>今日すること</h2>
+    <table><thead><tr><th>順番</th><th>作業</th><th>結果</th><th>次の扱い</th></tr></thead><tbody><tr><td>1</td><td>イベント後更新ページを確認</td><td>市場ゲートは黄: 注意あり</td><td>赤停止なし。ただし慎重運用。</td></tr><tr><td>2</td><td>本人別NISA・証券画面確認</td><td>未完了</td><td>ここが完了するまで実注文額0円。</td></tr><tr><td>3</td><td>候補10社の個別反応確認</td><td>5803は保留、半導体高PERは注意</td><td>初回候補を中心候補寄りにする。</td></tr><tr><td>4</td><td>注文票作成可否</td><td>まだ不可</td><td>本人別確認後に金額を入れる。</td></tr></tbody></table>
+  </section>
+  <section>
+    <h2>更新したファイル</h2>
+    <table><thead><tr><th>ファイル</th><th>内容</th></tr></thead><tbody><tr><td>102_june_event_result_input.csv</td><td>CPI・日銀・FOMC・最終確認の状態を、未入力からイベント後の実数反映へ更新。</td></tr><tr><td>106_june_event_engine_output.csv</td><td>候補10社のイベント後扱い、前日比、保留条件を更新。</td></tr><tr><td>108_capital_allocation_by_ticker.csv</td><td>イベント上限と実注文額0円を分けて更新。</td></tr><tr><td>109_capital_scenario_plan.csv</td><td>現在、黄、緑、赤の資金シナリオを更新。</td></tr><tr><td>event_after_update_20260618.html</td><td>イベント通過後の確認画面。</td></tr></tbody></table>
+  </section>
+</main>
+</body>
+</html>
