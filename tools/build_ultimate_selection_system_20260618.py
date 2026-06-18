@@ -31,6 +31,7 @@ OUT_MISSING = ROOT / "ultimate_selection_missing_data_20260618.csv"
 OUT_EXECUTION = ROOT / "ultimate_selection_execution_plan_20260618.csv"
 OUT_RISK = ROOT / "ultimate_selection_risk_scenarios_20260618.csv"
 OUT_TRADE_RULES = ROOT / "ultimate_selection_trade_rules_20260618.csv"
+OUT_DAY_CHECKLIST = ROOT / "ultimate_selection_day_checklist_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -647,6 +648,80 @@ def build_execution_plan(portfolio: list[dict[str, object]]) -> list[dict[str, o
     return out
 
 
+def build_day_checklist(execution: list[dict[str, object]]) -> list[dict[str, object]]:
+    immediate_names = " / ".join(
+        str(r.get("name"))
+        for r in execution
+        if r.get("execution_status") in ["初回候補", "小口候補"]
+    )
+    conditional_names = " / ".join(
+        str(r.get("name"))
+        for r in execution
+        if r.get("execution_status") == "確認後候補"
+    )
+    immediate_total = sum(
+        float(r.get("initial_buy_yen") or 0)
+        for r in execution
+        if r.get("execution_status") in ["初回候補", "小口候補"]
+    )
+    conditional_total = sum(
+        float(r.get("initial_buy_yen") or 0)
+        for r in execution
+        if r.get("execution_status") == "確認後候補"
+    )
+    return [
+        {
+            "time": "前日まで",
+            "check_item": "本人NISA・買付余力・入金・注文口座区分",
+            "action": "本人のスマホ、本人ログイン、本人操作で確認する。口座区分がNISAでなければ当日発注しない。",
+            "stop_condition": "NISA口座未開設、買付余力不足、注文口座区分不明、本人操作が確認できない場合は停止。",
+            "record": "確認者、確認時刻、買付余力、NISA区分、入金額を記録。",
+        },
+        {
+            "time": "8:30",
+            "check_item": "市場全体の急変確認",
+            "action": "日経平均先物、TOPIX先物、ドル円、米10年金利、VIX、主要ニュースを確認する。",
+            "stop_condition": "日経/TOPIX先物が大きく下落、円高急進、金利急騰、候補銘柄に悪材料が出た場合は新規買付を停止。",
+            "record": "指数、為替、金利、VIX、目立つニュースを記録。",
+        },
+        {
+            "time": "9:00-9:15",
+            "check_item": "寄付き成行を避ける",
+            "action": "寄付き直後は価格確認のみ。成行注文は使わず、初値と出来高を確認する。",
+            "stop_condition": "候補が前日比+3%以上で始まる場合は追わない。前日比-3%以上の場合は理由確認まで待つ。",
+            "record": "各候補の始値、前日比、出来高、買わなかった理由を記録。",
+        },
+        {
+            "time": "9:30-10:30",
+            "check_item": "初回候補だけ小口指値",
+            "action": f"初回候補: {immediate_names or '該当なし'}。上限目安は合計{yen(immediate_total)}。指値または分割で小さく入る。",
+            "stop_condition": "指数が弱い、価格が追い上げすぎ、候補別の未確認項目が残る場合は買わない。",
+            "record": "指値、約定価格、約定株数、未約定理由を記録。",
+        },
+        {
+            "time": "11:30",
+            "check_item": "前場の約定確認",
+            "action": "約定済み、未約定、買わなかった銘柄を分ける。未約定を無理に追わない。",
+            "stop_condition": "前場で指数が崩れた場合、後場の新規買付は停止。",
+            "record": "前場終了時点の約定一覧、平均取得単価、残り買付予定額を記録。",
+        },
+        {
+            "time": "12:30-14:30",
+            "check_item": "後場の再確認",
+            "action": f"確認後候補: {conditional_names or '該当なし'}。上限目安は合計{yen(conditional_total)}。未確認が消えたものだけ検討する。",
+            "stop_condition": "未確認項目が残る、指数が弱い、ニュースでテーマが崩れた場合は現金待機。",
+            "record": "後場判断、追加しなかった理由、翌営業日に回す項目を記録。",
+        },
+        {
+            "time": "15:00以降",
+            "check_item": "当日記録と翌営業日の準備",
+            "action": "約定結果、指数差、候補別判断、買わなかった理由を保存する。翌営業日に見る項目を更新する。",
+            "stop_condition": "記録が残せない場合、次回追加買付をしない。",
+            "record": "約定一覧、未約定一覧、指数差、反省点、次回条件を記録。",
+        },
+    ]
+
+
 def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> float:
     total_weight = sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1.0
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
@@ -870,6 +945,7 @@ def build_html(
     execution: list[dict[str, object]],
     risk_scenarios: list[dict[str, object]],
     trade_rules: list[dict[str, object]],
+    day_checklist: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -943,6 +1019,13 @@ def build_html(
         ("add_rule", "追加ルール"),
         ("profit_rule", "上値ルール"),
         ("stop_rule", "下値ルール"),
+    ]
+    day_check_fields = [
+        ("time", "時刻"),
+        ("check_item", "確認すること"),
+        ("action", "行うこと"),
+        ("stop_condition", "止める条件"),
+        ("record", "記録すること"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1118,6 +1201,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>19日当日チェックリスト</h2>
+    <p class="note">当日は「何を買うか」より先に、本人口座・市場急変・高値追い・記録を確認します。ここを通らない場合は、候補銘柄が良くても買付を止めます。</p>
+    {html_table(day_checklist, day_check_fields)}
+  </section>
+
+  <section>
     <h2>銘柄別の判断理由</h2>
     <p class="note">ここは説明用の文章を固定で書くのではなく、スコア・財務確認状況・イベント接続・不足項目から自動生成しています。</p>
     {html_table(explanation_rows, explanation_fields)}
@@ -1169,6 +1258,7 @@ def build_html(
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
       <a href="ultimate_selection_risk_scenarios_20260618.csv">リスクシナリオCSV</a>
       <a href="ultimate_selection_trade_rules_20260618.csv">銘柄別売買ルールCSV</a>
+      <a href="ultimate_selection_day_checklist_20260618.csv">19日当日チェックCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -1186,13 +1276,15 @@ def main() -> None:
     execution = build_execution_plan(portfolio)
     risk_scenarios = build_risk_scenarios(portfolio, execution)
     trade_rules = build_trade_rules(portfolio, execution)
+    day_checklist = build_day_checklist(execution)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
     write_csv(OUT_EXECUTION, execution)
     write_csv(OUT_RISK, risk_scenarios)
     write_csv(OUT_TRADE_RULES, trade_rules)
-    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution, risk_scenarios, trade_rules), encoding="utf-8")
+    write_csv(OUT_DAY_CHECKLIST, day_checklist)
+    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution, risk_scenarios, trade_rules, day_checklist), encoding="utf-8")
     print(f"HTML: {OUT_HTML}")
     print(f"Scores: {OUT_SCORE}")
     print(f"Portfolio: {OUT_PORTFOLIO}")
@@ -1200,6 +1292,7 @@ def main() -> None:
     print(f"Execution: {OUT_EXECUTION}")
     print(f"Risk: {OUT_RISK}")
     print(f"Trade rules: {OUT_TRADE_RULES}")
+    print(f"Day checklist: {OUT_DAY_CHECKLIST}")
     print("Top 10:")
     for r in rows[:10]:
         print(r["ticker"], r["name"], r["final_score"], r["action"])
