@@ -42,7 +42,7 @@
       <div class="card"><b>戦略上位</b><strong>10社</strong><span>統合スコア順</span></div>
       <div class="card"><b>配分候補</b><strong>9社</strong><span>価格あり・制約通過</span></div>
       <div class="card"><b>初回枠</b><strong>360,000円</strong><span>イベント注意時15%</span></div>
-      <div class="card"><b>生成時刻</b><strong>2026/06/18 23:18</strong><span>ローカル計算</span></div>
+      <div class="card"><b>生成時刻</b><strong>2026/06/18 23:22</strong><span>ローカル計算</span></div>
     </div>
   </section>
 
@@ -144,6 +144,12 @@
   </section>
 
   <section>
+    <h2>リスク・損益シミュレーション</h2>
+    <p class="note">この表は予想を断定するものではありません。既存スコア内の上昇幅、EV、下落幅、最大下落、銘柄別下値確認ラインを使った確認表です。</p>
+    <table><thead><tr><th>シナリオ</th><th>変動率%</th><th>240万円後</th><th>240万円損益</th><th>初回36万円後</th><th>初回36万円損益</th><th>根拠</th><th>行動</th></tr></thead><tbody><tr><td>上振れ</td><td>29.4</td><td>3,106,382円</td><td>706,382円</td><td>465,957円</td><td>105,957円</td><td>上昇確率モデルの上昇幅を比率加重</td><td>利確ではなく、決算・指数超過・出来高を確認して一部利益確保を検討</td></tr><tr><td>通常EV仮説</td><td>13.8</td><td>2,730,356円</td><td>330,356円</td><td>409,553円</td><td>49,553円</td><td>上昇確率×上昇幅 - 下落確率×下落幅 - コスト</td><td>この水準が指数+1%を説明できるか確認</td></tr><tr><td>下値確認ライン到達</td><td>-7.1</td><td>2,230,749円</td><td>-169,251円</td><td>334,612円</td><td>-25,388円</td><td>銘柄別の一時停止ラインを比率加重</td><td>新規買付停止。理由確認まで追加しない</td></tr><tr><td>下振れ</td><td>-14.9</td><td>2,042,894円</td><td>-357,106円</td><td>306,434円</td><td>-53,566円</td><td>下落幅モデルを比率加重</td><td>個別株比率を下げ、現金またはインデックスへ戻す</td></tr><tr><td>直近1年最大下落級</td><td>-20.1</td><td>1,916,419円</td><td>-483,581円</td><td>287,463円</td><td>-72,537円</td><td>各銘柄の直近1年最大下落を比率加重</td><td>想定外ではなくストレスとして扱い、追加停止・減額</td></tr><tr><td>5年最大下落級</td><td>-35.5</td><td>1,549,111円</td><td>-850,889円</td><td>232,367円</td><td>-127,633円</td><td>各銘柄の5年最大下落を比率加重</td><td>短期テストの範囲を超える。購入計画を再設計</td></tr><tr><td>一律-10%機械ストレス</td><td>-10.0</td><td>2,160,000円</td><td>-240,000円</td><td>324,000円</td><td>-36,000円</td><td>全銘柄が同時に-10%下落する仮定</td><td>ストップ安相当ではなく、急落時の資金ダメージ確認用</td></tr></tbody></table>
+  </section>
+
+  <section>
     <h2>共通売買ルール</h2>
     <table>
       <thead><tr><th>場面</th><th>条件</th><th>行動</th><th>理由</th></tr></thead>
@@ -175,6 +181,7 @@
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
+      <a href="ultimate_selection_risk_scenarios_20260618.csv">リスクシナリオCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>

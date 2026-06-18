@@ -29,6 +29,7 @@ OUT_SCORE = ROOT / "ultimate_selection_scores_20260618.csv"
 OUT_PORTFOLIO = ROOT / "ultimate_selection_portfolio_20260618.csv"
 OUT_MISSING = ROOT / "ultimate_selection_missing_data_20260618.csv"
 OUT_EXECUTION = ROOT / "ultimate_selection_execution_plan_20260618.csv"
+OUT_RISK = ROOT / "ultimate_selection_risk_scenarios_20260618.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -650,6 +651,48 @@ def weighted_portfolio_value(portfolio: list[dict[str, object]], key: str) -> fl
     return sum(float(r.get(key) or 0) * float(r.get("target_weight_pct") or 0) for r in portfolio) / total_weight
 
 
+def scenario_row(name: str, pct_value: float, basis: str, action: str) -> dict[str, object]:
+    full_profit = CAPITAL_YEN * pct_value / 100
+    initial_profit = INITIAL_BUY_CAP_YEN * pct_value / 100
+    return {
+        "scenario": name,
+        "return_pct": round(pct_value, 1),
+        "full_240m_result_yen": yen(CAPITAL_YEN + full_profit),
+        "full_240m_profit_yen": yen(full_profit),
+        "initial_36m_result_yen": yen(INITIAL_BUY_CAP_YEN + initial_profit),
+        "initial_36m_profit_yen": yen(initial_profit),
+        "basis": basis,
+        "action": action,
+    }
+
+
+def build_risk_scenarios(portfolio: list[dict[str, object]], execution: list[dict[str, object]]) -> list[dict[str, object]]:
+    ev = weighted_portfolio_value(portfolio, "expected_value_pct")
+    upside = weighted_portfolio_value(portfolio, "upside_pct")
+    downside = weighted_portfolio_value(portfolio, "downside_pct")
+    dd1 = abs(weighted_portfolio_value(portfolio, "max_dd1"))
+    dd5 = abs(weighted_portfolio_value(portfolio, "max_dd5"))
+
+    stop_losses = []
+    for row in execution:
+        price = float(next((p.get("price") or 0 for p in portfolio if p.get("ticker") == row.get("ticker")), 0) or 0)
+        stop = float(row.get("temporary_stop_line_yen") or 0)
+        weight = float(next((p.get("target_weight_pct") or 0 for p in portfolio if p.get("ticker") == row.get("ticker")), 0) or 0)
+        if price and stop and weight:
+            stop_losses.append((1 - stop / price) * 100 * weight)
+    stop_loss_pct = sum(stop_losses) / (sum(float(r.get("target_weight_pct") or 0) for r in portfolio) or 1)
+
+    return [
+        scenario_row("上振れ", upside, "上昇確率モデルの上昇幅を比率加重", "利確ではなく、決算・指数超過・出来高を確認して一部利益確保を検討"),
+        scenario_row("通常EV仮説", ev, "上昇確率×上昇幅 - 下落確率×下落幅 - コスト", "この水準が指数+1%を説明できるか確認"),
+        scenario_row("下値確認ライン到達", -stop_loss_pct, "銘柄別の一時停止ラインを比率加重", "新規買付停止。理由確認まで追加しない"),
+        scenario_row("下振れ", -downside, "下落幅モデルを比率加重", "個別株比率を下げ、現金またはインデックスへ戻す"),
+        scenario_row("直近1年最大下落級", -dd1, "各銘柄の直近1年最大下落を比率加重", "想定外ではなくストレスとして扱い、追加停止・減額"),
+        scenario_row("5年最大下落級", -dd5, "各銘柄の5年最大下落を比率加重", "短期テストの範囲を超える。購入計画を再設計"),
+        scenario_row("一律-10%機械ストレス", -10.0, "全銘柄が同時に-10%下落する仮定", "ストップ安相当ではなく、急落時の資金ダメージ確認用"),
+    ]
+
+
 def short_reason(row: dict[str, object]) -> str:
     strengths: list[str] = []
     if float(row.get("financial_score") or 0) >= 75:
@@ -772,6 +815,7 @@ def build_html(
     portfolio: list[dict[str, object]],
     missing: list[dict[str, object]],
     execution: list[dict[str, object]],
+    risk_scenarios: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
     top = rows[:10]
@@ -823,6 +867,16 @@ def build_html(
         ("reason", "残した理由"),
         ("risk", "警戒点"),
         ("action", "実行方針"),
+    ]
+    risk_fields = [
+        ("scenario", "シナリオ"),
+        ("return_pct", "変動率%"),
+        ("full_240m_result_yen", "240万円後"),
+        ("full_240m_profit_yen", "240万円損益"),
+        ("initial_36m_result_yen", "初回36万円後"),
+        ("initial_36m_profit_yen", "初回36万円損益"),
+        ("basis", "根拠"),
+        ("action", "行動"),
     ]
     missing_fields = [
         ("ticker", "銘柄"),
@@ -1004,6 +1058,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>リスク・損益シミュレーション</h2>
+    <p class="note">この表は予想を断定するものではありません。既存スコア内の上昇幅、EV、下落幅、最大下落、銘柄別下値確認ラインを使った確認表です。</p>
+    {html_table(risk_scenarios, risk_fields)}
+  </section>
+
+  <section>
     <h2>共通売買ルール</h2>
     <table>
       <thead><tr><th>場面</th><th>条件</th><th>行動</th><th>理由</th></tr></thead>
@@ -1035,6 +1095,7 @@ def build_html(
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
+      <a href="ultimate_selection_risk_scenarios_20260618.csv">リスクシナリオCSV</a>
       <a href="ultimate_selection_missing_data_20260618.csv">不足データCSV</a>
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
@@ -1050,16 +1111,19 @@ def main() -> None:
     portfolio = optimize_portfolio(rows)
     missing = build_missing(rows)
     execution = build_execution_plan(portfolio)
+    risk_scenarios = build_risk_scenarios(portfolio, execution)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
     write_csv(OUT_EXECUTION, execution)
-    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution), encoding="utf-8")
+    write_csv(OUT_RISK, risk_scenarios)
+    OUT_HTML.write_text(build_html(rows, portfolio, missing, execution, risk_scenarios), encoding="utf-8")
     print(f"HTML: {OUT_HTML}")
     print(f"Scores: {OUT_SCORE}")
     print(f"Portfolio: {OUT_PORTFOLIO}")
     print(f"Missing: {OUT_MISSING}")
     print(f"Execution: {OUT_EXECUTION}")
+    print(f"Risk: {OUT_RISK}")
     print("Top 10:")
     for r in rows[:10]:
         print(r["ticker"], r["name"], r["final_score"], r["action"])
