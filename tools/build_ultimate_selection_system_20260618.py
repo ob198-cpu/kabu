@@ -3309,7 +3309,7 @@ def build_html(
     .bad{{color:var(--red);font-weight:900}}
     .ok{{color:var(--green);font-weight:900}}
     .links a{{display:inline-block;margin:4px 8px 4px 0;padding:8px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--navy);font-weight:900;background:#fbfdff}}
-    .quick-nav{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:12px}}
+    .quick-nav{{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:12px}}
     .quick-nav a{{display:block;border:1px solid #8db9d8;border-radius:10px;padding:12px;text-decoration:none;background:#fff;color:var(--navy);font-weight:950;text-align:center}}
     .ops-note{{border:2px solid #6aa8ce;background:#f2f9ff;border-radius:10px;padding:12px;font-weight:950;margin-top:12px}}
     .operation-steps{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}}
@@ -3404,10 +3404,11 @@ def build_html(
       <a href="#daily-decision">1. 最短判断</a>
       <a href="#operation-flow">2. 操作順</a>
       <a href="#today-order-ticket">3. 注文票</a>
-      <a href="#trade-rules">4. 売買ルール</a>
-      <a href="#archive-materials">5. 補足資料</a>
+      <a href="#buy-blocker-triage">4. 買付不足</a>
+      <a href="#trade-rules">5. 売買ルール</a>
+      <a href="#archive-materials">6. 補足資料</a>
     </div>
-    <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「実用コックピット」「本日注文票」「買付不足トリアージ」「実行サマリー」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
+    <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「最短判断」「操作順」「本日注文票」「買付不足」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
   </section>
 
   <section id="daily-decision">
