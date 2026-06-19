@@ -28,7 +28,7 @@
     .bad{color:var(--red);font-weight:900}
     .ok{color:var(--green);font-weight:900}
     .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--navy);font-weight:900;background:#fbfdff}
-    .quick-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+    .quick-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:12px}
     .quick-nav a{display:block;border:1px solid #8db9d8;border-radius:10px;padding:12px;text-decoration:none;background:#fff;color:var(--navy);font-weight:950;text-align:center}
     .ops-note{border:2px solid #6aa8ce;background:#f2f9ff;border-radius:10px;padding:12px;font-weight:950;margin-top:12px}
     .operation-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
@@ -56,18 +56,19 @@
       <div class="card"><b>戦略上位</b><strong>10社</strong><span>統合スコア順</span></div>
       <div class="card"><b>配分候補</b><strong>9社</strong><span>価格あり・制約通過</span></div>
       <div class="card"><b>初回枠</b><strong>360,000円</strong><span>イベント注意時15%</span></div>
-      <div class="card"><b>生成時刻</b><strong>2026/06/19 09:32</strong><span>ローカル計算</span></div>
+      <div class="card"><b>生成時刻</b><strong>2026/06/19 09:37</strong><span>ローカル計算</span></div>
     </div>
     <div class="quick-nav">
-      <a href="#action-cockpit">1. 今日の結論</a>
-      <a href="#today-order-ticket">2. 注文票</a>
-      <a href="#trade-rules">3. 売買ルール</a>
-      <a href="#archive-materials">4. 補足資料</a>
+      <a href="#operation-flow">1. 操作順</a>
+      <a href="#action-cockpit">2. 今日の結論</a>
+      <a href="#today-order-ticket">3. 注文票</a>
+      <a href="#trade-rules">4. 売買ルール</a>
+      <a href="#archive-materials">5. 補足資料</a>
     </div>
     <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「実用コックピット」「本日注文票」「買付不足トリアージ」「実行サマリー」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
   </section>
 
-  <section>
+  <section id="operation-flow">
     <h2>今日の操作順</h2>
     <div class="operation-steps">
       <div class="op-card"><b>1. 止める条件</b><span>本人NISA区分、本人操作、買付余力、市場急落、前日比+3%以上の高値追いを確認。ここで引っかかれば買いません。</span></div>
@@ -109,6 +110,12 @@
       </tbody>
     </table>
     <p class="note">この画面の結論は「候補を全部買う」ではありません。初回は、条件を通った銘柄だけを小さく開始し、確認が弱い銘柄は現金待機に回す設計です。</p>
+  </section>
+
+  <section id="trade-rules">
+    <h2>銘柄別 売買ルール</h2>
+    <p class="note">普段はここまで見れば十分です。各銘柄の扱い、下値確認ライン、上値確認ライン、未確認項目の有無に応じて行動を分けます。</p>
+    <table><thead><tr><th>銘柄</th><th>名称</th><th>扱い</th><th>現在値</th><th>初回金額</th><th>買付ルール</th><th>追わない価格</th><th>追加ルール</th><th>上値ルール</th><th>下値ルール</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>初回候補</td><td>6,494円</td><td>58,446円</td><td>価格が落ち着いた後、指値目安以下なら初回候補</td><td>6688.8円以上は追わない</td><td>5営業日で指数を上回り、決算・財務前提が崩れなければ追加検討</td><td>7273.3円付近で一部利益確保を検討。上昇理由が残れば保有継続</td><td>6066.7円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>初回候補</td><td>6,621円</td><td>59,589円</td><td>価格が落ち着いた後、指値目安以下なら初回候補</td><td>6819.6円以上は追わない</td><td>5営業日で指数を上回り、決算・財務前提が崩れなければ追加検討</td><td>7415.5円付近で一部利益確保を検討。上昇理由が残れば保有継続</td><td>6173.8円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>確認後候補</td><td>4,570円</td><td>31,990円</td><td>公式照合・未確認項目が残る間は買わない</td><td>4707.1円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>5118.4円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>4301.3円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>初回候補</td><td>4,784円</td><td>47,840円</td><td>価格が落ち着いた後、指値目安以下なら初回候補</td><td>4927.5円以上は追わない</td><td>5営業日で指数を上回り、決算・財務前提が崩れなければ追加検討</td><td>5358.1円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>4402.2円付近で理由確認。直近下落が大きいため、追加停止を優先</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>小口候補</td><td>6,089円</td><td>24,356円</td><td>財務partialのため、初回のみ小口。追加は未確認解消後</td><td>6271.7円以上は追わない</td><td>PER/PBR/ROE等の未確認が消え、指数超過が続く場合だけ追加</td><td>6819.7円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>5741.6円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8031.T</td><td>三井物産</td><td>確認後候補</td><td>4,719円</td><td>28,314円</td><td>公式照合・未確認項目が残る間は買わない</td><td>4860.6円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>5285.3円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>4400.2円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8411.T</td><td>みずほFG</td><td>確認後候補</td><td>8,249円</td><td>24,747円</td><td>公式照合・未確認項目が残る間は買わない</td><td>8496.5円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>9238.9円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>7538.8円付近で理由確認。直近下落が大きいため、追加停止を優先</td></tr><tr><td>6762.T</td><td>TDK</td><td>小口候補</td><td>3,890円</td><td>27,230円</td><td>財務partialのため、初回のみ小口。追加は未確認解消後</td><td>4006.7円以上は追わない</td><td>PER/PBR/ROE等の未確認が消え、指数超過が続く場合だけ追加</td><td>4356.8円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>3506.1円付近で理由確認。直近下落が大きいため、追加停止を優先</td></tr><tr><td>8750.T</td><td>第一生命HD</td><td>確認後候補</td><td>1,820円</td><td>21,846円</td><td>公式照合・未確認項目が残る間は買わない</td><td>1875.1円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>2039.0円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>1720.5円付近で一時停止。指数連動か個別悪材料か確認</td></tr></tbody></table>
   </section>
 
   <details id="archive-materials" class="archive-block">
@@ -288,6 +295,10 @@
 
   </details>
 
+  <details id="operation-support" class="archive-block">
+    <summary>運用補助・記録・リスク確認（必要時だけ開く）</summary>
+    <p class="archive-intro">普段は上の操作順、実用コックピット、本日注文票、銘柄別売買ルールを見ます。ここは、記録を残す時、実行ゲートを再確認する時、リスク表や共通ルールを説明する時だけ開きます。</p>
+
   <section>
     <h2>19日以降の実行ゲート</h2>
     <div class="cards">
@@ -325,12 +336,6 @@
     <table><thead><tr><th>シナリオ</th><th>変動率%</th><th>240万円後</th><th>240万円損益</th><th>初回36万円後</th><th>初回36万円損益</th><th>根拠</th><th>行動</th></tr></thead><tbody><tr><td>上振れ</td><td>29.4</td><td>3,000,334円</td><td>600,334円</td><td>465,941円</td><td>105,941円</td><td>上昇確率モデルの上昇幅を比率加重</td><td>利確ではなく、決算・指数超過・出来高を確認して一部利益確保を検討</td></tr><tr><td>通常EV仮説</td><td>13.8</td><td>2,680,754円</td><td>280,754円</td><td>409,545円</td><td>49,545円</td><td>上昇確率×上昇幅 - 下落確率×下落幅 - コスト</td><td>この水準が指数+1%を説明できるか確認</td></tr><tr><td>下値確認ライン到達</td><td>-7.1</td><td>2,256,160円</td><td>-143,840円</td><td>334,616円</td><td>-25,384円</td><td>銘柄別の一時停止ラインを比率加重</td><td>新規買付停止。理由確認まで追加しない</td></tr><tr><td>下振れ</td><td>-14.9</td><td>2,096,501円</td><td>-303,499円</td><td>306,441円</td><td>-53,559円</td><td>下落幅モデルを比率加重</td><td>個別株比率を下げ、現金またはインデックスへ戻す</td></tr><tr><td>直近1年最大下落級</td><td>-20.1</td><td>1,989,014円</td><td>-410,986円</td><td>287,473円</td><td>-72,527円</td><td>各銘柄の直近1年最大下落を比率加重</td><td>想定外ではなくストレスとして扱い、追加停止・減額</td></tr><tr><td>5年最大下落級</td><td>-35.4</td><td>1,676,842円</td><td>-723,158円</td><td>232,384円</td><td>-127,616円</td><td>各銘柄の5年最大下落を比率加重</td><td>短期テストの範囲を超える。購入計画を再設計</td></tr><tr><td>一律-10%機械ストレス</td><td>-10.0</td><td>2,196,000円</td><td>-204,000円</td><td>324,000円</td><td>-36,000円</td><td>全銘柄が同時に-10%下落する仮定</td><td>ストップ安相当ではなく、急落時の資金ダメージ確認用</td></tr></tbody></table>
   </section>
 
-  <section id="trade-rules">
-    <h2>銘柄別 売買ルール</h2>
-    <p class="note">共通ルールだけでなく、各銘柄の扱い、下値確認ライン、上値確認ライン、未確認項目の有無に応じて行動を分けます。</p>
-    <table><thead><tr><th>銘柄</th><th>名称</th><th>扱い</th><th>現在値</th><th>初回金額</th><th>買付ルール</th><th>追わない価格</th><th>追加ルール</th><th>上値ルール</th><th>下値ルール</th></tr></thead><tbody><tr><td>8053.T</td><td>住友商事</td><td>初回候補</td><td>6,494円</td><td>58,446円</td><td>価格が落ち着いた後、指値目安以下なら初回候補</td><td>6688.8円以上は追わない</td><td>5営業日で指数を上回り、決算・財務前提が崩れなければ追加検討</td><td>7273.3円付近で一部利益確保を検討。上昇理由が残れば保有継続</td><td>6066.7円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8316.T</td><td>三井住友FG</td><td>初回候補</td><td>6,621円</td><td>59,589円</td><td>価格が落ち着いた後、指値目安以下なら初回候補</td><td>6819.6円以上は追わない</td><td>5営業日で指数を上回り、決算・財務前提が崩れなければ追加検討</td><td>7415.5円付近で一部利益確保を検討。上昇理由が残れば保有継続</td><td>6173.8円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8058.T</td><td>三菱商事</td><td>確認後候補</td><td>4,570円</td><td>31,990円</td><td>公式照合・未確認項目が残る間は買わない</td><td>4707.1円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>5118.4円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>4301.3円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>6501.T</td><td>日立製作所</td><td>初回候補</td><td>4,784円</td><td>47,840円</td><td>価格が落ち着いた後、指値目安以下なら初回候補</td><td>4927.5円以上は追わない</td><td>5営業日で指数を上回り、決算・財務前提が崩れなければ追加検討</td><td>5358.1円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>4402.2円付近で理由確認。直近下落が大きいため、追加停止を優先</td></tr><tr><td>6503.T</td><td>三菱電機</td><td>小口候補</td><td>6,089円</td><td>24,356円</td><td>財務partialのため、初回のみ小口。追加は未確認解消後</td><td>6271.7円以上は追わない</td><td>PER/PBR/ROE等の未確認が消え、指数超過が続く場合だけ追加</td><td>6819.7円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>5741.6円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8031.T</td><td>三井物産</td><td>確認後候補</td><td>4,719円</td><td>28,314円</td><td>公式照合・未確認項目が残る間は買わない</td><td>4860.6円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>5285.3円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>4400.2円付近で一時停止。指数連動か個別悪材料か確認</td></tr><tr><td>8411.T</td><td>みずほFG</td><td>確認後候補</td><td>8,249円</td><td>24,747円</td><td>公式照合・未確認項目が残る間は買わない</td><td>8496.5円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>9238.9円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>7538.8円付近で理由確認。直近下落が大きいため、追加停止を優先</td></tr><tr><td>6762.T</td><td>TDK</td><td>小口候補</td><td>3,890円</td><td>27,230円</td><td>財務partialのため、初回のみ小口。追加は未確認解消後</td><td>4006.7円以上は追わない</td><td>PER/PBR/ROE等の未確認が消え、指数超過が続く場合だけ追加</td><td>4356.8円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>3506.1円付近で理由確認。直近下落が大きいため、追加停止を優先</td></tr><tr><td>8750.T</td><td>第一生命HD</td><td>確認後候補</td><td>1,820円</td><td>21,846円</td><td>公式照合・未確認項目が残る間は買わない</td><td>1875.1円以上は追わない</td><td>確認後に再スコア。確認前の追加買いはしない</td><td>2039.0円付近で過熱確認。根拠が弱ければ利益確保を優先</td><td>1720.5円付近で一時停止。指数連動か個別悪材料か確認</td></tr></tbody></table>
-  </section>
-
   <section>
     <h2>共通売買ルール</h2>
     <table>
@@ -345,6 +350,8 @@
       </tbody>
     </table>
   </section>
+
+  </details>
 
   <details class="archive-block">
     <summary>候補外・不足データ・CSV出力（必要時だけ開く）</summary>
