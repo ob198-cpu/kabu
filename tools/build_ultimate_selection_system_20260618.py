@@ -53,6 +53,7 @@ OUT_SCORE_TRACE = ROOT / "ultimate_selection_score_trace_20260619.csv"
 OUT_ACTION_COCKPIT = ROOT / "ultimate_selection_action_cockpit_20260619.csv"
 OUT_BUY_BLOCKER_TRIAGE = ROOT / "ultimate_selection_buy_blocker_triage_20260619.csv"
 OUT_ALLOCATION_TRACE = ROOT / "ultimate_selection_allocation_trace_20260619.csv"
+OUT_TODAY_ORDER_TICKET = ROOT / "ultimate_selection_today_order_ticket_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -934,6 +935,49 @@ def build_order_log_template(execution: list[dict[str, object]]) -> list[dict[st
             "us10y": "",
             "vix": "",
             "memo": "買った理由、買わなかった理由、翌営業日に見る項目を記録。",
+        }
+    )
+    return rows
+
+
+def build_today_order_ticket(execution: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for row in execution:
+        amount = float(row.get("executable_today_yen") or 0)
+        if amount <= 0:
+            continue
+        rows.append(
+            {
+                "order_rank": row.get("rank", ""),
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "order_bucket": row.get("execution_bucket", ""),
+                "max_today_yen": round(amount),
+                "planned_shares": row.get("initial_shares", ""),
+                "limit_price_yen": row.get("limit_price_yen", ""),
+                "do_not_chase_price_yen": row.get("do_not_chase_price_yen", ""),
+                "temporary_stop_line_yen": row.get("temporary_stop_line_yen", ""),
+                "order_method": "寄付き成行は使わず、価格確認後に指値または小口で検討",
+                "before_order_check": "本人NISA区分、買付余力、本人操作、当日指数、個別ニュースを確認",
+                "do_not_order_if": row.get("no_buy_conditions", ""),
+                "record_after_order": "約定価格、約定株数、買わなかった理由、指数変化を注文ログへ記録",
+            }
+        )
+    rows.append(
+        {
+            "order_rank": "STOP",
+            "ticker": "全体停止条件",
+            "name": "注文前に必ず確認",
+            "order_bucket": "停止ゲート",
+            "max_today_yen": 0,
+            "planned_shares": "",
+            "limit_price_yen": "",
+            "do_not_chase_price_yen": "",
+            "temporary_stop_line_yen": "",
+            "order_method": "条件に触れた場合は全銘柄の新規買付を止める",
+            "before_order_check": "NISA未確認、本人操作不可、日経/TOPIX-2%以上、前日比+3%以上の追い買い、重大悪材料",
+            "do_not_order_if": "証券会社画面でNISA区分・余力・本人操作が確認できない / 市場急落 / 高値追い / 未確認項目が残る",
+            "record_after_order": "買わなかった理由を記録し、翌営業日に再判定",
         }
     )
     return rows
@@ -2582,6 +2626,7 @@ def build_html(
     trade_rules: list[dict[str, object]],
     day_checklist: list[dict[str, object]],
     order_log_template: list[dict[str, object]],
+    today_order_ticket_rows: list[dict[str, object]],
     correlation_rows: list[dict[str, object]],
     constraint_rows: list[dict[str, object]],
     architecture_rows: list[dict[str, object]],
@@ -2758,6 +2803,20 @@ def build_html(
         ("actual_action", "実際の扱い"),
         ("not_bought_reason", "買わなかった理由"),
         ("memo", "メモ"),
+    ]
+    today_order_ticket_fields = [
+        ("order_rank", "順"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("order_bucket", "注文枠"),
+        ("max_today_yen", "本日上限"),
+        ("planned_shares", "予定株数"),
+        ("limit_price_yen", "指値目安"),
+        ("do_not_chase_price_yen", "追わない価格"),
+        ("temporary_stop_line_yen", "下値停止目安"),
+        ("order_method", "注文方法"),
+        ("before_order_check", "注文前確認"),
+        ("do_not_order_if", "注文しない条件"),
     ]
     architecture_fields = [
         ("layer", "層"),
@@ -3028,6 +3087,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>本日注文票</h2>
+    <p class="note">証券会社画面で見るための表です。本日実行額が0円の確認後候補はここに出しません。STOP行の条件に触れた場合は、全銘柄の新規買付を止めます。</p>
+    {html_table(today_order_ticket_rows, today_order_ticket_fields)}
+  </section>
+
+  <section>
     <h2>買付不足トリアージ</h2>
     <p class="note">「不足がある」とだけ表示すると判断できないため、現配分候補ごとに、初回小口可、条件付き小口、確認後保留へ分けます。全額投入を止める理由と、後で埋める調査項目を分離します。</p>
     {html_table(buy_blocker_triage_rows, buy_blocker_fields)}
@@ -3287,6 +3352,7 @@ def build_html(
     <div class="links">
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_action_cockpit_20260619.csv">実用コックピットCSV</a>
+      <a href="ultimate_selection_today_order_ticket_20260619.csv">本日注文票CSV</a>
       <a href="ultimate_selection_buy_blocker_triage_20260619.csv">買付不足トリアージCSV</a>
       <a href="ultimate_selection_allocation_trace_20260619.csv">配分計算監査CSV</a>
       <a href="ultimate_selection_score_trace_20260619.csv">スコア分解監査CSV</a>
@@ -3336,6 +3402,7 @@ def main() -> None:
     trade_rules = build_trade_rules(portfolio, execution)
     day_checklist = build_day_checklist(execution)
     order_log_template = build_order_log_template(execution)
+    today_order_ticket_rows = build_today_order_ticket(execution)
     prediction_review_rows = build_prediction_review(portfolio, execution)
     model_revision_rows = build_model_revision_queue(portfolio, prediction_review_rows)
     review_input_rows = merge_existing_review_input(build_review_input_template(portfolio, execution))
@@ -3357,6 +3424,7 @@ def main() -> None:
     write_csv(OUT_TRADE_RULES, trade_rules)
     write_csv(OUT_DAY_CHECKLIST, day_checklist)
     write_csv(OUT_ORDER_LOG_TEMPLATE, order_log_template)
+    write_csv(OUT_TODAY_ORDER_TICKET, today_order_ticket_rows)
     write_csv(OUT_CORRELATION, correlation_rows)
     write_csv(OUT_CONSTRAINTS, constraint_rows)
     write_csv(OUT_ARCHITECTURE_AUDIT, architecture_rows)
@@ -3386,6 +3454,7 @@ def main() -> None:
             trade_rules,
             day_checklist,
             order_log_template,
+            today_order_ticket_rows,
             correlation_rows,
             constraint_rows,
             architecture_rows,
@@ -3416,6 +3485,7 @@ def main() -> None:
     print(f"Risk: {OUT_RISK}")
     print(f"Trade rules: {OUT_TRADE_RULES}")
     print(f"Day checklist: {OUT_DAY_CHECKLIST}")
+    print(f"Today order ticket: {OUT_TODAY_ORDER_TICKET}")
     print(f"Correlation risk: {OUT_CORRELATION}")
     print(f"Constraints: {OUT_CONSTRAINTS}")
     print(f"Architecture audit: {OUT_ARCHITECTURE_AUDIT}")
