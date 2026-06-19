@@ -2713,6 +2713,39 @@ def html_table(rows: list[dict[str, object]], fields: list[tuple[str, str]], lim
     return f"<table><thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table>"
 
 
+def order_ticket_cards(rows: list[dict[str, object]]) -> str:
+    cards: list[str] = []
+    for row in rows:
+        if str(row.get("order_rank", "")).upper() == "STOP":
+            continue
+        if to_float(row.get("max_today_yen"), 0) <= 0:
+            continue
+        ticker = esc(row.get("ticker", ""))
+        name = esc(row.get("name", ""))
+        bucket = esc(row.get("order_bucket", ""))
+        max_yen = yen(to_float(row.get("max_today_yen"), 0))
+        shares = esc(row.get("planned_shares", ""))
+        limit_price = esc(row.get("limit_price_yen", ""))
+        no_chase = esc(row.get("do_not_chase_price_yen", ""))
+        stop_line = esc(row.get("temporary_stop_line_yen", ""))
+        cards.append(
+            f"""
+      <div class="order-card">
+        <div class="order-head"><b>{ticker}</b><span>{name}</span></div>
+        <p class="order-bucket">{bucket}</p>
+        <div class="order-metrics">
+          <div><b>{max_yen}</b><span>本日上限</span></div>
+          <div><b>{shares}株</b><span>予定株数</span></div>
+          <div><b>{limit_price}円</b><span>指値目安</span></div>
+        </div>
+        <p class="order-note">追わない: {no_chase}円 / 下値停止: {stop_line}円</p>
+      </div>"""
+        )
+    if not cards:
+        return '<p class="note">本日実行対象の注文候補はありません。停止条件または確認後候補を確認してください。</p>'
+    return '<div class="order-cards">' + "\n".join(cards) + "\n    </div>"
+
+
 def build_html(
     rows: list[dict[str, object]],
     portfolio: list[dict[str, object]],
@@ -3183,13 +3216,26 @@ def build_html(
     .decision-card strong{{display:block;color:var(--blue);font-size:34px;line-height:1.2}}
     .decision-card span{{display:block;color:#263e55;font-weight:850;font-size:15px}}
     .decision-card.stop{{border-color:#d6a84d;background:#fff8e7}}
+    .order-cards{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}}
+    .order-card{{border:2px solid #9dbbd1;border-radius:14px;background:#fbfdff;padding:14px}}
+    .order-head{{display:flex;gap:10px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}}
+    .order-head b{{color:var(--navy);font-size:22px}}
+    .order-head span{{font-weight:950;color:#263e55}}
+    .order-bucket{{font-weight:950;color:#063b63;margin:0 0 8px}}
+    .order-metrics{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}}
+    .order-metrics div{{border:1px solid var(--line);border-radius:10px;background:#f6fbff;padding:8px}}
+    .order-metrics b{{display:block;font-size:20px;color:var(--blue)}}
+    .order-metrics span{{display:block;font-size:12px;font-weight:900;color:#526b82}}
+    .order-note{{margin:10px 0 0;font-size:14px;font-weight:900;color:#263e55}}
+    details.inline-detail{{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px;margin-top:12px}}
+    details.inline-detail > summary{{cursor:pointer;font-weight:950;color:var(--navy);font-size:18px}}
     details.archive-block{{background:#fff;border:2px dashed #9dbbd1;border-radius:14px;padding:14px;margin:0 0 16px}}
     details.archive-block > summary{{cursor:pointer;font-size:24px;font-weight:950;color:var(--navy);padding:8px 4px}}
     details.archive-block > .archive-intro{{margin:8px 0 14px;border-left:6px solid #9dbbd1;padding:8px 12px;background:#f6fbff;font-weight:850}}
     .priority-label{{display:inline-block;background:#e6f1fa;color:#063b63;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px;font-weight:950;margin-right:6px}}
-    @media(max-width:1100px){{.operation-steps,.decision-board{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+    @media(max-width:1100px){{.operation-steps,.decision-board,.order-cards{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
     @media(max-width:900px){{.quick-nav{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board{{grid-template-columns:1fr}}}}
+    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board,.order-cards{{grid-template-columns:1fr}}}}
   </style>
 </head>
 <body>
@@ -3247,7 +3293,11 @@ def build_html(
   <section id="today-order-ticket">
     <h2>本日注文票</h2>
     <p class="note">証券会社画面で見るための表です。本日実行額が0円の確認後候補はここに出しません。STOP行の条件に触れた場合は、全銘柄の新規買付を止めます。</p>
-    {html_table(today_order_ticket_rows, today_order_ticket_fields)}
+    {order_ticket_cards(today_order_ticket_rows)}
+    <details class="inline-detail">
+      <summary>詳細注文表・STOP条件を開く</summary>
+      {html_table(today_order_ticket_rows, today_order_ticket_fields)}
+    </details>
   </section>
 
   <section>
