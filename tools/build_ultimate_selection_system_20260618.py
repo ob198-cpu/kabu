@@ -3177,13 +3177,19 @@ def build_html(
     .op-card{{border:2px solid #6aa8ce;border-radius:12px;background:#f7fcff;padding:12px;min-height:132px}}
     .op-card b{{display:block;color:var(--navy);font-size:18px;margin-bottom:5px}}
     .op-card span{{display:block;font-weight:850;color:#253f58;font-size:14px}}
+    .decision-board{{display:grid;grid-template-columns:1.25fr repeat(3,minmax(0,1fr));gap:12px}}
+    .decision-card{{border:2px solid #6aa8ce;border-radius:14px;background:#f7fcff;padding:14px;min-height:128px}}
+    .decision-card b{{display:block;color:var(--navy);font-size:17px;margin-bottom:6px}}
+    .decision-card strong{{display:block;color:var(--blue);font-size:34px;line-height:1.2}}
+    .decision-card span{{display:block;color:#263e55;font-weight:850;font-size:15px}}
+    .decision-card.stop{{border-color:#d6a84d;background:#fff8e7}}
     details.archive-block{{background:#fff;border:2px dashed #9dbbd1;border-radius:14px;padding:14px;margin:0 0 16px}}
     details.archive-block > summary{{cursor:pointer;font-size:24px;font-weight:950;color:var(--navy);padding:8px 4px}}
     details.archive-block > .archive-intro{{margin:8px 0 14px;border-left:6px solid #9dbbd1;padding:8px 12px;background:#f6fbff;font-weight:850}}
     .priority-label{{display:inline-block;background:#e6f1fa;color:#063b63;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px;font-weight:950;margin-right:6px}}
-    @media(max-width:1100px){{.operation-steps{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+    @media(max-width:1100px){{.operation-steps,.decision-board{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
     @media(max-width:900px){{.quick-nav{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-    @media(max-width:560px){{.quick-nav,.operation-steps{{grid-template-columns:1fr}}}}
+    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board{{grid-template-columns:1fr}}}}
   </style>
 </head>
 <body>
@@ -3201,13 +3207,24 @@ def build_html(
       <div class="card"><b>生成時刻</b><strong>{esc(generated_at)}</strong><span>ローカル計算</span></div>
     </div>
     <div class="quick-nav">
-      <a href="#operation-flow">1. 操作順</a>
-      <a href="#action-cockpit">2. 今日の結論</a>
+      <a href="#daily-decision">1. 最短判断</a>
+      <a href="#operation-flow">2. 操作順</a>
       <a href="#today-order-ticket">3. 注文票</a>
       <a href="#trade-rules">4. 売買ルール</a>
       <a href="#archive-materials">5. 補足資料</a>
     </div>
     <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「実用コックピット」「本日注文票」「買付不足トリアージ」「実行サマリー」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
+  </section>
+
+  <section id="daily-decision">
+    <h2>今日の最短判断</h2>
+    <div class="decision-board">
+      <div class="decision-card stop"><b>最初に止める条件</b><strong>5つ確認</strong><span>本人NISA区分、本人操作、買付余力、市場急落、前日比+3%以上の高値追い。どれか不明なら注文しません。</span></div>
+      <div class="decision-card"><b>本日使う上限</b><strong>{yen(immediate_total)}</strong><span>初回候補・小口候補だけ。確認後候補は混ぜません。</span></div>
+      <div class="decision-card"><b>確認後に回す額</b><strong>{yen(conditional_total)}</strong><span>公式照合や未確認項目が消えるまで保留します。</span></div>
+      <div class="decision-card"><b>初回枠の現金待機</b><strong>{yen(reserve_total)}</strong><span>急落、未約定、再確認用に残します。</span></div>
+    </div>
+    <p class="note">このカードが今日の入口です。買付は「全候補を買う」ではなく、止める条件に触れず、注文票に出ているものだけを小さく扱います。</p>
   </section>
 
   <section id="operation-flow">
@@ -3237,21 +3254,6 @@ def build_html(
     <h2>買付不足トリアージ</h2>
     <p class="note">「不足がある」とだけ表示すると判断できないため、現配分候補ごとに、初回小口可、条件付き小口、確認後保留へ分けます。全額投入を止める理由と、後で埋める調査項目を分離します。</p>
     {html_table(buy_blocker_triage_rows, buy_blocker_fields)}
-  </section>
-
-  <section>
-    <h2>実行サマリー</h2>
-    <table>
-      <thead><tr><th>確認順</th><th>見るもの</th><th>現在の扱い</th><th>次の行動</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>本人NISA・買付余力・注文口座区分</td><td>証券会社画面で最終確認</td><td>NISA区分、残枠、入金、本人操作を確認。未確認なら注文しない。</td></tr>
-        <tr><td>2</td><td>市場全体</td><td>急落時は停止</td><td>日経平均またはTOPIXが当日-2%以上なら、その日の新規買付を止める。</td></tr>
-        <tr><td>3</td><td>初回候補・小口候補</td><td>{esc(immediate_names)}</td><td>合計上限 {yen(immediate_total)}。前日比+3%以上で始まる銘柄は追わない。</td></tr>
-        <tr><td>4</td><td>確認後候補</td><td>{esc(conditional_names)}</td><td>合計 {yen(conditional_total)} は、公式照合・未確認項目が解消するまで追加しない。</td></tr>
-        <tr><td>5</td><td>監視</td><td>{esc(watch_names)}</td><td>点数が近くても、確認が弱い間は買付表に混ぜない。</td></tr>
-      </tbody>
-    </table>
-    <p class="note">この画面の結論は「候補を全部買う」ではありません。初回は、条件を通った銘柄だけを小さく開始し、確認が弱い銘柄は現金待機に回す設計です。</p>
   </section>
 
   <section id="trade-rules">
@@ -3440,6 +3442,21 @@ def build_html(
   <details id="operation-support" class="archive-block">
     <summary>運用補助・記録・リスク確認（必要時だけ開く）</summary>
     <p class="archive-intro">普段は上の操作順、実用コックピット、本日注文票、銘柄別売買ルールを見ます。ここは、記録を残す時、実行ゲートを再確認する時、リスク表や共通ルールを説明する時だけ開きます。</p>
+
+  <section>
+    <h2>実行サマリー</h2>
+    <table>
+      <thead><tr><th>確認順</th><th>見るもの</th><th>現在の扱い</th><th>次の行動</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>本人NISA・買付余力・注文口座区分</td><td>証券会社画面で最終確認</td><td>NISA区分、残枠、入金、本人操作を確認。未確認なら注文しない。</td></tr>
+        <tr><td>2</td><td>市場全体</td><td>急落時は停止</td><td>日経平均またはTOPIXが当日-2%以上なら、その日の新規買付を止める。</td></tr>
+        <tr><td>3</td><td>初回候補・小口候補</td><td>{esc(immediate_names)}</td><td>合計上限 {yen(immediate_total)}。前日比+3%以上で始まる銘柄は追わない。</td></tr>
+        <tr><td>4</td><td>確認後候補</td><td>{esc(conditional_names)}</td><td>合計 {yen(conditional_total)} は、公式照合・未確認項目が解消するまで追加しない。</td></tr>
+        <tr><td>5</td><td>監視</td><td>{esc(watch_names)}</td><td>点数が近くても、確認が弱い間は買付表に混ぜない。</td></tr>
+      </tbody>
+    </table>
+    <p class="note">この画面の結論は「候補を全部買う」ではありません。初回は、条件を通った銘柄だけを小さく開始し、確認が弱い銘柄は現金待機に回す設計です。</p>
+  </section>
 
   <section>
     <h2>19日以降の実行ゲート</h2>
