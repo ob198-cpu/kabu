@@ -3170,6 +3170,15 @@ def build_html(
     .bad{{color:var(--red);font-weight:900}}
     .ok{{color:var(--green);font-weight:900}}
     .links a{{display:inline-block;margin:4px 8px 4px 0;padding:8px 12px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--navy);font-weight:900;background:#fbfdff}}
+    .quick-nav{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}}
+    .quick-nav a{{display:block;border:1px solid #8db9d8;border-radius:10px;padding:12px;text-decoration:none;background:#fff;color:var(--navy);font-weight:950;text-align:center}}
+    .ops-note{{border:2px solid #6aa8ce;background:#f2f9ff;border-radius:10px;padding:12px;font-weight:950;margin-top:12px}}
+    details.archive-block{{background:#fff;border:2px dashed #9dbbd1;border-radius:14px;padding:14px;margin:0 0 16px}}
+    details.archive-block > summary{{cursor:pointer;font-size:24px;font-weight:950;color:var(--navy);padding:8px 4px}}
+    details.archive-block > .archive-intro{{margin:8px 0 14px;border-left:6px solid #9dbbd1;padding:8px 12px;background:#f6fbff;font-weight:850}}
+    .priority-label{{display:inline-block;background:#e6f1fa;color:#063b63;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px;font-weight:950;margin-right:6px}}
+    @media(max-width:900px){{.quick-nav{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+    @media(max-width:560px){{.quick-nav{{grid-template-columns:1fr}}}}
   </style>
 </head>
 <body>
@@ -3186,6 +3195,13 @@ def build_html(
       <div class="card"><b>初回枠</b><strong>{yen(INITIAL_BUY_CAP_YEN)}</strong><span>イベント注意時15%</span></div>
       <div class="card"><b>生成時刻</b><strong>{esc(generated_at)}</strong><span>ローカル計算</span></div>
     </div>
+    <div class="quick-nav">
+      <a href="#action-cockpit">1. 今日の結論</a>
+      <a href="#today-order-ticket">2. 注文票</a>
+      <a href="#trade-rules">3. 売買ルール</a>
+      <a href="#archive-materials">4. 補足資料</a>
+    </div>
+    <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「実用コックピット」「本日注文票」「買付不足トリアージ」「実行サマリー」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
   </section>
 
   <section id="action-cockpit">
@@ -3200,7 +3216,7 @@ def build_html(
     {html_table(structural_gate_rows, structural_gate_fields)}
   </section>
 
-  <section>
+  <section id="today-order-ticket">
     <h2>本日注文票</h2>
     <p class="note">証券会社画面で見るための表です。本日実行額が0円の確認後候補はここに出しません。STOP行の条件に触れた場合は、全銘柄の新規買付を止めます。</p>
     {html_table(today_order_ticket_rows, today_order_ticket_fields)}
@@ -3226,6 +3242,10 @@ def build_html(
     </table>
     <p class="note">この画面の結論は「候補を全部買う」ではありません。初回は、条件を通った銘柄だけを小さく開始し、確認が弱い銘柄は現金待機に回す設計です。</p>
   </section>
+
+  <details id="archive-materials" class="archive-block">
+    <summary>補足資料・監査ログ（必要時だけ開く）</summary>
+    <p class="archive-intro">ここは普段の運用では開かなくてよい領域です。計算根拠、母集団監査、スコア分解、期待値監査、予実差レビューなど、説明や検算が必要な時だけ確認します。</p>
 
   <section>
     <h2>計算の流れ</h2>
@@ -3392,6 +3412,8 @@ def build_html(
     {html_table(model_revision_rows, model_revision_fields)}
   </section>
 
+  </details>
+
   <section>
     <h2>19日以降の実行ゲート</h2>
     <div class="cards">
@@ -3429,7 +3451,7 @@ def build_html(
     {html_table(risk_scenarios, risk_fields)}
   </section>
 
-  <section>
+  <section id="trade-rules">
     <h2>銘柄別 売買ルール</h2>
     <p class="note">共通ルールだけでなく、各銘柄の扱い、下値確認ライン、上値確認ライン、未確認項目の有無に応じて行動を分けます。</p>
     {html_table(trade_rules, trade_rule_fields)}
@@ -3449,6 +3471,10 @@ def build_html(
       </tbody>
     </table>
   </section>
+
+  <details class="archive-block">
+    <summary>候補外・不足データ・CSV出力（必要時だけ開く）</summary>
+    <p class="archive-intro">ここは運用時の補足です。候補から外した理由、不足データ、各CSVへのリンクを確認するための領域です。</p>
 
   <section>
     <h2>上位10社のうち配分しない銘柄</h2>
@@ -3496,6 +3522,8 @@ def build_html(
     </div>
     <p class="note">この版は、渡された数式群を「量的・質的・イベント・期待値・配分制約」に分解して実装した初回統合版です。未取得の財務・ニュース・イベント長期履歴は信頼度を下げ、欠損表へ出します。</p>
   </section>
+
+  </details>
 </main>
 </body>
 </html>
