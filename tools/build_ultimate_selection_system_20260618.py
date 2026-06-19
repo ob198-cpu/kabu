@@ -54,6 +54,7 @@ OUT_ACTION_COCKPIT = ROOT / "ultimate_selection_action_cockpit_20260619.csv"
 OUT_BUY_BLOCKER_TRIAGE = ROOT / "ultimate_selection_buy_blocker_triage_20260619.csv"
 OUT_ALLOCATION_TRACE = ROOT / "ultimate_selection_allocation_trace_20260619.csv"
 OUT_TODAY_ORDER_TICKET = ROOT / "ultimate_selection_today_order_ticket_20260619.csv"
+OUT_STRUCTURAL_GATE = ROOT / "ultimate_selection_structural_gate_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1468,6 +1469,101 @@ def build_ultimate_requirement_matrix(rows: list[dict[str, object]], portfolio: 
     return rows_out
 
 
+def build_structural_gate(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    total = len(rows)
+    portfolio_count = len(portfolio)
+    price_count = sum(1 for r in rows if r.get("price") != "")
+    financial_pass = sum(1 for r in rows if r.get("financial_status") == "pass")
+    financial_partial = sum(1 for r in rows if r.get("financial_status") == "partial")
+    qualitative_ready = len({r.get("ticker", "") for r in read_csv(QUAL_CSV) if r.get("ticker", "")})
+    event_ready = len(
+        {r.get("ticker", "") for r in read_csv(EVENT_CSV) if r.get("ticker", "")}
+        | {r.get("ticker", "") for r in read_csv(REACTION_CSV) if r.get("ticker", "")}
+        | {r.get("ticker", "") for r in read_csv(EVENT_VALIDATION_CSV) if r.get("ticker", "")}
+    )
+    ev_ready = sum(1 for r in rows if r.get("expected_value_pct") != "")
+
+    return [
+        {
+            "layer": "1. 候補母集団",
+            "required_structure": "業績成長、流動性、時価総額、テーマ適合で100社前後を作る",
+            "implementation_status": "PARTIAL",
+            "current_evidence": f"{total}社を母集団化。スコア計算対象としては利用可能。",
+            "can_use_for_buy_decision": "PARTIAL",
+            "buy_decision_usage": "候補探索の入口として使う。母集団外の銘柄を急に買付候補へ上げないための制御に使う。",
+            "blocking_gap": "時価総額、流動性、除外条件の完全な再現ルールはまだ固定し切っていない。",
+            "current_system_control": "母集団外、除外、監視の銘柄は初回買付候補へ上げない。",
+            "next_hardening_step": "母集団作成条件、入替日、除外理由をCSVで固定し、翌回以降も同じ条件で再現できるようにする。",
+        },
+        {
+            "layer": "2. 量的スコア",
+            "required_structure": "売上成長、利益成長、EPS、ROE、PER/PBR、FCF、営業利益率、自己資本、株価モメンタム、出来高、下落率、指数差",
+            "implementation_status": "PARTIAL",
+            "current_evidence": f"価格あり {price_count}/{total}社。公式財務pass {financial_pass}社、partial {financial_partial}社。CAGR、指数差、最大下落、PER/PBR/ROEの一部を使用。",
+            "can_use_for_buy_decision": "PARTIAL",
+            "buy_decision_usage": "順位付けと減額判断に使う。ただし未確認財務や補助値だけの銘柄は購入確定へ直結させない。",
+            "blocking_gap": "FCF、営業利益率、自己資本、出来高倍率の全社統一入力が未完成。",
+            "current_system_control": "未取得値は点数に混ぜず、信頼度・不足データ・買付停止理由へ分離する。",
+            "next_hardening_step": "公式決算PDF/短信からFCF、営業利益率、自己資本、出来高20日平均を埋め、スコア反映前後を監査表に残す。",
+        },
+        {
+            "layer": "3. 質的スコア",
+            "required_structure": "AI、半導体、電力、防衛、金利、資源、政策、新商品、業界シェア、構造優位をニュース・公式資料・過去反応で評価する",
+            "implementation_status": "PARTIAL",
+            "current_evidence": f"質的スコアあり {qualitative_ready}/{total}社。テーマ台帳、チャンネル比較、構造優位メモを使用。",
+            "can_use_for_buy_decision": "PARTIAL",
+            "buy_decision_usage": "量的スコアの補助、調査優先順位、テーマ崩れ時の減額条件に使う。単独では買付確定に使わない。",
+            "blocking_gap": "ニュース本文、公式資料、業界シェア、過去イベント反応の接続が銘柄ごとに完全ではない。",
+            "current_system_control": "仮説層だけの材料は監視・調査優先に留め、実績層がない場合は買付比率を上げない。",
+            "next_hardening_step": "仮説層、実績層、公式資料、過去反応を分けた質的イベント台帳を増やす。",
+        },
+        {
+            "layer": "4. イベント検証",
+            "required_structure": "決算、上方修正、TOB、新製品、政策、金利、為替、戦争、商品市況後に株価がどう動いたかを見る",
+            "implementation_status": "PARTIAL",
+            "current_evidence": f"イベントスコアあり {event_ready}/{total}社。決算後反応、6月イベント、イベント反応検証CSVを使用。",
+            "can_use_for_buy_decision": "PARTIAL",
+            "buy_decision_usage": "買付日、追加可否、減額条件に使う。イベント未接続なら初回比率を下げる。",
+            "blocking_gap": "TOB、新製品、政策、戦争、商品市況の長期イベント履歴DBは未完成。",
+            "current_system_control": "イベント未接続または悪化は、追加入金停止・確認後候補へ落とす。",
+            "next_hardening_step": "イベント種別、発生日、対象銘柄、D+1/D+5/D+20超過リターンを継続蓄積する。",
+        },
+        {
+            "layer": "5. 期待値",
+            "required_structure": "期待値 = 上昇確率 × 上昇幅 - 下落確率 × 下落幅 - コスト",
+            "implementation_status": "YES",
+            "current_evidence": f"期待値入力あり {ev_ready}/{total}社。expected_value_pct、up_probability、upside、downside、costを出力。",
+            "can_use_for_buy_decision": "PARTIAL",
+            "buy_decision_usage": "銘柄間の相対比較と配分の補助に使う。勝率保証としては使わない。",
+            "blocking_gap": "上昇確率と上下幅は検証用仮説で、予実差レビューによる校正が必要。",
+            "current_system_control": "期待値が高くても、財務・イベント・価格ゲートを通らなければ購入確定にしない。",
+            "next_hardening_step": "D+20、3か月、1年レビューで実績を入れ、確率と上下幅を更新する。",
+        },
+        {
+            "layer": "6. ポートフォリオ最適化",
+            "required_structure": "相関、業種偏り、最大下落、1銘柄比率、現金比率を制約にして配分する",
+            "implementation_status": "YES",
+            "current_evidence": f"配分対象 {portfolio_count}社。株式{TARGET_STOCK_EXPOSURE_PCT:.1f}%、現金{CASH_RESERVE_PCT:.1f}%、1銘柄上限{MAX_SINGLE_STOCK_SLEEVE_PCT:.1f}%、業種上限{MAX_SECTOR_COUNT}社。",
+            "can_use_for_buy_decision": "YES",
+            "buy_decision_usage": "初回金額、1銘柄上限、業種集中回避、現金待機の決定に使う。",
+            "blocking_gap": "相関は実測とproxyが混在。全社日次相関DBは追加余地あり。",
+            "current_system_control": "集中しすぎる銘柄・業種は上限で抑え、未確認分は現金待機または小口にする。",
+            "next_hardening_step": "日次/週次リターンから実測相関を再計算し、proxy依存を減らす。",
+        },
+        {
+            "layer": "7. 買わない・減額条件",
+            "required_structure": "市場急落、指数劣後、テーマ崩れ、決算失望、円高、金利急騰、出来高急増下落を明文化する",
+            "implementation_status": "YES",
+            "current_evidence": "no-buy gate、execution plan、trade rules、review resultに接続済み。",
+            "can_use_for_buy_decision": "YES",
+            "buy_decision_usage": "買付停止、追加停止、減額、現金待機、再審査の実行条件に使う。",
+            "blocking_gap": "実売買ログ入力後に、ルールが過剰停止・過少停止になっていないか検証が必要。",
+            "current_system_control": "市場急落、指数劣後、未確認財務、イベント悪化は買付停止または減額にする。",
+            "next_hardening_step": "実行ログと予実差レビューを入れ、停止条件の有効性を月次で検証する。",
+        },
+    ]
+
+
 def build_purchase_readiness_gate(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
     portfolio_tickers = {str(r.get("ticker", "")) for r in portfolio}
     candidates = [r for r in rows[:20] if str(r.get("ticker", "")) in portfolio_tickers or str(r.get("action", "")) != "監視"]
@@ -2643,6 +2739,7 @@ def build_html(
     universe_audit_rows: list[dict[str, object]],
     expected_value_audit_rows: list[dict[str, object]],
     action_cockpit_rows: list[dict[str, object]],
+    structural_gate_rows: list[dict[str, object]],
     buy_blocker_triage_rows: list[dict[str, object]],
     allocation_trace_rows: list[dict[str, object]],
     score_trace_rows: list[dict[str, object]],
@@ -2692,6 +2789,17 @@ def build_html(
         ("current_status", "現在の状態"),
         ("action", "実行すること"),
         ("stop_or_next", "止める条件・次の処理"),
+    ]
+    structural_gate_fields = [
+        ("layer", "層"),
+        ("required_structure", "必要な構造"),
+        ("implementation_status", "実装状況"),
+        ("current_evidence", "現在の根拠"),
+        ("can_use_for_buy_decision", "買付判断への使用"),
+        ("buy_decision_usage", "実際の使い方"),
+        ("blocking_gap", "残る穴"),
+        ("current_system_control", "現在の制御"),
+        ("next_hardening_step", "次の強化"),
     ]
     buy_blocker_fields = [
         ("rank", "順位"),
@@ -3086,6 +3194,12 @@ def build_html(
     {html_table(action_cockpit_rows, action_cockpit_fields)}
   </section>
 
+  <section id="structural-gate">
+    <h2>究極構造ゲート</h2>
+    <p class="note">7層構造を「買付判断に使えるか」で監査します。YESは実行条件に使用、PARTIALは補助または減額条件まで、NOは買付判断に使わない扱いです。未検証の仮説や未取得データが、そのまま購入根拠に混ざることを防ぎます。</p>
+    {html_table(structural_gate_rows, structural_gate_fields)}
+  </section>
+
   <section>
     <h2>本日注文票</h2>
     <p class="note">証券会社画面で見るための表です。本日実行額が0円の確認後候補はここに出しません。STOP行の条件に触れた場合は、全銘柄の新規買付を止めます。</p>
@@ -3352,6 +3466,7 @@ def build_html(
     <div class="links">
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_action_cockpit_20260619.csv">実用コックピットCSV</a>
+      <a href="ultimate_selection_structural_gate_20260619.csv">究極構造ゲートCSV</a>
       <a href="ultimate_selection_today_order_ticket_20260619.csv">本日注文票CSV</a>
       <a href="ultimate_selection_buy_blocker_triage_20260619.csv">買付不足トリアージCSV</a>
       <a href="ultimate_selection_allocation_trace_20260619.csv">配分計算監査CSV</a>
@@ -3414,6 +3529,7 @@ def main() -> None:
     expected_value_audit_rows = build_expected_value_audit(rows, portfolio)
     score_trace_rows = build_score_trace(rows)
     action_cockpit_rows = build_action_cockpit(portfolio, execution, missing, benchmark_allocation_rows)
+    structural_gate_rows = build_structural_gate(rows, portfolio)
     buy_blocker_triage_rows = build_buy_blocker_triage(portfolio, purchase_readiness_rows)
     allocation_trace_rows = build_allocation_trace(portfolio)
     write_csv(OUT_SCORE, rows)
@@ -3442,6 +3558,7 @@ def main() -> None:
     write_csv(OUT_EXPECTED_VALUE_AUDIT, expected_value_audit_rows)
     write_csv(OUT_SCORE_TRACE, score_trace_rows)
     write_csv(OUT_ACTION_COCKPIT, action_cockpit_rows)
+    write_csv(OUT_STRUCTURAL_GATE, structural_gate_rows)
     write_csv(OUT_BUY_BLOCKER_TRIAGE, buy_blocker_triage_rows)
     write_csv(OUT_ALLOCATION_TRACE, allocation_trace_rows)
     OUT_HTML.write_text(
@@ -3471,6 +3588,7 @@ def main() -> None:
             universe_audit_rows,
             expected_value_audit_rows,
             action_cockpit_rows,
+            structural_gate_rows,
             buy_blocker_triage_rows,
             allocation_trace_rows,
             score_trace_rows,
@@ -3486,6 +3604,7 @@ def main() -> None:
     print(f"Trade rules: {OUT_TRADE_RULES}")
     print(f"Day checklist: {OUT_DAY_CHECKLIST}")
     print(f"Today order ticket: {OUT_TODAY_ORDER_TICKET}")
+    print(f"Structural gate: {OUT_STRUCTURAL_GATE}")
     print(f"Correlation risk: {OUT_CORRELATION}")
     print(f"Constraints: {OUT_CONSTRAINTS}")
     print(f"Architecture audit: {OUT_ARCHITECTURE_AUDIT}")
