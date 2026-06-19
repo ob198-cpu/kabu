@@ -3173,12 +3173,17 @@ def build_html(
     .quick-nav{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}}
     .quick-nav a{{display:block;border:1px solid #8db9d8;border-radius:10px;padding:12px;text-decoration:none;background:#fff;color:var(--navy);font-weight:950;text-align:center}}
     .ops-note{{border:2px solid #6aa8ce;background:#f2f9ff;border-radius:10px;padding:12px;font-weight:950;margin-top:12px}}
+    .operation-steps{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}}
+    .op-card{{border:2px solid #6aa8ce;border-radius:12px;background:#f7fcff;padding:12px;min-height:132px}}
+    .op-card b{{display:block;color:var(--navy);font-size:18px;margin-bottom:5px}}
+    .op-card span{{display:block;font-weight:850;color:#253f58;font-size:14px}}
     details.archive-block{{background:#fff;border:2px dashed #9dbbd1;border-radius:14px;padding:14px;margin:0 0 16px}}
     details.archive-block > summary{{cursor:pointer;font-size:24px;font-weight:950;color:var(--navy);padding:8px 4px}}
     details.archive-block > .archive-intro{{margin:8px 0 14px;border-left:6px solid #9dbbd1;padding:8px 12px;background:#f6fbff;font-weight:850}}
     .priority-label{{display:inline-block;background:#e6f1fa;color:#063b63;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px;font-weight:950;margin-right:6px}}
+    @media(max-width:1100px){{.operation-steps{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
     @media(max-width:900px){{.quick-nav{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-    @media(max-width:560px){{.quick-nav{{grid-template-columns:1fr}}}}
+    @media(max-width:560px){{.quick-nav,.operation-steps{{grid-template-columns:1fr}}}}
   </style>
 </head>
 <body>
@@ -3204,16 +3209,21 @@ def build_html(
     <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「実用コックピット」「本日注文票」「買付不足トリアージ」「実行サマリー」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
   </section>
 
+  <section>
+    <h2>今日の操作順</h2>
+    <div class="operation-steps">
+      <div class="op-card"><b>1. 止める条件</b><span>本人NISA区分、本人操作、買付余力、市場急落、前日比+3%以上の高値追いを確認。ここで引っかかれば買いません。</span></div>
+      <div class="op-card"><b>2. 買う候補</b><span>実用コックピットで初回候補・小口候補・確認後候補を分けて確認します。全銘柄を無理に買いません。</span></div>
+      <div class="op-card"><b>3. 注文票</b><span>本日注文票で金額、株数、指値目安、追わない価格を確認してから証券会社画面へ移ります。</span></div>
+      <div class="op-card"><b>4. 記録</b><span>買った価格、買わなかった理由、次に見る日を注文ログに残します。記録できない場合は追加買付へ進みません。</span></div>
+      <div class="op-card"><b>5. 保有中ルール</b><span>上値、下値、追加、停止、途中決済は銘柄別売買ルールで確認します。</span></div>
+    </div>
+  </section>
+
   <section id="action-cockpit">
     <h2>実用コックピット</h2>
     <p class="note">毎日見る前提の要約です。候補名、初回上限、保留理由、現金待機、止める条件を1枚にまとめます。ここで止まる条件が出た場合は、ランキングが高くても買付に進みません。</p>
     {html_table(action_cockpit_rows, action_cockpit_fields)}
-  </section>
-
-  <section id="structural-gate">
-    <h2>究極構造ゲート</h2>
-    <p class="note">7層構造を「買付判断に使えるか」で監査します。YESは実行条件に使用、PARTIALは補助または減額条件まで、NOは買付判断に使わない扱いです。未検証の仮説や未取得データが、そのまま購入根拠に混ざることを防ぎます。</p>
-    {html_table(structural_gate_rows, structural_gate_fields)}
   </section>
 
   <section id="today-order-ticket">
@@ -3246,6 +3256,12 @@ def build_html(
   <details id="archive-materials" class="archive-block">
     <summary>補足資料・監査ログ（必要時だけ開く）</summary>
     <p class="archive-intro">ここは普段の運用では開かなくてよい領域です。計算根拠、母集団監査、スコア分解、期待値監査、予実差レビューなど、説明や検算が必要な時だけ確認します。</p>
+
+  <section id="structural-gate">
+    <h2>究極構造ゲート</h2>
+    <p class="note">7層構造を「買付判断に使えるか」で監査します。YESは実行条件に使用、PARTIALは補助または減額条件まで、NOは買付判断に使わない扱いです。未検証の仮説や未取得データが、そのまま購入根拠に混ざることを防ぎます。</p>
+    {html_table(structural_gate_rows, structural_gate_fields)}
+  </section>
 
   <section>
     <h2>計算の流れ</h2>
