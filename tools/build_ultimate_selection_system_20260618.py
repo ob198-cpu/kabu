@@ -2772,6 +2772,45 @@ def action_cockpit_cards(rows: list[dict[str, object]]) -> str:
     return '<div class="cockpit-cards">' + "\n".join(cards) + "\n    </div>"
 
 
+def buy_blocker_cards(rows: list[dict[str, object]]) -> str:
+    cards: list[str] = []
+    for row in rows:
+        rank = esc(row.get("rank", ""))
+        ticker = esc(row.get("ticker", ""))
+        name = esc(row.get("name", ""))
+        permission = esc(row.get("permission", ""))
+        initial_yen = yen(to_float(row.get("initial_buy_yen"), 0))
+        financial_gap = esc(row.get("financial_gap", ""))
+        event_gap = esc(row.get("event_gap", ""))
+        qualitative_gap = esc(row.get("qualitative_gap", ""))
+        critical_blocker = esc(row.get("critical_blocker", ""))
+        amount_policy = esc(row.get("amount_policy", ""))
+        next_action = esc(row.get("next_action", ""))
+        cards.append(
+            f"""
+      <div class="triage-card">
+        <div class="triage-head"><b>{rank}. {ticker}</b><span>{name}</span></div>
+        <p class="triage-permission">{permission}</p>
+        <div class="triage-metrics">
+          <div><b>{initial_yen}</b><span>初回候補額</span></div>
+          <div><b>{financial_gap}</b><span>財務確認</span></div>
+        </div>
+        <p class="triage-gap">{event_gap} / {qualitative_gap}</p>
+        <details class="triage-more">
+          <summary>停止理由・金額方針・次アクションを見る</summary>
+          <dl>
+            <dt>全額を止める理由</dt><dd>{critical_blocker}</dd>
+            <dt>金額方針</dt><dd>{amount_policy}</dd>
+            <dt>次アクション</dt><dd>{next_action}</dd>
+          </dl>
+        </details>
+      </div>"""
+        )
+    if not cards:
+        return '<p class="note">買付不足トリアージの表示対象がありません。</p>'
+    return '<div class="triage-cards">' + "\n".join(cards) + "\n    </div>"
+
+
 def build_html(
     rows: list[dict[str, object]],
     portfolio: list[dict[str, object]],
@@ -3251,6 +3290,22 @@ def build_html(
     .cockpit-more dl{{margin:8px 0 0}}
     .cockpit-more dt{{font-weight:950;color:var(--navy);font-size:13px;margin-top:8px}}
     .cockpit-more dd{{margin:2px 0 0;font-size:13px;font-weight:850;color:#263e55}}
+    .triage-cards{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}}
+    .triage-card{{border:2px solid #d4e2ed;border-radius:14px;background:#fff;padding:14px}}
+    .triage-head{{display:flex;gap:10px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}}
+    .triage-head b{{color:var(--navy);font-size:20px}}
+    .triage-head span{{font-weight:950;color:#263e55}}
+    .triage-permission{{display:inline-block;margin:0 0 8px;padding:4px 10px;border-radius:999px;background:#e6f1fa;color:#063b63;font-weight:950}}
+    .triage-metrics{{display:grid;grid-template-columns:1fr 1.45fr;gap:8px}}
+    .triage-metrics div{{border:1px solid var(--line);border-radius:10px;background:#f6fbff;padding:8px}}
+    .triage-metrics b{{display:block;font-size:17px;color:var(--blue)}}
+    .triage-metrics span{{display:block;font-size:12px;font-weight:900;color:#526b82}}
+    .triage-gap{{margin:10px 0;font-size:14px;font-weight:900;color:#263e55}}
+    .triage-more{{border-top:1px solid var(--line);padding-top:8px}}
+    .triage-more summary{{cursor:pointer;color:var(--blue);font-weight:950}}
+    .triage-more dl{{margin:8px 0 0}}
+    .triage-more dt{{font-weight:950;color:var(--navy);font-size:13px;margin-top:8px}}
+    .triage-more dd{{margin:2px 0 0;font-size:13px;font-weight:850;color:#263e55}}
     .order-cards{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}}
     .order-card{{border:2px solid #9dbbd1;border-radius:14px;background:#fbfdff;padding:14px}}
     .order-head{{display:flex;gap:10px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}}
@@ -3268,9 +3323,9 @@ def build_html(
     details.archive-block > summary{{cursor:pointer;font-size:24px;font-weight:950;color:var(--navy);padding:8px 4px}}
     details.archive-block > .archive-intro{{margin:8px 0 14px;border-left:6px solid #9dbbd1;padding:8px 12px;background:#f6fbff;font-weight:850}}
     .priority-label{{display:inline-block;background:#e6f1fa;color:#063b63;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px;font-weight:950;margin-right:6px}}
-    @media(max-width:1100px){{.operation-steps,.decision-board,.cockpit-cards,.order-cards{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+    @media(max-width:1100px){{.operation-steps,.decision-board,.cockpit-cards,.triage-cards,.order-cards{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
     @media(max-width:900px){{.quick-nav{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board,.cockpit-cards,.order-cards{{grid-template-columns:1fr}}}}
+    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board,.cockpit-cards,.triage-cards,.order-cards{{grid-template-columns:1fr}}}}
   </style>
 </head>
 <body>
@@ -3339,10 +3394,14 @@ def build_html(
     </details>
   </section>
 
-  <section>
+  <section id="buy-blocker-triage">
     <h2>買付不足トリアージ</h2>
     <p class="note">「不足がある」とだけ表示すると判断できないため、現配分候補ごとに、初回小口可、条件付き小口、確認後保留へ分けます。全額投入を止める理由と、後で埋める調査項目を分離します。</p>
-    {html_table(buy_blocker_triage_rows, buy_blocker_fields)}
+    {buy_blocker_cards(buy_blocker_triage_rows)}
+    <details class="inline-detail">
+      <summary>詳細トリアージ表を開く</summary>
+      {html_table(buy_blocker_triage_rows, buy_blocker_fields)}
+    </details>
   </section>
 
   <section id="trade-rules">
