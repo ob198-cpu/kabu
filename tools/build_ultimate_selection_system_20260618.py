@@ -2811,6 +2811,47 @@ def buy_blocker_cards(rows: list[dict[str, object]]) -> str:
     return '<div class="triage-cards">' + "\n".join(cards) + "\n    </div>"
 
 
+def trade_rule_cards(rows: list[dict[str, object]]) -> str:
+    cards: list[str] = []
+    for row in rows:
+        ticker = esc(row.get("ticker", ""))
+        name = esc(row.get("name", ""))
+        status = esc(row.get("status", ""))
+        current_price = esc(row.get("current_price_yen", ""))
+        initial_buy = esc(row.get("initial_buy_yen", ""))
+        do_not_chase = esc(row.get("do_not_chase", ""))
+        profit_rule = esc(row.get("profit_rule", ""))
+        stop_rule = esc(row.get("stop_rule", ""))
+        buy_rule = esc(row.get("buy_rule", ""))
+        add_rule = esc(row.get("add_rule", ""))
+        cards.append(
+            f"""
+      <div class="rule-card">
+        <div class="rule-head"><b>{ticker}</b><span>{name}</span></div>
+        <p class="rule-status">{status}</p>
+        <div class="rule-metrics">
+          <div><b>{current_price}</b><span>現在値</span></div>
+          <div><b>{initial_buy}</b><span>初回候補額</span></div>
+        </div>
+        <ul class="rule-list">
+          <li><b>追わない:</b> {do_not_chase}</li>
+          <li><b>上値:</b> {profit_rule}</li>
+          <li><b>下値:</b> {stop_rule}</li>
+        </ul>
+        <details class="rule-more">
+          <summary>買付・追加ルールを見る</summary>
+          <dl>
+            <dt>買付ルール</dt><dd>{buy_rule}</dd>
+            <dt>追加ルール</dt><dd>{add_rule}</dd>
+          </dl>
+        </details>
+      </div>"""
+        )
+    if not cards:
+        return '<p class="note">銘柄別売買ルールの表示対象がありません。</p>'
+    return '<div class="rule-cards">' + "\n".join(cards) + "\n    </div>"
+
+
 def build_html(
     rows: list[dict[str, object]],
     portfolio: list[dict[str, object]],
@@ -3306,6 +3347,23 @@ def build_html(
     .triage-more dl{{margin:8px 0 0}}
     .triage-more dt{{font-weight:950;color:var(--navy);font-size:13px;margin-top:8px}}
     .triage-more dd{{margin:2px 0 0;font-size:13px;font-weight:850;color:#263e55}}
+    .rule-cards{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px}}
+    .rule-card{{border:2px solid #9dbbd1;border-radius:14px;background:#fbfdff;padding:14px}}
+    .rule-head{{display:flex;gap:10px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}}
+    .rule-head b{{color:var(--navy);font-size:21px}}
+    .rule-head span{{font-weight:950;color:#263e55}}
+    .rule-status{{display:inline-block;margin:0 0 8px;padding:4px 10px;border-radius:999px;background:#e6f1fa;color:#063b63;font-weight:950}}
+    .rule-metrics{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+    .rule-metrics div{{border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px}}
+    .rule-metrics b{{display:block;font-size:18px;color:var(--blue)}}
+    .rule-metrics span{{display:block;font-size:12px;font-weight:900;color:#526b82}}
+    .rule-list{{margin:10px 0;padding-left:20px;font-size:14px;font-weight:850;color:#263e55}}
+    .rule-list li{{margin:4px 0}}
+    .rule-more{{border-top:1px solid var(--line);padding-top:8px}}
+    .rule-more summary{{cursor:pointer;color:var(--blue);font-weight:950}}
+    .rule-more dl{{margin:8px 0 0}}
+    .rule-more dt{{font-weight:950;color:var(--navy);font-size:13px;margin-top:8px}}
+    .rule-more dd{{margin:2px 0 0;font-size:13px;font-weight:850;color:#263e55}}
     .order-cards{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}}
     .order-card{{border:2px solid #9dbbd1;border-radius:14px;background:#fbfdff;padding:14px}}
     .order-head{{display:flex;gap:10px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}}
@@ -3323,9 +3381,9 @@ def build_html(
     details.archive-block > summary{{cursor:pointer;font-size:24px;font-weight:950;color:var(--navy);padding:8px 4px}}
     details.archive-block > .archive-intro{{margin:8px 0 14px;border-left:6px solid #9dbbd1;padding:8px 12px;background:#f6fbff;font-weight:850}}
     .priority-label{{display:inline-block;background:#e6f1fa;color:#063b63;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px;font-weight:950;margin-right:6px}}
-    @media(max-width:1100px){{.operation-steps,.decision-board,.cockpit-cards,.triage-cards,.order-cards{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+    @media(max-width:1100px){{.operation-steps,.decision-board,.cockpit-cards,.triage-cards,.rule-cards,.order-cards{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
     @media(max-width:900px){{.quick-nav{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board,.cockpit-cards,.triage-cards,.order-cards{{grid-template-columns:1fr}}}}
+    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board,.cockpit-cards,.triage-cards,.rule-cards,.order-cards{{grid-template-columns:1fr}}}}
   </style>
 </head>
 <body>
@@ -3407,7 +3465,11 @@ def build_html(
   <section id="trade-rules">
     <h2>銘柄別 売買ルール</h2>
     <p class="note">普段はここまで見れば十分です。各銘柄の扱い、下値確認ライン、上値確認ライン、未確認項目の有無に応じて行動を分けます。</p>
-    {html_table(trade_rules, trade_rule_fields)}
+    {trade_rule_cards(trade_rules)}
+    <details class="inline-detail">
+      <summary>詳細売買ルール表を開く</summary>
+      {html_table(trade_rules, trade_rule_fields)}
+    </details>
   </section>
 
   <details id="archive-materials" class="archive-block">
