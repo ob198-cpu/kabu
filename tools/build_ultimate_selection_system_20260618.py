@@ -2746,6 +2746,32 @@ def order_ticket_cards(rows: list[dict[str, object]]) -> str:
     return '<div class="order-cards">' + "\n".join(cards) + "\n    </div>"
 
 
+def action_cockpit_cards(rows: list[dict[str, object]]) -> str:
+    cards: list[str] = []
+    for row in rows:
+        block = esc(row.get("block", ""))
+        current_status = esc(row.get("current_status", ""))
+        action = esc(row.get("action", ""))
+        stop_or_next = esc(row.get("stop_or_next", ""))
+        cards.append(
+            f"""
+      <div class="cockpit-card">
+        <b>{block}</b>
+        <p class="cockpit-state">{current_status}</p>
+        <details class="cockpit-more">
+          <summary>実行内容と停止条件を見る</summary>
+          <dl>
+            <dt>実行すること</dt><dd>{action}</dd>
+            <dt>止める条件・次の処理</dt><dd>{stop_or_next}</dd>
+          </dl>
+        </details>
+      </div>"""
+        )
+    if not cards:
+        return '<p class="note">実用コックピットの表示対象がありません。</p>'
+    return '<div class="cockpit-cards">' + "\n".join(cards) + "\n    </div>"
+
+
 def build_html(
     rows: list[dict[str, object]],
     portfolio: list[dict[str, object]],
@@ -3216,6 +3242,15 @@ def build_html(
     .decision-card strong{{display:block;color:var(--blue);font-size:34px;line-height:1.2}}
     .decision-card span{{display:block;color:#263e55;font-weight:850;font-size:15px}}
     .decision-card.stop{{border-color:#d6a84d;background:#fff8e7}}
+    .cockpit-cards{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}}
+    .cockpit-card{{border:2px solid #9dbbd1;border-radius:14px;background:#fbfdff;padding:14px}}
+    .cockpit-card b{{display:block;color:var(--navy);font-size:20px;margin-bottom:8px}}
+    .cockpit-state{{margin:0 0 10px;font-size:15px;font-weight:900;color:#253f58}}
+    .cockpit-more{{border-top:1px solid var(--line);padding-top:8px}}
+    .cockpit-more summary{{cursor:pointer;color:var(--blue);font-weight:950}}
+    .cockpit-more dl{{margin:8px 0 0}}
+    .cockpit-more dt{{font-weight:950;color:var(--navy);font-size:13px;margin-top:8px}}
+    .cockpit-more dd{{margin:2px 0 0;font-size:13px;font-weight:850;color:#263e55}}
     .order-cards{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}}
     .order-card{{border:2px solid #9dbbd1;border-radius:14px;background:#fbfdff;padding:14px}}
     .order-head{{display:flex;gap:10px;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}}
@@ -3233,9 +3268,9 @@ def build_html(
     details.archive-block > summary{{cursor:pointer;font-size:24px;font-weight:950;color:var(--navy);padding:8px 4px}}
     details.archive-block > .archive-intro{{margin:8px 0 14px;border-left:6px solid #9dbbd1;padding:8px 12px;background:#f6fbff;font-weight:850}}
     .priority-label{{display:inline-block;background:#e6f1fa;color:#063b63;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px;font-weight:950;margin-right:6px}}
-    @media(max-width:1100px){{.operation-steps,.decision-board,.order-cards{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+    @media(max-width:1100px){{.operation-steps,.decision-board,.cockpit-cards,.order-cards{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
     @media(max-width:900px){{.quick-nav{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board,.order-cards{{grid-template-columns:1fr}}}}
+    @media(max-width:560px){{.quick-nav,.operation-steps,.decision-board,.cockpit-cards,.order-cards{{grid-template-columns:1fr}}}}
   </style>
 </head>
 <body>
@@ -3287,7 +3322,11 @@ def build_html(
   <section id="action-cockpit">
     <h2>実用コックピット</h2>
     <p class="note">毎日見る前提の要約です。候補名、初回上限、保留理由、現金待機、止める条件を1枚にまとめます。ここで止まる条件が出た場合は、ランキングが高くても買付に進みません。</p>
-    {html_table(action_cockpit_rows, action_cockpit_fields)}
+    {action_cockpit_cards(action_cockpit_rows)}
+    <details class="inline-detail">
+      <summary>詳細コックピット表を開く</summary>
+      {html_table(action_cockpit_rows, action_cockpit_fields)}
+    </details>
   </section>
 
   <section id="today-order-ticket">
