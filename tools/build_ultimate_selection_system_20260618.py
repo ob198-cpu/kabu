@@ -52,6 +52,7 @@ OUT_EXPECTED_VALUE_AUDIT = ROOT / "ultimate_selection_expected_value_audit_20260
 OUT_SCORE_TRACE = ROOT / "ultimate_selection_score_trace_20260619.csv"
 OUT_ACTION_COCKPIT = ROOT / "ultimate_selection_action_cockpit_20260619.csv"
 OUT_BUY_BLOCKER_TRIAGE = ROOT / "ultimate_selection_buy_blocker_triage_20260619.csv"
+OUT_ALLOCATION_TRACE = ROOT / "ultimate_selection_allocation_trace_20260619.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -648,17 +649,24 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
         sector_counts[sector] += 1
 
     raw_weights = []
+    allocation_multipliers = []
+    allocation_caps = []
     for r in selected:
         score = float(r["final_score"])
         ev = max(float(r["expected_value_pct"]), 0.0)
+        action_multiplier = 1.0
         raw = max(score - 45, 1) * (1 + ev / 30)
         if r["action"] == "小口または監視":
-            raw *= 0.55
+            action_multiplier = 0.55
+            raw *= action_multiplier
         if r["action"] == "小口":
-            raw *= 0.70
+            action_multiplier = 0.70
+            raw *= action_multiplier
         if r["action"] == "調査優先":
-            raw *= 0.65
+            action_multiplier = 0.65
+            raw *= action_multiplier
         raw_weights.append(raw)
+        allocation_multipliers.append(action_multiplier)
     total_raw = sum(raw_weights) or 1
 
     capped = []
@@ -668,6 +676,7 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
             cap = 0.08
         if r["action"] == "調査優先":
             cap = 0.10
+        allocation_caps.append(cap)
         capped.append(min(raw / total_raw, cap))
 
     for _ in range(8):
@@ -697,6 +706,7 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
     total = sum(capped) or 1
     portfolio: list[dict[str, object]] = []
     for rank, (r, w) in enumerate(zip(selected, capped), start=1):
+        idx = rank - 1
         sleeve_weight = w / total
         total_weight = sleeve_weight * (TARGET_STOCK_EXPOSURE_PCT / 100)
         full_amount = CAPITAL_YEN * total_weight
@@ -704,10 +714,28 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
         price = float(r["price"])
         initial_shares = math.floor(initial_amount / price) if price else 0
         initial_yen = initial_shares * price
+        score_component = max(float(r["final_score"]) - 45, 1)
+        ev_multiplier = 1 + max(float(r["expected_value_pct"]), 0.0) / 30
+        raw_share = raw_weights[idx] / total_raw
+        cap = allocation_caps[idx]
+        if r["action"] in ["小口", "小口または監視"]:
+            cap_reason = "小口扱いのため株式枠8%上限"
+        elif r["action"] == "調査優先":
+            cap_reason = "調査優先のため株式枠10%上限"
+        else:
+            cap_reason = f"通常候補のため株式枠{MAX_SINGLE_STOCK_SLEEVE_PCT:.0f}%上限"
         portfolio.append(
             {
                 **r,
                 "portfolio_rank": rank,
+                "allocation_formula": "raw = max(総合点-45,1) × (1+EV/30) × 扱い別係数",
+                "allocation_score_component": round(score_component, 2),
+                "allocation_ev_multiplier": round(ev_multiplier, 3),
+                "allocation_action_multiplier": allocation_multipliers[idx],
+                "allocation_raw_weight": round(raw_weights[idx], 3),
+                "allocation_raw_share_before_cap_pct": round(raw_share * 100, 1),
+                "allocation_cap_pct": round(cap * 100, 1),
+                "allocation_cap_reason": cap_reason,
                 "stock_sleeve_weight_pct": round(sleeve_weight * 100, 1),
                 "target_weight_pct": round(total_weight * 100, 1),
                 "target_full_amount_yen": round(full_amount),
@@ -1508,6 +1536,36 @@ def build_buy_blocker_triage(
                 "noncritical_backlog": missing or "なし",
                 "amount_policy": amount_policy,
                 "next_action": readiness.get("next_action", ""),
+            }
+        )
+    return out
+
+
+def build_allocation_trace(portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for row in portfolio:
+        out.append(
+            {
+                "rank": row.get("portfolio_rank", ""),
+                "ticker": row.get("ticker", ""),
+                "name": row.get("name", ""),
+                "action": row.get("action", ""),
+                "final_score": row.get("final_score", ""),
+                "expected_value_pct": row.get("expected_value_pct", ""),
+                "raw_formula": row.get("allocation_formula", ""),
+                "score_component": row.get("allocation_score_component", ""),
+                "ev_multiplier": row.get("allocation_ev_multiplier", ""),
+                "action_multiplier": row.get("allocation_action_multiplier", ""),
+                "raw_weight": row.get("allocation_raw_weight", ""),
+                "raw_share_before_cap_pct": row.get("allocation_raw_share_before_cap_pct", ""),
+                "cap_pct": row.get("allocation_cap_pct", ""),
+                "cap_reason": row.get("allocation_cap_reason", ""),
+                "stock_sleeve_weight_pct": row.get("stock_sleeve_weight_pct", ""),
+                "total_portfolio_weight_pct": row.get("target_weight_pct", ""),
+                "target_full_amount_yen": row.get("target_full_amount_yen", ""),
+                "initial_budget_yen": row.get("initial_buy_budget_yen", ""),
+                "initial_buy_yen": row.get("initial_buy_yen", ""),
+                "audit_note": "配分は利益保証ではなく、同一ルールで候補間の相対配分を出すための計算。未確認銘柄は扱い別係数と上限で小さくする。",
             }
         )
     return out
@@ -2541,6 +2599,7 @@ def build_html(
     expected_value_audit_rows: list[dict[str, object]],
     action_cockpit_rows: list[dict[str, object]],
     buy_blocker_triage_rows: list[dict[str, object]],
+    allocation_trace_rows: list[dict[str, object]],
     score_trace_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
@@ -2601,6 +2660,25 @@ def build_html(
         ("critical_blocker", "全額を止める理由"),
         ("amount_policy", "金額方針"),
         ("next_action", "次アクション"),
+    ]
+    allocation_trace_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("action", "扱い"),
+        ("final_score", "総合点"),
+        ("expected_value_pct", "EV%"),
+        ("score_component", "点数成分"),
+        ("ev_multiplier", "EV倍率"),
+        ("action_multiplier", "扱い係数"),
+        ("raw_share_before_cap_pct", "上限前比率%"),
+        ("cap_pct", "上限%"),
+        ("cap_reason", "上限理由"),
+        ("stock_sleeve_weight_pct", "株式枠内比率%"),
+        ("total_portfolio_weight_pct", "全体比率%"),
+        ("target_full_amount_yen", "240万円時"),
+        ("initial_budget_yen", "初回予算"),
+        ("initial_buy_yen", "初回実行候補"),
     ]
     port_fields = [
         ("portfolio_rank", "順位"),
@@ -3073,6 +3151,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>配分計算監査</h2>
+    <p class="note">なぜその比率・金額になったかを見る表です。総合点、EV、扱い別係数、1銘柄上限を使って配分しています。調査優先・小口銘柄は、点数があっても係数と上限で小さくします。</p>
+    {html_table(allocation_trace_rows, allocation_trace_fields)}
+  </section>
+
+  <section>
     <h2>インデックス超過目標との接続</h2>
     <div class="cards">
       <div class="card"><b>配分EV仮説</b><strong>{pct(portfolio_ev)}</strong><span>候補9社の比率加重</span></div>
@@ -3204,6 +3288,7 @@ def build_html(
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_action_cockpit_20260619.csv">実用コックピットCSV</a>
       <a href="ultimate_selection_buy_blocker_triage_20260619.csv">買付不足トリアージCSV</a>
+      <a href="ultimate_selection_allocation_trace_20260619.csv">配分計算監査CSV</a>
       <a href="ultimate_selection_score_trace_20260619.csv">スコア分解監査CSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
@@ -3263,6 +3348,7 @@ def main() -> None:
     score_trace_rows = build_score_trace(rows)
     action_cockpit_rows = build_action_cockpit(portfolio, execution, missing, benchmark_allocation_rows)
     buy_blocker_triage_rows = build_buy_blocker_triage(portfolio, purchase_readiness_rows)
+    allocation_trace_rows = build_allocation_trace(portfolio)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -3289,6 +3375,7 @@ def main() -> None:
     write_csv(OUT_SCORE_TRACE, score_trace_rows)
     write_csv(OUT_ACTION_COCKPIT, action_cockpit_rows)
     write_csv(OUT_BUY_BLOCKER_TRIAGE, buy_blocker_triage_rows)
+    write_csv(OUT_ALLOCATION_TRACE, allocation_trace_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -3316,6 +3403,7 @@ def main() -> None:
             expected_value_audit_rows,
             action_cockpit_rows,
             buy_blocker_triage_rows,
+            allocation_trace_rows,
             score_trace_rows,
         ),
         encoding="utf-8",
@@ -3346,6 +3434,7 @@ def main() -> None:
     print(f"Score trace: {OUT_SCORE_TRACE}")
     print(f"Action cockpit: {OUT_ACTION_COCKPIT}")
     print(f"Buy blocker triage: {OUT_BUY_BLOCKER_TRIAGE}")
+    print(f"Allocation trace: {OUT_ALLOCATION_TRACE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
