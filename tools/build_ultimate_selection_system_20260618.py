@@ -56,6 +56,7 @@ OUT_ALLOCATION_TRACE = ROOT / "ultimate_selection_allocation_trace_20260619.csv"
 OUT_TODAY_ORDER_TICKET = ROOT / "ultimate_selection_today_order_ticket_20260619.csv"
 OUT_STRUCTURAL_GATE = ROOT / "ultimate_selection_structural_gate_20260619.csv"
 OUT_DATA_HARDENING_PROGRESS = ROOT / "ultimate_selection_data_hardening_progress_20260621.csv"
+OUT_FINANCIAL_HARDENING_QUEUE = ROOT / "ultimate_selection_financial_hardening_queue_20260621.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -1862,6 +1863,81 @@ def build_data_hardening_progress(
     ]
 
 
+def build_financial_hardening_queue(
+    rows: list[dict[str, object]], portfolio: list[dict[str, object]]
+) -> list[dict[str, object]]:
+    financial_gate = by_ticker(FINANCIAL_CSV)
+    portfolio_by_ticker = {str(r.get("ticker", "")): r for r in portfolio if str(r.get("ticker", ""))}
+    portfolio_tickers = {str(r.get("ticker", "")) for r in portfolio}
+    selected = sorted(
+        rows,
+        key=lambda r: (
+            0 if str(r.get("ticker", "")) in portfolio_tickers else 1,
+            -to_float(r.get("final_score")),
+        ),
+    )
+    out: list[dict[str, object]] = []
+    for row in selected:
+        ticker = str(row.get("ticker", ""))
+        status = str(row.get("financial_status", ""))
+        if status == "pass" and ticker not in portfolio_tickers:
+            continue
+        if len(out) >= 20:
+            break
+        portfolio_row = portfolio_by_ticker.get(ticker, {})
+        initial_buy_yen = first_value(portfolio_row.get("initial_buy_yen"), row.get("initial_buy_yen"))
+        gate = financial_gate.get(ticker, {})
+        required_items = first_value(
+            gate.get("required_items"),
+            row.get("missing_items"),
+            "PER / PBR / ROE / 営業利益率 / 今期会社予想 / 前期比増減",
+        )
+        source_to_check = first_value(
+            gate.get("source_to_check"),
+            "各社IR、決算短信、決算説明資料、公式有価証券報告書",
+        )
+        if status == "pass":
+            readiness = "通過"
+            buy_effect = "財務理由では止めない。他の市場・口座・価格ゲートで最終確認。"
+            max_before_confirm = initial_buy_yen or "購入計画内"
+            next_action = "買付前に数値が古くないかだけ再確認。"
+        elif status == "partial":
+            readiness = "一部確認"
+            buy_effect = "初回は小口まで。未確認項目が残る間は追加買い・増額をしない。"
+            max_before_confirm = initial_buy_yen or "小口のみ"
+            next_action = "PER/PBR/ROE、営業利益率、会社予想、受注・セグメント寄与を公式資料で埋める。"
+        elif status.startswith("補助"):
+            readiness = "補助データ"
+            buy_effect = "購入確定には使わない。確認後候補として、公式照合が終わるまで現金待機。"
+            max_before_confirm = 0
+            next_action = "補助値を公式資料で照合し、passまたはpartialへ昇格できるか判断。"
+        else:
+            readiness = "未取得"
+            buy_effect = "買付対象外。財務データ取得後に再スコア。"
+            max_before_confirm = 0
+            next_action = "公式資料から基礎財務を新規入力。"
+        out.append(
+            {
+                "queue_rank": len(out) + 1,
+                "ticker": ticker,
+                "name": row.get("name", ""),
+                "in_portfolio": "YES" if ticker in portfolio_tickers else "NO",
+                "current_action": row.get("action", ""),
+                "financial_status": status,
+                "financial_readiness": readiness,
+                "final_score": row.get("final_score", ""),
+                "data_completion_pct": row.get("data_completion_pct", ""),
+                "ev_confidence_pct": row.get("ev_confidence_pct", ""),
+                "required_items": required_items,
+                "source_to_check": source_to_check,
+                "purchase_effect": buy_effect,
+                "max_buy_before_financial_confirmation_yen": max_before_confirm,
+                "next_action": next_action,
+            }
+        )
+    return out
+
+
 def build_universe_rules(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
     total = len(rows)
     price_count = sum(1 for r in rows if r.get("price") != "")
@@ -3036,6 +3112,7 @@ def build_html(
     action_cockpit_rows: list[dict[str, object]],
     structural_gate_rows: list[dict[str, object]],
     data_hardening_rows: list[dict[str, object]],
+    financial_hardening_rows: list[dict[str, object]],
     buy_blocker_triage_rows: list[dict[str, object]],
     allocation_trace_rows: list[dict[str, object]],
     score_trace_rows: list[dict[str, object]],
@@ -3123,6 +3200,23 @@ def build_html(
         ("critical_blocker", "全額を止める理由"),
         ("amount_policy", "金額方針"),
         ("next_action", "次アクション"),
+    ]
+    financial_hardening_fields = [
+        ("queue_rank", "優先"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("in_portfolio", "現配分"),
+        ("current_action", "現在の扱い"),
+        ("financial_status", "財務状態"),
+        ("financial_readiness", "確認段階"),
+        ("final_score", "総合点"),
+        ("data_completion_pct", "データ充足度"),
+        ("ev_confidence_pct", "EV信頼度"),
+        ("required_items", "確認する数値"),
+        ("source_to_check", "確認先"),
+        ("purchase_effect", "買付への影響"),
+        ("max_buy_before_financial_confirmation_yen", "確認前上限"),
+        ("next_action", "次の作業"),
     ]
     allocation_trace_fields = [
         ("rank", "順位"),
@@ -3584,10 +3678,11 @@ def build_html(
       <a href="#operation-flow">2. 操作順</a>
       <a href="#today-order-ticket">3. 注文票</a>
       <a href="#buy-blocker-triage">4. 買付不足</a>
-      <a href="#trade-rules">5. 売買ルール</a>
-      <a href="#archive-materials">6. 補足資料</a>
+      <a href="#financial-hardening-queue">5. 財務確認</a>
+      <a href="#trade-rules">6. 売買ルール</a>
+      <a href="#archive-materials">7. 補足資料</a>
     </div>
-    <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「最短判断」「操作順」「本日注文票」「買付不足」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
+    <p class="ops-note"><span class="priority-label">運用優先</span>普段見るのは「最短判断」「操作順」「本日注文票」「買付不足」「財務確認」「売買ルール」です。監査表、計算根拠、古い確認用データは下部の補足資料へ退避しました。</p>
   </section>
 
   <section id="daily-decision">
@@ -3640,6 +3735,12 @@ def build_html(
       <summary>詳細トリアージ表を開く</summary>
       {html_table(buy_blocker_triage_rows, buy_blocker_fields)}
     </details>
+  </section>
+
+  <section id="financial-hardening-queue">
+    <h2>財務確認キュー</h2>
+    <p class="note">財務pass、partial、補助を同じ扱いにしないための確認表です。passは財務理由では止めず、partialは小口まで、補助データは公式照合が終わるまで確認後候補として扱います。</p>
+    {html_table(financial_hardening_rows, financial_hardening_fields, 20)}
   </section>
 
   <section id="trade-rules">
@@ -3930,6 +4031,7 @@ def build_html(
       <a href="ultimate_selection_action_cockpit_20260619.csv">実用コックピットCSV</a>
       <a href="ultimate_selection_structural_gate_20260619.csv">究極構造ゲートCSV</a>
       <a href="ultimate_selection_data_hardening_progress_20260621.csv">6項目改善進捗CSV</a>
+      <a href="ultimate_selection_financial_hardening_queue_20260621.csv">財務確認キューCSV</a>
       <a href="ultimate_selection_today_order_ticket_20260619.csv">本日注文票CSV</a>
       <a href="ultimate_selection_buy_blocker_triage_20260619.csv">買付不足トリアージCSV</a>
       <a href="ultimate_selection_allocation_trace_20260619.csv">配分計算監査CSV</a>
@@ -3996,6 +4098,7 @@ def main() -> None:
     action_cockpit_rows = build_action_cockpit(portfolio, execution, missing, benchmark_allocation_rows)
     structural_gate_rows = build_structural_gate(rows, portfolio)
     data_hardening_rows = build_data_hardening_progress(rows, portfolio)
+    financial_hardening_rows = build_financial_hardening_queue(rows, portfolio)
     buy_blocker_triage_rows = build_buy_blocker_triage(portfolio, purchase_readiness_rows)
     allocation_trace_rows = build_allocation_trace(portfolio)
     write_csv(OUT_SCORE, rows)
@@ -4026,6 +4129,7 @@ def main() -> None:
     write_csv(OUT_ACTION_COCKPIT, action_cockpit_rows)
     write_csv(OUT_STRUCTURAL_GATE, structural_gate_rows)
     write_csv(OUT_DATA_HARDENING_PROGRESS, data_hardening_rows)
+    write_csv(OUT_FINANCIAL_HARDENING_QUEUE, financial_hardening_rows)
     write_csv(OUT_BUY_BLOCKER_TRIAGE, buy_blocker_triage_rows)
     write_csv(OUT_ALLOCATION_TRACE, allocation_trace_rows)
     OUT_HTML.write_text(
@@ -4057,6 +4161,7 @@ def main() -> None:
             action_cockpit_rows,
             structural_gate_rows,
             data_hardening_rows,
+            financial_hardening_rows,
             buy_blocker_triage_rows,
             allocation_trace_rows,
             score_trace_rows,
@@ -4092,6 +4197,7 @@ def main() -> None:
     print(f"Action cockpit: {OUT_ACTION_COCKPIT}")
     print(f"Buy blocker triage: {OUT_BUY_BLOCKER_TRIAGE}")
     print(f"Data hardening progress: {OUT_DATA_HARDENING_PROGRESS}")
+    print(f"Financial hardening queue: {OUT_FINANCIAL_HARDENING_QUEUE}")
     print(f"Allocation trace: {OUT_ALLOCATION_TRACE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
