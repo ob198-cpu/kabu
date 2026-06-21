@@ -59,6 +59,7 @@ OUT_DATA_HARDENING_PROGRESS = ROOT / "ultimate_selection_data_hardening_progress
 OUT_FINANCIAL_HARDENING_QUEUE = ROOT / "ultimate_selection_financial_hardening_queue_20260621.csv"
 OUT_QUALITATIVE_VALIDATION_GATE = ROOT / "ultimate_selection_qualitative_validation_gate_20260621.csv"
 OUT_EVENT_VALIDATION_GATE = ROOT / "ultimate_selection_event_validation_gate_20260621.csv"
+OUT_ALLOCATION_READINESS_GATE = ROOT / "ultimate_selection_allocation_readiness_gate_20260621.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -817,6 +818,96 @@ def optimize_portfolio(rows: list[dict[str, object]]) -> list[dict[str, object]]
     return portfolio
 
 
+def allocation_readiness_profile(row: dict[str, object]) -> dict[str, object]:
+    financial_status = str(row.get("financial_status", ""))
+    event_gate = str(row.get("event_usage_gate", ""))
+    qualitative_gate = str(row.get("qualitative_usage_gate", ""))
+    data_completion = to_float(row.get("data_completion_pct"), 0)
+    ev_confidence = to_float(row.get("ev_confidence_pct"), 0)
+    dd1 = abs(to_float(row.get("max_dd1"), 0))
+    dd5 = abs(to_float(row.get("max_dd5"), 0))
+
+    if financial_status == "pass":
+        financial_multiplier = 1.00
+    elif financial_status == "partial":
+        financial_multiplier = 0.82
+    elif financial_status.startswith("補助"):
+        financial_multiplier = 0.55
+    else:
+        financial_multiplier = 0.45
+
+    if "実績補助可" in event_gate:
+        event_multiplier = 0.98
+    elif "暫定補助" in event_gate:
+        event_multiplier = 0.84
+    elif "短期" in event_gate:
+        event_multiplier = 0.74
+    elif "反証注意" in event_gate:
+        event_multiplier = 0.45
+    elif "未使用" in event_gate:
+        event_multiplier = 0.72
+    else:
+        event_multiplier = 0.78
+
+    if "補助使用可" in qualitative_gate:
+        qualitative_multiplier = 0.96
+    elif "短期確認" in qualitative_gate:
+        qualitative_multiplier = 0.82
+    elif "比較材料" in qualitative_gate:
+        qualitative_multiplier = 0.76
+    elif "仮説のみ" in qualitative_gate:
+        qualitative_multiplier = 0.64
+    elif "未使用" in qualitative_gate:
+        qualitative_multiplier = 0.72
+    else:
+        qualitative_multiplier = 0.78
+
+    confidence_multiplier = clamp(0.55 + 0.45 * (0.55 * data_completion + 0.45 * ev_confidence) / 100.0, 0.55, 1.0)
+    if dd1 >= 30 or dd5 >= 55:
+        drawdown_multiplier = 0.62
+    elif dd1 >= 22 or dd5 >= 42:
+        drawdown_multiplier = 0.76
+    elif dd1 >= 16 or dd5 >= 34:
+        drawdown_multiplier = 0.88
+    else:
+        drawdown_multiplier = 1.00
+
+    combined = clamp(
+        financial_multiplier
+        * event_multiplier
+        * qualitative_multiplier
+        * confidence_multiplier
+        * drawdown_multiplier,
+        0.20,
+        1.00,
+    )
+    if financial_status == "pass" and data_completion >= 90 and ev_confidence >= 85 and "反証注意" not in event_gate:
+        readiness = "中心配分可"
+    elif financial_status == "partial":
+        readiness = "小口配分"
+    elif financial_status.startswith("補助"):
+        readiness = "確認後配分"
+    else:
+        readiness = "配分不可"
+    reasons = [
+        f"財務x{financial_multiplier:.2f}",
+        f"イベントx{event_multiplier:.2f}",
+        f"質的x{qualitative_multiplier:.2f}",
+        f"充足x{confidence_multiplier:.2f}",
+        f"下落x{drawdown_multiplier:.2f}",
+    ]
+    return {
+        "allocation_readiness": readiness,
+        "financial_multiplier": round(financial_multiplier, 3),
+        "event_multiplier": round(event_multiplier, 3),
+        "qualitative_multiplier": round(qualitative_multiplier, 3),
+        "confidence_multiplier": round(confidence_multiplier, 3),
+        "drawdown_multiplier": round(drawdown_multiplier, 3),
+        "combined_multiplier": round(combined, 3),
+        "allocation_readiness_reason": " / ".join(reasons),
+    }
+
+
 def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     eligible = [
         r
@@ -838,11 +929,13 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
 
     raw_weights = []
     allocation_multipliers = []
+    readiness_profiles = []
     allocation_caps = []
     for r in selected:
         score = float(r["final_score"])
         ev = max(float(r["expected_value_pct"]), 0.0)
         action_multiplier = 1.0
+        readiness = allocation_readiness_profile(r)
         raw = max(score - 45, 1) * (1 + ev / 30)
         if r["action"] == "小口または監視":
             action_multiplier = 0.55
@@ -853,17 +946,23 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
         if r["action"] == "調査優先":
             action_multiplier = 0.65
             raw *= action_multiplier
+        raw *= to_float(readiness["combined_multiplier"], 1.0)
         raw_weights.append(raw)
         allocation_multipliers.append(action_multiplier)
+        readiness_profiles.append(readiness)
     total_raw = sum(raw_weights) or 1
 
     capped = []
     for r, raw in zip(selected, raw_weights):
         cap = MAX_SINGLE_STOCK_SLEEVE_PCT / 100
         if r["action"] in ["小口", "小口または監視"]:
-            cap = 0.08
+            cap = 0.07
         if r["action"] == "調査優先":
-            cap = 0.10
+            cap = 0.06
+        if str(r.get("financial_status", "")).startswith("補助"):
+            cap = min(cap, 0.05)
+        if str(r.get("financial_status", "")) == "partial":
+            cap = min(cap, 0.07)
         allocation_caps.append(cap)
         capped.append(min(raw / total_raw, cap))
 
@@ -875,9 +974,13 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
         for i, r in enumerate(selected):
             cap = MAX_SINGLE_STOCK_SLEEVE_PCT / 100
             if r["action"] in ["小口", "小口または監視"]:
-                cap = 0.08
+                cap = 0.07
             if r["action"] == "調査優先":
-                cap = 0.10
+                cap = 0.06
+            if str(r.get("financial_status", "")).startswith("補助"):
+                cap = min(cap, 0.05)
+            if str(r.get("financial_status", "")) == "partial":
+                cap = min(cap, 0.07)
             if capped[i] + 0.0001 < cap:
                 room_indices.append(i)
         if not room_indices:
@@ -886,40 +989,62 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
         for i in room_indices:
             cap = MAX_SINGLE_STOCK_SLEEVE_PCT / 100
             if selected[i]["action"] in ["小口", "小口または監視"]:
-                cap = 0.08
+                cap = 0.07
             if selected[i]["action"] == "調査優先":
-                cap = 0.10
+                cap = 0.06
+            if str(selected[i].get("financial_status", "")).startswith("補助"):
+                cap = min(cap, 0.05)
+            if str(selected[i].get("financial_status", "")) == "partial":
+                cap = min(cap, 0.07)
             capped[i] = min(cap, capped[i] + add_each)
 
-    total = sum(capped) or 1
     portfolio: list[dict[str, object]] = []
     for rank, (r, w) in enumerate(zip(selected, capped), start=1):
         idx = rank - 1
-        sleeve_weight = w / total
+        sleeve_weight = w
         total_weight = sleeve_weight * (TARGET_STOCK_EXPOSURE_PCT / 100)
         full_amount = CAPITAL_YEN * total_weight
         initial_amount = INITIAL_BUY_CAP_YEN * sleeve_weight
         price = float(r["price"])
-        initial_shares = math.floor(initial_amount / price) if price else 0
-        initial_yen = initial_shares * price
+        requires_confirmed_allocation = str(r.get("financial_status", "")).startswith("補助") or r["action"] == "調査優先"
+        conditional_initial_budget = round(initial_amount) if requires_confirmed_allocation else 0
+        if requires_confirmed_allocation:
+            initial_shares = 0
+            initial_yen = 0
+        else:
+            initial_shares = math.floor(initial_amount / price) if price else 0
+            initial_yen = initial_shares * price
         score_component = max(float(r["final_score"]) - 45, 1)
         ev_multiplier = 1 + max(float(r["expected_value_pct"]), 0.0) / 30
         raw_share = raw_weights[idx] / total_raw
         cap = allocation_caps[idx]
-        if r["action"] in ["小口", "小口または監視"]:
-            cap_reason = "小口扱いのため株式枠8%上限"
+        if str(r.get("financial_status", "")).startswith("補助"):
+            cap_reason = "補助財務のため株式枠5%上限。確認後まで初回買付は0円"
+        elif r["action"] in ["小口", "小口または監視"]:
+            cap_reason = "小口扱いのため株式枠7%上限"
+        elif str(r.get("financial_status", "")) == "partial":
+            cap_reason = "財務partialのため株式枠7%上限"
         elif r["action"] == "調査優先":
-            cap_reason = "調査優先のため株式枠10%上限"
+            cap_reason = "調査優先のため株式枠6%上限"
         else:
             cap_reason = f"通常候補のため株式枠{MAX_SINGLE_STOCK_SLEEVE_PCT:.0f}%上限"
+        readiness = readiness_profiles[idx]
         portfolio.append(
             {
                 **r,
                 "portfolio_rank": rank,
-                "allocation_formula": "raw = max(総合点-45,1) × (1+信頼度補正後EV/30) × 扱い別係数",
+                "allocation_formula": "raw = max(総合点-45,1) × (1+信頼度補正後EV/30) × 扱い別係数 × 配分レディネス係数",
                 "allocation_score_component": round(score_component, 2),
                 "allocation_ev_multiplier": round(ev_multiplier, 3),
                 "allocation_action_multiplier": allocation_multipliers[idx],
+                "allocation_readiness": readiness["allocation_readiness"],
+                "allocation_readiness_multiplier": readiness["combined_multiplier"],
+                "allocation_readiness_reason": readiness["allocation_readiness_reason"],
+                "financial_allocation_multiplier": readiness["financial_multiplier"],
+                "event_allocation_multiplier": readiness["event_multiplier"],
+                "qualitative_allocation_multiplier": readiness["qualitative_multiplier"],
+                "confidence_allocation_multiplier": readiness["confidence_multiplier"],
+                "drawdown_allocation_multiplier": readiness["drawdown_multiplier"],
                 "allocation_raw_weight": round(raw_weights[idx], 3),
                 "allocation_raw_share_before_cap_pct": round(raw_share * 100, 1),
                 "allocation_cap_pct": round(cap * 100, 1),
@@ -928,6 +1053,7 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
                 "target_weight_pct": round(total_weight * 100, 1),
                 "target_full_amount_yen": round(full_amount),
                 "initial_buy_budget_yen": round(initial_amount),
+                "conditional_buy_budget_yen": conditional_initial_budget,
                 "initial_shares": initial_shares,
                 "initial_buy_yen": round(initial_yen),
             }
@@ -959,8 +1085,9 @@ def build_execution_plan(portfolio: list[dict[str, object]]) -> list[dict[str, o
         stop_line = round(price * (1 - min(max(drawdown * 0.35, 5), 12) / 100), 1) if price else ""
         profit_line = round(price * 1.12, 1) if price else ""
         initial_yen = float(row.get("initial_buy_yen") or 0)
+        planned_budget_yen = float(row.get("conditional_buy_budget_yen") or row.get("initial_buy_budget_yen") or initial_yen or 0)
         executable_today_yen = initial_yen if status in ["初回候補", "小口候補"] else 0
-        hold_yen = 0 if executable_today_yen else initial_yen
+        hold_yen = planned_budget_yen if status == "確認後候補" else 0
         if status == "初回候補":
             execution_bucket = "本日小口実行枠"
         elif status == "小口候補":
@@ -1010,7 +1137,7 @@ def build_day_checklist(execution: list[dict[str, object]]) -> list[dict[str, ob
         if r.get("execution_status") in ["初回候補", "小口候補"]
     )
     conditional_total = sum(
-        float(r.get("initial_buy_yen") or 0)
+        float(r.get("hold_until_confirmed_yen") or 0)
         for r in execution
         if r.get("execution_status") == "確認後候補"
     )
@@ -1884,6 +2011,9 @@ def build_allocation_trace(portfolio: list[dict[str, object]]) -> list[dict[str,
                 "score_component": row.get("allocation_score_component", ""),
                 "ev_multiplier": row.get("allocation_ev_multiplier", ""),
                 "action_multiplier": row.get("allocation_action_multiplier", ""),
+                "readiness": row.get("allocation_readiness", ""),
+                "readiness_multiplier": row.get("allocation_readiness_multiplier", ""),
+                "readiness_reason": row.get("allocation_readiness_reason", ""),
                 "raw_weight": row.get("allocation_raw_weight", ""),
                 "raw_share_before_cap_pct": row.get("allocation_raw_share_before_cap_pct", ""),
                 "cap_pct": row.get("allocation_cap_pct", ""),
@@ -1893,7 +2023,49 @@ def build_allocation_trace(portfolio: list[dict[str, object]]) -> list[dict[str,
                 "target_full_amount_yen": row.get("target_full_amount_yen", ""),
                 "initial_budget_yen": row.get("initial_buy_budget_yen", ""),
                 "initial_buy_yen": row.get("initial_buy_yen", ""),
+                "conditional_buy_budget_yen": row.get("conditional_buy_budget_yen", ""),
                 "audit_note": "配分は利益保証ではなく、同一ルールで候補間の相対配分を出すための計算。未確認銘柄は扱い別係数と上限で小さくする。",
+            }
+        )
+    return out
+
+
+def build_allocation_readiness_gate(
+    rows: list[dict[str, object]], portfolio: list[dict[str, object]]
+) -> list[dict[str, object]]:
+    portfolio_by_ticker = {str(r.get("ticker", "")): r for r in portfolio}
+    out: list[dict[str, object]] = []
+    for row in rows[:40]:
+        ticker = str(row.get("ticker", ""))
+        profile = allocation_readiness_profile(row)
+        portfolio_row = portfolio_by_ticker.get(ticker, {})
+        in_portfolio = bool(portfolio_row)
+        if profile["allocation_readiness"] == "中心配分可":
+            amount_policy = "配分対象。指数・口座・価格ゲート通過後に初回候補。"
+        elif profile["allocation_readiness"] == "小口配分":
+            amount_policy = "小口上限。未確認項目が消えるまで追加しない。"
+        elif profile["allocation_readiness"] == "確認後配分":
+            amount_policy = "確認後候補。公式照合まで初回買付0円。"
+        else:
+            amount_policy = "配分しない。根拠補完後に再判定。"
+        out.append(
+            {
+                "rank": len(out) + 1,
+                "ticker": ticker,
+                "name": row.get("name", ""),
+                "in_portfolio": "YES" if in_portfolio else "NO",
+                "action": row.get("action", ""),
+                "allocation_readiness": profile["allocation_readiness"],
+                "combined_multiplier": profile["combined_multiplier"],
+                "financial_multiplier": profile["financial_multiplier"],
+                "event_multiplier": profile["event_multiplier"],
+                "qualitative_multiplier": profile["qualitative_multiplier"],
+                "confidence_multiplier": profile["confidence_multiplier"],
+                "drawdown_multiplier": profile["drawdown_multiplier"],
+                "target_weight_pct": portfolio_row.get("target_weight_pct", 0),
+                "initial_buy_yen": portfolio_row.get("initial_buy_yen", 0),
+                "amount_policy": amount_policy,
+                "reason": profile["allocation_readiness_reason"],
             }
         )
     return out
@@ -2266,7 +2438,7 @@ def build_action_cockpit(
     first_total = sum(float(r.get("initial_buy_yen") or 0) for r in first)
     small_total = sum(float(r.get("initial_buy_yen") or 0) for r in small)
     immediate_total = first_total + small_total
-    conditional_total = sum(float(r.get("initial_buy_yen") or 0) for r in conditional)
+    conditional_total = sum(float(r.get("hold_until_confirmed_yen") or 0) for r in conditional)
     reserve_total = max(INITIAL_BUY_CAP_YEN - immediate_total - conditional_total, 0)
     portfolio_ev = weighted_portfolio_value(portfolio, "expected_value_pct")
     portfolio_reliability = weighted_portfolio_value(portfolio, "reliability")
@@ -3383,6 +3555,7 @@ def build_html(
     financial_hardening_rows: list[dict[str, object]],
     buy_blocker_triage_rows: list[dict[str, object]],
     allocation_trace_rows: list[dict[str, object]],
+    allocation_readiness_rows: list[dict[str, object]],
     score_trace_rows: list[dict[str, object]],
 ) -> str:
     generated_at = datetime.now().strftime("%Y/%m/%d %H:%M")
@@ -3502,6 +3675,9 @@ def build_html(
         ("score_component", "点数成分"),
         ("ev_multiplier", "EV倍率"),
         ("action_multiplier", "扱い係数"),
+        ("readiness", "配分状態"),
+        ("readiness_multiplier", "レディネス係数"),
+        ("readiness_reason", "係数内訳"),
         ("raw_share_before_cap_pct", "上限前比率%"),
         ("cap_pct", "上限%"),
         ("cap_reason", "上限理由"),
@@ -3510,6 +3686,25 @@ def build_html(
         ("target_full_amount_yen", "240万円時"),
         ("initial_budget_yen", "初回予算"),
         ("initial_buy_yen", "初回実行候補"),
+        ("conditional_buy_budget_yen", "確認後予算"),
+    ]
+    allocation_readiness_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("in_portfolio", "配分入り"),
+        ("action", "扱い"),
+        ("allocation_readiness", "配分状態"),
+        ("combined_multiplier", "総合係数"),
+        ("financial_multiplier", "財務"),
+        ("event_multiplier", "イベント"),
+        ("qualitative_multiplier", "質的"),
+        ("confidence_multiplier", "信頼度"),
+        ("drawdown_multiplier", "下落"),
+        ("target_weight_pct", "全体比率%"),
+        ("initial_buy_yen", "初回買付"),
+        ("amount_policy", "金額方針"),
+        ("reason", "理由"),
     ]
     port_fields = [
         ("portfolio_rank", "順位"),
@@ -3519,6 +3714,7 @@ def build_html(
         ("target_full_amount_yen", "240万円時"),
         ("initial_shares", "初回株数"),
         ("initial_buy_yen", "初回金額"),
+        ("conditional_buy_budget_yen", "確認後予算"),
         ("final_score", "統合"),
         ("expected_value_pct", "補正後EV%"),
         ("raw_expected_value_pct", "raw EV%"),
@@ -3842,7 +4038,7 @@ def build_html(
         ("rule", "実行条件"),
     ]
     immediate_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") in ["初回候補", "小口候補"])
-    conditional_total = sum(float(r.get("initial_buy_yen") or 0) for r in execution if r.get("execution_status") == "確認後候補")
+    conditional_total = sum(float(r.get("hold_until_confirmed_yen") or 0) for r in execution if r.get("execution_status") == "確認後候補")
     reserve_total = max(INITIAL_BUY_CAP_YEN - immediate_total - conditional_total, 0)
     immediate_names = " / ".join(str(r.get("name")) for r in execution if r.get("execution_status") in ["初回候補", "小口候補"])
     conditional_names = " / ".join(str(r.get("name")) for r in execution if r.get("execution_status") == "確認後候補")
@@ -4187,8 +4383,14 @@ def build_html(
 
   <section>
     <h2>配分計算監査</h2>
-    <p class="note">なぜその比率・金額になったかを見る表です。総合点、信頼度補正後EV、扱い別係数、1銘柄上限を使って配分しています。調査優先・小口銘柄は、点数があっても係数と上限で小さくします。</p>
+    <p class="note">なぜその比率・金額になったかを見る表です。総合点、信頼度補正後EV、扱い別係数、配分レディネス係数、1銘柄上限を使って配分しています。調査優先・小口銘柄は、点数があっても係数と上限で小さくします。</p>
     {html_table(allocation_trace_rows, allocation_trace_fields)}
+  </section>
+
+  <section>
+    <h2>配分レディネスゲート</h2>
+    <p class="note">財務、イベント、質的根拠、データ充足度、下落耐性を掛け合わせ、配分に入れるか、初回小口か、確認後候補かを分けます。上限で余った分は無理に再配分せず、現金待機に残します。</p>
+    {html_table(allocation_readiness_rows, allocation_readiness_fields, 40)}
   </section>
 
   <section>
@@ -4349,6 +4551,7 @@ def build_html(
       <a href="ultimate_selection_today_order_ticket_20260619.csv">本日注文票CSV</a>
       <a href="ultimate_selection_buy_blocker_triage_20260619.csv">買付不足トリアージCSV</a>
       <a href="ultimate_selection_allocation_trace_20260619.csv">配分計算監査CSV</a>
+      <a href="ultimate_selection_allocation_readiness_gate_20260621.csv">配分レディネスゲートCSV</a>
       <a href="ultimate_selection_score_trace_20260619.csv">スコア分解監査CSV</a>
       <a href="ultimate_selection_portfolio_20260618.csv">配分案CSV</a>
       <a href="ultimate_selection_execution_plan_20260618.csv">実行ゲートCSV</a>
@@ -4419,6 +4622,7 @@ def main() -> None:
     financial_hardening_rows = build_financial_hardening_queue(rows, portfolio)
     buy_blocker_triage_rows = build_buy_blocker_triage(portfolio, purchase_readiness_rows)
     allocation_trace_rows = build_allocation_trace(portfolio)
+    allocation_readiness_rows = build_allocation_readiness_gate(rows, portfolio)
     write_csv(OUT_SCORE, rows)
     write_csv(OUT_PORTFOLIO, portfolio)
     write_csv(OUT_MISSING, missing)
@@ -4452,6 +4656,7 @@ def main() -> None:
     write_csv(OUT_FINANCIAL_HARDENING_QUEUE, financial_hardening_rows)
     write_csv(OUT_BUY_BLOCKER_TRIAGE, buy_blocker_triage_rows)
     write_csv(OUT_ALLOCATION_TRACE, allocation_trace_rows)
+    write_csv(OUT_ALLOCATION_READINESS_GATE, allocation_readiness_rows)
     OUT_HTML.write_text(
         build_html(
             rows,
@@ -4486,6 +4691,7 @@ def main() -> None:
             financial_hardening_rows,
             buy_blocker_triage_rows,
             allocation_trace_rows,
+            allocation_readiness_rows,
             score_trace_rows,
         ),
         encoding="utf-8",
@@ -4523,6 +4729,7 @@ def main() -> None:
     print(f"Data hardening progress: {OUT_DATA_HARDENING_PROGRESS}")
     print(f"Financial hardening queue: {OUT_FINANCIAL_HARDENING_QUEUE}")
     print(f"Allocation trace: {OUT_ALLOCATION_TRACE}")
+    print(f"Allocation readiness gate: {OUT_ALLOCATION_READINESS_GATE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
     for r in rows[:10]:
