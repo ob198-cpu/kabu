@@ -2448,9 +2448,9 @@ def build_action_cockpit(
     ) or "主要不足なし"
     allocation_rule = next(
         (
-            f"{r.get('stock_allocation_pct')} / {r.get('action')}"
+            f"個別株{r.get('stock_allocation_pct')}%・本日{r.get('today_executable_yen')}・確認後{r.get('hold_until_confirmed_yen')}"
             for r in benchmark_allocation_rows
-            if str(r.get("case", "")).startswith("標準")
+            if str(r.get("case", "")) == "現行設定"
         ),
         "指数見通し入力後に分岐",
     )
@@ -3146,6 +3146,9 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
     current_stock_yen = sum(float(r.get("target_full_amount_yen") or 0) for r in portfolio)
     current_stock_pct = current_stock_yen / CAPITAL_YEN * 100 if CAPITAL_YEN else 0
     current_cash_yen = CAPITAL_YEN - current_stock_yen
+    current_initial_yen = sum(float(r.get("initial_buy_yen") or 0) for r in portfolio)
+    current_hold_yen = sum(float(r.get("conditional_buy_budget_yen") or 0) for r in portfolio)
+    current_unused_initial_yen = max(INITIAL_BUY_CAP_YEN - current_initial_yen - current_hold_yen, 0)
     rows = [
         {
             "case": "強気個別株",
@@ -3153,6 +3156,9 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
             "stock_allocation_pct": 85,
             "index_or_cash_pct": 15,
             "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN),
+            "today_executable_yen": "指数見通し入力後に再計算",
+            "hold_until_confirmed_yen": "指数見通し入力後に再計算",
+            "unused_initial_cap_yen": "指数見通し入力後に再計算",
             "action": "現行の最大株式枠まで検討。ただし初回は小口で開始",
             "reason": "個別株EV仮説が指数を+5%以上上回る説明が成立するため",
         },
@@ -3162,6 +3168,9 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
             "stock_allocation_pct": 70,
             "index_or_cash_pct": 30,
             "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN * 0.8),
+            "today_executable_yen": "指数見通し入力後に再計算",
+            "hold_until_confirmed_yen": "指数見通し入力後に再計算",
+            "unused_initial_cap_yen": "指数見通し入力後に再計算",
             "action": "個別株テストは継続。ただし確認後候補を急いで増やさない",
             "reason": "+1%目標は説明できるが、強気配分にするほどの差ではないため",
         },
@@ -3171,6 +3180,9 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
             "stock_allocation_pct": 50,
             "index_or_cash_pct": 50,
             "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN * 0.5),
+            "today_executable_yen": "初回候補だけ再計算",
+            "hold_until_confirmed_yen": "原則0円または現金待機",
+            "unused_initial_cap_yen": "指数・現金へ待機",
             "action": "初回候補だけ検証。残りは現金または指数候補へ待機",
             "reason": "個別株を選ぶ説明は残るが、手間とリスクに対する上乗せが薄いため",
         },
@@ -3180,6 +3192,9 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
             "stock_allocation_pct": 15,
             "index_or_cash_pct": 85,
             "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN * 0.25),
+            "today_executable_yen": "原則0円",
+            "hold_until_confirmed_yen": "0円",
+            "unused_initial_cap_yen": "指数・現金へ待機",
             "action": "個別株は観察のみ。実買付は原則見送り",
             "reason": "指数と同等以下なら、個別株を選ぶ合理性が弱いため",
         },
@@ -3189,6 +3204,9 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
             "stock_allocation_pct": 0,
             "index_or_cash_pct": 100,
             "initial_buy_cap_yen": yen(0),
+            "today_executable_yen": yen(0),
+            "hold_until_confirmed_yen": yen(0),
+            "unused_initial_cap_yen": yen(INITIAL_BUY_CAP_YEN),
             "action": "当日の新規買付を停止。翌営業日以降に再判定",
             "reason": "個別要因ではなく市場全体の売りに巻き込まれるため",
         },
@@ -3198,6 +3216,9 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
             "stock_allocation_pct": "次回予定の50%以下",
             "index_or_cash_pct": "減額分を現金または指数へ",
             "initial_buy_cap_yen": "次回分を半減",
+            "today_executable_yen": "追加停止",
+            "hold_until_confirmed_yen": "確認後候補も増額しない",
+            "unused_initial_cap_yen": "減額分を現金または指数へ",
             "action": "追加買付を停止し、劣後理由を記録",
             "reason": "期待値仮説が実績で崩れ始めた可能性があるため",
         },
@@ -3207,8 +3228,11 @@ def build_benchmark_allocation_gate(portfolio: list[dict[str, object]]) -> list[
             "stock_allocation_pct": round(current_stock_pct, 1),
             "index_or_cash_pct": round(100 - current_stock_pct, 1),
             "initial_buy_cap_yen": yen(INITIAL_BUY_CAP_YEN),
-            "action": f"株式{yen(current_stock_yen)}、現金{yen(current_cash_yen)}を上限として表示",
-            "reason": "指数見通し入力前なので、買付確定ではなく上限計画として扱う",
+            "today_executable_yen": yen(current_initial_yen),
+            "hold_until_confirmed_yen": yen(current_hold_yen),
+            "unused_initial_cap_yen": yen(current_unused_initial_yen),
+            "action": f"株式{yen(current_stock_yen)}、現金{yen(current_cash_yen)}を上限として表示。本日実行候補は{yen(current_initial_yen)}まで",
+            "reason": "指数見通し入力前なので、買付確定ではなく上限計画として扱う。確認後候補は初回実行額に混ぜない",
         },
     ]
     return rows
@@ -3954,6 +3978,9 @@ def build_html(
         ("stock_allocation_pct", "個別株比率"),
         ("index_or_cash_pct", "現金・指数比率"),
         ("initial_buy_cap_yen", "初回上限"),
+        ("today_executable_yen", "本日実行候補"),
+        ("hold_until_confirmed_yen", "確認後保留"),
+        ("unused_initial_cap_yen", "未使用枠"),
         ("action", "実行"),
         ("reason", "理由"),
     ]
