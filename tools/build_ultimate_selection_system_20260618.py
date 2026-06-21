@@ -58,6 +58,7 @@ OUT_STRUCTURAL_GATE = ROOT / "ultimate_selection_structural_gate_20260619.csv"
 OUT_DATA_HARDENING_PROGRESS = ROOT / "ultimate_selection_data_hardening_progress_20260621.csv"
 OUT_FINANCIAL_HARDENING_QUEUE = ROOT / "ultimate_selection_financial_hardening_queue_20260621.csv"
 OUT_QUALITATIVE_VALIDATION_GATE = ROOT / "ultimate_selection_qualitative_validation_gate_20260621.csv"
+OUT_EVENT_VALIDATION_GATE = ROOT / "ultimate_selection_event_validation_gate_20260621.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -381,6 +382,59 @@ def event_score(
     return clamp(score), f"{market_signal} / {row.get('one_day_change_pct','')}"
 
 
+def adjusted_event_score(
+    raw_score: float,
+    note: str,
+    recent_event: dict[str, str] | None,
+    reaction: dict[str, str] | None,
+    validation: dict[str, str] | None,
+) -> tuple[float, str, str]:
+    """Separate durable event evidence from one-off event reactions."""
+    if "未接続" in note:
+        return 50.0, note, "未使用: イベント未接続"
+    if validation:
+        count = to_float(validation.get("event_count_calculated"))
+        avg20 = to_float(validation.get("avg_excess_20d_pct"))
+        avg5 = to_float(validation.get("avg_excess_5d_pct"))
+        strong = to_float(validation.get("strong_event_count"))
+        weak = to_float(validation.get("weak_event_count"))
+        if weak > strong or avg20 < -1.0:
+            capped = min(raw_score, 46.0)
+            return capped, f"{note} / 反証注意のため46点上限", "反証注意: イベント理由での買付不可"
+        if count >= 4 and avg20 >= 1.0 and strong > weak:
+            return raw_score, f"{note} / 実績補助可", "実績補助可: 複数イベントで指数超過を確認"
+        if count >= 3 and avg20 >= 0 and strong >= weak:
+            capped = min(raw_score, 62.0)
+            return capped, f"{note} / 暫定実績のため62点上限", "暫定補助: 量的・財務が通る場合だけ補助"
+        capped = min(raw_score, 55.0)
+        return capped, f"{note} / 実績弱いため55点上限", "監視材料: 再現性が弱く購入根拠にしない"
+    if reaction:
+        excess20_text = str(reaction.get("excess_20d_pct", "")).strip()
+        excess20 = to_float(excess20_text)
+        excess5 = to_float(reaction.get("excess_5d_pct"))
+        status = reaction.get("reaction_status", "")
+        if excess20_text and excess20 >= 0:
+            capped = min(raw_score, 62.0)
+            return capped, f"{note} / 決算20営業日反応のため62点上限", "決算反応補助: 単発のため単独買付不可"
+        if excess5 > 0:
+            capped = min(raw_score, 58.0)
+            return capped, f"{note} / {status}のため58点上限", "短期決算反応: 20営業日未到達なら監視寄り"
+        capped = min(raw_score, 50.0)
+        return capped, f"{note} / 決算反応弱いため50点上限", "未使用: 決算反応が弱い"
+    if recent_event:
+        signal = str(recent_event.get("market_signal", ""))
+        change = to_float(recent_event.get("one_day_change_pct"))
+        if "保留" in signal:
+            capped = min(raw_score, 52.0)
+            return capped, f"{note} / 6月イベント保留のため52点上限", "短期イベントのみ: 保留扱い"
+        if "確認" in signal and change >= 0:
+            capped = min(raw_score, 58.0)
+            return capped, f"{note} / 6月イベント1回のみのため58点上限", "短期イベントのみ: 過去反応が揃うまで購入根拠にしない"
+        capped = min(raw_score, 50.0)
+        return capped, f"{note} / 6月イベント反応弱いため50点上限", "短期イベントのみ: 購入根拠にしない"
+    return min(raw_score, 50.0), note, "未使用: 根拠不足"
+
+
 def gate_penalty(final_status: str, universe_reason: str, financial_status: str, qualitative_note: str) -> tuple[float, list[str], str]:
     penalties: list[str] = []
     penalty = 0.0
@@ -460,6 +514,14 @@ def data_completion_and_ev_confidence(
 
     if "未接続" in event_note:
         event_factor = 0.55
+    elif "反証注意" in event_note:
+        event_factor = 0.50
+    elif "6月イベント" in event_note or "短期" in event_note:
+        event_factor = 0.62
+    elif "暫定" in event_note:
+        event_factor = 0.72
+    elif "実績補助可" in event_note:
+        event_factor = 0.88
     elif "補助" in event_note or "過去イベント" in event_note or "決算後反応" in event_note:
         event_factor = 0.76
     else:
@@ -552,7 +614,14 @@ def build_scores() -> list[dict[str, object]]:
             discovery_map.get(ticker),
         )
         raw_qual_s, raw_qual_note = qualitative_score(qual_map.get(ticker, []), qual_explore_map.get(ticker))
-        event_s, event_note = event_score(event_map.get(ticker), reaction_map.get(ticker), validation_map.get(ticker))
+        raw_event_s, raw_event_note = event_score(event_map.get(ticker), reaction_map.get(ticker), validation_map.get(ticker))
+        event_s, event_note, event_usage_gate = adjusted_event_score(
+            raw_event_s,
+            raw_event_note,
+            event_map.get(ticker),
+            reaction_map.get(ticker),
+            validation_map.get(ticker),
+        )
         qual_s, qual_note, qualitative_usage_gate = adjusted_qualitative_score(
             raw_qual_s,
             raw_qual_note,
@@ -628,6 +697,8 @@ def build_scores() -> list[dict[str, object]]:
                 "raw_qualitative_score": round(raw_qual_s, 1),
                 "qualitative_usage_gate": qualitative_usage_gate,
                 "event_score": round(event_s, 1),
+                "raw_event_score": round(raw_event_s, 1),
+                "event_usage_gate": event_usage_gate,
                 "ev_score": round(usable_ev_s, 1),
                 "raw_ev_score": round(ev_s, 1),
                 "risk_score": round(risk_s, 1),
@@ -2734,6 +2805,81 @@ def build_qualitative_validation_gate(rows: list[dict[str, object]], portfolio: 
     return out
 
 
+def build_event_validation_gate(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    event = by_ticker(EVENT_CSV)
+    reaction = by_ticker(REACTION_CSV)
+    validation = by_ticker(EVENT_VALIDATION_CSV)
+    portfolio_tickers = {str(r.get("ticker", "")) for r in portfolio}
+    out: list[dict[str, object]] = []
+    for row in rows:
+        ticker = str(row.get("ticker", ""))
+        ev = event.get(ticker)
+        react = reaction.get(ticker)
+        val = validation.get(ticker)
+        raw_event = to_float(row.get("raw_event_score"), to_float(row.get("event_score"), 50))
+        adjusted_event = to_float(row.get("event_score"), 50)
+        usage = str(row.get("event_usage_gate", ""))
+        long_layer = "なし"
+        if val:
+            long_layer = (
+                f"過去{val.get('event_count_calculated','')}件 / "
+                f"5日超過{val.get('avg_excess_5d_pct','')}% / "
+                f"20日超過{val.get('avg_excess_20d_pct','')}% / "
+                f"強{val.get('strong_event_count','')}弱{val.get('weak_event_count','')}"
+            )
+        earnings_layer = "なし"
+        if react:
+            earnings_layer = (
+                f"{react.get('event_type','')} / "
+                f"1日{react.get('excess_1d_pct','')}% / "
+                f"5日{react.get('excess_5d_pct','')}% / "
+                f"20日{react.get('excess_20d_pct','未到達')}% / "
+                f"{react.get('reaction_status','')}"
+            )
+        recent_layer = "なし"
+        if ev:
+            recent_layer = (
+                f"6月イベント / {ev.get('market_signal','')} / "
+                f"{ev.get('one_day_change_pct','')} / {ev.get('event_status','')}"
+            )
+        if "実績補助可" in usage:
+            event_gate = "実績補助可"
+            purchase_usage = "量的・財務・価格が通る場合だけ、補助根拠として使用。"
+        elif "反証注意" in usage:
+            event_gate = "反証注意"
+            purchase_usage = "イベント理由での買付不可。追加停止・監視へ戻す。"
+        elif "暫定補助" in usage:
+            event_gate = "暫定補助"
+            purchase_usage = "20営業日・複数イベント確認まで小口または監視。"
+        elif "短期" in usage:
+            event_gate = "短期反応のみ"
+            purchase_usage = "6月または決算直後の反応。購入根拠ではなく確認材料。"
+        elif "未使用" in usage:
+            event_gate = "未使用"
+            purchase_usage = "イベント材料はスコア根拠にしない。"
+        else:
+            event_gate = "監視"
+            purchase_usage = "イベント材料の根拠が弱いため監視扱い。"
+        out.append(
+            {
+                "rank": len(out) + 1,
+                "ticker": ticker,
+                "name": row.get("name", ""),
+                "in_portfolio": "YES" if ticker in portfolio_tickers else "NO",
+                "event_gate": event_gate,
+                "raw_event_score": round(raw_event, 1),
+                "adjusted_event_score": round(adjusted_event, 1),
+                "long_event_layer": long_layer,
+                "earnings_reaction_layer": earnings_layer,
+                "recent_event_layer": recent_layer,
+                "purchase_usage": purchase_usage,
+                "score_gate_note": usage,
+                "next_action": "過去イベント件数と20営業日反応を増やす" if event_gate in ["短期反応のみ", "未使用", "監視", "暫定補助"] else "実績レビューで継続確認",
+            }
+        )
+    return out
+
+
 def build_no_buy_reduce_gate(
     portfolio: list[dict[str, object]],
     correlation_rows: list[dict[str, object]],
@@ -3219,6 +3365,7 @@ def build_html(
     architecture_rows: list[dict[str, object]],
     theme_evidence_rows: list[dict[str, object]],
     qualitative_validation_rows: list[dict[str, object]],
+    event_validation_rows: list[dict[str, object]],
     no_buy_gate_rows: list[dict[str, object]],
     benchmark_allocation_rows: list[dict[str, object]],
     prediction_review_rows: list[dict[str, object]],
@@ -3251,6 +3398,7 @@ def build_html(
         ("qualitative_score", "質的"),
         ("raw_qualitative_score", "質的raw"),
         ("event_score", "イベント"),
+        ("raw_event_score", "イベントraw"),
         ("expected_value_pct", "補正後EV%"),
         ("raw_expected_value_pct", "raw EV%"),
         ("ev_confidence_pct", "EV信頼度"),
@@ -3271,6 +3419,7 @@ def build_html(
         ("qualitative_score", "質的"),
         ("raw_qualitative_score", "質的raw"),
         ("event_score", "イベント"),
+        ("raw_event_score", "イベントraw"),
         ("benchmark_score", "指数"),
         ("risk_score", "リスク"),
         ("reliability", "信頼度"),
@@ -3576,6 +3725,21 @@ def build_html(
         ("adjusted_qualitative_score", "採用質的"),
         ("event_score", "イベント"),
         ("observed_layer", "実績層"),
+        ("purchase_usage", "購入判断での扱い"),
+        ("score_gate_note", "点数ゲート"),
+        ("next_action", "次の作業"),
+    ]
+    event_validation_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("in_portfolio", "現配分"),
+        ("event_gate", "イベントゲート"),
+        ("raw_event_score", "rawイベント"),
+        ("adjusted_event_score", "採用イベント"),
+        ("long_event_layer", "過去イベント層"),
+        ("earnings_reaction_layer", "決算反応層"),
+        ("recent_event_layer", "直近イベント層"),
         ("purchase_usage", "購入判断での扱い"),
         ("score_gate_note", "点数ゲート"),
         ("next_action", "次の作業"),
@@ -3969,6 +4133,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>イベント利用ゲート</h2>
+    <p class="note">決算後反応、過去イベント、6月イベントを分けます。直近1回だけの反応や20営業日未到達の決算反応は、rawイベント点が高くても採用イベント点に上限をかけます。</p>
+    {html_table(event_validation_rows, event_validation_fields, 100)}
+  </section>
+
+  <section>
     <h2>質的テーマ証拠台帳</h2>
     <p class="note">AI、半導体、電力、防衛、金利、資源、政策、構造優位などの質的材料を、仮説層と実績層に分けます。実績層が弱い材料は、購入決定ではなく監視・比較材料として扱います。</p>
     {html_table(theme_evidence_rows, theme_evidence_fields, 40)}
@@ -4196,6 +4366,7 @@ def build_html(
       <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
       <a href="ultimate_selection_theme_evidence_20260618.csv">質的テーマ証拠台帳CSV</a>
       <a href="ultimate_selection_qualitative_validation_gate_20260621.csv">質的テーマ利用ゲートCSV</a>
+      <a href="ultimate_selection_event_validation_gate_20260621.csv">イベント利用ゲートCSV</a>
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
       <a href="ultimate_selection_review_input_template_20260619.csv">実績入力テンプレートCSV</a>
@@ -4224,6 +4395,7 @@ def main() -> None:
     architecture_rows = build_architecture_audit(rows, portfolio, correlation_rows, constraint_rows)
     theme_evidence_rows = build_theme_evidence(rows, portfolio)
     qualitative_validation_rows = build_qualitative_validation_gate(rows, portfolio)
+    event_validation_rows = build_event_validation_gate(rows, portfolio)
     no_buy_gate_rows = build_no_buy_reduce_gate(portfolio, correlation_rows)
     benchmark_allocation_rows = build_benchmark_allocation_gate(portfolio)
     risk_scenarios = build_risk_scenarios(portfolio, execution)
@@ -4261,6 +4433,7 @@ def main() -> None:
     write_csv(OUT_ARCHITECTURE_AUDIT, architecture_rows)
     write_csv(OUT_THEME_EVIDENCE, theme_evidence_rows)
     write_csv(OUT_QUALITATIVE_VALIDATION_GATE, qualitative_validation_rows)
+    write_csv(OUT_EVENT_VALIDATION_GATE, event_validation_rows)
     write_csv(OUT_NO_BUY_GATE, no_buy_gate_rows)
     write_csv(OUT_BENCHMARK_ALLOCATION_GATE, benchmark_allocation_rows)
     write_csv(OUT_PREDICTION_REVIEW, prediction_review_rows)
@@ -4295,6 +4468,7 @@ def main() -> None:
             architecture_rows,
             theme_evidence_rows,
             qualitative_validation_rows,
+            event_validation_rows,
             no_buy_gate_rows,
             benchmark_allocation_rows,
             prediction_review_rows,
@@ -4331,6 +4505,7 @@ def main() -> None:
     print(f"Architecture audit: {OUT_ARCHITECTURE_AUDIT}")
     print(f"Theme evidence: {OUT_THEME_EVIDENCE}")
     print(f"Qualitative validation gate: {OUT_QUALITATIVE_VALIDATION_GATE}")
+    print(f"Event validation gate: {OUT_EVENT_VALIDATION_GATE}")
     print(f"No-buy gate: {OUT_NO_BUY_GATE}")
     print(f"Benchmark allocation gate: {OUT_BENCHMARK_ALLOCATION_GATE}")
     print(f"Prediction review: {OUT_PREDICTION_REVIEW}")
