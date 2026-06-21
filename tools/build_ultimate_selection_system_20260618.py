@@ -57,6 +57,7 @@ OUT_TODAY_ORDER_TICKET = ROOT / "ultimate_selection_today_order_ticket_20260619.
 OUT_STRUCTURAL_GATE = ROOT / "ultimate_selection_structural_gate_20260619.csv"
 OUT_DATA_HARDENING_PROGRESS = ROOT / "ultimate_selection_data_hardening_progress_20260621.csv"
 OUT_FINANCIAL_HARDENING_QUEUE = ROOT / "ultimate_selection_financial_hardening_queue_20260621.csv"
+OUT_QUALITATIVE_VALIDATION_GATE = ROOT / "ultimate_selection_qualitative_validation_gate_20260621.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -317,6 +318,37 @@ def qualitative_score(rows: list[dict[str, str]], explore: dict[str, str] | None
     return sum(scores) / len(scores), "、".join(labels[:2])
 
 
+def adjusted_qualitative_score(
+    raw_score: float,
+    note: str,
+    has_channel_evidence: bool,
+    has_exploration_score: bool,
+    has_recent_event: bool,
+    has_event_validation: bool,
+) -> tuple[float, str, str]:
+    """Keep qualitative ideas from becoming purchase evidence before validation exists."""
+    if "未接続" in note:
+        return 50.0, note, "未使用: 質的根拠未接続"
+    if has_channel_evidence and has_event_validation:
+        return raw_score, note, "補助使用可: 公式・チャンネル材料と過去反応確認あり"
+    if has_channel_evidence and has_recent_event:
+        capped = min(raw_score, 65.0)
+        return capped, f"{note} / 短期反応のみのため65点上限", "短期確認: 過去反応が揃うまで購入根拠にしない"
+    if has_channel_evidence:
+        capped = min(raw_score, 60.0)
+        return capped, f"{note} / 実績層未接続のため60点上限", "監視優先: 実績層が揃うまで購入根拠にしない"
+    if has_exploration_score and has_event_validation:
+        capped = min(raw_score, 65.0)
+        return capped, f"{note} / 探索スコアのため65点上限", "比較材料: 量的・財務が通る場合だけ補助"
+    if has_exploration_score and has_recent_event:
+        capped = min(raw_score, 58.0)
+        return capped, f"{note} / 探索かつ短期反応のみのため58点上限", "監視材料: 公式財務と過去反応が揃うまで使わない"
+    if has_exploration_score:
+        capped = min(raw_score, 55.0)
+        return capped, f"{note} / 仮説のみのため55点上限", "仮説のみ: 購入根拠にしない"
+    return min(raw_score, 50.0), note, "未使用: 根拠不足"
+
+
 def event_score(
     row: dict[str, str] | None,
     reaction: dict[str, str] | None = None,
@@ -519,8 +551,16 @@ def build_scores() -> list[dict[str, object]]:
             qual_explore_map.get(ticker),
             discovery_map.get(ticker),
         )
-        qual_s, qual_note = qualitative_score(qual_map.get(ticker, []), qual_explore_map.get(ticker))
+        raw_qual_s, raw_qual_note = qualitative_score(qual_map.get(ticker, []), qual_explore_map.get(ticker))
         event_s, event_note = event_score(event_map.get(ticker), reaction_map.get(ticker), validation_map.get(ticker))
+        qual_s, qual_note, qualitative_usage_gate = adjusted_qualitative_score(
+            raw_qual_s,
+            raw_qual_note,
+            ticker in qual_map,
+            ticker in qual_explore_map,
+            ticker in event_map,
+            ticker in validation_map,
+        )
         reliability = 45.0
         reliability += 20 if ticker in financial_map and financial_status == "pass" else 8 if financial_status == "partial" else 6 if financial_status.startswith("補助") else 0
         reliability += 12 if ticker in event_map else 8 if ticker in reaction_map or ticker in validation_map else 0
@@ -585,6 +625,8 @@ def build_scores() -> list[dict[str, object]]:
                 "quant_score": round(quant_s, 1),
                 "financial_score": round(financial_s, 1),
                 "qualitative_score": round(qual_s, 1),
+                "raw_qualitative_score": round(raw_qual_s, 1),
+                "qualitative_usage_gate": qualitative_usage_gate,
                 "event_score": round(event_s, 1),
                 "ev_score": round(usable_ev_s, 1),
                 "raw_ev_score": round(ev_s, 1),
@@ -2614,6 +2656,84 @@ def build_theme_evidence(rows: list[dict[str, object]], portfolio: list[dict[str
     return out
 
 
+def build_qualitative_validation_gate(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
+    qual_by_ticker: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for r in read_csv(QUAL_CSV):
+        qual_by_ticker[r.get("ticker", "")].append(r)
+    explore = by_ticker(QUAL_EXPLORE_CSV)
+    validation = by_ticker(EVENT_VALIDATION_CSV)
+    event = by_ticker(EVENT_CSV)
+    portfolio_tickers = {str(r.get("ticker", "")) for r in portfolio}
+    out: list[dict[str, object]] = []
+    for row in rows:
+        ticker = str(row.get("ticker", ""))
+        qrows = qual_by_ticker.get(ticker, [])
+        exp = explore.get(ticker)
+        val = validation.get(ticker)
+        ev = event.get(ticker)
+        has_channel = bool(qrows)
+        has_explore = bool(exp)
+        event_count = to_float(val.get("event_count_calculated") if val else 0)
+        avg5 = to_float(val.get("avg_excess_5d_pct") if val else 0)
+        avg20 = to_float(val.get("avg_excess_20d_pct") if val else 0)
+        strong = to_float(val.get("strong_event_count") if val else 0)
+        weak = to_float(val.get("weak_event_count") if val else 0)
+        has_validation = bool(val)
+        has_recent_event = bool(ev)
+        raw_q = to_float(row.get("raw_qualitative_score"), to_float(row.get("qualitative_score"), 50))
+        adjusted_q = to_float(row.get("qualitative_score"), 50)
+        usage_gate = str(row.get("qualitative_usage_gate", ""))
+        if has_channel and has_validation and event_count >= 3 and strong >= weak and avg20 >= 0:
+            status = "補助使用可"
+            purchase_usage = "量的・財務・価格ゲートが通る場合だけ補助根拠に使う。単独では買わない。"
+        elif has_channel and has_recent_event:
+            status = "短期確認あり"
+            purchase_usage = "6月イベント反応はあるが、長期検証が弱い。追加買い前に実績層を確認。"
+        elif has_explore and has_validation and event_count >= 3:
+            status = "比較材料"
+            purchase_usage = "探索テーマとして比較に使う。購入候補化には公式財務と再現反応が必要。"
+        elif has_channel or has_explore:
+            status = "仮説のみ"
+            purchase_usage = "購入根拠にしない。監視・調査優先順位に限定。"
+        else:
+            status = "未接続"
+            purchase_usage = "質的材料は未使用。量的・財務・価格だけで評価。"
+        if weak > strong and has_validation:
+            status = "反証注意"
+            purchase_usage = "弱い反応が多いため、テーマ理由での買付は不可。"
+        theme_name = ""
+        if qrows:
+            theme_name = " / ".join(first_value(q.get("channel"), q.get("theme"), "") for q in qrows[:2])
+        elif exp:
+            theme_name = exp.get("theme_name", "")
+        else:
+            theme_name = row.get("sector", "")
+        if val:
+            observed = f"過去{int(event_count)}件 / 5日超過{avg5:.2f}% / 20日超過{avg20:.2f}% / 強{int(strong)}弱{int(weak)}"
+        elif ev:
+            observed = f"6月イベント: {ev.get('market_signal','')} / {ev.get('one_day_change_pct','')} / {ev.get('event_status','')}"
+        else:
+            observed = "実績層なし"
+        out.append(
+            {
+                "rank": len(out) + 1,
+                "ticker": ticker,
+                "name": row.get("name", ""),
+                "in_portfolio": "YES" if ticker in portfolio_tickers else "NO",
+                "theme_or_channel": theme_name,
+                "qualitative_gate": status,
+                "raw_qualitative_score": round(raw_q, 1),
+                "adjusted_qualitative_score": round(adjusted_q, 1),
+                "event_score": row.get("event_score", ""),
+                "observed_layer": observed,
+                "purchase_usage": purchase_usage,
+                "score_gate_note": usage_gate,
+                "next_action": "公式資料・ニュース出所・過去イベント反応を追加" if status in ["仮説のみ", "未接続", "比較材料"] else "反応が継続するか運用記録で確認",
+            }
+        )
+    return out
+
+
 def build_no_buy_reduce_gate(
     portfolio: list[dict[str, object]],
     correlation_rows: list[dict[str, object]],
@@ -3098,6 +3218,7 @@ def build_html(
     constraint_rows: list[dict[str, object]],
     architecture_rows: list[dict[str, object]],
     theme_evidence_rows: list[dict[str, object]],
+    qualitative_validation_rows: list[dict[str, object]],
     no_buy_gate_rows: list[dict[str, object]],
     benchmark_allocation_rows: list[dict[str, object]],
     prediction_review_rows: list[dict[str, object]],
@@ -3128,6 +3249,7 @@ def build_html(
         ("quant_score", "量的"),
         ("financial_score", "財務"),
         ("qualitative_score", "質的"),
+        ("raw_qualitative_score", "質的raw"),
         ("event_score", "イベント"),
         ("expected_value_pct", "補正後EV%"),
         ("raw_expected_value_pct", "raw EV%"),
@@ -3147,6 +3269,7 @@ def build_html(
         ("quant_score", "量的"),
         ("financial_score", "財務"),
         ("qualitative_score", "質的"),
+        ("raw_qualitative_score", "質的raw"),
         ("event_score", "イベント"),
         ("benchmark_score", "指数"),
         ("risk_score", "リスク"),
@@ -3441,6 +3564,21 @@ def build_html(
         ("score_usage", "点数への使い方"),
         ("risks", "注意点"),
         ("next_check", "次確認"),
+    ]
+    qualitative_validation_fields = [
+        ("rank", "順位"),
+        ("ticker", "銘柄"),
+        ("name", "名称"),
+        ("in_portfolio", "現配分"),
+        ("theme_or_channel", "テーマ"),
+        ("qualitative_gate", "質的ゲート"),
+        ("raw_qualitative_score", "raw質的"),
+        ("adjusted_qualitative_score", "採用質的"),
+        ("event_score", "イベント"),
+        ("observed_layer", "実績層"),
+        ("purchase_usage", "購入判断での扱い"),
+        ("score_gate_note", "点数ゲート"),
+        ("next_action", "次の作業"),
     ]
     no_buy_gate_fields = [
         ("gate", "ゲート"),
@@ -3825,6 +3963,12 @@ def build_html(
   </section>
 
   <section>
+    <h2>質的テーマ利用ゲート</h2>
+    <p class="note">質的材料を、購入根拠に使える補助材料、比較材料、仮説のみ、未接続に分けます。raw質的点が高くても、実績層が弱い場合は採用質的点を中立寄りに戻します。</p>
+    {html_table(qualitative_validation_rows, qualitative_validation_fields, 100)}
+  </section>
+
+  <section>
     <h2>質的テーマ証拠台帳</h2>
     <p class="note">AI、半導体、電力、防衛、金利、資源、政策、構造優位などの質的材料を、仮説層と実績層に分けます。実績層が弱い材料は、購入決定ではなく監視・比較材料として扱います。</p>
     {html_table(theme_evidence_rows, theme_evidence_fields, 40)}
@@ -4051,6 +4195,7 @@ def build_html(
       <a href="ultimate_selection_constraints_20260618.csv">配分制約チェックCSV</a>
       <a href="ultimate_selection_correlation_risk_20260618.csv">相関リスクCSV</a>
       <a href="ultimate_selection_theme_evidence_20260618.csv">質的テーマ証拠台帳CSV</a>
+      <a href="ultimate_selection_qualitative_validation_gate_20260621.csv">質的テーマ利用ゲートCSV</a>
       <a href="ultimate_selection_no_buy_reduce_gate_20260618.csv">買わない・減額ゲートCSV</a>
       <a href="ultimate_selection_benchmark_allocation_gate_20260618.csv">指数比較配分ゲートCSV</a>
       <a href="ultimate_selection_review_input_template_20260619.csv">実績入力テンプレートCSV</a>
@@ -4078,6 +4223,7 @@ def main() -> None:
     constraint_rows = build_constraints(rows, portfolio, correlation_rows)
     architecture_rows = build_architecture_audit(rows, portfolio, correlation_rows, constraint_rows)
     theme_evidence_rows = build_theme_evidence(rows, portfolio)
+    qualitative_validation_rows = build_qualitative_validation_gate(rows, portfolio)
     no_buy_gate_rows = build_no_buy_reduce_gate(portfolio, correlation_rows)
     benchmark_allocation_rows = build_benchmark_allocation_gate(portfolio)
     risk_scenarios = build_risk_scenarios(portfolio, execution)
@@ -4114,6 +4260,7 @@ def main() -> None:
     write_csv(OUT_CONSTRAINTS, constraint_rows)
     write_csv(OUT_ARCHITECTURE_AUDIT, architecture_rows)
     write_csv(OUT_THEME_EVIDENCE, theme_evidence_rows)
+    write_csv(OUT_QUALITATIVE_VALIDATION_GATE, qualitative_validation_rows)
     write_csv(OUT_NO_BUY_GATE, no_buy_gate_rows)
     write_csv(OUT_BENCHMARK_ALLOCATION_GATE, benchmark_allocation_rows)
     write_csv(OUT_PREDICTION_REVIEW, prediction_review_rows)
@@ -4147,6 +4294,7 @@ def main() -> None:
             constraint_rows,
             architecture_rows,
             theme_evidence_rows,
+            qualitative_validation_rows,
             no_buy_gate_rows,
             benchmark_allocation_rows,
             prediction_review_rows,
@@ -4182,6 +4330,7 @@ def main() -> None:
     print(f"Constraints: {OUT_CONSTRAINTS}")
     print(f"Architecture audit: {OUT_ARCHITECTURE_AUDIT}")
     print(f"Theme evidence: {OUT_THEME_EVIDENCE}")
+    print(f"Qualitative validation gate: {OUT_QUALITATIVE_VALIDATION_GATE}")
     print(f"No-buy gate: {OUT_NO_BUY_GATE}")
     print(f"Benchmark allocation gate: {OUT_BENCHMARK_ALLOCATION_GATE}")
     print(f"Prediction review: {OUT_PREDICTION_REVIEW}")
