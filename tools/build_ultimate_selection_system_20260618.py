@@ -55,6 +55,7 @@ OUT_BUY_BLOCKER_TRIAGE = ROOT / "ultimate_selection_buy_blocker_triage_20260619.
 OUT_ALLOCATION_TRACE = ROOT / "ultimate_selection_allocation_trace_20260619.csv"
 OUT_TODAY_ORDER_TICKET = ROOT / "ultimate_selection_today_order_ticket_20260619.csv"
 OUT_STRUCTURAL_GATE = ROOT / "ultimate_selection_structural_gate_20260619.csv"
+OUT_DATA_HARDENING_PROGRESS = ROOT / "ultimate_selection_data_hardening_progress_20260621.csv"
 OUT_HTML = ROOT / "ultimate_selection_system_20260618.html"
 
 CAPITAL_YEN = 2_400_000
@@ -401,6 +402,62 @@ def expected_value_score(final_score: float, cagr5: float, cagr10: float, one_ye
     return ev, ev_score, pu, upside, downside
 
 
+def data_completion_and_ev_confidence(
+    financial_status: str,
+    qualitative_note: str,
+    event_note: str,
+    has_price: bool,
+    reliability: float,
+) -> tuple[float, float, str]:
+    if financial_status == "pass":
+        financial_factor = 1.00
+    elif financial_status == "partial":
+        financial_factor = 0.78
+    elif financial_status.startswith("補助"):
+        financial_factor = 0.64
+    else:
+        financial_factor = 0.52
+
+    if "未接続" in qualitative_note:
+        qualitative_factor = 0.55
+    elif "補助" in qualitative_note:
+        qualitative_factor = 0.72
+    else:
+        qualitative_factor = 0.90
+
+    if "未接続" in event_note:
+        event_factor = 0.55
+    elif "補助" in event_note or "過去イベント" in event_note or "決算後反応" in event_note:
+        event_factor = 0.76
+    else:
+        event_factor = 0.88
+
+    price_factor = 1.00 if has_price else 0.35
+    reliability_factor = 0.55 + 0.45 * clamp(reliability) / 100.0
+    data_completion = (
+        0.30 * financial_factor
+        + 0.25 * price_factor
+        + 0.20 * event_factor
+        + 0.15 * qualitative_factor
+        + 0.10 * reliability_factor
+    )
+    ev_confidence = (
+        0.35 * financial_factor
+        + 0.25 * event_factor
+        + 0.15 * qualitative_factor
+        + 0.15 * price_factor
+        + 0.10 * reliability_factor
+    )
+    reason_bits = [
+        f"財務{financial_factor:.2f}",
+        f"イベント{event_factor:.2f}",
+        f"質的{qualitative_factor:.2f}",
+        f"価格{price_factor:.2f}",
+        f"信頼度{reliability_factor:.2f}",
+    ]
+    return round(data_completion * 100, 1), round(ev_confidence * 100, 1), " / ".join(reason_bits)
+
+
 def sector_bucket(name: str, ticker: str, qual_note: str) -> str:
     text = f"{name} {ticker} {qual_note}"
     if any(x in text for x in ["FG", "銀行", "みずほ", "三井住友", "UFJ", "第一生命", "MS&AD", "東京海上"]):
@@ -471,6 +528,16 @@ def build_scores() -> list[dict[str, object]]:
         reliability += 3 if base_reselect else 0
         reliability = clamp(reliability)
 
+        price_row = price_map.get(ticker, {})
+        price = to_float(price_row.get("price"), 0.0)
+        data_completion_pct, ev_confidence_pct, ev_confidence_reason = data_completion_and_ev_confidence(
+            financial_status,
+            qual_note,
+            event_note,
+            bool(price),
+            reliability,
+        )
+
         pre_score = clamp(
             0.31 * quant_s
             + 0.17 * financial_s
@@ -481,15 +548,15 @@ def build_scores() -> list[dict[str, object]]:
             + 0.05 * reliability
         )
         ev, ev_s, pu, upside, downside = expected_value_score(pre_score, cagr5, cagr10, one_year, min(dd5, dd1), event_s)
+        usable_ev = ev * ev_confidence_pct / 100.0
+        usable_ev_s = clamp(50 + usable_ev * 2.0)
         penalty, penalties, action = gate_penalty(final_status, universe_reason, financial_status, qual_note)
-        final_s = clamp(0.86 * pre_score + 0.14 * ev_s - penalty)
+        final_s = clamp(0.86 * pre_score + 0.14 * usable_ev_s - penalty)
         if final_s < 52 and action not in ["買付不可"]:
             action = "監視"
         if reliability < 55 and action == "購入候補":
             action = "保留"
 
-        price_row = price_map.get(ticker, {})
-        price = to_float(price_row.get("price"), 0.0)
         sector = sector_bucket(name, ticker, qual_note)
         data_sources = []
         if ticker in financial_map:
@@ -518,11 +585,16 @@ def build_scores() -> list[dict[str, object]]:
                 "financial_score": round(financial_s, 1),
                 "qualitative_score": round(qual_s, 1),
                 "event_score": round(event_s, 1),
-                "ev_score": round(ev_s, 1),
+                "ev_score": round(usable_ev_s, 1),
+                "raw_ev_score": round(ev_s, 1),
                 "risk_score": round(risk_s, 1),
                 "benchmark_score": round(benchmark_s, 1),
                 "reliability": round(reliability, 1),
-                "expected_value_pct": round(ev, 2),
+                "expected_value_pct": round(usable_ev, 2),
+                "raw_expected_value_pct": round(ev, 2),
+                "ev_confidence_pct": round(ev_confidence_pct, 1),
+                "data_completion_pct": round(data_completion_pct, 1),
+                "ev_confidence_reason": ev_confidence_reason,
                 "up_probability": round(pu * 100, 1),
                 "upside_pct": round(upside, 1),
                 "downside_pct": round(downside, 1),
@@ -730,7 +802,7 @@ def optimize_portfolio_v2(rows: list[dict[str, object]]) -> list[dict[str, objec
             {
                 **r,
                 "portfolio_rank": rank,
-                "allocation_formula": "raw = max(総合点-45,1) × (1+EV/30) × 扱い別係数",
+                "allocation_formula": "raw = max(総合点-45,1) × (1+信頼度補正後EV/30) × 扱い別係数",
                 "allocation_score_component": round(score_component, 2),
                 "allocation_ev_multiplier": round(ev_multiplier, 3),
                 "allocation_action_multiplier": allocation_multipliers[idx],
@@ -1692,6 +1764,8 @@ def build_allocation_trace(portfolio: list[dict[str, object]]) -> list[dict[str,
                 "action": row.get("action", ""),
                 "final_score": row.get("final_score", ""),
                 "expected_value_pct": row.get("expected_value_pct", ""),
+                "raw_expected_value_pct": row.get("raw_expected_value_pct", ""),
+                "ev_confidence_pct": row.get("ev_confidence_pct", ""),
                 "raw_formula": row.get("allocation_formula", ""),
                 "score_component": row.get("allocation_score_component", ""),
                 "ev_multiplier": row.get("allocation_ev_multiplier", ""),
@@ -1709,6 +1783,83 @@ def build_allocation_trace(portfolio: list[dict[str, object]]) -> list[dict[str,
             }
         )
     return out
+
+
+def build_data_hardening_progress(
+    rows: list[dict[str, object]], portfolio: list[dict[str, object]]
+) -> list[dict[str, object]]:
+    total = len(rows)
+    price_count = sum(1 for r in rows if r.get("price") != "")
+    financial_pass = sum(1 for r in rows if r.get("financial_status") == "pass")
+    financial_partial = sum(1 for r in rows if r.get("financial_status") == "partial")
+    financial_supplement = sum(1 for r in rows if str(r.get("financial_status", "")).startswith("補助"))
+    qualitative_connected = sum(1 for r in rows if "未接続" not in str(r.get("qualitative_note", "")))
+    qualitative_scored = sum(
+        1
+        for r in rows
+        if "未接続" not in str(r.get("qualitative_note", ""))
+        and to_float(r.get("qualitative_score"), 50) != 50
+    )
+    event_connected = sum(1 for r in rows if "未接続" not in str(r.get("event_note", "")))
+    ev_adjusted = sum(1 for r in rows if r.get("ev_confidence_pct") != "")
+    portfolio_count = len(portfolio)
+    avg_data_completion = (
+        sum(to_float(r.get("data_completion_pct")) for r in rows) / total if total else 0.0
+    )
+    avg_ev_confidence = (
+        sum(to_float(r.get("ev_confidence_pct")) for r in rows) / total if total else 0.0
+    )
+
+    return [
+        {
+            "target_area": "候補母集団100社前後",
+            "current_improvement": "100社CSVを基準母集団として維持。母集団外を急に購入候補へ入れない制御を継続。",
+            "coverage": f"{total}/{total}",
+            "now_used_for": "全スコア計算、ランキング、購入候補、除外候補の起点。",
+            "remaining_gap": "母集団を作った時の抽出条件履歴をさらに固定し、後から見ても再現できる状態にする。",
+            "next_action": "時価総額、流動性、業績成長、テーマ適合、除外条件を母集団定義表へ固定。",
+        },
+        {
+            "target_area": "量的スコア",
+            "current_improvement": f"価格あり {price_count}/{total}。CAGR、指数差、最大下落、PER/PBR/ROE一部、株価指標を同一表で処理。",
+            "coverage": f"{price_count}/{total}",
+            "now_used_for": "探索スコア、購入候補スコア、配分上限、下落時の停止条件。",
+            "remaining_gap": "出来高、FCF、営業利益率、自己資本比率の全社統一入力がまだ不足。",
+            "next_action": "未入力指標は点数に混ぜず、取得済み項目だけでスコア化。未入力は信頼度で減額。",
+        },
+        {
+            "target_area": "財務データ",
+            "current_improvement": f"公式pass {financial_pass}社、partial {financial_partial}社、補助 {financial_supplement}社。pass以外は購入金額とEV信頼度を抑制。",
+            "coverage": f"pass {financial_pass}/{total}",
+            "now_used_for": "財務スコア、購入可否ゲート、EV信頼度補正、買付金額の抑制。",
+            "remaining_gap": "公式PDF・決算短信ベースのPER/PBR/ROE、受注、利益率、FCF確認が全社では未完。",
+            "next_action": "購入候補から優先して公式値を追加入力。passでない銘柄は『確認後増額』扱いにする。",
+        },
+        {
+            "target_area": "質的スコア",
+            "current_improvement": f"質的接続 {qualitative_connected}/{total}、実スコア利用 {qualitative_scored}/{total}。単独加点ではなく補助指標として運用。",
+            "coverage": f"{qualitative_connected}/{total}",
+            "now_used_for": "テーマ整合性、構造優位、監視理由、購入後に見るニュース項目。",
+            "remaining_gap": "ニュース・公式資料・過去反応がそろわないテーマは、まだ購入確定には使えない。",
+            "next_action": "仮説層と実績層を分け、実績層がないものは『監視枠』に留める。",
+        },
+        {
+            "target_area": "イベント検証",
+            "current_improvement": f"イベント接続 {event_connected}/{total}。決算後反応、6月イベント、過去イベント反応を接続済み分だけ利用。",
+            "coverage": f"{event_connected}/{total}",
+            "now_used_for": "決算後に買われたか、6月イベント後に買えるか、買わない条件の判定。",
+            "remaining_gap": "TOB、上方修正、新商品、政策、商品市況などの長期イベント履歴はまだ完全ではない。",
+            "next_action": "イベント種別ごとに、1日・5日・20営業日反応を株価データと結合して追加。",
+        },
+        {
+            "target_area": "期待値式",
+            "current_improvement": f"raw EVを直接使わず、財務・イベント・質的・価格・信頼度からEV信頼度で補正。平均データ充足度 {avg_data_completion:.1f}、平均EV信頼度 {avg_ev_confidence:.1f}。",
+            "coverage": f"{ev_adjusted}/{total}",
+            "now_used_for": f"候補{portfolio_count}社の配分、購入優先度、指数比較、見送り条件。",
+            "remaining_gap": "上昇確率と上昇幅はまだ検証仮説であり、勝率の証明ではない。",
+            "next_action": "実績レビューで予想と実績のズレを記録し、EV信頼度と重みを更新する。",
+        },
+    ]
 
 
 def build_universe_rules(rows: list[dict[str, object]], portfolio: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -1846,6 +1997,7 @@ def build_expected_value_audit(rows: list[dict[str, object]], portfolio: list[di
         downside = to_float(row.get("downside_pct"))
         cost = 0.4
         ev = to_float(row.get("expected_value_pct"))
+        raw_ev = to_float(row.get("raw_expected_value_pct"))
         status = "配分対象" if str(row.get("ticker", "")) in portfolio_tickers else "非配分"
         if str(row.get("action", "")) in ["雋ｷ莉倅ｸ榊庄", "買付不可"]:
             status = "除外"
@@ -1856,13 +2008,17 @@ def build_expected_value_audit(rows: list[dict[str, object]], portfolio: list[di
                 "name": row.get("name", ""),
                 "portfolio_status": status,
                 "expected_value_pct": round(ev, 2),
+                "raw_expected_value_pct": round(raw_ev, 2),
+                "ev_confidence_pct": row.get("ev_confidence_pct", ""),
+                "data_completion_pct": row.get("data_completion_pct", ""),
                 "up_probability_pct": pu,
                 "upside_pct": upside,
                 "down_probability_pct": pd,
                 "downside_pct": downside,
                 "cost_pct": cost,
-                "formula": "EV = 上昇確率×上昇幅 - 下落確率×下落幅 - コスト",
+                "formula": "raw EV = 上昇確率×上昇幅 - 下落確率×下落幅 - コスト。補正後EV = raw EV × EV信頼度。",
                 "inputs": f"5年CAGR {row.get('cagr5','')} / 10年CAGR {row.get('cagr10','')} / 直近1年 {row.get('one_year','')} / 最大下落 {row.get('max_dd1','')}",
+                "ev_confidence_reason": row.get("ev_confidence_reason", ""),
                 "calculation_note": "相対比較用の仮説値。利益予測の確約ではなく、候補間の優先順位と買付比率の検討に使う。",
                 "data_gate": "公式財務・価格・イベント・質的根拠が不足する場合は、EVが高くても買付候補にしない。",
             }
@@ -1895,7 +2051,7 @@ def build_score_trace(rows: list[dict[str, object]]) -> list[dict[str, object]]:
                 "ev_score": row.get("ev_score", ""),
                 "implied_gate_penalty": implied_penalty,
                 "pre_score_formula": "事前スコア = 量的31% + 財務17% + 質的15% + イベント14% + 指数10% + リスク8% + 信頼度5%",
-                "final_score_formula": "総合点 = 事前スコア86% + EVスコア14% - ゲート減点",
+                "final_score_formula": "総合点 = 事前スコア86% + 信頼度補正後EVスコア14% - ゲート減点",
                 "gate_notes": row.get("gate_notes", ""),
                 "missing_items": row.get("missing_items", ""),
                 "data_sources": row.get("data_sources", ""),
@@ -1970,7 +2126,7 @@ def build_action_cockpit(
         },
         {
             "block": "指数比較",
-            "current_status": f"配分EV仮説 {pct(portfolio_ev)}、加重信頼度 {portfolio_reliability:.1f}。標準分岐: {allocation_rule}",
+            "current_status": f"補正後EV仮説 {pct(portfolio_ev)}、加重信頼度 {portfolio_reliability:.1f}。標準分岐: {allocation_rule}",
             "action": "S&P500/TOPIXを+1%以上上回る説明が弱い場合は、個別株比率を落とす。",
             "stop_or_next": "指数見通しが個別株EVを上回る場合は、個別株を観察扱いに戻す。",
         },
@@ -2879,6 +3035,7 @@ def build_html(
     expected_value_audit_rows: list[dict[str, object]],
     action_cockpit_rows: list[dict[str, object]],
     structural_gate_rows: list[dict[str, object]],
+    data_hardening_rows: list[dict[str, object]],
     buy_blocker_triage_rows: list[dict[str, object]],
     allocation_trace_rows: list[dict[str, object]],
     score_trace_rows: list[dict[str, object]],
@@ -2895,7 +3052,10 @@ def build_html(
         ("financial_score", "財務"),
         ("qualitative_score", "質的"),
         ("event_score", "イベント"),
-        ("expected_value_pct", "EV%"),
+        ("expected_value_pct", "補正後EV%"),
+        ("raw_expected_value_pct", "raw EV%"),
+        ("ev_confidence_pct", "EV信頼度"),
+        ("data_completion_pct", "データ充足度"),
         ("reliability", "信頼度"),
         ("data_sources", "使用データ"),
         ("gate_notes", "注意"),
@@ -2914,7 +3074,10 @@ def build_html(
         ("benchmark_score", "指数"),
         ("risk_score", "リスク"),
         ("reliability", "信頼度"),
-        ("ev_score", "EV"),
+        ("ev_score", "補正後EV"),
+        ("raw_ev_score", "raw EV"),
+        ("ev_confidence_pct", "EV信頼度"),
+        ("data_completion_pct", "データ充足度"),
         ("implied_gate_penalty", "ゲート減点"),
         ("pre_score_formula", "事前式"),
         ("final_score_formula", "総合式"),
@@ -2940,6 +3103,14 @@ def build_html(
         ("current_system_control", "現在の制御"),
         ("next_hardening_step", "次の強化"),
     ]
+    data_hardening_fields = [
+        ("target_area", "改善対象"),
+        ("current_improvement", "今回の改善"),
+        ("coverage", "カバー状況"),
+        ("now_used_for", "現在の使い方"),
+        ("remaining_gap", "残る課題"),
+        ("next_action", "次の作業"),
+    ]
     buy_blocker_fields = [
         ("rank", "順位"),
         ("ticker", "銘柄"),
@@ -2959,7 +3130,9 @@ def build_html(
         ("name", "名称"),
         ("action", "扱い"),
         ("final_score", "総合点"),
-        ("expected_value_pct", "EV%"),
+        ("expected_value_pct", "補正後EV%"),
+        ("raw_expected_value_pct", "raw EV%"),
+        ("ev_confidence_pct", "EV信頼度"),
         ("score_component", "点数成分"),
         ("ev_multiplier", "EV倍率"),
         ("action_multiplier", "扱い係数"),
@@ -2981,7 +3154,9 @@ def build_html(
         ("initial_shares", "初回株数"),
         ("initial_buy_yen", "初回金額"),
         ("final_score", "統合"),
-        ("expected_value_pct", "EV%"),
+        ("expected_value_pct", "補正後EV%"),
+        ("raw_expected_value_pct", "raw EV%"),
+        ("ev_confidence_pct", "EV信頼度"),
         ("action", "扱い"),
     ]
     port_tickers = {str(r.get("ticker", "")) for r in portfolio}
@@ -3131,7 +3306,10 @@ def build_html(
         ("ticker", "銘柄"),
         ("name", "名称"),
         ("portfolio_status", "配分扱い"),
-        ("expected_value_pct", "EV%"),
+        ("expected_value_pct", "補正後EV%"),
+        ("raw_expected_value_pct", "raw EV%"),
+        ("ev_confidence_pct", "EV信頼度"),
+        ("data_completion_pct", "データ充足度"),
         ("up_probability_pct", "上昇確率%"),
         ("upside_pct", "上昇幅%"),
         ("down_probability_pct", "下落確率%"),
@@ -3139,6 +3317,7 @@ def build_html(
         ("cost_pct", "コスト%"),
         ("formula", "式"),
         ("inputs", "入力"),
+        ("ev_confidence_reason", "信頼度補正理由"),
         ("calculation_note", "注意"),
         ("data_gate", "ゲート"),
     ]
@@ -3483,6 +3662,12 @@ def build_html(
     {html_table(structural_gate_rows, structural_gate_fields)}
   </section>
 
+  <section id="data-hardening-progress">
+    <h2>6項目 改善進捗</h2>
+    <p class="note">候補母集団、量的、財務、質的、イベント、期待値について、今回どこを強化したかをまとめています。raw EVはそのまま配分に使わず、財務・イベント・質的・価格・信頼度で補正したEVだけを購入優先度と配分に使います。</p>
+    {html_table(data_hardening_rows, data_hardening_fields)}
+  </section>
+
   <section>
     <h2>計算の流れ</h2>
     <div class="flow">
@@ -3561,8 +3746,8 @@ def build_html(
         <tr><td>下落耐性</td><td>5年最大下落 55% + 直近1年最大下落 45%</td><td>上昇だけでなく、大きく崩れた履歴も見る。</td></tr>
         <tr><td>量的スコア</td><td>成長34% + 勢い25% + 指数比較22% + 下落耐性19%</td><td>株価データ中心の基礎点。</td></tr>
         <tr><td>事前スコア</td><td>量的31% + 財務17% + 質的15% + イベント14% + 指数10% + 下落耐性8% + 信頼度5%</td><td>数値、財務、時流、イベント、データ信頼度を同時に見る。</td></tr>
-        <tr><td>期待値</td><td>上昇確率 × 上昇幅 - 下落確率 × 下落幅 - コスト</td><td>上がりそうという雰囲気ではなく、上昇と下落を同じ表で比較する。</td></tr>
-        <tr><td>最終スコア</td><td>事前スコア86% + 期待値スコア14% - 買わない条件の減点</td><td>未確認・過熱・監視扱いを最後に落とす。</td></tr>
+        <tr><td>期待値</td><td>raw EV = 上昇確率 × 上昇幅 - 下落確率 × 下落幅 - コスト。補正後EV = raw EV × EV信頼度。</td><td>上がりそうという雰囲気ではなく、上昇と下落を同じ表で比較し、データが弱い場合は期待値を割り引く。</td></tr>
+        <tr><td>最終スコア</td><td>事前スコア86% + 信頼度補正後EVスコア14% - 買わない条件の減点</td><td>未確認・過熱・監視扱いを最後に落とす。</td></tr>
       </tbody>
     </table>
     <p class="note">質的テーマは単純加点しません。公式資料、ニュース、過去反応が弱い場合は信頼度を下げ、購入候補ではなく監視・確認後候補に回します。</p>
@@ -3587,14 +3772,14 @@ def build_html(
 
   <section>
     <h2>配分計算監査</h2>
-    <p class="note">なぜその比率・金額になったかを見る表です。総合点、EV、扱い別係数、1銘柄上限を使って配分しています。調査優先・小口銘柄は、点数があっても係数と上限で小さくします。</p>
+    <p class="note">なぜその比率・金額になったかを見る表です。総合点、信頼度補正後EV、扱い別係数、1銘柄上限を使って配分しています。調査優先・小口銘柄は、点数があっても係数と上限で小さくします。</p>
     {html_table(allocation_trace_rows, allocation_trace_fields)}
   </section>
 
   <section>
     <h2>インデックス超過目標との接続</h2>
     <div class="cards">
-      <div class="card"><b>配分EV仮説</b><strong>{pct(portfolio_ev)}</strong><span>候補9社の比率加重</span></div>
+      <div class="card"><b>補正後EV仮説</b><strong>{pct(portfolio_ev)}</strong><span>候補9社の比率加重</span></div>
       <div class="card"><b>+1%目標の条件</b><strong>{pct(plus1_index_limit)}以下</strong><span>指数見通しがこの水準以下なら説明可能</span></div>
       <div class="card"><b>+5%目標の条件</b><strong>{pct(plus5_index_limit)}以下</strong><span>強気説明が成立する指数水準</span></div>
       <div class="card"><b>加重スコア</b><strong>{portfolio_score:.1f}</strong><span>配分後の平均点</span></div>
@@ -3620,7 +3805,7 @@ def build_html(
 
   <section>
     <h2>期待値分解監査</h2>
-    <p class="note">期待値は、単なる雰囲気の加点ではなく「上昇確率×上昇幅 - 下落確率×下落幅 - コスト」で分解して確認します。EVが高くても、財務・価格・イベント・質的根拠のゲートが不足する銘柄は買付候補へ進めない扱いを明示します。</p>
+    <p class="note">期待値は、単なる雰囲気の加点ではなく「上昇確率×上昇幅 - 下落確率×下落幅 - コスト」で分解して確認します。さらに財務・価格・イベント・質的根拠の充足度でEVを補正し、raw EVが高いだけの銘柄を過大評価しない扱いにします。</p>
     {html_table(expected_value_audit_rows, expected_value_audit_fields, 100)}
   </section>
 
@@ -3744,6 +3929,7 @@ def build_html(
       <a href="ultimate_selection_scores_20260618.csv">統合スコアCSV</a>
       <a href="ultimate_selection_action_cockpit_20260619.csv">実用コックピットCSV</a>
       <a href="ultimate_selection_structural_gate_20260619.csv">究極構造ゲートCSV</a>
+      <a href="ultimate_selection_data_hardening_progress_20260621.csv">6項目改善進捗CSV</a>
       <a href="ultimate_selection_today_order_ticket_20260619.csv">本日注文票CSV</a>
       <a href="ultimate_selection_buy_blocker_triage_20260619.csv">買付不足トリアージCSV</a>
       <a href="ultimate_selection_allocation_trace_20260619.csv">配分計算監査CSV</a>
@@ -3809,6 +3995,7 @@ def main() -> None:
     score_trace_rows = build_score_trace(rows)
     action_cockpit_rows = build_action_cockpit(portfolio, execution, missing, benchmark_allocation_rows)
     structural_gate_rows = build_structural_gate(rows, portfolio)
+    data_hardening_rows = build_data_hardening_progress(rows, portfolio)
     buy_blocker_triage_rows = build_buy_blocker_triage(portfolio, purchase_readiness_rows)
     allocation_trace_rows = build_allocation_trace(portfolio)
     write_csv(OUT_SCORE, rows)
@@ -3838,6 +4025,7 @@ def main() -> None:
     write_csv(OUT_SCORE_TRACE, score_trace_rows)
     write_csv(OUT_ACTION_COCKPIT, action_cockpit_rows)
     write_csv(OUT_STRUCTURAL_GATE, structural_gate_rows)
+    write_csv(OUT_DATA_HARDENING_PROGRESS, data_hardening_rows)
     write_csv(OUT_BUY_BLOCKER_TRIAGE, buy_blocker_triage_rows)
     write_csv(OUT_ALLOCATION_TRACE, allocation_trace_rows)
     OUT_HTML.write_text(
@@ -3868,6 +4056,7 @@ def main() -> None:
             expected_value_audit_rows,
             action_cockpit_rows,
             structural_gate_rows,
+            data_hardening_rows,
             buy_blocker_triage_rows,
             allocation_trace_rows,
             score_trace_rows,
@@ -3902,6 +4091,7 @@ def main() -> None:
     print(f"Score trace: {OUT_SCORE_TRACE}")
     print(f"Action cockpit: {OUT_ACTION_COCKPIT}")
     print(f"Buy blocker triage: {OUT_BUY_BLOCKER_TRIAGE}")
+    print(f"Data hardening progress: {OUT_DATA_HARDENING_PROGRESS}")
     print(f"Allocation trace: {OUT_ALLOCATION_TRACE}")
     print(f"Order log template: {OUT_ORDER_LOG_TEMPLATE}")
     print("Top 10:")
