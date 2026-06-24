@@ -1363,6 +1363,7 @@ def build_html():
       <a class="btn" href="regular10_pre_order_gate_20260625.csv">発注前ゲートCSV</a>
       <a class="btn" href="regular10_order_ticket_20260625.csv">注文票CSV</a>
       <a class="btn" href="regular10_execution_record_20260625.csv">約定記録CSV</a>
+      <a class="btn" href="regular10_daily_monitoring_20260625.csv">日々監視CSV</a>
       <a class="btn" href="purchase_gate_exact10_v65_20260624.html">正規10社の元データ</a>
     </section>
     <section>
