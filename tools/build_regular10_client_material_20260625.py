@@ -650,6 +650,73 @@ def draw_contribution_table(c: canvas.Canvas, rows, x0, y0):
             draw_wrapped(c, val, xx + 4, y + row_h - 6, w - 8, 7.0, 8.0, color, max_lines=1)
             xx += w
 
+
+def add_page_6_stage_math(c: canvas.Canvas):
+    title(c, "段階別の投入と期待値", "どこまで進めると何%を狙えるか")
+    intro = (
+        "利回り目標は、最初から全額を入れて作るものではありません。"
+        "初回は40%までに抑え、5営業日後、20営業日・決算確認後、強い地合い確認後の順に、条件を満たした分だけ投入率を上げます。"
+    )
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+    rows = [
+        ("慎重案", "初回", "720,000円", "30.0%", "9.65%", "市場が不安定なら追加しない"),
+        ("第1段階", "初回", "960,000円", "40.0%", "12.86%", "主力5社のみ。現金を残す"),
+        ("第2段階", "5営業日後", "1,332,000円", "55.5%", "16.85%", "対TOPIX劣後・悪材料なしなら追加"),
+        ("第3段階", "20営業日・決算確認後", "1,800,000円", "75.0%", "22.13%", "ここが本命+20%前後の中心"),
+        ("強い地合い", "本命75%到達後", "2,040,000円", "85.0%", "25.60%", "EV上位5社へ各48,000円追加"),
+    ]
+    draw_stage_math_table(c, rows, 36, 250)
+
+    rounded_box(c, 46, 160, 746, 64, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    c.setFillColor(AMBER)
+    c.setFont(FONT, 11)
+    c.drawString(60, 198, "この表の意味")
+    msg = "第1段階だけでは約12.86%で、採用下限に届きません。第2段階で約16.85%となり採用下限を超え、第3段階で約22.13%となり本命計画に入ります。強い地合い確認後だけ、85%投入で約25.60%を狙います。"
+    draw_wrapped(c, msg, 60, 181, 710, 9.8, 12.5, INK, max_lines=3)
+
+    rounded_box(c, 46, 82, 746, 54, colors.HexColor("#FDF2F2"), colors.HexColor("#E4A6A6"), 8)
+    c.setFillColor(RED)
+    c.setFont(FONT, 11)
+    c.drawString(60, 116, "禁止ルール")
+    msg2 = "第2段階・第3段階の条件を満たさない場合、ほかの銘柄で穴埋めして投入率だけを上げません。期待値が作れない時は、現金待機が正しい処理です。"
+    draw_wrapped(c, msg2, 60, 99, 710, 9.8, 12.5, INK, max_lines=2)
+
+    rounded_box(c, 46, 34, 746, 34, PALE, LINE, 8)
+    draw_wrapped(c, "根拠CSV: regular10_stage_return_math_20260625.csv。各段階の投入額、追加額、期待値上昇分を記録しています。", 60, 55, 710, 9.5, 12, NAVY, max_lines=2)
+    footer(c, 7)
+    c.showPage()
+
+
+def draw_stage_math_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["段階", "時点", "累計投入", "投入率", "計算値", "運用上の意味"]
+    widths = [85, 115, 110, 70, 70, 290]
+    row_h = 43
+    header_h = 25
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.8)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 5, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for j, (val, w) in enumerate(zip(row, widths)):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            color = GREEN if j == 4 and ("16." in val or "22." in val or "25." in val) else INK
+            if j == 0 and val == "強い地合い":
+                color = AMBER
+            draw_wrapped(c, val, xx + 5, y + row_h - 12, w - 10, 8.5, 11, color, max_lines=3)
+            xx += w
+
 def add_page_7_initial_buy(c: canvas.Canvas):
     title(c, "初回買付の具体案", "240万円の場合")
     intro = (
@@ -693,7 +760,7 @@ def add_page_7_initial_buy(c: canvas.Canvas):
         "買わなかった分は現金待機です。5営業日・20営業日の対TOPIX反応が弱ければ、次の追加買付を止めます。"
     )
     draw_wrapped(c, note, 60, 74, 700, 10, 13, INK, max_lines=2)
-    footer(c, 7)
+    footer(c, 8)
     c.showPage()
 
 
@@ -766,7 +833,7 @@ def add_page_8_additional_buy(c: canvas.Canvas):
     draw_initial_buy_table(c, stage3_rows[5:], 46, 35)
 
 
-    footer(c, 8)
+    footer(c, 9)
     c.showPage()
 
 def add_page_9_pre_order_gate(c: canvas.Canvas):
@@ -808,7 +875,7 @@ def add_page_9_pre_order_gate(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "このチェックは売買を増やすためではなく、買わない日を明確にするためのものです。条件不一致の金額は現金待機にし、次の判定日に再確認します。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 9)
+    footer(c, 10)
     c.showPage()
 
 
@@ -875,7 +942,7 @@ def add_page_10_order_ticket(c: canvas.Canvas):
     c.setFillColor(RED)
     c.setFont(FONT, 10.5)
     c.drawString(60, 64, "禁止: 条件不一致の金額を、他銘柄へその場で上乗せしない。迷う場合は現金待機。")
-    footer(c, 10)
+    footer(c, 11)
     c.showPage()
 
 
@@ -944,7 +1011,7 @@ def add_page_11_execution_record(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "約定後に記録する数字は、利益を見せるためではなく、判断が正しかったかを検証するための証拠です。未記録の売買は次回判断に使いません。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 11)
+    footer(c, 12)
     c.showPage()
 
 
@@ -1057,7 +1124,7 @@ def add_page_6(c: canvas.Canvas):
     c.drawString(60, 114, "読み方")
     note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回るなら追加しません。本命+20%は75%投入、強気+25%は強い地合いで85%投入する場合だけの上振れ計画です。"
     draw_wrapped(c, note, 60, 94, 700, 10, 14, INK, max_lines=3)
-    footer(c, 12)
+    footer(c, 13)
     c.showPage()
 
 
@@ -1084,7 +1151,7 @@ def add_page_7(c: canvas.Canvas):
     draw_schedule_table(c, rows, 48, 72)
     rounded_box(c, 48, 34, 746, 30, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この表は6月30日開始時の運用計画です。実際には、当日の株価、指数、為替、金利、ニュース、証券会社画面の注文条件を確認してから発注します。", 62, 54, 710, 9.2, 11.5, INK, max_lines=2)
-    footer(c, 13)
+    footer(c, 14)
     c.showPage()
 
 
@@ -1144,7 +1211,7 @@ def add_page_8(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#F6FAFD"), LINE, 8)
     note = "買い増しは、指数より強いこと、決算・材料が続くこと、過熱していないことを確認して小さく行います。売却は、損失拡大を止める売却と、利益を守る売却を分けます。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 14)
+    footer(c, 15)
     c.showPage()
 
 
@@ -1191,7 +1258,7 @@ def add_page_9(c: canvas.Canvas):
     rounded_box(c, 46, 42, 746, 54, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "監視の目的は、値動きに反応して売買を増やすことではなく、最初の選定根拠が崩れていないかを確認することです。根拠が崩れていない下落は保留、根拠が崩れた下落は減額・入替候補にします。"
     draw_wrapped(c, note, 60, 75, 710, 10, 13, INK, max_lines=3)
-    footer(c, 15)
+    footer(c, 16)
     c.showPage()
 
 
@@ -1248,7 +1315,7 @@ def add_page_10(c: canvas.Canvas):
         ("損失回避", "-10%銘柄を半分減額", "損失拡大を約12,000円抑制", "24万円枠の半分を早めに逃がした場合"),
     ]
     draw_impact_table(c, impact_rows, 46, 54)
-    footer(c, 16)
+    footer(c, 17)
     c.showPage()
 
 
@@ -1335,7 +1402,7 @@ def add_page_12_monitoring_decision(c: canvas.Canvas):
 
     rounded_box(c, 46, 34, 746, 36, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この判定は利益保証ではありません。買うための理由を探す表ではなく、買わない条件を先に見つけるための安全装置です。", 60, 55, 710, 9.5, 12, AMBER, max_lines=2)
-    footer(c, 17)
+    footer(c, 18)
     c.showPage()
 
 
@@ -1375,6 +1442,7 @@ def build_pdf():
     add_page_4(c)
     add_page_5(c)
     add_page_6_plan(c)
+    add_page_6_stage_math(c)
     add_page_7_initial_buy(c)
     add_page_8_additional_buy(c)
     add_page_9_pre_order_gate(c)
@@ -1447,6 +1515,7 @@ def build_html():
       <a class="btn" href="regular10_client_material_20260625.pdf">PDFを開く</a>
       <a class="btn" href="regular10_return_target_execution_plan_20260625.csv">15/20/25計画CSV</a>
       <a class="btn" href="regular10_return_target_rationale_20260625.csv">15/20/25根拠CSV</a>
+      <a class="btn" href="regular10_stage_return_math_20260625.csv">段階別期待値CSV</a>
       <a class="btn" href="regular10_target_allocation_20260625.csv">投入比率CSV</a>
       <a class="btn" href="regular10_initial_buy_plan_20260625.csv">初回買付CSV</a>
       <a class="btn" href="regular10_additional_buy_plan_20260625.csv">追加買付CSV</a>
