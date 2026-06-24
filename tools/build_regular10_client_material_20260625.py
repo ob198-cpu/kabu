@@ -876,6 +876,75 @@ def draw_order_ticket_table(c: canvas.Canvas, rows, x0, y0):
             c.rect(xx, y, w, row_h, fill=0, stroke=1)
             draw_wrapped(c, val, xx + 4, y + row_h - 11, w - 8, 7.7, 9.8, INK, max_lines=3)
             xx += w
+
+def add_page_11_execution_record(c: canvas.Canvas):
+    title(c, "約定後の記録表", "買った後に必ず残す数字")
+    intro = (
+        "発注して終わりではなく、約定後に実際の株数、約定価格、約定金額、残り現金、次回判定日を記録します。"
+        "この記録がないと、1年後に予想と実績の差を検証できません。"
+    )
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    rows = [
+        ("3099.T", "三越伊勢丹HD", "196,000円", "入力", "入力", "入力", "5営業日後", "対TOPIX確認"),
+        ("5333.T", "日本ガイシ", "153,000円", "入力", "入力", "入力", "5営業日後", "対TOPIX確認"),
+        ("6479.T", "ミネベアミツミ", "175,000円", "入力", "入力", "入力", "5営業日後", "対TOPIX確認"),
+        ("8316.T", "三井住友FG", "218,000円", "入力", "入力", "入力", "5営業日後", "銀行比率確認"),
+        ("1942.T", "関電工", "218,000円", "入力", "入力", "入力", "5営業日後", "出来高確認"),
+    ]
+    draw_execution_record_table(c, rows, 30, 278)
+
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 14)
+    c.drawString(46, 228, "記録する理由")
+    boxes = [
+        ("予実差", "予定金額と実際の約定金額の差を確認する。"),
+        ("次回判定", "5営業日後、20営業日後、決算後の判定日を固定する。"),
+        ("現金管理", "買わなかった分、余った分、次回追加に使える金額を残す。"),
+        ("検証", "1年後に、選定根拠・買付価格・売買判断が妥当だったか確認する。"),
+    ]
+    for i, (head, note) in enumerate(boxes):
+        x = 46 + (i % 2) * 380
+        y = 162 - (i // 2) * 64
+        rounded_box(c, x, y, 352, 46, PALE, LINE, 8)
+        c.setFillColor(BLUE)
+        c.setFont(FONT, 10.5)
+        c.drawString(x + 12, y + 27, head)
+        draw_wrapped(c, note, x + 70, y + 27, 258, 8.5, 10.5, INK, max_lines=2)
+
+    rounded_box(c, 46, 34, 746, 38, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    note = "約定後に記録する数字は、利益を見せるためではなく、判断が正しかったかを検証するための証拠です。未記録の売買は次回判断に使いません。"
+    draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
+    footer(c, 11)
+    c.showPage()
+
+
+def draw_execution_record_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["銘柄", "銘柄名", "予定金額", "約定株数", "約定単価", "約定金額", "次回判定", "確認項目"]
+    widths = [68, 112, 78, 70, 70, 78, 88, 180]
+    row_h = 36
+    header_h = 24
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.3)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 4, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for val, w in zip(row, widths):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            draw_wrapped(c, val, xx + 4, y + row_h - 11, w - 8, 7.6, 9.6, INK, max_lines=3)
+            xx += w
 def add_page_6(c: canvas.Canvas):
     title(c, "6月30日開始の1年間シミュレーション", "月ごとの資産目安")
     intro = (
@@ -959,7 +1028,7 @@ def add_page_6(c: canvas.Canvas):
     c.drawString(60, 114, "読み方")
     note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回るなら追加しません。本命+20%は75%投入、強気+25%は強い地合いで85%投入する場合だけの上振れ計画です。"
     draw_wrapped(c, note, 60, 94, 700, 10, 14, INK, max_lines=3)
-    footer(c, 11)
+    footer(c, 12)
     c.showPage()
 
 
@@ -986,7 +1055,7 @@ def add_page_7(c: canvas.Canvas):
     draw_schedule_table(c, rows, 48, 72)
     rounded_box(c, 48, 34, 746, 30, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この表は6月30日開始時の運用計画です。実際には、当日の株価、指数、為替、金利、ニュース、証券会社画面の注文条件を確認してから発注します。", 62, 54, 710, 9.2, 11.5, INK, max_lines=2)
-    footer(c, 12)
+    footer(c, 13)
     c.showPage()
 
 
@@ -1046,7 +1115,7 @@ def add_page_8(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#F6FAFD"), LINE, 8)
     note = "買い増しは、指数より強いこと、決算・材料が続くこと、過熱していないことを確認して小さく行います。売却は、損失拡大を止める売却と、利益を守る売却を分けます。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 13)
+    footer(c, 14)
     c.showPage()
 
 
@@ -1093,7 +1162,7 @@ def add_page_9(c: canvas.Canvas):
     rounded_box(c, 46, 42, 746, 54, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "監視の目的は、値動きに反応して売買を増やすことではなく、最初の選定根拠が崩れていないかを確認することです。根拠が崩れていない下落は保留、根拠が崩れた下落は減額・入替候補にします。"
     draw_wrapped(c, note, 60, 75, 710, 10, 13, INK, max_lines=3)
-    footer(c, 14)
+    footer(c, 15)
     c.showPage()
 
 
@@ -1150,7 +1219,7 @@ def add_page_10(c: canvas.Canvas):
         ("損失回避", "-10%銘柄を半分減額", "損失拡大を約12,000円抑制", "24万円枠の半分を早めに逃がした場合"),
     ]
     draw_impact_table(c, impact_rows, 46, 54)
-    footer(c, 15)
+    footer(c, 16)
     c.showPage()
 
 
@@ -1222,6 +1291,7 @@ def build_pdf():
     add_page_8_additional_buy(c)
     add_page_9_pre_order_gate(c)
     add_page_10_order_ticket(c)
+    add_page_11_execution_record(c)
     add_page_6(c)
     add_page_7(c)
     add_page_8(c)
@@ -1292,6 +1362,7 @@ def build_html():
       <a class="btn" href="regular10_additional_buy_plan_20260625.csv">追加買付CSV</a>
       <a class="btn" href="regular10_pre_order_gate_20260625.csv">発注前ゲートCSV</a>
       <a class="btn" href="regular10_order_ticket_20260625.csv">注文票CSV</a>
+      <a class="btn" href="regular10_execution_record_20260625.csv">約定記録CSV</a>
       <a class="btn" href="purchase_gate_exact10_v65_20260624.html">正規10社の元データ</a>
     </section>
     <section>
@@ -1307,6 +1378,7 @@ def build_html():
         <div class="card"><b>追加</b><strong>84万円</strong><span>75%到達までの追加額</span></div>
         <div class="card"><b>発注前</b><strong>7項目</strong><span>OK/延期/現金待機を確認</span></div>
         <div class="card"><b>注文票</b><strong>5銘柄</strong><span>金額と株価入力欄を確認</span></div>
+        <div class="card"><b>記録</b><strong>約定後</strong><span>株数・単価・次回判定日</span></div>
         <div class="card"><b>運用</b><strong>条件分岐</strong><span>買わない条件を明文化</span></div>
       </div>
     </section>
