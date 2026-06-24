@@ -513,6 +513,203 @@ def add_page_5(c: canvas.Canvas):
     c.showPage()
 
 
+
+def add_page_6(c: canvas.Canvas):
+    title(c, "6月30日開始の1年間シミュレーション", "月ごとの資産目安")
+    intro = (
+        "6月30日に初回買付を行う場合の、1年間の確認予定です。資金240万円を例に、初回は30〜40%だけ投入し、"
+        "5営業日後、20営業日後、月次、決算時点で追加・停止・減額を判断します。"
+    )
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    base = 2_400_000
+    months = ["6/30", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月", "4月", "5月", "6月"]
+    baseline = [base * (1.10 ** (i / 12)) for i in range(13)]
+    target = [base * (1.13 ** (i / 12)) for i in range(13)]
+    defensive = [base * (1.03 ** (i / 12)) for i in range(13)]
+
+    chart_x, chart_y, chart_w, chart_h = 58, 210, 720, 220
+    min_v, max_v = 2_350_000, 2_750_000
+    c.setFillColor(colors.white)
+    c.setStrokeColor(LINE)
+    c.roundRect(chart_x - 10, chart_y - 34, chart_w + 20, chart_h + 72, 10, fill=1, stroke=1)
+    c.setFont(FONT, 10)
+    c.setFillColor(NAVY)
+    c.drawString(chart_x, chart_y + chart_h + 28, "240万円で見た場合の資産推移目安")
+
+    for v in [2_400_000, 2_500_000, 2_600_000, 2_700_000]:
+        yy = chart_y + (v - min_v) / (max_v - min_v) * chart_h
+        c.setStrokeColor(colors.HexColor("#D8E7F2"))
+        c.line(chart_x, yy, chart_x + chart_w, yy)
+        c.setFillColor(GRAY)
+        c.setFont(FONT, 8)
+        c.drawRightString(chart_x - 8, yy - 3, f"{v/10000:.0f}万円")
+
+    def xy(i, val):
+        x = chart_x + chart_w * i / 12
+        y = chart_y + (val - min_v) / (max_v - min_v) * chart_h
+        return x, y
+
+    def draw_line(vals, color, label):
+        c.setStrokeColor(color)
+        c.setLineWidth(2.2)
+        pts = [xy(i, vals[i]) for i in range(13)]
+        for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
+            c.line(x1, y1, x2, y2)
+        c.setFillColor(color)
+        for x, y in pts:
+            c.circle(x, y, 2.5, fill=1, stroke=0)
+        c.setFont(FONT, 9)
+        c.drawString(pts[-1][0] - 52, pts[-1][1] + 8, label)
+
+    draw_line(defensive, colors.HexColor("#7A8B99"), "防御 +3%")
+    draw_line(baseline, BLUE, "基準 +10%")
+    draw_line(target, GREEN, "目標 +13%")
+
+    c.setStrokeColor(NAVY)
+    c.setLineWidth(1)
+    c.line(chart_x, chart_y, chart_x + chart_w, chart_y)
+    c.line(chart_x, chart_y, chart_x, chart_y + chart_h)
+    for i, m in enumerate(months):
+        x, _ = xy(i, min_v)
+        c.setStrokeColor(LINE)
+        c.line(x, chart_y - 4, x, chart_y)
+        c.setFillColor(INK)
+        c.setFont(FONT, 8.2)
+        c.drawCentredString(x, chart_y - 18, m)
+
+    markers = [(0, "初回\n30〜40%"), (1, "5日/20日\n追加判定"), (2, "決算\n確認"), (5, "中間決算\n確認"), (8, "3Q\n確認"), (12, "1年\n評価")]
+    for i, label in markers:
+        x, y = xy(i, target[i])
+        c.setStrokeColor(AMBER)
+        c.setLineWidth(1)
+        c.line(x, y + 8, x, chart_y + chart_h + 8)
+        c.setFillColor(colors.HexColor("#FFF8E7"))
+        c.setStrokeColor(colors.HexColor("#E3B15C"))
+        c.roundRect(x - 36, chart_y + chart_h + 10, 72, 34, 6, fill=1, stroke=1)
+        draw_wrapped(c, label, x - 30, chart_y + chart_h + 34, 60, 7.4, 9, INK, max_lines=2)
+
+    rounded_box(c, 46, 64, 746, 74, colors.HexColor("#F6FAFD"), LINE, 8)
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 11)
+    c.drawString(60, 114, "読み方")
+    note = "グラフは資産管理の目安です。実際の株価は毎月きれいに上がるわけではないため、月次では金額そのものより、指数差、悪材料、買わない条件、追加条件を確認します。"
+    draw_wrapped(c, note, 60, 94, 700, 10, 14, INK, max_lines=3)
+    footer(c, 6)
+    c.showPage()
+
+
+def add_page_7(c: canvas.Canvas):
+    title(c, "6月30日購入時の行動表", "いつ何をするか")
+    intro = "以下は、6月30日に初回買付を行った場合の運用表です。買付日は固定せず、当日の急騰・急落・悪材料に該当すれば翌営業日に延期します。"
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    rows = [
+        ("6/30", "初回買付", "資金の30〜40%。主力5社中心。", "急騰+3%以上、指数急落、悪材料なら買わない。"),
+        ("7月", "5営業日・20営業日確認", "追加0〜20%。対TOPIX、出来高、悪材料を確認。", "対TOPIX-5pt以下なら追加停止。"),
+        ("8月", "4〜6月期決算確認", "決算が良い銘柄だけ追加候補。", "下方修正、利益率悪化、テーマ崩れは減額。"),
+        ("9月", "月次点検", "保有比率と業種偏りを確認。", "銀行・保険など同業集中が強ければ追加しない。"),
+        ("10月", "中間決算前確認", "決算またぎリスクを確認。", "過熱銘柄は20〜30%利益確定を検討。"),
+        ("11月", "中間決算後確認", "決算後5日・20日の指数差を確認。", "決算失望なら追加停止、-10%なら半分減額を検討。"),
+        ("12月", "年末点検", "NISA枠、現金比率、含み損益を確認。", "NISA損失は損益通算できないため無理に損出ししない。"),
+        ("1月", "新年方針確認", "前年末の指数差とテーマ継続を確認。", "指数に劣後していれば個別株比率を下げる。"),
+        ("2月", "3Q決算確認", "強い銘柄は維持、弱い銘柄は減額候補。", "決算後反応が弱い場合は追加しない。"),
+        ("3月", "年度末リスク確認", "需給、権利、為替、金利を確認。", "急騰後の出来高増加下落は警戒。"),
+        ("4月", "本決算前確認", "決算またぎをする銘柄と減額する銘柄を分ける。", "高PER・高ボラ銘柄は比率を抑える。"),
+        ("5月", "本決算後確認", "次年度計画、配当、自己株買い、受注を確認。", "会社計画が弱い銘柄は入れ替え候補。"),
+        ("6月", "1年評価", "S&P500/TOPIXとの差を確認し継続・縮小・入替。", "+1%以上上回れない場合は個別株比率を下げる。"),
+    ]
+    draw_schedule_table(c, rows, 48, 72)
+    rounded_box(c, 48, 34, 746, 30, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    draw_wrapped(c, "この表は6月30日開始時の運用計画です。実際には、当日の株価、指数、為替、金利、ニュース、証券会社画面の注文条件を確認してから発注します。", 62, 54, 710, 9.2, 11.5, INK, max_lines=2)
+    footer(c, 7)
+    c.showPage()
+
+
+def draw_schedule_table(c: canvas.Canvas, rows, x0, y_bottom):
+    headers = ["時期", "作業", "行動", "停止・減額条件"]
+    widths = [65, 130, 290, 260]
+    y0 = 450
+    row_h = 29
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, y0, sum(widths), 26, fill=1, stroke=0)
+    c.setStrokeColor(LINE)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 9)
+    for h, w in zip(headers, widths):
+        c.rect(xx, y0, w, 26, fill=0, stroke=1)
+        c.drawString(xx + 5, y0 + 8, h)
+        xx += w
+    y = y0 - row_h
+    for idx, row in enumerate(rows):
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for val, w in zip(row, widths):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            draw_wrapped(c, val, xx + 5, y + row_h - 10, w - 10, 7.8, 9.7, INK, max_lines=3)
+            xx += w
+        y -= row_h
+
+
+def add_page_8(c: canvas.Canvas):
+    title(c, "買い増し・売却の具体例", "条件に応じた行動例")
+    intro = "以下は、6月30日に初回買付を行った後の具体例です。実際の金額は口座残高、株価、単元未満株の可否で調整しますが、判断の考え方はこの表に沿って確認します。"
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 14)
+    c.drawString(46, 438, "買い増しの例")
+    buy_rows = [
+        ("例1: 20営業日後に強い", "初回10万円で購入。20営業日後に株価+8%、TOPIX+3%。対指数+5pt、悪材料なし。", "追加で資金全体の2〜3%、240万円なら約5万〜7万円を上限に買い増し。"),
+        ("例2: 決算確認後に強い", "決算で会社計画が上振れ、営業利益率も改善。決算後5日で対TOPIX+3pt以上。", "一度に大きく買わず、候補1銘柄あたり3〜5万円を追加。業種集中が高い場合は半分にする。"),
+        ("例3: 上がっているが過熱", "株価+12%だが、当日+4%以上急騰、出来高急増、ニュースで短期人気化。", "追い買いしない。翌営業日以降、出来高と価格が落ち着いてから再判定。"),
+    ]
+    draw_example_table(c, buy_rows, 46, 300, [130, 340, 270], ["場面", "確認内容", "行動"])
+
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 14)
+    c.drawString(46, 255, "売却・減額の例")
+    sell_rows = [
+        ("例1: 損失を抑える", "購入後-7%、または対TOPIXで-5pt以上劣後。理由が個別悪材料。", "追加停止。-10%に達したら保有の半分を売却候補にし、残りは翌営業日も確認。"),
+        ("例2: 利益を一部守る", "購入後+15%以上。出来高急増、短期過熱、指数に対して急に伸びすぎ。", "保有の20〜30%を利益確定。テーマが継続していれば全売却ではなく一部を残す。"),
+        ("例3: ストップ安・大幅売り気配", "寄付前から売り気配。理由が決算失望、事故、規制、急な悪材料。", "成行で慌てて売らない。理由、出来高、翌日の気配を確認。構造悪化なら減額、全体急落なら一時保留。"),
+    ]
+    draw_example_table(c, sell_rows, 46, 92, [130, 340, 270], ["場面", "確認内容", "行動"])
+
+    rounded_box(c, 46, 34, 746, 38, colors.HexColor("#F6FAFD"), LINE, 8)
+    note = "買い増しは、指数より強いこと、決算・材料が続くこと、過熱していないことを確認して小さく行います。売却は、損失拡大を止める売却と、利益を守る売却を分けます。"
+    draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
+    footer(c, 8)
+    c.showPage()
+
+
+def draw_example_table(c: canvas.Canvas, rows, x0, y0, widths, headers):
+    header_h = 24
+    row_h = 56
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, y0 + row_h * len(rows), sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setStrokeColor(LINE)
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 9)
+    for h, w in zip(headers, widths):
+        c.rect(xx, y0 + row_h * len(rows), w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 6, y0 + row_h * len(rows) + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for val, w in zip(row, widths):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            draw_wrapped(c, val, xx + 6, y + row_h - 13, w - 12, 8.6, 11.5, INK, max_lines=4)
+            xx += w
+
 def build_pdf():
     c = canvas.Canvas(str(OUT_PDF), pagesize=landscape(A4))
     c.setTitle("正規10社 運用候補資料")
@@ -521,6 +718,9 @@ def build_pdf():
     add_page_3(c)
     add_page_4(c)
     add_page_5(c)
+    add_page_6(c)
+    add_page_7(c)
+    add_page_8(c)
     c.save()
 
 
