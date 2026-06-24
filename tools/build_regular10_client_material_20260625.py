@@ -548,8 +548,10 @@ def add_page_5(c: canvas.Canvas):
 
 
 
+
+
 def add_page_6_plan(c: canvas.Canvas):
-    title(c, "15%・20%・25%の根拠", "投入比率で作る運用計画")
+    title(c, "15%・20%・25%を狙う実行計画", "期待値と投入率を分けて管理する")
     floor_weights = scaled_weights(TARGET_WEIGHTS, 55)
     target_weights = dict(TARGET_WEIGHTS)
     bull_weights = aggressive_weights()
@@ -557,69 +559,96 @@ def add_page_6_plan(c: canvas.Canvas):
     target_ev = portfolio_expected(target_weights)
     bull_ev = portfolio_expected(bull_weights)
     intro = (
-        "+20%前後を狙うには、銘柄を選ぶだけでは足りません。EVの高い候補に資金を厚くし、"
-        "条件がそろわない時は現金を残す必要があります。計算式は 期待リターン = Σ(投入比率 × EV) です。"
+        "本資料の利回り目標は、希望値ではなく、正規10社それぞれのEVに実際の投入比率を掛けて逆算した運用設計です。"
+        "採用下限は55%投入で約16.2%、本命計画は75%投入で約22.1%、強い地合いだけ85%投入で約25.6%を狙います。"
     )
     draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
 
-    rounded_box(c, 46, 422, 746, 48, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    rounded_box(c, 46, 430, 746, 46, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     c.setFillColor(AMBER)
     c.setFont(FONT, 11)
-    c.drawString(60, 452, "根拠式")
-    draw_wrapped(c, "正規10社のEVを使い、投入比率を掛けて全体の期待値を出します。現金部分は0%として扱うため、投入比率が低いほど期待値も下がります。", 60, 434, 700, 9.8, 12.5, INK, max_lines=2)
+    c.drawString(60, 458, "計算式")
+    formula = "期待値 = Σ(銘柄別投入比率 × 銘柄EV)。現金は0%で計算します。地合いが弱い時に現金を残すと期待値は下がりますが、損失拡大を防ぐ余力になります。"
+    draw_wrapped(c, formula, 60, 441, 700, 9.5, 12.2, INK, max_lines=2)
 
-    cards = [
-        ("採用下限", floor_ev, "55%投入", "条件が弱い時はここまで。+15%を下回るなら追加しない。"),
-        ("本命計画", target_ev, "75%投入", "5日・20日反応、指数、悪材料を確認して段階的に到達。"),
-        ("強気上振れ", bull_ev, "85%投入", "強い地合い時だけ、EV上位5社へ各+2%、240万円なら各48,000円追加。"),
+    rows = [
+        ("採用下限", "55%", f"{floor_ev:.1f}%", "初回40%に加え、条件を満たした分だけ15%追加", "指数急落なし、重大悪材料なし、対TOPIX大幅劣後なし", "+15%を下回る見込みなら追加しない"),
+        ("本命計画", "75%", f"{target_ev:.1f}%", "初回40% + 5営業日後15.5% + 20営業日後19.5%", "5日・20日反応、決算、金利、為替、悪材料を通過", "条件未達なら現金待機。穴埋め買いは禁止"),
+        ("強い地合い", "85%", f"{bull_ev:.1f}%", "EV上位5社へ各2%追加。240万円なら各48,000円", "TOPIX/S&Pが崩れず、出来高を伴う上昇、テーマ継続", "強い地合い確認なしでは85%にしない"),
     ]
-    for i, (label, ev, exposure, note) in enumerate(cards):
-        x = 46 + i * 252
-        rounded_box(c, x, 342, 235, 62, PALE, LINE, 8)
-        c.setFillColor(BLUE if i < 2 else AMBER)
-        c.setFont(FONT, 10)
-        c.drawString(x + 12, 382, label)
-        c.setFillColor(NAVY)
-        c.setFont(FONT, 17)
-        c.drawString(x + 12, 360, f"{ev:.1f}% / {exposure}")
-        draw_wrapped(c, note, x + 116, 382, 104, 7.5, 9, GRAY, max_lines=3)
+    draw_return_plan_table(c, rows, 36, 262)
 
     c.setFillColor(NAVY)
     c.setFont(FONT, 14)
-    c.drawString(46, 316, "本命計画 75%投入時の比率")
-    headers = ["銘柄", "EV", "比率", "240万円換算", "役割"]
-    widths = [150, 55, 55, 90, 400]
-    x0, y0 = 46, 58
-    row_h = 23
+    c.drawString(46, 234, "本命75%計画の期待値寄与")
+    contrib_rows = []
+    for row in CANDIDATES:
+        ticker = row["ticker"]
+        weight = TARGET_WEIGHTS[ticker]
+        contribution = weight * row["ev"] / 100
+        amount = int(BASE_CAPITAL * weight / 100)
+        contrib_rows.append((f"{ticker} {row['name']}", f"{row['ev']:.1f}%", f"{weight:.0f}%", f"{contribution:.2f}pt", f"{amount:,}円"))
+    draw_contribution_table(c, contrib_rows, 46, 42)
+    footer(c, 6)
+    c.showPage()
+
+
+def draw_return_plan_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["区分", "投入率", "計算値", "具体的な動き", "進む条件", "止める条件"]
+    widths = [70, 58, 64, 205, 205, 160]
+    row_h = 43
     header_h = 24
-    top = y0 + row_h * len(CANDIDATES)
+    top = y0 + row_h * len(rows)
     c.setFillColor(LIGHT_BLUE)
     c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
     xx = x0
     c.setFillColor(NAVY)
-    c.setFont(FONT, 8.5)
+    c.setFont(FONT, 8.4)
     for h, w in zip(headers, widths):
         c.setStrokeColor(LINE)
         c.rect(xx, top, w, header_h, fill=0, stroke=1)
-        c.drawString(xx + 5, top + 8, h)
+        c.drawString(xx + 4, top + 8, h)
         xx += w
-    for idx, row in enumerate(CANDIDATES):
-        y = y0 + row_h * (len(CANDIDATES) - idx - 1)
-        ticker = row["ticker"]
-        weight = TARGET_WEIGHTS[ticker]
-        amount = int(BASE_CAPITAL * weight / 100)
-        vals = [f"{ticker} {row['name']}", f"{row['ev']:.1f}%", f"{weight:.0f}%", f"{amount:,}円", row["rule"]]
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
         c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
         c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
         xx = x0
-        for val, w in zip(vals, widths):
+        for j, (val, w) in enumerate(zip(row, widths)):
             c.setStrokeColor(LINE)
             c.rect(xx, y, w, row_h, fill=0, stroke=1)
-            draw_wrapped(c, val, xx + 5, y + row_h - 8, w - 10, 7.2, 8.3, INK, max_lines=2)
+            color = GREEN if j == 2 else (AMBER if j == 5 else INK)
+            draw_wrapped(c, val, xx + 4, y + row_h - 11, w - 8, 7.5, 9.8, color, max_lines=3)
             xx += w
-    footer(c, 6)
-    c.showPage()
 
+
+def draw_contribution_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["銘柄", "EV", "比率", "期待値寄与", "240万円換算"]
+    widths = [235, 58, 58, 88, 105]
+    row_h = 17
+    header_h = 22
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.2)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 4, top + 7, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for j, (val, w) in enumerate(zip(row, widths)):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            color = GREEN if j == 3 else INK
+            draw_wrapped(c, val, xx + 4, y + row_h - 6, w - 8, 7.0, 8.0, color, max_lines=1)
+            xx += w
 
 def add_page_7_initial_buy(c: canvas.Canvas):
     title(c, "初回買付の具体案", "240万円の場合")
@@ -1417,6 +1446,7 @@ def build_html():
       <p>比較対象は主要インデックスです。個別株を選ぶ価値があるかを確認するため、運用後はS&amp;P500・TOPIX等との比較で継続評価します。</p>
       <a class="btn" href="regular10_client_material_20260625.pdf">PDFを開く</a>
       <a class="btn" href="regular10_return_target_execution_plan_20260625.csv">15/20/25計画CSV</a>
+      <a class="btn" href="regular10_return_target_rationale_20260625.csv">15/20/25根拠CSV</a>
       <a class="btn" href="regular10_target_allocation_20260625.csv">投入比率CSV</a>
       <a class="btn" href="regular10_initial_buy_plan_20260625.csv">初回買付CSV</a>
       <a class="btn" href="regular10_additional_buy_plan_20260625.csv">追加買付CSV</a>
