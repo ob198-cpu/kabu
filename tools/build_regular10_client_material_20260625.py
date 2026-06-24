@@ -560,10 +560,10 @@ def add_page_6_plan(c: canvas.Canvas):
     target_ev = portfolio_expected(target_weights)
     bull_ev = portfolio_expected(bull_weights)
     intro = (
-        "本資料の利回り目標は、希望値ではなく、正規10社それぞれのEVに実際の投入比率を掛けて逆算した運用設計です。"
-        "採用下限は55%投入で約16.2%、本命計画は75%投入で約22.1%、強い地合いだけ85%投入で約25.6%を狙います。"
+        "利回り目標は、正規10社のEVに投入比率を掛けて逆算した運用設計です。"
+        "55%で約16.2%、75%で約22.1%、85%で約25.6%。残り15%は別ゲートで使います。"
     )
-    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+    draw_wrapped(c, intro, 46, 506, 746, 12, 18, INK, max_lines=2)
 
     rounded_box(c, 46, 430, 746, 46, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     c.setFillColor(AMBER)
@@ -575,7 +575,7 @@ def add_page_6_plan(c: canvas.Canvas):
     rows = [
         ("採用下限", "55%", f"{floor_ev:.1f}%", "初回40%に加え、条件を満たした分だけ15%追加", "指数急落なし、重大悪材料なし、対TOPIX大幅劣後なし", "+15%を下回る見込みなら追加しない"),
         ("本命計画", "75%", f"{target_ev:.1f}%", "初回40% + 5営業日後15.5% + 20営業日後19.5%", "5日・20日反応、決算、金利、為替、悪材料を通過", "条件未達なら現金待機。穴埋め買いは禁止"),
-        ("強い地合い", "85%", f"{bull_ev:.1f}%", "EV上位5社へ各2%追加。240万円なら各48,000円", "TOPIX/S&Pが崩れず、出来高を伴う上昇、テーマ継続", "強い地合い確認なしでは85%にしない"),
+        ("強気標準", "85%", f"{bull_ev:.1f}%", "EV上位5社へ各2%追加。240万円なら各48,000円", "TOPIX/S&Pが崩れず、出来高を伴う上昇、テーマ継続", "残り15%は条件付き予備枠として別判定"),
     ]
     draw_return_plan_table(c, rows, 36, 262)
 
@@ -656,7 +656,7 @@ def add_page_6_stage_math(c: canvas.Canvas):
     title(c, "段階別の投入と期待値", "どこまで進めると何%を狙えるか")
     intro = (
         "利回り目標は、最初から全額を入れて作るものではありません。"
-        "初回は40%までに抑え、5営業日後、20営業日・決算確認後、強い地合い確認後の順に、条件を満たした分だけ投入率を上げます。"
+        "初回は40%までに抑え、5営業日後、20営業日・決算確認後、85%の強気標準ラインまで順に条件を満たした分だけ投入率を上げます。85%到達後の15%は別ゲートで使います。"
     )
     draw_wrapped(c, intro, 46, 492, 746, 12, 18, INK, max_lines=2)
     rows = [
@@ -664,7 +664,7 @@ def add_page_6_stage_math(c: canvas.Canvas):
         ("第1段階", "初回", "960,000円", "40.0%", "12.86%", "主力5社のみ。現金を残す"),
         ("第2段階", "5営業日後", "1,332,000円", "55.5%", "16.85%", "対TOPIX劣後・悪材料なしなら追加"),
         ("第3段階", "20営業日・決算確認後", "1,800,000円", "75.0%", "22.13%", "ここが本命+20%前後の中心"),
-        ("強い地合い", "本命75%到達後", "2,040,000円", "85.0%", "25.60%", "EV上位5社へ各48,000円追加"),
+        ("強気標準", "本命75%到達後", "2,040,000円", "85.0%", "25.60%", "+25%が見える標準上振れ。残り15%は別判定"),
     ]
     draw_stage_math_table(c, rows, 36, 218)
 
@@ -672,7 +672,7 @@ def add_page_6_stage_math(c: canvas.Canvas):
     c.setFillColor(AMBER)
     c.setFont(FONT, 11)
     c.drawString(60, 180, "この表の意味")
-    msg = "第1段階だけでは約12.86%で、採用下限に届きません。第2段階で約16.85%となり採用下限を超え、第3段階で約22.13%となり本命計画に入ります。強い地合い確認後だけ、85%投入で約25.60%を狙います。"
+    msg = "第1段階だけでは約12.86%で、採用下限に届きません。第2段階で約16.85%となり採用下限を超え、第3段階で約22.13%となり本命計画に入ります。85%は+25%が見える強気標準ラインで、残り15%は条件付きの追加余力です。"
     draw_wrapped(c, msg, 60, 163, 710, 9.4, 11.8, INK, max_lines=3)
 
     rounded_box(c, 46, 76, 746, 50, colors.HexColor("#FDF2F2"), colors.HexColor("#E4A6A6"), 8)
@@ -713,7 +713,7 @@ def draw_stage_math_table(c: canvas.Canvas, rows, x0, y0):
             c.setStrokeColor(LINE)
             c.rect(xx, y, w, row_h, fill=0, stroke=1)
             color = GREEN if j == 4 and ("16." in val or "22." in val or "25." in val) else INK
-            if j == 0 and val == "強い地合い":
+            if j == 0 and val in ("強い地合い", "強気標準"):
                 color = AMBER
             draw_wrapped(c, val, xx + 5, y + row_h - 12, w - 10, 8.5, 11, color, max_lines=3)
             xx += w
@@ -730,7 +730,7 @@ def add_page_6_stage_gate(c: canvas.Canvas):
         ("発注前 -> 40%", "買付当日", "NISA預り、余力、指数急落なし、悪材料なし", "主力5社へ96万円", "不一致分は現金", "12.86%"),
         ("40% -> 55.5%", "5営業日後", "対TOPIX-5pt以下でない、金利・為替ショックなし", "37.2万円追加", "40%のまま監視", "16.85%"),
         ("55.5% -> 75%", "20営業日・決算後", "20日反応、決算、出来高、金利・為替が許容範囲", "46.8万円追加", "穴埋め買い禁止", "22.13%"),
-        ("75% -> 85%", "強い地合い確認後", "指数が崩れず、EV上位5社が出来高を伴って上昇", "24万円追加", "75%のまま維持", "25.60%"),
+        ("75% -> 85%", "強気標準確認後", "指数が崩れず、EV上位5社が出来高を伴って上昇", "24万円追加", "75%のまま維持", "25.60%"),
         ("全段階", "随時", "下方修正、重大事故、規制、テーマ崩れ", "該当なし", "停止・減額・入替", "損失抑制"),
     ]
     draw_stage_gate_table(c, rows, 36, 210)
@@ -739,7 +739,7 @@ def add_page_6_stage_gate(c: canvas.Canvas):
     c.setFillColor(AMBER)
     c.setFont(FONT, 11)
     c.drawString(60, 166, "運用上の結論")
-    msg = "第2段階を通過して初めて採用下限を超えます。本命+20%前後は第3段階まで進んだ場合だけです。+25%は85%投入が許される強い地合い限定であり、通常時に無理に狙う数値ではありません。"
+    msg = "第2段階を通過して初めて採用下限を超えます。本命+20%前後は第3段階まで進んだ場合だけです。85%は+25%が見える強気標準ラインで、残り15%は押し目・確認後・最終攻勢の条件を満たす場合だけ追加します。"
     draw_wrapped(c, msg, 60, 149, 710, 9.8, 12.5, INK, max_lines=3)
 
     rounded_box(c, 46, 60, 746, 42, colors.HexColor("#FDF2F2"), colors.HexColor("#E4A6A6"), 8)
@@ -785,10 +785,10 @@ def draw_stage_gate_table(c: canvas.Canvas, rows, x0, y0):
 
 
 def add_page_6_bull_execution(c: canvas.Canvas):
-    title(c, "25%を狙うための実行条件", "強い地合い時だけ上位5銘柄へ追加する")
+    title(c, "25%を狙うための実行条件", "85%は上限ではなく強気標準ライン")
     intro = (
         "+25%は目標値の書き換えではありません。75%投入で本命計画まで進んだ後、"
-        "市場・個別・テーマ・リスクの4条件を同時に満たした場合だけ、EV寄与の大きい5銘柄へ各48,000円を追加します。"
+        "市場・個別・テーマ・リスクの4条件を同時に満たした場合だけ、EV寄与の大きい5銘柄へ各48,000円を追加します。ここで終わるのではなく、残り15%は次ページの3条件で使います。"
     )
     draw_wrapped(c, intro, 46, 522, 746, 12.5, 18, INK, max_lines=3)
 
@@ -840,9 +840,75 @@ def add_page_6_bull_execution(c: canvas.Canvas):
         c.drawString(448, sy, "・" + s)
         sy -= 24
 
-    draw_wrapped(c, "根拠CSV: regular10_bull_25_execution_20260625.csv。追加5銘柄、追加額、期待値寄与、通過条件、停止条件を記録しています。", 60, 44, 710, 9.2, 11.5, NAVY, max_lines=2)
+    draw_wrapped(c, "根拠CSV: regular10_bull_25_execution_20260625.csv。85%到達までの追加5銘柄、追加額、期待値寄与、通過条件、停止条件を記録しています。", 60, 44, 710, 9.2, 11.5, NAVY, max_lines=2)
+    footer(c, 9)
+    c.showPage()
+
+
+def add_page_6_reserve15(c: canvas.Canvas):
+    title(c, "残り15%の使い方", "85%で止めず、条件付きの予備弾として使う")
+    intro = (
+        "85%投入は上振れ計画の終点ではなく、+25%がモデル上見える強気標準ラインです。"
+        "残り15%は現金で終わらせる前提ではなく、5%ずつ3本に分け、押し目・確認後・最終攻勢の条件を満たす場合だけ使います。"
+    )
+    draw_wrapped(c, intro, 46, 512, 746, 12.5, 18, INK, max_lines=3)
+
+    rounded_box(c, 46, 442, 746, 54, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    formula = "前提: 240万円運用。85%投入=204万円、現金36万円。残り15%=36万円を12万円ずつ3本に分けます。EV上位5社へ均等追加する場合、5%追加ごとのモデル寄与は約+1.73ptです。"
+    draw_wrapped(c, formula, 62, 475, 710, 10.3, 13.5, NAVY, max_lines=2)
+
+    rows = [
+        ("押し目追加", "5%", "120,000円", "90%", "約27.33%", "有力銘柄が-3〜-7%下落。ただし決算・テーマ根拠は崩れていない", "下落が根拠崩れなら使わない"),
+        ("確認後追加", "5%", "120,000円", "95%", "約29.07%", "20営業日・決算・イベント通過後、対TOPIX劣後なし", "指数劣後、悪材料、出来高急増下落なら待つ"),
+        ("最終攻勢", "5%", "120,000円", "100%", "約30.80%", "運用全体がTOPIX比+3pt以上、主力5社の根拠が継続", "業種集中・過熱・急騰追い買いなら使わない"),
+    ]
+    draw_reserve15_table(c, rows, 36, 264)
+
+    rounded_box(c, 46, 154, 746, 74, colors.HexColor("#F7FBFF"), colors.HexColor("#C9D9EA"), 8)
+    c.setFillColor(BLUE)
+    c.setFont(FONT_BOLD, 12)
+    c.drawString(62, 206, "運用上の答え")
+    msg = "上振れ時に15%を必ず残して終える設計ではありません。85%は+25%を確認できる強気標準ラインで、残り15%はさらに勝ち筋が確認できた時の追加余力です。条件がそろえば100%まで使い、条件が崩れれば現金を残します。"
+    draw_wrapped(c, msg, 62, 188, 704, 10.3, 13, INK, max_lines=3)
+
+    rounded_box(c, 46, 74, 746, 58, colors.HexColor("#FFF7F7"), colors.HexColor("#E4A0A0"), 8)
+    c.setFillColor(RED)
+    c.setFont(FONT_BOLD, 11)
+    c.drawString(62, 112, "禁止ルール")
+    draw_wrapped(c, "残り15%は成績をよく見せるための水増し枠ではありません。根拠が崩れた時、指数に劣後した時、急騰日の追い買いになる時は使いません。", 62, 95, 704, 9.8, 12.5, INK, max_lines=2)
+
+    draw_wrapped(c, "根拠CSV: regular10_reserve15_deployment_20260625.csv。残り15%の分割条件、追加金額、停止条件、期待値目安を記録しています。", 60, 44, 710, 9.2, 11.5, NAVY, max_lines=2)
     footer(c, 10)
     c.showPage()
+
+
+def draw_reserve15_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["枠", "追加率", "追加額", "累計", "目安", "使う条件", "止める条件"]
+    widths = [76, 58, 78, 60, 78, 240, 210]
+    row_h = 52
+    header_h = 25
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT_BOLD, 8.2)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 4, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for j, (val, w) in enumerate(zip(row, widths)):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            color = GREEN if j == 4 else (RED if j == 6 else INK)
+            draw_wrapped(c, val, xx + 4, y + row_h - 12, w - 8, 7.6, 10.2, color, max_lines=4)
+            xx += w
 
 
 def draw_bull_execution_table(c: canvas.Canvas, rows, x0, y0):
@@ -920,7 +986,7 @@ def add_page_7_initial_buy(c: canvas.Canvas):
         "買わなかった分は現金待機です。5営業日・20営業日の対TOPIX反応が弱ければ、次の追加買付を止めます。"
     )
     draw_wrapped(c, note, 60, 74, 700, 10, 13, INK, max_lines=2)
-    footer(c, 10)
+    footer(c, 11)
     c.showPage()
 
 
@@ -953,7 +1019,7 @@ def draw_initial_buy_table(c: canvas.Canvas, rows, x0, y0):
 
 
 def add_page_8_additional_buy(c: canvas.Canvas):
-    title(c, "追加買付の具体案", "40%から75%、強い地合いでは85%へ")
+    title(c, "追加買付の具体案", "40%から75%、強気標準では85%へ")
     intro = (
         "初回の基本案960,000円から、本命計画75%の1,800,000円へ進める場合の追加金額です。"
         "追加は一度に行わず、5営業日後と20営業日・決算確認後に分けます。"
@@ -993,7 +1059,7 @@ def add_page_8_additional_buy(c: canvas.Canvas):
     draw_initial_buy_table(c, stage3_rows[5:], 46, 25)
 
 
-    footer(c, 11)
+    footer(c, 12)
     c.showPage()
 
 def add_page_9_pre_order_gate(c: canvas.Canvas):
@@ -1035,7 +1101,7 @@ def add_page_9_pre_order_gate(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "このチェックは売買を増やすためではなく、買わない日を明確にするためのものです。条件不一致の金額は現金待機にし、次の判定日に再確認します。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 12)
+    footer(c, 13)
     c.showPage()
 
 
@@ -1102,7 +1168,7 @@ def add_page_10_order_ticket(c: canvas.Canvas):
     c.setFillColor(RED)
     c.setFont(FONT, 10.5)
     c.drawString(60, 56, "禁止: 条件不一致の金額を、他銘柄へその場で上乗せしない。迷う場合は現金待機。")
-    footer(c, 13)
+    footer(c, 14)
     c.showPage()
 
 
@@ -1171,7 +1237,7 @@ def add_page_11_execution_record(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "約定後に記録する数字は、利益を見せるためではなく、判断が正しかったかを検証するための証拠です。未記録の売買は次回判断に使いません。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 14)
+    footer(c, 15)
     c.showPage()
 
 
@@ -1223,7 +1289,7 @@ def add_page_6(c: canvas.Canvas):
     c.roundRect(chart_x - 10, chart_y - 34, chart_w + 20, chart_h + 72, 10, fill=1, stroke=1)
     c.setFont(FONT, 10)
     c.setFillColor(NAVY)
-    c.drawString(chart_x, chart_y + chart_h + 28, "240万円で見た場合の資産推移目安")
+    c.drawString(chart_x, chart_y + chart_h + 58, "240万円で見た場合の資産推移目安")
 
     for v in [2_400_000, 2_550_000, 2_700_000, 2_850_000, 3_000_000]:
         yy = chart_y + (v - min_v) / (max_v - min_v) * chart_h
@@ -1282,9 +1348,9 @@ def add_page_6(c: canvas.Canvas):
     c.setFillColor(NAVY)
     c.setFont(FONT, 11)
     c.drawString(60, 114, "読み方")
-    note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回るなら追加しません。本命+20%は75%投入、強気+25%は強い地合いで85%投入する場合だけの上振れ計画です。"
+    note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回るなら追加しません。本命+20%は75%投入、強気標準+25%は85%投入。残り15%は条件付き追加余力です。"
     draw_wrapped(c, note, 60, 94, 700, 10, 14, INK, max_lines=3)
-    footer(c, 15)
+    footer(c, 16)
     c.showPage()
 
 
@@ -1311,7 +1377,7 @@ def add_page_7(c: canvas.Canvas):
     draw_schedule_table(c, rows, 48, 72)
     rounded_box(c, 48, 34, 746, 30, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この表は6月30日開始時の運用計画です。実際には、当日の株価、指数、為替、金利、ニュース、証券会社画面の注文条件を確認してから発注します。", 62, 54, 710, 9.2, 11.5, INK, max_lines=2)
-    footer(c, 16)
+    footer(c, 17)
     c.showPage()
 
 
@@ -1371,7 +1437,7 @@ def add_page_8(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#F6FAFD"), LINE, 8)
     note = "買い増しは、指数より強いこと、決算・材料が続くこと、過熱していないことを確認して小さく行います。売却は、損失拡大を止める売却と、利益を守る売却を分けます。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 17)
+    footer(c, 18)
     c.showPage()
 
 
@@ -1418,7 +1484,7 @@ def add_page_9(c: canvas.Canvas):
     rounded_box(c, 46, 42, 746, 54, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "監視の目的は、値動きに反応して売買を増やすことではなく、最初の選定根拠が崩れていないかを確認することです。根拠が崩れていない下落は保留、根拠が崩れた下落は減額・入替候補にします。"
     draw_wrapped(c, note, 60, 75, 710, 10, 13, INK, max_lines=3)
-    footer(c, 18)
+    footer(c, 19)
     c.showPage()
 
 
@@ -1475,7 +1541,7 @@ def add_page_10(c: canvas.Canvas):
         ("損失回避", "-10%銘柄を半分減額", "損失拡大を約12,000円抑制", "24万円枠の半分を早めに逃がした場合"),
     ]
     draw_impact_table(c, impact_rows, 46, 30)
-    footer(c, 19)
+    footer(c, 20)
     c.showPage()
 
 
@@ -1562,7 +1628,7 @@ def add_page_12_monitoring_decision(c: canvas.Canvas):
 
     rounded_box(c, 46, 34, 746, 36, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この判定は利益保証ではありません。買うための理由を探す表ではなく、買わない条件を先に見つけるための安全装置です。", 60, 55, 710, 9.5, 12, AMBER, max_lines=2)
-    footer(c, 20)
+    footer(c, 21)
     c.showPage()
 
 
@@ -1605,6 +1671,7 @@ def build_pdf():
     add_page_6_stage_math(c)
     add_page_6_stage_gate(c)
     add_page_6_bull_execution(c)
+    add_page_6_reserve15(c)
     add_page_7_initial_buy(c)
     add_page_8_additional_buy(c)
     add_page_9_pre_order_gate(c)
@@ -1680,6 +1747,7 @@ def build_html():
       <a class="btn" href="regular10_stage_return_math_20260625.csv">段階別期待値CSV</a>
       <a class="btn" href="regular10_stage_gate_decision_20260625.csv">段階ゲートCSV</a>
       <a class="btn" href="regular10_bull_25_execution_20260625.csv">25%実行条件CSV</a>
+      <a class="btn" href="regular10_reserve15_deployment_20260625.csv">残り15%運用CSV</a>
       <a class="btn" href="regular10_target_allocation_20260625.csv">投入比率CSV</a>
       <a class="btn" href="regular10_initial_buy_plan_20260625.csv">初回買付CSV</a>
       <a class="btn" href="regular10_additional_buy_plan_20260625.csv">追加買付CSV</a>
@@ -1699,7 +1767,8 @@ def build_html():
         <div class="card"><b>評価</b><strong>指数比較</strong><span>S&amp;P500・TOPIX等</span></div>
         <div class="card"><b>採用下限</b><strong>+15%</strong><span>下回るなら追加しない</span></div>
         <div class="card"><b>本命目標</b><strong>+20%</strong><span>75%投入時の中心計画</span></div>
-        <div class="card"><b>強気上振れ</b><strong>+25%</strong><span>強い地合いで85%まで</span></div>
+        <div class="card"><b>強気標準</b><strong>+25%</strong><span>85%で到達目安</span></div>
+        <div class="card"><b>予備15%</b><strong>5%×3</strong><span>条件付きで追加</span></div>
         <div class="card"><b>追加</b><strong>84万円</strong><span>75%到達までの追加額</span></div>
         <div class="card"><b>発注前</b><strong>7項目</strong><span>OK/延期/現金待機を確認</span></div>
         <div class="card"><b>注文票</b><strong>5銘柄</strong><span>金額と株価入力欄を確認</span></div>
