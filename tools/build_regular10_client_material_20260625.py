@@ -710,6 +710,141 @@ def draw_example_table(c: canvas.Canvas, rows, x0, y0, widths, headers):
             draw_wrapped(c, val, xx + 6, y + row_h - 13, w - 12, 8.6, 11.5, INK, max_lines=4)
             xx += w
 
+
+def add_page_9(c: canvas.Canvas):
+    title(c, "日々の監視項目", "買った後に何を見るか")
+    intro = "購入後は、株価だけで判断しません。指数、出来高、為替、金利、決算情報を同じ順番で確認し、追加・維持・減額を判断します。"
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    rows = [
+        ("毎営業日", "個別株価", "前日比、出来高、寄付後の値動き", "+3%以上急騰なら追い買いしない。-5%以上下落なら理由確認。", "短期の過熱・悪材料を避けるため。"),
+        ("毎営業日", "TOPIX/日経平均", "候補10社が指数より強いか", "対TOPIXで-5pt以上劣後なら追加停止。", "個別株を選ぶ意味が薄くなるため。"),
+        ("毎営業日", "為替", "ドル円が急な円高/円安になっていないか", "1日で2円以上の円高は輸出・外需系を減額確認。", "為替で利益見通しが変わるため。"),
+        ("毎営業日", "米10年金利", "金利が急騰していないか", "0.15%以上の急騰は高PER・グロースの追加停止。", "割高株が売られやすくなるため。"),
+        ("週1回", "セクター集中", "銀行・保険・電力設備に偏りすぎていないか", "同一テーマ合計35%超は新規追加を抑制。", "同じ材料で一斉下落するリスクを抑えるため。"),
+        ("月1回", "決算・会社計画", "売上、利益、EPS、配当、自己株買い", "下方修正、利益率悪化、受注悪化なら入替候補。", "株価の根拠となる業績が崩れたかを見るため。"),
+    ]
+    draw_monitor_table(c, rows, 36, 122)
+
+    rounded_box(c, 46, 42, 746, 54, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    note = "監視の目的は、値動きに反応して売買を増やすことではなく、最初の選定根拠が崩れていないかを確認することです。根拠が崩れていない下落は保留、根拠が崩れた下落は減額・入替候補にします。"
+    draw_wrapped(c, note, 60, 75, 710, 10, 13, INK, max_lines=3)
+    footer(c, 9)
+    c.showPage()
+
+
+def draw_monitor_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["頻度", "項目", "見る内容", "判断基準", "根拠"]
+    widths = [58, 82, 200, 205, 185]
+    row_h = 54
+    header_h = 25
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.5)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 4, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for val, w in zip(row, widths):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            draw_wrapped(c, val, xx + 4, y + row_h - 12, w - 8, 7.8, 10.2, INK, max_lines=4)
+            xx += w
+
+
+def add_page_10(c: canvas.Canvas):
+    title(c, "入れ替え基準と利益影響", "どの条件で銘柄を替えるか")
+    intro = "入れ替えは、気分やニュースの印象ではなく、選定時の根拠が崩れたか、より条件の良い候補が出たかで判断します。"
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    rows = [
+        ("維持", "対TOPIXが±5pt以内、決算未悪化、出来高急増下落なし", "売買しない", "売買回数を増やさず、根拠が残る銘柄を維持。"),
+        ("追加停止", "対TOPIX-5pt以下、または5営業日で弱い反応", "新規追加を停止", "弱い銘柄へ資金を足さない。"),
+        ("一部減額", "購入後-10%、または決算失望・下方修正", "保有の50%を売却候補", "損失拡大を止め、資金を強い候補へ移す。"),
+        ("利益確定", "+15%以上、かつ出来高急増・短期過熱", "20〜30%を売却", "利益を一部守り、残りで上昇継続を狙う。"),
+        ("入れ替え", "A候補が既存銘柄よりEV+5pt以上、かつリスク同等以下", "弱い銘柄から5〜10%分を移す", "より期待値の高い候補へ資金効率を上げる。"),
+    ]
+    draw_replace_table(c, rows, 46, 245)
+
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 14)
+    c.drawString(46, 205, "利益見込みの変化例 240万円の場合")
+    impact_rows = [
+        ("弱い10%枠を維持", "10%枠=24万円、期待+3%", "+7,200円", "弱い銘柄をそのまま保有した場合"),
+        ("強い候補へ入替", "10%枠=24万円、期待+10%", "+24,000円", "条件を満たすA候補へ入れ替えた場合"),
+        ("差額", "期待差+7pt", "+16,800円", "1銘柄10%分の入替で増える期待利益"),
+        ("2銘柄入替", "合計20%枠=48万円、期待差+7pt", "+33,600円", "2枠を改善できた場合の目安"),
+        ("損失回避", "-10%銘柄を半分減額", "損失拡大を約12,000円抑制", "24万円枠の半分を早めに逃がした場合"),
+    ]
+    draw_impact_table(c, impact_rows, 46, 54)
+    footer(c, 10)
+    c.showPage()
+
+
+def draw_replace_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["判定", "条件", "行動", "根拠"]
+    widths = [70, 310, 160, 210]
+    row_h = 42
+    header_h = 24
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.8)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 5, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for val, w in zip(row, widths):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            draw_wrapped(c, val, xx + 5, y + row_h - 12, w - 10, 8, 10.5, INK, max_lines=3)
+            xx += w
+
+
+def draw_impact_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["ケース", "前提", "1年の利益目安", "意味"]
+    widths = [120, 230, 150, 250]
+    row_h = 30
+    header_h = 24
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.8)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 5, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for j, (val, w) in enumerate(zip(row, widths)):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            color = GREEN if j == 2 and "+" in val else INK
+            draw_wrapped(c, val, xx + 5, y + row_h - 11, w - 10, 8, 10, color, max_lines=2)
+            xx += w
 def build_pdf():
     c = canvas.Canvas(str(OUT_PDF), pagesize=landscape(A4))
     c.setTitle("正規10社 運用候補資料")
@@ -721,6 +856,8 @@ def build_pdf():
     add_page_6(c)
     add_page_7(c)
     add_page_8(c)
+    add_page_9(c)
+    add_page_10(c)
     c.save()
 
 
