@@ -18,6 +18,7 @@ OUT_HTML = ROOT / "regular10_client_material_20260625.html"
 
 pdfmetrics.registerFont(UnicodeCIDFont("HeiseiKakuGo-W5"))
 FONT = "HeiseiKakuGo-W5"
+FONT_BOLD = FONT
 
 NAVY = colors.HexColor("#123A5A")
 BLUE = colors.HexColor("#0B67A3")
@@ -717,6 +718,165 @@ def draw_stage_math_table(c: canvas.Canvas, rows, x0, y0):
             draw_wrapped(c, val, xx + 5, y + row_h - 12, w - 10, 8.5, 11, color, max_lines=3)
             xx += w
 
+
+def add_page_6_stage_gate(c: canvas.Canvas):
+    title(c, "段階ゲート判定表", "進める条件と止める条件を固定する")
+    intro = (
+        "+15%、+20%、+25%の違いは、表現ではなく通過するゲートの違いです。"
+        "各段階で条件を満たした場合だけ次の資金投入へ進み、条件未達なら現金待機にします。"
+    )
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+    rows = [
+        ("発注前 -> 40%", "買付当日", "NISA預り、余力、指数急落なし、悪材料なし", "主力5社へ96万円", "不一致分は現金", "12.86%"),
+        ("40% -> 55.5%", "5営業日後", "対TOPIX-5pt以下でない、金利・為替ショックなし", "37.2万円追加", "40%のまま監視", "16.85%"),
+        ("55.5% -> 75%", "20営業日・決算後", "20日反応、決算、出来高、金利・為替が許容範囲", "46.8万円追加", "穴埋め買い禁止", "22.13%"),
+        ("75% -> 85%", "強い地合い確認後", "指数が崩れず、EV上位5社が出来高を伴って上昇", "24万円追加", "75%のまま維持", "25.60%"),
+        ("全段階", "随時", "下方修正、重大事故、規制、テーマ崩れ", "該当なし", "停止・減額・入替", "損失抑制"),
+    ]
+    draw_stage_gate_table(c, rows, 36, 230)
+
+    rounded_box(c, 46, 126, 746, 68, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    c.setFillColor(AMBER)
+    c.setFont(FONT, 11)
+    c.drawString(60, 166, "運用上の結論")
+    msg = "第2段階を通過して初めて採用下限を超えます。本命+20%前後は第3段階まで進んだ場合だけです。+25%は85%投入が許される強い地合い限定であり、通常時に無理に狙う数値ではありません。"
+    draw_wrapped(c, msg, 60, 149, 710, 9.8, 12.5, INK, max_lines=3)
+
+    rounded_box(c, 46, 60, 746, 42, colors.HexColor("#FDF2F2"), colors.HexColor("#E4A6A6"), 8)
+    c.setFillColor(RED)
+    c.setFont(FONT, 10.5)
+    draw_wrapped(c, "禁止: 条件未達なのに投入率だけを上げること。期待値を作れない時は、現金待機・延期・減額が正しい処理です。", 60, 84, 710, 9.5, 12, RED, max_lines=2)
+
+    rounded_box(c, 46, 28, 746, 24, PALE, LINE, 8)
+    draw_wrapped(c, "根拠CSV: regular10_stage_gate_decision_20260625.csv", 60, 43, 710, 8.8, 10.5, NAVY, max_lines=1)
+    footer(c, 8)
+    c.showPage()
+
+
+def draw_stage_gate_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["段階", "時点", "通過条件", "進む場合", "止める場合", "計算値"]
+    widths = [92, 88, 238, 105, 115, 82]
+    row_h = 48
+    header_h = 25
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.6)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 4, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for j, (val, w) in enumerate(zip(row, widths)):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            color = GREEN if j == 5 and ("16." in val or "22." in val or "25." in val) else INK
+            if j == 4:
+                color = AMBER if idx < 4 else RED
+            draw_wrapped(c, val, xx + 4, y + row_h - 11, w - 8, 7.7, 10.2, color, max_lines=3)
+            xx += w
+
+
+def add_page_6_bull_execution(c: canvas.Canvas):
+    title(c, "25%を狙うための実行条件", "強い地合い時だけ上位5銘柄へ追加する")
+    intro = (
+        "+25%は目標値の書き換えではありません。75%投入で本命計画まで進んだ後、"
+        "市場・個別・テーマ・リスクの4条件を同時に満たした場合だけ、EV寄与の大きい5銘柄へ各48,000円を追加します。"
+    )
+    draw_wrapped(c, intro, 46, 522, 746, 12.5, 18, INK, max_lines=3)
+
+    rounded_box(c, 46, 456, 746, 52, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    formula = "計算: 75%投入時22.13% + Σ(追加2% × EV上位5社) = 25.60%。追加額は240万円の2% = 48,000円ずつ、合計240,000円です。"
+    draw_wrapped(c, formula, 62, 486, 710, 11, 15, NAVY, max_lines=2)
+
+    rows = [
+        ("1942.T", "関電工", "40.48%", "48,000円", "+0.81pt", "電力設備・データセンター周辺。EV最上位。"),
+        ("8316.T", "三井住友FG", "37.23%", "48,000円", "+0.74pt", "銀行・金利。EV上位、銀行枠の中心。"),
+        ("3099.T", "三越伊勢丹HD", "33.27%", "48,000円", "+0.67pt", "消費・インバウンド。20日指数差が強い。"),
+        ("8306.T", "三菱UFJ FG", "34.88%", "48,000円", "+0.70pt", "銀行・金利。SMFGの補完、EV上位。"),
+        ("6479.T", "ミネベアミツミ", "27.63%", "48,000円", "+0.55pt", "電子部品・機械。20日指数差が強い。"),
+    ]
+    draw_bull_execution_table(c, rows, 36, 260)
+
+    c.setFont(FONT_BOLD, 14)
+    c.setFillColor(NAVY)
+    c.drawString(46, 220, "4つの通過条件")
+    checks = [
+        ("市場", "TOPIX/S&P500が崩れておらず、全面安や先物急落がない。"),
+        ("個別", "追加対象5社が対TOPIXで大きく劣後せず、出来高急増を伴う下落がない。"),
+        ("質的根拠", "決算・月次・IR・テーマ材料に悪化がなく、選定根拠が残っている。"),
+        ("リスク", "1銘柄・業種集中上限を超えず、当日+3%以上の急騰を追わない。"),
+    ]
+    y = 194
+    for label, body in checks:
+        rounded_box(c, 50, y - 4, 355, 34, colors.HexColor("#F7FBFF"), colors.HexColor("#C9D9EA"), 8)
+        c.setFont(FONT_BOLD, 10.5)
+        c.setFillColor(BLUE)
+        c.drawString(62, y + 15, label)
+        draw_wrapped(c, body, 122, y + 15, 266, 8.7, 11, INK, max_lines=2)
+        y -= 39
+
+    rounded_box(c, 430, 76, 362, 150, colors.HexColor("#FFF7F7"), colors.HexColor("#E4A0A0"), 8)
+    c.setFont(FONT_BOLD, 13)
+    c.setFillColor(RED)
+    c.drawString(448, 200, "進めない条件")
+    stop = [
+        "75%投入前に+25%を狙って追加しない。",
+        "条件未達なのに別銘柄で穴埋めしない。",
+        "指数劣後・悪材料・急落継続なら75%で止める。",
+        "根拠が崩れた銘柄は追加ではなく減額・入替確認へ回す。",
+    ]
+    sy = 176
+    for s in stop:
+        c.setFont(FONT, 10)
+        c.setFillColor(INK)
+        c.drawString(448, sy, "・" + s)
+        sy -= 24
+
+    draw_wrapped(c, "根拠CSV: regular10_bull_25_execution_20260625.csv。追加5銘柄、追加額、期待値寄与、通過条件、停止条件を記録しています。", 60, 44, 710, 9.2, 11.5, NAVY, max_lines=2)
+    footer(c, 10)
+    c.showPage()
+
+
+def draw_bull_execution_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["銘柄", "名称", "EV", "追加額", "寄与", "根拠"]
+    widths = [70, 110, 62, 82, 62, 334]
+    row_h = 39
+    header_h = 25
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, y0 + row_h * len(rows), sum(widths), header_h, fill=1, stroke=0)
+    c.setStrokeColor(LINE)
+    c.rect(x0, y0, sum(widths), header_h + row_h * len(rows), fill=0, stroke=1)
+    x = x0
+    c.setFont(FONT_BOLD, 9.2)
+    c.setFillColor(NAVY)
+    for h, w in zip(headers, widths):
+        c.line(x, y0, x, y0 + header_h + row_h * len(rows))
+        c.drawString(x + 5, y0 + row_h * len(rows) + 8, h)
+        x += w
+    c.line(x, y0, x, y0 + header_h + row_h * len(rows))
+    yy = y0 + row_h * (len(rows) - 1)
+    for row in rows:
+        c.line(x0, yy, x0 + sum(widths), yy)
+        x = x0
+        for j, val in enumerate(row):
+            c.setFillColor(GREEN if j == 4 else INK)
+            c.setFont(FONT_BOLD if j in (0, 2, 4) else FONT, 9)
+            if j == 5:
+                draw_wrapped(c, val, x + 5, yy + row_h - 11, widths[j] - 10, 8.2, 10, INK, max_lines=2)
+            else:
+                c.drawString(x + 5, yy + row_h - 18, val)
+            x += widths[j]
+        yy -= row_h
+
+
 def add_page_7_initial_buy(c: canvas.Canvas):
     title(c, "初回買付の具体案", "240万円の場合")
     intro = (
@@ -760,7 +920,7 @@ def add_page_7_initial_buy(c: canvas.Canvas):
         "買わなかった分は現金待機です。5営業日・20営業日の対TOPIX反応が弱ければ、次の追加買付を止めます。"
     )
     draw_wrapped(c, note, 60, 74, 700, 10, 13, INK, max_lines=2)
-    footer(c, 8)
+    footer(c, 10)
     c.showPage()
 
 
@@ -833,7 +993,7 @@ def add_page_8_additional_buy(c: canvas.Canvas):
     draw_initial_buy_table(c, stage3_rows[5:], 46, 35)
 
 
-    footer(c, 9)
+    footer(c, 11)
     c.showPage()
 
 def add_page_9_pre_order_gate(c: canvas.Canvas):
@@ -875,7 +1035,7 @@ def add_page_9_pre_order_gate(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "このチェックは売買を増やすためではなく、買わない日を明確にするためのものです。条件不一致の金額は現金待機にし、次の判定日に再確認します。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 10)
+    footer(c, 12)
     c.showPage()
 
 
@@ -942,7 +1102,7 @@ def add_page_10_order_ticket(c: canvas.Canvas):
     c.setFillColor(RED)
     c.setFont(FONT, 10.5)
     c.drawString(60, 64, "禁止: 条件不一致の金額を、他銘柄へその場で上乗せしない。迷う場合は現金待機。")
-    footer(c, 11)
+    footer(c, 13)
     c.showPage()
 
 
@@ -1011,7 +1171,7 @@ def add_page_11_execution_record(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "約定後に記録する数字は、利益を見せるためではなく、判断が正しかったかを検証するための証拠です。未記録の売買は次回判断に使いません。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 12)
+    footer(c, 14)
     c.showPage()
 
 
@@ -1124,7 +1284,7 @@ def add_page_6(c: canvas.Canvas):
     c.drawString(60, 114, "読み方")
     note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回るなら追加しません。本命+20%は75%投入、強気+25%は強い地合いで85%投入する場合だけの上振れ計画です。"
     draw_wrapped(c, note, 60, 94, 700, 10, 14, INK, max_lines=3)
-    footer(c, 13)
+    footer(c, 15)
     c.showPage()
 
 
@@ -1151,7 +1311,7 @@ def add_page_7(c: canvas.Canvas):
     draw_schedule_table(c, rows, 48, 72)
     rounded_box(c, 48, 34, 746, 30, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この表は6月30日開始時の運用計画です。実際には、当日の株価、指数、為替、金利、ニュース、証券会社画面の注文条件を確認してから発注します。", 62, 54, 710, 9.2, 11.5, INK, max_lines=2)
-    footer(c, 14)
+    footer(c, 16)
     c.showPage()
 
 
@@ -1211,7 +1371,7 @@ def add_page_8(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#F6FAFD"), LINE, 8)
     note = "買い増しは、指数より強いこと、決算・材料が続くこと、過熱していないことを確認して小さく行います。売却は、損失拡大を止める売却と、利益を守る売却を分けます。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 15)
+    footer(c, 17)
     c.showPage()
 
 
@@ -1258,7 +1418,7 @@ def add_page_9(c: canvas.Canvas):
     rounded_box(c, 46, 42, 746, 54, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "監視の目的は、値動きに反応して売買を増やすことではなく、最初の選定根拠が崩れていないかを確認することです。根拠が崩れていない下落は保留、根拠が崩れた下落は減額・入替候補にします。"
     draw_wrapped(c, note, 60, 75, 710, 10, 13, INK, max_lines=3)
-    footer(c, 16)
+    footer(c, 18)
     c.showPage()
 
 
@@ -1315,7 +1475,7 @@ def add_page_10(c: canvas.Canvas):
         ("損失回避", "-10%銘柄を半分減額", "損失拡大を約12,000円抑制", "24万円枠の半分を早めに逃がした場合"),
     ]
     draw_impact_table(c, impact_rows, 46, 54)
-    footer(c, 17)
+    footer(c, 19)
     c.showPage()
 
 
@@ -1402,7 +1562,7 @@ def add_page_12_monitoring_decision(c: canvas.Canvas):
 
     rounded_box(c, 46, 34, 746, 36, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この判定は利益保証ではありません。買うための理由を探す表ではなく、買わない条件を先に見つけるための安全装置です。", 60, 55, 710, 9.5, 12, AMBER, max_lines=2)
-    footer(c, 18)
+    footer(c, 20)
     c.showPage()
 
 
@@ -1443,6 +1603,8 @@ def build_pdf():
     add_page_5(c)
     add_page_6_plan(c)
     add_page_6_stage_math(c)
+    add_page_6_stage_gate(c)
+    add_page_6_bull_execution(c)
     add_page_7_initial_buy(c)
     add_page_8_additional_buy(c)
     add_page_9_pre_order_gate(c)
@@ -1516,6 +1678,8 @@ def build_html():
       <a class="btn" href="regular10_return_target_execution_plan_20260625.csv">15/20/25計画CSV</a>
       <a class="btn" href="regular10_return_target_rationale_20260625.csv">15/20/25根拠CSV</a>
       <a class="btn" href="regular10_stage_return_math_20260625.csv">段階別期待値CSV</a>
+      <a class="btn" href="regular10_stage_gate_decision_20260625.csv">段階ゲートCSV</a>
+      <a class="btn" href="regular10_bull_25_execution_20260625.csv">25%実行条件CSV</a>
       <a class="btn" href="regular10_target_allocation_20260625.csv">投入比率CSV</a>
       <a class="btn" href="regular10_initial_buy_plan_20260625.csv">初回買付CSV</a>
       <a class="btn" href="regular10_additional_buy_plan_20260625.csv">追加買付CSV</a>
