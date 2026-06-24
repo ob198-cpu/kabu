@@ -1278,6 +1278,65 @@ def draw_impact_table(c: canvas.Canvas, rows, x0, y0):
             color = GREEN if j == 2 and "+" in val else INK
             draw_wrapped(c, val, xx + 5, y + row_h - 11, w - 10, 8, 10, color, max_lines=2)
             xx += w
+
+def add_page_12_monitoring_decision(c: canvas.Canvas):
+    title(c, "監視値からの判定", "買い増し・停止・入替を数字で分ける")
+    intro = (
+        "約定後は、毎日の値動きを感覚で追いかけるのではなく、入力した監視値を同じ順番で判定します。"
+        "悪材料、決算悪化、テーマ崩れは最優先で停止確認。次に指数劣後、為替、米金利を見て、最後に個別株の急騰・急落を確認します。"
+    )
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    rows = [
+        ("1", "悪材料・決算悪化・テーマ崩れ", "YESが1つでもある", "停止・入替確認", "根拠が崩れた可能性があるため、買い増しより先に保有理由を再確認する。"),
+        ("2", "対TOPIX 5日差", "-5pt以下", "追加停止", "個別株を選ぶ優位性が弱くなっている可能性を見る。"),
+        ("3", "米10年金利", "1日で+0.15pt以上", "追加停止", "高PER・成長株の評価が圧縮されやすいため、追い買いを止める。"),
+        ("4", "ドル円", "1日で2円以上の円高", "追加停止", "海外売上・輸出・外需感応度が高い銘柄の利益前提を確認する。"),
+        ("5", "個別株の急騰", "+3%以上かつ出来高1.5倍以上", "追わず翌営業日確認", "材料出尽くしや短期過熱を避ける。"),
+        ("6", "個別株の急落", "-5%以下", "理由確認", "一時的な需給か、根拠崩れかを分ける。"),
+        ("7", "上記なし", "停止条件なし", "継続", "保有継続、または追加買付計画へ進む。"),
+    ]
+    draw_monitoring_decision_table(c, rows, 36, 170)
+
+    rounded_box(c, 46, 82, 746, 58, colors.HexColor("#F6FAFD"), LINE, 8)
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 11)
+    c.drawString(60, 118, "実務で使うCSV")
+    draw_wrapped(c, "regular10_monitoring_decision_20260625.csv に、各銘柄の前日騰落率、対TOPIX差、出来高倍率、為替、米金利、悪材料の有無を入力すると、判定式で 継続 / 追加停止 / 理由確認 / 停止・入替確認 に分けます。", 60, 101, 710, 9.5, 12.5, INK, max_lines=2)
+
+    rounded_box(c, 46, 34, 746, 36, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    draw_wrapped(c, "この判定は利益保証ではありません。買うための理由を探す表ではなく、買わない条件を先に見つけるための安全装置です。", 60, 55, 710, 9.5, 12, AMBER, max_lines=2)
+    footer(c, 17)
+    c.showPage()
+
+
+def draw_monitoring_decision_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["順番", "見る項目", "条件", "判定", "根拠"]
+    widths = [48, 155, 155, 120, 262]
+    row_h = 43
+    header_h = 25
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.8)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 5, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for j, (val, w) in enumerate(zip(row, widths)):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            color = RED if j == 3 and ("停止" in val or "入替" in val) else (AMBER if j == 3 else INK)
+            draw_wrapped(c, val, xx + 5, y + row_h - 12, w - 10, 8, 10.5, color, max_lines=3)
+            xx += w
 def build_pdf():
     c = canvas.Canvas(str(OUT_PDF), pagesize=landscape(A4))
     c.setTitle("正規10社 運用候補資料")
@@ -1297,6 +1356,7 @@ def build_pdf():
     add_page_8(c)
     add_page_9(c)
     add_page_10(c)
+    add_page_12_monitoring_decision(c)
     c.save()
 
 
@@ -1364,6 +1424,7 @@ def build_html():
       <a class="btn" href="regular10_order_ticket_20260625.csv">注文票CSV</a>
       <a class="btn" href="regular10_execution_record_20260625.csv">約定記録CSV</a>
       <a class="btn" href="regular10_daily_monitoring_20260625.csv">日々監視CSV</a>
+      <a class="btn" href="regular10_monitoring_decision_20260625.csv">監視判定CSV</a>
       <a class="btn" href="purchase_gate_exact10_v65_20260624.html">正規10社の元データ</a>
     </section>
     <section>
