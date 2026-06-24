@@ -449,11 +449,11 @@ def add_page_4(c: canvas.Canvas):
 
 
 def add_page_5(c: canvas.Canvas):
-    title(c, "期待値と確認項目", "初年度の評価目標")
+    title(c, "期待値と確認項目", "初年度の採用ライン")
     text = (
-        "現時点の設計では、初年度の検証目標を年+10〜13%程度に置きます。"
-        "この数値は利益の約束ではなく、個別株を選ぶ意味があるかを測るための評価ラインです。"
-        "主要インデックスが強い場合は、インデックスとの差も合わせて確認します。"
+        "年+10%は比較対象であり、個別株運用の目標にはしません。採用下限は年+15%、本命目標は年+20%前後です。"
+        "+15%を下回る見込みなら、個別株比率を上げず、指数・現金・延期を優先します。"
+        "この数値は利益保証ではなく、リスクを取る価値があるかを確認するための評価基準です。"
     )
     draw_wrapped(c, text, 46, 474, 746, 12, 18, INK)
 
@@ -461,18 +461,19 @@ def add_page_5(c: canvas.Canvas):
     c.setFont(FONT, 13)
     c.drawString(46, 405, "240万円でのイメージ")
     scenarios = [
-        ("防御", 0.03, "市場が不安定で買付を絞る"),
-        ("基準", 0.10, "段階投入し、指数比較で継続"),
-        ("目標", 0.13, "主力が機能し、指数を上回る"),
-        ("悪化", -0.10, "急落・劣後で減額する"),
+        ("指数想定", 0.10, "比較対象"),
+        ("採用下限", 0.15, "下限"),
+        ("本命目標", 0.20, "主目標"),
+        ("強気上振れ", 0.25, "上振れ"),
+        ("悪化", -0.10, "減額"),
     ]
-    x0, y0 = 60, 265
+    x0, y0 = 60, 365
     base = 2_400_000
-    max_bar = 2_750_000
+    max_bar = 3_050_000
     min_bar = 2_100_000
     for i, (label, rate, note) in enumerate(scenarios):
         amount = base * (1 + rate)
-        y = y0 + i * 38
+        y = y0 - i * 34
         c.setFillColor(GRAY)
         c.setFont(FONT, 10)
         c.drawString(x0, y + 4, label)
@@ -485,7 +486,7 @@ def add_page_5(c: canvas.Canvas):
         c.setFont(FONT, 10)
         c.drawString(x0 + 505, y + 4, f"{amount:,.0f}円 ({rate*100:+.0f}%)")
         c.setFillColor(GRAY)
-        c.drawString(x0 + 650, y + 4, note)
+        draw_wrapped(c, note, x0 + 650, y + 10, 85, 8.2, 10, GRAY, max_lines=2)
 
     c.setFillColor(NAVY)
     c.setFont(FONT, 15)
@@ -524,12 +525,12 @@ def add_page_6(c: canvas.Canvas):
 
     base = 2_400_000
     months = ["6/30", "7月", "8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月", "4月", "5月", "6月"]
-    baseline = [base * (1.10 ** (i / 12)) for i in range(13)]
-    target = [base * (1.13 ** (i / 12)) for i in range(13)]
-    defensive = [base * (1.03 ** (i / 12)) for i in range(13)]
+    index_line = [base * (1.10 ** (i / 12)) for i in range(13)]
+    floor_line = [base * (1.15 ** (i / 12)) for i in range(13)]
+    target = [base * (1.20 ** (i / 12)) for i in range(13)]
 
     chart_x, chart_y, chart_w, chart_h = 58, 210, 720, 220
-    min_v, max_v = 2_350_000, 2_750_000
+    min_v, max_v = 2_350_000, 3_050_000
     c.setFillColor(colors.white)
     c.setStrokeColor(LINE)
     c.roundRect(chart_x - 10, chart_y - 34, chart_w + 20, chart_h + 72, 10, fill=1, stroke=1)
@@ -537,7 +538,7 @@ def add_page_6(c: canvas.Canvas):
     c.setFillColor(NAVY)
     c.drawString(chart_x, chart_y + chart_h + 28, "240万円で見た場合の資産推移目安")
 
-    for v in [2_400_000, 2_500_000, 2_600_000, 2_700_000]:
+    for v in [2_400_000, 2_550_000, 2_700_000, 2_850_000, 3_000_000]:
         yy = chart_y + (v - min_v) / (max_v - min_v) * chart_h
         c.setStrokeColor(colors.HexColor("#D8E7F2"))
         c.line(chart_x, yy, chart_x + chart_w, yy)
@@ -562,9 +563,9 @@ def add_page_6(c: canvas.Canvas):
         c.setFont(FONT, 9)
         c.drawString(pts[-1][0] - 52, pts[-1][1] + 8, label)
 
-    draw_line(defensive, colors.HexColor("#7A8B99"), "防御 +3%")
-    draw_line(baseline, BLUE, "基準 +10%")
-    draw_line(target, GREEN, "目標 +13%")
+    draw_line(index_line, colors.HexColor("#7A8B99"), "指数想定 +10%")
+    draw_line(floor_line, BLUE, "採用下限 +15%")
+    draw_line(target, GREEN, "本命目標 +20%")
 
     c.setStrokeColor(NAVY)
     c.setLineWidth(1)
@@ -593,7 +594,7 @@ def add_page_6(c: canvas.Canvas):
     c.setFillColor(NAVY)
     c.setFont(FONT, 11)
     c.drawString(60, 114, "読み方")
-    note = "グラフは資産管理の目安です。実際の株価は毎月きれいに上がるわけではないため、月次では金額そのものより、指数差、悪材料、買わない条件、追加条件を確認します。"
+    note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回る見込みなら個別株比率を上げません。本命目標+20%前後を狙える場合にだけ追加買付を検討します。"
     draw_wrapped(c, note, 60, 94, 700, 10, 14, INK, max_lines=3)
     footer(c, 6)
     c.showPage()
