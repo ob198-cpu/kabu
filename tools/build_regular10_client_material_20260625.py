@@ -164,6 +164,38 @@ CANDIDATES = [
     },
 ]
 
+TARGET_WEIGHTS = {
+    "3099.T": 9,
+    "5333.T": 7,
+    "6479.T": 8,
+    "8316.T": 10,
+    "1942.T": 10,
+    "8306.T": 8,
+    "8750.T": 7,
+    "8630.T": 7,
+    "8795.T": 5,
+    "8411.T": 4,
+}
+
+AGGRESSIVE_ADD = {"1942.T": 2, "8316.T": 2, "3099.T": 2, "8306.T": 2, "6479.T": 2}
+BASE_CAPITAL = 2_400_000
+
+
+def portfolio_expected(weights: dict[str, float]) -> float:
+    ev_by_ticker = {row["ticker"]: row["ev"] for row in CANDIDATES}
+    return sum(weights[t] * ev_by_ticker[t] / 100 for t in weights)
+
+
+def scaled_weights(weights: dict[str, float], target_total: float) -> dict[str, float]:
+    current_total = sum(weights.values())
+    return {ticker: weight * target_total / current_total for ticker, weight in weights.items()}
+
+
+def aggressive_weights() -> dict[str, float]:
+    weights = dict(TARGET_WEIGHTS)
+    for ticker, add in AGGRESSIVE_ADD.items():
+        weights[ticker] += add
+    return weights
 
 def wrap_lines(text: str, width: float, font_size: float) -> list[str]:
     lines: list[str] = []
@@ -343,8 +375,8 @@ def add_page_2(c: canvas.Canvas):
 def add_page_3(c: canvas.Canvas):
     title(c, "正規10社一覧", "同一ゲート通過銘柄")
     headers = ["No", "銘柄", "役割", "業種・テーマ", "EV", "リスク", "20日指数差", "主な根拠", "運用上の扱い"]
-    widths = [30, 95, 68, 105, 45, 45, 58, 230, 150]
-    x0, y0 = 30, 496
+    widths = [28, 92, 62, 100, 42, 42, 58, 222, 150]
+    x0, y0 = 24, 496
     row_h = 43
     c.setFillColor(LIGHT_BLUE)
     c.rect(x0, y0, sum(widths), 28, fill=1, stroke=0)
@@ -395,8 +427,8 @@ def add_page_4(c: canvas.Canvas):
     c.setFont(FONT, 15)
     c.drawString(46, 498, "初回買付の考え方")
     bullets = [
-        "初回は資金の30〜40%まで。240万円の場合は72万〜96万円を上限にします。",
-        "初回主力5社を中心に、1銘柄の初回比率は資金全体の6〜8%を目安にします。",
+        "初回は基本案40%で960,000円、慎重案30%で720,000円を上限にします。",
+        "基本案40%は三越196,000円、日本ガイシ153,000円、ミネベア175,000円、SMFG218,000円、関電工218,000円です。",
         "小口・追加候補5社は、5営業日・20営業日の指数差と同業集中を見て追加判断します。",
         "現金は最低30%残し、急落時・追加確認時・見送り時の余力にします。",
     ]
@@ -408,7 +440,7 @@ def add_page_4(c: canvas.Canvas):
         y -= 3
 
     phases = [
-        ("当日", "30〜40%", "主力5社を中心に初回買付。買わない条件に該当すれば延期。"),
+        ("当日", "72万〜96万円", "主力5社に銘柄別金額を割当。条件不一致分は現金待機。"),
         ("5営業日後", "+0〜20%", "対TOPIXでマイナス、悪材料、急落なら追加しない。"),
         ("20営業日後", "+0〜20%", "指数差・決算後反応・出来高を確認して追加。"),
         ("月次", "見直し", "指数に劣後、テーマ崩れ、急落兆候があれば比率を落とす。"),
@@ -515,10 +547,158 @@ def add_page_5(c: canvas.Canvas):
 
 
 
+
+def add_page_6_plan(c: canvas.Canvas):
+    title(c, "15%・20%・25%の根拠", "投入比率で作る運用計画")
+    floor_weights = scaled_weights(TARGET_WEIGHTS, 55)
+    target_weights = dict(TARGET_WEIGHTS)
+    bull_weights = aggressive_weights()
+    floor_ev = portfolio_expected(floor_weights)
+    target_ev = portfolio_expected(target_weights)
+    bull_ev = portfolio_expected(bull_weights)
+    intro = (
+        "+20%前後を狙うには、銘柄を選ぶだけでは足りません。EVの高い候補に資金を厚くし、"
+        "条件がそろわない時は現金を残す必要があります。計算式は 期待リターン = Σ(投入比率 × EV) です。"
+    )
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    rounded_box(c, 46, 422, 746, 48, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    c.setFillColor(AMBER)
+    c.setFont(FONT, 11)
+    c.drawString(60, 452, "根拠式")
+    draw_wrapped(c, "正規10社のEVを使い、投入比率を掛けて全体の期待値を出します。現金部分は0%として扱うため、投入比率が低いほど期待値も下がります。", 60, 434, 700, 9.8, 12.5, INK, max_lines=2)
+
+    cards = [
+        ("採用下限", floor_ev, "55%投入", "条件が弱い時はここまで。+15%を下回るなら追加しない。"),
+        ("本命計画", target_ev, "75%投入", "5日・20日反応、指数、悪材料を確認して段階的に到達。"),
+        ("強気上振れ", bull_ev, "85%投入", "強い地合い時だけ、EV上位5社へ各+2%追加。"),
+    ]
+    for i, (label, ev, exposure, note) in enumerate(cards):
+        x = 46 + i * 252
+        rounded_box(c, x, 342, 235, 62, PALE, LINE, 8)
+        c.setFillColor(BLUE if i < 2 else AMBER)
+        c.setFont(FONT, 10)
+        c.drawString(x + 12, 382, label)
+        c.setFillColor(NAVY)
+        c.setFont(FONT, 17)
+        c.drawString(x + 12, 360, f"{ev:.1f}% / {exposure}")
+        draw_wrapped(c, note, x + 116, 382, 104, 7.5, 9, GRAY, max_lines=3)
+
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 14)
+    c.drawString(46, 316, "本命計画 75%投入時の比率")
+    headers = ["銘柄", "EV", "比率", "240万円換算", "役割"]
+    widths = [150, 55, 55, 90, 400]
+    x0, y0 = 46, 58
+    row_h = 23
+    header_h = 24
+    top = y0 + row_h * len(CANDIDATES)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.5)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 5, top + 8, h)
+        xx += w
+    for idx, row in enumerate(CANDIDATES):
+        y = y0 + row_h * (len(CANDIDATES) - idx - 1)
+        ticker = row["ticker"]
+        weight = TARGET_WEIGHTS[ticker]
+        amount = int(BASE_CAPITAL * weight / 100)
+        vals = [f"{ticker} {row['name']}", f"{row['ev']:.1f}%", f"{weight:.0f}%", f"{amount:,}円", row["rule"]]
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for val, w in zip(vals, widths):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            draw_wrapped(c, val, xx + 5, y + row_h - 8, w - 10, 7.2, 8.3, INK, max_lines=2)
+            xx += w
+    footer(c, 6)
+    c.showPage()
+
+
+def add_page_7_initial_buy(c: canvas.Canvas):
+    title(c, "初回買付の具体案", "240万円の場合")
+    intro = (
+        "初回は正規10社のうち、EVと購入前ゲートの根拠が強い主力5社だけを対象にします。"
+        "金額は本命計画75%の比率を初回資金へ縮小して配分します。"
+        "条件に合わない銘柄の金額は現金待機とし、ほかの銘柄へ穴埋めしません。"
+    )
+    draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
+
+    basic_rows = [
+        ("3099.T", "三越伊勢丹HD", "196,000円", "消費・インバウンド枠。EVと価格反応を確認して初回対象。"),
+        ("5333.T", "日本ガイシ", "153,000円", "電力・セラミック材料枠。過熱を抑えて小さめに開始。"),
+        ("6479.T", "ミネベアミツミ", "175,000円", "精密部品・電動化枠。テーマ性と価格反応を確認。"),
+        ("8316.T", "三井住友FG", "218,000円", "金融主力枠。金利環境と財務耐性を評価。"),
+        ("1942.T", "関電工", "218,000円", "電力インフラ枠。EVが高く、初回主力に設定。"),
+    ]
+    cautious_rows = [
+        ("3099.T", "三越伊勢丹HD", "146,000円", "基本案より25%縮小。"),
+        ("5333.T", "日本ガイシ", "115,000円", "基本案より25%縮小。"),
+        ("6479.T", "ミネベアミツミ", "131,000円", "基本案より25%縮小。"),
+        ("8316.T", "三井住友FG", "164,000円", "基本案より25%縮小。"),
+        ("1942.T", "関電工", "164,000円", "基本案より25%縮小。"),
+    ]
+
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 15)
+    c.drawString(46, 458, "基本案40%: 合計960,000円")
+    draw_initial_buy_table(c, basic_rows, 46, 315)
+
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 15)
+    c.drawString(46, 285, "慎重案30%: 合計720,000円")
+    draw_initial_buy_table(c, cautious_rows, 46, 142)
+
+    rounded_box(c, 46, 52, 746, 62, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
+    c.setFillColor(AMBER)
+    c.setFont(FONT, 11)
+    c.drawString(60, 92, "当日の実行条件")
+    note = (
+        "当日+3%以上急騰、指数急落、米金利急騰、円高ショック、重大悪材料がある場合は買いません。"
+        "買わなかった分は現金待機です。5営業日・20営業日の対TOPIX反応が弱ければ、次の追加買付を止めます。"
+    )
+    draw_wrapped(c, note, 60, 74, 700, 10, 13, INK, max_lines=2)
+    footer(c, 7)
+    c.showPage()
+
+
+def draw_initial_buy_table(c: canvas.Canvas, rows, x0, y0):
+    headers = ["銘柄コード", "銘柄名", "初回金額", "根拠・扱い"]
+    widths = [90, 150, 105, 400]
+    row_h = 23
+    header_h = 24
+    top = y0 + row_h * len(rows)
+    c.setFillColor(LIGHT_BLUE)
+    c.rect(x0, top, sum(widths), header_h, fill=1, stroke=0)
+    xx = x0
+    c.setFillColor(NAVY)
+    c.setFont(FONT, 8.8)
+    for h, w in zip(headers, widths):
+        c.setStrokeColor(LINE)
+        c.rect(xx, top, w, header_h, fill=0, stroke=1)
+        c.drawString(xx + 5, top + 8, h)
+        xx += w
+    for idx, row in enumerate(rows):
+        y = y0 + row_h * (len(rows) - idx - 1)
+        c.setFillColor(colors.white if idx % 2 == 0 else colors.HexColor("#FBFDFF"))
+        c.rect(x0, y, sum(widths), row_h, fill=1, stroke=0)
+        xx = x0
+        for val, w in zip(row, widths):
+            c.setStrokeColor(LINE)
+            c.rect(xx, y, w, row_h, fill=0, stroke=1)
+            draw_wrapped(c, val, xx + 5, y + row_h - 8, w - 10, 7.8, 9.2, INK, max_lines=2)
+            xx += w
+
 def add_page_6(c: canvas.Canvas):
     title(c, "6月30日開始の1年間シミュレーション", "月ごとの資産目安")
     intro = (
-        "6月30日に初回買付を行う場合の、1年間の確認予定です。資金240万円を例に、初回は30〜40%だけ投入し、"
+        "6月30日に初回買付を行う場合の、1年間の確認予定です。資金240万円を例に、初回は基本案96万円または慎重案72万円を投入し、"
         "5営業日後、20営業日後、月次、決算時点で追加・停止・減額を判断します。"
     )
     draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
@@ -528,6 +708,7 @@ def add_page_6(c: canvas.Canvas):
     index_line = [base * (1.10 ** (i / 12)) for i in range(13)]
     floor_line = [base * (1.15 ** (i / 12)) for i in range(13)]
     target = [base * (1.20 ** (i / 12)) for i in range(13)]
+    bull_line = [base * (1.25 ** (i / 12)) for i in range(13)]
 
     chart_x, chart_y, chart_w, chart_h = 58, 210, 720, 220
     min_v, max_v = 2_350_000, 3_050_000
@@ -566,6 +747,7 @@ def add_page_6(c: canvas.Canvas):
     draw_line(index_line, colors.HexColor("#7A8B99"), "指数想定 +10%")
     draw_line(floor_line, BLUE, "採用下限 +15%")
     draw_line(target, GREEN, "本命目標 +20%")
+    draw_line(bull_line, AMBER, "強気上振れ +25%")
 
     c.setStrokeColor(NAVY)
     c.setLineWidth(1)
@@ -579,7 +761,7 @@ def add_page_6(c: canvas.Canvas):
         c.setFont(FONT, 8.2)
         c.drawCentredString(x, chart_y - 18, m)
 
-    markers = [(0, "初回\n30〜40%"), (1, "5日/20日\n追加判定"), (2, "決算\n確認"), (5, "中間決算\n確認"), (8, "3Q\n確認"), (12, "1年\n評価")]
+    markers = [(0, "初回\n72万〜96万"), (1, "5日/20日\n追加判定"), (2, "決算\n確認"), (5, "中間決算\n確認"), (8, "3Q\n確認"), (12, "1年\n評価")]
     for i, label in markers:
         x, y = xy(i, target[i])
         c.setStrokeColor(AMBER)
@@ -594,9 +776,9 @@ def add_page_6(c: canvas.Canvas):
     c.setFillColor(NAVY)
     c.setFont(FONT, 11)
     c.drawString(60, 114, "読み方")
-    note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回る見込みなら個別株比率を上げません。本命目標+20%前後を狙える場合にだけ追加買付を検討します。"
+    note = "グラフは資産管理の目安です。指数想定+10%は比較対象であり、目標ではありません。採用下限+15%を下回るなら追加しません。本命+20%は75%投入、強気+25%は強い地合いで85%投入する場合だけの上振れ計画です。"
     draw_wrapped(c, note, 60, 94, 700, 10, 14, INK, max_lines=3)
-    footer(c, 6)
+    footer(c, 8)
     c.showPage()
 
 
@@ -606,7 +788,7 @@ def add_page_7(c: canvas.Canvas):
     draw_wrapped(c, intro, 46, 500, 746, 12, 18, INK)
 
     rows = [
-        ("6/30", "初回買付", "資金の30〜40%。主力5社中心。", "急騰+3%以上、指数急落、悪材料なら買わない。"),
+        ("6/30", "初回買付", "基本案96万円。三越19.6万、日本ガイシ15.3万、ミネベア17.5万、SMFG21.8万、関電工21.8万。", "条件不一致分は現金待機。急騰+3%以上、指数急落、悪材料なら買わない。"),
         ("7月", "5営業日・20営業日確認", "追加0〜20%。対TOPIX、出来高、悪材料を確認。", "対TOPIX-5pt以下なら追加停止。"),
         ("8月", "4〜6月期決算確認", "決算が良い銘柄だけ追加候補。", "下方修正、利益率悪化、テーマ崩れは減額。"),
         ("9月", "月次点検", "保有比率と業種偏りを確認。", "銀行・保険など同業集中が強ければ追加しない。"),
@@ -623,7 +805,7 @@ def add_page_7(c: canvas.Canvas):
     draw_schedule_table(c, rows, 48, 72)
     rounded_box(c, 48, 34, 746, 30, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     draw_wrapped(c, "この表は6月30日開始時の運用計画です。実際には、当日の株価、指数、為替、金利、ニュース、証券会社画面の注文条件を確認してから発注します。", 62, 54, 710, 9.2, 11.5, INK, max_lines=2)
-    footer(c, 7)
+    footer(c, 9)
     c.showPage()
 
 
@@ -683,7 +865,7 @@ def add_page_8(c: canvas.Canvas):
     rounded_box(c, 46, 34, 746, 38, colors.HexColor("#F6FAFD"), LINE, 8)
     note = "買い増しは、指数より強いこと、決算・材料が続くこと、過熱していないことを確認して小さく行います。売却は、損失拡大を止める売却と、利益を守る売却を分けます。"
     draw_wrapped(c, note, 60, 57, 710, 9.5, 12, INK, max_lines=2)
-    footer(c, 8)
+    footer(c, 10)
     c.showPage()
 
 
@@ -730,7 +912,7 @@ def add_page_9(c: canvas.Canvas):
     rounded_box(c, 46, 42, 746, 54, colors.HexColor("#FFF8E7"), colors.HexColor("#E3B15C"), 8)
     note = "監視の目的は、値動きに反応して売買を増やすことではなく、最初の選定根拠が崩れていないかを確認することです。根拠が崩れていない下落は保留、根拠が崩れた下落は減額・入替候補にします。"
     draw_wrapped(c, note, 60, 75, 710, 10, 13, INK, max_lines=3)
-    footer(c, 9)
+    footer(c, 11)
     c.showPage()
 
 
@@ -787,7 +969,7 @@ def add_page_10(c: canvas.Canvas):
         ("損失回避", "-10%銘柄を半分減額", "損失拡大を約12,000円抑制", "24万円枠の半分を早めに逃がした場合"),
     ]
     draw_impact_table(c, impact_rows, 46, 54)
-    footer(c, 10)
+    footer(c, 12)
     c.showPage()
 
 
@@ -854,6 +1036,8 @@ def build_pdf():
     add_page_3(c)
     add_page_4(c)
     add_page_5(c)
+    add_page_6_plan(c)
+    add_page_7_initial_buy(c)
     add_page_6(c)
     add_page_7(c)
     add_page_8(c)
@@ -918,16 +1102,21 @@ def build_html():
       <p class="lead">NISAでの個別株運用を検討するために、財務・事業テーマ・価格リスク・期待値の4項目を同じ基準で確認した10銘柄を整理しています。</p>
       <p>比較対象は主要インデックスです。個別株を選ぶ価値があるかを確認するため、運用後はS&amp;P500・TOPIX等との比較で継続評価します。</p>
       <a class="btn" href="regular10_client_material_20260625.pdf">PDFを開く</a>
+      <a class="btn" href="regular10_return_target_execution_plan_20260625.csv">15/20/25計画CSV</a>
+      <a class="btn" href="regular10_target_allocation_20260625.csv">投入比率CSV</a>
+      <a class="btn" href="regular10_initial_buy_plan_20260625.csv">初回買付CSV</a>
       <a class="btn" href="purchase_gate_exact10_v65_20260624.html">正規10社の元データ</a>
     </section>
     <section>
       <h2>要点</h2>
       <div class="cards">
         <div class="card"><b>対象</b><strong>正規10社</strong><span>同一基準を通過</span></div>
-        <div class="card"><b>初回</b><strong>主力5社</strong><span>最初に確認する中心候補</span></div>
+        <div class="card"><b>初回</b><strong>主力5社</strong><span>基本案96万円 / 慎重案72万円</span></div>
         <div class="card"><b>投入</b><strong>30〜40%</strong><span>初回は全額投入しない</span></div>
         <div class="card"><b>評価</b><strong>指数比較</strong><span>S&amp;P500・TOPIX等</span></div>
-        <div class="card"><b>目安</b><strong>+10〜13%</strong><span>初年度の検証目標</span></div>
+        <div class="card"><b>採用下限</b><strong>+15%</strong><span>下回るなら追加しない</span></div>
+        <div class="card"><b>本命目標</b><strong>+20%</strong><span>75%投入時の中心計画</span></div>
+        <div class="card"><b>強気上振れ</b><strong>+25%</strong><span>強い地合いで85%まで</span></div>
         <div class="card"><b>運用</b><strong>条件分岐</strong><span>買わない条件を明文化</span></div>
       </div>
     </section>
