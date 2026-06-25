@@ -1,9 +1,9 @@
-﻿frequency,item,metric_to_enter,condition,action,reason,record_date,actual_value,decision,memo
-daily,individual_price,"prev_day_pct, 5day_pct, volume_ratio","+3% or more rise: do not chase / -5% or more fall: confirm reason","continue / stop add / review","Avoid buying short-term spikes and catch material bad news early.",,,,
-daily,vs_topix,"stock_5day_return - topix_5day_return","-5pt or worse after purchase","stop add","If the selected stock loses to TOPIX sharply, the selection edge may be weakening.",,,,
-daily,usd_jpy,"1day_change_yen","yen appreciation of 2 yen or more in one day","stop add for export/overseas-sensitive names","FX can quickly change profit expectations for overseas-sensitive stocks.",,,,
-daily,us_10y_yield,"1day_change_pct_point","+0.15pt or more in one day","stop add for high PER/growth names","A sharp yield rise often compresses high valuation stocks.",,,,
-weekly,sector_concentration,"same_theme_weight_pct","45% or more in one theme","limit new add","Avoid concentration in one theme even when the theme looks strong.",,,,
-monthly,earnings_and_guidance,"sales, profit, EPS, orders, buyback","downward revision, order weakness, margin deterioration","reduce / replace candidate","The core reason for holding is company earnings, not price movement alone.",,,,
-monthly,expected_value,"EV, up_probability, upside, downside, cost","EV <= 0 or persistent index underperformance","replace candidate","A candidate must keep positive expected value versus benchmark.",,,,
-as_needed,material_news,"TOB, regulation, accident, policy, new product, supply shock","bad news confirmed / good news unconfirmed","bad: stop, good: verify before add","Qualitative information is used only after source and price reaction are checked.",,,,
+frequency,item,metric_to_enter,condition,action,reason,record_date,actual_value,decision,memo
+daily,individual_price,"prev_day_pct, 5day_pct, volume_ratio",+3% or more rise: do not chase / -5% or more fall: confirm reason,continue / stop add / review,Avoid buying short-term spikes and catch material bad news early.,,,,
+daily,vs_topix,stock_5day_return - topix_5day_return,-5pt or worse after purchase,stop add,"If the selected stock loses to TOPIX sharply, the selection edge may be weakening.",,,,
+daily,usd_jpy,1day_change_yen,yen appreciation of 2 yen or more in one day,stop add for export/overseas-sensitive names,FX can quickly change profit expectations for overseas-sensitive stocks.,,,,
+daily,us_10y_yield,1day_change_pct_point,+0.15pt or more in one day,stop add for expensive growth names,A sharp yield rise often compresses high valuation stocks.,,,,
+weekly,sector_concentration,same_theme_weight_pct,45% or more in one theme,limit new add,Avoid concentration in one theme even when the theme looks strong.,,,,
+monthly,earnings_and_guidance,"sales, profit, EPS, orders, buyback","downward revision, order weakness, margin deterioration",reduce / replace candidate,"The core reason for holding is company earnings, not price movement alone.",,,,
+monthly,upside_check,"upside_score, up_probability, upside, downside, cost",upside_score <= 0 or persistent market underperformance,replace candidate,A candidate must keep positive upside versus benchmark.,,,,
+as_needed,material_news,"TOB, regulation, accident, policy, new product, supply shock",bad news confirmed / good news unconfirmed,"bad: stop, good: verify before add",Qualitative information is used only after source and price reaction are checked.,,,,
