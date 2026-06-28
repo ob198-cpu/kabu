@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>7794 EDP 販路確保 監視システム</title>
+  <style>
+    :root{
+      --ink:#102033;--navy:#0f4c75;--blue:#0b67a3;--line:#c9dceb;
+      --bg:#f4f8fb;--paper:#fff;--green:#176b45;--red:#b42318;--amber:#a56400;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#0f4c75,#0b67a3);color:#fff;padding:30px 24px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,46px);line-height:1.18;letter-spacing:0}
+    header p{margin:0;max-width:1160px;font-weight:800}
+    main{max-width:1220px;margin:0 auto;padding:20px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:28px}
+    h3{margin:18px 0 8px;color:var(--navy);font-size:22px}
+    p{margin:0 0 10px}
+    .lead{border:2px solid #6aa8ce;background:#f2f9ff;border-radius:12px;padding:14px 16px;font-weight:900}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:14px;min-height:124px}
+    .card b{display:block;color:var(--navy);font-size:17px;margin-bottom:4px}
+    .card strong{display:block;font-size:28px;line-height:1.2;color:var(--blue)}
+    .card span{display:block;color:#334b63;font-weight:800;font-size:14px}
+    .status-watch{color:var(--amber)!important}.status-bad{color:var(--red)!important}.status-good{color:var(--green)!important}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:10px}
+    th,td{border:1px solid var(--line);padding:10px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e6f1fa;color:#063b63;text-align:left}
+    td{background:#fff}
+    .small{font-size:14px;color:#536b81;font-weight:800}
+    .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:950;font-size:14px}
+    .pill-red{background:#fdecec;color:var(--red)}
+    .pill-amber{background:#fff4df;color:var(--amber)}
+    .pill-green{background:#e9f7ef;color:var(--green)}
+    .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:#fbfdff;color:var(--navy);font-weight:900;text-decoration:none}
+    .scorebox{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:start}
+    .formula{background:#f8fbfe;border:1px solid var(--line);border-radius:12px;padding:14px;font-weight:900;color:#18364f}
+    .buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    button{border:1px solid #7bb2d6;background:#0b67a3;color:white;border-radius:9px;padding:9px 12px;font-weight:900;cursor:pointer}
+    textarea{width:100%;min-height:118px;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;line-height:1.5}
+    input[type="number"]{width:90px;border:1px solid var(--line);border-radius:8px;padding:6px;font:inherit}
+    .result{font-size:28px;font-weight:950;color:var(--navy)}
+    @media(max-width:900px){.grid,.scorebox{grid-template-columns:1fr}body{font-size:16px}table{font-size:14px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>7794 EDP 販路確保 監視システム</h1>
+  <p>目的は、販路拡大の「雰囲気」ではなく、受注・出荷・顧客・売上・利益に進んでいるかを毎回同じ基準で確認することです。</p>
+</header>
+<main>
+  <section>
+    <h2>現在の結論</h2>
+    <p class="lead">7794は、販路拡大の兆しはあります。ただし、現時点では売上・利益への接続が弱いため、通常Aではなく「テーマ監視・イベント検証枠」として扱います。</p>
+    <div class="grid" style="margin-top:14px">
+      <div class="card"><b>販路材料</b><strong class="status-good">あり</strong><span>インド向け、種結晶大型化、半導体基板、Honda R&amp;D協議。</span></div>
+      <div class="card"><b>売上接続</b><strong class="status-watch">未確認</strong><span>2026年3月期は売上減。次期計画の進捗確認が必要。</span></div>
+      <div class="card"><b>通常A判定</b><strong class="status-bad">不可</strong><span>赤字、PER算出不可、高PBR、ROEマイナスが重い。</span></div>
+      <div class="card"><b>次の判定日</b><strong>次回決算</strong><span>決算短信・説明資料・IRトピックスを確認。</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>販路拡大を判断する5段階</h2>
+    <table>
+      <thead><tr><th style="width:18%">段階</th><th style="width:32%">見るもの</th><th style="width:28%">今の状態</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>1. 製品材料</td><td>大型種結晶、2インチ/4インチウエハ、半導体基板、放熱・光学用途</td><td>公式トピックスで複数確認</td><td><span class="pill pill-green">通過</span></td></tr>
+        <tr><td>2. 顧客接点</td><td>海外ユーザー、Honda R&amp;D、共同研究、販売先の広がり</td><td>兆しあり。ただし契約・量産は未確認</td><td><span class="pill pill-amber">監視</span></td></tr>
+        <tr><td>3. 受注・出荷</td><td>受注数、出荷数量、輸出許可、継続受注</td><td>インド向け受注・出荷開始の情報あり。数量は要確認</td><td><span class="pill pill-amber">監視</span></td></tr>
+        <tr><td>4. 売上反映</td><td>四半期売上、製品別/用途別の伸び、通期計画の進捗率</td><td>直近期は売上減。次期計画11億円の進捗確認前</td><td><span class="pill pill-red">未通過</span></td></tr>
+        <tr><td>5. 利益反映</td><td>営業赤字縮小、粗利改善、EPS改善、希薄化影響</td><td>赤字・ROEマイナス。利益化は未確認</td><td><span class="pill pill-red">未通過</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>監視スコア</h2>
+    <div class="scorebox">
+      <div>
+        <p>下の点数は、販路確保がどこまで進んだかを見るための運用スコアです。高得点でも利益保証ではありません。</p>
+        <div class="formula">
+          販路確保スコア = 製品材料 + 顧客接点 + 受注出荷 + 売上反映 + 利益反映 - リスク減点
+        </div>
+        <table>
+          <thead><tr><th>項目</th><th>最大</th><th>現在</th></tr></thead>
+          <tbody>
+            <tr><td>製品材料</td><td>15</td><td><input id="product" type="number" value="13" min="0" max="15"></td></tr>
+            <tr><td>顧客接点</td><td>20</td><td><input id="customer" type="number" value="10" min="0" max="20"></td></tr>
+            <tr><td>受注・出荷</td><td>25</td><td><input id="shipment" type="number" value="8" min="0" max="25"></td></tr>
+            <tr><td>売上反映</td><td>25</td><td><input id="sales" type="number" value="0" min="0" max="25"></td></tr>
+            <tr><td>利益反映</td><td>15</td><td><input id="profit" type="number" value="0" min="0" max="15"></td></tr>
+            <tr><td>リスク減点</td><td>-30</td><td><input id="risk" type="number" value="18" min="0" max="30"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="card">
+          <b>現在の販路確保スコア</b>
+          <strong id="score" class="status-watch">--</strong>
+          <span id="scoreText">計算してください。</span>
+        </div>
+        <h3>スコアの扱い</h3>
+        <table>
+          <tbody>
+            <tr><th>70点以上</th><td>通常Aへの昇格検討。ただし財務・株価反応も別途通過が必要。</td></tr>
+            <tr><th>50〜69点</th><td>監視継続。小額検証まで。</td></tr>
+            <tr><th>49点以下</th><td>購入候補にしない。材料待ち。</td></tr>
+          </tbody>
+        </table>
+        <div class="buttons">
+          <button onclick="calcScore()">スコア計算</button>
+          <button onclick="saveMemo()">メモ保存</button>
+          <button onclick="exportCsv()">CSV出力</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>通常Aへ上げる条件</h2>
+    <table>
+      <thead><tr><th style="width:24%">条件</th><th style="width:42%">具体的な確認</th><th>満たした時の扱い</th></tr></thead>
+      <tbody>
+        <tr><td>売上進捗</td><td>次期売上計画11億円に対して、四半期進捗が明確に改善する。</td><td>販路確保スコアの売上反映を加点。</td></tr>
+        <tr><td>受注・出荷</td><td>インド向け種結晶、基板・ウエハ、大型種結晶の受注・出荷が数量で確認できる。</td><td>顧客接点、受注・出荷を加点。</td></tr>
+        <tr><td>利益改善</td><td>営業赤字縮小、粗利改善、EPS改善が確認できる。</td><td>通常Aへの昇格候補に近づく。</td></tr>
+        <tr><td>希薄化リスク低下</td><td>新株・新株予約権の影響が落ち着き、株価が材料だけで急騰反落しない。</td><td>リスク減点を下げる。</td></tr>
+        <tr><td>株価反応</td><td>TOPIX比で安定して上回る。出来高急増後の反落が限定的。</td><td>小額検証から準候補へ移す余地。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>監視メモ</h2>
+    <textarea id="memo">2026/06/28 初期設定: 販路拡大の兆しはあり。ただし売上・利益接続は未確認。通常Aではなくテーマ監視・イベント検証枠。</textarea>
+    <p class="small">メモはこのブラウザのlocalStorageに保存されます。正式記録にする場合はCSV出力して保管してください。</p>
+  </section>
+
+  <section>
+    <h2>確認元リンク</h2>
+    <div class="links">
+      <a href="https://www.d-edp.jp/topics/" target="_blank" rel="noopener">EDP トピックス</a>
+      <a href="https://www.d-edp.jp/ir/" target="_blank" rel="noopener">EDP IR</a>
+      <a href="https://finance.yahoo.co.jp/quote/7794.T" target="_blank" rel="noopener">Yahoo!ファイナンス 7794</a>
+      <a href="https://kabutan.jp/stock/?code=7794" target="_blank" rel="noopener">株探 7794</a>
+      <a href="edp7794_evaluation_20260628.pdf">7794 評価PDF</a>
+    </div>
+  </section>
+</main>
+<script>
+function n(id){return Number(document.getElementById(id).value || 0)}
+function calcScore(){
+  const score = n('product') + n('customer') + n('shipment') + n('sales') + n('profit') - n('risk')
+  const el = document.getElementById('score')
+  const text = document.getElementById('scoreText')
+  el.textContent = score + '点'
+  el.className = score >= 70 ? 'status-good' : score >= 50 ? 'status-watch' : 'status-bad'
+  if(score >= 70){ text.textContent = '販路面は昇格検討。ただし財務・株価反応も通過が必要です。' }
+  else if(score >= 50){ text.textContent = '監視継続。小額検証までで、通常Aにはまだ上げません。' }
+  else { text.textContent = '購入候補にはしません。次回決算・受注・出荷の追加材料待ちです。' }
+  localStorage.setItem('edp7794_score', JSON.stringify({product:n('product'),customer:n('customer'),shipment:n('shipment'),sales:n('sales'),profit:n('profit'),risk:n('risk'),score}))
+}
+function saveMemo(){
+  localStorage.setItem('edp7794_memo', document.getElementById('memo').value)
+  alert('保存しました')
+}
+function exportCsv(){
+  const rows = [
+    ['updated_at','ticker','product','customer','shipment','sales','profit','risk','score','memo'],
+    [new Date().toISOString(),'7794.T',n('product'),n('customer'),n('shipment'),n('sales'),n('profit'),n('risk'),document.getElementById('score').textContent,document.getElementById('memo').value.replaceAll('\\n',' / ')]
+  ]
+  const csv = rows.map(r => r.map(v => '"' + String(v).replaceAll('"','""') + '"').join(',')).join('\\n')
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'})
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'edp7794_sales_channel_monitor_export.csv'
+  a.click()
+  URL.revokeObjectURL(url)
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('edp7794_score')
+  if(saved){
+    try{
+      const s=JSON.parse(saved)
+      for(const k of ['product','customer','shipment','sales','profit','risk']) if(s[k] !== undefined) document.getElementById(k).value=s[k]
+    }catch(e){}
+  }
+  const memo = localStorage.getItem('edp7794_memo')
+  if(memo) document.getElementById('memo').value = memo
+  calcScore()
+})
+</script>
+</body>
+</html>

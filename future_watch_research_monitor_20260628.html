@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>いつか枠 研究監視システム</title>
+  <style>
+    :root{--ink:#102033;--navy:#0f4c75;--blue:#0b67a3;--line:#c9dceb;--bg:#f4f8fb;--paper:#fff;--red:#b42318;--green:#176b45;--amber:#9a5b00}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Meiryo,sans-serif;font-size:18px;line-height:1.75}
+    header{background:linear-gradient(135deg,#0f4c75,#0b67a3);color:#fff;padding:30px 24px}
+    header h1{margin:0 0 8px;font-size:clamp(30px,4vw,46px);line-height:1.18;letter-spacing:0}
+    header p{margin:0;max-width:1180px;font-weight:850}
+    main{max-width:1240px;margin:0 auto;padding:20px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin:0 0 18px;box-shadow:0 8px 20px rgba(20,60,90,.08)}
+    h2{margin:0 0 12px;border-left:8px solid var(--blue);padding-left:12px;color:var(--navy);font-size:28px}
+    h3{margin:18px 0 8px;color:var(--navy);font-size:22px}
+    p{margin:0 0 10px}
+    .lead{border:2px solid #6aa8ce;background:#f2f9ff;border-radius:12px;padding:14px 16px;font-weight:900}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:14px;min-height:126px}
+    .card b{display:block;color:var(--navy);font-size:17px;margin-bottom:4px}
+    .card strong{display:block;font-size:28px;line-height:1.2;color:var(--blue)}
+    .card span{display:block;color:#334b63;font-weight:800;font-size:14px}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:10px}
+    th,td{border:1px solid var(--line);padding:10px;vertical-align:top;overflow-wrap:anywhere}
+    th{background:#e6f1fa;color:#063b63;text-align:left}
+    .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:950;font-size:14px}
+    .pill-red{background:#fdecec;color:var(--red)}
+    .pill-amber{background:#fff4df;color:var(--amber)}
+    .pill-green{background:#e9f7ef;color:var(--green)}
+    .scorebox{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:start}
+    .formula{background:#f8fbfe;border:1px solid var(--line);border-radius:12px;padding:14px;font-weight:900;color:#18364f}
+    input,select,textarea{border:1px solid var(--line);border-radius:8px;padding:7px;font:inherit}
+    input[type="number"]{width:92px}
+    textarea{width:100%;min-height:120px;line-height:1.5}
+    .result{font-size:30px;font-weight:950;color:var(--navy)}
+    .links a{display:inline-block;margin:4px 8px 4px 0;padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:#fbfdff;color:var(--navy);font-weight:900;text-decoration:none}
+    button{border:1px solid #7bb2d6;background:#0b67a3;color:white;border-radius:9px;padding:9px 12px;font-weight:900;cursor:pointer;margin:4px 4px 0 0}
+    .small{font-size:14px;color:#536b81;font-weight:800}
+    @media(max-width:900px){.grid,.scorebox{grid-template-columns:1fr}body{font-size:16px}table{font-size:14px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>いつか枠 研究監視システム</h1>
+  <p>目的は、今すぐ買えない銘柄を「雰囲気」で放置せず、競合、特許、販路、政策・助成金、収益化の証拠を集めて、通常Aへ上げられるかを判断することです。</p>
+</header>
+<main>
+  <section>
+    <h2>この画面の位置づけ</h2>
+    <p class="lead">いつか枠は購入候補ではありません。将来の大化け材料を監視し、公式資料と数字で裏付けが取れた場合だけ、テーマ監視枠、準候補、通常Aへ進めます。</p>
+    <div class="grid" style="margin-top:14px">
+      <div class="card"><b>競合確認</b><strong>国内外</strong><span>同じ技術・製品・用途を持つ企業がいるか。</span></div>
+      <div class="card"><b>特許確認</b><strong>類似特許</strong><span>J-PlatPat、Google Patents、Espacenetで調べる。</span></div>
+      <div class="card"><b>販路確認</b><strong>顧客化</strong><span>受注、共同研究、量産、販売代理、輸出許可を見る。</span></div>
+      <div class="card"><b>政策確認</b><strong>助成金</strong><span>NEDO、経産省、JST、半導体政策を追う。</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>監視対象の初期例</h2>
+    <table>
+      <thead><tr><th style="width:16%">銘柄・テーマ</th><th style="width:22%">見ている仮説</th><th style="width:22%">競合・代替リスク</th><th style="width:22%">特許・技術確認</th><th>販路・政策確認</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>7794 EDP</td>
+          <td>合成ダイヤモンドが半導体基板・放熱・光学用途へ広がるか。</td>
+          <td>国内外の合成ダイヤモンド、CVD、SiC/GaN、放熱材料企業。</td>
+          <td>ダイヤモンド基板、モザイクウエハ、大型種結晶、放熱用途の特許。</td>
+          <td>インド向け受注、Honda R&amp;D、NEDO/半導体政策、量産化。</td>
+        </tr>
+        <tr>
+          <td>量子コンピューター材料</td>
+          <td>量子センサー、ダイヤモンドNVセンター、低温部材などの需要。</td>
+          <td>海外量子企業、大学発技術、大手半導体材料企業。</td>
+          <td>NVセンター、量子センサー、量子デバイス材料の特許。</td>
+          <td>国策研究、大学共同研究、NEDO/JST案件。</td>
+        </tr>
+        <tr>
+          <td>フィジカルAI</td>
+          <td>ロボット、FA、センサー、制御、電源、エッジAIの需要拡大。</td>
+          <td>海外ロボット・FA企業、GPU/センサー/制御大手。</td>
+          <td>制御AI、ロボット認識、センサー統合、エッジ推論の特許。</td>
+          <td>工場自動化、人手不足政策、補助金、設備投資。</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>いつか枠スコア</h2>
+    <div class="scorebox">
+      <div>
+        <p>通常Aへ進める前に、将来性を5つの証拠で確認します。点数が高くても、財務と株価反応が弱ければ購入候補にはしません。</p>
+        <div class="formula">いつか枠スコア = 技術独自性 + 競合優位 + 特許防御力 + 販路確度 + 政策追い風 - 収益化遅れリスク</div>
+        <table>
+          <thead><tr><th>項目</th><th>最大</th><th>現在</th><th>見るもの</th></tr></thead>
+          <tbody>
+            <tr><td>技術独自性</td><td>20</td><td><input id="tech" type="number" min="0" max="20" value="14"></td><td>製品が他社と明確に違うか。</td></tr>
+            <tr><td>競合優位</td><td>20</td><td><input id="compete" type="number" min="0" max="20" value="8"></td><td>国内外競合に対して価格・品質・量産で勝てるか。</td></tr>
+            <tr><td>特許防御力</td><td>20</td><td><input id="patent" type="number" min="0" max="20" value="8"></td><td>似た特許があるか、自社の権利で守れるか。</td></tr>
+            <tr><td>販路確度</td><td>25</td><td><input id="channel" type="number" min="0" max="25" value="9"></td><td>受注、共同研究、量産、出荷、顧客数。</td></tr>
+            <tr><td>政策追い風</td><td>15</td><td><input id="policy" type="number" min="0" max="15" value="8"></td><td>国策、助成金、研究開発支援。</td></tr>
+            <tr><td>収益化遅れリスク</td><td>-30</td><td><input id="delay" type="number" min="0" max="30" value="18"></td><td>開発遅延、赤字、希薄化、売上未達。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="card">
+          <b>現在のいつか枠スコア</b>
+          <strong id="score">--</strong>
+          <span id="scoreText">計算してください。</span>
+        </div>
+        <h3>スコアの扱い</h3>
+        <table>
+          <tbody>
+            <tr><th>75点以上</th><td>テーマ監視から準候補へ。財務・株価反応の再確認へ進む。</td></tr>
+            <tr><th>55〜74点</th><td>いつか枠で監視継続。公式材料と次回決算待ち。</td></tr>
+            <tr><th>54点以下</th><td>現時点では研究メモ。購入候補にはしない。</td></tr>
+          </tbody>
+        </table>
+        <button onclick="calcScore()">スコア計算</button>
+        <button onclick="saveMemo()">メモ保存</button>
+        <button onclick="exportCsv()">CSV出力</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>調査チェックリスト</h2>
+    <table>
+      <thead><tr><th style="width:22%">調査項目</th><th style="width:34%">具体的に確認すること</th><th style="width:24%">使うサイト</th><th>判定</th></tr></thead>
+      <tbody>
+        <tr><td>国内外競合</td><td>同じ製品を作る企業、代替素材、価格競争、量産能力。</td><td>企業IR、業界紙、Google検索、海外企業IR</td><td><span class="pill pill-amber">要調査</span></td></tr>
+        <tr><td>類似特許</td><td>同じ用途・製法・構造の特許があるか。自社優位か侵害リスクか。</td><td>J-PlatPat、Google Patents、Espacenet</td><td><span class="pill pill-amber">要調査</span></td></tr>
+        <tr><td>販路獲得</td><td>共同研究、量産契約、出荷開始、販売代理、輸出許可、顧客数。</td><td>企業IR、適時開示、決算説明資料</td><td><span class="pill pill-amber">監視</span></td></tr>
+        <tr><td>政策・助成金</td><td>半導体、量子、ロボット、素材、GX、経済安全保障の支援対象か。</td><td>経産省、NEDO、JST、内閣府、文科省</td><td><span class="pill pill-amber">要調査</span></td></tr>
+        <tr><td>収益化</td><td>売上、粗利、営業利益、EPS、受注残、設備投資の回収。</td><td>決算短信、有報、決算説明資料</td><td><span class="pill pill-red">未通過</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>調査リンク</h2>
+    <div class="links">
+      <a href="https://www.j-platpat.inpit.go.jp/" target="_blank" rel="noopener">J-PlatPat</a>
+      <a href="https://patents.google.com/" target="_blank" rel="noopener">Google Patents</a>
+      <a href="https://worldwide.espacenet.com/" target="_blank" rel="noopener">Espacenet</a>
+      <a href="https://www.meti.go.jp/" target="_blank" rel="noopener">経済産業省</a>
+      <a href="https://www.nedo.go.jp/" target="_blank" rel="noopener">NEDO</a>
+      <a href="https://www.jst.go.jp/" target="_blank" rel="noopener">JST</a>
+      <a href="https://www8.cao.go.jp/cstp/" target="_blank" rel="noopener">内閣府 科学技術・イノベーション</a>
+      <a href="https://www.d-edp.jp/ir/" target="_blank" rel="noopener">EDP IR</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>調査メモ</h2>
+    <textarea id="memo">2026/06/28 初期設定: 7794 EDPは販路拡大の兆しあり。ただし競合、特許、助成金、収益化の確認が不足。いつか枠として監視。</textarea>
+    <p class="small">メモはブラウザに保存されます。正式記録にする場合はCSV出力してください。</p>
+  </section>
+</main>
+<script>
+function n(id){return Number(document.getElementById(id).value || 0)}
+function calcScore(){
+  const score=n('tech')+n('compete')+n('patent')+n('channel')+n('policy')-n('delay')
+  const scoreEl=document.getElementById('score')
+  const text=document.getElementById('scoreText')
+  scoreEl.textContent=score+'点'
+  scoreEl.style.color=score>=75?'#176b45':score>=55?'#9a5b00':'#b42318'
+  if(score>=75){text.textContent='準候補へ進める水準。ただし財務・株価反応の確認が必要です。'}
+  else if(score>=55){text.textContent='いつか枠で監視継続。追加材料待ちです。'}
+  else{text.textContent='研究メモ段階。購入候補にはしません。'}
+  localStorage.setItem('future_watch_score', JSON.stringify({tech:n('tech'),compete:n('compete'),patent:n('patent'),channel:n('channel'),policy:n('policy'),delay:n('delay'),score}))
+}
+function saveMemo(){
+  localStorage.setItem('future_watch_memo', document.getElementById('memo').value)
+  alert('保存しました')
+}
+function exportCsv(){
+  const rows=[
+    ['updated_at','theme','tech','compete','patent','channel','policy','delay','score','memo'],
+    [new Date().toISOString(),'いつか枠',n('tech'),n('compete'),n('patent'),n('channel'),n('policy'),n('delay'),document.getElementById('score').textContent,document.getElementById('memo').value.replaceAll('\n',' / ')]
+  ]
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n')
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'})
+  const url=URL.createObjectURL(blob)
+  const a=document.createElement('a')
+  a.href=url
+  a.download='future_watch_research_monitor_export.csv'
+  a.click()
+  URL.revokeObjectURL(url)
+}
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved=localStorage.getItem('future_watch_score')
+  if(saved){
+    try{const s=JSON.parse(saved); for(const k of ['tech','compete','patent','channel','policy','delay']) if(s[k]!==undefined) document.getElementById(k).value=s[k]}catch(e){}
+  }
+  const memo=localStorage.getItem('future_watch_memo')
+  if(memo) document.getElementById('memo').value=memo
+  calcScore()
+})
+</script>
+</body>
+</html>
