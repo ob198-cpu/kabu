@@ -1,0 +1,135 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>NISA Alpha 運用状況と検証状態</title>
+<style>
+body{font-family:Meiryo,"Noto Sans JP",sans-serif;color:#102333;line-height:1.75;margin:28px;max-width:1080px}
+h1{color:#0b4f79;font-size:22px}h2{color:#0b4f79;font-size:18px;margin-top:28px;border-bottom:2px solid #d5e5f0;padding-bottom:4px}
+table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #bfd6e6;padding:7px 9px;vertical-align:top;font-size:13.5px}
+th{background:#e8f3fa;text-align:left}td.num{text-align:right}
+.buy{background:#eefaf4}.sell{background:#fdecec}.hold{background:#fafafa}
+.warn{background:#fff4e5;border:1px solid #e6a23c;padding:12px;border-radius:8px;margin:12px 0}
+.ok{background:#eefaf4;border:1px solid #41a36f;padding:12px;border-radius:8px;margin:12px 0}
+.danger{background:#fdecec;border:1px solid #c0392b;padding:12px;border-radius:8px;margin:12px 0}
+.small{font-size:12px;color:#5a6b78}
+.check{width:22px;height:22px;display:inline-block;border:2px solid #7a8b98;border-radius:4px;vertical-align:middle;margin-right:8px}
+/* PDF印刷時の改ページ制御 */
+thead { display: table-header-group; } /* 表が改ページをまたぐ時、次ページ先頭にヘッダ行を再表示 */
+@media print {
+  /* 見出しは次の要素と切り離さない。さらに「見出し→説明文→表/ボックス」を数珠つなぎで
+     一体化し、見出しだけがページ末尾に取り残される事故を防ぐ(:has で直後が表/divの段落も固定) */
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; break-inside: avoid; }
+  p:has(+ table), p:has(+ div), p:has(+ ol), p:has(+ ul), h3:has(+ p) { break-after: avoid; page-break-after: avoid; }
+  /* 行・箇条書き項目・注意ボックスは途中で切らない */
+  tr, li, .ok, .warn, .danger { break-inside: avoid; page-break-inside: avoid; }
+  p { orphans: 3; widows: 3; }
+}
+</style></head><body>
+<h1>NISA Alpha 運用状況と検証状態 (基準日: 2026-07-10)</h1>
+<div class="danger" style="border:2px solid #b42318;background:#fff1f0;color:#7a271a;font-size:18px"><b>現在は新規発注を停止しています</b><br>購入可能銘柄数・期待値検証・分散条件が運用開始条件に達していないため、発注額は0円です。候補や試算は確認用であり、実際の保有を示しません。</div>
+<div class="warn"><b>実際の保有状況</b><br>
+未発注です。実保有は0件、現金は2,400,000円です。以下の銘柄表は注文済みではありません。</div>
+<div class="ok"><b>価格データ検査</b>: 109/109系列通過。
+旧TOPIX系列1306.Tは分割調整不良のため隔離し、1348.Tへ変更しました。</div>
+<div class="ok"><b>購入前ゲート</b>: 105社中8社が通過。
+分散運用の最低条件5社を満たしています。個別条件と注文額を再確認して購入判断へ進めます。</div>
+<div class="warn"><b>改善制御層</b>: PAPER_ONLY<br>
+探索100社 → 運用105社 → 購入停止ゲート通過 28社 → 期待値ゲート通過 11社。全額運用: 停止。現在の通過銘柄と上限制約から組める個別株比率は総資金の30.0%です。実発注条件は未成立です。<br>・上場廃止銘柄を含む時点整合バックテストが未完成<br>・実行構成の3指数+1pt超過確率が50%未満<br>・独立した時点整合試行履歴による正式PBO・Deflated Sharpe検査が未完了<br>・リスク停止値が前向き検証未完了</div>
+
+<h2>1. 実際の保有</h2>
+<p>現在は保有なしです。モデル候補を表示しても、この欄は約定記録を入力するまで変わりません。</p>
+
+<h2>2. 未発注のモデル候補</h2>
+<p>財務数値と公式原本のハッシュ照合、PER/PBR比較母集団、決算後20営業日の対指数反応、直近TDnet悪材料確認、開始月をずらした期待値感応度をすべて通過した銘柄だけを表示します。</p>
+<table><thead><tr><th>用途</th><th>銘柄</th><th>業種</th><th>12-1か月上昇率</th><th>開始月感応度<br>超過期待値10%点</th><th>同90%下限<br>10%点</th><th>年率変動</th><th>発注可能額</th><th>株数上限</th><th>状態</th></tr></thead>
+<tr class="hold"><td>NISA検証候補</td><td>8316.T 三井住友FG</td><td>銀行</td><td class="num">77.5%</td><td class="num">6.2%</td><td class="num">0.3%</td><td class="num">32.3%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr><tr class="hold"><td>NISA検証候補</td><td>8591.T オリックス</td><td>金融・リース</td><td class="num">105.3%</td><td class="num">4.4%</td><td class="num">0.2%</td><td class="num">29.0%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr><tr class="hold"><td>NISA検証候補</td><td>9983.T ファーストリテイリング</td><td>小売</td><td class="num">64.5%</td><td class="num">8.0%</td><td class="num">0.6%</td><td class="num">34.7%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr><tr class="hold"><td>NISA検証候補</td><td>8306.T 三菱UFJ FG</td><td>銀行</td><td class="num">67.6%</td><td class="num">6.0%</td><td class="num">0.4%</td><td class="num">30.8%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr><tr class="hold"><td>NISA検証候補</td><td>1812.T 鹿島</td><td>建設</td><td class="num">55.7%</td><td class="num">8.6%</td><td class="num">2.9%</td><td class="num">37.4%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr><tr class="hold"><td>NISA検証候補</td><td>8630.T SOMPO HD</td><td>保険</td><td class="num">47.1%</td><td class="num">5.7%</td><td class="num">0.5%</td><td class="num">31.0%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr><tr class="hold"><td>NISA検証候補</td><td>6861.T キーエンス</td><td>FA</td><td class="num">22.5%</td><td class="num">7.4%</td><td class="num">1.7%</td><td class="num">38.4%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr><tr class="hold"><td>NISA検証候補</td><td>6501.T 日立製作所</td><td>総合電機</td><td class="num">18.4%</td><td class="num">8.9%</td><td class="num">2.2%</td><td class="num">41.2%</td><td class="num">0円</td><td class="num">0株</td><td>未発注・実発注条件未成立</td></tr>
+
+
+</table>
+
+<h3>順位上位でも停止されている銘柄</h3>
+<table><thead><tr><th>順位</th><th>銘柄</th><th>停止理由</th></tr></thead>
+<tr class="sell"><td class="num">1</td><td>5803.T フジクラ</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 期待値根拠未接続</td></tr><tr class="sell"><td class="num">3</td><td>1801.T 大成建設</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 期待値根拠未接続</td></tr><tr class="sell"><td class="num">8</td><td>6146.T ディスコ</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 期待値根拠未接続</td></tr><tr class="sell"><td class="num">10</td><td>6762.T TDK</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 基準位相のTOPIX超過期待値 9.50%、90%下限 2.59%、独立観測 16件、開始月12位相の期待値10%点 4.19%、同90%下限10%点 -2.56%</td></tr><tr class="sell"><td class="num">11</td><td>6383.T ダイフク</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 期待値根拠未接続</td></tr><tr class="sell"><td class="num">12</td><td>8411.T みずほFG</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 基準位相のTOPIX超過期待値 4.88%、90%下限 -1.29%、独立観測 16件、開始月12位相の期待値10%点 2.36%、同90%下限10%点 -3.06%</td></tr><tr class="sell"><td class="num">14</td><td>8035.T 東京エレクトロン</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 期待値根拠未接続</td></tr><tr class="sell"><td class="num">16</td><td>6503.T 三菱電機</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 基準位相のTOPIX超過期待値 5.32%、90%下限 1.06%、独立観測 16件、開始月12位相の期待値10%点 2.92%、同90%下限10%点 -1.98%</td></tr><tr class="sell"><td class="num">17</td><td>9433.T KDDI</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 基準位相のTOPIX超過期待値 2.88%、90%下限 -3.90%、独立観測 16件、開始月12位相の期待値10%点 2.70%、同90%下限10%点 -4.21%</td></tr><tr class="sell"><td class="num">18</td><td>6504.T 富士電機</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 基準位相のTOPIX超過期待値 12.81%、90%下限 4.25%、独立観測 16件、開始月12位相の期待値10%点 5.96%、同90%下限10%点 -0.31%</td></tr><tr class="sell"><td class="num">19</td><td>7012.T 川崎重工業</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 基準位相のTOPIX超過期待値 4.74%、90%下限 -2.74%、独立観測 16件、開始月12位相の期待値10%点 4.25%、同90%下限10%点 -3.03%</td></tr><tr class="sell"><td class="num">20</td><td>8795.T T&D HD</td><td>購入停止ゲートは通過したが配分前期待値ゲートで停止: 基準位相のTOPIX超過期待値 4.24%、90%下限 -1.08%、独立観測 16件、開始月12位相の期待値10%点 0.75%、同90%下限10%点 -3.46%</td></tr>
+</table>
+
+<h2>3. 選定式と購入停止の関係</h2>
+<table><thead>
+<tr><th>処理</th><th>計算・判定</th><th>役割</th></tr></thead>
+<tr><td>順位</td><td>TOPIX超過期待値、12-1か月上昇率、公式財務の成長性・収益性をそれぞれ母集団内順位へ換算し、3項目のうち最も低い順位を総合順位に使用</td><td>一つの指標だけが突出した銘柄を上位にしない。平均順位は同点時だけ使用</td></tr>
+<tr><td>財務ゲート</td><td>公式PDFと売上・利益・EPS・BPS・ROE・利益率を照合。非金融企業は正の公式FCFも確認し、最新株価からPER・PBRを再計算</td><td>照合不能、ROE 8%未満、正のFCFなし（金融を除く）、資料期限切れは購入停止</td></tr>
+<tr><td>決算反応ゲート</td><td>安全停止は決算後20営業日の対TOPIX差-10ポイント未満。購入証拠は同差0ポイント以上</td><td>-10ポイント以上でも指数に負けていれば購入証拠とは認めない。0ポイント未満、未到達、根拠URLなしは新規購入停止</td></tr>
+<tr><td>悪材料ゲート</td><td>直近3日以内のTDnetで下方修正・赤字・不祥事・需要崩壊・信用不安を確認</td><td>該当または取得期限切れなら購入停止・原文確認</td></tr>
+</table>
+
+<h2>4. データと検証の状態</h2>
+<table><thead><tr><th>項目</th><th>状態</th><th>運用上の扱い</th></tr></thead>
+<tr><td>価格・配当・分割</td><td>正本109系列中109系列通過</td><td>異常時は帳票とバックテストを強制停止</td></tr>
+<tr><td>前向き検証の母集団</td><td>2026-07-13開始予定。現在は105社の下書きで、開始前のため未凍結</td><td>初回観測日の再取得・凍結が終わるまで実績証拠に使用不可</td></tr>
+<tr><td>過去の時点整合母集団</td><td>未調達。上場廃止銘柄を含む履歴がない</td><td>過去成績を購入根拠として使用禁止</td></tr>
+<tr><td>新しい未使用検証</td><td>2026-07-13開始、最短評価2027-07-13</td><td>期間中は係数変更禁止。結果到達前は有効性未確定</td></tr>
+</table>
+
+<h2>5. つみたて投資枠を含む配分比較</h2>
+<p>つみたて投資枠は年120万円、成長投資枠は年240万円、生涯総枠は1,800万円、そのうち成長投資枠は1,200万円です。比較ではこの上限と売却簿価の翌年復活を計算しています。</p>
+<table><thead><tr><th>比較案</th><th>研究上の年平均</th><th>研究上の最大下落</th><th>3指数を1ポイント以上上回った割合</th><th>扱い</th></tr></thead><tr>
+  <td>現行型</td><td class="num">25.3%</td>
+  <td class="num">-34.1%</td>
+  <td class="num">62.5%</td>
+  <td>研究値。現在の生存銘柄だけを過去へ遡った結果で、購入根拠には使用不可</td>
+</tr><tr>
+  <td>TOPIX中核40%型</td><td class="num">14.5%</td>
+  <td class="num">-24.6%</td>
+  <td class="num">50.0%</td>
+  <td>研究値。現在の生存銘柄だけを過去へ遡った結果で、購入根拠には使用不可</td>
+</tr><tr>
+  <td>S&amp;P500中核40%型</td><td class="num">17.3%</td>
+  <td class="num">-24.9%</td>
+  <td class="num">50.0%</td>
+  <td>研究値。現在の生存銘柄だけを過去へ遡った結果で、購入根拠には使用不可</td>
+</tr><tr>
+  <td>TOPIX中核50%型</td><td class="num">12.3%</td>
+  <td class="num">-24.4%</td>
+  <td class="num">37.5%</td>
+  <td>研究値。現在の生存銘柄だけを過去へ遡った結果で、購入根拠には使用不可</td>
+</tr><tr>
+  <td>S&amp;P500中核50%型</td><td class="num">15.7%</td>
+  <td class="num">-24.9%</td>
+  <td class="num">50.0%</td>
+  <td>研究値。現在の生存銘柄だけを過去へ遡った結果で、購入根拠には使用不可</td>
+</tr><tr>
+  <td>TOPIXインデックス100%</td><td class="num">7.7%</td>
+  <td class="num">-25.6%</td>
+  <td class="num">0.0%</td>
+  <td>研究値。現在の生存銘柄だけを過去へ遡った結果で、購入根拠には使用不可</td>
+</tr><tr>
+  <td>S&amp;P500インデックス100%</td><td class="num">15.7%</td>
+  <td class="num">-29.8%</td>
+  <td class="num">12.5%</td>
+  <td>研究値。現在の生存銘柄だけを過去へ遡った結果で、購入根拠には使用不可</td>
+</tr></table>
+<div class="danger"><b>重要</b>: 上表は修正済み価格・税金・NISA枠で再計算しましたが、過去の時点整合母集団がないため研究値です。顧客への期待利回り、購入推奨、運用保証には使いません。</div>
+
+<h2>6. 改善後の予測レンジと指数超過確率</h2>
+<p>20営業日単位の値動きを再抽出した5,000回の研究シミュレーションです。平均値だけでなく弱気10%、中央値、強気90%、全3指数を1ポイント上回った割合を表示します。</p>
+<table><thead><tr><th>配分案</th><th>弱気10%</th><th>中央値</th><th>強気90%</th><th>厳しいDD</th><th>全3指数+1pt確率</th></tr></thead><tr><td>current_execution_cash100</td><td class="num">0.0%</td><td class="num">0.0%</td><td class="num">0.0%</td><td class="num">0.0%</td><td class="num">対象外</td></tr><tr><td>pilot_executable_alpha30.000_cash70.000</td><td class="num">-2.8%</td><td class="num">6.1%</td><td class="num">15.2%</td><td class="num">-10.2%</td><td class="num">10.1%</td></tr><tr><td>full_constrained_alpha80.000_cash20.000</td><td class="num">-8.7%</td><td class="num">15.4%</td><td class="num">43.0%</td><td class="num">-25.5%</td><td class="num">25.9%</td></tr><tr><td>comparison_topix25_sp50025_alpha30_cash20</td><td class="num">-5.9%</td><td class="num">14.7%</td><td class="num">36.5%</td><td class="num">-20.8%</td><td class="num">7.7%</td></tr><tr><td>topix50_alpha30_cash20</td><td class="num">-9.6%</td><td class="num">11.1%</td><td class="num">33.7%</td><td class="num">-23.2%</td><td class="num">7.9%</td></tr><tr><td>sp50050_alpha30_cash20</td><td class="num">-3.6%</td><td class="num">17.2%</td><td class="num">39.1%</td><td class="num">-19.3%</td><td class="num">9.8%</td></tr></table>
+<div class="danger">現在の生存銘柄とPASS銘柄を過去に再利用した研究値です。正式な期待利回りや購入保証ではありません。</div>
+
+<h2>7. 税金・重複・再購入の処理</h2>
+<ul>
+<li>課税リロード枠は譲渡益20.315%、同年損益通算、3年間の損失繰越をバックテストへ反映。</li>
+<li>課税口座の配当は20.315%の源泉税を反映。</li>
+<li>同じ銘柄をNISA枠と課税リロード枠へ同時保有しない。</li>
+<li>売却した個別株はNISA・課税口座を問わず20営業日再購入しない。</li>
+<li>1銘柄は総資金の12%以下、1業種は30%以下。</li>
+</ul>
+
+<h2>8. 確認できるデータ</h2>
+<ul>
+<li><a href="strict_upgrade_status_20260710.md">今回の厳格化10項目の実装結果</a></li>
+<li><a href="validated_data_quality.csv">価格・配当・分割検査CSV</a></li>
+<li><a href="current_model_candidates.csv">全候補と停止理由CSV</a></li>
+<li><a href="purchase_gate_summary.json">購入停止ゲート集計</a></li>
+<li><a href="validated_backtest_summary.csv">税引後の研究用再計算CSV</a></li>
+<li><a href="strict_backtest_status.json">正式検証の進捗</a></li>
+<li><a href="point_in_time_historical_data_gap.md">過去の時点整合データが未調達である理由と再開条件</a></li>
+<li><a href="alpha_control_dashboard.html">改善制御ダッシュボード</a></li>
+</ul>
+<p class="small">生成: 2026-07-13 00:10 UTC / nisa_alpha Phase 4 ツール。本資料は判断補助であり、投資助言・自動売買ではありません。</p>
+</body></html>
