@@ -3,10 +3,10 @@
 :root{--ink:#071827;--navy:#0b3e63;--blue:#0876ad;--line:#bed4e4;--bg:#eef4f8;--paper:#fff;--green:#087443;--red:#b42318;--amber:#8a5200}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic",Meiryo,sans-serif;line-height:1.65;font-size:16px}header{background:#123f60;color:#fff;padding:26px 32px}header h1{margin:0 0 5px;font-size:30px}header p{margin:0}main{max-width:1440px;margin:auto;padding:20px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}.nav a,.button{display:inline-block;border:1px solid #6fa7c8;background:#fff;color:#064873;text-decoration:none;padding:9px 13px;border-radius:6px;font-weight:700;cursor:pointer;font:inherit}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.card,section{background:#fff;border:1px solid var(--line);border-radius:7px}.card{padding:14px}.card b{display:block;font-size:24px;color:var(--navy)}section{padding:18px;margin-top:16px}h2{font-size:23px;color:var(--navy);border-left:7px solid var(--blue);padding-left:10px;margin:0 0 12px}.notice{background:#fff7e8;border:1px solid #e3a745;padding:12px 14px;border-radius:6px}.ok{background:#edf8f2;border-color:#69a987}.update-panel{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px}.update-panel b{display:block;font-size:18px;color:var(--navy)}.management-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.management-summary div{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:#f8fbfd}.management-summary b{display:block;font-size:22px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:1360px}th,td{border:1px solid var(--line);padding:8px 9px;vertical-align:top}th{background:#e4f0f7;white-space:nowrap}.num{text-align:right;white-space:nowrap}.sub{font-size:12px;color:#4c6375}.gain{color:var(--green);font-weight:700}.loss{color:var(--red);font-weight:700}.status{font-weight:700;color:var(--amber)}.freshness,.management-badge{display:inline-block;font-weight:700;padding:2px 7px;border-radius:4px}.freshness{white-space:nowrap}.freshness.ok,.management-badge.normal{background:#def2e6;color:#08663d}.freshness.stale,.management-badge.watch{background:#fff0d1;color:#815000}.freshness.snapshot,.management-badge.review{background:#e9eef2;color:#425466}.management-badge.sell{background:#fde7e5;color:#a61b14}.management-cell{min-width:330px}.management-detail{margin-top:4px;font-size:13px}.management-detail b{color:var(--navy)}dialog{width:min(900px,calc(100vw - 30px));max-height:90vh;border:1px solid #6fa7c8;border-radius:8px;padding:0;box-shadow:0 18px 60px #0005}dialog::backdrop{background:#07182799}.dialog-head{display:flex;justify-content:space-between;align-items:center;gap:14px;background:#123f60;color:#fff;padding:14px 18px}.dialog-head h2{color:#fff;border:0;padding:0;margin:0}.dialog-body{padding:18px;overflow:auto}.dialog-body table{min-width:720px}.close-button{background:#fff;border:0;border-radius:4px;padding:7px 11px;font-weight:700;cursor:pointer}ul{margin:8px 0 0;padding-left:24px}@media(max-width:900px){.grid,.update-panel,.management-summary{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:10px}header{padding:20px}.card b{font-size:21px}}@media print{body{background:#fff}.nav{display:none}section,.card{break-inside:avoid}dialog{display:none}}
 main{max-width:1900px;width:100%;padding:12px 14px}#holdings{padding:12px}#holdings table{min-width:0;width:100%;font-size:13px}#holdings th,#holdings td{padding:4px 5px;vertical-align:middle;white-space:nowrap}.inline-sub{margin-left:4px;font-size:10px;color:#4c6375;font-weight:400}.management-cell{min-width:350px}.management-one-line{display:flex;align-items:center;gap:6px;white-space:nowrap;min-height:26px}.management-one-line>b{font-size:12px;color:var(--navy)}.management-one-line>.sub{font-size:11px}.management-details{display:inline-block;margin:0;font-size:11px;position:relative}.management-details summary{color:#075b8d;font-weight:700;cursor:pointer;list-style:none}.management-details summary::before{content:"▶ ";font-size:8px}.management-details[open] summary::before{content:"▼ "}.management-detail-panel{position:absolute;right:0;top:28px;z-index:20;width:390px;white-space:normal;background:#fff;border:1px solid var(--line);border-radius:5px;padding:9px;box-shadow:0 8px 24px #07182733}.management-detail-panel div{margin-top:2px}
-</style></head><body><header><h1>実保有29銘柄 管理画面</h1><p>NISA成長投資枠の実際の保有を、候補・紙上計画と分けて管理します。基準: 2026-07-16 09:10:08</p></header><main>
+</style></head><body><header><h1>実保有29銘柄 管理画面</h1><p>NISA成長投資枠の実際の保有を、候補・紙上計画と分けて管理します。基準: 2026-07-16 10:09:09</p></header><main>
 <nav class="nav"><button class="button" id="showManagementRules" type="button">売買管理ルールを表示</button><a href="actual_holdings_dashboard.csv">最新保有表CSV</a><a href="actual_holdings_price_history.csv">時間別価格履歴CSV</a><a href="actual_holdings_auto_update_status.json">自動更新状態</a><a href="broker_holdings_20260714.png">取込元画像</a></nav>
-<section><h2>1時間ごとの自動更新</h2><div class="update-panel"><div><span>価格データの状態</span><b>29銘柄すべて取得成功</b></div><div><span>最後に価格を取得できた時刻</span><b>2026-07-16 09:25:08</b></div><div><span>次回の定時実行</span><b>2026-07-16 10:25:08</b></div></div><p class="sub">株価は外部の遅延データです。ファイルは1時間ごとに再生成され、この画面は5分ごとに表示を再読込します。取得失敗時は「前回成功値」と明記し、新しい価格のように表示しません。</p></section>
-<div class="grid"><div class="card"><span>保有銘柄</span><b>29社</b></div><div class="card"><span>取得総額</span><b>2,031,938円</b></div><div class="card"><span>現在評価額</span><b>2,040,357円</b></div><div class="card"><span>含み損益</span><b class="gain">8,419円</b><span>+0.41%</span></div><div class="card"><span>成長投資枠 残額概算</span><b>368,062円</b><span class="sub">証券会社の買付余力は未確認</span></div></div>
+<section><h2>1時間ごとの自動更新</h2><div class="update-panel"><div><span>価格データの状態</span><b>29銘柄すべて取得成功</b></div><div><span>最後に価格を取得できた時刻</span><b>2026-07-16 10:24:09</b></div><div><span>次回の定時実行</span><b>2026-07-16 11:24:09</b></div></div><p class="sub">株価は外部の遅延データです。ファイルは1時間ごとに再生成され、この画面は5分ごとに表示を再読込します。取得失敗時は「前回成功値」と明記し、新しい価格のように表示しません。</p></section>
+<div class="grid"><div class="card"><span>保有銘柄</span><b>29社</b></div><div class="card"><span>取得総額</span><b>2,031,938円</b></div><div class="card"><span>現在評価額</span><b>2,031,696円</b></div><div class="card"><span>含み損益</span><b class="loss">-242円</b><span>-0.01%</span></div><div class="card"><span>成長投資枠 残額概算</span><b>368,062円</b><span class="sub">証券会社の買付余力は未確認</span></div></div>
 <section><h2>現在の扱い</h2><div class="notice ok"><b>証券会社画面の29銘柄を実保有として登録済みです。</b><br>7月14日の取得単価・数量・評価額を正本CSVへ保存しました。紙上30社案の古河電工は画像にないため、実保有には含めていません。</div><ul><li>最初の5営業日確認日: 2026-07-22。約定直後の値動き、対TOPIX、重大悪材料を確認します。</li><li>最初の20営業日確認日: 2026-08-13。取得後リターンと対TOPIX差を同じ期間で比較します。</li><li>売却判断は、取得後損益だけでなく、対TOPIX劣後と公式悪材料を組み合わせます。買付当日の値動きだけで自動売却しません。</li></ul></section>
 <section><h2>売買管理の集計</h2><div class="management-summary"><div><span>正常</span><b>29社</b></div><div><span>監視</span><b>0社</b></div><div><span>売却候補</span><b>0社</b></div><div><span>判定保留</span><b>0社</b></div></div><p class="sub">売却候補は自動注文ではありません。価格条件と対TOPIX条件を確認し、証券会社画面で最終判断します。</p></section>
 <section id="holdings"><h2>保有一覧</h2><div class="table-wrap"><table><thead><tr><th>銘柄</th><th>数量</th><th>取得単価</th><th>確認価格</th><th>評価額</th><th>含み損益</th><th>当日比</th><th>構成比</th><th>価格鮮度</th><th>現在の管理状態</th></tr></thead><tbody>
@@ -14,380 +14,380 @@ main{max-width:1900px;width:100%;padding:12px 14px}#holdings{padding:12px}#holdi
   <td><a href="https://finance.yahoo.co.jp/quote/9983.T/chart" target="_blank" rel="noopener">9983 ファーストリテイリング</a><span class="inline-sub">小売</span></td>
   <td class="num">2株</td>
   <td class="num">79,790円</td>
-  <td class="num">78,920円</td>
-  <td class="num">157,840円</td>
-  <td class="num loss">-1,740円<span class="inline-sub">-1.09%</span></td>
-  <td class="num gain">90円<span class="inline-sub">+0.11%</span></td>
-  <td class="num">7.74%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと25.5%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.09%</div><div>50%売却価格: 58,759.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 104,073.6円（あと31.9%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">78,430円</td>
+  <td class="num">156,860円</td>
+  <td class="num loss">-2,720円<span class="inline-sub">-1.70%</span></td>
+  <td class="num loss">-400円<span class="inline-sub">-0.51%</span></td>
+  <td class="num">7.72%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:08</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと25.1%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.70%</div><div>50%売却価格: 58,759.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 104,073.6円（あと32.7%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/6861.T/chart" target="_blank" rel="noopener">6861 キーエンス</a><span class="inline-sub">FA</span></td>
   <td class="num">2株</td>
   <td class="num">75,390円</td>
-  <td class="num">74,690円</td>
-  <td class="num">149,380円</td>
-  <td class="num loss">-1,400円<span class="inline-sub">-0.93%</span></td>
-  <td class="num loss">-1,930円<span class="inline-sub">-2.52%</span></td>
+  <td class="num">74,310円</td>
+  <td class="num">148,620円</td>
+  <td class="num loss">-2,160円<span class="inline-sub">-1.43%</span></td>
+  <td class="num loss">-2,310円<span class="inline-sub">-3.01%</span></td>
   <td class="num">7.32%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:09</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.93%</div><div>50%売却価格: 52,773円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 101,776.5円（あと36.3%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:08</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.0%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.43%</div><div>50%売却価格: 52,773円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 101,776.5円（あと37.0%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/8766.T/chart" target="_blank" rel="noopener">8766 東京海上HD</a><span class="inline-sub">保険</span></td>
   <td class="num">12株</td>
   <td class="num">7,720円</td>
-  <td class="num">7,711円</td>
-  <td class="num">92,532円</td>
-  <td class="num loss">-108円<span class="inline-sub">-0.12%</span></td>
-  <td class="num loss">-61円<span class="inline-sub">-0.78%</span></td>
-  <td class="num">4.54%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと27.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.12%</div><div>50%売却価格: 5,603.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 10,163.5円（あと31.8%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">7,751円</td>
+  <td class="num">93,012円</td>
+  <td class="num gain">372円<span class="inline-sub">+0.40%</span></td>
+  <td class="num loss">-21円<span class="inline-sub">-0.27%</span></td>
+  <td class="num">4.58%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと27.7%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.40%</div><div>50%売却価格: 5,603.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 10,163.5円（あと31.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/8316.T/chart" target="_blank" rel="noopener">8316 三井住友FG</a><span class="inline-sub">銀行</span></td>
   <td class="num">13株</td>
   <td class="num">6,967円</td>
-  <td class="num">7,091円</td>
-  <td class="num">92,183円</td>
-  <td class="num gain">1,612円<span class="inline-sub">+1.78%</span></td>
-  <td class="num loss">-30円<span class="inline-sub">-0.42%</span></td>
-  <td class="num">4.52%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと26.0%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.78%</div><div>50%売却価格: 5,248.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,950.9円（あと26.2%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
-  </td>
-</tr>
-<tr>
-  <td><a href="https://finance.yahoo.co.jp/quote/8411.T/chart" target="_blank" rel="noopener">8411 みずほFG</a><span class="inline-sub">銀行</span></td>
-  <td class="num">10株</td>
-  <td class="num">8,480円</td>
-  <td class="num">8,555円</td>
-  <td class="num">85,550円</td>
-  <td class="num gain">750円<span class="inline-sub">+0.88%</span></td>
-  <td class="num loss">-69円<span class="inline-sub">-0.80%</span></td>
-  <td class="num">4.19%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.88%</div><div>50%売却価格: 5,936円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 11,448円（あと33.8%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">7,047円</td>
+  <td class="num">91,611円</td>
+  <td class="num gain">1,040円<span class="inline-sub">+1.15%</span></td>
+  <td class="num loss">-74円<span class="inline-sub">-1.04%</span></td>
+  <td class="num">4.51%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと25.5%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.15%</div><div>50%売却価格: 5,248.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,950.9円（あと27.0%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/8591.T/chart" target="_blank" rel="noopener">8591 オリックス</a><span class="inline-sub">金融・リース</span></td>
   <td class="num">13株</td>
   <td class="num">6,430円</td>
-  <td class="num">6,577円</td>
-  <td class="num">85,501円</td>
-  <td class="num gain">1,911円<span class="inline-sub">+2.29%</span></td>
-  <td class="num loss">-16円<span class="inline-sub">-0.24%</span></td>
+  <td class="num">6,552円</td>
+  <td class="num">85,176円</td>
+  <td class="num gain">1,586円<span class="inline-sub">+1.90%</span></td>
+  <td class="num loss">-41円<span class="inline-sub">-0.62%</span></td>
   <td class="num">4.19%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +2.29%</div><div>50%売却価格: 4,501円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,680.5円（あと32.0%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.90%</div><div>50%売却価格: 4,501円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,680.5円（あと32.5%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  </td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8411.T/chart" target="_blank" rel="noopener">8411 みずほFG</a><span class="inline-sub">銀行</span></td>
+  <td class="num">10株</td>
+  <td class="num">8,480円</td>
+  <td class="num">8,500円</td>
+  <td class="num">85,000円</td>
+  <td class="num gain">200円<span class="inline-sub">+0.24%</span></td>
+  <td class="num loss">-124円<span class="inline-sub">-1.44%</span></td>
+  <td class="num">4.18%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.2%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.24%</div><div>50%売却価格: 5,936円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 11,448円（あと34.7%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/1812.T/chart" target="_blank" rel="noopener">1812 鹿島</a><span class="inline-sub">建設</span></td>
   <td class="num">14株</td>
   <td class="num">5,559円</td>
-  <td class="num">5,707円</td>
-  <td class="num">79,898円</td>
-  <td class="num gain">2,072円<span class="inline-sub">+2.66%</span></td>
-  <td class="num loss">-8円<span class="inline-sub">-0.14%</span></td>
+  <td class="num">5,696円</td>
+  <td class="num">79,744円</td>
+  <td class="num gain">1,918円<span class="inline-sub">+2.46%</span></td>
+  <td class="num loss">-19円<span class="inline-sub">-0.33%</span></td>
   <td class="num">3.92%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.8%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +2.66%</div><div>50%売却価格: 3,891.3円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 7,504.7円（あと31.5%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
-  </td>
-</tr>
-<tr>
-  <td><a href="https://finance.yahoo.co.jp/quote/6503.T/chart" target="_blank" rel="noopener">6503 三菱電機</a><span class="inline-sub">総合電機</span></td>
-  <td class="num">14株</td>
-  <td class="num">5,592円</td>
-  <td class="num">5,703円</td>
-  <td class="num">79,842円</td>
-  <td class="num gain">1,554円<span class="inline-sub">+1.98%</span></td>
-  <td class="num loss">-61円<span class="inline-sub">-1.06%</span></td>
-  <td class="num">3.91%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.4%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.98%</div><div>50%売却価格: 3,914.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 7,549.2円（あと32.4%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.7%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +2.46%</div><div>50%売却価格: 3,891.3円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 7,504.7円（あと31.8%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/8630.T/chart" target="_blank" rel="noopener">8630 SOMPO HD</a><span class="inline-sub">保険</span></td>
   <td class="num">12株</td>
   <td class="num">6,584円</td>
-  <td class="num">6,637円</td>
-  <td class="num">79,644円</td>
-  <td class="num gain">636円<span class="inline-sub">+0.80%</span></td>
-  <td class="num ">0円<span class="inline-sub">+0.00%</span></td>
-  <td class="num">3.90%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.80%</div><div>50%売却価格: 4,608.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,888.4円（あと33.9%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">6,644円</td>
+  <td class="num">79,728円</td>
+  <td class="num gain">720円<span class="inline-sub">+0.91%</span></td>
+  <td class="num gain">7円<span class="inline-sub">+0.11%</span></td>
+  <td class="num">3.92%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.91%</div><div>50%売却価格: 4,608.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,888.4円（あと33.8%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  </td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6503.T/chart" target="_blank" rel="noopener">6503 三菱電機</a><span class="inline-sub">総合電機</span></td>
+  <td class="num">14株</td>
+  <td class="num">5,592円</td>
+  <td class="num">5,692円</td>
+  <td class="num">79,688円</td>
+  <td class="num gain">1,400円<span class="inline-sub">+1.79%</span></td>
+  <td class="num loss">-72円<span class="inline-sub">-1.25%</span></td>
+  <td class="num">3.92%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.2%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.79%</div><div>50%売却価格: 3,914.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 7,549.2円（あと32.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/6504.T/chart" target="_blank" rel="noopener">6504 富士電機</a><span class="inline-sub">電機</span></td>
   <td class="num">6株</td>
   <td class="num">12,760円</td>
-  <td class="num">12,755円</td>
-  <td class="num">76,530円</td>
-  <td class="num loss">-30円<span class="inline-sub">-0.04%</span></td>
-  <td class="num loss">-195円<span class="inline-sub">-1.51%</span></td>
-  <td class="num">3.75%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:09</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.0%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.04%</div><div>50%売却価格: 8,932円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 17,226円（あと35.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">12,740円</td>
+  <td class="num">76,440円</td>
+  <td class="num loss">-120円<span class="inline-sub">-0.16%</span></td>
+  <td class="num loss">-210円<span class="inline-sub">-1.62%</span></td>
+  <td class="num">3.76%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.9%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.16%</div><div>50%売却価格: 8,932円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 17,226円（あと35.2%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/9432.T/chart" target="_blank" rel="noopener">9432 NTT</a><span class="inline-sub">通信</span></td>
   <td class="num">500株</td>
   <td class="num">152円</td>
-  <td class="num">151.3円</td>
-  <td class="num">75,650円</td>
-  <td class="num loss">-350円<span class="inline-sub">-0.46%</span></td>
-  <td class="num gain">1.3円<span class="inline-sub">+0.87%</span></td>
+  <td class="num">150.8円</td>
+  <td class="num">75,400円</td>
+  <td class="num loss">-600円<span class="inline-sub">-0.79%</span></td>
+  <td class="num gain">0.8円<span class="inline-sub">+0.53%</span></td>
   <td class="num">3.71%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと17.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.46%</div><div>50%売却価格: 124.6円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 182.4円（あと20.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと17.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.79%</div><div>50%売却価格: 124.6円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 182.4円（あと21.0%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/6762.T/chart" target="_blank" rel="noopener">6762 TDK</a><span class="inline-sub">電子部品</span></td>
   <td class="num">23株</td>
   <td class="num">3,234円</td>
-  <td class="num">3,157円</td>
-  <td class="num">72,611円</td>
-  <td class="num loss">-1,771円<span class="inline-sub">-2.38%</span></td>
-  <td class="num loss">-89円<span class="inline-sub">-2.74%</span></td>
-  <td class="num">3.56%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと28.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -2.38%</div><div>50%売却価格: 2,263.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 4,365.9円（あと38.3%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">3,131円</td>
+  <td class="num">72,013円</td>
+  <td class="num loss">-2,369円<span class="inline-sub">-3.18%</span></td>
+  <td class="num loss">-115円<span class="inline-sub">-3.54%</span></td>
+  <td class="num">3.54%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと27.7%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -3.18%</div><div>50%売却価格: 2,263.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 4,365.9円（あと39.4%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/6501.T/chart" target="_blank" rel="noopener">6501 日立製作所</a><span class="inline-sub">総合電機</span></td>
   <td class="num">15株</td>
   <td class="num">4,802円</td>
-  <td class="num">4,769円</td>
-  <td class="num">71,535円</td>
-  <td class="num loss">-495円<span class="inline-sub">-0.69%</span></td>
-  <td class="num loss">-27円<span class="inline-sub">-0.56%</span></td>
+  <td class="num">4,753円</td>
+  <td class="num">71,295円</td>
+  <td class="num loss">-735円<span class="inline-sub">-1.02%</span></td>
+  <td class="num loss">-43円<span class="inline-sub">-0.90%</span></td>
   <td class="num">3.51%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.5%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.69%</div><div>50%売却価格: 3,361.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 6,482.7円（あと35.9%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.02%</div><div>50%売却価格: 3,361.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 6,482.7円（あと36.4%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/8035.T/chart" target="_blank" rel="noopener">8035 東京エレクトロン</a><span class="inline-sub">半導体</span></td>
   <td class="num">1株</td>
   <td class="num">71,130円</td>
-  <td class="num">70,540円</td>
-  <td class="num">70,540円</td>
-  <td class="num loss">-590円<span class="inline-sub">-0.83%</span></td>
-  <td class="num loss">-3,700円<span class="inline-sub">-4.98%</span></td>
-  <td class="num">3.46%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.4%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.83%</div><div>50%売却価格: 49,791円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 96,025.5円（あと36.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">70,020円</td>
+  <td class="num">70,020円</td>
+  <td class="num loss">-1,110円<span class="inline-sub">-1.56%</span></td>
+  <td class="num loss">-4,220円<span class="inline-sub">-5.69%</span></td>
+  <td class="num">3.45%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと28.9%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.56%</div><div>50%売却価格: 49,791円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 96,025.5円（あと37.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/8795.T/chart" target="_blank" rel="noopener">8795 T&amp;D HD</a><span class="inline-sub">保険</span></td>
   <td class="num">14株</td>
   <td class="num">4,952円</td>
-  <td class="num">5,008円</td>
-  <td class="num">70,112円</td>
-  <td class="num gain">784円<span class="inline-sub">+1.13%</span></td>
-  <td class="num loss">-42円<span class="inline-sub">-0.83%</span></td>
-  <td class="num">3.44%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.13%</div><div>50%売却価格: 3,526.1円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 6,598.5円（あと31.8%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">4,978円</td>
+  <td class="num">69,692円</td>
+  <td class="num gain">364円<span class="inline-sub">+0.53%</span></td>
+  <td class="num loss">-72円<span class="inline-sub">-1.43%</span></td>
+  <td class="num">3.43%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.2%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.53%</div><div>50%売却価格: 3,526.1円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 6,598.5円（あと32.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/6146.T/chart" target="_blank" rel="noopener">6146 ディスコ</a><span class="inline-sub">半導体</span></td>
   <td class="num">1株</td>
   <td class="num">71,650円</td>
-  <td class="num">69,970円</td>
-  <td class="num">69,970円</td>
-  <td class="num loss">-1,680円<span class="inline-sub">-2.34%</span></td>
-  <td class="num loss">-3,580円<span class="inline-sub">-4.87%</span></td>
-  <td class="num">3.43%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと28.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -2.34%</div><div>50%売却価格: 50,155円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 96,727.5円（あと38.2%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">68,820円</td>
+  <td class="num">68,820円</td>
+  <td class="num loss">-2,830円<span class="inline-sub">-3.95%</span></td>
+  <td class="num loss">-4,730円<span class="inline-sub">-6.43%</span></td>
+  <td class="num">3.39%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと27.1%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -3.95%</div><div>50%売却価格: 50,155円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 96,727.5円（あと40.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/7012.T/chart" target="_blank" rel="noopener">7012 川崎重工業</a><span class="inline-sub">重工</span></td>
   <td class="num">25株</td>
   <td class="num">2,690円</td>
-  <td class="num">2,773.5円</td>
-  <td class="num">69,338円</td>
-  <td class="num gain">2,088円<span class="inline-sub">+3.10%</span></td>
-  <td class="num gain">48円<span class="inline-sub">+1.76%</span></td>
-  <td class="num">3.40%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと32.1%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +3.10%</div><div>50%売却価格: 1,883.0円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 3,631.5円（あと30.9%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">2,716円</td>
+  <td class="num">67,900円</td>
+  <td class="num gain">650円<span class="inline-sub">+0.97%</span></td>
+  <td class="num loss">-9.5円<span class="inline-sub">-0.35%</span></td>
+  <td class="num">3.34%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.7%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.97%</div><div>50%売却価格: 1,883.0円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 3,631.5円（あと33.7%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/7203.T/chart" target="_blank" rel="noopener">7203 トヨタ自動車</a><span class="inline-sub">自動車</span></td>
   <td class="num">23株</td>
   <td class="num">2,839円</td>
-  <td class="num">2,904円</td>
-  <td class="num">66,792円</td>
-  <td class="num gain">1,495円<span class="inline-sub">+2.29%</span></td>
-  <td class="num gain">28.5円<span class="inline-sub">+0.99%</span></td>
-  <td class="num">3.27%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと26.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +2.29%</div><div>50%売却価格: 2,138.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 3,647.4円（あと25.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
-  </td>
-</tr>
-<tr>
-  <td><a href="https://finance.yahoo.co.jp/quote/8306.T/chart" target="_blank" rel="noopener">8306 三菱UFJ FG</a><span class="inline-sub">銀行</span></td>
-  <td class="num">18株</td>
-  <td class="num">3,600円</td>
-  <td class="num">3,684円</td>
-  <td class="num">66,312円</td>
-  <td class="num gain">1,512円<span class="inline-sub">+2.33%</span></td>
-  <td class="num loss">-13円<span class="inline-sub">-0.35%</span></td>
-  <td class="num">3.25%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと23.4%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +2.33%</div><div>50%売却価格: 2,820.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 4,499.7円（あと22.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
-  </td>
-</tr>
-<tr>
-  <td><a href="https://finance.yahoo.co.jp/quote/9433.T/chart" target="_blank" rel="noopener">9433 KDDI</a><span class="inline-sub">通信</span></td>
-  <td class="num">23株</td>
-  <td class="num">2,835円</td>
-  <td class="num">2,853.5円</td>
-  <td class="num">65,631円</td>
-  <td class="num gain">426円<span class="inline-sub">+0.65%</span></td>
-  <td class="num gain">1円<span class="inline-sub">+0.04%</span></td>
-  <td class="num">3.22%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと21.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.65%</div><div>50%売却価格: 2,244.7円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 3,516.6円（あと23.2%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">2,915円</td>
+  <td class="num">67,045円</td>
+  <td class="num gain">1,748円<span class="inline-sub">+2.68%</span></td>
+  <td class="num gain">39.5円<span class="inline-sub">+1.37%</span></td>
+  <td class="num">3.30%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと26.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +2.68%</div><div>50%売却価格: 2,138.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 3,647.4円（あと25.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/7832.T/chart" target="_blank" rel="noopener">7832 バンダイナムコHD</a><span class="inline-sub">ゲーム</span></td>
   <td class="num">16株</td>
   <td class="num">4,143円</td>
-  <td class="num">4,100円</td>
-  <td class="num">65,600円</td>
-  <td class="num loss">-688円<span class="inline-sub">-1.04%</span></td>
-  <td class="num gain">12円<span class="inline-sub">+0.29%</span></td>
-  <td class="num">3.22%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと23.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.04%</div><div>50%売却価格: 3,130.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 5,312.3円（あと29.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">4,118円</td>
+  <td class="num">65,888円</td>
+  <td class="num loss">-400円<span class="inline-sub">-0.60%</span></td>
+  <td class="num gain">30円<span class="inline-sub">+0.73%</span></td>
+  <td class="num">3.24%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと24.0%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.60%</div><div>50%売却価格: 3,130.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 5,312.3円（あと29.0%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  </td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/9433.T/chart" target="_blank" rel="noopener">9433 KDDI</a><span class="inline-sub">通信</span></td>
+  <td class="num">23株</td>
+  <td class="num">2,835円</td>
+  <td class="num">2,863円</td>
+  <td class="num">65,849円</td>
+  <td class="num gain">644円<span class="inline-sub">+0.99%</span></td>
+  <td class="num gain">10.5円<span class="inline-sub">+0.37%</span></td>
+  <td class="num">3.24%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと21.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.99%</div><div>50%売却価格: 2,244.7円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 3,516.6円（あと22.8%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  </td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8306.T/chart" target="_blank" rel="noopener">8306 三菱UFJ FG</a><span class="inline-sub">銀行</span></td>
+  <td class="num">18株</td>
+  <td class="num">3,600円</td>
+  <td class="num">3,655円</td>
+  <td class="num">65,790円</td>
+  <td class="num gain">990円<span class="inline-sub">+1.53%</span></td>
+  <td class="num loss">-42円<span class="inline-sub">-1.14%</span></td>
+  <td class="num">3.24%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと22.8%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.53%</div><div>50%売却価格: 2,820.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 4,499.7円（あと23.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/7532.T/chart" target="_blank" rel="noopener">7532 パン・パシフィックHD</a><span class="inline-sub">小売</span></td>
   <td class="num">70株</td>
   <td class="num">874円</td>
-  <td class="num">870.2円</td>
-  <td class="num">60,914円</td>
-  <td class="num loss">-266円<span class="inline-sub">-0.43%</span></td>
-  <td class="num gain">11.7円<span class="inline-sub">+1.36%</span></td>
-  <td class="num">2.99%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと25.7%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.43%</div><div>50%売却価格: 646.3円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 1,136.9円（あと30.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">888.7円</td>
+  <td class="num">62,209円</td>
+  <td class="num gain">1,029円<span class="inline-sub">+1.68%</span></td>
+  <td class="num gain">30.2円<span class="inline-sub">+3.52%</span></td>
+  <td class="num">3.06%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと27.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.68%</div><div>50%売却価格: 646.3円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 1,136.9円（あと27.9%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/1801.T/chart" target="_blank" rel="noopener">1801 大成建設</a><span class="inline-sub">建設</span></td>
   <td class="num">3株</td>
   <td class="num">13,520円</td>
-  <td class="num">13,980円</td>
-  <td class="num">41,940円</td>
-  <td class="num gain">1,380円<span class="inline-sub">+3.40%</span></td>
-  <td class="num loss">-165円<span class="inline-sub">-1.17%</span></td>
-  <td class="num">2.06%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと32.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +3.40%</div><div>50%売却価格: 9,464円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 18,252円（あと30.6%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">13,775円</td>
+  <td class="num">41,325円</td>
+  <td class="num gain">765円<span class="inline-sub">+1.89%</span></td>
+  <td class="num loss">-370円<span class="inline-sub">-2.61%</span></td>
+  <td class="num">2.03%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:08</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.3%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.89%</div><div>50%売却価格: 9,464円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 18,252円（あと32.5%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/7269.T/chart" target="_blank" rel="noopener">7269 スズキ</a><span class="inline-sub">自動車</span></td>
   <td class="num">20株</td>
   <td class="num">2,017円</td>
-  <td class="num">2,038円</td>
-  <td class="num">40,760円</td>
-  <td class="num gain">420円<span class="inline-sub">+1.04%</span></td>
-  <td class="num gain">12.5円<span class="inline-sub">+0.62%</span></td>
-  <td class="num">2.00%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.7%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.04%</div><div>50%売却価格: 1,411.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 2,720.6円（あと33.5%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">2,044.5円</td>
+  <td class="num">40,890円</td>
+  <td class="num gain">550円<span class="inline-sub">+1.36%</span></td>
+  <td class="num gain">19円<span class="inline-sub">+0.94%</span></td>
+  <td class="num">2.01%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.9%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +1.36%</div><div>50%売却価格: 1,411.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 2,720.6円（あと33.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/6383.T/chart" target="_blank" rel="noopener">6383 ダイフク</a><span class="inline-sub">機械</span></td>
   <td class="num">6株</td>
   <td class="num">6,602円</td>
-  <td class="num">6,656円</td>
-  <td class="num">39,936円</td>
-  <td class="num gain">324円<span class="inline-sub">+0.82%</span></td>
-  <td class="num loss">-118円<span class="inline-sub">-1.74%</span></td>
-  <td class="num">1.96%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:09</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.6%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.82%</div><div>50%売却価格: 4,621.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,912.7円（あと33.9%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">6,504円</td>
+  <td class="num">39,024円</td>
+  <td class="num loss">-588円<span class="inline-sub">-1.48%</span></td>
+  <td class="num loss">-270円<span class="inline-sub">-3.99%</span></td>
+  <td class="num">1.92%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと28.9%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.48%</div><div>50%売却価格: 4,621.4円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,912.7円（あと37.0%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/5803.T/chart" target="_blank" rel="noopener">5803 フジクラ</a><span class="inline-sub">電線</span></td>
   <td class="num">8株</td>
   <td class="num">4,800円</td>
-  <td class="num">4,907円</td>
-  <td class="num">39,256円</td>
-  <td class="num gain">856円<span class="inline-sub">+2.23%</span></td>
-  <td class="num loss">-238円<span class="inline-sub">-4.63%</span></td>
-  <td class="num">1.92%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと31.5%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +2.23%</div><div>50%売却価格: 3,360円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 6,480円（あと32.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">4,797円</td>
+  <td class="num">38,376円</td>
+  <td class="num loss">-24円<span class="inline-sub">-0.06%</span></td>
+  <td class="num loss">-348円<span class="inline-sub">-6.76%</span></td>
+  <td class="num">1.89%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと30.0%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.06%</div><div>50%売却価格: 3,360円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 6,480円（あと35.1%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/5333.T/chart" target="_blank" rel="noopener">5333 NGK</a><span class="inline-sub">電力・素材</span></td>
   <td class="num">5株</td>
   <td class="num">6,617円</td>
-  <td class="num">6,606円</td>
-  <td class="num">33,030円</td>
-  <td class="num loss">-55円<span class="inline-sub">-0.17%</span></td>
-  <td class="num loss">-153円<span class="inline-sub">-2.26%</span></td>
-  <td class="num">1.62%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.9%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -0.17%</div><div>50%売却価格: 4,631.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,933.0円（あと35.2%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">6,545円</td>
+  <td class="num">32,725円</td>
+  <td class="num loss">-360円<span class="inline-sub">-1.09%</span></td>
+  <td class="num loss">-214円<span class="inline-sub">-3.17%</span></td>
+  <td class="num">1.61%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.2%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.09%</div><div>50%売却価格: 4,631.9円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 8,933.0円（あと36.5%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/9697.T/chart" target="_blank" rel="noopener">9697 カプコン</a><span class="inline-sub">ゲーム</span></td>
   <td class="num">7株</td>
   <td class="num">3,314円</td>
-  <td class="num">3,258円</td>
-  <td class="num">22,806円</td>
-  <td class="num loss">-392円<span class="inline-sub">-1.69%</span></td>
-  <td class="num gain">12円<span class="inline-sub">+0.37%</span></td>
-  <td class="num">1.12%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと28.8%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.69%</div><div>50%売却価格: 2,319.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 4,473.9円（あと37.3%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td class="num">3,278円</td>
+  <td class="num">22,946円</td>
+  <td class="num loss">-252円<span class="inline-sub">-1.09%</span></td>
+  <td class="num gain">32円<span class="inline-sub">+0.99%</span></td>
+  <td class="num">1.13%</td>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと29.2%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: -1.09%</div><div>50%売却価格: 2,319.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 4,473.9円（あと36.5%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/8750.T/chart" target="_blank" rel="noopener">8750 第一生命HD</a><span class="inline-sub">保険</span></td>
   <td class="num">10株</td>
   <td class="num">1,856円</td>
-  <td class="num">1,872.5円</td>
-  <td class="num">18,725円</td>
-  <td class="num gain">165円<span class="inline-sub">+0.89%</span></td>
-  <td class="num loss">-11.5円<span class="inline-sub">-0.61%</span></td>
+  <td class="num">1,861円</td>
+  <td class="num">18,610円</td>
+  <td class="num gain">50円<span class="inline-sub">+0.27%</span></td>
+  <td class="num loss">-23円<span class="inline-sub">-1.22%</span></td>
   <td class="num">0.92%</td>
-  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 09:10</span></td>
-  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと23.7%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.89%</div><div>50%売却価格: 1,428.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 2,349.3円（あと25.5%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
+  <td><span class="freshness ok">取得成功</span><span class="inline-sub">07-16 10:09</span></td>
+  <td class="management-cell"><div class="management-one-line"><span class="management-badge normal">正常</span><b>50%売却まであと23.2%↓</b><span class="sub">次回 07-22</span><details class="management-details"><summary>詳細</summary><div class="management-detail-panel"><div>損益: +0.27%</div><div>50%売却価格: 1,428.8円</div><div>対TOPIX条件: 2026-08-13から判定</div><div>利益監視価格: 2,349.3円（あと26.2%上昇）</div><div class="sub">売却・利確の数値条件には到達していません。</div></div></details></div>
   </td>
 </tr></tbody></table></div></section>
-<section><h2>偏りの確認</h2><div class="notice">最大の単一銘柄は <b>ファーストリテイリング 7.74%</b>、最大のまとめたリスク群は <b>金融 28.94%</b> です。銀行・保険・金融リースは同じ金利要因で動きやすいため、一つの金融群として集計しています。</div><div class="table-wrap"><table><thead><tr><th>リスク群</th><th>評価額</th><th>構成比</th><th>銘柄</th></tr></thead><tbody><tr><td>金融</td><td class="num">590,559円</td><td class="num">28.94%</td><td>三菱UFJ FG、三井住友FG、みずほFG、オリックス、SOMPO HD、第一生命HD、東京海上HD、T&amp;D HD</td></tr><tr><td>小売</td><td class="num">218,754円</td><td class="num">10.72%</td><td>パン・パシフィックHD、ファーストリテイリング</td></tr><tr><td>総合電機</td><td class="num">151,377円</td><td class="num">7.42%</td><td>日立製作所、三菱電機</td></tr><tr><td>FA</td><td class="num">149,380円</td><td class="num">7.32%</td><td>キーエンス</td></tr><tr><td>通信</td><td class="num">141,281円</td><td class="num">6.92%</td><td>NTT、KDDI</td></tr><tr><td>半導体</td><td class="num">140,510円</td><td class="num">6.89%</td><td>ディスコ、東京エレクトロン</td></tr><tr><td>建設</td><td class="num">121,838円</td><td class="num">5.97%</td><td>大成建設、鹿島</td></tr><tr><td>自動車</td><td class="num">107,552円</td><td class="num">5.27%</td><td>トヨタ自動車、スズキ</td></tr><tr><td>ゲーム</td><td class="num">88,406円</td><td class="num">4.33%</td><td>バンダイナムコHD、カプコン</td></tr><tr><td>電機</td><td class="num">76,530円</td><td class="num">3.75%</td><td>富士電機</td></tr><tr><td>電子部品</td><td class="num">72,611円</td><td class="num">3.56%</td><td>TDK</td></tr><tr><td>重工</td><td class="num">69,338円</td><td class="num">3.40%</td><td>川崎重工業</td></tr><tr><td>機械</td><td class="num">39,936円</td><td class="num">1.96%</td><td>ダイフク</td></tr><tr><td>電線</td><td class="num">39,256円</td><td class="num">1.92%</td><td>フジクラ</td></tr><tr><td>電力・素材</td><td class="num">33,030円</td><td class="num">1.62%</td><td>NGK</td></tr></tbody></table></div></section>
+<section><h2>偏りの確認</h2><div class="notice">最大の単一銘柄は <b>ファーストリテイリング 7.72%</b>、最大のまとめたリスク群は <b>金融 28.97%</b> です。銀行・保険・金融リースは同じ金利要因で動きやすいため、一つの金融群として集計しています。</div><div class="table-wrap"><table><thead><tr><th>リスク群</th><th>評価額</th><th>構成比</th><th>銘柄</th></tr></thead><tbody><tr><td>金融</td><td class="num">588,619円</td><td class="num">28.97%</td><td>三菱UFJ FG、三井住友FG、みずほFG、オリックス、SOMPO HD、第一生命HD、東京海上HD、T&amp;D HD</td></tr><tr><td>小売</td><td class="num">219,069円</td><td class="num">10.78%</td><td>パン・パシフィックHD、ファーストリテイリング</td></tr><tr><td>総合電機</td><td class="num">150,983円</td><td class="num">7.43%</td><td>日立製作所、三菱電機</td></tr><tr><td>FA</td><td class="num">148,620円</td><td class="num">7.32%</td><td>キーエンス</td></tr><tr><td>通信</td><td class="num">141,249円</td><td class="num">6.95%</td><td>NTT、KDDI</td></tr><tr><td>半導体</td><td class="num">138,840円</td><td class="num">6.83%</td><td>ディスコ、東京エレクトロン</td></tr><tr><td>建設</td><td class="num">121,069円</td><td class="num">5.96%</td><td>大成建設、鹿島</td></tr><tr><td>自動車</td><td class="num">107,935円</td><td class="num">5.31%</td><td>トヨタ自動車、スズキ</td></tr><tr><td>ゲーム</td><td class="num">88,834円</td><td class="num">4.37%</td><td>バンダイナムコHD、カプコン</td></tr><tr><td>電機</td><td class="num">76,440円</td><td class="num">3.76%</td><td>富士電機</td></tr><tr><td>電子部品</td><td class="num">72,013円</td><td class="num">3.54%</td><td>TDK</td></tr><tr><td>重工</td><td class="num">67,900円</td><td class="num">3.34%</td><td>川崎重工業</td></tr><tr><td>機械</td><td class="num">39,024円</td><td class="num">1.92%</td><td>ダイフク</td></tr><tr><td>電線</td><td class="num">38,376円</td><td class="num">1.89%</td><td>フジクラ</td></tr><tr><td>電力・素材</td><td class="num">32,725円</td><td class="num">1.61%</td><td>NGK</td></tr></tbody></table></div></section>
 <section><h2>自動更新の動き</h2><ol><li>1時間ごとに、日本株全市場の遅延価格を一括取得し、端末内で保有29銘柄だけを照合します。</li><li>取得単価と数量は正本CSVのまま固定し、現在評価額・含み損益・構成比だけを再計算します。</li><li>結果をこのHTML、最新保有表CSV、時間別価格履歴CSVへ書き出します。</li><li>取得失敗の銘柄は前回成功値を保持し、鮮度欄に「前回成功値」と表示します。</li></ol><p class="sub">取得元はYahoo Finance JP full-market screener (delayed)です。保有銘柄コードは取得先へ個別送信しません。正式な売買判断や発注前には、証券会社画面の現在値・数量・NISA預りを再確認します。</p></section>
 <dialog id="managementRulesDialog"><div class="dialog-head"><h2>売買管理ルール</h2><button class="close-button" id="closeManagementRules" type="button">閉じる</button></div><div class="dialog-body">
 <p>銘柄ごとの過去60営業日の年率換算変動率を σ とし、値動きの大きさに応じて価格条件を変えます。固定の一律損切りではありません。</p>
