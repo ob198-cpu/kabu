@@ -2,16 +2,307 @@
 <style>
 :root{--ink:#071827;--navy:#0b3e63;--blue:#0876ad;--line:#bed4e4;--bg:#eef4f8;--paper:#fff;--green:#087443;--red:#b42318;--amber:#8a5200}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Yu Gothic",Meiryo,sans-serif;line-height:1.65;font-size:16px}header{background:#123f60;color:#fff;padding:26px 32px}header h1{margin:0 0 5px;font-size:30px}header p{margin:0}main{max-width:1440px;margin:auto;padding:20px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}.nav a,.button{display:inline-block;border:1px solid #6fa7c8;background:#fff;color:#064873;text-decoration:none;padding:9px 13px;border-radius:6px;font-weight:700;cursor:pointer;font:inherit}.nav .rules-nav{background:#0876ad;border-color:#0876ad;color:#fff;padding-inline:18px}.nav .rules-nav:hover,.nav .rules-nav:focus-visible{background:#075b8d;outline:3px solid #9bd5ef;outline-offset:2px}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.card,section{background:#fff;border:1px solid var(--line);border-radius:7px}.card{padding:14px}.card b{display:block;font-size:24px;color:var(--navy)}section{padding:18px;margin-top:16px}h2{font-size:23px;color:var(--navy);border-left:7px solid var(--blue);padding-left:10px;margin:0 0 12px}.notice{background:#fff7e8;border:1px solid #e3a745;padding:12px 14px;border-radius:6px}.ok{background:#edf8f2;border-color:#69a987}.update-panel{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px}.update-panel b{display:block;font-size:18px;color:var(--navy)}.management-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.management-summary div{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:#f8fbfd}.management-summary b{display:block;font-size:22px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:1360px}th,td{border:1px solid var(--line);padding:8px 9px;vertical-align:top}th{background:#e4f0f7;white-space:nowrap}.num{text-align:right;white-space:nowrap}.sub{font-size:12px;color:#4c6375}.gain{color:var(--green);font-weight:700}.loss{color:var(--red);font-weight:700}.status{font-weight:700;color:var(--amber)}.freshness,.management-badge{display:inline-block;font-weight:700;padding:2px 7px;border-radius:4px}.freshness{white-space:nowrap}.freshness.ok,.management-badge.normal{background:#def2e6;color:#08663d}.freshness.stale,.management-badge.watch{background:#fff0d1;color:#815000}.freshness.snapshot,.management-badge.review{background:#e9eef2;color:#425466}.management-badge.sell{background:#fde7e5;color:#a61b14}.management-cell{min-width:330px}.management-detail{margin-top:4px;font-size:13px}.management-detail b{color:var(--navy)}dialog{width:min(1180px,calc(100vw - 24px));height:min(820px,calc(100vh - 24px));max-width:none;max-height:none;border:1px solid #6fa7c8;border-radius:8px;padding:0;box-shadow:0 18px 60px #0005}dialog::backdrop{background:#07182799}.dialog-head{display:flex;justify-content:space-between;align-items:center;gap:14px;background:#123f60;color:#fff;padding:16px 20px}.dialog-head h2{color:#fff;border:0;padding:0;margin:0}.dialog-body{height:calc(100% - 68px);padding:22px;overflow:auto}.dialog-body table{min-width:900px}.close-button{background:#fff;border:0;border-radius:4px;padding:9px 14px;font-weight:700;cursor:pointer}ul{margin:8px 0 0;padding-left:24px}@media(max-width:900px){.grid,.update-panel,.management-summary{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:10px}header{padding:20px}.card b{font-size:21px}dialog{width:calc(100vw - 12px);height:calc(100vh - 12px)}.dialog-body{padding:14px}}@media print{body{background:#fff}.nav{display:none}section,.card{break-inside:avoid}dialog{display:none}}
-main{max-width:1900px;width:100%;padding:16px 20px}#holdings{padding:18px}#holdings table{min-width:1900px;width:100%;font-size:17px;line-height:1.6}#holdings th,#holdings td{padding:9px 10px;vertical-align:middle;white-space:nowrap}.inline-sub{margin-left:6px;font-size:14px;color:#4c6375;font-weight:400}.management-cell{min-width:570px;width:570px}.management-one-line{display:grid;grid-template-columns:max-content minmax(245px,1fr) max-content;align-items:center;gap:10px;width:100%;white-space:nowrap;min-height:44px}.management-main{display:flex;min-width:0;flex-direction:column;justify-content:center;line-height:1.35}.management-main>b{min-width:0;font-size:16px;color:var(--navy)}.management-main>.sub{font-size:14px}.management-details{display:inline-block;justify-self:end;margin:0;font-size:15px;position:relative}.management-details summary{display:inline-flex;align-items:center;min-height:38px;padding:4px 10px;border:1px solid #6fa7c8;border-radius:5px;background:#fff;color:#075b8d;font-weight:700;cursor:pointer;list-style:none}.management-details summary::before{content:"▶ ";font-size:11px}.management-details[open] summary::before{content:"▼ "}.management-detail-panel{position:absolute;right:0;top:44px;z-index:20;width:500px;white-space:normal;background:#fff;border:1px solid var(--line);border-radius:5px;padding:14px;font-size:17px;line-height:1.75;box-shadow:0 8px 24px #07182733}.management-detail-panel div{margin-top:4px}
+main{max-width:1900px;width:100%;padding:16px 20px}#holdings{padding:18px}#holdings table{min-width:1900px;width:100%;font-size:17px;line-height:1.6}#holdings th,#holdings td{padding:9px 10px;vertical-align:middle;white-space:nowrap}#stop-prices table{min-width:1250px;font-size:17px}#stop-prices th,#stop-prices td{vertical-align:middle}.inline-sub{margin-left:6px;font-size:14px;color:#4c6375;font-weight:400}.management-cell{min-width:570px;width:570px}.management-one-line{display:grid;grid-template-columns:max-content minmax(245px,1fr) max-content;align-items:center;gap:10px;width:100%;white-space:nowrap;min-height:44px}.management-main{display:flex;min-width:0;flex-direction:column;justify-content:center;line-height:1.35}.management-main>b{min-width:0;font-size:16px;color:var(--navy)}.management-main>.sub{font-size:14px}.management-details{display:inline-block;justify-self:end;margin:0;font-size:15px;position:relative}.management-details summary{display:inline-flex;align-items:center;min-height:38px;padding:4px 10px;border:1px solid #6fa7c8;border-radius:5px;background:#fff;color:#075b8d;font-weight:700;cursor:pointer;list-style:none}.management-details summary::before{content:"▶ ";font-size:11px}.management-details[open] summary::before{content:"▼ "}.management-detail-panel{position:absolute;right:0;top:44px;z-index:20;width:500px;white-space:normal;background:#fff;border:1px solid var(--line);border-radius:5px;padding:14px;font-size:17px;line-height:1.75;box-shadow:0 8px 24px #07182733}.management-detail-panel div{margin-top:4px}
 body{font-size:20px;line-height:1.85}header h1{font-size:37px}header p{font-size:20px}.nav a,.button{font-size:19px;padding:13px 18px}.card{padding:18px}.card span{font-size:19px}.card b{font-size:30px}section{padding:22px}h2{font-size:30px}.update-panel span,.management-summary span{font-size:18px}.update-panel b{font-size:24px}.management-summary b{font-size:28px}.sub{font-size:16px}.freshness,.management-badge{font-size:17px;padding:5px 9px}.dialog-head h2{font-size:31px}.close-button{font-size:19px;min-width:84px}.dialog-body{font-size:20px;line-height:1.85}.dialog-body table{font-size:18px}.dialog-body th,.dialog-body td{padding:12px 14px}.dialog-body h3{font-size:25px}
 @media(max-width:900px){body{font-size:19px}header h1{font-size:32px}header p{font-size:18px}.nav a,.button{font-size:18px}#holdings table{font-size:16px}.dialog-body{font-size:19px}}
 @media(max-width:600px){main{padding:8px}.grid,.update-panel,.management-summary{grid-template-columns:1fr}.nav{display:grid;grid-template-columns:1fr}.nav a,.nav .button{min-width:0;text-align:center;width:100%;padding:12px 8px;white-space:normal;overflow-wrap:anywhere}.card{min-height:0}.update-panel>div{min-width:0;padding-bottom:8px}.update-panel b{font-size:22px;overflow-wrap:anywhere}section{min-width:0;padding:16px}h2{font-size:25px}}
 </style></head><body><header><h1>実保有29銘柄 管理画面</h1><p>NISA成長投資枠の実際の保有を、候補・紙上計画と分けて管理します。基準: 2026-07-17 09:34:29</p></header><main>
-<nav class="nav"><a href="actual_holdings_dashboard.csv">最新保有表CSV</a><a href="actual_holdings_price_history.csv">時間別価格履歴CSV</a><a href="actual_holdings_auto_update_status.json">自動更新状態</a><button class="button rules-nav" id="showManagementRules" type="button">売買ルールを見る</button></nav>
+<nav class="nav"><a href="actual_holdings_dashboard.csv">最新保有表CSV</a><a href="actual_holdings_stop_prices.csv">逆指値価格表CSV</a><a href="#stop-prices">逆指値価格表</a><a href="actual_holdings_price_history.csv">時間別価格履歴CSV</a><a href="actual_holdings_auto_update_status.json">自動更新状態</a><button class="button rules-nav" id="showManagementRules" type="button">売買ルールを見る</button></nav>
 <section><h2>1時間ごとの自動更新</h2><div class="update-panel"><div><span>価格データの状態</span><b>29銘柄すべて取得成功</b></div><div><span>最後に価格を取得できた時刻</span><b>2026-07-17 09:49:29</b></div><div><span>次回の定時実行</span><b>2026-07-17 10:49:28</b></div></div><p class="sub">株価は外部の遅延データです。ファイルは1時間ごとに再生成され、この画面は5分ごとに表示を再読込します。取得失敗時は「前回成功値」と明記し、新しい価格のように表示しません。</p></section>
 <div class="grid"><div class="card"><span>保有銘柄</span><b>29社</b></div><div class="card"><span>取得総額</span><b>2,031,938円</b></div><div class="card"><span>現在評価額</span><b>1,988,645円</b></div><div class="card"><span>含み損益</span><b class="loss">-43,293円</b><span>-2.13%</span></div><div class="card"><span>成長投資枠 残額概算</span><b>368,062円</b><span class="sub">証券会社の買付余力は未確認</span></div></div>
 <section><h2>現在の扱い</h2><div class="notice ok"><b>証券会社画面の29銘柄を実保有として登録済みです。</b><br>7月14日の取得単価・数量・評価額を正本CSVへ保存しました。紙上30社案の古河電工は画像にないため、実保有には含めていません。</div><ul><li>最初の5営業日確認日: 2026-07-22。約定直後の値動き、対TOPIX、重大悪材料を確認します。</li><li>最初の20営業日確認日: 2026-08-13。取得後リターンと対TOPIX差を同じ期間で比較します。</li><li>売却判断は、取得後損益だけでなく、対TOPIX劣後と公式悪材料を組み合わせます。買付当日の値動きだけで自動売却しません。</li></ul></section>
 <section><h2>売買管理の集計</h2><div class="management-summary"><div><span>正常</span><b>26社</b></div><div><span>監視</span><b>3社</b></div><div><span>売却候補</span><b>0社</b></div><div><span>判定保留</span><b>0社</b></div></div><p class="sub">売却候補は自動注文ではありません。価格条件と対TOPIX条件を確認し、証券会社画面で最終判断します。</p></section>
+<section id="stop-prices"><h2>各銘柄の逆指値監視価格</h2><div class="notice"><b>この表は売却判断を始める価格の一覧です。</b> 価格到達だけで自動売却せず、20営業日の対TOPIX差と公式悪材料を確認します。単元未満株では証券会社の注文方法に制約があるため、実際の発注可否は注文画面で確認します。</div><div class="table-wrap"><table><thead><tr><th>銘柄</th><th>保有数</th><th>取得単価</th><th>確認価格</th><th>50%売却の監視価格</th><th>全売却の監視価格</th><th>管理状態</th><th>次回確認</th></tr></thead><tbody>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/1801.T/chart" target="_blank" rel="noopener">1801 大成建設</a></td>
+  <td class="num">3株</td>
+  <td class="num">13,520円</td>
+  <td class="num">13,690円</td>
+  <td class="num"><b>9,464円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>8,788円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/1812.T/chart" target="_blank" rel="noopener">1812 鹿島</a></td>
+  <td class="num">14株</td>
+  <td class="num">5,559円</td>
+  <td class="num">5,602円</td>
+  <td class="num"><b>3,891.3円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>3,613.4円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/5333.T/chart" target="_blank" rel="noopener">5333 NGK</a></td>
+  <td class="num">5株</td>
+  <td class="num">6,617円</td>
+  <td class="num">6,184円</td>
+  <td class="num"><b>4,631.9円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>4,301.1円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/5803.T/chart" target="_blank" rel="noopener">5803 フジクラ</a></td>
+  <td class="num">8株</td>
+  <td class="num">4,800円</td>
+  <td class="num">4,448円</td>
+  <td class="num"><b>3,360円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>3,120円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6146.T/chart" target="_blank" rel="noopener">6146 ディスコ</a></td>
+  <td class="num">1株</td>
+  <td class="num">71,650円</td>
+  <td class="num">64,460円</td>
+  <td class="num"><b>50,155円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>46,572.5円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge watch">監視（下落確認）</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6383.T/chart" target="_blank" rel="noopener">6383 ダイフク</a></td>
+  <td class="num">6株</td>
+  <td class="num">6,602円</td>
+  <td class="num">6,271円</td>
+  <td class="num"><b>4,621.4円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>4,291.3円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6501.T/chart" target="_blank" rel="noopener">6501 日立製作所</a></td>
+  <td class="num">15株</td>
+  <td class="num">4,802円</td>
+  <td class="num">4,700円</td>
+  <td class="num"><b>3,361.4円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>3,121.3円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6503.T/chart" target="_blank" rel="noopener">6503 三菱電機</a></td>
+  <td class="num">14株</td>
+  <td class="num">5,592円</td>
+  <td class="num">5,419円</td>
+  <td class="num"><b>3,914.4円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>3,634.8円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6504.T/chart" target="_blank" rel="noopener">6504 富士電機</a></td>
+  <td class="num">6株</td>
+  <td class="num">12,760円</td>
+  <td class="num">12,175円</td>
+  <td class="num"><b>8,932円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>8,294円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6762.T/chart" target="_blank" rel="noopener">6762 TDK</a></td>
+  <td class="num">23株</td>
+  <td class="num">3,234円</td>
+  <td class="num">2,939円</td>
+  <td class="num"><b>2,263.8円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>2,102.1円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge watch">監視（下落確認）</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/6861.T/chart" target="_blank" rel="noopener">6861 キーエンス</a></td>
+  <td class="num">2株</td>
+  <td class="num">75,390円</td>
+  <td class="num">71,110円</td>
+  <td class="num"><b>52,773円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>49,003.5円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/7012.T/chart" target="_blank" rel="noopener">7012 川崎重工業</a></td>
+  <td class="num">25株</td>
+  <td class="num">2,690円</td>
+  <td class="num">2,625円</td>
+  <td class="num"><b>1,883.0円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>1,748.5円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/7203.T/chart" target="_blank" rel="noopener">7203 トヨタ自動車</a></td>
+  <td class="num">23株</td>
+  <td class="num">2,839円</td>
+  <td class="num">2,905円</td>
+  <td class="num"><b>2,138.9円</b><span class="inline-sub">-24.7%</span></td>
+  <td class="num"><b>1,996.9円</b><span class="inline-sub">-29.7%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/7269.T/chart" target="_blank" rel="noopener">7269 スズキ</a></td>
+  <td class="num">20株</td>
+  <td class="num">2,017円</td>
+  <td class="num">2,054.5円</td>
+  <td class="num"><b>1,411.9円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>1,311.1円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/7532.T/chart" target="_blank" rel="noopener">7532 パン・パシフィックHD</a></td>
+  <td class="num">70株</td>
+  <td class="num">874円</td>
+  <td class="num">893.1円</td>
+  <td class="num"><b>646.3円</b><span class="inline-sub">-26.0%</span></td>
+  <td class="num"><b>602.6円</b><span class="inline-sub">-31.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/7832.T/chart" target="_blank" rel="noopener">7832 バンダイナムコHD</a></td>
+  <td class="num">16株</td>
+  <td class="num">4,143円</td>
+  <td class="num">4,207円</td>
+  <td class="num"><b>3,130.4円</b><span class="inline-sub">-24.4%</span></td>
+  <td class="num"><b>2,923.2円</b><span class="inline-sub">-29.4%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8035.T/chart" target="_blank" rel="noopener">8035 東京エレクトロン</a></td>
+  <td class="num">1株</td>
+  <td class="num">71,130円</td>
+  <td class="num">65,150円</td>
+  <td class="num"><b>49,791円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>46,234.5円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge watch">監視（下落確認）</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8306.T/chart" target="_blank" rel="noopener">8306 三菱UFJ FG</a></td>
+  <td class="num">18株</td>
+  <td class="num">3,600円</td>
+  <td class="num">3,522円</td>
+  <td class="num"><b>2,820.9円</b><span class="inline-sub">-21.6%</span></td>
+  <td class="num"><b>2,640.9円</b><span class="inline-sub">-26.6%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8316.T/chart" target="_blank" rel="noopener">8316 三井住友FG</a></td>
+  <td class="num">13株</td>
+  <td class="num">6,967円</td>
+  <td class="num">6,862円</td>
+  <td class="num"><b>5,248.9円</b><span class="inline-sub">-24.7%</span></td>
+  <td class="num"><b>4,900.5円</b><span class="inline-sub">-29.7%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8411.T/chart" target="_blank" rel="noopener">8411 みずほFG</a></td>
+  <td class="num">10株</td>
+  <td class="num">8,480円</td>
+  <td class="num">8,124円</td>
+  <td class="num"><b>5,936円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>5,512円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8591.T/chart" target="_blank" rel="noopener">8591 オリックス</a></td>
+  <td class="num">13株</td>
+  <td class="num">6,430円</td>
+  <td class="num">6,352円</td>
+  <td class="num"><b>4,501円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>4,179.5円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8630.T/chart" target="_blank" rel="noopener">8630 SOMPO HD</a></td>
+  <td class="num">12株</td>
+  <td class="num">6,584円</td>
+  <td class="num">6,687円</td>
+  <td class="num"><b>4,608.8円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>4,279.6円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8750.T/chart" target="_blank" rel="noopener">8750 第一生命HD</a></td>
+  <td class="num">10株</td>
+  <td class="num">1,856円</td>
+  <td class="num">1,821.5円</td>
+  <td class="num"><b>1,428.8円</b><span class="inline-sub">-23.0%</span></td>
+  <td class="num"><b>1,336.0円</b><span class="inline-sub">-28.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8766.T/chart" target="_blank" rel="noopener">8766 東京海上HD</a></td>
+  <td class="num">12株</td>
+  <td class="num">7,720円</td>
+  <td class="num">7,637円</td>
+  <td class="num"><b>5,603.8円</b><span class="inline-sub">-27.4%</span></td>
+  <td class="num"><b>5,217.8円</b><span class="inline-sub">-32.4%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/8795.T/chart" target="_blank" rel="noopener">8795 T&amp;D HD</a></td>
+  <td class="num">14株</td>
+  <td class="num">4,952円</td>
+  <td class="num">4,870円</td>
+  <td class="num"><b>3,526.1円</b><span class="inline-sub">-28.8%</span></td>
+  <td class="num"><b>3,278.5円</b><span class="inline-sub">-33.8%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/9432.T/chart" target="_blank" rel="noopener">9432 NTT</a></td>
+  <td class="num">500株</td>
+  <td class="num">152円</td>
+  <td class="num">152.1円</td>
+  <td class="num"><b>124.6円</b><span class="inline-sub">-18.0%</span></td>
+  <td class="num"><b>114円</b><span class="inline-sub">-25.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/9433.T/chart" target="_blank" rel="noopener">9433 KDDI</a></td>
+  <td class="num">23株</td>
+  <td class="num">2,835円</td>
+  <td class="num">2,889円</td>
+  <td class="num"><b>2,244.7円</b><span class="inline-sub">-20.8%</span></td>
+  <td class="num"><b>2,103.0円</b><span class="inline-sub">-25.8%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/9697.T/chart" target="_blank" rel="noopener">9697 カプコン</a></td>
+  <td class="num">7株</td>
+  <td class="num">3,314円</td>
+  <td class="num">3,431円</td>
+  <td class="num"><b>2,319.8円</b><span class="inline-sub">-30.0%</span></td>
+  <td class="num"><b>2,154.1円</b><span class="inline-sub">-35.0%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr>
+<tr>
+  <td><a href="https://finance.yahoo.co.jp/quote/9983.T/chart" target="_blank" rel="noopener">9983 ファーストリテイリング</a></td>
+  <td class="num">2株</td>
+  <td class="num">79,790円</td>
+  <td class="num">80,800円</td>
+  <td class="num"><b>58,759.8円</b><span class="inline-sub">-26.4%</span></td>
+  <td class="num"><b>54,770.3円</b><span class="inline-sub">-31.4%</span></td>
+  <td><span class="management-badge normal">正常</span></td>
+  <td>2026-07-22</td>
+</tr></tbody></table></div></section>
 <section id="holdings"><h2>保有一覧</h2><div class="table-wrap"><table><thead><tr><th>銘柄</th><th>数量</th><th>取得単価</th><th>確認価格</th><th>評価額</th><th>含み損益</th><th>当日比</th><th>構成比</th><th>価格鮮度</th><th>現在の管理状態</th></tr></thead><tbody>
 <tr>
   <td><a href="https://finance.yahoo.co.jp/quote/9983.T/chart" target="_blank" rel="noopener">9983 ファーストリテイリング</a><span class="inline-sub">小売</span></td>
